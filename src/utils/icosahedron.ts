@@ -20,6 +20,7 @@ export interface Triangle {
 }
 
 // Predefined triangle grid with custom geographic coordinates
+// Based on your specification: Arctic Circle (66.5°), Equator (0°), Antarctic Circle (-66.5°)
 const CUSTOM_TRIANGLES = [
   // Triangle _01
   { id: "triangle-01", vertices: [[66.5, 0.0], [66.5, 36.0], [0.0, 0.0]] },
@@ -32,17 +33,17 @@ const CUSTOM_TRIANGLES = [
   // Triangle _05
   { id: "triangle-05", vertices: [[66.5, 180.0], [66.5, 108.0], [0.0, 144.0]] },
   // Triangle _06
-  { id: "triangle-06", vertices: [[0.0, 216.0], [0.0, 144.0], [66.5, 180.0]] },
+  { id: "triangle-06", vertices: [[0.0, -144.0], [0.0, 144.0], [66.5, 180.0]] },
   // Triangle _07
-  { id: "triangle-07", vertices: [[66.5, 252.0], [66.5, 180.0], [0.0, 216.0]] },
+  { id: "triangle-07", vertices: [[66.5, -108.0], [66.5, 180.0], [0.0, -144.0]] },
   // Triangle _08
-  { id: "triangle-08", vertices: [[0.0, 288.0], [0.0, 216.0], [66.5, 252.0]] },
+  { id: "triangle-08", vertices: [[0.0, -72.0], [0.0, -144.0], [66.5, -108.0]] },
   // Triangle _09
-  { id: "triangle-09", vertices: [[66.5, 324.0], [66.5, 252.0], [0.0, 288.0]] },
+  { id: "triangle-09", vertices: [[66.5, -36.0], [66.5, -108.0], [0.0, -72.0]] },
   // Triangle _10
-  { id: "triangle-10", vertices: [[0.0, 360.0], [0.0, 288.0], [66.5, 324.0]] },
+  { id: "triangle-10", vertices: [[0.0, 0.0], [0.0, -72.0], [66.5, -36.0]] },
   // Triangle _11
-  { id: "triangle-11", vertices: [[66.5, 360.0], [66.5, 324.0], [0.0, 360.0]] },
+  { id: "triangle-11", vertices: [[66.5, 0.0], [66.5, -36.0], [0.0, 0.0]] },
   // Triangle _12
   { id: "triangle-12", vertices: [[-66.5, 0.0], [-66.5, 36.0], [0.0, 0.0]] },
   // Triangle _13
@@ -54,17 +55,17 @@ const CUSTOM_TRIANGLES = [
   // Triangle _16
   { id: "triangle-16", vertices: [[-66.5, 180.0], [-66.5, 108.0], [0.0, 144.0]] },
   // Triangle _17
-  { id: "triangle-17", vertices: [[0.0, 216.0], [0.0, 144.0], [-66.5, 180.0]] },
+  { id: "triangle-17", vertices: [[0.0, -144.0], [0.0, 144.0], [-66.5, 180.0]] },
   // Triangle _18
-  { id: "triangle-18", vertices: [[-66.5, 252.0], [-66.5, 180.0], [0.0, 216.0]] },
+  { id: "triangle-18", vertices: [[-66.5, -108.0], [-66.5, 180.0], [0.0, -144.0]] },
   // Triangle _19
-  { id: "triangle-19", vertices: [[0.0, 288.0], [0.0, 216.0], [-66.5, 252.0]] },
+  { id: "triangle-19", vertices: [[0.0, -72.0], [0.0, -144.0], [-66.5, -108.0]] },
   // Triangle _20
-  { id: "triangle-20", vertices: [[-66.5, 324.0], [-66.5, 252.0], [0.0, 288.0]] },
+  { id: "triangle-20", vertices: [[-66.5, -36.0], [-66.5, -108.0], [0.0, -72.0]] },
   // Triangle _21
-  { id: "triangle-21", vertices: [[0.0, 360.0], [0.0, 288.0], [-66.5, 324.0]] },
+  { id: "triangle-21", vertices: [[0.0, 0.0], [0.0, -72.0], [-66.5, -36.0]] },
   // Triangle _22
-  { id: "triangle-22", vertices: [[-66.5, 360.0], [-66.5, 324.0], [0.0, 360.0]] }
+  { id: "triangle-22", vertices: [[-66.5, 0.0], [-66.5, -36.0], [0.0, 0.0]] }
 ];
 
 // Convert 3D point to lat/lng coordinates
