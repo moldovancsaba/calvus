@@ -19,42 +19,53 @@ export interface Triangle {
   children?: Triangle[];
 }
 
-// Golden ratio constant for icosahedron calculations
-const PHI = (1 + Math.sqrt(5)) / 2;
-
-// Generate the 12 vertices of a regular icosahedron
-export function generateIcosahedronVertices(): Point3D[] {
-  const vertices: Point3D[] = [];
-  
-  // Normalize factor to ensure unit sphere
-  const norm = Math.sqrt(1 + PHI * PHI);
-  
-  // Generate vertices in 3 perpendicular rectangles
-  const coords = [
-    [1, PHI, 0],
-    [-1, PHI, 0],
-    [1, -PHI, 0],
-    [-1, -PHI, 0],
-    [0, 1, PHI],
-    [0, -1, PHI],
-    [0, 1, -PHI],
-    [0, -1, -PHI],
-    [PHI, 0, 1],
-    [-PHI, 0, 1],
-    [PHI, 0, -1],
-    [-PHI, 0, -1]
-  ];
-
-  coords.forEach(([x, y, z]) => {
-    vertices.push({
-      x: x / norm,
-      y: y / norm,
-      z: z / norm
-    });
-  });
-
-  return vertices;
-}
+// Predefined triangle grid with custom geographic coordinates
+const CUSTOM_TRIANGLES = [
+  // Triangle _01
+  { id: "triangle-01", vertices: [[66.5, 0.0], [66.5, 36.0], [0.0, 0.0]] },
+  // Triangle _02
+  { id: "triangle-02", vertices: [[0.0, 72.0], [0.0, 0.0], [66.5, 36.0]] },
+  // Triangle _03
+  { id: "triangle-03", vertices: [[66.5, 108.0], [66.5, 36.0], [0.0, 72.0]] },
+  // Triangle _04
+  { id: "triangle-04", vertices: [[0.0, 144.0], [0.0, 72.0], [66.5, 108.0]] },
+  // Triangle _05
+  { id: "triangle-05", vertices: [[66.5, 180.0], [66.5, 108.0], [0.0, 144.0]] },
+  // Triangle _06
+  { id: "triangle-06", vertices: [[0.0, 216.0], [0.0, 144.0], [66.5, 180.0]] },
+  // Triangle _07
+  { id: "triangle-07", vertices: [[66.5, 252.0], [66.5, 180.0], [0.0, 216.0]] },
+  // Triangle _08
+  { id: "triangle-08", vertices: [[0.0, 288.0], [0.0, 216.0], [66.5, 252.0]] },
+  // Triangle _09
+  { id: "triangle-09", vertices: [[66.5, 324.0], [66.5, 252.0], [0.0, 288.0]] },
+  // Triangle _10
+  { id: "triangle-10", vertices: [[0.0, 360.0], [0.0, 288.0], [66.5, 324.0]] },
+  // Triangle _11
+  { id: "triangle-11", vertices: [[66.5, 360.0], [66.5, 324.0], [0.0, 360.0]] },
+  // Triangle _12
+  { id: "triangle-12", vertices: [[-66.5, 0.0], [-66.5, 36.0], [0.0, 0.0]] },
+  // Triangle _13
+  { id: "triangle-13", vertices: [[0.0, 72.0], [0.0, 0.0], [-66.5, 36.0]] },
+  // Triangle _14
+  { id: "triangle-14", vertices: [[-66.5, 108.0], [-66.5, 36.0], [0.0, 72.0]] },
+  // Triangle _15
+  { id: "triangle-15", vertices: [[0.0, 144.0], [0.0, 72.0], [-66.5, 108.0]] },
+  // Triangle _16
+  { id: "triangle-16", vertices: [[-66.5, 180.0], [-66.5, 108.0], [0.0, 144.0]] },
+  // Triangle _17
+  { id: "triangle-17", vertices: [[0.0, 216.0], [0.0, 144.0], [-66.5, 180.0]] },
+  // Triangle _18
+  { id: "triangle-18", vertices: [[-66.5, 252.0], [-66.5, 180.0], [0.0, 216.0]] },
+  // Triangle _19
+  { id: "triangle-19", vertices: [[0.0, 288.0], [0.0, 216.0], [-66.5, 252.0]] },
+  // Triangle _20
+  { id: "triangle-20", vertices: [[-66.5, 324.0], [-66.5, 252.0], [0.0, 288.0]] },
+  // Triangle _21
+  { id: "triangle-21", vertices: [[0.0, 360.0], [0.0, 288.0], [-66.5, 324.0]] },
+  // Triangle _22
+  { id: "triangle-22", vertices: [[-66.5, 360.0], [-66.5, 324.0], [0.0, 360.0]] }
+];
 
 // Convert 3D point to lat/lng coordinates
 export function point3DToLatLng(point: Point3D): LatLng {
@@ -76,28 +87,17 @@ export function latLngToPoint3D(latLng: LatLng): Point3D {
   };
 }
 
-// Generate the 20 triangular faces of an icosahedron
+// Generate the custom triangle grid
 export function generateIcosahedronTriangles(): Triangle[] {
-  const vertices = generateIcosahedronVertices();
   const triangles: Triangle[] = [];
   
-  // Define the 20 triangular faces by vertex indices
-  const faces = [
-    [0, 4, 8], [0, 8, 10], [0, 10, 6], [0, 6, 1], [0, 1, 4],
-    [2, 5, 9], [2, 9, 11], [2, 11, 7], [2, 7, 3], [2, 3, 5],
-    [1, 6, 11], [1, 11, 9], [1, 9, 4], [4, 9, 5], [4, 5, 8],
-    [8, 5, 3], [8, 3, 10], [10, 3, 7], [10, 7, 6], [6, 7, 11]
-  ];
-
-  faces.forEach((face, index) => {
-    const [v1, v2, v3] = face.map(i => vertices[i]);
+  CUSTOM_TRIANGLES.forEach((triangleData) => {
     const triangle: Triangle = {
-      id: `triangle-${index}`,
-      vertices: [
-        point3DToLatLng(v1),
-        point3DToLatLng(v2),
-        point3DToLatLng(v3)
-      ] as [LatLng, LatLng, LatLng],
+      id: triangleData.id,
+      vertices: triangleData.vertices.map(([lat, lng]) => ({
+        lat,
+        lng: lng > 180 ? lng - 360 : lng // Normalize longitude to [-180, 180]
+      })) as [LatLng, LatLng, LatLng],
       level: 0,
       clickCount: 0,
       subdivided: false
