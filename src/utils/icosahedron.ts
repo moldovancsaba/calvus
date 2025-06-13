@@ -19,55 +19,6 @@ export interface Triangle {
   children?: Triangle[];
 }
 
-// Spherical triangle grid with 5 latitudinal bands and 5 longitude segments
-// Latitude bands: Arctic Circle (66.5°), Tropic of Cancer (23.5°), Equator (0°), Tropic of Capricorn (-23.5°), Antarctic Circle (-66.5°)
-// Longitude points: -180°, -108°, -36°, 36°, 108°, 180° (but we use -144°, -72°, 0°, 72°, 144° for 5 segments)
-const LATITUDE_BANDS = [66.5, 23.5, 0, -23.5, -66.5];
-const LONGITUDE_POINTS = [-144, -72, 0, 72, 144]; // 5 segments of 72° each
-
-function generateTriangleGrid(): any[] {
-  const triangles: any[] = [];
-  let triangleId = 1;
-
-  // Generate triangles between adjacent latitude bands
-  for (let latBand = 0; latBand < LATITUDE_BANDS.length - 1; latBand++) {
-    const upperLat = LATITUDE_BANDS[latBand];
-    const lowerLat = LATITUDE_BANDS[latBand + 1];
-
-    for (let lonSegment = 0; lonSegment < LONGITUDE_POINTS.length; lonSegment++) {
-      const lng1 = LONGITUDE_POINTS[lonSegment];
-      const lng2 = LONGITUDE_POINTS[(lonSegment + 1) % LONGITUDE_POINTS.length];
-
-      // Create two triangles for each rectangular segment
-      // Triangle 1: Upper-left, Lower-left, Upper-right
-      triangles.push({
-        id: `triangle-${triangleId.toString().padStart(2, '0')}`,
-        vertices: [
-          [upperLat, lng1], // Upper-left
-          [lowerLat, lng1], // Lower-left
-          [upperLat, lng2]  // Upper-right
-        ]
-      });
-      triangleId++;
-
-      // Triangle 2: Lower-left, Lower-right, Upper-right
-      triangles.push({
-        id: `triangle-${triangleId.toString().padStart(2, '0')}`,
-        vertices: [
-          [lowerLat, lng1], // Lower-left
-          [lowerLat, lng2], // Lower-right
-          [upperLat, lng2]  // Upper-right
-        ]
-      });
-      triangleId++;
-    }
-  }
-
-  return triangles;
-}
-
-const CUSTOM_TRIANGLES = generateTriangleGrid();
-
 // Convert 3D point to lat/lng coordinates
 export function point3DToLatLng(point: Point3D): LatLng {
   const lat = Math.asin(point.z) * (180 / Math.PI);
@@ -88,26 +39,22 @@ export function latLngToPoint3D(latLng: LatLng): Point3D {
   };
 }
 
-// Generate the spherical triangle grid
+// Generate a single spherical triangle
 export function generateIcosahedronTriangles(): Triangle[] {
-  const triangles: Triangle[] = [];
-  
-  CUSTOM_TRIANGLES.forEach((triangleData) => {
-    const triangle: Triangle = {
-      id: triangleData.id,
-      vertices: triangleData.vertices.map(([lat, lng]) => ({
-        lat,
-        lng: lng > 180 ? lng - 360 : lng < -180 ? lng + 360 : lng // Normalize longitude to [-180, 180]
-      })) as [LatLng, LatLng, LatLng],
-      level: 0,
-      clickCount: 0,
-      subdivided: false
-    };
-    triangles.push(triangle);
-  });
+  const triangle: Triangle = {
+    id: 'triangle-01',
+    vertices: [
+      { lat: 66.0, lng: 0.0 },      // Top point
+      { lat: 0.0, lng: -36.0 },     // Bottom left
+      { lat: 0.0, lng: 36.0 }       // Bottom right
+    ],
+    level: 0,
+    clickCount: 0,
+    subdivided: false
+  };
 
-  console.log(`Generated ${triangles.length} triangles in spherical grid`);
-  return triangles;
+  console.log('Generated single spherical triangle');
+  return [triangle];
 }
 
 // Calculate midpoint between two lat/lng points on sphere surface (Great Circle)

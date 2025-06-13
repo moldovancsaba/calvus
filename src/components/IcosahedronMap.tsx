@@ -13,10 +13,10 @@ const IcosahedronMap = () => {
   useEffect(() => {
     if (!mapRef.current) return;
 
-    // Initialize the map
+    // Initialize the map centered on the triangle
     const map = L.map(mapRef.current, {
-      center: [0, 0],
-      zoom: 2,
+      center: [33, 0], // Center between the triangle points
+      zoom: 3,
       minZoom: 1,
       maxZoom: 18,
       worldCopyJump: true,
@@ -34,11 +34,11 @@ const IcosahedronMap = () => {
     // Set map background to light gray
     map.getContainer().style.backgroundColor = '#f0f0f0';
 
-    // Generate initial spherical triangle grid
+    // Generate initial single triangle
     const initialTriangles = generateIcosahedronTriangles();
     setTriangles(initialTriangles);
 
-    console.log('Generated spherical grid with', initialTriangles.length, 'triangles');
+    console.log('Generated single triangle');
 
     return () => {
       map.remove();
@@ -188,11 +188,13 @@ const IcosahedronMap = () => {
     <div className="w-full h-screen relative">
       <div ref={mapRef} className="w-full h-full" />
       <div className="absolute top-4 left-4 bg-white/90 backdrop-blur-sm rounded-lg p-4 shadow-lg max-w-sm">
-        <h2 className="text-lg font-semibold mb-2">Spherical Geodesic Grid</h2>
+        <h2 className="text-lg font-semibold mb-2">Single Spherical Triangle</h2>
         <div className="text-sm text-muted-foreground space-y-1">
-          <p>• 5 latitude bands: Arctic Circle, Tropic of Cancer, Equator, Tropic of Capricorn, Antarctic Circle</p>
-          <p>• 5 longitude segments of 72° each</p>
-          <p>• Click triangles to change color (10% gray per click)</p>
+          <p>• Single triangle with vertices:</p>
+          <p>  - Top: 0°, 66°</p>
+          <p>  - Left: -36°, 0°</p>
+          <p>  - Right: 36°, 0°</p>
+          <p>• Click triangle to change color (10% gray per click)</p>
           <p>• 11th click subdivides into 4 triangles</p>
           <p>• Up to 19 levels of subdivision</p>
           <p>• Final level turns red</p>
