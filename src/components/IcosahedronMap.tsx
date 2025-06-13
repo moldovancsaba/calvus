@@ -1,4 +1,3 @@
-
 import { useEffect, useRef, useState } from 'react';
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
@@ -45,29 +44,85 @@ const IcosahedronMap = () => {
     };
   }, []);
 
-  // Function to create geodesic lines between points
+  // Function to create proper geodesic lines between points
   const createGeodesicTriangle = (vertices: [any, any, any]) => {
-    // For spherical triangles, we need to create curved edges
-    // Leaflet's polygon will automatically handle this when we provide enough intermediate points
-    const interpolatePoints = (start: any, end: any, steps: number = 10) => {
+    // Calculate great circle path between two points on sphere
+    const greatCirclePath = (start: any, end: any, steps: number = 50) => {
       const points = [];
+      
+      // Convert to radians
+      const lat1 = start.lat * Math.PI / 180;
+      const lng1 = start.lng * Math.PI / 180;
+      const lat2 = end.lat * Math.PI / 180;
+      const lng2 = end.lng * Math.PI / 180;
+      
+      // Calculate the great circle distance
+      const deltaLng = lng2 - lng1;
+      const a = Math.sin((lat2 - lat1) / 2) ** 2 + 
+               Math.cos(lat1) * Math.cos(lat2) * Math.sin(deltaLng / 2) ** 2;
+      const distance = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+      
       for (let i = 0; i <= steps; i++) {
-        const ratio = i / steps;
-        // Simple spherical interpolation (great circle)
-        const lat = start.lat + (end.lat - start.lat) * ratio;
-        const lng = start.lng + (end.lng - start.lng) * ratio;
+        const f = i / steps;
+        
+        // Spherical interpolation (slerp) for great circle
+        const A = Math.sin((1 - f) * distance) / Math.sin(distance);
+        const B = Math.sin(f * distance) / Math.sin(distance);
+        
+        // Handle special cases where points are very close or antipodal
+        if (distance < 1e-6) {
+          // Points are very close, use linear interpolation
+          const lat = start.lat + (end.lat - start.lat) * f;
+          const lng = start.lng + (end.lng - start.lng) * f;
+          points.push([lat, lng]);
+          continue;
+        }
+        
+        if (Math.abs(distance - Math.PI) < 1e-6) {
+          // Points are antipodal, use any great circle
+          const lat = start.lat + (end.lat - start.lat) * f;
+          const lng = start.lng + (end.lng - start.lng) * f;
+          points.push([lat, lng]);
+          continue;
+        }
+        
+        // Convert back to cartesian for interpolation
+        const x1 = Math.cos(lat1) * Math.cos(lng1);
+        const y1 = Math.cos(lat1) * Math.sin(lng1);
+        const z1 = Math.sin(lat1);
+        
+        const x2 = Math.cos(lat2) * Math.cos(lng2);
+        const y2 = Math.cos(lat2) * Math.sin(lng2);
+        const z2 = Math.sin(lat2);
+        
+        // Interpolated cartesian coordinates
+        const x = A * x1 + B * x2;
+        const y = A * y1 + B * y2;
+        const z = A * z1 + B * z2;
+        
+        // Convert back to lat/lng
+        const lat = Math.atan2(z, Math.sqrt(x * x + y * y)) * 180 / Math.PI;
+        const lng = Math.atan2(y, x) * 180 / Math.PI;
+        
         points.push([lat, lng]);
       }
+      
       return points;
     };
 
     // Create geodesic edges for the triangle
-    const edge1 = interpolatePoints(vertices[0], vertices[1], 20);
-    const edge2 = interpolatePoints(vertices[1], vertices[2], 20);
-    const edge3 = interpolatePoints(vertices[2], vertices[0], 20);
+    const edge1 = greatCirclePath(vertices[0], vertices[1]);
+    const edge2 = greatCirclePath(vertices[1], vertices[2]);
+    const edge3 = greatCirclePath(vertices[2], vertices[0]);
 
-    // Combine all points to form a smooth triangle
-    const allPoints = [...edge1, ...edge2.slice(1), ...edge3.slice(1, -1)];
+    // Combine all points to form a closed triangle
+    // Remove duplicate points at corners to avoid overlaps
+    const allPoints = [
+      ...edge1,
+      ...edge2.slice(1), // Skip first point (duplicate of edge1 last)
+      ...edge3.slice(1, -1) // Skip first and last points (duplicates)
+    ];
+    
     return allPoints;
   };
 
@@ -198,6 +253,7 @@ const IcosahedronMap = () => {
           <p>• 11th click subdivides into 4 triangles</p>
           <p>• Up to 19 levels of subdivision</p>
           <p>• Final level turns red</p>
+          <p>• Geodesic edges prevent gaps/overlaps</p>
         </div>
       </div>
     </div>
