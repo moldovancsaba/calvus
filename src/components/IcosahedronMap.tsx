@@ -25,25 +25,51 @@ const IcosahedronMap = () => {
 
     mapInstanceRef.current = map;
 
-    // Add OpenStreetMap tiles with 10% gray background
+    // Add OpenStreetMap tiles
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
       attribution: '© OpenStreetMap contributors',
       opacity: 0.9
     }).addTo(map);
 
-    // Set map background to 10% gray
-    map.getContainer().style.backgroundColor = '#e6e6e6';
+    // Set map background to light gray
+    map.getContainer().style.backgroundColor = '#f0f0f0';
 
-    // Generate initial icosahedron triangles
+    // Generate initial spherical triangle grid
     const initialTriangles = generateIcosahedronTriangles();
     setTriangles(initialTriangles);
 
-    console.log('Generated icosahedron with', initialTriangles.length, 'triangles');
+    console.log('Generated spherical grid with', initialTriangles.length, 'triangles');
 
     return () => {
       map.remove();
     };
   }, []);
+
+  // Function to create geodesic lines between points
+  const createGeodesicTriangle = (vertices: [any, any, any]) => {
+    // For spherical triangles, we need to create curved edges
+    // Leaflet's polygon will automatically handle this when we provide enough intermediate points
+    const interpolatePoints = (start: any, end: any, steps: number = 10) => {
+      const points = [];
+      for (let i = 0; i <= steps; i++) {
+        const ratio = i / steps;
+        // Simple spherical interpolation (great circle)
+        const lat = start.lat + (end.lat - start.lat) * ratio;
+        const lng = start.lng + (end.lng - start.lng) * ratio;
+        points.push([lat, lng]);
+      }
+      return points;
+    };
+
+    // Create geodesic edges for the triangle
+    const edge1 = interpolatePoints(vertices[0], vertices[1], 20);
+    const edge2 = interpolatePoints(vertices[1], vertices[2], 20);
+    const edge3 = interpolatePoints(vertices[2], vertices[0], 20);
+
+    // Combine all points to form a smooth triangle
+    const allPoints = [...edge1, ...edge2.slice(1), ...edge3.slice(1, -1)];
+    return allPoints;
+  };
 
   // Function to handle triangle clicks
   const handleTriangleClick = (triangleId: string) => {
@@ -104,22 +130,32 @@ const IcosahedronMap = () => {
           map.removeLayer(existingLayer);
         }
 
-        // Create polygon coordinates
-        const coordinates: [number, number][] = triangle.vertices.map(vertex => [vertex.lat, vertex.lng]);
+        // Create geodesic triangle coordinates
+        const coordinates = createGeodesicTriangle(triangle.vertices);
         
-        // Create the polygon
+        // Create the polygon with geodesic edges
         const polygon = L.polygon(coordinates, {
-          color: '#333333',
-          weight: 1,
+          color: '#2563eb',
+          weight: 2,
           opacity: 0.8,
           fillColor: getTriangleColor(triangle),
-          fillOpacity: 0.7
+          fillOpacity: 0.6,
+          smoothFactor: 1.0
         });
 
         // Add click handler
         polygon.on('click', () => {
-          console.log(`Clicked triangle ${triangle.id}, current clicks: ${triangle.clickCount}`);
+          console.log(`Clicked triangle ${triangle.id}, current clicks: ${triangle.clickCount}, level: ${triangle.level}`);
           handleTriangleClick(triangle.id);
+        });
+
+        // Add hover effect
+        polygon.on('mouseover', () => {
+          polygon.setStyle({ weight: 4, opacity: 1.0 });
+        });
+
+        polygon.on('mouseout', () => {
+          polygon.setStyle({ weight: 2, opacity: 0.8 });
         });
 
         // Add to map and store reference
@@ -151,9 +187,11 @@ const IcosahedronMap = () => {
   return (
     <div className="w-full h-screen relative">
       <div ref={mapRef} className="w-full h-full" />
-      <div className="absolute top-4 left-4 bg-white/90 backdrop-blur-sm rounded-lg p-4 shadow-lg">
-        <h2 className="text-lg font-semibold mb-2">Icosahedral Geodesic Grid</h2>
+      <div className="absolute top-4 left-4 bg-white/90 backdrop-blur-sm rounded-lg p-4 shadow-lg max-w-sm">
+        <h2 className="text-lg font-semibold mb-2">Spherical Geodesic Grid</h2>
         <div className="text-sm text-muted-foreground space-y-1">
+          <p>• 5 latitude bands: Arctic Circle, Tropic of Cancer, Equator, Tropic of Capricorn, Antarctic Circle</p>
+          <p>• 5 longitude segments of 72° each</p>
           <p>• Click triangles to change color (10% gray per click)</p>
           <p>• 11th click subdivides into 4 triangles</p>
           <p>• Up to 19 levels of subdivision</p>

@@ -19,54 +19,54 @@ export interface Triangle {
   children?: Triangle[];
 }
 
-// Predefined triangle grid with custom geographic coordinates
-// Based on your specification: Arctic Circle (66.5°), Equator (0°), Antarctic Circle (-66.5°)
-const CUSTOM_TRIANGLES = [
-  // Triangle _01
-  { id: "triangle-01", vertices: [[66.5, 0.0], [66.5, 36.0], [0.0, 0.0]] },
-  // Triangle _02
-  { id: "triangle-02", vertices: [[0.0, 72.0], [0.0, 0.0], [66.5, 36.0]] },
-  // Triangle _03
-  { id: "triangle-03", vertices: [[66.5, 108.0], [66.5, 36.0], [0.0, 72.0]] },
-  // Triangle _04
-  { id: "triangle-04", vertices: [[0.0, 144.0], [0.0, 72.0], [66.5, 108.0]] },
-  // Triangle _05
-  { id: "triangle-05", vertices: [[66.5, 180.0], [66.5, 108.0], [0.0, 144.0]] },
-  // Triangle _06
-  { id: "triangle-06", vertices: [[0.0, -144.0], [0.0, 144.0], [66.5, 180.0]] },
-  // Triangle _07
-  { id: "triangle-07", vertices: [[66.5, -108.0], [66.5, 180.0], [0.0, -144.0]] },
-  // Triangle _08
-  { id: "triangle-08", vertices: [[0.0, -72.0], [0.0, -144.0], [66.5, -108.0]] },
-  // Triangle _09
-  { id: "triangle-09", vertices: [[66.5, -36.0], [66.5, -108.0], [0.0, -72.0]] },
-  // Triangle _10
-  { id: "triangle-10", vertices: [[0.0, 0.0], [0.0, -72.0], [66.5, -36.0]] },
-  // Triangle _11
-  { id: "triangle-11", vertices: [[66.5, 0.0], [66.5, -36.0], [0.0, 0.0]] },
-  // Triangle _12
-  { id: "triangle-12", vertices: [[-66.5, 0.0], [-66.5, 36.0], [0.0, 0.0]] },
-  // Triangle _13
-  { id: "triangle-13", vertices: [[0.0, 72.0], [0.0, 0.0], [-66.5, 36.0]] },
-  // Triangle _14
-  { id: "triangle-14", vertices: [[-66.5, 108.0], [-66.5, 36.0], [0.0, 72.0]] },
-  // Triangle _15
-  { id: "triangle-15", vertices: [[0.0, 144.0], [0.0, 72.0], [-66.5, 108.0]] },
-  // Triangle _16
-  { id: "triangle-16", vertices: [[-66.5, 180.0], [-66.5, 108.0], [0.0, 144.0]] },
-  // Triangle _17
-  { id: "triangle-17", vertices: [[0.0, -144.0], [0.0, 144.0], [-66.5, 180.0]] },
-  // Triangle _18
-  { id: "triangle-18", vertices: [[-66.5, -108.0], [-66.5, 180.0], [0.0, -144.0]] },
-  // Triangle _19
-  { id: "triangle-19", vertices: [[0.0, -72.0], [0.0, -144.0], [-66.5, -108.0]] },
-  // Triangle _20
-  { id: "triangle-20", vertices: [[-66.5, -36.0], [-66.5, -108.0], [0.0, -72.0]] },
-  // Triangle _21
-  { id: "triangle-21", vertices: [[0.0, 0.0], [0.0, -72.0], [-66.5, -36.0]] },
-  // Triangle _22
-  { id: "triangle-22", vertices: [[-66.5, 0.0], [-66.5, -36.0], [0.0, 0.0]] }
-];
+// Spherical triangle grid with 5 latitudinal bands and 5 longitude segments
+// Latitude bands: Arctic Circle (66.5°), Tropic of Cancer (23.5°), Equator (0°), Tropic of Capricorn (-23.5°), Antarctic Circle (-66.5°)
+// Longitude points: -180°, -108°, -36°, 36°, 108°, 180° (but we use -144°, -72°, 0°, 72°, 144° for 5 segments)
+const LATITUDE_BANDS = [66.5, 23.5, 0, -23.5, -66.5];
+const LONGITUDE_POINTS = [-144, -72, 0, 72, 144]; // 5 segments of 72° each
+
+function generateTriangleGrid(): any[] {
+  const triangles: any[] = [];
+  let triangleId = 1;
+
+  // Generate triangles between adjacent latitude bands
+  for (let latBand = 0; latBand < LATITUDE_BANDS.length - 1; latBand++) {
+    const upperLat = LATITUDE_BANDS[latBand];
+    const lowerLat = LATITUDE_BANDS[latBand + 1];
+
+    for (let lonSegment = 0; lonSegment < LONGITUDE_POINTS.length; lonSegment++) {
+      const lng1 = LONGITUDE_POINTS[lonSegment];
+      const lng2 = LONGITUDE_POINTS[(lonSegment + 1) % LONGITUDE_POINTS.length];
+
+      // Create two triangles for each rectangular segment
+      // Triangle 1: Upper-left, Lower-left, Upper-right
+      triangles.push({
+        id: `triangle-${triangleId.toString().padStart(2, '0')}`,
+        vertices: [
+          [upperLat, lng1], // Upper-left
+          [lowerLat, lng1], // Lower-left
+          [upperLat, lng2]  // Upper-right
+        ]
+      });
+      triangleId++;
+
+      // Triangle 2: Lower-left, Lower-right, Upper-right
+      triangles.push({
+        id: `triangle-${triangleId.toString().padStart(2, '0')}`,
+        vertices: [
+          [lowerLat, lng1], // Lower-left
+          [lowerLat, lng2], // Lower-right
+          [upperLat, lng2]  // Upper-right
+        ]
+      });
+      triangleId++;
+    }
+  }
+
+  return triangles;
+}
+
+const CUSTOM_TRIANGLES = generateTriangleGrid();
 
 // Convert 3D point to lat/lng coordinates
 export function point3DToLatLng(point: Point3D): LatLng {
@@ -88,7 +88,7 @@ export function latLngToPoint3D(latLng: LatLng): Point3D {
   };
 }
 
-// Generate the custom triangle grid
+// Generate the spherical triangle grid
 export function generateIcosahedronTriangles(): Triangle[] {
   const triangles: Triangle[] = [];
   
@@ -97,7 +97,7 @@ export function generateIcosahedronTriangles(): Triangle[] {
       id: triangleData.id,
       vertices: triangleData.vertices.map(([lat, lng]) => ({
         lat,
-        lng: lng > 180 ? lng - 360 : lng // Normalize longitude to [-180, 180]
+        lng: lng > 180 ? lng - 360 : lng < -180 ? lng + 360 : lng // Normalize longitude to [-180, 180]
       })) as [LatLng, LatLng, LatLng],
       level: 0,
       clickCount: 0,
@@ -106,10 +106,11 @@ export function generateIcosahedronTriangles(): Triangle[] {
     triangles.push(triangle);
   });
 
+  console.log(`Generated ${triangles.length} triangles in spherical grid`);
   return triangles;
 }
 
-// Calculate midpoint between two lat/lng points on sphere surface
+// Calculate midpoint between two lat/lng points on sphere surface (Great Circle)
 export function sphericalMidpoint(p1: LatLng, p2: LatLng): LatLng {
   const point1 = latLngToPoint3D(p1);
   const point2 = latLngToPoint3D(p2);
@@ -133,7 +134,7 @@ export function sphericalMidpoint(p1: LatLng, p2: LatLng): LatLng {
 export function subdivideTriangle(triangle: Triangle): Triangle[] {
   const [v1, v2, v3] = triangle.vertices;
   
-  // Calculate midpoints
+  // Calculate midpoints using great circle paths
   const m1 = sphericalMidpoint(v1, v2);
   const m2 = sphericalMidpoint(v2, v3);
   const m3 = sphericalMidpoint(v3, v1);
