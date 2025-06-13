@@ -8,6 +8,8 @@ import {
   getTriangleMeshColor, 
   storeTriangleActivity,
   clearTriangleActivities,
+  getTriangleActivities,
+  rebuildTriangleMeshFromActivities,
   TriangleMesh 
 } from '../utils/triangleMesh';
 
@@ -16,6 +18,8 @@ const TriangleMeshMap = () => {
   const mapInstanceRef = useRef<L.Map | null>(null);
   const [triangleMesh, setTriangleMesh] = useState<TriangleMesh[]>([]);
   const triangleLayersRef = useRef<Map<string, L.Polygon>>(new Map());
+  const [isLoading, setIsLoading] = useState(true);
+  const pollIntervalRef = useRef<NodeJS.Timeout | null>(null);
 
   useEffect(() => {
     if (!mapRef.current) return;
@@ -41,25 +45,49 @@ const TriangleMeshMap = () => {
     // Set map background to light gray
     map.getContainer().style.backgroundColor = '#f0f0f0';
 
-    // Generate initial triangle mesh and clear MongoDB
+    // Load existing activities and initialize mesh
     const initializeMesh = async () => {
       try {
-        await clearTriangleActivities();
-        const initialMesh = generateBaseTriangleMesh();
-        setTriangleMesh(initialMesh);
-        console.log('Generated base triangle mesh and cleared MongoDB');
+        setIsLoading(true);
+        const activities = await getTriangleActivities();
+        
+        if (activities.length > 0) {
+          console.log(`Loading ${activities.length} stored activities`);
+          const restoredMesh = rebuildTriangleMeshFromActivities(activities);
+          setTriangleMesh(restoredMesh);
+        } else {
+          console.log('No stored activities found, starting with base mesh');
+          const initialMesh = generateBaseTriangleMesh();
+          setTriangleMesh(initialMesh);
+        }
       } catch (error) {
-        console.error('Error initializing mesh:', error);
-        // Fallback to local mesh if MongoDB fails
+        console.error('Error loading activities:', error);
+        // Fallback to base mesh if loading fails
         const initialMesh = generateBaseTriangleMesh();
         setTriangleMesh(initialMesh);
+      } finally {
+        setIsLoading(false);
       }
     };
 
     initializeMesh();
 
+    // Set up periodic polling for real-time updates
+    pollIntervalRef.current = setInterval(async () => {
+      try {
+        const activities = await getTriangleActivities();
+        const restoredMesh = rebuildTriangleMeshFromActivities(activities);
+        setTriangleMesh(restoredMesh);
+      } catch (error) {
+        console.error('Error polling for updates:', error);
+      }
+    }, 5000); // Poll every 5 seconds
+
     return () => {
       map.remove();
+      if (pollIntervalRef.current) {
+        clearInterval(pollIntervalRef.current);
+      }
     };
   }, []);
 
@@ -241,17 +269,26 @@ const TriangleMeshMap = () => {
   return (
     <div className="w-full h-screen relative">
       <div ref={mapRef} className="w-full h-full" />
+      {isLoading && (
+        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white/90 backdrop-blur-sm rounded-lg p-4 shadow-lg">
+          <div className="text-center">
+            <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600 mx-auto mb-2"></div>
+            <p className="text-sm text-gray-600">Loading triangle activities...</p>
+          </div>
+        </div>
+      )}
       <div className="absolute top-4 left-4 bg-white/90 backdrop-blur-sm rounded-lg p-4 shadow-lg max-w-sm">
         <h2 className="text-lg font-semibold mb-2">Spherical Triangle Mesh</h2>
         <div className="text-sm text-muted-foreground space-y-1">
           <p>• Three base triangles with geodesic edges</p>
           <p>• Triangle IDs: 1, 2, 3 → 1.1, 1.2, 1.3, 1.4</p>
-          <p>• Click tracking stored in MongoDB</p>
+          <p>• Real-time sync with MongoDB</p>
           <p>• Activity format: when/where/what</p>
           <p>• Click triangle to change color (10% gray per click)</p>
           <p>• 11th click subdivides into 4 triangles</p>
           <p>• Up to 19 levels of subdivision</p>
           <p>• Final level turns red</p>
+          <p>• Updates every 5 seconds for real-time collaboration</p>
         </div>
       </div>
     </div>
