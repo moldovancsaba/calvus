@@ -1,10 +1,10 @@
 
-import IcosahedronMap from '../components/IcosahedronMap';
+import TriangleMeshMap from '../components/TriangleMeshMap';
 
 const Index = () => {
   return (
     <div className="w-full h-screen">
-      <IcosahedronMap />
+      <TriangleMeshMap />
     </div>
   );
 };
