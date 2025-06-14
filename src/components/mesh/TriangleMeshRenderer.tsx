@@ -24,6 +24,7 @@ export function TriangleMeshRenderer({
   if (!map) return null;
 
   React.useEffect(() => {
+    // Guard: if map is destroyed, do not run effect
     if (!map || !triangleMesh) return;
 
     const renderTriangleMesh = (triangleList: TriangleMesh[], parentPath: string = "") => {
@@ -31,7 +32,8 @@ export function TriangleMeshRenderer({
         const trianglePath = parentPath ? `${parentPath}-${triangle.id}` : triangle.id;
         if (!triangle.subdivided) {
           const existingLayer = triangleLayersRef.current.get(trianglePath);
-          if (existingLayer) map.removeLayer(existingLayer);
+          // Defensive: only try to remove if map is still valid
+          if (existingLayer && map.hasLayer(existingLayer)) map.removeLayer(existingLayer);
 
           const coordinates = createGeodesicTriangle(triangle.vertices);
           let fill = "#fff";
@@ -53,33 +55,37 @@ export function TriangleMeshRenderer({
             className: "leaflet-interactive"
           });
 
-          // --- Main interaction events ---
+          // Defensive: don't add polygons if map is destroyed or not attached to DOM
+          // map._container is a heuristic for if it's still attached
+          if (map && (map as any)._container && map._container.parentNode) {
+            // --- Main interaction events ---
 
-          // Handle pointerdown (desktop and modern mobile)
-          polygon.on("pointerdown", (e: any) => {
-            console.log("[TriangleMeshRenderer] pointerdown", e, triangle);
-            onTriangleClick(triangle.id, triangle, trianglePath);
-          });
+            // Handle pointerdown (desktop and modern mobile)
+            polygon.on("pointerdown", (e: any) => {
+              console.log("[TriangleMeshRenderer] pointerdown", e, triangle);
+              onTriangleClick(triangle.id, triangle, trianglePath);
+            });
 
-          // Fallback for mouse click
-          polygon.on("click", (e: any) => {
-            console.log("[TriangleMeshRenderer] click fallback", e, triangle);
-            onTriangleClick(triangle.id, triangle, trianglePath);
-          });
+            // Fallback for mouse click
+            polygon.on("click", (e: any) => {
+              console.log("[TriangleMeshRenderer] click fallback", e, triangle);
+              onTriangleClick(triangle.id, triangle, trianglePath);
+            });
 
-          // Direct touch interaction for mobile browsers
-          polygon.on("touchstart", (e: any) => {
-            console.log("[TriangleMeshRenderer] touchstart - firing tap/click!", e, triangle);
-            onTriangleClick(triangle.id, triangle, trianglePath);
-          });
+            // Direct touch interaction for mobile browsers
+            polygon.on("touchstart", (e: any) => {
+              console.log("[TriangleMeshRenderer] touchstart - firing tap/click!", e, triangle);
+              onTriangleClick(triangle.id, triangle, trianglePath);
+            });
 
-          // (Optional debug, can be removed after confirming touch works)
-          polygon.on("touchend", (e: any) => {
-            console.log("[TriangleMeshRenderer] touchend", e, triangle);
-          });
+            // (Optional debug, can be removed after confirming touch works)
+            polygon.on("touchend", (e: any) => {
+              console.log("[TriangleMeshRenderer] touchend", e, triangle);
+            });
 
-          polygon.addTo(map);
-          triangleLayersRef.current.set(trianglePath, polygon);
+            polygon.addTo(map);
+            triangleLayersRef.current.set(trianglePath, polygon);
+          }
         } else if (triangle.children) {
           renderTriangleMesh(triangle.children, trianglePath);
         }
@@ -88,7 +94,7 @@ export function TriangleMeshRenderer({
 
     // Remove all current layers first
     triangleLayersRef.current.forEach(layer => {
-      map.removeLayer(layer);
+      if (map && map.hasLayer(layer)) map.removeLayer(layer);
     });
     triangleLayersRef.current.clear();
 
@@ -97,7 +103,7 @@ export function TriangleMeshRenderer({
     // Cleanup: remove layers on unmount
     return () => {
       triangleLayersRef.current.forEach(layer => {
-        map.removeLayer(layer);
+        if (map && map.hasLayer(layer)) map.removeLayer(layer);
       });
       triangleLayersRef.current.clear();
     };

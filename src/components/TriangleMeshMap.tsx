@@ -144,6 +144,8 @@ const TriangleMeshMap = () => {
     }, 5000);
 
     return () => {
+      // Set ref to null BEFORE removing so children are unmounted!
+      mapInstanceRef.current = null;
       map.remove();
       if (pollIntervalRef.current) {
         clearInterval(pollIntervalRef.current);
