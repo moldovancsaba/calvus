@@ -36,14 +36,36 @@ const TriangleMeshMap = () => {
   useEffect(() => {
     if (!mapRef.current) return;
 
-    // Fix zoom level for mobile
-    const mapZoom = isMobile ? 10 : 6;
+    // ----- Read zoom settings from localStorage -----
+    let mobileZoomLevel = 10;
+    let mobileFixedZoomEnabled = true;
+    if (isMobile) {
+      const forceMobileZoom = window.localStorage.getItem('fixedMobileZoom');
+      mobileFixedZoomEnabled = forceMobileZoom === null || forceMobileZoom === "true";
+      if (mobileFixedZoomEnabled) {
+        const zoomVal = window.localStorage.getItem('fixedMobileZoomLevel');
+        if (
+          zoomVal &&
+          !isNaN(Number(zoomVal)) &&
+          Number(zoomVal) >= 1 &&
+          Number(zoomVal) <= 12
+        ) {
+          mobileZoomLevel = Number(zoomVal);
+        }
+      }
+    }
+
+    // ----- Map Init -----
+    // Use fixed zoom or original fallback
+    const mapZoom = isMobile
+      ? (mobileFixedZoomEnabled ? mobileZoomLevel : 10)
+      : 6;
 
     const map = L.map(mapRef.current, {
       center: DEFAULT_CENTER,
       zoom: mapZoom,
-      minZoom: isMobile ? 10 : 5,
-      maxZoom: isMobile ? 10 : 15,
+      minZoom: isMobile && mobileFixedZoomEnabled ? mobileZoomLevel : (isMobile ? 10 : 5),
+      maxZoom: isMobile && mobileFixedZoomEnabled ? mobileZoomLevel : (isMobile ? 10 : 15),
       worldCopyJump: true,
       maxBounds: [[-90, -180], [90, 180]],
       preferCanvas: true,
@@ -60,15 +82,25 @@ const TriangleMeshMap = () => {
       map.zoomControl.setPosition('topright');
     }
 
-    // If mobile, completely lock zoom level to 10
-    if (isMobile) {
+    if (isMobile && mobileFixedZoomEnabled) {
       // Prevent zoom by gestures, scroll, and programmatically
+      map.on("zoomend", () => {
+        if (map.getZoom() !== mobileZoomLevel) {
+          map.setZoom(mobileZoomLevel);
+        }
+      });
+      map.on("movestart", () => {
+        if (map.getZoom() !== mobileZoomLevel) {
+          map.setZoom(mobileZoomLevel);
+        }
+      });
+    } else if (isMobile) {
+      // Default mobile logic for zoom = 10 (legacy behavior)
       map.on("zoomend", () => {
         if (map.getZoom() !== 10) {
           map.setZoom(10);
         }
       });
-      // Optionally: Reset zoom if attempted by bounds, etc
       map.on("movestart", () => {
         if (map.getZoom() !== 10) {
           map.setZoom(10);
