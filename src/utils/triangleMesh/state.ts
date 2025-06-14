@@ -14,18 +14,34 @@ export function rebuildTriangleMeshFromActivities(activities: any[]): TriangleMe
   return currentMesh;
 }
 
-// Apply a single activity to the mesh
+// Apply a single activity to the mesh, INCLUDING color and gametag restore
 function applyActivityToMesh(mesh: TriangleMesh[], activity: any): TriangleMesh[] {
-  return updateTriangleInMesh(mesh, activity.where, activity.what, activity.level);
+  return updateTriangleInMesh(
+    mesh,
+    activity.where,
+    activity.what,
+    activity.level,
+    activity.gametag,
+    activity.color
+  );
 }
 
-// Update a specific triangle in the mesh
-function updateTriangleInMesh(triangles: TriangleMesh[], triangleId: string, clickCount: number, level: number): TriangleMesh[] {
+// Update a specific triangle in the mesh & add identity fields
+function updateTriangleInMesh(
+  triangles: TriangleMesh[],
+  triangleId: string,
+  clickCount: number,
+  level: number,
+  gametag?: string | null,
+  color?: string | null
+): TriangleMesh[] {
   return triangles.map(triangle => {
     if (triangle.id === triangleId) {
       const updatedTriangle = {
         ...triangle,
-        clickCount: clickCount
+        clickCount: clickCount,
+        gametag: gametag ?? triangle.gametag,
+        color: color ?? triangle.color,
       };
 
       if (clickCount === 11 && triangle.level < 19) {
@@ -43,7 +59,7 @@ function updateTriangleInMesh(triangles: TriangleMesh[], triangleId: string, cli
     if (triangle.children) {
       return {
         ...triangle,
-        children: updateTriangleInMesh(triangle.children, triangleId, clickCount, level)
+        children: updateTriangleInMesh(triangle.children, triangleId, clickCount, level, gametag, color)
       };
     }
 

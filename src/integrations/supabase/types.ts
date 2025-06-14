@@ -11,6 +11,8 @@ export type Database = {
     Tables: {
       triangle_activities: {
         Row: {
+          color: string | null
+          gametag: string | null
           id: string
           level: number
           timestamp: string
@@ -19,6 +21,8 @@ export type Database = {
           where: string
         }
         Insert: {
+          color?: string | null
+          gametag?: string | null
           id?: string
           level: number
           timestamp?: string
@@ -27,6 +31,8 @@ export type Database = {
           where: string
         }
         Update: {
+          color?: string | null
+          gametag?: string | null
           id?: string
           level?: number
           timestamp?: string
