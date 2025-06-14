@@ -1,4 +1,3 @@
-
 import React from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -140,6 +139,30 @@ export const SettingsControls: React.FC<SettingsControlsProps> = ({
           }}
         />
       </div>
+      {/* NEW: Max consecutive clicks per user */}
+      <div className="flex items-center justify-between mb-4 gap-2">
+        <label htmlFor="max-consecutive-clicks" className="text-sm">
+          Max consecutive clicks per user on a triangle
+        </label>
+        <Input
+          id="max-consecutive-clicks"
+          type="number"
+          min={1}
+          max={20}
+          step={1}
+          className="w-20 text-right"
+          value={pendingSettings.max_consecutive_clicks_per_user}
+          disabled={settingsBusy}
+          onChange={e => {
+            const n = Math.max(1, Math.floor(Number((e.target as HTMLInputElement).value)));
+            handleSettingEdit("max_consecutive_clicks_per_user", n);
+          }}
+          onBlur={e => {
+            let val = Math.max(1, Math.round(Number((e.target as HTMLInputElement).value)));
+            handleSettingEdit("max_consecutive_clicks_per_user", val);
+          }}
+        />
+      </div>
       {/* Apply Button */}
       <div className="flex justify-end mb-4">
         <Button
@@ -166,4 +189,3 @@ export const SettingsControls: React.FC<SettingsControlsProps> = ({
     </div>
   );
 };
-

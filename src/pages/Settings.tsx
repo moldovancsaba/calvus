@@ -1,4 +1,3 @@
-
 import React, { useEffect, useState } from "react";
 import { fetchWorldSettings, updateWorldSettings, WorldSettings } from "@/utils/worldSettings";
 import { SettingsControls } from "@/components/SettingsControls";

@@ -14,6 +14,7 @@ export type WorldSettings = {
   clicks_to_divide: number;
   max_divide_level: number;
   force_mobile_zoom: boolean;
+  max_consecutive_clicks_per_user: number; // NEW FIELD
 };
 
 export async function fetchWorldSettings(worldSlug: string): Promise<WorldSettings> {
@@ -33,6 +34,7 @@ export async function fetchWorldSettings(worldSlug: string): Promise<WorldSettin
       clicks_to_divide: 3,
       max_divide_level: 3,
       force_mobile_zoom: true,
+      max_consecutive_clicks_per_user: 1,
     };
     return {
       ...defaults,
@@ -49,6 +51,7 @@ export async function fetchWorldSettings(worldSlug: string): Promise<WorldSettin
     clicks_to_divide: 3,
     max_divide_level: 3,
     force_mobile_zoom: true,
+    max_consecutive_clicks_per_user: 1,
   };
   const { data: created, error: insErr } = await supabase
     .from("world_settings")
@@ -84,6 +87,7 @@ export async function updateWorldSettings(worldSlug: string, values: Partial<Wor
     clicks_to_divide: 3,
     max_divide_level: 3,
     force_mobile_zoom: true,
+    max_consecutive_clicks_per_user: 1,
   };
   return {
     ...defaults,

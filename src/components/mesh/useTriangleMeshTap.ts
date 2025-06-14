@@ -1,5 +1,9 @@
-import { useCallback } from "react";
+
+import { useCallback, useRef } from "react";
 import { storeTriangleActivity, subdivideTriangleMesh } from "../../utils/triangleMesh";
+
+// Helper to support tracking in-memory recently clicked per user/triangle.
+const userTriangleClickStreak: Record<string, { triangleId: string, streak: number }> = {};
 
 export function useTriangleMeshTap(
   identity: { gametag: string; color: string } | null,
@@ -7,10 +11,17 @@ export function useTriangleMeshTap(
   isMobile: boolean,
   mapInstance: L.Map | null,
   worldSlug: string,
-  settings?: { clicks_to_divide?: number, max_divide_level?: number }
+  settings?: { clicks_to_divide?: number, max_divide_level?: number, max_consecutive_clicks_per_user?: number }
 ) {
   const clicksToDivide = settings?.clicks_to_divide ?? 3;
   const maxDivideLevel = settings?.max_divide_level ?? 3;
+  const maxConsecutiveClicks =
+    settings?.max_consecutive_clicks_per_user && settings.max_consecutive_clicks_per_user > 0
+      ? settings.max_consecutive_clicks_per_user
+      : 1;
+
+  // For basic toast UI, show a warning if restriction is hit:
+  const shownRef = useRef<{ [k: string]: boolean }>({});
 
   return useCallback(
     async (
@@ -24,9 +35,34 @@ export function useTriangleMeshTap(
       const isFullyClaimed = isAtFinalLevel && triangle.clickCount >= clicksToDivide;
 
       // NEW: Block ALL users from interacting with a fully-claimed final triangle
-      if (isFullyClaimed) {
-        // Triangle is at the final level and has been fully claimed, no further update allowed
-        return;
+      if (isFullyClaimed) return;
+
+      // --- Enforce max consecutive clicks per user per triangle (client side memory) ---
+      // The key for current user (unique string for session/local memory)
+      const userKey = `u:${identity.gametag}:${identity.color}`;
+      const streakObj = userTriangleClickStreak[userKey] || { triangleId: "", streak: 0 };
+      if (streakObj.triangleId === triangleId) {
+        if (streakObj.streak >= maxConsecutiveClicks) {
+          // Optionally, show toast if possible (on global window or as a side effect).
+          if (typeof window !== "undefined" && !shownRef.current[triangleId]) {
+            if (window.lovableToast) {
+              window.lovableToast(`You've reached the maximum consecutive clicks (${maxConsecutiveClicks}) allowed for this triangle.`, { variant: "destructive" });
+            } else {
+              // fallback: simple browser alert
+              // alert("You can't click again right now."); // Don't block UI w/ alert, better UX with toast.
+            }
+            shownRef.current[triangleId] = true;
+            setTimeout(() => { shownRef.current[triangleId] = false; }, 1800);
+          }
+          return;
+        }
+        userTriangleClickStreak[userKey] = {
+          triangleId,
+          streak: streakObj.streak + 1
+        };
+      } else {
+        // New triangle for user: reset streak
+        userTriangleClickStreak[userKey] = { triangleId, streak: 1 };
       }
 
       setTriangleMesh(currMesh => {
@@ -135,6 +171,6 @@ export function useTriangleMeshTap(
         }
       }
     },
-    [identity, isMobile, mapInstance, setTriangleMesh, worldSlug, clicksToDivide, maxDivideLevel]
+    [identity, isMobile, mapInstance, setTriangleMesh, worldSlug, clicksToDivide, maxDivideLevel, maxConsecutiveClicks]
   );
 }
