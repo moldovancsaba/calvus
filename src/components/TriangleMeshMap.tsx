@@ -1,3 +1,4 @@
+
 import { useEffect, useRef, useState } from 'react';
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
@@ -151,6 +152,18 @@ const TriangleMeshMap = () => {
     // eslint-disable-next-line
   }, [mapCenter]);
 
+  // Recenter map if mapCenter changes after map constructed
+  useEffect(() => {
+    const map = mapInstanceRef.current;
+    if (map && mapCenter) {
+      const current = map.getCenter();
+      // only recenter if center is different from desired center
+      if (current.lat !== mapCenter[0] || current.lng !== mapCenter[1]) {
+        map.setView(mapCenter, map.getZoom(), { animate: true });
+      }
+    }
+  }, [mapCenter]);
+
   // Custom mobile/touch logic (refactored, hook does nothing on desktop)
   useLeafletMobileTouch(mapInstanceRef.current);
 
@@ -205,3 +218,4 @@ const TriangleMeshMap = () => {
 };
 
 export default TriangleMeshMap;
+
