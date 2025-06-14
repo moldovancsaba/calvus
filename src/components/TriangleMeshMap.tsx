@@ -20,7 +20,11 @@ import { ErrorBanner } from './map/ErrorBanner';
 // Always use this default map center
 const DEFAULT_CENTER: [number, number] = [33, 0];
 
-const TriangleMeshMap = () => {
+type Props = {
+  worldSlug: string;
+};
+
+const TriangleMeshMap = ({ worldSlug }: Props) => {
   const mapRef = useRef<HTMLDivElement>(null);
   const mapInstanceRef = useRef<L.Map | null>(null);
   const [triangleMesh, setTriangleMesh] = useState<TriangleMesh[]>([]);
@@ -31,15 +35,12 @@ const TriangleMeshMap = () => {
   const isMobile = useIsMobile();
   const prevMeshRef = useRef<TriangleMesh[]>([]);
   const [meshVersion, setMeshVersion] = useState(
-    () => window.localStorage.getItem("meshVersion") || ""
-  ); // listen for mesh resets
+    () => window.localStorage.getItem(`meshVersion_${worldSlug}`) || ""
+  );
 
-  // Listen for mesh/zoom settings changes even if user is actively on the map,
-  // so settings take effect instantly on mobile
   useEffect(() => {
     const reloadMapSettings = () => {
       if (mapRef.current && mapInstanceRef.current) {
-        // Remove and re-init map on setting changes
         mapInstanceRef.current.remove();
         mapInstanceRef.current = null;
         setIsLoading(true);
@@ -51,22 +52,18 @@ const TriangleMeshMap = () => {
       if (
         e.key === "fixedMobileZoomLevel" ||
         e.key === "fixedMobileZoom" ||
-        e.key === "refreshMesh"
+        e.key === `refreshMesh_${worldSlug}`
       ) {
         reloadMapSettings();
       }
-      // Also reload/refresh mesh if meshVersion bumps
-      if (e.key === "meshVersion") {
+      if (e.key === `meshVersion_${worldSlug}`) {
         setMeshVersion(e.newValue || "");
-        // Clear old mesh/activity caches
-        window.localStorage.removeItem("triangleMeshCache");
-        // Remove all triangle activities from memory
+        window.localStorage.removeItem(`triangleMeshCache_${worldSlug}`);
         setTriangleMesh([]);
         setIsLoading(true);
         setTimeout(() => setIsLoading(false), 30);
       }
-      // GLOBAL WORLD RESET: reload the window for everyone!
-      if (e.key === "worldReset") {
+      if (e.key === `worldReset_${worldSlug}`) {
         window.location.reload();
       }
     };
@@ -74,12 +71,10 @@ const TriangleMeshMap = () => {
     return () => {
       window.removeEventListener("storage", storageHandler);
     };
-  }, []);
+  }, [worldSlug]);
 
   useEffect(() => {
     if (!mapRef.current) return;
-
-    // ----- Read zoom settings from localStorage -----
     let mobileZoomLevel = 10;
     let mobileFixedZoomEnabled = true;
     if (isMobile) {
@@ -93,14 +88,11 @@ const TriangleMeshMap = () => {
           Number(zoomVal) >= 1 &&
           Number(zoomVal) <= 20
         ) {
-          // Round zoom (for OSM only integer)
           mobileZoomLevel = Math.floor(Number(zoomVal));
         }
       }
     }
 
-    // ----- Map Init -----
-    // Use fixed zoom or original fallback
     const mapZoom = isMobile
       ? (mobileFixedZoomEnabled ? mobileZoomLevel : 10)
       : 6;
@@ -121,13 +113,11 @@ const TriangleMeshMap = () => {
       dragging: true,
     });
 
-    // Set zoom control position on desktop only
     if (!isMobile) {
       map.zoomControl.setPosition('topright');
     }
 
     if (isMobile && mobileFixedZoomEnabled) {
-      // Prevent zoom by gestures, scroll, and programmatically
       map.on("zoomend", () => {
         if (map.getZoom() !== mobileZoomLevel) {
           map.setZoom(mobileZoomLevel);
@@ -150,7 +140,6 @@ const TriangleMeshMap = () => {
         }
       });
     } else {
-      // Clamp zoom in all user interactions (desktop)
       map.on("zoomend", () => {
         const z = map.getZoom();
         if (z < 5) map.setZoom(5);
@@ -170,8 +159,7 @@ const TriangleMeshMap = () => {
     const initializeMesh = async () => {
       try {
         setIsLoading(true);
-        // After reset, this will find nothing, so baseMesh will be used
-        const activities = await getTriangleActivities();
+        const activities = await getTriangleActivities(worldSlug);
         if (activities.length > 0) {
           const restoredMesh = rebuildTriangleMeshFromActivities(activities);
           setTriangleMesh(restoredMesh);
@@ -192,7 +180,7 @@ const TriangleMeshMap = () => {
 
     pollIntervalRef.current = setInterval(async () => {
       try {
-        const activities = await getTriangleActivities();
+        const activities = await getTriangleActivities(worldSlug);
         const restoredMesh = rebuildTriangleMeshFromActivities(activities);
         setTriangleMesh(restoredMesh);
       } catch (error) {
@@ -207,17 +195,16 @@ const TriangleMeshMap = () => {
         clearInterval(pollIntervalRef.current);
       }
     };
-  }, [isMobile, meshVersion]); // re-run loader on meshVersion change
+  }, [isMobile, meshVersion, worldSlug]);
 
-  // Custom mobile/touch logic (does nothing on desktop)
   useLeafletMobileTouch(mapInstanceRef.current);
 
-  // Use mesh tap handler (shared across devices)
   const handleTriangleMeshClick = useTriangleMeshTap(
     identity,
     setTriangleMesh,
     isMobile,
-    mapInstanceRef.current
+    mapInstanceRef.current,
+    worldSlug
   );
 
   return (

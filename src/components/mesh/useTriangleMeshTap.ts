@@ -1,16 +1,17 @@
+
 import { useCallback } from "react";
 import { storeTriangleActivity, subdivideTriangleMesh } from "../../utils/triangleMesh";
 import { toast } from "../ui/use-toast";
 
 /**
- * This hook is now updated to fully persist triangle state for each tap (click_count, subdivided, action_type).
- * Now also enforces: user can only click triangles never clicked or most recently clicked by another user.
+ * Add worldSlug argument: all activity is scoped to a world.
  */
 export function useTriangleMeshTap(
   identity: { gametag: string; color: string } | null,
   setTriangleMesh: React.Dispatch<React.SetStateAction<any[]>>,
   isMobile: boolean,
-  mapInstance: L.Map | null
+  mapInstance: L.Map | null,
+  worldSlug: string
 ) {
   return useCallback(
     async (
@@ -21,12 +22,7 @@ export function useTriangleMeshTap(
       if (!identity) return;
 
       // --- ENFORCE CLICKABILITY ---
-      // User can ONLY click:
-      // (a) triangle never clicked (triangle.gametag falsy)
-      // (b) triangle most recently clicked by ANOTHER gamer (triangle.gametag != me or color != me)
-      // (c) If it is your own triangle (gametag AND color = me), do nothing
       if (triangle?.gametag && triangle.gametag === identity.gametag && triangle.color === identity.color) {
-        // Prevent click, let user know
         toast({
           title: "Try another triangle!",
           description: "You can't click repeatedly on your own triangle. Try a triangle claimed by another gamer or a new one.",
@@ -39,7 +35,6 @@ export function useTriangleMeshTap(
       setTriangleMesh(currMesh => {
         prevMesh = currMesh;
         prevMeshRef.current = currMesh;
-        // Local optimistic update
         const updateTriangle = (triangles: any[]): any[] =>
           triangles.map(triangleEl => {
             if (triangleEl.id === triangleId) {
@@ -89,7 +84,9 @@ export function useTriangleMeshTap(
           ),
           actionType,
           identity.gametag,
-          identity.color
+          identity.color,
+          undefined,
+          worldSlug // SCOPED
         );
         if (!result?.success) {
           throw new Error("No success response from storeTriangleActivity");
@@ -111,7 +108,6 @@ export function useTriangleMeshTap(
         setTriangleMesh(prev => prevMeshRef.current);
       }
 
-      // Mobile: zoom to triangle if successful
       if (
         storeSuccess &&
         isMobile &&
@@ -138,6 +134,6 @@ export function useTriangleMeshTap(
         }
       }
     },
-    [identity, isMobile, mapInstance, setTriangleMesh]
+    [identity, isMobile, mapInstance, setTriangleMesh, worldSlug]
   );
 }
