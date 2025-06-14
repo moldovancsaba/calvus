@@ -48,7 +48,7 @@ export function latLngToPoint3D(latLng: LatLng): Point3D {
   };
 }
 
-// Generate the eight base triangles for the spherical mesh (now with two north pole caps)
+// Generate the eight base triangles for the spherical mesh (now with two north pole caps and two south pole caps)
 export function generateBaseTriangleMesh(): TriangleMesh[] {
   const triangles: TriangleMesh[] = [
     // North hemisphere base triangles (as before)
@@ -119,7 +119,7 @@ export function generateBaseTriangleMesh(): TriangleMesh[] {
       clickCount: 0,
       subdivided: false
     },
-    // NEW: Two triangles capping the north pole
+    // North pole caps
     {
       id: 'N1',
       vertices: [
@@ -141,10 +141,33 @@ export function generateBaseTriangleMesh(): TriangleMesh[] {
       level: 0,
       clickCount: 0,
       subdivided: false
+    },
+    // South pole caps: NEW
+    {
+      id: 'S1',
+      vertices: [
+        { lat: -90.0, lng: 0.0 },         // South pole
+        { lat: -66.0, lng: 0.0 },         // "center" bottom shared with triangles 4-6
+        { lat: -66.0, lng: 72.0 }         // Same as triangle 5's 2nd vertex
+      ],
+      level: 0,
+      clickCount: 0,
+      subdivided: false
+    },
+    {
+      id: 'S2',
+      vertices: [
+        { lat: -90.0, lng: 0.0 },         // South pole
+        { lat: -66.0, lng: -72.0 },       // Same as triangle 6's 2nd vertex
+        { lat: -66.0, lng: 0.0 }          // "center" bottom
+      ],
+      level: 0,
+      clickCount: 0,
+      subdivided: false
     }
   ];
 
-  console.log('Generated base triangle mesh with 8 triangles (north/south hemispheres + pole caps)');
+  console.log('Generated base triangle mesh with 10 triangles (north/south hemispheres + pole caps)');
   return triangles;
 }
 
