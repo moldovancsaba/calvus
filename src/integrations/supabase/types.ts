@@ -64,6 +64,7 @@ export type Database = {
           fixed_mobile_zoom_level: number
           force_mobile_zoom: boolean
           id: string
+          max_consecutive_clicks_per_user: number
           updated_at: string
           world_slug: string
         }
@@ -73,6 +74,7 @@ export type Database = {
           fixed_mobile_zoom_level?: number
           force_mobile_zoom?: boolean
           id?: string
+          max_consecutive_clicks_per_user?: number
           updated_at?: string
           world_slug: string
         }
@@ -82,6 +84,7 @@ export type Database = {
           fixed_mobile_zoom_level?: number
           force_mobile_zoom?: boolean
           id?: string
+          max_consecutive_clicks_per_user?: number
           updated_at?: string
           world_slug?: string
         }
