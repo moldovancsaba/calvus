@@ -1,4 +1,3 @@
-
 # Step
 
 A collaborative spherical triangle mesh system built with React, Leaflet, and MongoDB.  
@@ -15,10 +14,17 @@ Step (formerly "Icosahedral Geodesic Grid") is an interactive, world-first, coll
 - Gametag/color personalization
 - Full documentation: [User Guide (README)](/documents), [Technical Notes](/documents), [Changelog](/documents)
 
-## Navigation & Maintainers
-- Main site navigation: Home (`/`), Map (`/game`), Docs (`/documents`)
-- Documentation is modular: see the `/documents` route for a dynamic MD reader.
-- This readme is intentionally MINIMAL: please update individual doc files as needed!
+## Documentation Navigation
+
+See [`/documents`](/documents) for ALL guides and technical docs, modularly organized:
+
+- [User Guide (README)](/documents)
+- [Technical Architecture](technical-architecture.md)
+- [Performance Optimizations](performance-optimizations.md)
+- [Security & Scalability](security-scalability.md)
+- [Changelog](CHANGELOG.md)
+
+**Summary:** All documentation above is visible under `/documents` (via the app settings menu).
 
 ---
 
