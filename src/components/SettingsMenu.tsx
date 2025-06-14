@@ -22,7 +22,7 @@ function summarizeGamers(activities: any[]): GamerSummary[] {
   return Object.values(stats).sort((a, b) => b.clicks - a.clicks);
 }
 
-export const SettingsMenu: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+export const SettingsMenu: React.FC<{ children: React.ReactNode; worldSlug: string }> = ({ children, worldSlug }) => {
   const [open, setOpen] = useState(false);
   const [activities, setActivities] = useState<any[]>([]);
   const [forceMobileZoom, setForceMobileZoom] = useState(true);
@@ -32,11 +32,11 @@ export const SettingsMenu: React.FC<{ children: React.ReactNode }> = ({ children
 
   useEffect(() => {
     async function load() {
-      const acts = await getTriangleActivities();
+      const acts = await getTriangleActivities(worldSlug);
       setActivities(acts);
     }
     if (open) load();
-  }, [open]);
+  }, [open, worldSlug]);
 
   useEffect(() => {
     const val = window.localStorage.getItem("fixedMobileZoom");
@@ -80,23 +80,23 @@ export const SettingsMenu: React.FC<{ children: React.ReactNode }> = ({ children
   async function handleStartNewWorld() {
     setBusy(true);
     try {
-      await clearTriangleActivities();
-      window.localStorage.removeItem("triangleMeshCache");
+      await clearTriangleActivities(worldSlug);
+      window.localStorage.removeItem(`triangleMeshCache_${worldSlug}`);
       // NEW: update meshVersion for cache-busting and broadcast event
       const meshVersion = Date.now().toString();
-      window.localStorage.setItem("meshVersion", meshVersion);
-      window.dispatchEvent(new StorageEvent("storage", { key: "meshVersion", newValue: meshVersion }));
+      window.localStorage.setItem(`meshVersion_${worldSlug}`, meshVersion);
+      window.dispatchEvent(new StorageEvent("storage", { key: `meshVersion_${worldSlug}`, newValue: meshVersion }));
 
       setActivities([]); // clear gamer list instantly
-      window.dispatchEvent(new StorageEvent("storage", { key: "refreshMesh", newValue: Date.now().toString() }));
+      window.dispatchEvent(new StorageEvent("storage", { key: `refreshMesh_${worldSlug}`, newValue: Date.now().toString() }));
       // REAL GLOBAL RESTART
       const resetEpoch = Date.now().toString();
-      window.localStorage.setItem("worldReset", resetEpoch);
-      window.dispatchEvent(new StorageEvent("storage", { key: "worldReset", newValue: resetEpoch }));
+      window.localStorage.setItem(`worldReset_${worldSlug}`, resetEpoch);
+      window.dispatchEvent(new StorageEvent("storage", { key: `worldReset_${worldSlug}`, newValue: resetEpoch }));
 
       toast({
         title: "World started",
-        description: "A brand new world has been launched! All previous clicks/data are cleared.",
+        description: "A brand new world has been launched! All previous clicks/data are cleared for this world.",
         duration: 2500,
       });
       setBusy(false);

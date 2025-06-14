@@ -23,6 +23,7 @@ export type Database = {
           what: number
           when: string
           where: string
+          world_slug: string
         }
         Insert: {
           action_type?: string | null
@@ -37,6 +38,7 @@ export type Database = {
           what: number
           when: string
           where: string
+          world_slug?: string
         }
         Update: {
           action_type?: string | null
@@ -51,6 +53,7 @@ export type Database = {
           what?: number
           when?: string
           where?: string
+          world_slug?: string
         }
         Relationships: []
       }

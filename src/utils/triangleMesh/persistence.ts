@@ -6,7 +6,7 @@ type TriangleActivityRow = {
   id: string;
   when: string;
   where: string;
-  what?: string | number | null; // Now can be string action_type
+  what?: string | number | null;
   click_count?: number | null;
   level: number;
   subdivided?: boolean | null;
@@ -15,9 +15,10 @@ type TriangleActivityRow = {
   color?: string | null;
   notes?: string | null;
   action_type?: string | null;
+  world_slug?: string;
 };
 
-// Store full triangle state on every write
+// Store full triangle state on every write WITH world_slug
 export async function storeTriangleActivity(
   triangleId: string,
   clickCount: number,
@@ -26,7 +27,8 @@ export async function storeTriangleActivity(
   action_type: string,
   gametag?: string,
   color?: string,
-  notes?: string
+  notes?: string,
+  world_slug: string = ""
 ) {
   try {
     const { supabase } = await import('@/integrations/supabase/client');
@@ -36,7 +38,7 @@ export async function storeTriangleActivity(
         {
           when: new Date().toISOString(),
           where: triangleId,
-          what: clickCount, // FIXED: must be a number (was action_type string)
+          what: clickCount,
           click_count: clickCount,
           level: level,
           subdivided: subdivided,
@@ -44,6 +46,7 @@ export async function storeTriangleActivity(
           color: color ?? null,
           notes: notes ?? null,
           action_type: action_type,
+          world_slug: world_slug,
         }
       ])
       .select('id');
@@ -58,13 +61,14 @@ export async function storeTriangleActivity(
   }
 }
 
-// Clear all triangle activities
-export async function clearTriangleActivities() {
+// Clear all triangle activities BY world
+export async function clearTriangleActivities(world_slug: string = "") {
   try {
     const { supabase } = await import('@/integrations/supabase/client');
     const { error } = await supabase
       .from('triangle_activities')
-      .delete();
+      .delete()
+      .eq("world_slug", world_slug);
     if (error) throw error;
     return { success: true };
   } catch (error) {
@@ -73,14 +77,14 @@ export async function clearTriangleActivities() {
   }
 }
 
-// Get all triangle activities from Supabase
-// Each row is now a full triangle state
-export async function getTriangleActivities() {
+// Get all triangle activities for a specific world
+export async function getTriangleActivities(world_slug: string = "") {
   try {
     const { supabase } = await import('@/integrations/supabase/client');
     const { data, error } = await supabase
       .from('triangle_activities')
-      .select('*');
+      .select('*')
+      .eq("world_slug", world_slug);
     if (error) throw error;
     if (!Array.isArray(data)) return [];
     const activities: TriangleActivityRow[] = data.map((act) => ({
@@ -91,6 +95,7 @@ export async function getTriangleActivities() {
       color: act.color ?? null,
       notes: act.notes ?? null,
       action_type: act.action_type ?? (typeof act.what === 'string' ? act.what : null),
+      world_slug: act.world_slug ?? "",
     }));
     return activities;
   } catch (error) {
