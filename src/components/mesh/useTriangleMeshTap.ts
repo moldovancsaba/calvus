@@ -12,6 +12,7 @@ export function useTriangleMeshTap(
   worldSlug: string,
   settings?: { clicks_to_divide?: number, max_divide_level?: number, max_consecutive_clicks_per_user?: number }
 ) {
+  // Correct! These now reflect the settings passed, fetched from backend
   const clicksToDivide = settings?.clicks_to_divide ?? 3;
   const maxDivideLevel = settings?.max_divide_level ?? 3;
   const maxConsecutiveClicks =

@@ -19,6 +19,7 @@ import { fetchWorldSettings, WorldSettings } from "../utils/worldSettings";
 
 type Props = {
   worldSlug: string;
+  settings?: WorldSettings;
 };
 
 // Always use this default map center
@@ -28,7 +29,7 @@ function getFixedWorldSlug(slug: string) {
   return (!slug || slug === "") ? "original" : slug;
 }
 
-const TriangleMeshMap = ({ worldSlug }: Props) => {
+const TriangleMeshMap = ({ worldSlug, settings }: Props) => {
   const fixedWorldSlug = getFixedWorldSlug(worldSlug);
   const mapDivRef = useRef<HTMLDivElement>(null);
   const mapInstanceRef = useRef<L.Map | null>(null);
@@ -111,12 +112,13 @@ const TriangleMeshMap = ({ worldSlug }: Props) => {
     mapInstanceRef.current = map;
   }
 
-  const handleTriangleMeshClick = useTriangleMeshTap(
+  const handleTriangleClick = useTriangleMeshTap(
     identity,
     setTriangleMesh,
     isMobile,
     mapInstanceRef.current,
-    fixedWorldSlug
+    worldSlug,
+    settings
   );
 
   // Show a loading overlay until worldSettings is loaded
@@ -149,7 +151,7 @@ const TriangleMeshMap = ({ worldSlug }: Props) => {
           triangleMesh={triangleMesh}
           triangleLayersRef={triangleLayersRef}
           onTriangleClick={(triangleId, triangle, parentPath) => {
-            handleTriangleMeshClick(triangleId, triangle, prevMeshRef);
+            handleTriangleClick(triangleId, triangle, prevMeshRef);
           }}
         />
       )}
