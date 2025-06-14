@@ -269,11 +269,85 @@ export function generateBaseTriangleMesh(): TriangleMesh[] {
       level: 0,
       clickCount: 0,
       subdivided: false
+    },
+
+    // ---- NEW: Belt triangles for full coverage (added by request, 2025-06) ----
+    // Triangle A: (66°N, 72°), (66°N, 144°), (0°, 108°)
+    {
+      id: 'B1',
+      vertices: [
+        { lat: 66.0, lng: 72.0 },
+        { lat: 66.0, lng: 144.0 },
+        { lat: 0.0, lng: 108.0 }
+      ],
+      level: 0,
+      clickCount: 0,
+      subdivided: false
+    },
+    // Triangle B: (66°N, -72°), (66°N, -144°), (0°, -108°)
+    {
+      id: 'B2',
+      vertices: [
+        { lat: 66.0, lng: -72.0 },
+        { lat: 66.0, lng: -144.0 },
+        { lat: 0.0, lng: -108.0 }
+      ],
+      level: 0,
+      clickCount: 0,
+      subdivided: false
+    },
+    // Triangle C: (66°N, -144.0), (66°N, 144.0), (0.0, 180.0)
+    {
+      id: 'B3',
+      vertices: [
+        { lat: 66.0, lng: -144.0 },
+        { lat: 66.0, lng: 144.0 },
+        { lat: 0.0, lng: 180.0 }
+      ],
+      level: 0,
+      clickCount: 0,
+      subdivided: false
+    },
+    // Triangle D: (-66°S, 72°), (-66°S, 144°), (0°, 108°)
+    {
+      id: 'B4',
+      vertices: [
+        { lat: -66.0, lng: 72.0 },
+        { lat: -66.0, lng: 144.0 },
+        { lat: 0.0, lng: 108.0 }
+      ],
+      level: 0,
+      clickCount: 0,
+      subdivided: false
+    },
+    // Triangle E: (-66°S, -72°), (-66°S, -144°), (0°, -108°)
+    {
+      id: 'B5',
+      vertices: [
+        { lat: -66.0, lng: -72.0 },
+        { lat: -66.0, lng: -144.0 },
+        { lat: 0.0, lng: -108.0 }
+      ],
+      level: 0,
+      clickCount: 0,
+      subdivided: false
+    },
+    // Triangle F: (-66°S, -144.0), (-66°S, 144.0), (0.0, -180.0)
+    {
+      id: 'B6',
+      vertices: [
+        { lat: -66.0, lng: -144.0 },
+        { lat: -66.0, lng: 144.0 },
+        { lat: 0.0, lng: -180.0 }
+      ],
+      level: 0,
+      clickCount: 0,
+      subdivided: false
     }
   ];
 
-  // Updated log: 18 triangles in base mesh
-  console.log('Generated base triangle mesh with 18 triangles (including corrected belt/side triangles)');
+  // Updated log: 24 triangles in base mesh (added 6 new belt triangles for coverage)
+  console.log('Generated base triangle mesh with 24 triangles (including new belt triangles B1–B6 for full coverage)');
   return triangles;
 }
 
