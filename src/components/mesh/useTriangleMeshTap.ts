@@ -5,6 +5,7 @@ import { toast } from "../ui/use-toast";
 
 /**
  * This hook is now updated to fully persist triangle state for each tap (click_count, subdivided, action_type).
+ * Now also enforces: user can only click triangles never clicked or most recently clicked by another user.
  */
 export function useTriangleMeshTap(
   identity: { gametag: string; color: string } | null,
@@ -19,6 +20,21 @@ export function useTriangleMeshTap(
       prevMeshRef: React.MutableRefObject<any[]>
     ) => {
       if (!identity) return;
+
+      // --- ENFORCE CLICKABILITY ---
+      // Only allow clicking triangles:
+      // (a) never clicked (triangle.gametag falsy)
+      // (b) last clicked by another gamer (triangle.gametag != me)
+      // (c) else, do nothing
+      if (triangle?.gametag && triangle.gametag === identity.gametag && triangle.color === identity.color) {
+        // Prevent click, let user know
+        toast({
+          title: "Try another triangle!",
+          description: "You can't click repeatedly on your own triangle. Try a triangle claimed by another gamer or a new one.",
+          variant: "destructive",
+        });
+        return;
+      }
 
       let prevMesh: any[] = [];
       setTriangleMesh(currMesh => {
