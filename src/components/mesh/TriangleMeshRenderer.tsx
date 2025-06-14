@@ -116,13 +116,10 @@ export function TriangleMeshRenderer({
             fill = triangle.color;
             fillOpacity = 1.0;
             shouldShowAvatar = true;
-            // Find emoji: use optional triangle.emoji if present (future), else fallback to only color
-            // We'll just show avatar with color; emoji must come from triangle.gametag (not in triangle now)
-            // Optionally, you could show owner gametag, but for now, emoji.
-            // We don't store emoji per triangle, only color/gametag, so use a neutral emoji when missing.
+            // Always show the CLAIMED/GAMER emoji, never default to star if non-empty
             avatarProps = { 
               color: triangle.color, 
-              emoji: triangle.emoji || "🌟" // << Use winner's emoji if available!
+              emoji: typeof triangle.emoji === "string" && triangle.emoji.trim() !== "" ? triangle.emoji : "🌟" 
             }; 
             // The emoji could be improved with a DB change, for now we fallback to a star.
           } else if (triangle.clickCount > 0) {
@@ -181,7 +178,7 @@ export function TriangleMeshRenderer({
               markerDiv.style.background = avatarProps.color;
               markerDiv.style.fontSize = "1.45rem";
               markerDiv.style.userSelect = "none";
-              markerDiv.innerText = avatarProps.emoji; // << Winner's emoji displayed!
+              markerDiv.innerText = avatarProps.emoji; // This now always shows user emoji if set!
 
               const icon = L.divIcon({
                 className: "",
