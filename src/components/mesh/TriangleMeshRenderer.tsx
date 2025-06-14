@@ -1,4 +1,3 @@
-
 import L from "leaflet";
 import { useEffect } from "react";
 import { createGeodesicTriangle } from "./GeodesicTriangle";
@@ -20,11 +19,9 @@ export function TriangleMeshRenderer({
   useEffect(() => {
     if (!map || !triangleMesh) return;
 
-    // Helper render
     const renderTriangleMesh = (triangleList: TriangleMesh[], parentPath: string = "") => {
       triangleList.forEach(triangle => {
         const trianglePath = parentPath ? `${parentPath}-${triangle.id}` : triangle.id;
-
         if (!triangle.subdivided) {
           // Remove existing layer if it exists
           const existingLayer = triangleLayersRef.current.get(trianglePath);
@@ -49,11 +46,10 @@ export function TriangleMeshRenderer({
             smoothFactor: 1.0,
           });
 
+          // Make sure both "click" and "touchend" always trigger the handler
           polygon.on("click", () => {
             onTriangleClick(triangle.id, triangle);
           });
-
-          // --- Touch: Mobile tap fix for triangles ---
           polygon.on("touchend", (e: any) => {
             if (
               e.originalEvent &&
