@@ -1,4 +1,3 @@
-
 import { useCallback, useRef } from "react";
 import { storeTriangleActivity, subdivideTriangleMesh } from "../../utils/triangleMesh";
 
@@ -71,6 +70,7 @@ export function useTriangleMeshTap(
           triangles.map(triangleEl => {
             if (triangleEl.id === triangleId) {
               const newClickCount = triangleEl.clickCount + 1;
+              const winnerEmoji = identity.emoji && identity.emoji.trim() !== "" ? identity.emoji : "🌟";
               // -- Final level logic: just color/owner/finalize, NO subdivide
               if (triangleEl.level >= maxDivideLevel) {
                 return {
@@ -78,10 +78,9 @@ export function useTriangleMeshTap(
                   clickCount: Math.min(newClickCount, clicksToDivide),
                   color: identity.color,
                   gametag: identity.gametag,
-                  emoji: identity.emoji, // Store emoji of current user
+                  emoji: winnerEmoji, // Always set emoji on claim
                 };
               }
-              // regular subdivide if needed
               if (newClickCount === clicksToDivide && triangleEl.level < maxDivideLevel && !triangleEl.subdivided) {
                 const children = subdivideTriangleMesh(triangleEl);
                 return {
@@ -91,16 +90,15 @@ export function useTriangleMeshTap(
                   children,
                   color: identity.color,
                   gametag: identity.gametag,
-                  emoji: identity.emoji, // Store emoji on claim
+                  emoji: winnerEmoji, // Always set emoji on subdivision
                 };
               }
-              // regular increment/color change
               return {
                 ...triangleEl,
                 clickCount: newClickCount,
                 color: identity.color,
                 gametag: identity.gametag,
-                emoji: identity.emoji, // Always update emoji on click
+                emoji: winnerEmoji, // Always update emoji on any click
               };
             }
             if (triangleEl.children) {
