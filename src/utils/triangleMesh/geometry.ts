@@ -277,19 +277,19 @@ export function generateBaseTriangleMesh(): TriangleMesh[] {
       vertices: [
         { lat: 66.0, lng: 72.0 },
         { lat: 66.0, lng: 144.0 },
-        { lat: 0.0, lng: 108.0 }
+        { lat: 0.0, lng: 108.0 },
       ],
       level: 0,
       clickCount: 0,
       subdivided: false
     },
-    // Triangle B: (66°N, 144°), (66°N, 216°), (0°, 180°)
+    // Triangle C: (66°N, 216°), (66°N, 288°), (0°, -180°)
     {
-      id: 'B2',
+      id: 'B3',
       vertices: [
-        { lat: 66.0, lng: 144.0 },
         { lat: 66.0, lng: 216.0 },
-        { lat: 0.0, lng: 180.0 }
+        { lat: 66.0, lng: 288.0 },
+        { lat: 0.0, lng: -180.0 }
       ],
       level: 0,
       clickCount: 0,
@@ -297,8 +297,8 @@ export function generateBaseTriangleMesh(): TriangleMesh[] {
     },
   ];
 
-  // Log 20 base triangles (original 18, plus belt triangles B1 & B2)
-  console.log('Generated base triangle mesh with 20 triangles (original 18, B1, B2)');
+  // Log 19 base triangles (original 18, plus belt triangle B3)
+  console.log('Generated base triangle mesh with 19 triangles (original 18, B1, B3)');
   return triangles;
 }
 
