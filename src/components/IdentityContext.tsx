@@ -4,6 +4,7 @@ import React, { createContext, useContext, useEffect, useState } from "react";
 export type Identity = {
   gametag: string;
   color: string;
+  emoji: string; // NEW: added emoji to identity
 };
 
 type IdentityContextType = {
