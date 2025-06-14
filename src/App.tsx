@@ -1,3 +1,4 @@
+
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -8,7 +9,7 @@ import NotFound from "./pages/NotFound";
 import Game from "./pages/Game";
 import DocumentsPage from "./pages/Documents";
 import SettingsPage from "./pages/Settings";
-import IdentityProvider from "./components/IdentityContext";
+import { IdentityProvider } from "./components/IdentityContext"; // FIXED: Named import
 import IdentityGate from "./components/IdentityGate";
 
 const queryClient = new QueryClient();
