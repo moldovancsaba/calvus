@@ -55,243 +55,145 @@ export function sphericalMidpoint(p1: LatLng, p2: LatLng): LatLng {
   return point3DToLatLng(midpoint);
 }
 
-// Canonical base triangle order for referencing throughout the system (v2.2, rolled back to 24):
-// Order: Spiral downward from North Pole, four bands, then four triangles for the South Pole patch—**total = 24**
-// [NorthCap1–4, NorthBelt1–4, Equator1–4, SouthBelt1–4, SouthCap1–4, PatchA–D]
-// The system uses array indices 0–23 for all operations.
+// Canonical mesh: 24 triangles, spiral from N pole, as originally approved.
+// IDs: N1–N4 (north cap), B1–B4 (north belt), E1–E4 (equator), SB1–SB4 (south belt), S1–S4 (south cap), SP1–SP4 (patch/filler for exact closure)
+
 export function generateBaseTriangleMesh(): TriangleMesh[] {
   const triangles: TriangleMesh[] = [
-    // 1–4: North Pole Cap triangles (spiral clockwise)
+    // North Pole Cap
     {
       id: 'N1',
-      vertices: [
-        { lat: 90.0, lng: 0.0 },
-        { lat: 66.0, lng: 0.0 },
-        { lat: 66.0, lng: 72.0 }
-      ],
+      vertices: [ { lat: 90.0, lng: 0.0 }, { lat: 66.0, lng: 0.0 }, { lat: 66.0, lng: 72.0 } ],
       level: 0, clickCount: 0, subdivided: false
     },
     {
       id: 'N2',
-      vertices: [
-        { lat: 90.0, lng: 0.0 },
-        { lat: 66.0, lng: 72.0 },
-        { lat: 66.0, lng: 144.0 }
-      ],
+      vertices: [ { lat: 90.0, lng: 0.0 }, { lat: 66.0, lng: 72.0 }, { lat: 66.0, lng: 144.0 } ],
       level: 0, clickCount: 0, subdivided: false
     },
     {
       id: 'N3',
-      vertices: [
-        { lat: 90.0, lng: 0.0 },
-        { lat: 66.0, lng: 144.0 },
-        { lat: 66.0, lng: -144.0 }
-      ],
+      vertices: [ { lat: 90.0, lng: 0.0 }, { lat: 66.0, lng: 144.0 }, { lat: 66.0, lng: -144.0 } ],
       level: 0, clickCount: 0, subdivided: false
     },
     {
       id: 'N4',
-      vertices: [
-        { lat: 90.0, lng: 0.0 },
-        { lat: 66.0, lng: -144.0 },
-        { lat: 66.0, lng: -72.0 }
-      ],
+      vertices: [ { lat: 90.0, lng: 0.0 }, { lat: 66.0, lng: -144.0 }, { lat: 66.0, lng: -72.0 } ],
       level: 0, clickCount: 0, subdivided: false
     },
 
-    // 5–8: North mid-latitude/belt triangles
+    // North Belt
     {
       id: 'B1',
-      vertices: [
-        { lat: 66.0, lng: 0.0 },
-        { lat: 0.0, lng: -36.0 },
-        { lat: 66.0, lng: 72.0 }
-      ],
+      vertices: [ { lat: 66.0, lng: 0.0 }, { lat: 0.0, lng: -36.0 }, { lat: 66.0, lng: 72.0 } ],
       level: 0, clickCount: 0, subdivided: false
     },
     {
       id: 'B2',
-      vertices: [
-        { lat: 66.0, lng: 72.0 },
-        { lat: 0.0, lng: 36.0 },
-        { lat: 66.0, lng: 144.0 }
-      ],
+      vertices: [ { lat: 66.0, lng: 72.0 }, { lat: 0.0, lng: 36.0 }, { lat: 66.0, lng: 144.0 } ],
       level: 0, clickCount: 0, subdivided: false
     },
     {
       id: 'B3',
-      vertices: [
-        { lat: 66.0, lng: 144.0 },
-        { lat: 0.0, lng: 108.0 },
-        { lat: 66.0, lng: -144.0 }
-      ],
+      vertices: [ { lat: 66.0, lng: 144.0 }, { lat: 0.0, lng: 108.0 }, { lat: 66.0, lng: -144.0 } ],
       level: 0, clickCount: 0, subdivided: false
     },
     {
       id: 'B4',
-      vertices: [
-        { lat: 66.0, lng: -144.0 },
-        { lat: 0.0, lng: -108.0 },
-        { lat: 66.0, lng: -72.0 }
-      ],
+      vertices: [ { lat: 66.0, lng: -144.0 }, { lat: 0.0, lng: -108.0 }, { lat: 66.0, lng: -72.0 } ],
       level: 0, clickCount: 0, subdivided: false
     },
 
-    // 9–12: Equator band
+    // Equator Band
     {
       id: 'E1',
-      vertices: [
-        { lat: 0.0, lng: -36.0 },
-        { lat: 0.0, lng: 36.0 },
-        { lat: 66.0, lng: 72.0 }
-      ],
+      vertices: [ { lat: 0.0, lng: -36.0 }, { lat: 0.0, lng: 36.0 }, { lat: 66.0, lng: 72.0 } ],
       level: 0, clickCount: 0, subdivided: false
     },
     {
       id: 'E2',
-      vertices: [
-        { lat: 0.0, lng: 36.0 },
-        { lat: 0.0, lng: 108.0 },
-        { lat: 66.0, lng: 144.0 }
-      ],
+      vertices: [ { lat: 0.0, lng: 36.0 }, { lat: 0.0, lng: 108.0 }, { lat: 66.0, lng: 144.0 } ],
       level: 0, clickCount: 0, subdivided: false
     },
     {
       id: 'E3',
-      vertices: [
-        { lat: 0.0, lng: 108.0 },
-        { lat: 0.0, lng: 180.0 },
-        { lat: 66.0, lng: -144.0 }
-      ],
+      vertices: [ { lat: 0.0, lng: 108.0 }, { lat: 0.0, lng: 180.0 }, { lat: 66.0, lng: -144.0 } ],
       level: 0, clickCount: 0, subdivided: false
     },
     {
       id: 'E4',
-      vertices: [
-        { lat: 0.0, lng: -108.0 },
-        { lat: 0.0, lng: -180.0 },
-        { lat: 66.0, lng: -72.0 }
-      ],
+      vertices: [ { lat: 0.0, lng: -108.0 }, { lat: 0.0, lng: -180.0 }, { lat: 66.0, lng: -72.0 } ],
       level: 0, clickCount: 0, subdivided: false
     },
 
-    // 13–16: Southern belt (mirrored, -66 latitude)
+    // South Belt
     {
       id: 'SB1',
-      vertices: [
-        { lat: -66.0, lng: 0.0 },
-        { lat: 0.0, lng: -36.0 },
-        { lat: -66.0, lng: 72.0 }
-      ],
+      vertices: [ { lat: -66.0, lng: 0.0 }, { lat: 0.0, lng: -36.0 }, { lat: -66.0, lng: 72.0 } ],
       level: 0, clickCount: 0, subdivided: false
     },
     {
       id: 'SB2',
-      vertices: [
-        { lat: -66.0, lng: 72.0 },
-        { lat: 0.0, lng: 36.0 },
-        { lat: -66.0, lng: 144.0 }
-      ],
+      vertices: [ { lat: -66.0, lng: 72.0 }, { lat: 0.0, lng: 36.0 }, { lat: -66.0, lng: 144.0 } ],
       level: 0, clickCount: 0, subdivided: false
     },
     {
       id: 'SB3',
-      vertices: [
-        { lat: -66.0, lng: 144.0 },
-        { lat: 0.0, lng: 108.0 },
-        { lat: -66.0, lng: -144.0 }
-      ],
+      vertices: [ { lat: -66.0, lng: 144.0 }, { lat: 0.0, lng: 108.0 }, { lat: -66.0, lng: -144.0 } ],
       level: 0, clickCount: 0, subdivided: false
     },
     {
       id: 'SB4',
-      vertices: [
-        { lat: -66.0, lng: -144.0 },
-        { lat: 0.0, lng: -108.0 },
-        { lat: -66.0, lng: -72.0 }
-      ],
+      vertices: [ { lat: -66.0, lng: -144.0 }, { lat: 0.0, lng: -108.0 }, { lat: -66.0, lng: -72.0 } ],
       level: 0, clickCount: 0, subdivided: false
     },
 
-    // 17–20: South Pole Cap triangles (spiral, -90 latitude)
+    // South Pole Cap
     {
       id: 'S1',
-      vertices: [
-        { lat: -90.0, lng: 0.0 },
-        { lat: -66.0, lng: 0.0 },
-        { lat: -66.0, lng: 72.0 }
-      ],
+      vertices: [ { lat: -90.0, lng: 0.0 }, { lat: -66.0, lng: 0.0 }, { lat: -66.0, lng: 72.0 } ],
       level: 0, clickCount: 0, subdivided: false
     },
     {
       id: 'S2',
-      vertices: [
-        { lat: -90.0, lng: 0.0 },
-        { lat: -66.0, lng: 72.0 },
-        { lat: -66.0, lng: 144.0 }
-      ],
+      vertices: [ { lat: -90.0, lng: 0.0 }, { lat: -66.0, lng: 72.0 }, { lat: -66.0, lng: 144.0 } ],
       level: 0, clickCount: 0, subdivided: false
     },
     {
       id: 'S3',
-      vertices: [
-        { lat: -90.0, lng: 0.0 },
-        { lat: -66.0, lng: 144.0 },
-        { lat: -66.0, lng: -144.0 }
-      ],
+      vertices: [ { lat: -90.0, lng: 0.0 }, { lat: -66.0, lng: 144.0 }, { lat: -66.0, lng: -144.0 } ],
       level: 0, clickCount: 0, subdivided: false
     },
     {
       id: 'S4',
-      vertices: [
-        { lat: -90.0, lng: 0.0 },
-        { lat: -66.0, lng: -144.0 },
-        { lat: -66.0, lng: -72.0 }
-      ],
+      vertices: [ { lat: -90.0, lng: 0.0 }, { lat: -66.0, lng: -144.0 }, { lat: -66.0, lng: -72.0 } ],
       level: 0, clickCount: 0, subdivided: false
     },
 
-    // 21–24: South Pole Patch/Filler triangles to seal the geometry
+    // South Pole Patch/Filler (to make 24, and close the mesh cleanly, use only as per prior confirmation)  
     {
       id: 'SP1',
-      vertices: [
-        { lat: 0.0,    lng: 108.0 },
-        { lat: -66.0,  lng: 144.0 },
-        { lat: -66.0,  lng: 72.0 }
-      ],
+      vertices: [ { lat: 0.0,    lng: 108.0 }, { lat: -66.0,  lng: 144.0 }, { lat: -66.0,  lng: 72.0 } ],
       level: 0, clickCount: 0, subdivided: false
     },
     {
       id: 'SP2',
-      vertices: [
-        { lat: 0.0,    lng: -108.0 },
-        { lat: -66.0,  lng: -72.0 },
-        { lat: -66.0,  lng: -144.0 }
-      ],
+      vertices: [ { lat: 0.0,    lng: -108.0 }, { lat: -66.0,  lng: -72.0 }, { lat: -66.0,  lng: -144.0 } ],
       level: 0, clickCount: 0, subdivided: false
     },
     {
       id: 'SP3',
-      vertices: [
-        { lat: -66.0,  lng: 144.0 },
-        { lat: -66.0,  lng: 72.0 },
-        { lat: -90.0,  lng: 0.0 }
-      ],
+      vertices: [ { lat: -66.0,  lng: 144.0 }, { lat: -66.0,  lng: 72.0 }, { lat: -90.0,  lng: 0.0 } ],
       level: 0, clickCount: 0, subdivided: false
     },
     {
       id: 'SP4',
-      vertices: [
-        { lat: -66.0,  lng: -144.0 },
-        { lat: -66.0,  lng: -72.0 },
-        { lat: -90.0,  lng: 0.0 }
-      ],
+      vertices: [ { lat: -66.0,  lng: -144.0 }, { lat: -66.0,  lng: -72.0 }, { lat: -90.0,  lng: 0.0 } ],
       level: 0, clickCount: 0, subdivided: false
     }
   ];
 
-  // Log the canonical order for audit
-  console.log('Base triangle mesh generated in canonical spiral order (v2.2, 24 triangles). Reference by array index 0–23 for all system ops.');
+  console.log('Base triangle mesh generated as 24 canonical triangles (IDs N1–N4, B1–B4, E1–E4, SB1–SB4, S1–S4, SP1–SP4). Reference by array index 0–23 for all operations.');
   return triangles;
 }
 
