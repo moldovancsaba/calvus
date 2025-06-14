@@ -295,10 +295,23 @@ export function generateBaseTriangleMesh(): TriangleMesh[] {
       clickCount: 0,
       subdivided: false
     },
+
+    // New North Pole Triangle: (90°N, 0°), (66°N, -144°), (66°N, -72°)
+    {
+      id: 'N3',
+      vertices: [
+        { lat: 90.0, lng: 0.0 },
+        { lat: 66.0, lng: -144.0 },
+        { lat: 66.0, lng: -72.0 },
+      ],
+      level: 0,
+      clickCount: 0,
+      subdivided: false
+    },
   ];
 
-  // Log 19 base triangles (original 18, plus belt triangle B3)
-  console.log('Generated base triangle mesh with 19 triangles (original 18, B1, B3)');
+  // Log 20 base triangles (original 19, plus new north pole triangle N3)
+  console.log('Generated base triangle mesh with 20 triangles (original 19, plus new North Pole triangle N3)');
   return triangles;
 }
 
