@@ -159,93 +159,78 @@ export function getTriangleMeshColor(triangle: TriangleMesh): string {
   return `rgb(${grayValue}, ${grayValue}, ${grayValue})`;
 }
 
-// Store triangle click activity in MongoDB
+// Store triangle click activity in Supabase
 export async function storeTriangleActivity(triangleId: string, clickCount: number, level: number) {
   try {
-    const response = await fetch('/functions/v1/triangle-activity', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        action: 'click',
-        triangleId,
-        clickCount,
-        level
-      })
-    });
-
-    if (!response.ok) {
-      throw new Error(`Failed to store activity: ${response.statusText}`);
+    // Write or insert activity (we "log" each event)
+    // Use the Supabase client provided in /src/integrations/supabase/client
+    const { supabase } = await import('@/integrations/supabase/client');
+    const { error, data } = await supabase
+      .from('triangle_activities')
+      .insert([
+        {
+          when: new Date().toISOString(),
+          where: triangleId,
+          what: clickCount,
+          level: level,
+          // timestamp will default to now()
+        }
+      ]);
+    if (error) {
+      throw error;
     }
-
-    const result = await response.json();
-    console.log('Triangle activity stored successfully:', result);
-    return result;
+    console.log('Triangle activity stored successfully in Supabase:', data);
+    return { success: true, id: data && data[0]?.id };
   } catch (error) {
-    console.error('Error storing triangle activity:', error);
+    console.error('Error storing triangle activity in Supabase:', error);
     throw error;
   }
 }
 
-// Clear all triangle activities from MongoDB
+// Clear all triangle activities from Supabase
 export async function clearTriangleActivities() {
   try {
-    const response = await fetch('/functions/v1/triangle-activity', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        action: 'clear'
-      })
-    });
-
-    if (!response.ok) {
-      throw new Error(`Failed to clear activities: ${response.statusText}`);
+    const { supabase } = await import('@/integrations/supabase/client');
+    // Truncate all activities (delete all rows)
+    const { error } = await supabase
+      .from('triangle_activities')
+      .delete()
+      .neq('id', ''); // Match everything (id != '')
+    if (error) {
+      throw error;
     }
-
-    const result = await response.json();
-    console.log('Triangle activities cleared successfully:', result);
-    return result;
+    console.log('Triangle activities cleared successfully in Supabase');
+    return { success: true };
   } catch (error) {
-    console.error('Error clearing triangle activities:', error);
+    console.error('Error clearing triangle activities in Supabase:', error);
     throw error;
   }
 }
 
-// Get all triangle activities from MongoDB
+// Get all triangle activities from Supabase
 export async function getTriangleActivities() {
   try {
-    const response = await fetch('/functions/v1/triangle-activity', {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-      }
-    });
-
-    if (!response.ok) {
-      throw new Error(`Failed to get activities: ${response.statusText}`);
+    const { supabase } = await import('@/integrations/supabase/client');
+    const { data, error } = await supabase
+      .from('triangle_activities')
+      .select('*');
+    if (error) {
+      throw error;
     }
-
-    // Defensive: Always try/catch JSON parse and provide fallback
-    let result: any;
-    try {
-      result = await response.json();
-    } catch (jsonErr) {
-      console.error("Failed to parse triangle activities JSON response", jsonErr, response);
-      // Fallback: treat as empty
+    // Defensive: if data is not an array, treat as empty
+    if (!Array.isArray(data)) {
+      console.warn("Triangle activities GET: Malformed response or 'activities' is not array", data);
       return [];
     }
-
-    if (!result || typeof result !== "object" || !Array.isArray(result.activities)) {
-      console.warn("Triangle activities GET: Malformed response or 'activities' is not array", result);
-      return [];
-    }
-    console.log('Retrieved triangle activities:', result.activities);
-    return result.activities;
+    // Normalize date strings to the same format
+    const activities = data.map((act) => ({
+      ...act,
+      when: typeof act.when === 'string' ? act.when : new Date(act.when).toISOString(),
+    }));
+    console.log('Retrieved triangle activities from Supabase:', activities.length, activities);
+    return activities;
   } catch (error) {
-    console.error('Error getting triangle activities:', error);
+    console.error('Error getting triangle activities from Supabase:', error);
     return [];
   }
 }
