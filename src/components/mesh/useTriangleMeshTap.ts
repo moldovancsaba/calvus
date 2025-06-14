@@ -1,18 +1,18 @@
 
 import { useCallback } from "react";
 import { storeTriangleActivity, subdivideTriangleMesh } from "../../utils/triangleMesh";
-// Removed: import { toast } from "../ui/use-toast";
 
-/**
- * Add worldSlug argument: all activity is scoped to a world.
- */
 export function useTriangleMeshTap(
   identity: { gametag: string; color: string } | null,
   setTriangleMesh: React.Dispatch<React.SetStateAction<any[]>>,
   isMobile: boolean,
   mapInstance: L.Map | null,
-  worldSlug: string
+  worldSlug: string,
+  settings?: { clicks_to_divide?: number, max_divide_level?: number }
 ) {
+  const clicksToDivide = settings?.clicks_to_divide ?? 3;
+  const maxDivideLevel = settings?.max_divide_level ?? 3;
+
   return useCallback(
     async (
       triangleId: string,
@@ -20,15 +20,10 @@ export function useTriangleMeshTap(
       prevMeshRef: React.MutableRefObject<any[]>
     ) => {
       if (!identity) return;
+      // ENFORCE FINALITY: if triangle at max level, block further interaction!
+      if (triangle.level >= maxDivideLevel) return;
 
-      // --- ENFORCE CLICKABILITY ---
       if (triangle?.gametag && triangle.gametag === identity.gametag && triangle.color === identity.color) {
-        // WAS:
-        // toast({
-        //   title: "Try another triangle!",
-        //   description: "You can't click repeatedly on your own triangle. Try a triangle claimed by another gamer or a new one.",
-        //   variant: "destructive",
-        // });
         return;
       }
 
@@ -40,7 +35,7 @@ export function useTriangleMeshTap(
           triangles.map(triangleEl => {
             if (triangleEl.id === triangleId) {
               const newClickCount = triangleEl.clickCount + 1;
-              if (newClickCount === 11 && triangleEl.level < 19 && !triangleEl.subdivided) {
+              if (newClickCount === clicksToDivide && triangleEl.level < maxDivideLevel && !triangleEl.subdivided) {
                 const children = subdivideTriangleMesh(triangleEl);
                 return {
                   ...triangleEl,
@@ -72,7 +67,7 @@ export function useTriangleMeshTap(
       let storeSuccess = false;
       try {
         const actionType =
-          (triangle?.clickCount ?? 0) + 1 === 11 && (triangle?.level ?? 0) < 19
+          (triangle?.clickCount ?? 0) + 1 === clicksToDivide && (triangle?.level ?? 0) < maxDivideLevel
             ? "subdivide"
             : "click";
         const result = await storeTriangleActivity(
@@ -80,34 +75,21 @@ export function useTriangleMeshTap(
           (triangle?.clickCount ?? 0) + 1,
           triangle?.level ?? 0,
           Boolean(
-            ((triangle?.clickCount ?? 0) + 1 === 11) &&
-            (triangle?.level ?? 0) < 19
+            ((triangle?.clickCount ?? 0) + 1 === clicksToDivide) &&
+            (triangle?.level ?? 0) < maxDivideLevel
           ),
           actionType,
           identity.gametag,
           identity.color,
           undefined,
-          worldSlug // SCOPED
+          worldSlug
         );
         if (!result?.success) {
           throw new Error("No success response from storeTriangleActivity");
         }
         storeSuccess = true;
-        // WAS:
-        // toast({
-        //   title: "Activity Saved!",
-        //   description: "Your triangle tap activity was recorded.",
-        //   variant: "default",
-        // });
       } catch (err: any) {
         storeSuccess = false;
-        // WAS:
-        // toast({
-        //   title: "Failed to save activity",
-        //   description:
-        //     "Could not save tap to server. Please check your connection.",
-        //   variant: "destructive",
-        // });
         setTriangleMesh(prev => prevMeshRef.current);
       }
 
@@ -137,7 +119,6 @@ export function useTriangleMeshTap(
         }
       }
     },
-    [identity, isMobile, mapInstance, setTriangleMesh, worldSlug]
+    [identity, isMobile, mapInstance, setTriangleMesh, worldSlug, clicksToDivide, maxDivideLevel]
   );
 }
-

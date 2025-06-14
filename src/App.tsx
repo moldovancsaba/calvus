@@ -1,4 +1,3 @@
-
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -8,7 +7,8 @@ import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
 import Game from "./pages/Game";
 import DocumentsPage from "./pages/Documents";
-import { IdentityProvider } from "./components/IdentityContext";
+import SettingsPage from "./pages/Settings";
+import IdentityProvider from "./components/IdentityContext";
 import IdentityGate from "./components/IdentityGate";
 
 const queryClient = new QueryClient();
@@ -23,14 +23,12 @@ const App = () => (
           <BrowserRouter>
             <Routes>
               <Route path="/" element={<Index />} />
-              {/* New multi-world route */}
               <Route path="/game">
                 <Route index element={<Game />} />
                 <Route path=":slug" element={<Game />} />
               </Route>
-              {/* Documentation page */}
+              <Route path="/settings" element={<SettingsPage />} />
               <Route path="/documents" element={<DocumentsPage />} />
-              {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
               <Route path="*" element={<NotFound />} />
             </Routes>
           </BrowserRouter>
