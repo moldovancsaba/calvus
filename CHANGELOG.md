@@ -46,3 +46,26 @@ All notable changes to the Triangle Mesh project will be documented in this file
 ### Changed
 - IdentityGate is now used only for first-time users; afterwards, identity can be adjusted or cleared directly from main UI
 - Triangle Mesh Map is more compact, touch-friendly, and visually streamlined
+
+## [1.2.0] - 2025-06-14
+
+### Changed
+- **Database Model**: Triangle activity persistence is now based on full triangle state snapshots (`click_count`, `subdivided`, `action_type`, color, gametag, when).
+- **Mesh Rebuild**: The mesh is reconstructed using last known state for each triangle, ensuring no loss or rollback after page reload.
+- **Codebase Consistency**: Aligned all click/save/restore logic to new schema and behavior. Legacy incremental actions are discontinued.
+
+### Data Model (as of 1.2.0)
+Each triangle activity snapshot row now stores:
+- `where` (triangle id)
+- `when` (ISO string timestamp of event)
+- `gametag` (player who acted)
+- `color` (player color for that triangle state)
+- `click_count` (the latest tap count for this triangle, accurate at save)
+- `level` (subdivision level of triangle)
+- `subdivided` (boolean: true if split into children)
+- `action_type` ("click" or "subdivide" or other, for future-proofing)
+- `notes` (optional, for debugging or analytics)
+
+### Migration
+- All previous mesh activity data is wiped as state is not compatible.
+- Upgraded UI and backend for reliable world mesh restoration.
