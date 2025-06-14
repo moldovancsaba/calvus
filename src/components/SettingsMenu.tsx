@@ -1,4 +1,3 @@
-
 import React, { useEffect, useState } from "react";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { Button } from "@/components/ui/button";
@@ -98,7 +97,6 @@ export const SettingsMenu: React.FC<{ children: React.ReactNode; worldSlug: stri
     setOpen(false);
     setTimeout(() => { navigate("/documents"); }, 100);
   }
-
   return (
     <Sheet open={open} onOpenChange={setOpen}>
       <SheetTrigger asChild>{children}</SheetTrigger>
