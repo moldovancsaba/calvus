@@ -49,20 +49,27 @@ const TriangleMeshMap = () => {
 
     // --- Disable map touch gestures not wanted on mobile ---
     if (mobile) {
-      // On mobile, allow only pinch to zoom and drag, disable single tap/double tap
       map.scrollWheelZoom.disable();
       map.doubleClickZoom.disable();
       map.boxZoom.disable();
-      // touchZoom 'center' means only two-finger will zoom
-      map.touchZoom.enable(); // still allow pinch
+      map.touchZoom.enable(); // only pinch
       map.dragging.enable();
-      // Prevent default browser zoom/scroll with single finger on map
+
+      // PATCH: allow single finger touch to pass through to polygons (for tapping triangles)
+      // Only preventDefault if the touch is on the map background, NOT on a polygon
       map.getContainer().addEventListener(
         "touchstart",
         function (e) {
           if (e.touches.length === 1) {
-            e.preventDefault();
-            // allow drag, but prevent scroll/zoom for single finger tap/touch
+            // Only prevent default if tapping the base map (not a polygon)
+            const target = e.target as HTMLElement;
+            if (
+              // If not a polygon (does not have leaflet-interactive class)
+              !(target.classList.contains('leaflet-interactive'))
+            ) {
+              e.preventDefault();
+            }
+            // Otherwise, let the tap go -- triangle event will trigger
           }
         },
         { passive: false }
@@ -310,8 +317,15 @@ const TriangleMeshMap = () => {
         });
 
         polygon.on('click', () => {
-          // Pass triangle info for mobile zoom
           handleTriangleMeshClick(triangle.id, triangle);
+        });
+
+        // --- Fix: Also allow tap event for mobile Safari that doesn't fire click ---
+        polygon.on('touchend', (e: any) => {
+          // Only trigger if this was a quick tap (not a drag), and single touch ended
+          if (e.originalEvent && e.originalEvent.changedTouches && e.originalEvent.changedTouches.length === 1) {
+            handleTriangleMeshClick(triangle.id, triangle);
+          }
         });
 
         polygon.addTo(map);
