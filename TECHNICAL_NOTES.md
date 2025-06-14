@@ -24,6 +24,6 @@ _Last updated: 2025-06-14_
 CURRENT DATA MODEL:
 - Each triangle's last state is stored as a "snapshot row" (see `CHANGELOG.md`)
 - No incremental logs: mesh is always rebuilt from the latest per-triangle snapshots (faster and resilient)
-- The base triangle mesh is **26** triangles total (as of v2.2, June 2025, S. Pole patch)
+- The base triangle mesh is **24** triangles total (as of v2.2, June 2025, S. Pole patch)
 - All app and doc references standardized as of this update
 -->

@@ -55,14 +55,13 @@ export function sphericalMidpoint(p1: LatLng, p2: LatLng): LatLng {
   return point3DToLatLng(midpoint);
 }
 
-// Canonical base triangle order for referencing throughout the system (v2.2+, June 2025):
-// [NorthCap1, NorthCap2, NorthCap3, NorthCap4, NorthBelt1, NorthBelt2, NorthBelt3, NorthBelt4,
-//  Equator1, Equator2, Equator3, Equator4, SouthBelt1, SouthBelt2, SouthBelt3, SouthBelt4,
-//  SouthCap1, SouthCap2, SouthCap3, SouthCap4, Extra1, Extra2, Extra3, Extra4, SouthPole1, SouthPole2]
-// The order is: starting at north pole, spiral downward and around the globe, then extras/patches at the end for south pole.
+// Canonical base triangle order for referencing throughout the system (v2.2, rolled back to 24):
+// Order: Spiral downward from North Pole, four bands, then four triangles for the South Pole patch—**total = 24**
+// [NorthCap1–4, NorthBelt1–4, Equator1–4, SouthBelt1–4, SouthCap1–4, PatchA–D]
+// The system uses array indices 0–23 for all operations.
 export function generateBaseTriangleMesh(): TriangleMesh[] {
   const triangles: TriangleMesh[] = [
-    // North Pole Cap triangles (top, spiral clockwise)
+    // 1–4: North Pole Cap triangles (spiral clockwise)
     {
       id: 'N1',
       vertices: [
@@ -100,7 +99,7 @@ export function generateBaseTriangleMesh(): TriangleMesh[] {
       level: 0, clickCount: 0, subdivided: false
     },
 
-    // Northern mid-latitude/belt triangles (66N)
+    // 5–8: North mid-latitude/belt triangles
     {
       id: 'B1',
       vertices: [
@@ -138,7 +137,7 @@ export function generateBaseTriangleMesh(): TriangleMesh[] {
       level: 0, clickCount: 0, subdivided: false
     },
 
-    // Equator band (0° lat around globe, spiral east)
+    // 9–12: Equator band
     {
       id: 'E1',
       vertices: [
@@ -176,7 +175,7 @@ export function generateBaseTriangleMesh(): TriangleMesh[] {
       level: 0, clickCount: 0, subdivided: false
     },
 
-    // Southern belt (mirror north, -66 latitude)
+    // 13–16: Southern belt (mirrored, -66 latitude)
     {
       id: 'SB1',
       vertices: [
@@ -214,7 +213,7 @@ export function generateBaseTriangleMesh(): TriangleMesh[] {
       level: 0, clickCount: 0, subdivided: false
     },
 
-    // South Pole Cap triangles
+    // 17–20: South Pole Cap triangles (spiral, -90 latitude)
     {
       id: 'S1',
       vertices: [
@@ -252,9 +251,9 @@ export function generateBaseTriangleMesh(): TriangleMesh[] {
       level: 0, clickCount: 0, subdivided: false
     },
 
-    // South Pole Patch triangles (extras/fill-ins for geometry closure/consistency)
+    // 21–24: South Pole Patch/Filler triangles to seal the geometry
     {
-      id: 'X1',
+      id: 'SP1',
       vertices: [
         { lat: 0.0,    lng: 108.0 },
         { lat: -66.0,  lng: 144.0 },
@@ -263,7 +262,7 @@ export function generateBaseTriangleMesh(): TriangleMesh[] {
       level: 0, clickCount: 0, subdivided: false
     },
     {
-      id: 'X2',
+      id: 'SP2',
       vertices: [
         { lat: 0.0,    lng: -108.0 },
         { lat: -66.0,  lng: -72.0 },
@@ -272,7 +271,7 @@ export function generateBaseTriangleMesh(): TriangleMesh[] {
       level: 0, clickCount: 0, subdivided: false
     },
     {
-      id: 'X3',
+      id: 'SP3',
       vertices: [
         { lat: -66.0,  lng: 144.0 },
         { lat: -66.0,  lng: 72.0 },
@@ -281,7 +280,7 @@ export function generateBaseTriangleMesh(): TriangleMesh[] {
       level: 0, clickCount: 0, subdivided: false
     },
     {
-      id: 'X4',
+      id: 'SP4',
       vertices: [
         { lat: -66.0,  lng: -144.0 },
         { lat: -66.0,  lng: -72.0 },
@@ -291,8 +290,8 @@ export function generateBaseTriangleMesh(): TriangleMesh[] {
     }
   ];
 
-  // Log new canonical order for audit trail
-  console.log('Base triangle mesh generated in canonical spiral order (v2.2+). Reference by array index for all system operations.');
+  // Log the canonical order for audit
+  console.log('Base triangle mesh generated in canonical spiral order (v2.2, 24 triangles). Reference by array index 0–23 for all system ops.');
   return triangles;
 }
 
