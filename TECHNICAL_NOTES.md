@@ -17,3 +17,7 @@
 ---
 
 _Last updated: 2025-06-14_
+
+<!--
+NOTE: The base triangle mesh is 18 triangles, reflecting the geometry.ts implementation. Historical "20 triangle" references have been corrected across all documentation.
+-->

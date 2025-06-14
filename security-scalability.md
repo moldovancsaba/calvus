@@ -19,5 +19,7 @@
 ## Learnings
 - Destroy map instances before remounting
 - All code and docs now modular & ≤100 lines where possible
+- **Triangle mesh base is 18 triangles (see technical docs for justification)**
 
 _Last reviewed: 2025-06-14_
+

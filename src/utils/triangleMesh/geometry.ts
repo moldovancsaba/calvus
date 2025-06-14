@@ -55,7 +55,7 @@ export function sphericalMidpoint(p1: LatLng, p2: LatLng): LatLng {
   return point3DToLatLng(midpoint);
 }
 
-// Generate the 12 base triangles for the spherical mesh (north/south + pole caps + 2 more equator)
+// Generate the 18 base triangles for the spherical mesh (north/south, belt, pole caps)
 export function generateBaseTriangleMesh(): TriangleMesh[] {
   const triangles: TriangleMesh[] = [
     // North hemisphere base triangles

@@ -1,4 +1,3 @@
-
 # Performance Optimizations & Edge Cases
 
 ## Triangle Layer Management
@@ -20,3 +19,5 @@
 ---
 
 _For security, database, and scaling, see [`security-scalability.md`](security-scalability.md)._
+
+<!-- Consistency note: All technical documentation and code now reference 18 base triangles for correctness. -->

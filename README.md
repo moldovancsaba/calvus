@@ -9,7 +9,7 @@ Step (formerly "Icosahedral Geodesic Grid") is an interactive, world-first, coll
 - All documentation is maintained in individual Markdown files for clarity.
 
 ### Key Features
-- Interactive world mesh (19 subdivision levels)
+- Interactive world mesh (**18 base triangles**, 19 subdivision levels)
 - Real-time collaboration across devices
 - Gametag/color personalization
 - Full documentation: [User Guide (README)](/documents), [Technical Notes](/documents), [Changelog](/documents)
@@ -33,6 +33,7 @@ See [`/documents`](/documents) for ALL guides and technical docs, modularly orga
 - See [Technical Notes](/documents) for architecture, geometry, and implementation guidelines.
 - All code must be fully modular and maintainable. File size limits: split >200 lines files promptly!
 - Use `/documents` for onboarding and troubleshooting reference.
+  - **Note:** Base triangle mesh consists of 18 triangles (see technical docs).
 
 ## License
 

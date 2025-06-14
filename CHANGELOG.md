@@ -32,7 +32,7 @@ All notable changes to the Triangle Mesh project will be documented in this file
 - **Coordinate System**: Spherical geometry with lat/lng conversion
 
 ### Initial Configuration
-- Three base triangles covering portions of the northern hemisphere
+- Eighteen (18) base triangles covering the globe per corrected mesh implementation
 - Base triangle coordinates:
   - Triangle 1: (66°N, 0°E), (0°N, -36°E), (0°N, 36°E)
   - Triangle 2: (66°N, 0°E), (66°N, 72°E), (0°N, 36°E)
@@ -41,7 +41,7 @@ All notable changes to the Triangle Mesh project will be documented in this file
 ### Known Limitations
 - 5-second polling interval may cause brief delays in collaboration
 - Maximum 19 subdivision levels to prevent performance issues
-- Northern hemisphere focus in initial triangle placement
+- **Eighteen (not 20) base triangles match the canonical mesh for reliable geometry**
 - Requires MongoDB URI configuration for full functionality
 
 ## [1.1.0] - 2025-06-14
