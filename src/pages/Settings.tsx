@@ -17,22 +17,36 @@ export default function SettingsPage() {
   const { toast } = useToast();
   const navigate = useNavigate();
 
-  useEffect(() => {
-    async function load() {
-      setSettingsBusy(true);
-      try {
-        const worldSettings = await fetchWorldSettings(worldSlug);
-        setSettings(worldSettings);
-        setPendingSettings(worldSettings);
-      } catch (e) {
-        toast({ title: "Error loading settings", description: String((e as Error).message), variant: "destructive" });
-      } finally {
-        setSettingsBusy(false);
-      }
-      const acts = await getTriangleActivities(worldSlug);
-      setActivities(acts);
+  // Function to fetch settings and update local state
+  const loadWorldSettings = async () => {
+    setSettingsBusy(true);
+    try {
+      const worldSettings = await fetchWorldSettings(worldSlug);
+      setSettings(worldSettings);
+      setPendingSettings(worldSettings);
+    } catch (e) {
+      toast({ title: "Error loading settings", description: String((e as Error).message), variant: "destructive" });
+    } finally {
+      setSettingsBusy(false);
     }
-    load();
+  };
+
+  // Fetch settings when page first loads
+  useEffect(() => {
+    loadWorldSettings();
+    getTriangleActivities(worldSlug).then(setActivities);
+  }, [worldSlug]);
+
+  // Also, refetch on window/tab focus to always show updated values
+  useEffect(() => {
+    const handleFocus = () => {
+      loadWorldSettings();
+      getTriangleActivities(worldSlug).then(setActivities);
+    };
+    window.addEventListener("focus", handleFocus);
+    return () => {
+      window.removeEventListener("focus", handleFocus);
+    };
   }, [worldSlug]);
 
   function handleSettingEdit<K extends keyof WorldSettings>(key: K, value: WorldSettings[K]) {
@@ -47,7 +61,7 @@ export default function SettingsPage() {
       const updated = await updateWorldSettings(worldSlug, pendingSettings);
       setSettings(updated);
       setPendingSettings(updated);
-      toast({ title: "Settings updated", duration: 1500 });
+      toast({ title: "Settings updated", duration: 1500, description: "Your new settings have been saved." });
       window.dispatchEvent(
         new StorageEvent("storage", { key: `worldSettings_${worldSlug}`, newValue: Date.now().toString() })
       );

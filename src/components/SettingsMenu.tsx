@@ -23,22 +23,33 @@ export const SettingsMenu: React.FC<{ children: React.ReactNode; worldSlug: stri
   // Hide settings menu on mobile
   if (isMobile) return null;
 
-  useEffect(() => {
-    async function load() {
-      setSettingsBusy(true);
-      try {
-        const worldSettings = await fetchWorldSettings(worldSlug);
-        setSettings(worldSettings);
-        setPendingSettings(worldSettings);
-      } catch (e) {
-        toast({ title: "Error loading settings", description: String((e as Error).message), variant: "destructive" });
-      } finally {
-        setSettingsBusy(false);
-      }
-      const acts = await getTriangleActivities(worldSlug);
-      setActivities(acts);
+  // Function to fetch settings and update local state
+  const loadWorldSettings = async () => {
+    setSettingsBusy(true);
+    try {
+      const worldSettings = await fetchWorldSettings(worldSlug);
+      setSettings(worldSettings);
+      setPendingSettings(worldSettings);
+    } catch (e) {
+      toast({ title: "Error loading settings", description: String((e as Error).message), variant: "destructive" });
+    } finally {
+      setSettingsBusy(false);
     }
-    if (open) load();
+    const acts = await getTriangleActivities(worldSlug);
+    setActivities(acts);
+  };
+
+  // Fetch when sheet is opened
+  useEffect(() => {
+    if (open) loadWorldSettings();
+    // Optionally listen for storage events in case of cross-tab update
+    const storageHandler = (e: StorageEvent) => {
+      if (e.key === `worldSettings_${worldSlug}`) {
+        loadWorldSettings();
+      }
+    };
+    window.addEventListener("storage", storageHandler);
+    return () => window.removeEventListener("storage", storageHandler);
   }, [open, worldSlug]);
 
   function handleSettingEdit<K extends keyof WorldSettings>(key: K, value: WorldSettings[K]) {
