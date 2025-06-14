@@ -10,7 +10,7 @@ const Game = () => {
   return (
     <div className="flex flex-col h-screen min-h-screen w-full bg-background">
       <header className="w-full flex-shrink-0">
-        <IdentityBar />
+        <IdentityBar worldSlug={worldSlug} />
         <div className="px-4 py-1 text-xs font-mono flex items-center gap-2 text-muted-foreground">
           <span>World:</span>
           <span className="font-bold text-blue-700">{worldSlug || "(original world)"}</span>

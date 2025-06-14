@@ -23,7 +23,11 @@ function countClicksAndUserClicks(activities, identity) {
   return [userClicks, totalClicks];
 }
 
-export const IdentityBar: React.FC = () => {
+type IdentityBarProps = {
+  worldSlug: string;
+};
+
+export const IdentityBar: React.FC<IdentityBarProps> = ({ worldSlug }) => {
   const { identity } = useIdentity();
   const [activities, setActivities] = useState([]);
   const isMobile = useIsMobile();
@@ -33,7 +37,7 @@ export const IdentityBar: React.FC = () => {
   useEffect(() => {
     let running = true;
     async function fetchActivities() {
-      const all = await getTriangleActivities();
+      const all = await getTriangleActivities(worldSlug);
       if (running) setActivities(all);
     }
     fetchActivities();
@@ -42,7 +46,7 @@ export const IdentityBar: React.FC = () => {
       running = false;
       clearInterval(interval);
     };
-  }, []);
+  }, [worldSlug]);
 
   const [userClicks, allClicks] = useMemo(() => countClicksAndUserClicks(activities, identity), [activities, identity]);
 
@@ -72,7 +76,7 @@ export const IdentityBar: React.FC = () => {
       </Button>
       {/* Desktop-only settings */}
       {!isMobile && (
-        <SettingsMenu>
+        <SettingsMenu worldSlug={worldSlug}>
           <Button
             variant="outline"
             className="px-1 py-1 ml-1 text-xs"
