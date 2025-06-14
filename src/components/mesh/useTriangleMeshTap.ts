@@ -21,21 +21,16 @@ export function useTriangleMeshTap(
       if (!identity) return;
 
       const isAtFinalLevel = triangle.level >= maxDivideLevel;
+      const isFullyClaimed = isAtFinalLevel && triangle.clickCount >= clicksToDivide;
 
-      // ALLOW owner/color update on final level, but no subdivide beyond final
-      if (
-        isAtFinalLevel &&
-        triangle.clickCount >= clicksToDivide &&
-        triangle.gametag === identity.gametag &&
-        triangle.color === identity.color
-      ) {
-        // Already claimed by this user at max, do nothing
+      // NEW: Block ALL users from interacting with a fully-claimed final triangle
+      if (isFullyClaimed) {
+        // Triangle is at the final level and has been fully claimed, no further update allowed
         return;
       }
 
-      let prevMesh: any[] = [];
       setTriangleMesh(currMesh => {
-        prevMesh = currMesh;
+        let prevMesh = currMesh;
         prevMeshRef.current = currMesh;
         const updateTriangle = (triangles: any[]): any[] =>
           triangles.map(triangleEl => {
@@ -43,7 +38,6 @@ export function useTriangleMeshTap(
               const newClickCount = triangleEl.clickCount + 1;
               // -- Final level logic: just color/owner/finalize, NO subdivide
               if (triangleEl.level >= maxDivideLevel) {
-                // let it reach clicksToDivide, then set color/owner, no subdivide
                 return {
                   ...triangleEl,
                   clickCount: Math.min(newClickCount, clicksToDivide),
