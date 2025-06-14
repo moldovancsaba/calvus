@@ -57,6 +57,36 @@ export type Database = {
         }
         Relationships: []
       }
+      world_settings: {
+        Row: {
+          desktop_max_zoom_level: number
+          desktop_min_zoom_level: number
+          fixed_mobile_zoom_level: number
+          force_mobile_zoom: boolean
+          id: string
+          updated_at: string
+          world_slug: string
+        }
+        Insert: {
+          desktop_max_zoom_level?: number
+          desktop_min_zoom_level?: number
+          fixed_mobile_zoom_level?: number
+          force_mobile_zoom?: boolean
+          id?: string
+          updated_at?: string
+          world_slug: string
+        }
+        Update: {
+          desktop_max_zoom_level?: number
+          desktop_min_zoom_level?: number
+          fixed_mobile_zoom_level?: number
+          force_mobile_zoom?: boolean
+          id?: string
+          updated_at?: string
+          world_slug?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
