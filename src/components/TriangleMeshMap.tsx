@@ -30,6 +30,9 @@ const TriangleMeshMap = () => {
   const { identity } = useIdentity();
   const isMobile = useIsMobile();
   const prevMeshRef = useRef<TriangleMesh[]>([]);
+  const [meshVersion, setMeshVersion] = useState(
+    () => window.localStorage.getItem("meshVersion") || ""
+  ); // listen for mesh resets
 
   // Listen for mesh/zoom settings changes even if user is actively on the map,
   // so settings take effect instantly on mobile
@@ -51,6 +54,16 @@ const TriangleMeshMap = () => {
         e.key === "refreshMesh"
       ) {
         reloadMapSettings();
+      }
+      // Added: also reload/refresh mesh if meshVersion bumps
+      if (e.key === "meshVersion") {
+        setMeshVersion(e.newValue || "");
+        // Clear old mesh/activity caches
+        window.localStorage.removeItem("triangleMeshCache");
+        // Remove all triangle activities from memory
+        setTriangleMesh([]);
+        setIsLoading(true);
+        setTimeout(() => setIsLoading(false), 30);
       }
     };
     window.addEventListener("storage", storageHandler);
@@ -153,6 +166,7 @@ const TriangleMeshMap = () => {
     const initializeMesh = async () => {
       try {
         setIsLoading(true);
+        // After reset, this will find nothing, so baseMesh will be used
         const activities = await getTriangleActivities();
         if (activities.length > 0) {
           const restoredMesh = rebuildTriangleMeshFromActivities(activities);
@@ -189,7 +203,7 @@ const TriangleMeshMap = () => {
         clearInterval(pollIntervalRef.current);
       }
     };
-  }, [isMobile]); // re-run on mobile/desktop change or re-mount
+  }, [isMobile, meshVersion]); // re-run loader on meshVersion change
 
   // Custom mobile/touch logic (does nothing on desktop)
   useLeafletMobileTouch(mapInstanceRef.current);
