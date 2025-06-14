@@ -1,4 +1,3 @@
-
 import React, { useRef, useEffect, useImperativeHandle, forwardRef } from "react";
 import L from "leaflet";
 import "leaflet/dist/leaflet.css";
@@ -27,7 +26,6 @@ export const LeafletMapContainer = forwardRef<HTMLDivElement, LeafletMapContaine
       desktopMinZoom = 5,
       desktopMaxZoom = 15,
       fixedMobileZoomLevel = 2,
-      forceMobileZoom = true
     },
     ref
   ) => {
@@ -47,20 +45,18 @@ export const LeafletMapContainer = forwardRef<HTMLDivElement, LeafletMapContaine
         mapRef.current.innerHTML = "";
       }
 
-      let mobileZoomLevel = fixedMobileZoomLevel ?? 2;
-      let mobileFixedZoomEnabled = forceMobileZoom;
-
       // Always pull in passed props for min/max zoom
-      const minZoom = isMobile && mobileFixedZoomEnabled
-        ? mobileZoomLevel
-        : (isMobile ? 10 : desktopMinZoom);
-      const maxZoom = isMobile && mobileFixedZoomEnabled
-        ? mobileZoomLevel
-        : (isMobile ? 10 : desktopMaxZoom);
+      // On mobile, min/max are fixed to fixedMobileZoomLevel
+      const minZoom = isMobile
+        ? fixedMobileZoomLevel
+        : desktopMinZoom;
+      const maxZoom = isMobile
+        ? fixedMobileZoomLevel
+        : desktopMaxZoom;
 
       const mapZoom = isMobile
-        ? (mobileFixedZoomEnabled ? mobileZoomLevel : 10)
-        : desktopMinZoom; // center zoom to min desktop for new map
+        ? fixedMobileZoomLevel
+        : desktopMinZoom;
 
       const map = L.map(mapRef.current, {
         center: DEFAULT_CENTER,
@@ -82,26 +78,15 @@ export const LeafletMapContainer = forwardRef<HTMLDivElement, LeafletMapContaine
         map.zoomControl.setPosition('topright');
       }
 
-      if (isMobile && mobileFixedZoomEnabled) {
+      if (isMobile) {
         map.on("zoomend", () => {
-          if (map.getZoom() !== mobileZoomLevel) {
-            map.setZoom(mobileZoomLevel);
+          if (map.getZoom() !== fixedMobileZoomLevel) {
+            map.setZoom(fixedMobileZoomLevel);
           }
         });
         map.on("movestart", () => {
-          if (map.getZoom() !== mobileZoomLevel) {
-            map.setZoom(mobileZoomLevel);
-          }
-        });
-      } else if (isMobile) {
-        map.on("zoomend", () => {
-          if (map.getZoom() !== 10) {
-            map.setZoom(10);
-          }
-        });
-        map.on("movestart", () => {
-          if (map.getZoom() !== 10) {
-            map.setZoom(10);
+          if (map.getZoom() !== fixedMobileZoomLevel) {
+            map.setZoom(fixedMobileZoomLevel);
           }
         });
       } else {
@@ -134,7 +119,7 @@ export const LeafletMapContainer = forwardRef<HTMLDivElement, LeafletMapContaine
           (mapRef.current as any)._leaflet_id = undefined;
         }
       };
-    }, [isMobile, meshVersion, worldSlug, desktopMinZoom, desktopMaxZoom, fixedMobileZoomLevel, forceMobileZoom]);
+    }, [isMobile, meshVersion, worldSlug, desktopMinZoom, desktopMaxZoom, fixedMobileZoomLevel]);
 
     return (
       <div

@@ -26,50 +26,32 @@ export const SettingsControls: React.FC<SettingsControlsProps> = ({
   }
 
   return (
-    <>
-      {/* Fixed zoom for mobile */}
-      <div className="flex items-center justify-between mb-4 gap-1">
-        <span>Fixed zoom for mobile</span>
-        <Button
-          variant={pendingSettings.force_mobile_zoom ? "default" : "outline"}
-          onClick={() => handleSettingEdit("force_mobile_zoom", !pendingSettings.force_mobile_zoom)}
-          size="sm"
+    <div>
+      {/* Mobile zoom level - enforced always */}
+      <div className="flex items-center justify-between mb-4 gap-2">
+        <label htmlFor="fixed-zoom-level" className="text-sm">
+          Mobile map zoom level (fixed)
+        </label>
+        <Input
+          id="fixed-zoom-level"
+          type="number"
+          min={1}
+          max={20}
+          step={1}
+          className="w-20 text-right"
+          value={pendingSettings.fixed_mobile_zoom_level}
           disabled={settingsBusy}
-        >
-          {pendingSettings.force_mobile_zoom ? "On" : "Off"}
-        </Button>
+          onChange={e => {
+            const n = Math.floor(Number((e.target as HTMLInputElement).value));
+            if (!isNaN(n)) handleSettingEdit("fixed_mobile_zoom_level", n);
+          }}
+          onBlur={e => {
+            let val = Math.round(Number((e.target as HTMLInputElement).value));
+            if (isNaN(val)) val = 2;
+            handleSettingEdit("fixed_mobile_zoom_level", val);
+          }}
+        />
       </div>
-
-      {/* Fixed zoom level input for mobile */}
-      {pendingSettings.force_mobile_zoom && (
-        <div className="flex items-center justify-between mb-4 gap-2">
-          <label htmlFor="fixed-zoom-level" className="text-sm">
-            Fixed mobile zoom level
-          </label>
-          <Input
-            id="fixed-zoom-level"
-            type="number"
-            min={1}
-            max={20}
-            step={1}
-            pattern="[0-9]*"
-            inputMode="numeric"
-            className="w-20 text-right"
-            value={pendingSettings.fixed_mobile_zoom_level}
-            disabled={settingsBusy}
-            onChange={e => {
-              const n = Math.floor(Number((e.target as HTMLInputElement).value));
-              if (!isNaN(n)) handleSettingEdit("fixed_mobile_zoom_level", n);
-            }}
-            onBlur={e => {
-              let val = Math.round(Number((e.target as HTMLInputElement).value));
-              if (isNaN(val)) val = 2;
-              handleSettingEdit("fixed_mobile_zoom_level", val);
-            }}
-          />
-        </div>
-      )}
-
       {/* Desktop zoom levels */}
       <div className="flex items-center justify-between mb-4 gap-2">
         <label htmlFor="desktop-min-zoom" className="text-sm">Desktop min zoom</label>
@@ -113,6 +95,50 @@ export const SettingsControls: React.FC<SettingsControlsProps> = ({
           }}
         />
       </div>
+      {/* Clicks to divide */}
+      <div className="flex items-center justify-between mb-4 gap-2">
+        <label htmlFor="clicks-to-divide" className="text-sm">Clicks to divide a triangle</label>
+        <Input
+          id="clicks-to-divide"
+          type="number"
+          min={1}
+          max={50}
+          step={1}
+          className="w-20 text-right"
+          value={pendingSettings.clicks_to_divide}
+          disabled={settingsBusy}
+          onChange={e => {
+            const n = Math.max(1, Math.floor(Number((e.target as HTMLInputElement).value));
+            handleSettingEdit("clicks_to_divide", n);
+          }}
+          onBlur={e => {
+            let val = Math.max(1, Math.round(Number((e.target as HTMLInputElement).value)));
+            handleSettingEdit("clicks_to_divide", val);
+          }}
+        />
+      </div>
+      {/* Max divide level */}
+      <div className="flex items-center justify-between mb-4 gap-2">
+        <label htmlFor="max-divide-level" className="text-sm">Maximum divide levels</label>
+        <Input
+          id="max-divide-level"
+          type="number"
+          min={1}
+          max={19}
+          step={1}
+          className="w-20 text-right"
+          value={pendingSettings.max_divide_level}
+          disabled={settingsBusy}
+          onChange={e => {
+            const n = Math.max(1, Math.floor(Number((e.target as HTMLInputElement).value)));
+            handleSettingEdit("max_divide_level", n);
+          }}
+          onBlur={e => {
+            let val = Math.max(1, Math.round(Number((e.target as HTMLInputElement).value)));
+            handleSettingEdit("max_divide_level", val);
+          }}
+        />
+      </div>
       {/* Apply Button */}
       <div className="flex justify-end mb-4">
         <Button
@@ -136,6 +162,6 @@ export const SettingsControls: React.FC<SettingsControlsProps> = ({
           {busy ? "Starting..." : "Start"}
         </Button>
       </div>
-    </>
+    </div>
   );
 };

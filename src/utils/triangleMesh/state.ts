@@ -1,4 +1,5 @@
 import { generateBaseTriangleMesh, subdivideTriangleMesh, TriangleMesh } from "./geometry";
+import { fetchWorldSettings } from "../worldSettings";
 
 // Utility to aggregate activity rows per triangle: [id]: { totalClicks, gametag, color, mostRecentActivity }
 function aggregateTriangleActivity(activities: any[]) {
@@ -26,19 +27,17 @@ function aggregateTriangleActivity(activities: any[]) {
   return clickMap;
 }
 
-// Rebuild triangle mesh from stored activities aggregating SUM(click) per triangle
-export function rebuildTriangleMeshFromActivities(activities: any[]): TriangleMesh[] {
-  // Use base mesh to start
+// Modified to accept settings for clicksToDivide and maxLevel
+export function rebuildTriangleMeshFromActivities(activities: any[], settings?: { clicks_to_divide?: number, max_divide_level?: number }): TriangleMesh[] {
   const baseMesh = generateBaseTriangleMesh();
   if (!Array.isArray(activities) || activities.length === 0) return baseMesh;
-
-  // Aggregate all activity rows per triangle
   const activityMap = aggregateTriangleActivity(activities);
 
-  // Recursively apply stored state to the mesh
+  const clicksToDivide = settings?.clicks_to_divide ?? 3;
+  const maxDivideLevel = settings?.max_divide_level ?? 3;
+
   function applyStatesToMesh(triangles: TriangleMesh[]): TriangleMesh[] {
     return triangles.map(triangle => {
-      // Get aggregate record for this triangle if any
       const activityAgg = activityMap.get(triangle.id);
       let clickCount = activityAgg?.clickCount ?? triangle.clickCount ?? 0;
       let gametag = activityAgg?.latest?.gametag ?? triangle.gametag;
@@ -51,11 +50,9 @@ export function rebuildTriangleMeshFromActivities(activities: any[]): TriangleMe
         gametag,
         color,
       };
-
-      // Determine subdivision status using SUM(clicks) like previously
-      const isSubdivided = !!lastActivity?.subdivided || clickCount >= 11;
-      if (isSubdivided && triangle.level < 19) {
-        // If not yet subdivided, or offspring not present, populate children
+      // Only subdivide if clickCount >= "clicksToDivide" and allowed by level
+      const isSubdivided = !!lastActivity?.subdivided || clickCount >= clicksToDivide;
+      if (isSubdivided && triangle.level < maxDivideLevel) {
         if (!triangle.subdivided || !triangle.children) {
           updated = {
             ...updated,
@@ -64,7 +61,6 @@ export function rebuildTriangleMeshFromActivities(activities: any[]): TriangleMe
           };
         }
         if (updated.children) {
-          // recursively update children if present in state
           updated = {
             ...updated,
             children: applyStatesToMesh(updated.children),
@@ -72,21 +68,17 @@ export function rebuildTriangleMeshFromActivities(activities: any[]): TriangleMe
         }
         return updated;
       }
-
-      // Recursively update children (should not be subdivided unless flagged)
       if (triangle.children) {
         updated = {
           ...updated,
           children: applyStatesToMesh(triangle.children),
         };
       }
-
       return updated;
     });
   }
-
   const rebuiltMesh = applyStatesToMesh(baseMesh);
-  console.log("[rebuildTriangleMeshFromActivities] mesh rebuilt using SUM of click activity", rebuiltMesh);
+  console.log("[rebuildTriangleMeshFromActivities] mesh rebuilt using settings", rebuiltMesh, settings);
   return rebuiltMesh;
 }
 

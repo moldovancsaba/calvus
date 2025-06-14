@@ -1,3 +1,4 @@
+
 import { supabase } from "@/integrations/supabase/client";
 
 function fixedWorldSlug(slug: string) {
@@ -7,11 +8,12 @@ function fixedWorldSlug(slug: string) {
 export type WorldSettings = {
   id: string;
   world_slug: string;
-  force_mobile_zoom: boolean;
   fixed_mobile_zoom_level: number;
   desktop_min_zoom_level: number;
   desktop_max_zoom_level: number;
   updated_at: string;
+  clicks_to_divide: number; // NEW
+  max_divide_level: number; // NEW
 };
 
 export async function fetchWorldSettings(worldSlug: string): Promise<WorldSettings> {
@@ -27,10 +29,11 @@ export async function fetchWorldSettings(worldSlug: string): Promise<WorldSettin
   // If not exist, create defaults
   const insertDefaults = {
     world_slug: fixedSlug,
-    force_mobile_zoom: true,
     fixed_mobile_zoom_level: 2,
     desktop_min_zoom_level: 5,
     desktop_max_zoom_level: 15,
+    clicks_to_divide: 3,
+    max_divide_level: 3,
   };
   const { data: created, error: insErr } = await supabase
     .from("world_settings")

@@ -1,5 +1,6 @@
 
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const docsList = [
   { file: "README.md", label: "User Guide (README)" },
@@ -18,6 +19,7 @@ function loadFile(filepath: string): Promise<string> {
 export default function DocumentsPage() {
   const [selected, setSelected] = useState(docsList[0].file);
   const [content, setContent] = useState<string>("Loading...");
+  const navigate = useNavigate();
   React.useEffect(() => {
     let cancelled = false;
     loadFile(selected)
@@ -31,6 +33,10 @@ export default function DocumentsPage() {
       <div className="flex gap-3 mb-6 border-b pb-2 items-center">
         <div className="font-bold text-xl">Documentation</div>
         <div className="ml-auto flex gap-2">
+          <button
+            className="px-2 py-1 rounded text-xs bg-muted"
+            onClick={() => navigate("/settings")}
+          >Settings</button>
           {docsList.map(doc =>
             <button
               key={doc.file}
