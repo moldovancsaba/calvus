@@ -15,25 +15,26 @@ export function useLeafletMobileTouch(map: L.Map | null) {
     map.touchZoom.enable();
     map.dragging.enable();
 
-    // Improved: only preventDefault on map base, never on triangles or controls
+    // Only preventDefault for background, never for .leaflet-interactive or .leaflet-control
     const handleTouchStart = function (e: TouchEvent) {
       if (e.touches.length === 1) {
         const target = e.target as HTMLElement;
         // Allow all interactive (triangles), and controls to work
         if (
           target.classList.contains("leaflet-interactive") ||
-          target.closest(".leaflet-control") // do not block controls
+          target.closest(".leaflet-control")
         ) {
-          // DO NOTHING, allow
+          // DO NOTHING, allow event to propagate
+          console.log("[useLeafletMobileTouch] touchstart: allowed interactive/control", target);
           return;
         }
         // Block drawing/panning/scrolling for just background
         e.preventDefault();
+        console.log("[useLeafletMobileTouch] touchstart: preventDefault on base map", target);
       }
     };
 
     const container = map.getContainer();
-    // passive: false is required so we can call preventDefault
     container.addEventListener("touchstart", handleTouchStart, { passive: false });
 
     return () => {
