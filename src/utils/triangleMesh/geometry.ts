@@ -55,145 +55,274 @@ export function sphericalMidpoint(p1: LatLng, p2: LatLng): LatLng {
   return point3DToLatLng(midpoint);
 }
 
-// Canonical mesh: 24 triangles, spiral from N pole, as originally approved.
+// Canonical mesh: 26 triangles, spiral from N pole, as originally approved.
 // IDs: N1–N4 (north cap), B1–B4 (north belt), E1–E4 (equator), SB1–SB4 (south belt), S1–S4 (south cap), SP1–SP4 (patch/filler for exact closure)
 
 export function generateBaseTriangleMesh(): TriangleMesh[] {
   const triangles: TriangleMesh[] = [
-    // North Pole Cap
+    // T1
     {
-      id: 'N1',
-      vertices: [ { lat: 90.0, lng: 0.0 }, { lat: 66.0, lng: 0.0 }, { lat: 66.0, lng: 72.0 } ],
+      id: 'T1',
+      vertices: [
+        { lat: 0, lng: -180 },
+        { lat: 66, lng: -144 },
+        { lat: 0, lng: -108 }
+      ],
       level: 0, clickCount: 0, subdivided: false
     },
+    // T2
     {
-      id: 'N2',
-      vertices: [ { lat: 90.0, lng: 0.0 }, { lat: 66.0, lng: 72.0 }, { lat: 66.0, lng: 144.0 } ],
+      id: 'T2',
+      vertices: [
+        { lat: 66, lng: -144 },
+        { lat: 0, lng: -108 },
+        { lat: 66, lng: -72 }
+      ],
       level: 0, clickCount: 0, subdivided: false
     },
+    // T3
     {
-      id: 'N3',
-      vertices: [ { lat: 90.0, lng: 0.0 }, { lat: 66.0, lng: 144.0 }, { lat: 66.0, lng: -144.0 } ],
+      id: 'T3',
+      vertices: [
+        { lat: 0, lng: -108 },
+        { lat: 66, lng: -72 },
+        { lat: 0, lng: -36 }
+      ],
       level: 0, clickCount: 0, subdivided: false
     },
+    // T4
     {
-      id: 'N4',
-      vertices: [ { lat: 90.0, lng: 0.0 }, { lat: 66.0, lng: -144.0 }, { lat: 66.0, lng: -72.0 } ],
+      id: 'T4',
+      vertices: [
+        { lat: 66, lng: -72 },
+        { lat: 0, lng: -36 },
+        { lat: 66, lng: 0 }
+      ],
       level: 0, clickCount: 0, subdivided: false
     },
-
-    // North Belt
+    // T5
     {
-      id: 'B1',
-      vertices: [ { lat: 66.0, lng: 0.0 }, { lat: 0.0, lng: -36.0 }, { lat: 66.0, lng: 72.0 } ],
+      id: 'T5',
+      vertices: [
+        { lat: 0, lng: -36 },
+        { lat: 66, lng: 0 },
+        { lat: 0, lng: 36 }
+      ],
       level: 0, clickCount: 0, subdivided: false
     },
+    // T6
     {
-      id: 'B2',
-      vertices: [ { lat: 66.0, lng: 72.0 }, { lat: 0.0, lng: 36.0 }, { lat: 66.0, lng: 144.0 } ],
+      id: 'T6',
+      vertices: [
+        { lat: 66, lng: 0 },
+        { lat: 0, lng: 36 },
+        { lat: 66, lng: 72 }
+      ],
       level: 0, clickCount: 0, subdivided: false
     },
+    // T7
     {
-      id: 'B3',
-      vertices: [ { lat: 66.0, lng: 144.0 }, { lat: 0.0, lng: 108.0 }, { lat: 66.0, lng: -144.0 } ],
+      id: 'T7',
+      vertices: [
+        { lat: 0, lng: 36 },
+        { lat: 66, lng: 72 },
+        { lat: 0, lng: 108 }
+      ],
       level: 0, clickCount: 0, subdivided: false
     },
+    // T8
     {
-      id: 'B4',
-      vertices: [ { lat: 66.0, lng: -144.0 }, { lat: 0.0, lng: -108.0 }, { lat: 66.0, lng: -72.0 } ],
+      id: 'T8',
+      vertices: [
+        { lat: 66, lng: 72 },
+        { lat: 0, lng: 108 },
+        { lat: 66, lng: 144 }
+      ],
       level: 0, clickCount: 0, subdivided: false
     },
-
-    // Equator Band
+    // T9
     {
-      id: 'E1',
-      vertices: [ { lat: 0.0, lng: -36.0 }, { lat: 0.0, lng: 36.0 }, { lat: 66.0, lng: 72.0 } ],
+      id: 'T9',
+      vertices: [
+        { lat: 0, lng: 108 },
+        { lat: 66, lng: 144 },
+        { lat: 0, lng: 180 }
+      ],
       level: 0, clickCount: 0, subdivided: false
     },
+    // T10
     {
-      id: 'E2',
-      vertices: [ { lat: 0.0, lng: 36.0 }, { lat: 0.0, lng: 108.0 }, { lat: 66.0, lng: 144.0 } ],
+      id: 'T10',
+      vertices: [
+        { lat: 0, lng: -180 },
+        { lat: -66, lng: -144 },
+        { lat: 0, lng: -108 }
+      ],
       level: 0, clickCount: 0, subdivided: false
     },
+    // T11
     {
-      id: 'E3',
-      vertices: [ { lat: 0.0, lng: 108.0 }, { lat: 0.0, lng: 180.0 }, { lat: 66.0, lng: -144.0 } ],
+      id: 'T11',
+      vertices: [
+        { lat: -66, lng: -144 },
+        { lat: 0, lng: -108 },
+        { lat: -66, lng: -72 }
+      ],
       level: 0, clickCount: 0, subdivided: false
     },
+    // T12
     {
-      id: 'E4',
-      vertices: [ { lat: 0.0, lng: -108.0 }, { lat: 0.0, lng: -180.0 }, { lat: 66.0, lng: -72.0 } ],
+      id: 'T12',
+      vertices: [
+        { lat: 0, lng: -108 },
+        { lat: -66, lng: -72 },
+        { lat: 0, lng: -36 }
+      ],
       level: 0, clickCount: 0, subdivided: false
     },
-
-    // South Belt
+    // T13
     {
-      id: 'SB1',
-      vertices: [ { lat: -66.0, lng: 0.0 }, { lat: 0.0, lng: -36.0 }, { lat: -66.0, lng: 72.0 } ],
+      id: 'T13',
+      vertices: [
+        { lat: -66, lng: -72 },
+        { lat: 0, lng: -36 },
+        { lat: -66, lng: 0 }
+      ],
       level: 0, clickCount: 0, subdivided: false
     },
+    // T14
     {
-      id: 'SB2',
-      vertices: [ { lat: -66.0, lng: 72.0 }, { lat: 0.0, lng: 36.0 }, { lat: -66.0, lng: 144.0 } ],
+      id: 'T14',
+      vertices: [
+        { lat: 0, lng: -36 },
+        { lat: -66, lng: 0 },
+        { lat: 0, lng: 36 }
+      ],
       level: 0, clickCount: 0, subdivided: false
     },
+    // T15
     {
-      id: 'SB3',
-      vertices: [ { lat: -66.0, lng: 144.0 }, { lat: 0.0, lng: 108.0 }, { lat: -66.0, lng: -144.0 } ],
+      id: 'T15',
+      vertices: [
+        { lat: -66, lng: 0 },
+        { lat: 0, lng: 36 },
+        { lat: -66, lng: 72 }
+      ],
       level: 0, clickCount: 0, subdivided: false
     },
+    // T16
     {
-      id: 'SB4',
-      vertices: [ { lat: -66.0, lng: -144.0 }, { lat: 0.0, lng: -108.0 }, { lat: -66.0, lng: -72.0 } ],
+      id: 'T16',
+      vertices: [
+        { lat: 0, lng: 36 },
+        { lat: -66, lng: 72 },
+        { lat: 0, lng: 108 }
+      ],
       level: 0, clickCount: 0, subdivided: false
     },
-
-    // South Pole Cap
+    // T17
     {
-      id: 'S1',
-      vertices: [ { lat: -90.0, lng: 0.0 }, { lat: -66.0, lng: 0.0 }, { lat: -66.0, lng: 72.0 } ],
+      id: 'T17',
+      vertices: [
+        { lat: -66, lng: 72 },
+        { lat: 0, lng: 108 },
+        { lat: -66, lng: 144 }
+      ],
       level: 0, clickCount: 0, subdivided: false
     },
+    // T18
     {
-      id: 'S2',
-      vertices: [ { lat: -90.0, lng: 0.0 }, { lat: -66.0, lng: 72.0 }, { lat: -66.0, lng: 144.0 } ],
+      id: 'T18',
+      vertices: [
+        { lat: 0, lng: 108 },
+        { lat: -66, lng: 144 },
+        { lat: 0, lng: 180 }
+      ],
       level: 0, clickCount: 0, subdivided: false
     },
+    // T19
     {
-      id: 'S3',
-      vertices: [ { lat: -90.0, lng: 0.0 }, { lat: -66.0, lng: 144.0 }, { lat: -66.0, lng: -144.0 } ],
+      id: 'T19',
+      vertices: [
+        { lat: 66, lng: -144 },
+        { lat: 90, lng: 0 },
+        { lat: 66, lng: -72 }
+      ],
       level: 0, clickCount: 0, subdivided: false
     },
+    // T20
     {
-      id: 'S4',
-      vertices: [ { lat: -90.0, lng: 0.0 }, { lat: -66.0, lng: -144.0 }, { lat: -66.0, lng: -72.0 } ],
+      id: 'T20',
+      vertices: [
+        { lat: 66, lng: -72 },
+        { lat: 90, lng: 0 },
+        { lat: 66, lng: 0 }
+      ],
       level: 0, clickCount: 0, subdivided: false
     },
-
-    // South Pole Patch/Filler (to make 24, and close the mesh cleanly, use only as per prior confirmation)  
+    // T21
     {
-      id: 'SP1',
-      vertices: [ { lat: 0.0,    lng: 108.0 }, { lat: -66.0,  lng: 144.0 }, { lat: -66.0,  lng: 72.0 } ],
+      id: 'T21',
+      vertices: [
+        { lat: 66, lng: 0 },
+        { lat: 90, lng: 0 },
+        { lat: 66, lng: 72 }
+      ],
       level: 0, clickCount: 0, subdivided: false
     },
+    // T22
     {
-      id: 'SP2',
-      vertices: [ { lat: 0.0,    lng: -108.0 }, { lat: -66.0,  lng: -72.0 }, { lat: -66.0,  lng: -144.0 } ],
+      id: 'T22',
+      vertices: [
+        { lat: 66, lng: 72 },
+        { lat: 90, lng: 0 },
+        { lat: 66, lng: 144 }
+      ],
       level: 0, clickCount: 0, subdivided: false
     },
+    // T23
     {
-      id: 'SP3',
-      vertices: [ { lat: -66.0,  lng: 144.0 }, { lat: -66.0,  lng: 72.0 }, { lat: -90.0,  lng: 0.0 } ],
+      id: 'T23',
+      vertices: [
+        { lat: -66, lng: -144 },
+        { lat: -90, lng: 0 },
+        { lat: -66, lng: -72 }
+      ],
       level: 0, clickCount: 0, subdivided: false
     },
+    // T24
     {
-      id: 'SP4',
-      vertices: [ { lat: -66.0,  lng: -144.0 }, { lat: -66.0,  lng: -72.0 }, { lat: -90.0,  lng: 0.0 } ],
+      id: 'T24',
+      vertices: [
+        { lat: -66, lng: -72 },
+        { lat: -90, lng: 0 },
+        { lat: -66, lng: 0 }
+      ],
+      level: 0, clickCount: 0, subdivided: false
+    },
+    // T25
+    {
+      id: 'T25',
+      vertices: [
+        { lat: -66, lng: 0 },
+        { lat: -90, lng: 0 },
+        { lat: -66, lng: 72 }
+      ],
+      level: 0, clickCount: 0, subdivided: false
+    },
+    // T26
+    {
+      id: 'T26',
+      vertices: [
+        { lat: -66, lng: 72 },
+        { lat: -90, lng: 0 },
+        { lat: -66, lng: 144 }
+      ],
       level: 0, clickCount: 0, subdivided: false
     }
   ];
 
-  console.log('Base triangle mesh generated as 24 canonical triangles (IDs N1–N4, B1–B4, E1–E4, SB1–SB4, S1–S4, SP1–SP4). Reference by array index 0–23 for all operations.');
+  console.log('Base triangle mesh generated as 26 triangles (T1–T26).');
   return triangles;
 }
 
