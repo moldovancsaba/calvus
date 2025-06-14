@@ -6,8 +6,9 @@ All notable changes to the Triangle Mesh project will be documented in this file
 
 ### Changed
 - App renamed from **Icosahedral Geodesic Grid** to **Step**
-- Removed popup notifications for triangle activity and invalid clicks
-- Documentation updated for new name, new version, and previous milestones
+- Removed popup notifications for triangle activity and invalid clicks for a cleaner UX
+- Documentation restructured: All long content moved to `/documents` with in-app Markdown reader
+- Project refactored: codebases above 200 lines auto-split, everything now modular and maintainable
 
 ## [1.0.0] - 2025-01-14
 
