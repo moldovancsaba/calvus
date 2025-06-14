@@ -36,7 +36,7 @@ export async function storeTriangleActivity(
         {
           when: new Date().toISOString(),
           where: triangleId,
-          what: action_type,
+          what: clickCount, // FIXED: must be a number (was action_type string)
           click_count: clickCount,
           level: level,
           subdivided: subdivided,
