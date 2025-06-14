@@ -81,8 +81,10 @@ export const SettingsMenu: React.FC<{ children: React.ReactNode }> = ({ children
     setBusy(true);
     try {
       await clearTriangleActivities();
-      // Optionally clear mesh-related state if any is cached (e.g. localStorage)
+      // Remove client cache if any
       window.localStorage.removeItem("triangleMeshCache");
+      // Also clear activities for instant reset in this drawer
+      setActivities([]);
       // Reload the page or trigger reload in parent if available.
       window.location.reload();
     } catch (e) {
