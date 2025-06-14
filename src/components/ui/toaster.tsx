@@ -1,3 +1,4 @@
+
 import { useToast } from "@/hooks/use-toast"
 import {
   Toast,
@@ -7,9 +8,14 @@ import {
   ToastTitle,
   ToastViewport,
 } from "@/components/ui/toast"
+import { useIsMobile } from "../../hooks/use-mobile"
 
 export function Toaster() {
   const { toasts } = useToast()
+  const isMobile = useIsMobile();
+
+  // Hide notifications on mobile completely
+  if (isMobile) return null;
 
   return (
     <ToastProvider>
