@@ -1,4 +1,3 @@
-
 # Technical Implementation Notes
 
 ## Architecture Decisions
@@ -75,19 +74,24 @@ const greatCirclePath = (start: any, end: any, steps: number = 50) => {
 ### Activity Storage Format
 ```typescript
 {
-  when: "2025-01-14T12:34:56.789Z",  // UTC ISO 8601 with milliseconds
-  where: "1.4.2",                   // Hierarchical triangle ID
-  what: 5,                          // Click count level
-  level: 2,                         // Subdivision depth
-  timestamp: Date                   // MongoDB native timestamp
+  when: "2025-01-14T12:34:56.789Z",        // UTC ISO 8601 with milliseconds
+  where: "1.4.2",                          // Hierarchical triangle ID
+  what: 5,                                 // Click count level (alias for click_count, kept for backward comp.)
+  click_count: 5,                          // Click count at write (snapshot, not delta)
+  subdivided: true,                        // TRUE if subdivided at this snapshot, FALSE otherwise
+  action_type: "click" | "subdivide",      // Nature of state change ("click" or "subdivide")
+  level: 2,                                // Subdivision depth
+  gametag: "player123",                    // Actor/player/user tag
+  color: "#06D6A0",                        // Chosen color for this triangle state
+  notes: "optional note about this action",// For debug/analytics, optional
+  timestamp: Date                          // DB write time, can be used for ordering
 }
 ```
 
 **Design Rationale**:
-- `when`: Enables temporal analysis and debugging
-- `where`: Direct triangle identification without complex joins
-- `what`: Simple integer for fast comparisons and sorting
-- `level`: Optimization for subdivision limit checks
+- Each row in the table is a **full, standalone snapshot** of a triangle's state.
+- `rebuildTriangleMeshFromActivities()` restores mesh by using the *latest row per triangle id* for lossless, race-free mesh recreation.
+- Old incremental activities are discarded; no replay of historical deltas.
 
 ## Performance Optimizations
 

@@ -75,11 +75,19 @@ A collaborative spherical triangle mesh system built with React, Leaflet, and Mo
 {
   when: "2025-01-14T12:34:56.789Z",  // UTC ISO 8601 with milliseconds
   where: "1.4.2",                   // Hierarchical triangle ID
-  what: 5,                          // Click count on this triangle
+  what: 5,                          // Click count on this triangle (snapshot, not delta)
   level: 2,                         // Subdivision level
-  timestamp: Date                   // MongoDB timestamp
+  click_count: 5,                   // Synonymous with 'what', full state at time of write
+  subdivided: true,                 // Boolean, full state at time of write
+  action_type: "click" | "subdivide", // Nature of the action leading to this state
+  gametag: "player123",             // User identifier for the action
+  color: "#06D6A0",                 // Player's chosen color for this triangle state
+  notes: "optional debug info",     // For analytics or debug
+  timestamp: Date                   // Database write timestamp
 }
 ```
+> The table stores a **snapshot** of the triangle's state at each relevant action (tap or subdivision).
+> On reload, the mesh is *reconstructed using the latest row per triangle ID*, so no historical state is required.
 
 #### Triangle Mesh Interface
 ```typescript
