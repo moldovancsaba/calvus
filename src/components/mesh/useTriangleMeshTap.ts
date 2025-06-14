@@ -1,4 +1,3 @@
-
 import { useCallback } from "react";
 import { storeTriangleActivity, subdivideTriangleMesh } from "../../utils/triangleMesh";
 
@@ -20,10 +19,17 @@ export function useTriangleMeshTap(
       prevMeshRef: React.MutableRefObject<any[]>
     ) => {
       if (!identity) return;
-      // ENFORCE FINALITY: if triangle at max level, block further interaction!
-      if (triangle.level >= maxDivideLevel) return;
 
-      if (triangle?.gametag && triangle.gametag === identity.gametag && triangle.color === identity.color) {
+      const isAtFinalLevel = triangle.level >= maxDivideLevel;
+
+      // ALLOW owner/color update on final level, but no subdivide beyond final
+      if (
+        isAtFinalLevel &&
+        triangle.clickCount >= clicksToDivide &&
+        triangle.gametag === identity.gametag &&
+        triangle.color === identity.color
+      ) {
+        // Already claimed by this user at max, do nothing
         return;
       }
 
@@ -35,6 +41,17 @@ export function useTriangleMeshTap(
           triangles.map(triangleEl => {
             if (triangleEl.id === triangleId) {
               const newClickCount = triangleEl.clickCount + 1;
+              // -- Final level logic: just color/owner/finalize, NO subdivide
+              if (triangleEl.level >= maxDivideLevel) {
+                // let it reach clicksToDivide, then set color/owner, no subdivide
+                return {
+                  ...triangleEl,
+                  clickCount: Math.min(newClickCount, clicksToDivide),
+                  color: identity.color,
+                  gametag: identity.gametag,
+                };
+              }
+              // regular subdivide if needed
               if (newClickCount === clicksToDivide && triangleEl.level < maxDivideLevel && !triangleEl.subdivided) {
                 const children = subdivideTriangleMesh(triangleEl);
                 return {
@@ -46,6 +63,7 @@ export function useTriangleMeshTap(
                   gametag: identity.gametag,
                 };
               }
+              // regular increment/color change
               return {
                 ...triangleEl,
                 clickCount: newClickCount,
@@ -66,18 +84,21 @@ export function useTriangleMeshTap(
 
       let storeSuccess = false;
       try {
-        const actionType =
-          (triangle?.clickCount ?? 0) + 1 === clicksToDivide && (triangle?.level ?? 0) < maxDivideLevel
-            ? "subdivide"
-            : "click";
+        // Update: make sure "subdivide" never triggers on last level
+        let actionType: string = "click";
+        let willSubdivide = false;
+        if (
+          (triangle?.clickCount ?? 0) + 1 === clicksToDivide &&
+          triangle?.level < maxDivideLevel
+        ) {
+          actionType = "subdivide";
+          willSubdivide = true;
+        }
         const result = await storeTriangleActivity(
           triangleId,
-          (triangle?.clickCount ?? 0) + 1,
+          Math.min((triangle?.clickCount ?? 0) + 1, clicksToDivide),
           triangle?.level ?? 0,
-          Boolean(
-            ((triangle?.clickCount ?? 0) + 1 === clicksToDivide) &&
-            (triangle?.level ?? 0) < maxDivideLevel
-          ),
+          willSubdivide,
           actionType,
           identity.gametag,
           identity.color,
@@ -93,6 +114,7 @@ export function useTriangleMeshTap(
         setTriangleMesh(prev => prevMeshRef.current);
       }
 
+      // -- existing mobile move-to-triangle logic unchanged --
       if (
         storeSuccess &&
         isMobile &&
