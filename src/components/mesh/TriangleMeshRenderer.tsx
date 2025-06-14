@@ -1,3 +1,4 @@
+
 import L from "leaflet";
 import React from "react";
 import { createGeodesicTriangle } from "./GeodesicTriangle";
@@ -56,8 +57,9 @@ export function TriangleMeshRenderer({
           });
 
           // Defensive: don't add polygons if map is destroyed or not attached to DOM
-          // map._container is a heuristic for if it's still attached
-          if (map && (map as any)._container && map._container.parentNode) {
+          // Use public API getContainer()
+          const container = map.getContainer && map.getContainer();
+          if (map && container && container.parentNode) {
             // --- Main interaction events ---
 
             // Handle pointerdown (desktop and modern mobile)
@@ -111,3 +113,4 @@ export function TriangleMeshRenderer({
 
   return null;
 }
+
