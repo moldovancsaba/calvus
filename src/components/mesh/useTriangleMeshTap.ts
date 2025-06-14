@@ -1,4 +1,3 @@
-
 import { useCallback } from "react";
 import { storeTriangleActivity, subdivideTriangleMesh } from "../../utils/triangleMesh";
 import { toast } from "../ui/use-toast";
@@ -22,10 +21,10 @@ export function useTriangleMeshTap(
       if (!identity) return;
 
       // --- ENFORCE CLICKABILITY ---
-      // Only allow clicking triangles:
-      // (a) never clicked (triangle.gametag falsy)
-      // (b) last clicked by another gamer (triangle.gametag != me)
-      // (c) else, do nothing
+      // User can ONLY click:
+      // (a) triangle never clicked (triangle.gametag falsy)
+      // (b) triangle most recently clicked by ANOTHER gamer (triangle.gametag != me or color != me)
+      // (c) If it is your own triangle (gametag AND color = me), do nothing
       if (triangle?.gametag && triangle.gametag === identity.gametag && triangle.color === identity.color) {
         // Prevent click, let user know
         toast({

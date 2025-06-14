@@ -14,7 +14,7 @@ export function Toaster() {
   const { toasts } = useToast()
   const isMobile = useIsMobile();
 
-  // Hide notifications on mobile completely
+  // Hide notifications on mobile completely (double guarantee)
   if (isMobile) return null;
 
   return (

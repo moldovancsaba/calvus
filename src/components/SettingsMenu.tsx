@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
-import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { Button } from "@/components/ui/button";
 import { getTriangleActivities, clearTriangleActivities } from "../utils/triangleMesh";
 import { useIsMobile } from "../hooks/use-mobile";
@@ -27,7 +26,6 @@ export const SettingsMenu: React.FC<{ children: React.ReactNode }> = ({ children
   const [activities, setActivities] = useState<any[]>([]);
   const [forceMobileZoom, setForceMobileZoom] = useState(true);
   const [busy, setBusy] = useState(false);
-  const isMobile = useIsMobile();
 
   useEffect(() => {
     async function load() {
@@ -56,7 +54,7 @@ export const SettingsMenu: React.FC<{ children: React.ReactNode }> = ({ children
     }, 1000);
   }
 
-  // Settings UI content reused for Popover/Sheet
+  // Settings UI content reused for fullscreen drawer
   const settingsContent = (
     <div className="flex flex-col h-full w-full">
       <div className="text-lg font-semibold mb-2">Settings</div>
@@ -99,27 +97,19 @@ export const SettingsMenu: React.FC<{ children: React.ReactNode }> = ({ children
     </div>
   );
 
-  if (isMobile) {
-    // Use Sheet modal on mobile (full screen)
-    return (
-      <Sheet open={open} onOpenChange={setOpen}>
-        <SheetTrigger asChild>{children}</SheetTrigger>
-        <SheetContent side="bottom" className="p-6 h-full max-h-screen w-full flex flex-col items-stretch rounded-t-lg">
-          {settingsContent}
-        </SheetContent>
-      </Sheet>
-    );
-  }
-
-  // Otherwise use popover on desktop
+  // Always render fullscreen sheet for settings (over map), regardless of device
   return (
-    <Popover open={open} onOpenChange={setOpen}>
-      <PopoverTrigger asChild>
-        {children}
-      </PopoverTrigger>
-      <PopoverContent align="end" className="w-80">
+    <Sheet open={open} onOpenChange={setOpen}>
+      <SheetTrigger asChild>{children}</SheetTrigger>
+      <SheetContent
+        side="bottom"
+        className="p-6 h-full max-h-screen w-full flex flex-col items-stretch rounded-none fixed inset-0 z-[9999] bg-background"
+        style={{
+          borderRadius: 0,
+        }}
+      >
         {settingsContent}
-      </PopoverContent>
-    </Popover>
+      </SheetContent>
+    </Sheet>
   );
 };
