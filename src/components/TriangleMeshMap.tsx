@@ -1,4 +1,3 @@
-
 import { useEffect, useRef, useState } from 'react';
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
@@ -47,7 +46,7 @@ const TriangleMeshMap = () => {
       boxZoom: false,
       scrollWheelZoom: false,
       dragging: true,
-      touchZoom: false // Disable pinch-zoom and double-tap to zoom
+      touchZoom: "center" // This disables pinch-zoom but allows tap/click/touch events for overlays
     });
 
     // Remove existing controls and add zoom control top right
