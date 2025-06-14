@@ -1,4 +1,3 @@
-
 import React, { useEffect, useState } from "react";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { Button } from "@/components/ui/button";
@@ -47,9 +46,9 @@ export const SettingsMenu: React.FC<{ children: React.ReactNode }> = ({ children
       zoomVal &&
       !isNaN(Number(zoomVal)) &&
       Number(zoomVal) > 0 &&
-      Number(zoomVal) <= 12
+      Number(zoomVal) <= 20
     ) {
-      setFixedZoomLevel(Number(zoomVal));
+      setFixedZoomLevel(Math.floor(Number(zoomVal)));
     }
   }, []);
 
@@ -63,11 +62,13 @@ export const SettingsMenu: React.FC<{ children: React.ReactNode }> = ({ children
         : "Fixed zoom disabled",
       duration: 2000,
     });
+    // Broadcast storage event for map tab to sync instantly
+    window.dispatchEvent(new StorageEvent("storage", { key: "fixedMobileZoom", newValue: val ? "true" : "false" }));
   }
 
   function handleSetFixedZoomLevel(level: number) {
-    // clamp to range [1, 12]
-    let clamped = Math.min(Math.max(level, 1), 12);
+    // clamp to range [1, 20], integer only
+    let clamped = Math.min(Math.max(Math.round(level), 1), 20);
     setFixedZoomLevel(clamped);
     window.localStorage.setItem("fixedMobileZoomLevel", String(clamped));
     toast({
@@ -75,17 +76,19 @@ export const SettingsMenu: React.FC<{ children: React.ReactNode }> = ({ children
       description: `Mobile zoom level set to ${clamped}`,
       duration: 2000,
     });
+    // Broadcast storage event so the map knows to re-read
+    window.dispatchEvent(new StorageEvent("storage", { key: "fixedMobileZoomLevel", newValue: String(clamped) }));
   }
 
   async function handleRestartWorld() {
     setBusy(true);
     try {
       await clearTriangleActivities();
-      // Remove client cache if any
       window.localStorage.removeItem("triangleMeshCache");
-      // Also clear activities for instant reset in this drawer
-      setActivities([]);
-      // Reload the page or trigger reload in parent if available.
+      setActivities([]); // clear gamer list instantly
+      // Broadcast a custom event so TriangleMeshMap refreshes itself instantly
+      window.dispatchEvent(new StorageEvent("storage", { key: "refreshMesh", newValue: Date.now().toString() }));
+      // Also reload the page for a guaranteed hard reset
       window.location.reload();
     } catch (e) {
       toast({
@@ -123,18 +126,20 @@ export const SettingsMenu: React.FC<{ children: React.ReactNode }> = ({ children
             id="fixed-zoom-level"
             type="number"
             min={1}
-            max={12}
-            step={0.1}
+            max={20}
+            step={1}
+            pattern="[0-9]*"
+            inputMode="numeric"
             className="w-20 text-right"
             value={fixedZoomLevel}
-            onChange={e =>
-              handleSetFixedZoomLevel(
-                Number((e.target as HTMLInputElement).value)
-              )
-            }
+            onChange={e => {
+              // keep only integer
+              const n = Math.floor(Number((e.target as HTMLInputElement).value));
+              if (!isNaN(n)) handleSetFixedZoomLevel(n);
+            }}
             onBlur={e => {
-              // Clamp on blur in case user enters out-of-bounds
-              let val = Number((e.target as HTMLInputElement).value);
+              // Clamp on blur in case user enters out-of-bounds or decimal
+              let val = Math.round(Number((e.target as HTMLInputElement).value));
               if (isNaN(val)) val = 2;
               handleSetFixedZoomLevel(val);
             }}
@@ -157,13 +162,17 @@ export const SettingsMenu: React.FC<{ children: React.ReactNode }> = ({ children
       <div className="flex-1 flex flex-col">
         <div className="font-semibold mb-2">Gamers</div>
         <div className="grid grid-cols-1 gap-1 max-h-40 overflow-y-auto">
-          {summarizeGamers(activities).map(({ gametag, color, clicks }) => (
-            <div className="flex items-center gap-2 p-1 rounded hover:bg-accent" key={gametag + color}>
-              <span className="inline-block w-3 h-3 rounded-full" style={{ backgroundColor: color }} />
-              <span className="truncate max-w-[5rem] font-mono">{gametag}</span>
-              <span className="ml-auto text-xs text-muted-foreground">{clicks} clicks</span>
-            </div>
-          ))}
+          {summarizeGamers(activities).length === 0 ? (
+            <div className="text-xs text-muted-foreground">No gamers yet</div>
+          ) : (
+            summarizeGamers(activities).map(({ gametag, color, clicks }) => (
+              <div className="flex items-center gap-2 p-1 rounded hover:bg-accent" key={gametag + color}>
+                <span className="inline-block w-3 h-3 rounded-full" style={{ backgroundColor: color }} />
+                <span className="truncate max-w-[5rem] font-mono">{gametag}</span>
+                <span className="ml-auto text-xs text-muted-foreground">{clicks} clicks</span>
+              </div>
+            ))
+          )}
         </div>
       </div>
     </div>

@@ -1,4 +1,3 @@
-
 import { useEffect, useRef, useState } from 'react';
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
@@ -30,8 +29,35 @@ const TriangleMeshMap = () => {
   const pollIntervalRef = useRef<NodeJS.Timeout | null>(null);
   const { identity } = useIdentity();
   const isMobile = useIsMobile();
-
   const prevMeshRef = useRef<TriangleMesh[]>([]);
+
+  // Listen for mesh/zoom settings changes even if user is actively on the map,
+  // so settings take effect instantly on mobile
+  useEffect(() => {
+    const reloadMapSettings = () => {
+      if (mapRef.current && mapInstanceRef.current) {
+        // Remove and re-init map on setting changes
+        mapInstanceRef.current.remove();
+        mapInstanceRef.current = null;
+        setIsLoading(true);
+        setTimeout(() => setIsLoading(false), 50);
+      }
+    };
+
+    const storageHandler = (e: StorageEvent) => {
+      if (
+        e.key === "fixedMobileZoomLevel" ||
+        e.key === "fixedMobileZoom" ||
+        e.key === "refreshMesh"
+      ) {
+        reloadMapSettings();
+      }
+    };
+    window.addEventListener("storage", storageHandler);
+    return () => {
+      window.removeEventListener("storage", storageHandler);
+    };
+  }, []);
 
   useEffect(() => {
     if (!mapRef.current) return;
@@ -48,9 +74,10 @@ const TriangleMeshMap = () => {
           zoomVal &&
           !isNaN(Number(zoomVal)) &&
           Number(zoomVal) >= 1 &&
-          Number(zoomVal) <= 12
+          Number(zoomVal) <= 20
         ) {
-          mobileZoomLevel = Number(zoomVal);
+          // Round zoom (for OSM only integer)
+          mobileZoomLevel = Math.floor(Number(zoomVal));
         }
       }
     }
@@ -69,7 +96,7 @@ const TriangleMeshMap = () => {
       worldCopyJump: true,
       maxBounds: [[-90, -180], [90, 180]],
       preferCanvas: true,
-      zoomControl: !isMobile, // hide +/- buttons on mobile
+      zoomControl: !isMobile,
       doubleClickZoom: false,
       boxZoom: false,
       scrollWheelZoom: false,
@@ -95,7 +122,6 @@ const TriangleMeshMap = () => {
         }
       });
     } else if (isMobile) {
-      // Default mobile logic for zoom = 10 (legacy behavior)
       map.on("zoomend", () => {
         if (map.getZoom() !== 10) {
           map.setZoom(10);
@@ -163,7 +189,7 @@ const TriangleMeshMap = () => {
         clearInterval(pollIntervalRef.current);
       }
     };
-  }, [isMobile]); // re-run when device-type changes
+  }, [isMobile]); // re-run on mobile/desktop change or re-mount
 
   // Custom mobile/touch logic (does nothing on desktop)
   useLeafletMobileTouch(mapInstanceRef.current);
