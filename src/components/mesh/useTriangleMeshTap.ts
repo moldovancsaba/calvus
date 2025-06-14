@@ -1,6 +1,6 @@
 
 import { useCallback } from "react";
-import { storeTriangleActivity } from "../../utils/triangleMesh";
+import { storeTriangleActivity, subdivideTriangleMesh } from "../../utils/triangleMesh";
 import { toast } from "../ui/use-toast";
 
 /**
@@ -30,11 +30,10 @@ export function useTriangleMeshTap(
           triangles.map(triangleEl => {
             if (triangleEl.id === triangleId) {
               const newClickCount = triangleEl.clickCount + 1;
-              if (newClickCount === 11 && triangleEl.level < 19) {
-                const children = triangleEl.children
-                  ? triangleEl.children
-                  : [];
-                console.log("[useTriangleMeshTap] Subdividing locally", triangleEl.id);
+              if (newClickCount === 11 && triangleEl.level < 19 && !triangleEl.subdivided) {
+                // Always subdivide when reaching 11 clicks and not at max level
+                const children = subdivideTriangleMesh(triangleEl);
+                console.log("[useTriangleMeshTap] Subdividing locally with new children", triangleEl.id, triangleEl.level);
                 return {
                   ...triangleEl,
                   clickCount: newClickCount,
@@ -116,3 +115,4 @@ export function useTriangleMeshTap(
     [identity, isMobile, mapInstance, setTriangleMesh]
   );
 }
+
