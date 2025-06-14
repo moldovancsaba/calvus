@@ -1,3 +1,4 @@
+
 import { useEffect, useRef, useState } from 'react';
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
@@ -17,7 +18,7 @@ import { useTriangleMeshTap } from "./mesh/useTriangleMeshTap";
 import { LoadingOverlay } from './map/LoadingOverlay';
 import { ErrorBanner } from './map/ErrorBanner';
 
-// Removed geolocation - always use this default map center
+// Always use this default map center
 const DEFAULT_CENTER: [number, number] = [33, 0];
 
 const TriangleMeshMap = () => {
@@ -32,19 +33,21 @@ const TriangleMeshMap = () => {
 
   const prevMeshRef = useRef<TriangleMesh[]>([]);
 
-  // --- Map initialization without geolocation ---
   useEffect(() => {
     if (!mapRef.current) return;
 
+    // Fix zoom level for mobile
+    const mapZoom = isMobile ? 10 : 6;
+
     const map = L.map(mapRef.current, {
       center: DEFAULT_CENTER,
-      zoom: 6,
-      minZoom: 5,
-      maxZoom: 15,
+      zoom: mapZoom,
+      minZoom: isMobile ? 10 : 5,
+      maxZoom: isMobile ? 10 : 15,
       worldCopyJump: true,
       maxBounds: [[-90, -180], [90, 180]],
       preferCanvas: true,
-      zoomControl: true,
+      zoomControl: !isMobile, // hide +/- buttons on mobile
       doubleClickZoom: false,
       boxZoom: false,
       scrollWheelZoom: false,
@@ -52,13 +55,33 @@ const TriangleMeshMap = () => {
       dragging: true,
     });
 
-    map.zoomControl.setPosition('topright');
+    // Set zoom control position on desktop only
+    if (!isMobile) {
+      map.zoomControl.setPosition('topright');
+    }
 
-    map.on("zoomend", () => {
-      const z = map.getZoom();
-      if (z < 5) map.setZoom(5);
-      if (z > 15) map.setZoom(15);
-    });
+    // If mobile, completely lock zoom level to 10
+    if (isMobile) {
+      // Prevent zoom by gestures, scroll, and programmatically
+      map.on("zoomend", () => {
+        if (map.getZoom() !== 10) {
+          map.setZoom(10);
+        }
+      });
+      // Optionally: Reset zoom if attempted by bounds, etc
+      map.on("movestart", () => {
+        if (map.getZoom() !== 10) {
+          map.setZoom(10);
+        }
+      });
+    } else {
+      // Clamp zoom in all user interactions (desktop)
+      map.on("zoomend", () => {
+        const z = map.getZoom();
+        if (z < 5) map.setZoom(5);
+        if (z > 15) map.setZoom(15);
+      });
+    }
 
     mapInstanceRef.current = map;
 
@@ -73,7 +96,6 @@ const TriangleMeshMap = () => {
       try {
         setIsLoading(true);
         const activities = await getTriangleActivities();
-        console.log("[TriangleMeshMap] Activities loaded:", activities);
         if (activities.length > 0) {
           const restoredMesh = rebuildTriangleMeshFromActivities(activities);
           setTriangleMesh(restoredMesh);
@@ -95,7 +117,6 @@ const TriangleMeshMap = () => {
     pollIntervalRef.current = setInterval(async () => {
       try {
         const activities = await getTriangleActivities();
-        console.log("[TriangleMeshMap] Activities polled:", activities);
         const restoredMesh = rebuildTriangleMeshFromActivities(activities);
         setTriangleMesh(restoredMesh);
       } catch (error) {
@@ -110,12 +131,12 @@ const TriangleMeshMap = () => {
         clearInterval(pollIntervalRef.current);
       }
     };
-  }, []);
+  }, [isMobile]); // re-run when device-type changes
 
-  // Custom mobile/touch logic (refactored, hook does nothing on desktop)
+  // Custom mobile/touch logic (does nothing on desktop)
   useLeafletMobileTouch(mapInstanceRef.current);
 
-  // Use robust mesh tap handler (shared across devices)
+  // Use mesh tap handler (shared across devices)
   const handleTriangleMeshClick = useTriangleMeshTap(
     identity,
     setTriangleMesh,
@@ -136,7 +157,6 @@ const TriangleMeshMap = () => {
         }}
       />
       {isLoading && <LoadingOverlay />}
-      {/* ErrorBanner no longer needed without geolocation, but keeping render for compatibility */}
       <ErrorBanner message={null} />
       {mapInstanceRef.current && (
         <TriangleMeshRenderer
@@ -144,7 +164,6 @@ const TriangleMeshMap = () => {
           triangleMesh={triangleMesh}
           triangleLayersRef={triangleLayersRef}
           onTriangleClick={(triangleId, triangle, parentPath) => {
-            console.log("[TriangleMeshMap] onTriangleClick", triangleId, triangle, parentPath);
             handleTriangleMeshClick(triangleId, triangle, prevMeshRef);
           }}
         />
