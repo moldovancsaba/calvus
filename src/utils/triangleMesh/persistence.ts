@@ -1,4 +1,3 @@
-
 import type { TriangleMesh } from "./geometry";
 
 // TypeScript type for DB row
@@ -9,10 +8,18 @@ type TriangleActivityRow = {
   what: number;
   level: number;
   timestamp: string;
+  gametag?: string | null;
+  color?: string | null;
 };
 
-// Store triangle click activity in Supabase
-export async function storeTriangleActivity(triangleId: string, clickCount: number, level: number) {
+// Store triangle click activity in Supabase, include gametag and color
+export async function storeTriangleActivity(
+  triangleId: string,
+  clickCount: number,
+  level: number,
+  gametag?: string,
+  color?: string
+) {
   try {
     const { supabase } = await import('@/integrations/supabase/client');
     const { error, data } = await supabase
@@ -23,6 +30,8 @@ export async function storeTriangleActivity(triangleId: string, clickCount: numb
           where: triangleId,
           what: clickCount,
           level: level,
+          gametag: gametag ?? null,
+          color: color ?? null,
         }
       ])
       .select('id');
@@ -69,9 +78,12 @@ export async function getTriangleActivities() {
       console.warn("Triangle activities GET: Malformed response or 'activities' is not array", data);
       return [];
     }
+    // Ensure activities include gametag/color even if missing
     const activities = (data as TriangleActivityRow[]).map((act) => ({
       ...act,
       when: typeof act.when === 'string' ? act.when : new Date(act.when).toISOString(),
+      gametag: act.gametag ?? null,
+      color: act.color ?? null,
     }));
     console.log('Retrieved triangle activities from Supabase:', activities.length, activities);
     return activities;

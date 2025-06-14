@@ -179,9 +179,14 @@ const TriangleMeshMap = () => {
           if (triangle.id === triangleId) {
             const newClickCount = triangle.clickCount + 1;
 
-            // Store activity (include gametag + color, persistently in DB if needed)
-            storeTriangleActivity(triangleId, newClickCount, triangle.level)
-              .catch(error => console.error('Failed to store triangle activity:', error));
+            // Store activity (now includes gametag + color)
+            storeTriangleActivity(
+              triangleId,
+              newClickCount,
+              triangle.level,
+              identity.gametag,
+              identity.color
+            ).catch(error => console.error('Failed to store triangle activity:', error));
             
             // If subdivide
             if (newClickCount === 11 && triangle.level < 19) {
@@ -196,7 +201,7 @@ const TriangleMeshMap = () => {
               };
             }
 
-            // Use player's color
+            // Use player's color/gametag
             return {
               ...triangle,
               clickCount: newClickCount,
