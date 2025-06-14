@@ -1,3 +1,4 @@
+
 import L from "leaflet";
 import React from "react";
 import { createGeodesicTriangle } from "./GeodesicTriangle";
@@ -30,17 +31,24 @@ export function TriangleMeshRenderer({
     // Extra defensive: abort if map has no container or is detached from DOM
     const mapContainer = map.getContainer?.();
     if (!mapContainer || !mapContainer.parentNode) {
+      // Do not attempt any rendering if map container is not attached!
       return;
     }
 
     const renderTriangleMesh = (triangleList: TriangleMesh[], parentPath: string = "") => {
-      triangleList.forEach(triangle => {
+      for (const triangle of triangleList) {
         const trianglePath = parentPath ? `${parentPath}-${triangle.id}` : triangle.id;
         if (!triangle.subdivided) {
+          // Defensive: always fetch current container just before manipulating!
+          const container = map.getContainer?.();
+          if (!map || !container || !container.parentNode) return;
+
+          // Remove existing layer first
           const existingLayer = triangleLayersRef.current.get(trianglePath);
           if (existingLayer && map.hasLayer(existingLayer)) map.removeLayer(existingLayer);
 
           const coordinates = createGeodesicTriangle(triangle.vertices);
+
           let fill = "#fff";
           if (triangle.clickCount > 0) {
             fill = triangle.color || "#222";
@@ -48,6 +56,9 @@ export function TriangleMeshRenderer({
           const fillOpacity = triangle.clickCount === 0
             ? 0.5
             : Math.min(0.3 + triangle.clickCount * 0.07, 0.95);
+
+          // Defensive: check freshness again
+          if (!map || !container.parentNode) return;
 
           const polygon = L.polygon(coordinates, {
             color: fill,
@@ -60,55 +71,53 @@ export function TriangleMeshRenderer({
             className: "leaflet-interactive"
           });
 
-          // Defensive: Ensure map is still valid and container attached before adding
-          const container = map.getContainer && map.getContainer();
-          if (map && container && container.parentNode) {
+          // Defensive: Ensure map and its container are valid and attached!
+          const safeMap = map;
+          const safeContainer = map.getContainer?.();
+          if (safeMap && safeContainer && safeContainer.parentNode) {
             // --- Main interaction events ---
             polygon.on("pointerdown", (e: any) => {
-              console.log("[TriangleMeshRenderer] pointerdown", e, triangle);
               onTriangleClick(triangle.id, triangle, trianglePath);
             });
 
             polygon.on("click", (e: any) => {
-              console.log("[TriangleMeshRenderer] click fallback", e, triangle);
               onTriangleClick(triangle.id, triangle, trianglePath);
             });
 
             polygon.on("touchstart", (e: any) => {
-              console.log("[TriangleMeshRenderer] touchstart - firing tap/click!", e, triangle);
               onTriangleClick(triangle.id, triangle, trianglePath);
             });
 
             polygon.on("touchend", (e: any) => {
-              console.log("[TriangleMeshRenderer] touchend", e, triangle);
+              // Optionally add touch end logic if needed
             });
 
-            polygon.addTo(map);
+            polygon.addTo(safeMap);
             triangleLayersRef.current.set(trianglePath, polygon);
           }
         } else if (triangle.children) {
           renderTriangleMesh(triangle.children, trianglePath);
         }
-      });
+      }
     };
 
-    // Remove all current layers first, only if map is attached
+    // Defensive: clear existing layers only if container is still valid
     const currentContainer = map.getContainer?.();
     if (map && currentContainer && currentContainer.parentNode) {
       triangleLayersRef.current.forEach(layer => {
-        if (map && map.hasLayer(layer)) map.removeLayer(layer);
+        if (map.hasLayer(layer)) map.removeLayer(layer);
       });
     }
     triangleLayersRef.current.clear();
 
     renderTriangleMesh(triangleMesh);
 
-    // Cleanup: remove layers on unmount, only if map is valid
+    // Cleanup: remove layers on unmount, only if map is valid and still attached
     return () => {
       const cleanupContainer = map.getContainer?.();
       if (map && cleanupContainer && cleanupContainer.parentNode) {
         triangleLayersRef.current.forEach(layer => {
-          if (map && map.hasLayer(layer)) map.removeLayer(layer);
+          if (map.hasLayer(layer)) map.removeLayer(layer);
         });
       }
       triangleLayersRef.current.clear();
