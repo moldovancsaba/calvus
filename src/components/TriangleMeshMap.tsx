@@ -75,6 +75,19 @@ const TriangleMeshMap = ({ worldSlug }: Props) => {
 
   useEffect(() => {
     if (!mapRef.current) return;
+    // ==== FIX: Properly clean up Leaflet container before initializing ====
+    // If a Leaflet map was already initialized on this container, remove its _leaflet_id property
+    if (mapRef.current && (mapRef.current as any)._leaflet_id) {
+      try {
+        // Remove previous map instance if needed (defensive)
+        mapInstanceRef.current?.remove();
+      } catch (e) {}
+      (mapRef.current as any)._leaflet_id = undefined;
+      // Optionally, clear children or HTML
+      mapRef.current.innerHTML = "";
+    }
+    // ==== END FIX ====
+
     let mobileZoomLevel = 10;
     let mobileFixedZoomEnabled = true;
     if (isMobile) {
@@ -190,9 +203,15 @@ const TriangleMeshMap = ({ worldSlug }: Props) => {
 
     return () => {
       mapInstanceRef.current = null;
-      map.remove();
+      try {
+        map.remove();
+      } catch (e) {} // Defensive if already removed
       if (pollIntervalRef.current) {
         clearInterval(pollIntervalRef.current);
+      }
+      // Defensive: remove _leaflet_id from the container (solves "being reused" error on fast remounts)
+      if (mapRef.current && (mapRef.current as any)._leaflet_id) {
+        (mapRef.current as any)._leaflet_id = undefined;
       }
     };
   }, [isMobile, meshVersion, worldSlug]);
