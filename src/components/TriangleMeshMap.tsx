@@ -15,6 +15,8 @@ import { useIsMobile } from "../hooks/use-mobile";
 import { useLeafletMobileTouch } from "./hooks/useLeafletMobileTouch";
 import { TriangleMeshRenderer } from "./mesh/TriangleMeshRenderer";
 import { useTriangleMeshTap } from "./mesh/useTriangleMeshTap";
+import { LoadingOverlay } from './map/LoadingOverlay';
+import { ErrorBanner } from './map/ErrorBanner';
 
 // Helper to get user's geolocation (promise-based)
 function getUserLatLng(): Promise<[number, number]> {
@@ -185,19 +187,8 @@ const TriangleMeshMap = () => {
           position: "relative"
         }}
       />
-      {isLoading && (
-        <div className="absolute inset-0 flex items-center justify-center bg-white/90 backdrop-blur-[2px] z-50 rounded-none p-4">
-          <div className="text-center">
-            <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600 mx-auto mb-2"></div>
-            <p className="text-base text-gray-600">Loading...</p>
-          </div>
-        </div>
-      )}
-      {locationError && (
-        <div className="absolute top-2 left-1/2 -translate-x-1/2 z-50 rounded bg-yellow-100 text-yellow-900 px-4 py-2 text-xs shadow border border-yellow-300">
-          {locationError}
-        </div>
-      )}
+      {isLoading && <LoadingOverlay />}
+      <ErrorBanner message={locationError} />
       {/* Only render the mesh renderer if the map instance is present */}
       {mapInstanceRef.current && (
         <TriangleMeshRenderer
