@@ -1,3 +1,4 @@
+
 import { useEffect, useRef, useState } from 'react';
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
@@ -32,34 +33,32 @@ const TriangleMeshMap = () => {
   useEffect(() => {
     if (!mapRef.current) return;
 
-    const mobile = window.innerWidth < 768;
-
+    // Always enable zoomControl (the +/- buttons) and disable all other zooming gestures
     const map = L.map(mapRef.current, {
       center: [33, 0],
-      zoom: 6, // Start in allowed range
+      zoom: 6,
       minZoom: 5,
-      maxZoom: 15, // Updated limits (was min 1, max 18)
+      maxZoom: 15,
       worldCopyJump: true,
       maxBounds: [[-90, -180], [90, 180]],
       preferCanvas: true,
-      zoomControl: false,
+      zoomControl: true,    // Show +/- buttons for zoom
       doubleClickZoom: false,
       boxZoom: false,
       scrollWheelZoom: false,
       dragging: true,
-      touchZoom: "center"
+      touchZoom: false // Disable pinch-zoom and double-tap to zoom
     });
 
-    // Also clamp zoom in all user interactions
+    // Remove existing controls and add zoom control top right
+    map.zoomControl.setPosition('topright');
+
+    // Clamp zoom in all user interactions
     map.on("zoomend", () => {
       const z = map.getZoom();
       if (z < 5) map.setZoom(5);
       if (z > 15) map.setZoom(15);
     });
-
-    if (!mobile) {
-      L.control.zoom({ position: 'topright' }).addTo(map);
-    }
 
     mapInstanceRef.current = map;
 
