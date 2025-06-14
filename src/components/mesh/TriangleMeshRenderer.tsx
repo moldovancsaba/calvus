@@ -1,4 +1,3 @@
-
 import L from "leaflet";
 import React from "react";
 import { createGeodesicTriangle } from "./GeodesicTriangle";
@@ -68,20 +67,7 @@ export function TriangleMeshRenderer({
       }
     }
 
-    // In order to know base triangle indexes, flat filter base (level 0) triangles in traversal order
-    const baseTrianglePaths: { triangle: TriangleMesh; path: string; index: number }[] = [];
-    let runningIdx = 0;
-    const collectBaseTriangles = (triangleList: TriangleMesh[], parentPath = "") => {
-      for (const triangle of triangleList) {
-        const trianglePath = parentPath ? `${parentPath}-${triangle.id}` : triangle.id;
-        if (triangle.level === 0 && !triangle.subdivided) {
-          runningIdx += 1;
-          baseTrianglePaths.push({ triangle, path: trianglePath, index: runningIdx });
-        }
-        // Don't count subdivided base triangles as "base" for overlay purposes
-      }
-    };
-    collectBaseTriangles(triangleMesh);
+    // No baseTrianglePaths or index overlays anymore
 
     // Helper to render triangle mesh
     const renderTriangleMesh = (triangleList: TriangleMesh[], parentPath: string = "") => {
@@ -113,7 +99,7 @@ export function TriangleMeshRenderer({
           }
 
           const polygon = L.polygon(coordinates, {
-            color: "#fff",                // <----- Edge always WHITE
+            color: "#fff",                // Edge always WHITE
             weight: 2,
             opacity: 0.8,
             fillColor: fill,
@@ -138,26 +124,6 @@ export function TriangleMeshRenderer({
 
             polygon.addTo(safeMap);
             triangleLayersRef.current.set(trianglePath, polygon);
-          }
-
-          // --- Draw label for base triangles only ---
-          const baseIdx = baseTrianglePaths.find(
-            t => t.path === trianglePath
-          )?.index;
-          if (triangle.level === 0 && !triangle.subdivided && typeof baseIdx === "number") {
-            const centroid = getTriangleCentroid(triangle.vertices);
-            const divIcon = L.divIcon({
-              html: `<div style="color:#234;font-size:1.15em;font-weight:bold;background:rgba(255,255,255,0.85);padding:0.15em 0.45em;border-radius:1em;border:1px solid #ccc;box-shadow:0 1px 4px #0001;">${baseIdx}</div>`,
-              className: "", // Don't use any custom class so it doesn't interfere.
-              iconSize: [30, 22],
-              iconAnchor: [15, 12],
-            });
-            const marker = L.marker(centroid, {
-              icon: divIcon,
-              interactive: false,
-              zIndexOffset: 1000
-            }).addTo(map);
-            numberMarkersRef.current.set(trianglePath, marker);
           }
         } else if (triangle.children) {
           renderTriangleMesh(triangle.children, trianglePath);
@@ -191,7 +157,6 @@ export function TriangleMeshRenderer({
       }
       triangleLayersRef.current.clear();
 
-      // Remove all number markers
       numberMarkersRef.current.forEach((marker) => {
         if (map.hasLayer(marker)) map.removeLayer(marker);
       });
@@ -201,4 +166,3 @@ export function TriangleMeshRenderer({
 
   return null;
 }
-

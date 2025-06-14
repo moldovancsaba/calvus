@@ -9,7 +9,7 @@ A collaborative spherical triangle mesh system built with React, Leaflet, and Mo
 - This README acts as a quick reference and project intro.
 
 ### Key Features
-- Interactive world mesh (**24 base triangles**, 19 subdivision levels)
+- Interactive world mesh (**26 base triangles in canonical spiral order**, 19 subdivision levels)
 - Live collaboration across devices (updates each 5 seconds for all users)
 - Instant “gamer tag” and color personalization (change anytime in UI)
 - Subdivision, coloring, and subdivision limits (see below)
@@ -21,7 +21,8 @@ A collaborative spherical triangle mesh system built with React, Leaflet, and Mo
 - **Gamer Identity:** Choose a unique "gamer tag" and color—instantly visible on your actions. Logout resets identity.
 - **Mesh Tapping:** Click/tap a triangle to “claim” and shade it by increments. The 11th click subdivides the triangle, up to level 19.
 - **Persistence:** Snapshots record each triangle’s state. State is always restored via the latest snapshot—never legacy deltas.
-- **Current Model:** Activity is per-triangle (not an incremental log).  
+- **Current Model:** Activity is per-triangle (not an incremental log).
+- **Triangles:** The system uses 26 canonical base triangles, defined in a spiral from the north pole downward; any triangle can be referenced by its array index (0–25).  
 - **Security:** No user secrets are exposed to clients. Client updates are checked only for correct world. RLS not yet applied server-side.
 - **Limitations:** 
   - Final (level 19) triangles turn red, no further actions allowed.
@@ -61,7 +62,7 @@ All files above are linked in the app (via settings or /documents route).
 | Snapshot        | Aggregate state of a triangle at the time of a user action                        |
 | World slug      | Unique key for parallel session/mesh worlds (route: `/game/:slug`)                |
 | Activity        | A row in the DB recording a triangle’s click/subdivision + owner/color            |
-| **Base mesh**   | Canonical set of 24 initial (level 0) triangles as of v2.1 (see technical docs)   |
+| **Base mesh**   | **26 initial (level 0) triangles (spiral order from the pole), see technical docs for diagram**   |
 
 ---
 
