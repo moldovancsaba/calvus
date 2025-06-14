@@ -22,7 +22,7 @@ A collaborative spherical triangle mesh system built with React, Leaflet, and Mo
 - **Mesh Tapping:** Click/tap a triangle to “claim” and shade it by increments. The 11th click subdivides the triangle, up to level 19.
 - **Persistence:** Snapshots record each triangle’s state. State is always restored via the latest snapshot—never legacy deltas.
 - **Current Model:** Activity is per-triangle (not an incremental log).
-- **Triangles:** The system uses 24 canonical base triangles, defined in a spiral from the north pole downward; any triangle can be referenced by its array index (0–23).  
+- **Triangles:** The system uses **24 canonical base triangles**, defined in a spiral from the north pole downward; any triangle can be referenced by its array index (0–23).  
 - **Security:** No user secrets are exposed to clients. Client updates are checked only for correct world. RLS not yet applied server-side.
 - **Limitations:** 
   - Final (level 19) triangles turn red, no further actions allowed.
