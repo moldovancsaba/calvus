@@ -82,6 +82,11 @@ export const SettingsMenu: React.FC<{ children: React.ReactNode }> = ({ children
     try {
       await clearTriangleActivities();
       window.localStorage.removeItem("triangleMeshCache");
+      // NEW: update meshVersion for cache-busting and broadcast event
+      const meshVersion = Date.now().toString();
+      window.localStorage.setItem("meshVersion", meshVersion);
+      window.dispatchEvent(new StorageEvent("storage", { key: "meshVersion", newValue: meshVersion }));
+
       setActivities([]); // clear gamer list instantly
       window.dispatchEvent(new StorageEvent("storage", { key: "refreshMesh", newValue: Date.now().toString() }));
       toast({
