@@ -1,8 +1,10 @@
+
 import React, { useEffect, useState } from "react";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 import { getTriangleActivities, clearTriangleActivities } from "../utils/triangleMesh";
-import { useIsMobile } from "../hooks/use-mobile";
+import { useToast } from "@/hooks/use-toast";
 
 // Define type for gamer summary
 type GamerSummary = { gametag: string; color: string; clicks: number };
@@ -25,7 +27,9 @@ export const SettingsMenu: React.FC<{ children: React.ReactNode }> = ({ children
   const [open, setOpen] = useState(false);
   const [activities, setActivities] = useState<any[]>([]);
   const [forceMobileZoom, setForceMobileZoom] = useState(true);
+  const [fixedZoomLevel, setFixedZoomLevel] = useState<number>(2); // default 2
   const [busy, setBusy] = useState(false);
+  const { toast } = useToast();
 
   useEffect(() => {
     async function load() {
@@ -38,20 +42,58 @@ export const SettingsMenu: React.FC<{ children: React.ReactNode }> = ({ children
   useEffect(() => {
     const val = window.localStorage.getItem("fixedMobileZoom");
     setForceMobileZoom(val === null || val === "true");
+    const zoomVal = window.localStorage.getItem("fixedMobileZoomLevel");
+    if (
+      zoomVal &&
+      !isNaN(Number(zoomVal)) &&
+      Number(zoomVal) > 0 &&
+      Number(zoomVal) <= 12
+    ) {
+      setFixedZoomLevel(Number(zoomVal));
+    }
   }, []);
 
   function handleSetMobileZoom(val: boolean) {
     setForceMobileZoom(val);
     window.localStorage.setItem("fixedMobileZoom", val ? "true" : "false");
+    toast({
+      title: "Setting updated",
+      description: val
+        ? `Fixed zoom enabled (level: ${fixedZoomLevel})`
+        : "Fixed zoom disabled",
+      duration: 2000,
+    });
+  }
+
+  function handleSetFixedZoomLevel(level: number) {
+    // clamp to range [1, 12]
+    let clamped = Math.min(Math.max(level, 1), 12);
+    setFixedZoomLevel(clamped);
+    window.localStorage.setItem("fixedMobileZoomLevel", String(clamped));
+    toast({
+      title: "Zoom level set",
+      description: `Mobile zoom level set to ${clamped}`,
+      duration: 2000,
+    });
   }
 
   async function handleRestartWorld() {
     setBusy(true);
-    await clearTriangleActivities();
-    setTimeout(() => {
-      setBusy(false);
+    try {
+      await clearTriangleActivities();
+      // Optionally clear mesh-related state if any is cached (e.g. localStorage)
+      window.localStorage.removeItem("triangleMeshCache");
+      // Reload the page or trigger reload in parent if available.
       window.location.reload();
-    }, 1000);
+    } catch (e) {
+      toast({
+        title: "Error",
+        description: "Failed to reset the world.",
+        duration: 3000,
+        variant: "destructive"
+      });
+      setBusy(false);
+    }
   }
 
   // Settings UI content reused for fullscreen drawer
@@ -59,7 +101,7 @@ export const SettingsMenu: React.FC<{ children: React.ReactNode }> = ({ children
     <div className="flex flex-col h-full w-full">
       <div className="text-lg font-semibold mb-2">Settings</div>
       {/* Fixed zoom for mobile */}
-      <div className="flex items-center justify-between mb-4">
+      <div className="flex items-center justify-between mb-4 gap-1">
         <span>Fixed zoom for mobile</span>
         <Button
           variant={forceMobileZoom ? "default" : "outline"}
@@ -69,8 +111,36 @@ export const SettingsMenu: React.FC<{ children: React.ReactNode }> = ({ children
           {forceMobileZoom ? "On" : "Off"}
         </Button>
       </div>
+      {/* Fixed zoom level input */}
+      {forceMobileZoom && (
+        <div className="flex items-center justify-between mb-4 gap-2">
+          <label htmlFor="fixed-zoom-level" className="text-sm">
+            Fixed zoom level
+          </label>
+          <Input
+            id="fixed-zoom-level"
+            type="number"
+            min={1}
+            max={12}
+            step={0.1}
+            className="w-20 text-right"
+            value={fixedZoomLevel}
+            onChange={e =>
+              handleSetFixedZoomLevel(
+                Number((e.target as HTMLInputElement).value)
+              )
+            }
+            onBlur={e => {
+              // Clamp on blur in case user enters out-of-bounds
+              let val = Number((e.target as HTMLInputElement).value);
+              if (isNaN(val)) val = 2;
+              handleSetFixedZoomLevel(val);
+            }}
+          />
+        </div>
+      )}
       {/* Restart World */}
-      <div className="flex items-center justify-between mb-4">
+      <div className="flex items-center justify-between mb-4 gap-1">
         <span>Restart world</span>
         <Button
           variant="destructive"
