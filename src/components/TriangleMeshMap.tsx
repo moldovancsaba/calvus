@@ -1,4 +1,3 @@
-
 import { useEffect, useRef, useState, useCallback } from 'react';
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
@@ -103,23 +102,19 @@ const TriangleMeshMap = () => {
   // Custom mobile/touch logic (refactored, hook does nothing on desktop)
   useLeafletMobileTouch(mapInstanceRef.current);
 
-  // Handler: make sure tap/interaction works on mobile and desktop
+  // Handler: robust tap/click/press - always await DB write and revert on fail
   const handleTriangleMeshClick = useCallback(
     async (triangleId: string, triangle?: TriangleMesh) => {
       if (!identity) return;
 
-      setTriangleMesh(prevMesh => {
+      let uiUpdated = false;
+      let prevMesh: TriangleMesh[] = [];
+      setTriangleMesh(currMesh => {
+        prevMesh = currMesh;
         const updateTriangle = (triangles: TriangleMesh[]): TriangleMesh[] => {
           return triangles.map(triangleEl => {
             if (triangleEl.id === triangleId) {
               const newClickCount = triangleEl.clickCount + 1;
-              storeTriangleActivity(
-                triangleId,
-                newClickCount,
-                triangleEl.level,
-                identity.gametag,
-                identity.color
-              ).catch(error => {});
 
               if (newClickCount === 11 && triangleEl.level < 19) {
                 const children = subdivideTriangleMesh(triangleEl);
@@ -150,11 +145,36 @@ const TriangleMeshMap = () => {
             return triangleEl;
           });
         };
-        return updateTriangle(prevMesh);
+        uiUpdated = true;
+        return updateTriangle(currMesh);
       });
 
-      // On mobile: zoom to triangle centroid when tapped
-      if (isMobile && mapInstanceRef.current && triangle) {
+      let storeSuccess = false;
+      try {
+        // Wait for DB to store the activity, toast if error!
+        await storeTriangleActivity(
+          triangleId,
+          (triangle?.clickCount ?? 0) + 1,
+          triangle?.level ?? 0,
+          identity.gametag,
+          identity.color
+        );
+        storeSuccess = true;
+      } catch (err: any) {
+        storeSuccess = false;
+        import("./ui/use-toast").then(({ toast }) => {
+          toast({
+            title: "Failed to save activity",
+            description: "Could not save tap to server. Please check your connection.",
+            variant: "destructive",
+          });
+        });
+        // Revert the UI change (to make state reliable)
+        setTriangleMesh(prev => prevMesh);
+      }
+
+      // On mobile: zoom to triangle centroid on tap
+      if (storeSuccess && isMobile && mapInstanceRef.current && triangle) {
         const avgLat = (
           triangle.vertices[0].lat +
           triangle.vertices[1].lat +
@@ -210,4 +230,3 @@ const TriangleMeshMap = () => {
 };
 
 export default TriangleMeshMap;
-
