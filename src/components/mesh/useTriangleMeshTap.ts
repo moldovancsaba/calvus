@@ -1,7 +1,7 @@
 
 import { useCallback } from "react";
 import { storeTriangleActivity, subdivideTriangleMesh } from "../../utils/triangleMesh";
-import { toast } from "../ui/use-toast";
+// Removed: import { toast } from "../ui/use-toast";
 
 /**
  * Add worldSlug argument: all activity is scoped to a world.
@@ -23,11 +23,12 @@ export function useTriangleMeshTap(
 
       // --- ENFORCE CLICKABILITY ---
       if (triangle?.gametag && triangle.gametag === identity.gametag && triangle.color === identity.color) {
-        toast({
-          title: "Try another triangle!",
-          description: "You can't click repeatedly on your own triangle. Try a triangle claimed by another gamer or a new one.",
-          variant: "destructive",
-        });
+        // WAS:
+        // toast({
+        //   title: "Try another triangle!",
+        //   description: "You can't click repeatedly on your own triangle. Try a triangle claimed by another gamer or a new one.",
+        //   variant: "destructive",
+        // });
         return;
       }
 
@@ -92,19 +93,21 @@ export function useTriangleMeshTap(
           throw new Error("No success response from storeTriangleActivity");
         }
         storeSuccess = true;
-        toast({
-          title: "Activity Saved!",
-          description: "Your triangle tap activity was recorded.",
-          variant: "default",
-        });
+        // WAS:
+        // toast({
+        //   title: "Activity Saved!",
+        //   description: "Your triangle tap activity was recorded.",
+        //   variant: "default",
+        // });
       } catch (err: any) {
         storeSuccess = false;
-        toast({
-          title: "Failed to save activity",
-          description:
-            "Could not save tap to server. Please check your connection.",
-          variant: "destructive",
-        });
+        // WAS:
+        // toast({
+        //   title: "Failed to save activity",
+        //   description:
+        //     "Could not save tap to server. Please check your connection.",
+        //   variant: "destructive",
+        // });
         setTriangleMesh(prev => prevMeshRef.current);
       }
 
@@ -137,3 +140,4 @@ export function useTriangleMeshTap(
     [identity, isMobile, mapInstance, setTriangleMesh, worldSlug]
   );
 }
+
