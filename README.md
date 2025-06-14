@@ -1,4 +1,3 @@
-
 # Step
 
 A collaborative spherical triangle mesh system built with React, Leaflet, and MongoDB.  
@@ -10,7 +9,7 @@ A collaborative spherical triangle mesh system built with React, Leaflet, and Mo
 - This README acts as a quick reference and project intro.
 
 ### Key Features
-- Interactive world mesh (**18 base triangles**, 19 subdivision levels)
+- Interactive world mesh (**24 base triangles**, 19 subdivision levels)
 - Live collaboration across devices (updates each 5 seconds for all users)
 - Instant “gamer tag” and color personalization (change anytime in UI)
 - Subdivision, coloring, and subdivision limits (see below)
@@ -62,6 +61,7 @@ All files above are linked in the app (via settings or /documents route).
 | Snapshot        | Aggregate state of a triangle at the time of a user action                        |
 | World slug      | Unique key for parallel session/mesh worlds (route: `/game/:slug`)                |
 | Activity        | A row in the DB recording a triangle’s click/subdivision + owner/color            |
+| **Base mesh**   | Canonical set of 24 initial (level 0) triangles as of v2.1 (see technical docs)   |
 
 ---
 
