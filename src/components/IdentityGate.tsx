@@ -74,7 +74,12 @@ const IdentityGate: React.FC<{ children: React.ReactNode }> = ({ children }) => 
     if (!identity) {
       const pal = getAvailableColors();
       setPalette(pal);
-      setColorEmojiPairs(getColorEmojiPairs(pal));
+      const pairs = getColorEmojiPairs(pal);
+      setColorEmojiPairs(pairs);
+      // Randomly preselect one index if available
+      if (pairs.length > 0) {
+        setSelectedIdx(Math.floor(Math.random() * pairs.length));
+      }
     }
   }, [identity]);
 
