@@ -15,6 +15,8 @@ import { ErrorBanner } from './map/ErrorBanner';
 import { LeafletMapContainer } from "./map/LeafletMapContainer";
 import { useTriangleMeshLoader } from "./map/useTriangleMeshLoader";
 
+import { fetchWorldSettings, WorldSettings } from "../utils/worldSettings";
+
 type Props = {
   worldSlug: string;
 };
@@ -35,6 +37,34 @@ const TriangleMeshMap = ({ worldSlug }: Props) => {
 
   // Loader hook (fetch, poll, manage mesh state)
   const { triangleMesh, setTriangleMesh, isLoading } = useTriangleMeshLoader(worldSlug, meshVersion);
+
+  // World settings
+  const [worldSettings, setWorldSettings] = useState<WorldSettings | null>(null);
+
+  useEffect(() => {
+    let mounted = true;
+    async function loadWorldSettings() {
+      try {
+        const ws = await fetchWorldSettings(worldSlug);
+        if (mounted) setWorldSettings(ws);
+      } catch (e) {
+        // Handle error or fallback to defaults?
+        setWorldSettings(null);
+      }
+    }
+    loadWorldSettings();
+    // Listen for changes to settings
+    const handler = (e: StorageEvent) => {
+      if (e.key === `worldSettings_${worldSlug}`) {
+        loadWorldSettings();
+      }
+    };
+    window.addEventListener("storage", handler);
+    return () => {
+      mounted = false;
+      window.removeEventListener("storage", handler);
+    };
+  }, [worldSlug]);
 
   // Listen for meshVersion/storage events for reloads
   useEffect(() => {
@@ -74,6 +104,15 @@ const TriangleMeshMap = ({ worldSlug }: Props) => {
     worldSlug
   );
 
+  // Show a loading overlay until worldSettings is loaded
+  if (!worldSettings) {
+    return (
+      <div className="relative w-full h-full flex-1 flex items-center justify-center">
+        <LoadingOverlay />
+      </div>
+    );
+  }
+
   return (
     <div className="relative w-full h-full min-h-[0] flex-1 rounded-none border-0 p-0 m-0">
       <LeafletMapContainer
@@ -82,6 +121,12 @@ const TriangleMeshMap = ({ worldSlug }: Props) => {
         meshVersion={meshVersion}
         worldSlug={worldSlug}
         onMapReady={handleMapReady}
+        // Pass the zoom settings from the database for desktop
+        desktopMinZoom={worldSettings.desktop_min_zoom_level}
+        desktopMaxZoom={worldSettings.desktop_max_zoom_level}
+        // For mobile, keep the prop contract but they are ignored for now in map
+        fixedMobileZoomLevel={worldSettings.fixed_mobile_zoom_level}
+        forceMobileZoom={worldSettings.force_mobile_zoom}
       />
       {isLoading && <LoadingOverlay />}
       <ErrorBanner message={null} />

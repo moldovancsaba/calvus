@@ -8,13 +8,29 @@ export interface LeafletMapContainerProps {
   meshVersion: string;
   worldSlug: string;
   onMapReady: (map: L.Map) => void;
+  desktopMinZoom?: number;
+  desktopMaxZoom?: number;
+  fixedMobileZoomLevel?: number;
+  forceMobileZoom?: boolean;
 }
 
 export const DEFAULT_CENTER: [number, number] = [33, 0];
 
 // Expose map instance via ref if needed
 export const LeafletMapContainer = forwardRef<HTMLDivElement, LeafletMapContainerProps>(
-  ({ isMobile, meshVersion, worldSlug, onMapReady }, ref) => {
+  (
+    {
+      isMobile,
+      meshVersion,
+      worldSlug,
+      onMapReady,
+      desktopMinZoom = 5,
+      desktopMaxZoom = 15,
+      fixedMobileZoomLevel = 2,
+      forceMobileZoom = true
+    },
+    ref
+  ) => {
     const mapRef = useRef<HTMLDivElement>(null);
     const mapInstanceRef = useRef<L.Map | null>(null);
 
@@ -31,33 +47,26 @@ export const LeafletMapContainer = forwardRef<HTMLDivElement, LeafletMapContaine
         mapRef.current.innerHTML = "";
       }
 
-      let mobileZoomLevel = 10;
-      let mobileFixedZoomEnabled = true;
-      if (isMobile) {
-        const forceMobileZoom = window.localStorage.getItem('fixedMobileZoom');
-        mobileFixedZoomEnabled = forceMobileZoom === null || forceMobileZoom === "true";
-        if (mobileFixedZoomEnabled) {
-          const zoomVal = window.localStorage.getItem('fixedMobileZoomLevel');
-          if (
-            zoomVal &&
-            !isNaN(Number(zoomVal)) &&
-            Number(zoomVal) >= 1 &&
-            Number(zoomVal) <= 20
-          ) {
-            mobileZoomLevel = Math.floor(Number(zoomVal));
-          }
-        }
-      }
+      let mobileZoomLevel = fixedMobileZoomLevel ?? 2;
+      let mobileFixedZoomEnabled = forceMobileZoom;
+
+      // Always pull in passed props for min/max zoom
+      const minZoom = isMobile && mobileFixedZoomEnabled
+        ? mobileZoomLevel
+        : (isMobile ? 10 : desktopMinZoom);
+      const maxZoom = isMobile && mobileFixedZoomEnabled
+        ? mobileZoomLevel
+        : (isMobile ? 10 : desktopMaxZoom);
 
       const mapZoom = isMobile
         ? (mobileFixedZoomEnabled ? mobileZoomLevel : 10)
-        : 6;
+        : desktopMinZoom; // center zoom to min desktop for new map
 
       const map = L.map(mapRef.current, {
         center: DEFAULT_CENTER,
         zoom: mapZoom,
-        minZoom: isMobile && mobileFixedZoomEnabled ? mobileZoomLevel : (isMobile ? 10 : 5),
-        maxZoom: isMobile && mobileFixedZoomEnabled ? mobileZoomLevel : (isMobile ? 10 : 15),
+        minZoom,
+        maxZoom,
         worldCopyJump: true,
         maxBounds: [[-90, -180], [90, 180]],
         preferCanvas: true,
@@ -96,10 +105,11 @@ export const LeafletMapContainer = forwardRef<HTMLDivElement, LeafletMapContaine
           }
         });
       } else {
+        // Enforce desktop min/max from DB
         map.on("zoomend", () => {
           const z = map.getZoom();
-          if (z < 5) map.setZoom(5);
-          if (z > 15) map.setZoom(15);
+          if (z < desktopMinZoom) map.setZoom(desktopMinZoom);
+          if (z > desktopMaxZoom) map.setZoom(desktopMaxZoom);
         });
       }
 
@@ -124,7 +134,7 @@ export const LeafletMapContainer = forwardRef<HTMLDivElement, LeafletMapContaine
           (mapRef.current as any)._leaflet_id = undefined;
         }
       };
-    }, [isMobile, meshVersion, worldSlug]);
+    }, [isMobile, meshVersion, worldSlug, desktopMinZoom, desktopMaxZoom, fixedMobileZoomLevel, forceMobileZoom]);
 
     return (
       <div
