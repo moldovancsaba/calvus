@@ -1,4 +1,3 @@
-
 import { useEffect, useRef, useState } from 'react';
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
@@ -18,16 +17,8 @@ import { useTriangleMeshTap } from "./mesh/useTriangleMeshTap";
 import { LoadingOverlay } from './map/LoadingOverlay';
 import { ErrorBanner } from './map/ErrorBanner';
 
-// Helper to get user's geolocation (promise-based)
-function getUserLatLng(): Promise<[number, number]> {
-  return new Promise((resolve, reject) => {
-    if (!navigator.geolocation) return reject(new Error('Geolocation is not supported.'));
-    navigator.geolocation.getCurrentPosition(
-      pos => resolve([pos.coords.latitude, pos.coords.longitude]),
-      err => reject(err)
-    );
-  });
-}
+// Removed geolocation - always use this default map center
+const DEFAULT_CENTER: [number, number] = [33, 0];
 
 const TriangleMeshMap = () => {
   const mapRef = useRef<HTMLDivElement>(null);
@@ -39,66 +30,30 @@ const TriangleMeshMap = () => {
   const { identity } = useIdentity();
   const isMobile = useIsMobile();
 
-  // For UI revert on DB failure
   const prevMeshRef = useRef<TriangleMesh[]>([]);
 
-  // Control: only request location once per session/mount
-  const geolocationRequestedRef = useRef<boolean>(false);
-  // Initial center and error
-  const [mapCenter, setMapCenter] = useState<[number, number] | null>(null);
-  const [locationError, setLocationError] = useState<string | null>(null);
-
-  // Get geolocation ONCE when the app FIRST loads (or fallback after timeout)
-  useEffect(() => {
-    let active = true;
-    if (!geolocationRequestedRef.current) {
-      geolocationRequestedRef.current = true;
-      getUserLatLng()
-        .then(center => {
-          if (active) setMapCenter(center);
-        })
-        .catch(() => {
-          setLocationError("Could not get your location, showing map at default location.");
-          setMapCenter([33, 0]); // fallback
-        });
-      // Fallback after 2 seconds if location taking too long
-      const fallbackTimeout = setTimeout(() => {
-        if (!mapCenter) setMapCenter([33, 0]);
-      }, 2000);
-      return () => {
-        active = false;
-        clearTimeout(fallbackTimeout);
-      };
-    }
-    // eslint-disable-next-line
-  }, []);
-
-  // Only run the map initialization when center is first ready
+  // --- Map initialization without geolocation ---
   useEffect(() => {
     if (!mapRef.current) return;
-    if (!mapCenter) return; // Wait for center
 
-    // Always enable zoomControl (the +/- buttons) and DISABLE ALL other zooming gestures
     const map = L.map(mapRef.current, {
-      center: mapCenter,
+      center: DEFAULT_CENTER,
       zoom: 6,
       minZoom: 5,
       maxZoom: 15,
       worldCopyJump: true,
       maxBounds: [[-90, -180], [90, 180]],
       preferCanvas: true,
-      zoomControl: true,    // Show +/- buttons for zoom
+      zoomControl: true,
       doubleClickZoom: false,
       boxZoom: false,
       scrollWheelZoom: false,
-      touchZoom: false,     // FULLY disable ALL touch zooming
-      dragging: true,       // Pan still works
+      touchZoom: false,
+      dragging: true,
     });
 
-    // Remove existing controls and add zoom control top right
     map.zoomControl.setPosition('topright');
 
-    // Clamp zoom in all user interactions
     map.on("zoomend", () => {
       const z = map.getZoom();
       if (z < 5) map.setZoom(5);
@@ -149,19 +104,13 @@ const TriangleMeshMap = () => {
     }, 5000);
 
     return () => {
-      // Set ref to null BEFORE removing so children are unmounted!
       mapInstanceRef.current = null;
       map.remove();
       if (pollIntervalRef.current) {
         clearInterval(pollIntervalRef.current);
       }
     };
-    // eslint-disable-next-line
-  }, [mapCenter]);
-
-  // If user center is resolved after map built, recenter only ONCE at very start (disable further recentering)
-  // This effect is left simple since our centering logic is already one-time.
-  // So we do not recenter map again after initial load
+  }, []);
 
   // Custom mobile/touch logic (refactored, hook does nothing on desktop)
   useLeafletMobileTouch(mapInstanceRef.current);
@@ -174,7 +123,6 @@ const TriangleMeshMap = () => {
     mapInstanceRef.current
   );
 
-  // --- Responsive, full-screen map shell ---
   return (
     <div className="relative w-full h-full min-h-[0] flex-1 rounded-none border-0 p-0 m-0">
       <div
@@ -188,8 +136,8 @@ const TriangleMeshMap = () => {
         }}
       />
       {isLoading && <LoadingOverlay />}
-      <ErrorBanner message={locationError} />
-      {/* Only render the mesh renderer if the map instance is present */}
+      {/* ErrorBanner no longer needed without geolocation, but keeping render for compatibility */}
+      <ErrorBanner message={null} />
       {mapInstanceRef.current && (
         <TriangleMeshRenderer
           map={mapInstanceRef.current}
