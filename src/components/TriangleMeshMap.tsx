@@ -55,7 +55,7 @@ const TriangleMeshMap = () => {
       ) {
         reloadMapSettings();
       }
-      // Added: also reload/refresh mesh if meshVersion bumps
+      // Also reload/refresh mesh if meshVersion bumps
       if (e.key === "meshVersion") {
         setMeshVersion(e.newValue || "");
         // Clear old mesh/activity caches
@@ -64,6 +64,10 @@ const TriangleMeshMap = () => {
         setTriangleMesh([]);
         setIsLoading(true);
         setTimeout(() => setIsLoading(false), 30);
+      }
+      // GLOBAL WORLD RESET: reload the window for everyone!
+      if (e.key === "worldReset") {
+        window.location.reload();
       }
     };
     window.addEventListener("storage", storageHandler);
