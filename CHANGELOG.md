@@ -1,7 +1,14 @@
 
+
 # Changelog
 
 All notable changes to the Step project will be documented in this file.
+
+## [2.0.1] - 2025-06-14
+
+### Changed
+- Canonical global mesh now set at **26 base triangles (T1–T26)** using agreed spiral/vertex order.
+- Updated all documentation and internal references from 18/24 to **26** triangles as base mesh count.
 
 ## [2.0.0] - 2025-06-14
 
@@ -24,13 +31,13 @@ All notable changes to the Step project will be documented in this file.
 - **Mobile Support:** Clean responsive design out of the box
 
 ### Initial Configuration
-- **18 base triangles** cover the globe (see geometry.ts and technical-architecture.md for full math rationale)
-  - Example (Triangle 1): (66°N, 0°E), (0°N, -36°E), (0°N, 36°E)
+- **26 base triangles** cover the globe (see geometry.ts and technical-architecture.md for full math rationale)
+  - Example (T1): (0°, -180°), (66°, -144°), (0°, -108°)
 
 ### Known Limitations
 - 5-second polling may cause short delay
 - Max 19 subdivision levels enforced in code
-- **Canonical mesh = 18 triangles (not 20)**
+- **Canonical mesh = 26 triangles**
 - Requires valid Supabase and MongoDB configuration
 
 ## [1.1.0] - 2025-06-14

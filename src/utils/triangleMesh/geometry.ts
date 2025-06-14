@@ -16,8 +16,8 @@ export interface TriangleMesh {
   clickCount: number;
   subdivided: boolean;
   children?: TriangleMesh[];
-  color?: string; // ADDED: color of owner, for "paint"
-  gametag?: string; // Identify user
+  color?: string; // Owner color for "paint"
+  gametag?: string; // Current owner display name
 }
 
 export function point3DToLatLng(point: Point3D): LatLng {
