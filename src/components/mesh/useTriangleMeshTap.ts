@@ -34,6 +34,7 @@ export function useTriangleMeshTap(
                 const children = triangleEl.children
                   ? triangleEl.children
                   : [];
+                console.log("[useTriangleMeshTap] Subdividing locally", triangleEl.id);
                 return {
                   ...triangleEl,
                   clickCount: newClickCount,
@@ -63,6 +64,7 @@ export function useTriangleMeshTap(
 
       let storeSuccess = false;
       try {
+        console.log("[useTriangleMeshTap] Store activity:", triangleId, (triangle?.clickCount ?? 0) + 1);
         await storeTriangleActivity(
           triangleId,
           (triangle?.clickCount ?? 0) + 1,
@@ -71,15 +73,16 @@ export function useTriangleMeshTap(
           identity.color
         );
         storeSuccess = true;
+        console.log("[useTriangleMeshTap] Store success!");
       } catch (err: any) {
         storeSuccess = false;
+        console.error("[useTriangleMeshTap] Store failed:", err);
         toast({
           title: "Failed to save activity",
           description:
             "Could not save tap to server. Please check your connection.",
           variant: "destructive",
         });
-        // Revert UI update
         setTriangleMesh(prev => prevMeshRef.current);
       }
 
@@ -113,4 +116,3 @@ export function useTriangleMeshTap(
     [identity, isMobile, mapInstance, setTriangleMesh]
   );
 }
-

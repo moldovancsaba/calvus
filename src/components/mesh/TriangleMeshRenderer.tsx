@@ -1,5 +1,5 @@
+
 import L from "leaflet";
-import { useEffect } from "react";
 import React from "react";
 import { createGeodesicTriangle } from "./GeodesicTriangle";
 import type { TriangleMesh } from "../../utils/triangleMesh/geometry";
@@ -55,10 +55,17 @@ export function TriangleMeshRenderer({
             console.log("[TriangleMeshRenderer] pointerdown", e, triangle);
             onTriangleClick(triangle.id, triangle, trianglePath);
           });
+          // Fallback for mouse events
           polygon.on("click", (e: any) => {
-            // This should fire only if pointerdown didn't
             console.log("[TriangleMeshRenderer] click fallback", e, triangle);
             onTriangleClick(triangle.id, triangle, trianglePath);
+          });
+          // Debug: log all pointer events
+          polygon.on("touchstart", (e: any) => {
+            console.log("[TriangleMeshRenderer] touchstart", e, triangle);
+          });
+          polygon.on("touchend", (e: any) => {
+            console.log("[TriangleMeshRenderer] touchend", e, triangle);
           });
 
           polygon.addTo(map);

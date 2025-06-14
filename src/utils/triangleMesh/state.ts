@@ -11,6 +11,7 @@ export function rebuildTriangleMeshFromActivities(activities: any[]): TriangleMe
   for (const activity of sortedActivities) {
     currentMesh = applyActivityToMesh(currentMesh, activity);
   }
+  console.log("[rebuildTriangleMeshFromActivities] Final mesh:", JSON.parse(JSON.stringify(currentMesh)));
   return currentMesh;
 }
 
@@ -44,8 +45,10 @@ function updateTriangleInMesh(
         color: color ?? triangle.color,
       };
 
-      if (clickCount === 11 && triangle.level < 19) {
+      if (clickCount === 11 && triangle.level < 19 && !triangle.subdivided) {
+        // Subdivide if not yet subdivided and at correct clickCount
         const children = subdivideTriangleMesh(triangle);
+        console.log("[updateTriangleInMesh] Subdividing triangle!", triangle.id, triangle.level);
         return {
           ...updatedTriangle,
           subdivided: true,
@@ -66,3 +69,4 @@ function updateTriangleInMesh(
     return triangle;
   });
 }
+

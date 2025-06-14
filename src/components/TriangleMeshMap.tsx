@@ -68,6 +68,7 @@ const TriangleMeshMap = () => {
       try {
         setIsLoading(true);
         const activities = await getTriangleActivities();
+        console.log("[TriangleMeshMap] Activities loaded:", activities);
         if (activities.length > 0) {
           const restoredMesh = rebuildTriangleMeshFromActivities(activities);
           setTriangleMesh(restoredMesh);
@@ -78,6 +79,7 @@ const TriangleMeshMap = () => {
       } catch (error) {
         const initialMesh = generateBaseTriangleMesh();
         setTriangleMesh(initialMesh);
+        console.error("[TriangleMeshMap] Error loading mesh activities, fallback to base:", error);
       } finally {
         setIsLoading(false);
       }
@@ -88,10 +90,11 @@ const TriangleMeshMap = () => {
     pollIntervalRef.current = setInterval(async () => {
       try {
         const activities = await getTriangleActivities();
+        console.log("[TriangleMeshMap] Activities polled:", activities);
         const restoredMesh = rebuildTriangleMeshFromActivities(activities);
         setTriangleMesh(restoredMesh);
       } catch (error) {
-        // ignore
+        console.error("[TriangleMeshMap] Error polling activities:", error);
       }
     }, 5000);
 
@@ -114,7 +117,7 @@ const TriangleMeshMap = () => {
     mapInstanceRef.current
   );
 
-  // --- Make overlays/loader readable on all sizes ---
+  // --- Overlays etc ---
   return (
     <div className="w-full h-full min-h-[410px] relative">
       <div
@@ -139,9 +142,10 @@ const TriangleMeshMap = () => {
         map={mapInstanceRef.current}
         triangleMesh={triangleMesh}
         triangleLayersRef={triangleLayersRef}
-        onTriangleClick={(triangleId, triangle, parentPath) =>
-          handleTriangleMeshClick(triangleId, triangle, prevMeshRef)
-        }
+        onTriangleClick={(triangleId, triangle, parentPath) => {
+          console.log("[TriangleMeshMap] onTriangleClick", triangleId, triangle, parentPath);
+          handleTriangleMeshClick(triangleId, triangle, prevMeshRef);
+        }}
       />
     </div>
   );
