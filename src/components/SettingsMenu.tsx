@@ -6,6 +6,9 @@ import { getTriangleActivities, clearTriangleActivities } from "../utils/triangl
 import { useToast } from "@/hooks/use-toast";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { fetchWorldSettings, updateWorldSettings, WorldSettings } from "@/utils/worldSettings";
+import { SettingsControls } from "./SettingsControls";
+import { GamerStats } from "./GamerStats";
+import { useNavigate } from "react-router-dom";
 
 // Define type for gamer summary
 type GamerSummary = { gametag: string; color: string; clicks: number };
@@ -33,6 +36,7 @@ export const SettingsMenu: React.FC<{ children: React.ReactNode; worldSlug: stri
   const [settingsBusy, setSettingsBusy] = useState(false);
   const { toast } = useToast();
   const isMobile = useIsMobile();
+  const navigate = useNavigate();
 
   // Hide settings menu on mobile, including SheetTrigger
   if (isMobile) return null;
@@ -113,140 +117,37 @@ export const SettingsMenu: React.FC<{ children: React.ReactNode; worldSlug: stri
     }
   }
 
+  // NEW: documentation menu item handler
+  function handleGoToDocuments() {
+    setOpen(false);
+    setTimeout(() => { navigate("/documents"); }, 100);
+  }
+
   // Settings UI content reused for fullscreen drawer
   const settingsContent = (
     <div className="flex flex-col h-full w-full">
       <div className="text-lg font-semibold mb-2">Settings</div>
-      {!pendingSettings ? (
-        <div className="text-xs text-muted-foreground">Loading settings...</div>
-      ) : (
-        <>
-          {/* Fixed zoom for mobile */}
-          <div className="flex items-center justify-between mb-4 gap-1">
-            <span>Fixed zoom for mobile</span>
-            <Button
-              variant={pendingSettings.force_mobile_zoom ? "default" : "outline"}
-              onClick={() => handleSettingEdit("force_mobile_zoom", !pendingSettings.force_mobile_zoom)}
-              size="sm"
-              disabled={settingsBusy}
-            >
-              {pendingSettings.force_mobile_zoom ? "On" : "Off"}
-            </Button>
-          </div>
-          {/* Fixed zoom level input for mobile */}
-          {pendingSettings.force_mobile_zoom && (
-            <div className="flex items-center justify-between mb-4 gap-2">
-              <label htmlFor="fixed-zoom-level" className="text-sm">
-                Fixed mobile zoom level
-              </label>
-              <Input
-                id="fixed-zoom-level"
-                type="number"
-                min={1}
-                max={20}
-                step={1}
-                pattern="[0-9]*"
-                inputMode="numeric"
-                className="w-20 text-right"
-                value={pendingSettings.fixed_mobile_zoom_level}
-                disabled={settingsBusy}
-                onChange={e => {
-                  const n = Math.floor(Number((e.target as HTMLInputElement).value));
-                  if (!isNaN(n)) handleSettingEdit("fixed_mobile_zoom_level", n);
-                }}
-                onBlur={e => {
-                  let val = Math.round(Number((e.target as HTMLInputElement).value));
-                  if (isNaN(val)) val = 2;
-                  handleSettingEdit("fixed_mobile_zoom_level", val);
-                }}
-              />
-            </div>
-          )}
-          {/* Desktop zoom levels */}
-          <div className="flex items-center justify-between mb-4 gap-2">
-            <label htmlFor="desktop-min-zoom" className="text-sm">Desktop min zoom</label>
-            <Input
-              id="desktop-min-zoom"
-              type="number"
-              min={1}
-              max={20}
-              step={1}
-              className="w-20 text-right"
-              value={pendingSettings.desktop_min_zoom_level}
-              disabled={settingsBusy}
-              onChange={e => {
-                const n = Math.max(1, Math.floor(Number((e.target as HTMLInputElement).value)));
-                handleSettingEdit("desktop_min_zoom_level", n);
-              }}
-              onBlur={e => {
-                let val = Math.max(1, Math.round(Number((e.target as HTMLInputElement).value)));
-                handleSettingEdit("desktop_min_zoom_level", val);
-              }}
-            />
-          </div>
-          <div className="flex items-center justify-between mb-4 gap-2">
-            <label htmlFor="desktop-max-zoom" className="text-sm">Desktop max zoom</label>
-            <Input
-              id="desktop-max-zoom"
-              type="number"
-              min={1}
-              max={20}
-              step={1}
-              className="w-20 text-right"
-              value={pendingSettings.desktop_max_zoom_level}
-              disabled={settingsBusy}
-              onChange={e => {
-                const n = Math.max(1, Math.floor(Number((e.target as HTMLInputElement).value)));
-                handleSettingEdit("desktop_max_zoom_level", n);
-              }}
-              onBlur={e => {
-                let val = Math.max(1, Math.round(Number((e.target as HTMLInputElement).value)));
-                handleSettingEdit("desktop_max_zoom_level", val);
-              }}
-            />
-          </div>
-          {/* Apply Button */}
-          <div className="flex justify-end mb-4">
-            <Button
-              variant="default"
-              size="sm"
-              onClick={handleApplySettings}
-              disabled={settingsBusy}
-            >
-              Apply
-            </Button>
-          </div>
-        </>
-      )}
-      {/* Start a New World */}
+      <SettingsControls
+        pendingSettings={pendingSettings}
+        settingsBusy={settingsBusy}
+        handleSettingEdit={handleSettingEdit}
+        handleApplySettings={handleApplySettings}
+        handleStartNewWorld={handleStartNewWorld}
+        busy={busy}
+      />
+      {/* Documentation menu item */}
       <div className="flex items-center justify-between mb-4 gap-1">
-        <span>Start a new world</span>
+        <span>Documentation</span>
         <Button
-          variant="destructive"
-          onClick={handleStartNewWorld}
+          variant="secondary"
+          onClick={handleGoToDocuments}
           size="sm"
-          disabled={busy}
         >
-          {busy ? "Starting..." : "Start"}
+          Open
         </Button>
       </div>
       {/* Gamer stats */}
-      <div className="flex-1 flex flex-col">
-        <div className="font-semibold mb-2">Gamers</div>
-        <div className="grid grid-cols-1 gap-1 max-h-40 overflow-y-auto">
-          {summarizeGamers(activities).length === 0 ? (
-            <div className="text-xs text-muted-foreground">No gamers yet</div>
-          ) : (
-            summarizeGamers(activities).map(({ gametag, color, clicks }) => (
-              <div className="flex items-center gap-2 p-1 rounded hover:bg-accent" key={gametag + color}>
-                <span className="inline-block w-3 h-3 rounded-full" style={{ backgroundColor: color }} />
-                <span className="truncate max-w-[5rem] font-mono">{gametag}</span>
-                <span className="ml-auto text-xs text-muted-foreground">{clicks} clicks</span>
-              </div>
-            ))
-          )}
-        </div>
-      </div>
+      <GamerStats activities={activities} />
     </div>
   );
 
