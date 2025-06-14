@@ -287,9 +287,9 @@ export function generateBaseTriangleMesh(): TriangleMesh[] {
     {
       id: 'B3',
       vertices: [
-        { lat: 66.0, lng: -144.0 },
-        { lat: 66.0, lng: -72.0 },
-        { lat: 0.0, lng: -108.0 },
+        { lat: 90.0, lng: 0.0 },
+        { lat: 66.0, lng: 72.0 },
+        { lat: 66.0, lng: 144.0 }
       ],
       level: 0,
       clickCount: 0,
