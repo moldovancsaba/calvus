@@ -6,7 +6,7 @@ import { storeTriangleActivity, subdivideTriangleMesh } from "../../utils/triang
 const userTriangleClickStreak: Record<string, { triangleId: string, streak: number }> = {};
 
 export function useTriangleMeshTap(
-  identity: { gametag: string; color: string } | null,
+  identity: { gametag: string; color: string; emoji?: string } | null,
   setTriangleMesh: React.Dispatch<React.SetStateAction<any[]>>,
   isMobile: boolean,
   mapInstance: L.Map | null,
@@ -34,22 +34,21 @@ export function useTriangleMeshTap(
       const isAtFinalLevel = triangle.level >= maxDivideLevel;
       const isFullyClaimed = isAtFinalLevel && triangle.clickCount >= clicksToDivide;
 
-      // NEW: Block ALL users from interacting with a fully-claimed final triangle
+      // Block ALL users from interacting with a fully-claimed final triangle
       if (isFullyClaimed) return;
 
       // --- Enforce max consecutive clicks per user per triangle (client side memory) ---
-      // The key for current user (unique string for session/local memory)
       const userKey = `u:${identity.gametag}:${identity.color}`;
       const streakObj = userTriangleClickStreak[userKey] || { triangleId: "", streak: 0 };
       if (streakObj.triangleId === triangleId) {
         if (streakObj.streak >= maxConsecutiveClicks) {
-          // Optionally, show toast if possible (on global window or as a side effect).
+          // Show toast if possible (checks for window.toast or window.lovableToast)
           if (typeof window !== "undefined" && !shownRef.current[triangleId]) {
-            if (window.lovableToast) {
-              window.lovableToast(`You've reached the maximum consecutive clicks (${maxConsecutiveClicks}) allowed for this triangle.`, { variant: "destructive" });
-            } else {
-              // fallback: simple browser alert
-              // alert("You can't click again right now."); // Don't block UI w/ alert, better UX with toast.
+            // Try shadcn/ui toast system
+            // @ts-ignore
+            if (window.toast) {
+              // @ts-ignore
+              window.toast(`You've reached the maximum consecutive clicks (${maxConsecutiveClicks}) allowed for this triangle.`, { variant: "destructive" });
             }
             shownRef.current[triangleId] = true;
             setTimeout(() => { shownRef.current[triangleId] = false; }, 1800);
@@ -79,6 +78,7 @@ export function useTriangleMeshTap(
                   clickCount: Math.min(newClickCount, clicksToDivide),
                   color: identity.color,
                   gametag: identity.gametag,
+                  emoji: identity.emoji, // Store emoji of current user
                 };
               }
               // regular subdivide if needed
@@ -91,6 +91,7 @@ export function useTriangleMeshTap(
                   children,
                   color: identity.color,
                   gametag: identity.gametag,
+                  emoji: identity.emoji, // Store emoji on claim
                 };
               }
               // regular increment/color change
@@ -99,6 +100,7 @@ export function useTriangleMeshTap(
                 clickCount: newClickCount,
                 color: identity.color,
                 gametag: identity.gametag,
+                emoji: identity.emoji, // Always update emoji on click
               };
             }
             if (triangleEl.children) {
@@ -132,7 +134,7 @@ export function useTriangleMeshTap(
           actionType,
           identity.gametag,
           identity.color,
-          undefined,
+          identity.emoji, // Pass emoji to store function if supported
           worldSlug
         );
         if (!result?.success) {
