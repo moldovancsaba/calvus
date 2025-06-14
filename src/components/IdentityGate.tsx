@@ -3,8 +3,7 @@ import React, { useEffect, useState } from "react";
 import { useIdentity } from "./IdentityContext";
 import { Button } from "@/components/ui/button";
 
-// Material palette, shuffle and pick 16; remove "used"
-// These colors are visually distinctive and avoid confusion.
+// Distinct palette, shuffle and pick 16, excluding used
 const BASE_COLORS = [
   "#EF476F", "#FFD166", "#06D6A0", "#118AB2",
   "#FF8A5B", "#FFC93C", "#6BCB77", "#4D96FF",
@@ -22,7 +21,6 @@ function shuffle(arr: string[]) {
   return a;
 }
 
-// Simulate active colors using localstorage for now
 function getUsedColors(): string[] {
   const all = window.localStorage.getItem("usedColors");
   if (!all) return [];
@@ -76,34 +74,40 @@ const IdentityGate: React.FC<{ children: React.ReactNode }> = ({ children }) => 
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-100 to-white">
-      <div className="bg-white/90 rounded-xl shadow-xl p-8 w-full max-w-xs space-y-6">
-        <h2 className="text-lg font-bold text-center">Identify Yourself</h2>
+    <div className="min-h-dvh h-dvh w-full flex items-center justify-center bg-gradient-to-br from-blue-100 to-white px-3">
+      <div className="bg-white/95 rounded-xl shadow-2xl mx-auto p-4 pb-6 w-full max-w-xs flex flex-col items-center gap-5">
+        <h2 className="text-xl font-bold text-center my-1">Identify Yourself</h2>
         <input
           placeholder="Gametag"
           maxLength={16}
           value={tag}
           onChange={e => setTag(e.target.value)}
-          className="w-full border rounded-md px-3 py-2 text-center text-base mb-2"
+          className="w-full border border-gray-200 rounded-lg px-3 py-3 text-center text-lg focus:outline-none focus:ring-2 focus:ring-blue-300"
+          inputMode="text"
+          autoFocus
+          aria-label="Enter gametag"
         />
-        <div className="grid grid-cols-4 gap-2 mb-2">
+        <div className="grid grid-cols-4 gap-2 w-full my-1">
           {palette.map((c) => (
             <button
               key={c}
               style={{
                 backgroundColor: c,
-                border: color === c ? "3px solid #222" : undefined,
+                border: color === c ? "3px solid #222" : "2px solid #e5e7eb",
+                boxShadow: color === c ? "0 0 0 2px #0369a1" : "none",
+                touchAction: "manipulation",
               }}
-              className={`w-10 h-10 rounded-full focus:outline-none border-2 transition-all`}
-              onClick={() => handleSelectColor(c)}
+              className={`transition-all w-12 h-12 sm:w-10 sm:h-10 rounded-full focus:outline-none`}
               aria-label={c}
+              onClick={() => handleSelectColor(c)}
               type="button"
+              tabIndex={0}
             />
           ))}
         </div>
-        <Button className="w-full" onClick={onConfirm} size="lg">Start</Button>
+        <Button className="w-full py-3 text-lg" onClick={onConfirm} size="lg">Start</Button>
         {error && (
-          <div className="text-center text-red-500 text-xs">{error}</div>
+          <div className="text-center text-red-500 text-xs mt-2">{error}</div>
         )}
       </div>
     </div>
@@ -111,3 +115,4 @@ const IdentityGate: React.FC<{ children: React.ReactNode }> = ({ children }) => 
 };
 
 export default IdentityGate;
+
