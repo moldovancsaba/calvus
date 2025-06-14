@@ -1,4 +1,3 @@
-
 import L from "leaflet";
 import { useEffect } from "react";
 import { createGeodesicTriangle } from "./GeodesicTriangle";
@@ -45,38 +44,22 @@ export function TriangleMeshRenderer({
             fillColor: fill,
             fillOpacity,
             smoothFactor: 1.0,
+            interactive: true,
+            className: "leaflet-interactive"
           });
 
-          // Always trigger on click (desktop and some mobile browsers)
-          polygon.on("click", () => {
-            console.log("[TriangleMeshRenderer] polygon.click");
+          // Robust: Use pointer events (handles touch+mouse+pen), fallback to click for legacy
+          const pointerHandler = (e: any) => {
+            console.log("[TriangleMeshRenderer] polygon.pointerdown", e, triangle);
             onTriangleClick(triangle.id, triangle);
-          });
+          };
 
-          // Trigger on touchend (some mobile browsers)
-          polygon.on("touchend", (e: any) => {
-            console.log("[TriangleMeshRenderer] polygon.touchend");
-            if (
-              e.originalEvent &&
-              e.originalEvent.changedTouches &&
-              e.originalEvent.changedTouches.length === 1
-            ) {
-              onTriangleClick(triangle.id, triangle);
-            }
-          });
+          polygon.on("pointerdown", pointerHandler);
 
-          // Also trigger on touchstart (for immediate response on many mobiles)
-          polygon.on("touchstart", (e: any) => {
-            // Only fire for single-finger tap
-            if (
-              e.originalEvent &&
-              e.originalEvent.touches &&
-              e.originalEvent.touches.length === 1
-            ) {
-              console.log("[TriangleMeshRenderer] polygon.touchstart");
-              onTriangleClick(triangle.id, triangle);
-              // Don't prevent default, allow map behaviors too
-            }
+          // For browsers/devices not supporting pointer events, keep "click" as safety net
+          polygon.on("click", (e: any) => {
+            console.log("[TriangleMeshRenderer] polygon.click", e, triangle);
+            onTriangleClick(triangle.id, triangle);
           });
 
           polygon.addTo(map);
