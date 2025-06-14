@@ -92,6 +92,7 @@ export function generateBaseTriangleMesh(): TriangleMesh[] {
       clickCount: 0,
       subdivided: false
     },
+
     // South hemisphere mirrored base triangles
     {
       id: '4',
@@ -126,13 +127,15 @@ export function generateBaseTriangleMesh(): TriangleMesh[] {
       clickCount: 0,
       subdivided: false
     },
-    // Additional equator triangles (left and right)
+
+    // ---- Corrected Belt (Equator) Triangles (NORTH) ----
+    // These form a geodesic band similar to the base triangles, not degenerate
     {
       id: '7',
       vertices: [
+        { lat: 66.0, lng: -72.0 },
         { lat: 0.0, lng: -36.0 },
-        { lat: 0.0, lng: -108.0 },
-        { lat: 0.0, lng: 36.0 }
+        { lat: 0.0, lng: -108.0 }
       ],
       level: 0,
       clickCount: 0,
@@ -141,14 +144,37 @@ export function generateBaseTriangleMesh(): TriangleMesh[] {
     {
       id: '8',
       vertices: [
+        { lat: 66.0, lng: 72.0 },
         { lat: 0.0, lng: 36.0 },
-        { lat: 0.0, lng: 108.0 },
-        { lat: 0.0, lng: -36.0 }
+        { lat: 0.0, lng: 108.0 }
       ],
       level: 0,
       clickCount: 0,
       subdivided: false
     },
+    {
+      id: '9',
+      vertices: [
+        { lat: 66.0, lng: 144.0 },
+        { lat: 0.0, lng: 108.0 },
+        { lat: 0.0, lng: 180.0 }
+      ],
+      level: 0,
+      clickCount: 0,
+      subdivided: false
+    },
+    {
+      id: '10',
+      vertices: [
+        { lat: 66.0, lng: -144.0 },
+        { lat: 0.0, lng: -108.0 },
+        { lat: 0.0, lng: -180.0 }
+      ],
+      level: 0,
+      clickCount: 0,
+      subdivided: false
+    },
+
     // North pole caps
     {
       id: 'N1',
@@ -197,7 +223,7 @@ export function generateBaseTriangleMesh(): TriangleMesh[] {
     }
   ];
 
-  console.log('Generated base triangle mesh with 12 triangles (extra equator coverage)');
+  console.log('Generated base triangle mesh with 16 triangles (including corrected belt/side triangles)');
   return triangles;
 }
 
