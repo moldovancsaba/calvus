@@ -32,7 +32,7 @@ const TriangleMeshMap = () => {
   useEffect(() => {
     if (!mapRef.current) return;
 
-    // Always enable zoomControl (the +/- buttons) and disable all other zooming gestures
+    // Always enable zoomControl (the +/- buttons) and DISABLE ALL other zooming gestures
     const map = L.map(mapRef.current, {
       center: [33, 0],
       zoom: 6,
@@ -45,8 +45,8 @@ const TriangleMeshMap = () => {
       doubleClickZoom: false,
       boxZoom: false,
       scrollWheelZoom: false,
-      dragging: true,
-      touchZoom: "center" // This disables pinch-zoom but allows tap/click/touch events for overlays
+      touchZoom: false,     // FULLY disable ALL touch zooming
+      dragging: true,       // Pan still works
     });
 
     // Remove existing controls and add zoom control top right
