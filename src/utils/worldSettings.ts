@@ -1,4 +1,3 @@
-
 import { supabase } from "@/integrations/supabase/client";
 
 function fixedWorldSlug(slug: string) {
@@ -12,8 +11,9 @@ export type WorldSettings = {
   desktop_min_zoom_level: number;
   desktop_max_zoom_level: number;
   updated_at: string;
-  clicks_to_divide: number; // NEW
-  max_divide_level: number; // NEW
+  clicks_to_divide: number;
+  max_divide_level: number;
+  force_mobile_zoom: boolean;
 };
 
 export async function fetchWorldSettings(worldSlug: string): Promise<WorldSettings> {
@@ -24,7 +24,21 @@ export async function fetchWorldSettings(worldSlug: string): Promise<WorldSettin
     .eq("world_slug", fixedSlug)
     .maybeSingle();
   if (error) throw error;
-  if (data) return data as WorldSettings;
+  if (data) {
+    // Coerce, fill in missing props from defaults as needed
+    const defaults = {
+      fixed_mobile_zoom_level: 2,
+      desktop_min_zoom_level: 5,
+      desktop_max_zoom_level: 15,
+      clicks_to_divide: 3,
+      max_divide_level: 3,
+      force_mobile_zoom: true,
+    };
+    return {
+      ...defaults,
+      ...data,
+    } as WorldSettings;
+  }
 
   // If not exist, create defaults
   const insertDefaults = {
@@ -34,6 +48,7 @@ export async function fetchWorldSettings(worldSlug: string): Promise<WorldSettin
     desktop_max_zoom_level: 15,
     clicks_to_divide: 3,
     max_divide_level: 3,
+    force_mobile_zoom: true,
   };
   const { data: created, error: insErr } = await supabase
     .from("world_settings")
@@ -42,7 +57,10 @@ export async function fetchWorldSettings(worldSlug: string): Promise<WorldSettin
     .maybeSingle();
   if (insErr) throw insErr;
   if (!created) throw new Error("Failed to initialize world settings");
-  return created as WorldSettings;
+  return {
+    ...insertDefaults,
+    ...created,
+  } as WorldSettings;
 }
 
 export async function updateWorldSettings(worldSlug: string, values: Partial<WorldSettings>) {
@@ -57,5 +75,18 @@ export async function updateWorldSettings(worldSlug: string, values: Partial<Wor
     .select("*")
     .maybeSingle();
   if (error) throw error;
-  return data as WorldSettings;
+  if (!data) throw new Error("Settings update failed");
+  // Apply defaults if necessary
+  const defaults = {
+    fixed_mobile_zoom_level: 2,
+    desktop_min_zoom_level: 5,
+    desktop_max_zoom_level: 15,
+    clicks_to_divide: 3,
+    max_divide_level: 3,
+    force_mobile_zoom: true,
+  };
+  return {
+    ...defaults,
+    ...data,
+  } as WorldSettings;
 }
