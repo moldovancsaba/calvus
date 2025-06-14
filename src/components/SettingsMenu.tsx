@@ -89,13 +89,17 @@ export const SettingsMenu: React.FC<{ children: React.ReactNode }> = ({ children
 
       setActivities([]); // clear gamer list instantly
       window.dispatchEvent(new StorageEvent("storage", { key: "refreshMesh", newValue: Date.now().toString() }));
+      // REAL GLOBAL RESTART
+      const resetEpoch = Date.now().toString();
+      window.localStorage.setItem("worldReset", resetEpoch);
+      window.dispatchEvent(new StorageEvent("storage", { key: "worldReset", newValue: resetEpoch }));
+
       toast({
         title: "World started",
         description: "A brand new world has been launched! All previous clicks/data are cleared.",
         duration: 2500,
       });
       setBusy(false);
-      // Force hard refresh so the new world is shown everywhere immediately
       setTimeout(() => {
         window.location.reload();
       }, 300);
