@@ -1,4 +1,3 @@
-
 import { useEffect, useRef, useState } from 'react';
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
@@ -111,13 +110,14 @@ const TriangleMeshMap = ({ worldSlug, settings }: Props) => {
   // Use merged worldSettings from prop or loaded state (favor prop)
   const mergedWorldSettings = settings || worldSettings;
 
+  // Always use values from worldSettings/backend!
   const handleTriangleClick = useTriangleMeshTap(
     identity,
     setTriangleMesh,
     isMobile,
     mapInstanceRef.current,
     fixedWorldSlug,
-    mergedWorldSettings // Always use DB values, never hardcode
+    mergedWorldSettings // only pass settings read from DB!
   );
 
   // Show a loading overlay until worldSettings is loaded

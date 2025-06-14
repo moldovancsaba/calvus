@@ -13,7 +13,7 @@ export function useTriangleMeshTap(
   worldSlug: string,
   settings?: { clicks_to_divide?: number, max_divide_level?: number, max_consecutive_clicks_per_user?: number }
 ) {
-  // These strictly use the values passed from settings (backend), do NOT fallback except if not set at all:
+  // Always only use settings from backend!
   const clicksToDivide = settings?.clicks_to_divide ?? 3;
   const maxDivideLevel = settings?.max_divide_level ?? 3;
   const maxConsecutiveClicks =
@@ -66,21 +66,21 @@ export function useTriangleMeshTap(
       }
 
       setTriangleMesh(currMesh => {
+        // --- ALWAYS preserve the user's own emoji, fallback to 🌟 ONLY if missing/empty ---
         let prevMesh = currMesh;
         prevMeshRef.current = currMesh;
         const updateTriangle = (triangles: any[]): any[] =>
           triangles.map(triangleEl => {
             if (triangleEl.id === triangleId) {
               const newClickCount = triangleEl.clickCount + 1;
-              // Always use player's emoji if present and non-empty, fallback only to star
-              const winnerEmoji = identity.emoji && identity.emoji.trim() !== "" ? identity.emoji : "🌟";
+              const winnerEmoji = (identity.emoji && identity.emoji.trim()) ? identity.emoji : (triangleEl.emoji && triangleEl.emoji.trim() ? triangleEl.emoji : "🌟");
               if (triangleEl.level >= maxDivideLevel) {
                 return {
                   ...triangleEl,
                   clickCount: Math.min(newClickCount, clicksToDivide),
                   color: identity.color,
                   gametag: identity.gametag,
-                  emoji: winnerEmoji,
+                  emoji: winnerEmoji, // always yours if present, else fallback
                 };
               }
               if (newClickCount === clicksToDivide && triangleEl.level < maxDivideLevel && !triangleEl.subdivided) {
@@ -126,8 +126,10 @@ export function useTriangleMeshTap(
           actionType = "subdivide";
           willSubdivide = true;
         }
-        // Always write the player's emoji to DB, fallback only to star
-        const emojiToStore = identity.emoji && identity.emoji.trim() !== "" ? identity.emoji : "🌟";
+        // Always write the player's emoji to DB, fallback only to star if neither provided nor previously present
+        const emojiToStore = (identity.emoji && identity.emoji.trim())
+          ? identity.emoji
+          : (triangle?.emoji && triangle.emoji.trim() ? triangle.emoji : "🌟");
         const result = await storeTriangleActivity(
           triangleId,
           Math.min((triangle?.clickCount ?? 0) + 1, clicksToDivide),
@@ -148,6 +150,7 @@ export function useTriangleMeshTap(
         setTriangleMesh(prev => prevMeshRef.current);
       }
 
+      // mobile fly-to if subdivide
       if (
         storeSuccess &&
         isMobile &&

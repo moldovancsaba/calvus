@@ -1,4 +1,3 @@
-
 import L from "leaflet";
 import React from "react";
 import { createGeodesicTriangle } from "./GeodesicTriangle";
@@ -43,7 +42,7 @@ export function TriangleMeshRenderer({
 
   const numberMarkersRef = React.useRef<Map<string, L.Marker>>(new Map());
 
-  // ENSURE settings are always respected, not hardcoded defaults
+  // ALWAYS use settings from props, never hardcoded defaults!
   const configMaxDivideLevel = maxDivideLevel;
   const configClicksToDivide = clicksToDivide;
 
@@ -81,7 +80,6 @@ export function TriangleMeshRenderer({
     ) => {
       for (const triangle of triangleList) {
         const trianglePath = parentPath ? `${parentPath}-${triangle.id}` : triangle.id;
-        // Use the ACTUAL game settings directly
         const isFinalLevel = triangle.level >= configMaxDivideLevel;
 
         if (!triangle.subdivided) {
@@ -104,13 +102,12 @@ export function TriangleMeshRenderer({
           if (
             isFinalLevel && triangle.clickCount >= configClicksToDivide && triangle.color
           ) {
-            // Properly always use the stored emoji (and fallback only if missing/empty)
             fill = triangle.color;
             fillOpacity = 1.0;
             shouldShowAvatar = true;
             avatarProps = { 
               color: triangle.color, 
-              emoji: typeof triangle.emoji === "string" && triangle.emoji.trim() !== "" ? triangle.emoji : "🌟" 
+              emoji: (triangle.emoji && triangle.emoji.trim() !== "") ? triangle.emoji : "🌟"
             };
           } else if (triangle.clickCount > 0) {
             fill = triangle.color || "#222";
@@ -165,7 +162,6 @@ export function TriangleMeshRenderer({
               markerDiv.style.background = avatarProps.color;
               markerDiv.style.fontSize = "1.45rem";
               markerDiv.style.userSelect = "none";
-              // ----- THIS IS CRITICAL: always use the triangle’s emoji, fallback ONLY if empty! -----
               markerDiv.innerText = avatarProps.emoji;
 
               const icon = L.divIcon({
