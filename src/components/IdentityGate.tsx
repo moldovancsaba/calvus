@@ -118,19 +118,9 @@ const IdentityGate: React.FC<{ children: React.ReactNode }> = ({ children }) => 
               type="button"
               aria-label={`${emoji} on ${color}`}
               tabIndex={0}
-              className={`flex flex-col items-center justify-center transition-all group outline-none`}
+              className="flex flex-col items-center justify-center transition-all group outline-none"
               onClick={() => handleSelect(i)}
             >
-              <span
-                className="text-2xl select-none mb-1"
-                aria-hidden
-                style={{
-                  filter: selectedIdx === i ? "drop-shadow(0 0 3px #0369a1)" : undefined,
-                  transition: "filter 0.15s"
-                }}
-              >
-                {emoji}
-              </span>
               <span
                 style={{
                   backgroundColor: color,
@@ -138,14 +128,21 @@ const IdentityGate: React.FC<{ children: React.ReactNode }> = ({ children }) => 
                   boxShadow: selectedIdx === i ? "0 0 0 2px #0369a1" : "none",
                   width: 48,
                   height: 48,
-                  display: "inline-block",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
                   borderRadius: "100%",
                   marginBottom: 0,
                   outline: "none",
-                  transition: "border 0.15s, box-shadow 0.15s"
+                  transition: "border 0.15s, box-shadow 0.15s",
+                  fontSize: "1.7rem",
+                  userSelect: "none",
+                  position: "relative"
                 }}
                 className="sm:w-10 sm:h-10"
-              />
+              >
+                <span className="select-none" style={{ lineHeight: 1 }}>{emoji}</span>
+              </span>
             </button>
           ))}
         </div>
