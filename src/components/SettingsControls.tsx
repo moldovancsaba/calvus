@@ -143,6 +143,16 @@ export const SettingsControls: React.FC<SettingsControlsProps> = ({
       <div className="flex items-center justify-between mb-4 gap-2">
         <label htmlFor="max-consecutive-clicks" className="text-sm">
           Max consecutive clicks per user on a triangle
+          <span className="block text-xs text-muted-foreground">
+            {`Players can't click the same triangle more than this number in a row. `}
+            <a
+              className="underline text-primary"
+              href="https://docs.lovable.dev/features/gameplay#settings"
+              target="_blank" rel="noopener noreferrer"
+            >
+              Learn more
+            </a>
+          </span>
         </label>
         <Input
           id="max-consecutive-clicks"
