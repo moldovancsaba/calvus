@@ -1,4 +1,3 @@
-
 import L from "leaflet";
 import React from "react";
 import { createGeodesicTriangle } from "./GeodesicTriangle";
@@ -28,12 +27,17 @@ export function TriangleMeshRenderer({
     // Guard: if map is destroyed, do not run effect
     if (!map || !triangleMesh) return;
 
+    // Extra defensive: abort if map has no container or is detached from DOM
+    const mapContainer = map.getContainer?.();
+    if (!mapContainer || !mapContainer.parentNode) {
+      return;
+    }
+
     const renderTriangleMesh = (triangleList: TriangleMesh[], parentPath: string = "") => {
       triangleList.forEach(triangle => {
         const trianglePath = parentPath ? `${parentPath}-${triangle.id}` : triangle.id;
         if (!triangle.subdivided) {
           const existingLayer = triangleLayersRef.current.get(trianglePath);
-          // Defensive: only try to remove if map is still valid
           if (existingLayer && map.hasLayer(existingLayer)) map.removeLayer(existingLayer);
 
           const coordinates = createGeodesicTriangle(triangle.vertices);
@@ -56,31 +60,25 @@ export function TriangleMeshRenderer({
             className: "leaflet-interactive"
           });
 
-          // Defensive: don't add polygons if map is destroyed or not attached to DOM
-          // Use public API getContainer()
+          // Defensive: Ensure map is still valid and container attached before adding
           const container = map.getContainer && map.getContainer();
           if (map && container && container.parentNode) {
             // --- Main interaction events ---
-
-            // Handle pointerdown (desktop and modern mobile)
             polygon.on("pointerdown", (e: any) => {
               console.log("[TriangleMeshRenderer] pointerdown", e, triangle);
               onTriangleClick(triangle.id, triangle, trianglePath);
             });
 
-            // Fallback for mouse click
             polygon.on("click", (e: any) => {
               console.log("[TriangleMeshRenderer] click fallback", e, triangle);
               onTriangleClick(triangle.id, triangle, trianglePath);
             });
 
-            // Direct touch interaction for mobile browsers
             polygon.on("touchstart", (e: any) => {
               console.log("[TriangleMeshRenderer] touchstart - firing tap/click!", e, triangle);
               onTriangleClick(triangle.id, triangle, trianglePath);
             });
 
-            // (Optional debug, can be removed after confirming touch works)
             polygon.on("touchend", (e: any) => {
               console.log("[TriangleMeshRenderer] touchend", e, triangle);
             });
@@ -94,23 +92,28 @@ export function TriangleMeshRenderer({
       });
     };
 
-    // Remove all current layers first
-    triangleLayersRef.current.forEach(layer => {
-      if (map && map.hasLayer(layer)) map.removeLayer(layer);
-    });
+    // Remove all current layers first, only if map is attached
+    const currentContainer = map.getContainer?.();
+    if (map && currentContainer && currentContainer.parentNode) {
+      triangleLayersRef.current.forEach(layer => {
+        if (map && map.hasLayer(layer)) map.removeLayer(layer);
+      });
+    }
     triangleLayersRef.current.clear();
 
     renderTriangleMesh(triangleMesh);
 
-    // Cleanup: remove layers on unmount
+    // Cleanup: remove layers on unmount, only if map is valid
     return () => {
-      triangleLayersRef.current.forEach(layer => {
-        if (map && map.hasLayer(layer)) map.removeLayer(layer);
-      });
+      const cleanupContainer = map.getContainer?.();
+      if (map && cleanupContainer && cleanupContainer.parentNode) {
+        triangleLayersRef.current.forEach(layer => {
+          if (map && map.hasLayer(layer)) map.removeLayer(layer);
+        });
+      }
       triangleLayersRef.current.clear();
     };
   }, [map, triangleMesh, triangleLayersRef, onTriangleClick]);
 
   return null;
 }
-
