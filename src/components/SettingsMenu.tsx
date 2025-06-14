@@ -5,9 +5,12 @@ import { Button } from "@/components/ui/button";
 import { getTriangleActivities, clearTriangleActivities } from "../utils/triangleMesh";
 import { useIsMobile } from "../hooks/use-mobile";
 
+// Define type for gamer summary
+type GamerSummary = { gametag: string; color: string; clicks: number };
+
 // Helper to aggregate gamer stats from activities
-function summarizeGamers(activities) {
-  const stats = {};
+function summarizeGamers(activities: any[]): GamerSummary[] {
+  const stats: Record<string, GamerSummary> = {};
   for (const act of activities) {
     if (!act.gametag || !act.color) continue;
     const key = `${act.gametag}:${act.color}`;
@@ -21,7 +24,7 @@ function summarizeGamers(activities) {
 
 export const SettingsMenu: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [open, setOpen] = useState(false);
-  const [activities, setActivities] = useState([]);
+  const [activities, setActivities] = useState<any[]>([]);
   const [forceMobileZoom, setForceMobileZoom] = useState(true);
   const [busy, setBusy] = useState(false);
   const isMobile = useIsMobile();
