@@ -18,6 +18,16 @@ export interface TriangleMesh {
   children?: TriangleMesh[];
 }
 
+// TypeScript type for DB row
+type TriangleActivityRow = {
+  id: string;
+  when: string;
+  where: string;
+  what: number;
+  level: number;
+  timestamp: string;
+};
+
 // Convert 3D point to lat/lng coordinates
 export function point3DToLatLng(point: Point3D): LatLng {
   const lat = Math.asin(point.z) * (180 / Math.PI);
@@ -162,8 +172,6 @@ export function getTriangleMeshColor(triangle: TriangleMesh): string {
 // Store triangle click activity in Supabase
 export async function storeTriangleActivity(triangleId: string, clickCount: number, level: number) {
   try {
-    // Write or insert activity (we "log" each event)
-    // Use the Supabase client provided in /src/integrations/supabase/client
     const { supabase } = await import('@/integrations/supabase/client');
     const { error, data } = await supabase
       .from('triangle_activities')
@@ -173,14 +181,15 @@ export async function storeTriangleActivity(triangleId: string, clickCount: numb
           where: triangleId,
           what: clickCount,
           level: level,
-          // timestamp will default to now()
         }
-      ]);
+      ])
+      .select('id'); // get id back
     if (error) {
       throw error;
     }
-    console.log('Triangle activity stored successfully in Supabase:', data);
-    return { success: true, id: data && data[0]?.id };
+    // Explicitly type the data returned from supabase
+    const typedData = data as TriangleActivityRow[] | null;
+    return { success: true, id: typedData?.[0]?.id };
   } catch (error) {
     console.error('Error storing triangle activity in Supabase:', error);
     throw error;
@@ -191,11 +200,10 @@ export async function storeTriangleActivity(triangleId: string, clickCount: numb
 export async function clearTriangleActivities() {
   try {
     const { supabase } = await import('@/integrations/supabase/client');
-    // Truncate all activities (delete all rows)
     const { error } = await supabase
       .from('triangle_activities')
       .delete()
-      .neq('id', ''); // Match everything (id != '')
+      .neq('id', '');
     if (error) {
       throw error;
     }
@@ -223,7 +231,7 @@ export async function getTriangleActivities() {
       return [];
     }
     // Normalize date strings to the same format
-    const activities = data.map((act) => ({
+    const activities = (data as TriangleActivityRow[]).map((act) => ({
       ...act,
       when: typeof act.when === 'string' ? act.when : new Date(act.when).toISOString(),
     }));
