@@ -11,7 +11,7 @@ const EMOJIS = [
   "🪐", "🎸", "🐲", "🐼", "🎈", "🥑", "🦥", "🥨"
 ];
 
-// Distinct palette, shuffle and pick 16, excluding used
+// Distinct palette, always shuffle and pick 16
 const BASE_COLORS = [
   "#EF476F", "#FFD166", "#06D6A0", "#118AB2",
   "#FF8A5B", "#FFC93C", "#6BCB77", "#4D96FF",
@@ -29,25 +29,8 @@ function shuffle(arr: string[]) {
   return a;
 }
 
-function getUsedColors(): string[] {
-  const all = window.localStorage.getItem("usedColors");
-  if (!all) return [];
-  try {
-    return JSON.parse(all) as string[];
-  } catch {
-    return [];
-  }
-}
-function setUsedColor(color: string) {
-  const prev = getUsedColors();
-  if (!prev.includes(color)) {
-    window.localStorage.setItem("usedColors", JSON.stringify([...prev, color]));
-  }
-}
-
-const getAvailableColors = (): string[] => {
-  const used = getUsedColors();
-  return shuffle(BASE_COLORS.filter(c => !used.includes(c))).slice(0, 16);
+const getRandomPalette = (): string[] => {
+  return shuffle(BASE_COLORS).slice(0, 16);
 };
 
 const validateTag = (tag: string) => tag.length > 0 && tag.length <= 16;
@@ -72,7 +55,7 @@ const IdentityGate: React.FC<{ children: React.ReactNode }> = ({ children }) => 
 
   useEffect(() => {
     if (!identity) {
-      const pal = getAvailableColors();
+      const pal = getRandomPalette();
       setPalette(pal);
       const pairs = getColorEmojiPairs(pal);
       setColorEmojiPairs(pairs);
@@ -99,7 +82,7 @@ const IdentityGate: React.FC<{ children: React.ReactNode }> = ({ children }) => 
     setError("");
     const { color, emoji } = colorEmojiPairs[selectedIdx];
     setIdentity({ gametag: tag.trim(), color, emoji });
-    setUsedColor(color);
+    // (No longer storing used colors!)
   };
 
   // Form submit handler — calls onConfirm
@@ -179,4 +162,3 @@ const IdentityGate: React.FC<{ children: React.ReactNode }> = ({ children }) => 
 };
 
 export default IdentityGate;
-
