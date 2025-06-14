@@ -50,9 +50,10 @@ All notable changes to the Triangle Mesh project will be documented in this file
 ## [1.2.0] - 2025-06-14
 
 ### Changed
-- **Database Model**: Triangle activity persistence is now based on full triangle state snapshots (`click_count`, `subdivided`, `action_type`, color, gametag, when).
-- **Mesh Rebuild**: The mesh is reconstructed using last known state for each triangle, ensuring no loss or rollback after page reload.
-- **Codebase Consistency**: Aligned all click/save/restore logic to new schema and behavior. Legacy incremental actions are discontinued.
+- **Database Model**: Triangle activity persistence now stores full triangle state as a snapshot (not an incremental action log). Each database row includes `click_count`, `subdivided`, `action_type`, color, gametag, and optional notes and is a complete record of the triangle's state *at the time of the action*.
+- **Mesh Rebuild**: The mesh is reconstructed using the last known state per triangle, ensuring accurate, lossless restoration after reload—no old incremental replaying logic.
+- **Codebase Consistency**: All click/save/restore logic now depends on state snapshots, not deltas. Legacy incremental action logic was removed.
+- **Schema Update**: See `notes`, `click_count`, `subdivided`, and `action_type` columns in the activity table; historical "what" may still be referenced for backward compatibility.
 
 ### Data Model (as of 1.2.0)
 Each triangle activity snapshot row now stores:
@@ -60,11 +61,11 @@ Each triangle activity snapshot row now stores:
 - `when` (ISO string timestamp of event)
 - `gametag` (player who acted)
 - `color` (player color for that triangle state)
-- `click_count` (the latest tap count for this triangle, accurate at save)
+- `click_count` (latest tap count for this triangle, accurate at save)
 - `level` (subdivision level of triangle)
 - `subdivided` (boolean: true if split into children)
 - `action_type` ("click" or "subdivide" or other, for future-proofing)
-- `notes` (optional, for debugging or analytics)
+- `notes` (optional for debugging/analytics)
 
 ### Migration
 - All previous mesh activity data is wiped as state is not compatible.
