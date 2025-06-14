@@ -90,6 +90,10 @@ export const SettingsMenu: React.FC<{ children: React.ReactNode }> = ({ children
         duration: 2500,
       });
       setBusy(false);
+      // Force hard refresh so the new world is shown everywhere immediately
+      setTimeout(() => {
+        window.location.reload();
+      }, 300);
     } catch (e) {
       toast({
         title: "Error",
