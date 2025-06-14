@@ -1,5 +1,6 @@
 import L from "leaflet";
 import { useEffect } from "react";
+import React from "react";
 import { createGeodesicTriangle } from "./GeodesicTriangle";
 import type { TriangleMesh } from "../../utils/triangleMesh/geometry";
 
@@ -7,7 +8,11 @@ type Props = {
   map: L.Map | null;
   triangleMesh: TriangleMesh[];
   triangleLayersRef: React.MutableRefObject<Map<string, L.Polygon>>;
-  onTriangleClick: (triangleId: string, triangle?: TriangleMesh) => void;
+  onTriangleClick: (
+    triangleId: string,
+    triangle?: TriangleMesh,
+    parentPath?: string
+  ) => void;
 };
 
 export function TriangleMeshRenderer({
@@ -16,19 +21,17 @@ export function TriangleMeshRenderer({
   triangleLayersRef,
   onTriangleClick
 }: Props) {
-  useEffect(() => {
+  React.useEffect(() => {
     if (!map || !triangleMesh) return;
 
     const renderTriangleMesh = (triangleList: TriangleMesh[], parentPath: string = "") => {
       triangleList.forEach(triangle => {
         const trianglePath = parentPath ? `${parentPath}-${triangle.id}` : triangle.id;
         if (!triangle.subdivided) {
-          // Remove existing layer if it exists
           const existingLayer = triangleLayersRef.current.get(trianglePath);
           if (existingLayer) map.removeLayer(existingLayer);
 
           const coordinates = createGeodesicTriangle(triangle.vertices);
-
           let fill = "#fff";
           if (triangle.clickCount > 0) {
             fill = triangle.color || "#222";
@@ -48,18 +51,14 @@ export function TriangleMeshRenderer({
             className: "leaflet-interactive"
           });
 
-          // Robust: Use pointer events (handles touch+mouse+pen), fallback to click for legacy
-          const pointerHandler = (e: any) => {
-            console.log("[TriangleMeshRenderer] polygon.pointerdown", e, triangle);
-            onTriangleClick(triangle.id, triangle);
-          };
-
-          polygon.on("pointerdown", pointerHandler);
-
-          // For browsers/devices not supporting pointer events, keep "click" as safety net
+          polygon.on("pointerdown", (e: any) => {
+            console.log("[TriangleMeshRenderer] pointerdown", e, triangle);
+            onTriangleClick(triangle.id, triangle, trianglePath);
+          });
           polygon.on("click", (e: any) => {
-            console.log("[TriangleMeshRenderer] polygon.click", e, triangle);
-            onTriangleClick(triangle.id, triangle);
+            // This should fire only if pointerdown didn't
+            console.log("[TriangleMeshRenderer] click fallback", e, triangle);
+            onTriangleClick(triangle.id, triangle, trianglePath);
           });
 
           polygon.addTo(map);
@@ -78,7 +77,7 @@ export function TriangleMeshRenderer({
 
     renderTriangleMesh(triangleMesh);
 
-    // Cleanup function to remove layers on unmount
+    // Cleanup: remove layers on unmount
     return () => {
       triangleLayersRef.current.forEach(layer => {
         map.removeLayer(layer);
