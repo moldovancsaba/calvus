@@ -18,6 +18,7 @@ export interface TriangleMesh {
   children?: TriangleMesh[];
   color?: string; // Owner color for "paint"
   gametag?: string; // Current owner display name
+  emoji?: string; // Winner's emoji or user picture
 }
 
 export function point3DToLatLng(point: Point3D): LatLng {
