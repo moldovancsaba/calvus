@@ -64,14 +64,23 @@ export function useTriangleMeshTap(
       let storeSuccess = false;
       try {
         console.log("[useTriangleMeshTap] Store activity:", triangleId, (triangle?.clickCount ?? 0) + 1);
-        await storeTriangleActivity(
+        const result = await storeTriangleActivity(
           triangleId,
           (triangle?.clickCount ?? 0) + 1,
           triangle?.level ?? 0,
           identity.gametag,
           identity.color
         );
+        console.log("[useTriangleMeshTap] Store activity result:", result);
+        if (!result?.success) {
+          throw new Error("No success response from storeTriangleActivity");
+        }
         storeSuccess = true;
+        toast({
+          title: "Activity Saved!",
+          description: "Your triangle tap activity was recorded to the database.",
+          variant: "default",
+        });
         console.log("[useTriangleMeshTap] Store success!");
       } catch (err: any) {
         storeSuccess = false;
