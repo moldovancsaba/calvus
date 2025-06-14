@@ -55,204 +55,166 @@ export function sphericalMidpoint(p1: LatLng, p2: LatLng): LatLng {
   return point3DToLatLng(midpoint);
 }
 
-// Generate the 26 base triangles for the spherical mesh.
-// These triangles are distributed to minimize distortion and support the subdivision system.
-// Canonical for v2.1+: See technical documentation.
-// 
-// As of June 2025, the base mesh contains the following triangles (IDs):
-// [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, N1, N2, S1, S2, B1, B3, N3, NEW1, NEW2, NEW3, SP1, SP2]
-// 
-// All per-triangle activity and mesh logic assumes 26 triangles at mesh genesis.
+// Canonical base triangle order for referencing throughout the system (v2.2+, June 2025):
+// [NorthCap1, NorthCap2, NorthCap3, NorthCap4, NorthBelt1, NorthBelt2, NorthBelt3, NorthBelt4,
+//  Equator1, Equator2, Equator3, Equator4, SouthBelt1, SouthBelt2, SouthBelt3, SouthBelt4,
+//  SouthCap1, SouthCap2, SouthCap3, SouthCap4, Extra1, Extra2, Extra3, Extra4, SouthPole1, SouthPole2]
+// The order is: starting at north pole, spiral downward and around the globe, then extras/patches at the end for south pole.
 export function generateBaseTriangleMesh(): TriangleMesh[] {
   const triangles: TriangleMesh[] = [
-    // North hemisphere base triangles
-    {
-      id: '1',
-      vertices: [
-        { lat: 66.0, lng: 0.0 },
-        { lat: 0.0, lng: -36.0 },
-        { lat: 0.0, lng: 36.0 }
-      ],
-      level: 0,
-      clickCount: 0,
-      subdivided: false
-    },
-    {
-      id: '2',
-      vertices: [
-        { lat: 66.0, lng: 0.0 },
-        { lat: 66.0, lng: 72.0 },
-        { lat: 0.0, lng: 36.0 }
-      ],
-      level: 0,
-      clickCount: 0,
-      subdivided: false
-    },
-    {
-      id: '3',
-      vertices: [
-        { lat: 66.0, lng: 0.0 },
-        { lat: 66.0, lng: -72.0 },
-        { lat: 0.0, lng: -36.0 }
-      ],
-      level: 0,
-      clickCount: 0,
-      subdivided: false
-    },
-
-    // South hemisphere mirrored base triangles
-    {
-      id: '4',
-      vertices: [
-        { lat: -66.0, lng: 0.0 },
-        { lat: 0.0, lng: -36.0 },
-        { lat: 0.0, lng: 36.0 }
-      ],
-      level: 0,
-      clickCount: 0,
-      subdivided: false
-    },
-    {
-      id: '5',
-      vertices: [
-        { lat: -66.0, lng: 0.0 },
-        { lat: -66.0, lng: 72.0 },
-        { lat: 0.0, lng: 36.0 }
-      ],
-      level: 0,
-      clickCount: 0,
-      subdivided: false
-    },
-    {
-      id: '6',
-      vertices: [
-        { lat: -66.0, lng: 0.0 },
-        { lat: -66.0, lng: -72.0 },
-        { lat: 0.0, lng: -36.0 }
-      ],
-      level: 0,
-      clickCount: 0,
-      subdivided: false
-    },
-
-    // ---- Corrected Belt (Equator) Triangles (NORTH) ----
-    // These form a geodesic band similar to the base triangles, not degenerate
-    {
-      id: '7',
-      vertices: [
-        { lat: 66.0, lng: -72.0 },
-        { lat: 0.0, lng: -36.0 },
-        { lat: 0.0, lng: -108.0 }
-      ],
-      level: 0,
-      clickCount: 0,
-      subdivided: false
-    },
-    {
-      id: '8',
-      vertices: [
-        { lat: 66.0, lng: 72.0 },
-        { lat: 0.0, lng: 36.0 },
-        { lat: 0.0, lng: 108.0 }
-      ],
-      level: 0,
-      clickCount: 0,
-      subdivided: false
-    },
-    {
-      id: '9',
-      vertices: [
-        { lat: 66.0, lng: 144.0 },
-        { lat: 0.0, lng: 108.0 },
-        { lat: 0.0, lng: 180.0 }
-      ],
-      level: 0,
-      clickCount: 0,
-      subdivided: false
-    },
-    {
-      id: '10',
-      vertices: [
-        { lat: 66.0, lng: -144.0 },
-        { lat: 0.0, lng: -108.0 },
-        { lat: 0.0, lng: -180.0 }
-      ],
-      level: 0,
-      clickCount: 0,
-      subdivided: false
-    },
-
-    // ---- South hemisphere mirror belt (equatorial) triangles ----
-    // These mirror triangles 7–10 but with -66 latitude
-    {
-      id: '11',
-      vertices: [
-        { lat: -66.0, lng: -72.0 },
-        { lat: 0.0, lng: -36.0 },
-        { lat: 0.0, lng: -108.0 }
-      ],
-      level: 0,
-      clickCount: 0,
-      subdivided: false
-    },
-    {
-      id: '12',
-      vertices: [
-        { lat: -66.0, lng: 72.0 },
-        { lat: 0.0, lng: 36.0 },
-        { lat: 0.0, lng: 108.0 }
-      ],
-      level: 0,
-      clickCount: 0,
-      subdivided: false
-    },
-    {
-      id: '13',
-      vertices: [
-        { lat: -66.0, lng: 144.0 },
-        { lat: 0.0, lng: 108.0 },
-        { lat: 0.0, lng: 180.0 }
-      ],
-      level: 0,
-      clickCount: 0,
-      subdivided: false
-    },
-    {
-      id: '14',
-      vertices: [
-        { lat: -66.0, lng: -144.0 },
-        { lat: 0.0, lng: -108.0 },
-        { lat: 0.0, lng: -180.0 }
-      ],
-      level: 0,
-      clickCount: 0,
-      subdivided: false
-    },
-
-    // North pole caps
+    // North Pole Cap triangles (top, spiral clockwise)
     {
       id: 'N1',
       vertices: [
         { lat: 90.0, lng: 0.0 },
-        { lat: 66.0, lng: 72.0 },
-        { lat: 66.0, lng: 0.0 }
+        { lat: 66.0, lng: 0.0 },
+        { lat: 66.0, lng: 72.0 }
       ],
-      level: 0,
-      clickCount: 0,
-      subdivided: false
+      level: 0, clickCount: 0, subdivided: false
     },
     {
       id: 'N2',
       vertices: [
         { lat: 90.0, lng: 0.0 },
-        { lat: 66.0, lng: 0.0 },
+        { lat: 66.0, lng: 72.0 },
+        { lat: 66.0, lng: 144.0 }
+      ],
+      level: 0, clickCount: 0, subdivided: false
+    },
+    {
+      id: 'N3',
+      vertices: [
+        { lat: 90.0, lng: 0.0 },
+        { lat: 66.0, lng: 144.0 },
+        { lat: 66.0, lng: -144.0 }
+      ],
+      level: 0, clickCount: 0, subdivided: false
+    },
+    {
+      id: 'N4',
+      vertices: [
+        { lat: 90.0, lng: 0.0 },
+        { lat: 66.0, lng: -144.0 },
         { lat: 66.0, lng: -72.0 }
       ],
-      level: 0,
-      clickCount: 0,
-      subdivided: false
+      level: 0, clickCount: 0, subdivided: false
     },
-    // South pole caps
+
+    // Northern mid-latitude/belt triangles (66N)
+    {
+      id: 'B1',
+      vertices: [
+        { lat: 66.0, lng: 0.0 },
+        { lat: 0.0, lng: -36.0 },
+        { lat: 66.0, lng: 72.0 }
+      ],
+      level: 0, clickCount: 0, subdivided: false
+    },
+    {
+      id: 'B2',
+      vertices: [
+        { lat: 66.0, lng: 72.0 },
+        { lat: 0.0, lng: 36.0 },
+        { lat: 66.0, lng: 144.0 }
+      ],
+      level: 0, clickCount: 0, subdivided: false
+    },
+    {
+      id: 'B3',
+      vertices: [
+        { lat: 66.0, lng: 144.0 },
+        { lat: 0.0, lng: 108.0 },
+        { lat: 66.0, lng: -144.0 }
+      ],
+      level: 0, clickCount: 0, subdivided: false
+    },
+    {
+      id: 'B4',
+      vertices: [
+        { lat: 66.0, lng: -144.0 },
+        { lat: 0.0, lng: -108.0 },
+        { lat: 66.0, lng: -72.0 }
+      ],
+      level: 0, clickCount: 0, subdivided: false
+    },
+
+    // Equator band (0° lat around globe, spiral east)
+    {
+      id: 'E1',
+      vertices: [
+        { lat: 0.0, lng: -36.0 },
+        { lat: 0.0, lng: 36.0 },
+        { lat: 66.0, lng: 72.0 }
+      ],
+      level: 0, clickCount: 0, subdivided: false
+    },
+    {
+      id: 'E2',
+      vertices: [
+        { lat: 0.0, lng: 36.0 },
+        { lat: 0.0, lng: 108.0 },
+        { lat: 66.0, lng: 144.0 }
+      ],
+      level: 0, clickCount: 0, subdivided: false
+    },
+    {
+      id: 'E3',
+      vertices: [
+        { lat: 0.0, lng: 108.0 },
+        { lat: 0.0, lng: 180.0 },
+        { lat: 66.0, lng: -144.0 }
+      ],
+      level: 0, clickCount: 0, subdivided: false
+    },
+    {
+      id: 'E4',
+      vertices: [
+        { lat: 0.0, lng: -108.0 },
+        { lat: 0.0, lng: -180.0 },
+        { lat: 66.0, lng: -72.0 }
+      ],
+      level: 0, clickCount: 0, subdivided: false
+    },
+
+    // Southern belt (mirror north, -66 latitude)
+    {
+      id: 'SB1',
+      vertices: [
+        { lat: -66.0, lng: 0.0 },
+        { lat: 0.0, lng: -36.0 },
+        { lat: -66.0, lng: 72.0 }
+      ],
+      level: 0, clickCount: 0, subdivided: false
+    },
+    {
+      id: 'SB2',
+      vertices: [
+        { lat: -66.0, lng: 72.0 },
+        { lat: 0.0, lng: 36.0 },
+        { lat: -66.0, lng: 144.0 }
+      ],
+      level: 0, clickCount: 0, subdivided: false
+    },
+    {
+      id: 'SB3',
+      vertices: [
+        { lat: -66.0, lng: 144.0 },
+        { lat: 0.0, lng: 108.0 },
+        { lat: -66.0, lng: -144.0 }
+      ],
+      level: 0, clickCount: 0, subdivided: false
+    },
+    {
+      id: 'SB4',
+      vertices: [
+        { lat: -66.0, lng: -144.0 },
+        { lat: 0.0, lng: -108.0 },
+        { lat: -66.0, lng: -72.0 }
+      ],
+      level: 0, clickCount: 0, subdivided: false
+    },
+
+    // South Pole Cap triangles
     {
       id: 'S1',
       vertices: [
@@ -260,121 +222,77 @@ export function generateBaseTriangleMesh(): TriangleMesh[] {
         { lat: -66.0, lng: 0.0 },
         { lat: -66.0, lng: 72.0 }
       ],
-      level: 0,
-      clickCount: 0,
-      subdivided: false
+      level: 0, clickCount: 0, subdivided: false
     },
     {
       id: 'S2',
       vertices: [
         { lat: -90.0, lng: 0.0 },
-        { lat: -66.0, lng: -72.0 },
-        { lat: -66.0, lng: 0.0 }
+        { lat: -66.0, lng: 72.0 },
+        { lat: -66.0, lng: 144.0 }
       ],
-      level: 0,
-      clickCount: 0,
-      subdivided: false
+      level: 0, clickCount: 0, subdivided: false
+    },
+    {
+      id: 'S3',
+      vertices: [
+        { lat: -90.0, lng: 0.0 },
+        { lat: -66.0, lng: 144.0 },
+        { lat: -66.0, lng: -144.0 }
+      ],
+      level: 0, clickCount: 0, subdivided: false
+    },
+    {
+      id: 'S4',
+      vertices: [
+        { lat: -90.0, lng: 0.0 },
+        { lat: -66.0, lng: -144.0 },
+        { lat: -66.0, lng: -72.0 }
+      ],
+      level: 0, clickCount: 0, subdivided: false
     },
 
-    // Triangle A: (66°N, 72°), (66°N, 144°), (0°, 108°)
+    // South Pole Patch triangles (extras/fill-ins for geometry closure/consistency)
     {
-      id: 'B1',
-      vertices: [
-        { lat: 66.0, lng: 72.0 },
-        { lat: 66.0, lng: 144.0 },
-        { lat: 0.0, lng: 108.0 },
-      ],
-      level: 0,
-      clickCount: 0,
-      subdivided: false
-    },
-    // Triangle C: (66°N, -144°), (66°N, -72°), (0°, -108°)
-    {
-      id: 'B3',
-      vertices: [
-        { lat: 90.0, lng: 0.0 },
-        { lat: 66.0, lng: 72.0 },
-        { lat: 66.0, lng: 144.0 }
-      ],
-      level: 0,
-      clickCount: 0,
-      subdivided: false
-    },
-
-    // New North Pole Triangle: (90°N, 0°), (66°N, -144°), (66°N, -72°)
-    {
-      id: 'N3',
-      vertices: [
-        { lat: 90.0, lng: 0.0 },
-        { lat: 66.0, lng: -144.0 },
-        { lat: 66.0, lng: -72.0 },
-      ],
-      level: 0,
-      clickCount: 0,
-      subdivided: false
-    },
-
-    // New custom triangle with user-defined coordinates
-    {
-      id: 'NEW1',
-      vertices: [
-        { lat: 66.0, lng: -72.0 },
-        { lat: 66.0, lng: -144.0 },
-        { lat: 0.0, lng: -108.0 }
-      ],
-      level: 0,
-      clickCount: 0,
-      subdivided: false
-    },
-    {
-      id: 'NEW2',
+      id: 'X1',
       vertices: [
         { lat: 0.0,    lng: 108.0 },
         { lat: -66.0,  lng: 144.0 },
         { lat: -66.0,  lng: 72.0 }
       ],
-      level: 0,
-      clickCount: 0,
-      subdivided: false
+      level: 0, clickCount: 0, subdivided: false
     },
     {
-      id: 'NEW3',
+      id: 'X2',
       vertices: [
-        { lat: -66.0,  lng: -144.0 },
+        { lat: 0.0,    lng: -108.0 },
         { lat: -66.0,  lng: -72.0 },
-        { lat: 0.0,    lng: -108.0 }
+        { lat: -66.0,  lng: -144.0 }
       ],
-      level: 0,
-      clickCount: 0,
-      subdivided: false
+      level: 0, clickCount: 0, subdivided: false
     },
-    // ---- NEW: South Pole connector triangles ----
     {
-      id: 'SP1',
+      id: 'X3',
       vertices: [
         { lat: -66.0,  lng: 144.0 },
         { lat: -66.0,  lng: 72.0 },
         { lat: -90.0,  lng: 0.0 }
       ],
-      level: 0,
-      clickCount: 0,
-      subdivided: false
+      level: 0, clickCount: 0, subdivided: false
     },
     {
-      id: 'SP2',
+      id: 'X4',
       vertices: [
         { lat: -66.0,  lng: -144.0 },
         { lat: -66.0,  lng: -72.0 },
         { lat: -90.0,  lng: 0.0 }
       ],
-      level: 0,
-      clickCount: 0,
-      subdivided: false
+      level: 0, clickCount: 0, subdivided: false
     }
   ];
 
-  // Log 26 base triangles (v2.2, June 2025 South Pole patch)
-  console.log('Generated base triangle mesh with 26 triangles (v2.2, June 2025 South Pole patch)');
+  // Log new canonical order for audit trail
+  console.log('Base triangle mesh generated in canonical spiral order (v2.2+). Reference by array index for all system operations.');
   return triangles;
 }
 
