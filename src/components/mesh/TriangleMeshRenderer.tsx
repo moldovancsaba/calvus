@@ -1,4 +1,3 @@
-
 import L from "leaflet";
 import React from "react";
 import { createGeodesicTriangle } from "./GeodesicTriangle";
@@ -51,19 +50,27 @@ export function TriangleMeshRenderer({
             className: "leaflet-interactive"
           });
 
+          // --- Main interaction events ---
+
+          // Handle pointerdown (desktop and modern mobile)
           polygon.on("pointerdown", (e: any) => {
             console.log("[TriangleMeshRenderer] pointerdown", e, triangle);
             onTriangleClick(triangle.id, triangle, trianglePath);
           });
-          // Fallback for mouse events
+
+          // Fallback for mouse click
           polygon.on("click", (e: any) => {
             console.log("[TriangleMeshRenderer] click fallback", e, triangle);
             onTriangleClick(triangle.id, triangle, trianglePath);
           });
-          // Debug: log all pointer events
+
+          // Direct touch interaction for mobile browsers
           polygon.on("touchstart", (e: any) => {
-            console.log("[TriangleMeshRenderer] touchstart", e, triangle);
+            console.log("[TriangleMeshRenderer] touchstart - firing tap/click!", e, triangle);
+            onTriangleClick(triangle.id, triangle, trianglePath);
           });
+
+          // (Optional debug, can be removed after confirming touch works)
           polygon.on("touchend", (e: any) => {
             console.log("[TriangleMeshRenderer] touchend", e, triangle);
           });
