@@ -28,6 +28,7 @@ export const SettingsMenu: React.FC<{ children: React.ReactNode; worldSlug: stri
   const [open, setOpen] = useState(false);
   const [activities, setActivities] = useState<any[]>([]);
   const [settings, setSettings] = useState<WorldSettings | null>(null);
+  const [pendingSettings, setPendingSettings] = useState<WorldSettings | null>(null);
   const [busy, setBusy] = useState(false);
   const [settingsBusy, setSettingsBusy] = useState(false);
   const { toast } = useToast();
@@ -43,6 +44,7 @@ export const SettingsMenu: React.FC<{ children: React.ReactNode; worldSlug: stri
       try {
         const worldSettings = await fetchWorldSettings(worldSlug);
         setSettings(worldSettings);
+        setPendingSettings(worldSettings); // track pending edits
       } catch (e) {
         toast({ title: "Error loading settings", description: String((e as Error).message), variant: "destructive" });
       } finally {
@@ -54,15 +56,20 @@ export const SettingsMenu: React.FC<{ children: React.ReactNode; worldSlug: stri
     if (open) load();
   }, [open, worldSlug]);
 
-  async function handleChangeSetting<K extends keyof WorldSettings>(key: K, value: WorldSettings[K]) {
-    if (!settings) return;
-    setSettings({ ...settings, [key]: value });
+  // Only apply changes via Apply button
+  function handleSettingEdit<K extends keyof WorldSettings>(key: K, value: WorldSettings[K]) {
+    if (!pendingSettings) return;
+    setPendingSettings({ ...pendingSettings, [key]: value });
+  }
+
+  async function handleApplySettings() {
+    if (!pendingSettings) return;
     setSettingsBusy(true);
     try {
-      const updated = await updateWorldSettings(worldSlug, { [key]: value });
+      const updated = await updateWorldSettings(worldSlug, pendingSettings);
       setSettings(updated);
-      toast({ title: "Setting updated", duration: 1500 });
-      // Optional: propagate change to clients via storage event/local reload
+      setPendingSettings(updated);
+      toast({ title: "Settings updated", duration: 1500 });
       window.dispatchEvent(
         new StorageEvent("storage", { key: `worldSettings_${worldSlug}`, newValue: Date.now().toString() })
       );
@@ -110,7 +117,7 @@ export const SettingsMenu: React.FC<{ children: React.ReactNode; worldSlug: stri
   const settingsContent = (
     <div className="flex flex-col h-full w-full">
       <div className="text-lg font-semibold mb-2">Settings</div>
-      {!settings ? (
+      {!pendingSettings ? (
         <div className="text-xs text-muted-foreground">Loading settings...</div>
       ) : (
         <>
@@ -118,16 +125,16 @@ export const SettingsMenu: React.FC<{ children: React.ReactNode; worldSlug: stri
           <div className="flex items-center justify-between mb-4 gap-1">
             <span>Fixed zoom for mobile</span>
             <Button
-              variant={settings.force_mobile_zoom ? "default" : "outline"}
-              onClick={() => handleChangeSetting("force_mobile_zoom", !settings.force_mobile_zoom)}
+              variant={pendingSettings.force_mobile_zoom ? "default" : "outline"}
+              onClick={() => handleSettingEdit("force_mobile_zoom", !pendingSettings.force_mobile_zoom)}
               size="sm"
               disabled={settingsBusy}
             >
-              {settings.force_mobile_zoom ? "On" : "Off"}
+              {pendingSettings.force_mobile_zoom ? "On" : "Off"}
             </Button>
           </div>
           {/* Fixed zoom level input for mobile */}
-          {settings.force_mobile_zoom && (
+          {pendingSettings.force_mobile_zoom && (
             <div className="flex items-center justify-between mb-4 gap-2">
               <label htmlFor="fixed-zoom-level" className="text-sm">
                 Fixed mobile zoom level
@@ -141,16 +148,16 @@ export const SettingsMenu: React.FC<{ children: React.ReactNode; worldSlug: stri
                 pattern="[0-9]*"
                 inputMode="numeric"
                 className="w-20 text-right"
-                value={settings.fixed_mobile_zoom_level}
+                value={pendingSettings.fixed_mobile_zoom_level}
                 disabled={settingsBusy}
                 onChange={e => {
                   const n = Math.floor(Number((e.target as HTMLInputElement).value));
-                  if (!isNaN(n)) handleChangeSetting("fixed_mobile_zoom_level", n);
+                  if (!isNaN(n)) handleSettingEdit("fixed_mobile_zoom_level", n);
                 }}
                 onBlur={e => {
                   let val = Math.round(Number((e.target as HTMLInputElement).value));
                   if (isNaN(val)) val = 2;
-                  handleChangeSetting("fixed_mobile_zoom_level", val);
+                  handleSettingEdit("fixed_mobile_zoom_level", val);
                 }}
               />
             </div>
@@ -165,15 +172,15 @@ export const SettingsMenu: React.FC<{ children: React.ReactNode; worldSlug: stri
               max={20}
               step={1}
               className="w-20 text-right"
-              value={settings.desktop_min_zoom_level}
+              value={pendingSettings.desktop_min_zoom_level}
               disabled={settingsBusy}
               onChange={e => {
                 const n = Math.max(1, Math.floor(Number((e.target as HTMLInputElement).value)));
-                handleChangeSetting("desktop_min_zoom_level", n);
+                handleSettingEdit("desktop_min_zoom_level", n);
               }}
               onBlur={e => {
                 let val = Math.max(1, Math.round(Number((e.target as HTMLInputElement).value)));
-                handleChangeSetting("desktop_min_zoom_level", val);
+                handleSettingEdit("desktop_min_zoom_level", val);
               }}
             />
           </div>
@@ -186,17 +193,28 @@ export const SettingsMenu: React.FC<{ children: React.ReactNode; worldSlug: stri
               max={20}
               step={1}
               className="w-20 text-right"
-              value={settings.desktop_max_zoom_level}
+              value={pendingSettings.desktop_max_zoom_level}
               disabled={settingsBusy}
               onChange={e => {
                 const n = Math.max(1, Math.floor(Number((e.target as HTMLInputElement).value)));
-                handleChangeSetting("desktop_max_zoom_level", n);
+                handleSettingEdit("desktop_max_zoom_level", n);
               }}
               onBlur={e => {
                 let val = Math.max(1, Math.round(Number((e.target as HTMLInputElement).value)));
-                handleChangeSetting("desktop_max_zoom_level", val);
+                handleSettingEdit("desktop_max_zoom_level", val);
               }}
             />
+          </div>
+          {/* Apply Button */}
+          <div className="flex justify-end mb-4">
+            <Button
+              variant="default"
+              size="sm"
+              onClick={handleApplySettings}
+              disabled={settingsBusy}
+            >
+              Apply
+            </Button>
           </div>
         </>
       )}

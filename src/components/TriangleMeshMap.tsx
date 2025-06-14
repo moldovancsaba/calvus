@@ -24,7 +24,12 @@ type Props = {
 // Always use this default map center
 const DEFAULT_CENTER: [number, number] = [33, 0];
 
+function getFixedWorldSlug(slug: string) {
+  return (!slug || slug === "") ? "original" : slug;
+}
+
 const TriangleMeshMap = ({ worldSlug }: Props) => {
+  const fixedWorldSlug = getFixedWorldSlug(worldSlug);
   const mapDivRef = useRef<HTMLDivElement>(null);
   const mapInstanceRef = useRef<L.Map | null>(null);
   const triangleLayersRef = useRef<Map<string, L.Polygon>>(new Map());
@@ -32,11 +37,11 @@ const TriangleMeshMap = ({ worldSlug }: Props) => {
   const { identity } = useIdentity();
   const isMobile = useIsMobile();
   const [meshVersion, setMeshVersion] = useState(
-    () => window.localStorage.getItem(`meshVersion_${worldSlug}`) || ""
+    () => window.localStorage.getItem(`meshVersion_${fixedWorldSlug}`) || ""
   );
 
   // Loader hook (fetch, poll, manage mesh state)
-  const { triangleMesh, setTriangleMesh, isLoading } = useTriangleMeshLoader(worldSlug, meshVersion);
+  const { triangleMesh, setTriangleMesh, isLoading } = useTriangleMeshLoader(fixedWorldSlug, meshVersion);
 
   // World settings
   const [worldSettings, setWorldSettings] = useState<WorldSettings | null>(null);
@@ -45,7 +50,7 @@ const TriangleMeshMap = ({ worldSlug }: Props) => {
     let mounted = true;
     async function loadWorldSettings() {
       try {
-        const ws = await fetchWorldSettings(worldSlug);
+        const ws = await fetchWorldSettings(fixedWorldSlug);
         if (mounted) setWorldSettings(ws);
       } catch (e) {
         // Handle error or fallback to defaults?
@@ -55,7 +60,7 @@ const TriangleMeshMap = ({ worldSlug }: Props) => {
     loadWorldSettings();
     // Listen for changes to settings
     const handler = (e: StorageEvent) => {
-      if (e.key === `worldSettings_${worldSlug}`) {
+      if (e.key === `worldSettings_${fixedWorldSlug}`) {
         loadWorldSettings();
       }
     };
@@ -64,7 +69,7 @@ const TriangleMeshMap = ({ worldSlug }: Props) => {
       mounted = false;
       window.removeEventListener("storage", handler);
     };
-  }, [worldSlug]);
+  }, [fixedWorldSlug]);
 
   // Listen for meshVersion/storage events for reloads
   useEffect(() => {
@@ -72,22 +77,22 @@ const TriangleMeshMap = ({ worldSlug }: Props) => {
       if (
         e.key === "fixedMobileZoomLevel" ||
         e.key === "fixedMobileZoom" ||
-        e.key === `refreshMesh_${worldSlug}`
+        e.key === `refreshMesh_${fixedWorldSlug}`
       ) {
         setMeshVersion(v => v); // trigger state
       }
-      if (e.key === `meshVersion_${worldSlug}`) {
+      if (e.key === `meshVersion_${fixedWorldSlug}`) {
         setMeshVersion(e.newValue || "");
-        window.localStorage.removeItem(`triangleMeshCache_${worldSlug}`);
+        window.localStorage.removeItem(`triangleMeshCache_${fixedWorldSlug}`);
         setTriangleMesh([]);
       }
-      if (e.key === `worldReset_${worldSlug}`) {
+      if (e.key === `worldReset_${fixedWorldSlug}`) {
         window.location.reload();
       }
     };
     window.addEventListener("storage", reloadMeshOnStorage);
     return () => window.removeEventListener("storage", reloadMeshOnStorage);
-  }, [worldSlug, setTriangleMesh]);
+  }, [fixedWorldSlug, setTriangleMesh]);
 
   useLeafletMobileTouch(mapInstanceRef.current);
 
@@ -111,7 +116,7 @@ const TriangleMeshMap = ({ worldSlug }: Props) => {
     setTriangleMesh,
     isMobile,
     mapInstanceRef.current,
-    worldSlug
+    fixedWorldSlug
   );
 
   // Show a loading overlay until worldSettings is loaded
@@ -129,7 +134,7 @@ const TriangleMeshMap = ({ worldSlug }: Props) => {
         ref={mapDivRef}
         isMobile={isMobile}
         meshVersion={meshVersion}
-        worldSlug={worldSlug}
+        worldSlug={fixedWorldSlug}
         onMapReady={handleMapReady}
         desktopMinZoom={worldSettings.desktop_min_zoom_level}
         desktopMaxZoom={worldSettings.desktop_max_zoom_level}

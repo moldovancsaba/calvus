@@ -1,5 +1,8 @@
-
 import { supabase } from "@/integrations/supabase/client";
+
+function fixedWorldSlug(slug: string) {
+  return (!slug || slug === "") ? "original" : slug;
+}
 
 export type WorldSettings = {
   id: string;
@@ -12,18 +15,18 @@ export type WorldSettings = {
 };
 
 export async function fetchWorldSettings(worldSlug: string): Promise<WorldSettings> {
-  // Try to fetch by world_slug
+  const fixedSlug = fixedWorldSlug(worldSlug);
   const { data, error } = await supabase
     .from("world_settings")
     .select("*")
-    .eq("world_slug", worldSlug)
+    .eq("world_slug", fixedSlug)
     .maybeSingle();
   if (error) throw error;
   if (data) return data as WorldSettings;
 
   // If not exist, create defaults
   const insertDefaults = {
-    world_slug: worldSlug,
+    world_slug: fixedSlug,
     force_mobile_zoom: true,
     fixed_mobile_zoom_level: 2,
     desktop_min_zoom_level: 5,
@@ -40,16 +43,16 @@ export async function fetchWorldSettings(worldSlug: string): Promise<WorldSettin
 }
 
 export async function updateWorldSettings(worldSlug: string, values: Partial<WorldSettings>) {
+  const fixedSlug = fixedWorldSlug(worldSlug);
   const { data, error } = await supabase
     .from("world_settings")
     .update({
       ...values,
       updated_at: new Date().toISOString(),
     })
-    .eq("world_slug", worldSlug)
+    .eq("world_slug", fixedSlug)
     .select("*")
     .maybeSingle();
   if (error) throw error;
   return data as WorldSettings;
 }
-
