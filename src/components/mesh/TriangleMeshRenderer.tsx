@@ -35,16 +35,13 @@ export function TriangleMeshRenderer({
 
     const mapContainer = map.getContainer?.();
     if (!mapContainer || !mapContainer.parentNode) {
-      // Do not attempt any rendering if map container is not attached!
       console.warn("[TriangleMeshRenderer useEffect] map container detached, aborting");
       return;
     }
 
-    // -- Add extra check for map DOM readiness and getPane --
     function isMapReallyReady(map: L.Map) {
       try {
         const c = map.getContainer?.();
-        // Pane 'overlayPane' is always used for polygons
         return (
           !!c &&
           !!c.parentNode &&
@@ -59,15 +56,12 @@ export function TriangleMeshRenderer({
       for (const triangle of triangleList) {
         const trianglePath = parentPath ? `${parentPath}-${triangle.id}` : triangle.id;
         if (!triangle.subdivided) {
-          // Defensive: always fetch current container just before manipulating!
           const container = map.getContainer?.();
-          // Extra check: map actually ready and its overlayPane present!
           if (!map || !container || !container.parentNode || !map.getPane("overlayPane")) {
             console.warn("[TriangleMeshRenderer render] map or container/overlayPane is not fully ready, skip triangle", trianglePath);
             return;
           }
 
-          // Remove existing layer first
           const existingLayer = triangleLayersRef.current.get(trianglePath);
           if (existingLayer && map.hasLayer(existingLayer)) map.removeLayer(existingLayer);
 
@@ -81,14 +75,13 @@ export function TriangleMeshRenderer({
             ? 0.5
             : Math.min(0.3 + triangle.clickCount * 0.07, 0.95);
 
-          // Defensive: check freshness again
           if (!map || !container.parentNode || !map.getPane("overlayPane")) {
             console.warn("[TriangleMeshRenderer renderPolygon] map or container/overlayPane not fresh, skipping polygon add.");
             return;
           }
 
           const polygon = L.polygon(coordinates, {
-            color: fill,
+            color: "#fff",                // <----- Edge always WHITE
             weight: 2,
             opacity: 0.8,
             fillColor: fill,
@@ -98,11 +91,9 @@ export function TriangleMeshRenderer({
             className: "leaflet-interactive"
           });
 
-          // Defensive: Ensure map and overlayPane are both valid!
           const safeMap = map;
           const safeContainer = map.getContainer?.();
           if (safeMap && safeContainer && safeContainer.parentNode && map.getPane("overlayPane")) {
-            // --- Main interaction events ---
             polygon.on("pointerdown", (e: any) => {
               onTriangleClick(triangle.id, triangle, trianglePath);
             });
@@ -122,7 +113,6 @@ export function TriangleMeshRenderer({
       }
     };
 
-    // Defensive: clear existing layers only if container is still valid
     const currentContainer = map.getContainer?.();
     if (map && currentContainer && currentContainer.parentNode && map.getPane("overlayPane")) {
       triangleLayersRef.current.forEach(layer => {
@@ -131,7 +121,6 @@ export function TriangleMeshRenderer({
     }
     triangleLayersRef.current.clear();
 
-    // -- SKIP rendering if map is not really ready! --
     if (!isMapReallyReady(map)) {
       console.warn("[TriangleMeshRenderer effect] Rendering skipped: map not ready (missing overlayPane)");
       return;
@@ -139,7 +128,6 @@ export function TriangleMeshRenderer({
 
     renderTriangleMesh(triangleMesh);
 
-    // Cleanup: remove layers on unmount, only if map is valid and still attached
     return () => {
       const cleanupContainer = map.getContainer?.();
       if (map && cleanupContainer && cleanupContainer.parentNode && map.getPane("overlayPane")) {
@@ -153,4 +141,3 @@ export function TriangleMeshRenderer({
 
   return null;
 }
-
