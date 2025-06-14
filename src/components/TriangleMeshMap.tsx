@@ -91,7 +91,17 @@ const TriangleMeshMap = ({ worldSlug }: Props) => {
 
   useLeafletMobileTouch(mapInstanceRef.current);
 
-  // Called when the map is ready and instance available
+  // Check if map instance is alive, rendered, and mounted
+  function isMapInstanceReady(map: L.Map | null) {
+    if (!map) return false;
+    try {
+      const container = map.getContainer?.();
+      return !!(container && container.parentNode);
+    } catch (e) {
+      return false;
+    }
+  }
+
   function handleMapReady(map: L.Map) {
     mapInstanceRef.current = map;
   }
@@ -121,16 +131,14 @@ const TriangleMeshMap = ({ worldSlug }: Props) => {
         meshVersion={meshVersion}
         worldSlug={worldSlug}
         onMapReady={handleMapReady}
-        // Pass the zoom settings from the database for desktop
         desktopMinZoom={worldSettings.desktop_min_zoom_level}
         desktopMaxZoom={worldSettings.desktop_max_zoom_level}
-        // For mobile, keep the prop contract but they are ignored for now in map
         fixedMobileZoomLevel={worldSettings.fixed_mobile_zoom_level}
         forceMobileZoom={worldSettings.force_mobile_zoom}
       />
       {isLoading && <LoadingOverlay />}
       <ErrorBanner message={null} />
-      {mapInstanceRef.current && (
+      {isMapInstanceReady(mapInstanceRef.current) && (
         <TriangleMeshRenderer
           map={mapInstanceRef.current}
           triangleMesh={triangleMesh}
