@@ -269,11 +269,24 @@ export function generateBaseTriangleMesh(): TriangleMesh[] {
       level: 0,
       clickCount: 0,
       subdivided: false
+    },
+
+    // Triangle A: (66°N, 72°), (66°N, 144°), (0°, 108°)
+    {
+      id: 'B1',
+      vertices: [
+        { lat: 66.0, lng: 72.0 },
+        { lat: 66.0, lng: 144.0 },
+        { lat: 0.0, lng: 108.0 }
+      ],
+      level: 0,
+      clickCount: 0,
+      subdivided: false
     }
   ];
 
-  // Rolled back log: 18 triangles in base mesh (removed 6 new belt triangles for testing coverage)
-  console.log('Generated base triangle mesh with 18 triangles (only original, no new belt triangles)');
+  // Log 19 base triangles (original + new B1)
+  console.log('Generated base triangle mesh with 19 triangles (original 18, plus belt triangle B1)');
   return triangles;
 }
 
