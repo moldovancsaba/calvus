@@ -15,7 +15,7 @@ export function Toaster() {
   const isMobile = useIsMobile();
 
   // Hide notifications on mobile completely (double guarantee)
-  if (isMobile) return null;
+  if (typeof window !== "undefined" && (isMobile || window.innerWidth < 640)) return null;
 
   return (
     <ToastProvider>
