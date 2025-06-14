@@ -2,11 +2,6 @@ import { useEffect, useRef, useState } from 'react';
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import {
-  generateBaseTriangleMesh,
-  subdivideTriangleMesh,
-  storeTriangleActivity,
-  getTriangleActivities,
-  rebuildTriangleMeshFromActivities,
   TriangleMesh
 } from '../utils/triangleMesh';
 import { useIdentity } from "./IdentityContext";
@@ -17,206 +12,59 @@ import { useTriangleMeshTap } from "./mesh/useTriangleMeshTap";
 import { LoadingOverlay } from './map/LoadingOverlay';
 import { ErrorBanner } from './map/ErrorBanner';
 
-// Always use this default map center
-const DEFAULT_CENTER: [number, number] = [33, 0];
+import { LeafletMapContainer } from "./map/LeafletMapContainer";
+import { useTriangleMeshLoader } from "./map/useTriangleMeshLoader";
 
 type Props = {
   worldSlug: string;
 };
 
+// Always use this default map center
+const DEFAULT_CENTER: [number, number] = [33, 0];
+
 const TriangleMeshMap = ({ worldSlug }: Props) => {
-  const mapRef = useRef<HTMLDivElement>(null);
+  const mapDivRef = useRef<HTMLDivElement>(null);
   const mapInstanceRef = useRef<L.Map | null>(null);
-  const [triangleMesh, setTriangleMesh] = useState<TriangleMesh[]>([]);
   const triangleLayersRef = useRef<Map<string, L.Polygon>>(new Map());
-  const [isLoading, setIsLoading] = useState(true);
-  const pollIntervalRef = useRef<NodeJS.Timeout | null>(null);
+  const prevMeshRef = useRef<any[]>([]);
   const { identity } = useIdentity();
   const isMobile = useIsMobile();
-  const prevMeshRef = useRef<TriangleMesh[]>([]);
   const [meshVersion, setMeshVersion] = useState(
     () => window.localStorage.getItem(`meshVersion_${worldSlug}`) || ""
   );
 
-  useEffect(() => {
-    const reloadMapSettings = () => {
-      if (mapRef.current && mapInstanceRef.current) {
-        mapInstanceRef.current.remove();
-        mapInstanceRef.current = null;
-        setIsLoading(true);
-        setTimeout(() => setIsLoading(false), 50);
-      }
-    };
+  // Loader hook (fetch, poll, manage mesh state)
+  const { triangleMesh, setTriangleMesh, isLoading } = useTriangleMeshLoader(worldSlug, meshVersion);
 
-    const storageHandler = (e: StorageEvent) => {
+  // Listen for meshVersion/storage events for reloads
+  useEffect(() => {
+    const reloadMeshOnStorage = (e: StorageEvent) => {
       if (
         e.key === "fixedMobileZoomLevel" ||
         e.key === "fixedMobileZoom" ||
         e.key === `refreshMesh_${worldSlug}`
       ) {
-        reloadMapSettings();
+        setMeshVersion(v => v); // trigger state
       }
       if (e.key === `meshVersion_${worldSlug}`) {
         setMeshVersion(e.newValue || "");
         window.localStorage.removeItem(`triangleMeshCache_${worldSlug}`);
         setTriangleMesh([]);
-        setIsLoading(true);
-        setTimeout(() => setIsLoading(false), 30);
       }
       if (e.key === `worldReset_${worldSlug}`) {
         window.location.reload();
       }
     };
-    window.addEventListener("storage", storageHandler);
-    return () => {
-      window.removeEventListener("storage", storageHandler);
-    };
-  }, [worldSlug]);
-
-  useEffect(() => {
-    if (!mapRef.current) return;
-    // ==== FIX: Properly clean up Leaflet container before initializing ====
-    // If a Leaflet map was already initialized on this container, remove its _leaflet_id property
-    if (mapRef.current && (mapRef.current as any)._leaflet_id) {
-      try {
-        // Remove previous map instance if needed (defensive)
-        mapInstanceRef.current?.remove();
-      } catch (e) {}
-      (mapRef.current as any)._leaflet_id = undefined;
-      // Optionally, clear children or HTML
-      mapRef.current.innerHTML = "";
-    }
-    // ==== END FIX ====
-
-    let mobileZoomLevel = 10;
-    let mobileFixedZoomEnabled = true;
-    if (isMobile) {
-      const forceMobileZoom = window.localStorage.getItem('fixedMobileZoom');
-      mobileFixedZoomEnabled = forceMobileZoom === null || forceMobileZoom === "true";
-      if (mobileFixedZoomEnabled) {
-        const zoomVal = window.localStorage.getItem('fixedMobileZoomLevel');
-        if (
-          zoomVal &&
-          !isNaN(Number(zoomVal)) &&
-          Number(zoomVal) >= 1 &&
-          Number(zoomVal) <= 20
-        ) {
-          mobileZoomLevel = Math.floor(Number(zoomVal));
-        }
-      }
-    }
-
-    const mapZoom = isMobile
-      ? (mobileFixedZoomEnabled ? mobileZoomLevel : 10)
-      : 6;
-
-    const map = L.map(mapRef.current, {
-      center: DEFAULT_CENTER,
-      zoom: mapZoom,
-      minZoom: isMobile && mobileFixedZoomEnabled ? mobileZoomLevel : (isMobile ? 10 : 5),
-      maxZoom: isMobile && mobileFixedZoomEnabled ? mobileZoomLevel : (isMobile ? 10 : 15),
-      worldCopyJump: true,
-      maxBounds: [[-90, -180], [90, 180]],
-      preferCanvas: true,
-      zoomControl: !isMobile,
-      doubleClickZoom: false,
-      boxZoom: false,
-      scrollWheelZoom: false,
-      touchZoom: false,
-      dragging: true,
-    });
-
-    if (!isMobile) {
-      map.zoomControl.setPosition('topright');
-    }
-
-    if (isMobile && mobileFixedZoomEnabled) {
-      map.on("zoomend", () => {
-        if (map.getZoom() !== mobileZoomLevel) {
-          map.setZoom(mobileZoomLevel);
-        }
-      });
-      map.on("movestart", () => {
-        if (map.getZoom() !== mobileZoomLevel) {
-          map.setZoom(mobileZoomLevel);
-        }
-      });
-    } else if (isMobile) {
-      map.on("zoomend", () => {
-        if (map.getZoom() !== 10) {
-          map.setZoom(10);
-        }
-      });
-      map.on("movestart", () => {
-        if (map.getZoom() !== 10) {
-          map.setZoom(10);
-        }
-      });
-    } else {
-      map.on("zoomend", () => {
-        const z = map.getZoom();
-        if (z < 5) map.setZoom(5);
-        if (z > 15) map.setZoom(15);
-      });
-    }
-
-    mapInstanceRef.current = map;
-
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-      attribution: '© OpenStreetMap contributors',
-      opacity: 0.9
-    }).addTo(map);
-
-    map.getContainer().style.backgroundColor = '#f0f0f0';
-
-    const initializeMesh = async () => {
-      try {
-        setIsLoading(true);
-        const activities = await getTriangleActivities(worldSlug);
-        if (activities.length > 0) {
-          const restoredMesh = rebuildTriangleMeshFromActivities(activities);
-          setTriangleMesh(restoredMesh);
-        } else {
-          const initialMesh = generateBaseTriangleMesh();
-          setTriangleMesh(initialMesh);
-        }
-      } catch (error) {
-        const initialMesh = generateBaseTriangleMesh();
-        setTriangleMesh(initialMesh);
-        console.error("[TriangleMeshMap] Error loading mesh activities, fallback to base:", error);
-      } finally {
-        setIsLoading(false);
-      }
-    };
-
-    initializeMesh();
-
-    pollIntervalRef.current = setInterval(async () => {
-      try {
-        const activities = await getTriangleActivities(worldSlug);
-        const restoredMesh = rebuildTriangleMeshFromActivities(activities);
-        setTriangleMesh(restoredMesh);
-      } catch (error) {
-        console.error("[TriangleMeshMap] Error polling activities:", error);
-      }
-    }, 5000);
-
-    return () => {
-      mapInstanceRef.current = null;
-      try {
-        map.remove();
-      } catch (e) {} // Defensive if already removed
-      if (pollIntervalRef.current) {
-        clearInterval(pollIntervalRef.current);
-      }
-      // Defensive: remove _leaflet_id from the container (solves "being reused" error on fast remounts)
-      if (mapRef.current && (mapRef.current as any)._leaflet_id) {
-        (mapRef.current as any)._leaflet_id = undefined;
-      }
-    };
-  }, [isMobile, meshVersion, worldSlug]);
+    window.addEventListener("storage", reloadMeshOnStorage);
+    return () => window.removeEventListener("storage", reloadMeshOnStorage);
+  }, [worldSlug, setTriangleMesh]);
 
   useLeafletMobileTouch(mapInstanceRef.current);
+
+  // Called when the map is ready and instance available
+  function handleMapReady(map: L.Map) {
+    mapInstanceRef.current = map;
+  }
 
   const handleTriangleMeshClick = useTriangleMeshTap(
     identity,
@@ -228,15 +76,12 @@ const TriangleMeshMap = ({ worldSlug }: Props) => {
 
   return (
     <div className="relative w-full h-full min-h-[0] flex-1 rounded-none border-0 p-0 m-0">
-      <div
-        ref={mapRef}
-        className="w-full h-full min-h-[0] rounded-none"
-        style={{
-          minHeight: "0",
-          maxHeight: "none",
-          height: "100%",
-          position: "relative"
-        }}
+      <LeafletMapContainer
+        ref={mapDivRef}
+        isMobile={isMobile}
+        meshVersion={meshVersion}
+        worldSlug={worldSlug}
+        onMapReady={handleMapReady}
       />
       {isLoading && <LoadingOverlay />}
       <ErrorBanner message={null} />
