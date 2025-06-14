@@ -11,30 +11,42 @@ export type Database = {
     Tables: {
       triangle_activities: {
         Row: {
+          action_type: string | null
+          click_count: number | null
           color: string | null
           gametag: string | null
           id: string
           level: number
+          notes: string | null
+          subdivided: boolean | null
           timestamp: string
           what: number
           when: string
           where: string
         }
         Insert: {
+          action_type?: string | null
+          click_count?: number | null
           color?: string | null
           gametag?: string | null
           id?: string
           level: number
+          notes?: string | null
+          subdivided?: boolean | null
           timestamp?: string
           what: number
           when: string
           where: string
         }
         Update: {
+          action_type?: string | null
+          click_count?: number | null
           color?: string | null
           gametag?: string | null
           id?: string
           level?: number
+          notes?: string | null
+          subdivided?: boolean | null
           timestamp?: string
           what?: number
           when?: string

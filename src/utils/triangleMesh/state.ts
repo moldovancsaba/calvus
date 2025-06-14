@@ -1,18 +1,76 @@
-
 import { generateBaseTriangleMesh, subdivideTriangleMesh, TriangleMesh } from "./geometry";
 
-// Rebuild triangle mesh from stored activities
+// Rebuild triangle mesh from stored activities representing full triangle state
 export function rebuildTriangleMeshFromActivities(activities: any[]): TriangleMesh[] {
+  // Use base mesh to start
   const baseMesh = generateBaseTriangleMesh();
-  const sortedActivities = activities.sort((a, b) =>
-    new Date(a.when).getTime() - new Date(b.when).getTime()
-  );
-  let currentMesh = baseMesh;
-  for (const activity of sortedActivities) {
-    currentMesh = applyActivityToMesh(currentMesh, activity);
+  if (!Array.isArray(activities) || activities.length === 0) return baseMesh;
+
+  // Use a map { id: activityRow } for quick update
+  const stateMap = new Map<string, any>();
+  activities.forEach(act => {
+    // always keep the latest activity for any triangle id
+    stateMap.set(act.where, act);
+  });
+
+  // Recursively apply stored state to the mesh
+  function applyStatesToMesh(triangles: TriangleMesh[]): TriangleMesh[] {
+    return triangles.map(triangle => {
+      // Get record for this triangle if any
+      const activity = stateMap.get(triangle.id);
+
+      let updated: TriangleMesh = {
+        ...triangle,
+        clickCount: activity?.click_count ?? triangle.clickCount ?? 0,
+        gametag: activity?.gametag ?? triangle.gametag,
+        color: activity?.color ?? triangle.color,
+      };
+
+      // Determine subdivision status using db/subdivided and clicks
+      const isSubdivided = !!activity?.subdivided || updated.clickCount >= 11;
+      if (isSubdivided && (triangle.level < 19)) {
+        // If not yet subdivided, or offspring not present, populate
+        if (!triangle.subdivided || !triangle.children) {
+          updated = {
+            ...updated,
+            subdivided: true,
+            children: subdivideTriangleMesh(triangle),
+          };
+        }
+        if (updated.children) {
+          // recursively update children if present in state
+          updated = {
+            ...updated,
+            children: applyStatesToMesh(updated.children),
+          };
+        }
+        return updated;
+      }
+
+      // If triangle is subdivided but does not have children, that's a data error - keep empty children.
+      if (activity?.subdivided && !updated.children) {
+        updated = {
+          ...updated,
+          children: [],
+        };
+      }
+
+      // Recursively update children (should not be subdivided unless flagged)
+      if (triangle.children) {
+        updated = {
+          ...updated,
+          children: applyStatesToMesh(triangle.children),
+        };
+      }
+
+      return updated;
+    });
   }
-  console.log("[rebuildTriangleMeshFromActivities] Final mesh:", JSON.parse(JSON.stringify(currentMesh)));
-  return currentMesh;
+
+  const rebuiltMesh = applyStatesToMesh(baseMesh);
+  // Log for debug
+  console.log("[rebuildTriangleMeshFromActivities] Rebuilt mesh from activities", rebuiltMesh);
+  return rebuiltMesh;
 }
 
 // Apply a single activity to the mesh, INCLUDING color and gametag restore
@@ -69,4 +127,3 @@ function updateTriangleInMesh(
     return triangle;
   });
 }
-

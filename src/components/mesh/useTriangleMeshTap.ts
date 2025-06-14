@@ -4,8 +4,7 @@ import { storeTriangleActivity, subdivideTriangleMesh } from "../../utils/triang
 import { toast } from "../ui/use-toast";
 
 /**
- * This hook provides a robust handler function for triangle taps/clicks.
- * It ensures DB writes are awaited, handles errors, and reverts local state on failure.
+ * This hook is now updated to fully persist triangle state for each tap (click_count, subdivided, action_type).
  */
 export function useTriangleMeshTap(
   identity: { gametag: string; color: string } | null,
@@ -25,15 +24,13 @@ export function useTriangleMeshTap(
       setTriangleMesh(currMesh => {
         prevMesh = currMesh;
         prevMeshRef.current = currMesh;
-        // Local UI update (optimistic)
+        // Local optimistic update
         const updateTriangle = (triangles: any[]): any[] =>
           triangles.map(triangleEl => {
             if (triangleEl.id === triangleId) {
               const newClickCount = triangleEl.clickCount + 1;
               if (newClickCount === 11 && triangleEl.level < 19 && !triangleEl.subdivided) {
-                // Always subdivide when reaching 11 clicks and not at max level
                 const children = subdivideTriangleMesh(triangleEl);
-                console.log("[useTriangleMeshTap] Subdividing locally with new children", triangleEl.id, triangleEl.level);
                 return {
                   ...triangleEl,
                   clickCount: newClickCount,
@@ -63,28 +60,33 @@ export function useTriangleMeshTap(
 
       let storeSuccess = false;
       try {
-        console.log("[useTriangleMeshTap] Store activity:", triangleId, (triangle?.clickCount ?? 0) + 1);
+        const actionType =
+          (triangle?.clickCount ?? 0) + 1 === 11 && (triangle?.level ?? 0) < 19
+            ? "subdivide"
+            : "click";
         const result = await storeTriangleActivity(
           triangleId,
           (triangle?.clickCount ?? 0) + 1,
           triangle?.level ?? 0,
+          Boolean(
+            ((triangle?.clickCount ?? 0) + 1 === 11) &&
+            (triangle?.level ?? 0) < 19
+          ),
+          actionType,
           identity.gametag,
           identity.color
         );
-        console.log("[useTriangleMeshTap] Store activity result:", result);
         if (!result?.success) {
           throw new Error("No success response from storeTriangleActivity");
         }
         storeSuccess = true;
         toast({
           title: "Activity Saved!",
-          description: "Your triangle tap activity was recorded to the database.",
+          description: "Your triangle tap activity was recorded.",
           variant: "default",
         });
-        console.log("[useTriangleMeshTap] Store success!");
       } catch (err: any) {
         storeSuccess = false;
-        console.error("[useTriangleMeshTap] Store failed:", err);
         toast({
           title: "Failed to save activity",
           description:
@@ -124,4 +126,3 @@ export function useTriangleMeshTap(
     [identity, isMobile, mapInstance, setTriangleMesh]
   );
 }
-

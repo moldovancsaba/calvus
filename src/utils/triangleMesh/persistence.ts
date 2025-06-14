@@ -1,24 +1,32 @@
+
 import type { TriangleMesh } from "./geometry";
 
-// TypeScript type for DB row
+// TypeScript type for DB row with new columns
 type TriangleActivityRow = {
   id: string;
   when: string;
   where: string;
-  what: number;
+  what?: string | number | null; // Now can be string action_type
+  click_count?: number | null;
   level: number;
+  subdivided?: boolean | null;
   timestamp: string;
   gametag?: string | null;
   color?: string | null;
+  notes?: string | null;
+  action_type?: string | null;
 };
 
-// Store triangle click activity in Supabase, include gametag and color
+// Store full triangle state on every write
 export async function storeTriangleActivity(
   triangleId: string,
   clickCount: number,
   level: number,
+  subdivided: boolean,
+  action_type: string,
   gametag?: string,
-  color?: string
+  color?: string,
+  notes?: string
 ) {
   try {
     const { supabase } = await import('@/integrations/supabase/client');
@@ -28,10 +36,14 @@ export async function storeTriangleActivity(
         {
           when: new Date().toISOString(),
           where: triangleId,
-          what: clickCount,
+          what: action_type,
+          click_count: clickCount,
           level: level,
+          subdivided: subdivided,
           gametag: gametag ?? null,
           color: color ?? null,
+          notes: notes ?? null,
+          action_type: action_type,
         }
       ])
       .select('id');
@@ -46,17 +58,14 @@ export async function storeTriangleActivity(
   }
 }
 
-// Clear all triangle activities from Supabase
+// Clear all triangle activities
 export async function clearTriangleActivities() {
   try {
     const { supabase } = await import('@/integrations/supabase/client');
     const { error } = await supabase
       .from('triangle_activities')
       .delete();
-    if (error) {
-      throw error;
-    }
-    console.log('Triangle activities cleared successfully in Supabase');
+    if (error) throw error;
     return { success: true };
   } catch (error) {
     console.error('Error clearing triangle activities in Supabase:', error);
@@ -65,27 +74,24 @@ export async function clearTriangleActivities() {
 }
 
 // Get all triangle activities from Supabase
+// Each row is now a full triangle state
 export async function getTriangleActivities() {
   try {
     const { supabase } = await import('@/integrations/supabase/client');
     const { data, error } = await supabase
       .from('triangle_activities')
       .select('*');
-    if (error) {
-      throw error;
-    }
-    if (!Array.isArray(data)) {
-      console.warn("Triangle activities GET: Malformed response or 'activities' is not array", data);
-      return [];
-    }
-    // Ensure activities include gametag/color even if missing
-    const activities = (data as TriangleActivityRow[]).map((act) => ({
+    if (error) throw error;
+    if (!Array.isArray(data)) return [];
+    const activities: TriangleActivityRow[] = data.map((act) => ({
       ...act,
       when: typeof act.when === 'string' ? act.when : new Date(act.when).toISOString(),
+      subdivided: act.subdivided ?? false,
       gametag: act.gametag ?? null,
       color: act.color ?? null,
+      notes: act.notes ?? null,
+      action_type: act.action_type ?? (typeof act.what === 'string' ? act.what : null),
     }));
-    console.log('Retrieved triangle activities from Supabase:', activities.length, activities);
     return activities;
   } catch (error) {
     console.error('Error getting triangle activities from Supabase:', error);
