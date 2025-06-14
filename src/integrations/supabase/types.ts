@@ -9,7 +9,33 @@ export type Json =
 export type Database = {
   public: {
     Tables: {
-      [_ in never]: never
+      triangle_activities: {
+        Row: {
+          id: string
+          level: number
+          timestamp: string
+          what: number
+          when: string
+          where: string
+        }
+        Insert: {
+          id?: string
+          level: number
+          timestamp?: string
+          what: number
+          when: string
+          where: string
+        }
+        Update: {
+          id?: string
+          level?: number
+          timestamp?: string
+          what?: number
+          when?: string
+          where?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
