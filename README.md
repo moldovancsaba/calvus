@@ -1,4 +1,3 @@
-
 # Triangle Mesh Interactive Map
 
 A collaborative spherical triangle mesh system built with React, Leaflet, and MongoDB. Users can click on triangles to progressively subdivide them, creating a real-time collaborative mapping experience.
@@ -8,6 +7,10 @@ A collaborative spherical triangle mesh system built with React, Leaflet, and Mo
 ## Features
 
 ### 🌍 Interactive Spherical Mesh
+- Fully mobile-first, minimal, responsive interface 🚀
+- Identify yourself with a gametag & pick one of 16 colors, right from the main page
+- Instantly log out/switch identity with one click/tap ("Log out" button)
+- Leaflet-based map always keeps zoom between levels 5 and 15 (for a better global view)
 - Three base triangles with geodesic edges on world map
 - Click-based progressive subdivision (up to 19 levels)
 - Hierarchical triangle identification system
