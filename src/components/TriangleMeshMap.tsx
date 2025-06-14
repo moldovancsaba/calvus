@@ -40,35 +40,38 @@ const TriangleMeshMap = () => {
   // For UI revert on DB failure
   const prevMeshRef = useRef<TriangleMesh[]>([]);
 
-  // New: Store initial center
+  // Control: only request location once per session/mount
+  const geolocationRequestedRef = useRef<boolean>(false);
+  // Initial center and error
   const [mapCenter, setMapCenter] = useState<[number, number] | null>(null);
   const [locationError, setLocationError] = useState<string | null>(null);
 
-  // Try to get user geolocation on initial mount
+  // Get geolocation ONCE when the app FIRST loads (or fallback after timeout)
   useEffect(() => {
     let active = true;
-    getUserLatLng()
-      .then(center => {
-        if (active) {
-          setMapCenter(center);
-        }
-      })
-      .catch((err) => {
-        setLocationError("Could not get your location, showing map at default location.");
-        setMapCenter([33, 0]); // fallback
-      });
-    // Give 2s for geolocation, fallback to default after timeout if still waiting
-    const fallbackTimeout = setTimeout(() => {
-      if (!mapCenter) setMapCenter([33, 0]);
-    }, 2000);
-    return () => {
-      active = false;
-      clearTimeout(fallbackTimeout);
-    };
+    if (!geolocationRequestedRef.current) {
+      geolocationRequestedRef.current = true;
+      getUserLatLng()
+        .then(center => {
+          if (active) setMapCenter(center);
+        })
+        .catch(() => {
+          setLocationError("Could not get your location, showing map at default location.");
+          setMapCenter([33, 0]); // fallback
+        });
+      // Fallback after 2 seconds if location taking too long
+      const fallbackTimeout = setTimeout(() => {
+        if (!mapCenter) setMapCenter([33, 0]);
+      }, 2000);
+      return () => {
+        active = false;
+        clearTimeout(fallbackTimeout);
+      };
+    }
     // eslint-disable-next-line
   }, []);
 
-  // Map initialization (runs when mapCenter first resolved)
+  // Only run the map initialization when center is first ready
   useEffect(() => {
     if (!mapRef.current) return;
     if (!mapCenter) return; // Wait for center
@@ -154,17 +157,9 @@ const TriangleMeshMap = () => {
     // eslint-disable-next-line
   }, [mapCenter]);
 
-  // Recenter map if mapCenter changes after map constructed
-  useEffect(() => {
-    const map = mapInstanceRef.current;
-    if (map && mapCenter) {
-      const current = map.getCenter();
-      // only recenter if center is different from desired center
-      if (current.lat !== mapCenter[0] || current.lng !== mapCenter[1]) {
-        map.setView(mapCenter, map.getZoom(), { animate: true });
-      }
-    }
-  }, [mapCenter]);
+  // If user center is resolved after map built, recenter only ONCE at very start (disable further recentering)
+  // This effect is left simple since our centering logic is already one-time.
+  // So we do not recenter map again after initial load
 
   // Custom mobile/touch logic (refactored, hook does nothing on desktop)
   useLeafletMobileTouch(mapInstanceRef.current);
@@ -220,4 +215,3 @@ const TriangleMeshMap = () => {
 };
 
 export default TriangleMeshMap;
-
