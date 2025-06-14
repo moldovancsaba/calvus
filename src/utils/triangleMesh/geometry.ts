@@ -55,9 +55,14 @@ export function sphericalMidpoint(p1: LatLng, p2: LatLng): LatLng {
   return point3DToLatLng(midpoint);
 }
 
-// Generate the 18 base triangles for the spherical mesh (north/south, belt, pole caps).
-// These triangles are evenly distributed to minimize distortion and support the subdivision system.
-// For canonical coordinates, see technical documentation (technical-architecture.md).
+// Generate the 24 base triangles for the spherical mesh.
+// These triangles are distributed to minimize distortion and support the subdivision system.
+// Canonical for v2.1+: See technical documentation.
+// 
+// As of June 2025, the base mesh contains the following triangles (IDs):
+// [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, N1, N2, S1, S2, B1, B3, N3, NEW1, NEW2, NEW3]
+// 
+// All per-triangle activity and mesh logic assumes 24 triangles at mesh genesis.
 export function generateBaseTriangleMesh(): TriangleMesh[] {
   const triangles: TriangleMesh[] = [
     // North hemisphere base triangles
@@ -345,8 +350,8 @@ export function generateBaseTriangleMesh(): TriangleMesh[] {
     },
   ];
 
-  // Log 20 base triangles (original 19, plus new north pole triangle N3)
-  console.log('Generated base triangle mesh with 20 triangles (original 19, plus new North Pole triangle N3)');
+  // Log 24 base triangles (v2.1 as of June 2025)
+  console.log('Generated base triangle mesh with 24 triangles (v2.1, June 2025)');
   return triangles;
 }
 
