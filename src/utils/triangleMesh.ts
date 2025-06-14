@@ -228,12 +228,25 @@ export async function getTriangleActivities() {
       throw new Error(`Failed to get activities: ${response.statusText}`);
     }
 
-    const result = await response.json();
+    // Defensive: Always try/catch JSON parse and provide fallback
+    let result: any;
+    try {
+      result = await response.json();
+    } catch (jsonErr) {
+      console.error("Failed to parse triangle activities JSON response", jsonErr, response);
+      // Fallback: treat as empty
+      return [];
+    }
+
+    if (!result || typeof result !== "object" || !Array.isArray(result.activities)) {
+      console.warn("Triangle activities GET: Malformed response or 'activities' is not array", result);
+      return [];
+    }
     console.log('Retrieved triangle activities:', result.activities);
-    return result.activities || [];
+    return result.activities;
   } catch (error) {
     console.error('Error getting triangle activities:', error);
-    throw error;
+    return [];
   }
 }
 
