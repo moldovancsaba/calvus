@@ -12,6 +12,7 @@ import {
   TriangleMesh 
 } from '../utils/triangleMesh';
 import { useIdentity } from "./IdentityContext";
+import { useIsMobile } from "../hooks/use-mobile";
 
 const TriangleMeshMap = () => {
   const mapRef = useRef<HTMLDivElement>(null);
@@ -21,10 +22,14 @@ const TriangleMeshMap = () => {
   const [isLoading, setIsLoading] = useState(true);
   const pollIntervalRef = useRef<NodeJS.Timeout | null>(null);
   const { identity } = useIdentity();
+  const isMobile = useIsMobile();
 
   // --- Responsive map: fill viewport height on mobile ---
   useEffect(() => {
     if (!mapRef.current) return;
+
+    // --- Detect mobile ---
+    const mobile = window.innerWidth < 768;
 
     const map = L.map(mapRef.current, {
       center: [33, 0],
@@ -34,8 +39,38 @@ const TriangleMeshMap = () => {
       worldCopyJump: true,
       maxBounds: [[-90, -180], [90, 180]],
       preferCanvas: true,
-      zoomControl: false // Hide default zoom control for mobile
+      zoomControl: false,
+      doubleClickZoom: false,
+      boxZoom: false,
+      tap: false,
+      scrollWheelZoom: false,
+      dragging: true,
+      touchZoom: "center"
     });
+
+    // --- Disable map touch gestures not wanted on mobile ---
+    if (mobile) {
+      // On mobile, allow only pinch to zoom and drag, disable single tap/double tap
+      map.scrollWheelZoom.disable();
+      map.doubleClickZoom.disable();
+      map.boxZoom.disable();
+      // Don't use map.tap handler (tapping is for triangles)
+      if (map.tap) map.tap.disable();
+      // touchZoom 'center' means only two-finger will zoom
+      map.touchZoom.enable(); // still allow pinch
+      map.dragging.enable();
+      // Prevent default browser zoom/scroll with single finger on map
+      map.getContainer().addEventListener(
+        "touchstart",
+        function (e) {
+          if (e.touches.length === 1) {
+            e.preventDefault();
+            // allow drag, but prevent scroll/zoom for single finger tap/touch
+          }
+        },
+        { passive: false }
+      );
+    }
 
     // --- Add mobile-friendly zoom controls ---
     if (window.innerWidth < 768) {
@@ -170,29 +205,29 @@ const TriangleMeshMap = () => {
   };
 
   // Modified: pass color/gametag in activity, apply color logic per player
-  const handleTriangleMeshClick = async (triangleId: string) => {
+  const handleTriangleMeshClick = async (triangleId: string, triangle?: TriangleMesh) => {
     if (!identity) return;
 
     setTriangleMesh(prevMesh => {
       const updateTriangle = (triangles: TriangleMesh[]): TriangleMesh[] => {
-        return triangles.map(triangle => {
-          if (triangle.id === triangleId) {
-            const newClickCount = triangle.clickCount + 1;
+        return triangles.map(triangleEl => {
+          if (triangleEl.id === triangleId) {
+            const newClickCount = triangleEl.clickCount + 1;
 
             // Store activity (now includes gametag + color)
             storeTriangleActivity(
               triangleId,
               newClickCount,
-              triangle.level,
+              triangleEl.level,
               identity.gametag,
               identity.color
             ).catch(error => console.error('Failed to store triangle activity:', error));
-            
+
             // If subdivide
-            if (newClickCount === 11 && triangle.level < 19) {
-              const children = subdivideTriangleMesh(triangle);
+            if (newClickCount === 11 && triangleEl.level < 19) {
+              const children = subdivideTriangleMesh(triangleEl);
               return {
-                ...triangle,
+                ...triangleEl,
                 clickCount: newClickCount,
                 subdivided: true,
                 children,
@@ -203,25 +238,48 @@ const TriangleMeshMap = () => {
 
             // Use player's color/gametag
             return {
-              ...triangle,
+              ...triangleEl,
               clickCount: newClickCount,
               color: identity.color,
               gametag: identity.gametag,
             };
           }
 
-          if (triangle.children) {
+          if (triangleEl.children) {
             return {
-              ...triangle,
-              children: updateTriangle(triangle.children)
+              ...triangleEl,
+              children: updateTriangle(triangleEl.children)
             };
           }
-          return triangle;
+          return triangleEl;
         });
       };
 
       return updateTriangle(prevMesh);
     });
+
+    // --- On mobile: zoom into triangle when tapped ---
+    if (isMobile && mapInstanceRef.current && triangle) {
+      // Compute triangle centroid for zoom
+      const avgLat =
+        (triangle.vertices[0].lat +
+          triangle.vertices[1].lat +
+          triangle.vertices[2].lat) /
+        3;
+      const avgLng =
+        (triangle.vertices[0].lng +
+          triangle.vertices[1].lng +
+          triangle.vertices[2].lng) /
+        3;
+      // Animate zoom if not already zoomed in enough
+      const zoomLevel = mapInstanceRef.current.getZoom();
+      if (zoomLevel < 8) {
+        mapInstanceRef.current.flyTo([avgLat, avgLng], 8, {
+          animate: true,
+          duration: 0.9
+        });
+      }
+    }
   };
 
   // Modified: Show only player click count, no descriptions, use player color
@@ -255,7 +313,8 @@ const TriangleMeshMap = () => {
         });
 
         polygon.on('click', () => {
-          handleTriangleMeshClick(triangle.id);
+          // Pass triangle info for mobile zoom
+          handleTriangleMeshClick(triangle.id, triangle);
         });
 
         polygon.addTo(map);
