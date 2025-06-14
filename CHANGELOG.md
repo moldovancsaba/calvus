@@ -1,4 +1,3 @@
-
 # Changelog
 
 All notable changes to the Triangle Mesh project will be documented in this file.
@@ -36,3 +35,14 @@ All notable changes to the Triangle Mesh project will be documented in this file
 - Maximum 19 subdivision levels to prevent performance issues
 - Northern hemisphere focus in initial triangle placement
 - Requires MongoDB URI configuration for full functionality
+
+## [1.1.0] - 2025-06-14
+
+### Added
+- **Mobile-first Minimal Design**: Upgraded to a fully responsive, mobile-first layout with clean minimal design
+- **Identity Controls**: Gametag and 16-color color picker now always available on the main page, with "Log out" for quick switching
+- **Map Zoom Range**: Map zoom is strictly limited between levels 5 and 15
+
+### Changed
+- IdentityGate is now used only for first-time users; afterwards, identity can be adjusted or cleared directly from main UI
+- Triangle Mesh Map is more compact, touch-friendly, and visually streamlined

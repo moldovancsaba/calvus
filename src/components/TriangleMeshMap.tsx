@@ -1,4 +1,3 @@
-
 import { useEffect, useRef, useState } from 'react';
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
@@ -37,9 +36,9 @@ const TriangleMeshMap = () => {
 
     const map = L.map(mapRef.current, {
       center: [33, 0],
-      zoom: 3,
-      minZoom: 1,
-      maxZoom: 18,
+      zoom: 6, // Start in allowed range
+      minZoom: 5,
+      maxZoom: 15, // Updated limits (was min 1, max 18)
       worldCopyJump: true,
       maxBounds: [[-90, -180], [90, 180]],
       preferCanvas: true,
@@ -49,6 +48,13 @@ const TriangleMeshMap = () => {
       scrollWheelZoom: false,
       dragging: true,
       touchZoom: "center"
+    });
+
+    // Also clamp zoom in all user interactions
+    map.on("zoomend", () => {
+      const z = map.getZoom();
+      if (z < 5) map.setZoom(5);
+      if (z > 15) map.setZoom(15);
     });
 
     if (!mobile) {
@@ -117,21 +123,21 @@ const TriangleMeshMap = () => {
     mapInstanceRef.current
   );
 
-  // --- Overlays etc ---
+  // --- Responsive, minimal map shell ---
   return (
-    <div className="w-full h-full min-h-[410px] relative">
+    <div className="relative w-full h-[60vh] min-h-[320px] max-h-[90dvh] md:h-[75vh] rounded-lg border bg-white shadow-md mx-auto transition-all duration-300">
       <div
         ref={mapRef}
-        className="w-full h-full min-h-[410px]"
+        className="w-full h-full min-h-[320px] rounded-lg"
         style={{
-          minHeight: "410px",
+          minHeight: "320px",
+          maxHeight: "90dvh",
           height: "100%",
-          maxHeight: "100dvh",
           position: "relative"
         }}
       />
       {isLoading && (
-        <div className="absolute inset-0 flex items-center justify-center bg-white/80 backdrop-blur-[2px] z-50 rounded-lg p-4 shadow-lg">
+        <div className="absolute inset-0 flex items-center justify-center bg-white/90 backdrop-blur-[2px] z-50 rounded-lg p-4">
           <div className="text-center">
             <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600 mx-auto mb-2"></div>
             <p className="text-base text-gray-600">Loading...</p>
