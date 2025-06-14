@@ -122,7 +122,7 @@ export function TriangleMeshRenderer({
             // We don't store emoji per triangle, only color/gametag, so use a neutral emoji when missing.
             avatarProps = { 
               color: triangle.color, 
-              emoji: (triangle as any).emoji || "🌟"
+              emoji: triangle.emoji || "🌟" // << Use winner's emoji if available!
             }; 
             // The emoji could be improved with a DB change, for now we fallback to a star.
           } else if (triangle.clickCount > 0) {
@@ -181,7 +181,7 @@ export function TriangleMeshRenderer({
               markerDiv.style.background = avatarProps.color;
               markerDiv.style.fontSize = "1.45rem";
               markerDiv.style.userSelect = "none";
-              markerDiv.innerText = avatarProps.emoji;
+              markerDiv.innerText = avatarProps.emoji; // << Winner's emoji displayed!
 
               const icon = L.divIcon({
                 className: "",
