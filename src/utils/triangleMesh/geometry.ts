@@ -270,7 +270,8 @@ export function generateBaseTriangleMesh(): TriangleMesh[] {
     }
   ];
 
-  console.log('Generated base triangle mesh with 20 triangles (including corrected belt/side triangles)');
+  // Updated log: 18 triangles in base mesh
+  console.log('Generated base triangle mesh with 18 triangles (including corrected belt/side triangles)');
   return triangles;
 }
 

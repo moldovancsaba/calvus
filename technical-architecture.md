@@ -26,3 +26,5 @@
 ---
 
 _For performance, error handling, and more, see [`performance-optimizations.md`](performance-optimizations.md)._
+
+<!-- Updated: base triangle mesh = 18 triangles (not 20) -->
