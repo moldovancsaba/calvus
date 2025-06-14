@@ -20,6 +20,9 @@ export function TriangleMeshRenderer({
   triangleLayersRef,
   onTriangleClick
 }: Props) {
+  // SAFETY: Don't do anything if map not ready
+  if (!map) return null;
+
   React.useEffect(() => {
     if (!map || !triangleMesh) return;
 

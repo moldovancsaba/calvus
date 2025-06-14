@@ -1,4 +1,3 @@
-
 import { useEffect, useRef, useState } from 'react';
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
@@ -189,15 +188,18 @@ const TriangleMeshMap = () => {
           {locationError}
         </div>
       )}
-      <TriangleMeshRenderer
-        map={mapInstanceRef.current}
-        triangleMesh={triangleMesh}
-        triangleLayersRef={triangleLayersRef}
-        onTriangleClick={(triangleId, triangle, parentPath) => {
-          console.log("[TriangleMeshMap] onTriangleClick", triangleId, triangle, parentPath);
-          handleTriangleMeshClick(triangleId, triangle, prevMeshRef);
-        }}
-      />
+      {/* Only render the mesh renderer if the map instance is present */}
+      {mapInstanceRef.current && (
+        <TriangleMeshRenderer
+          map={mapInstanceRef.current}
+          triangleMesh={triangleMesh}
+          triangleLayersRef={triangleLayersRef}
+          onTriangleClick={(triangleId, triangle, parentPath) => {
+            console.log("[TriangleMeshMap] onTriangleClick", triangleId, triangle, parentPath);
+            handleTriangleMeshClick(triangleId, triangle, prevMeshRef);
+          }}
+        />
+      )}
     </div>
   );
 };
