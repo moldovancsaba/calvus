@@ -108,7 +108,8 @@ export const SettingsControls: React.FC<SettingsControlsProps> = ({
           value={pendingSettings.clicks_to_divide}
           disabled={settingsBusy}
           onChange={e => {
-            const n = Math.max(1, Math.floor(Number((e.target as HTMLInputElement).value));
+            // FIXED: add closing parenthesis for Math.floor
+            const n = Math.max(1, Math.floor(Number((e.target as HTMLInputElement).value)));
             handleSettingEdit("clicks_to_divide", n);
           }}
           onBlur={e => {
@@ -165,3 +166,4 @@ export const SettingsControls: React.FC<SettingsControlsProps> = ({
     </div>
   );
 };
+
