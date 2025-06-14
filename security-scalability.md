@@ -1,4 +1,5 @@
 
+
 # Security & Scalability
 
 ## Security Considerations
@@ -19,7 +20,7 @@
 ## Implementation Learnings
 - Explicitly destroy map and mesh instances during reloads to prevent resource leaks.
 - All code and documentation is split into small, focused, and maintainable files (≤100–200 lines/file wherever possible).
-- **Triangle mesh base is 18 triangles, matching the geometry.ts implementation.**
+- **Triangle mesh base is 26 triangles, matching the geometry.ts implementation.**
 
 ---
 

@@ -1,7 +1,8 @@
+
 # Step
 
 A collaborative spherical triangle mesh system built with React, Leaflet, and MongoDB.  
-**Version: 2.0.0 – June 2025**
+**Version: 2.0.1 – June 2025 (updated for 26-triangle base mesh)**
 
 ## Overview
 **Step** is an interactive, collaborative mesh on the globe, enabling shared exploration and graph-based gameplay.
@@ -9,7 +10,7 @@ A collaborative spherical triangle mesh system built with React, Leaflet, and Mo
 - This README acts as a quick reference and project intro.
 
 ### Key Features
-- Interactive world mesh (**24 base triangles in canonical spiral order**, 19 subdivision levels)
+- Interactive world mesh (**26 base triangles in canonical spiral order**, 19 subdivision levels)
 - Live collaboration across devices (updates each 5 seconds for all users)
 - Instant “gamer tag” and color personalization (change anytime in UI)
 - Subdivision, coloring, and subdivision limits (see below)
@@ -22,7 +23,7 @@ A collaborative spherical triangle mesh system built with React, Leaflet, and Mo
 - **Mesh Tapping:** Click/tap a triangle to “claim” and shade it by increments. The 11th click subdivides the triangle, up to level 19.
 - **Persistence:** Snapshots record each triangle’s state. State is always restored via the latest snapshot—never legacy deltas.
 - **Current Model:** Activity is per-triangle (not an incremental log).
-- **Triangles:** The system uses **24 canonical base triangles**, defined in a spiral from the north pole downward; any triangle can be referenced by its array index (0–23).  
+- **Triangles:** The system uses **26 canonical base triangles (T1–T26)**, defined in a spiral from the north pole downward; any triangle can be referenced by its array index (0–25).  
 - **Security:** No user secrets are exposed to clients. Client updates are checked only for correct world. RLS not yet applied server-side.
 - **Limitations:** 
   - Final (level 19) triangles turn red, no further actions allowed.
@@ -62,7 +63,7 @@ All files above are linked in the app (via settings or /documents route).
 | Snapshot        | Aggregate state of a triangle at the time of a user action                        |
 | World slug      | Unique key for parallel session/mesh worlds (route: `/game/:slug`)                |
 | Activity        | A row in the DB recording a triangle’s click/subdivision + owner/color            |
-| **Base mesh**   | **24 initial (level 0) triangles in spiral order, see technical docs for diagram**|
+| **Base mesh**   | **26 initial (level 0) triangles in spiral order, see technical docs for diagram**|
 
 ---
 
@@ -78,3 +79,4 @@ MIT
 > - `CHANGELOG.md` — version history
 
 **If this file exceeds 200 lines, modularize by splitting off sections as shown above.**
+
