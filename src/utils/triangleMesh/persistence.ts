@@ -1,4 +1,3 @@
-
 import type { TriangleMesh } from "./geometry";
 
 // TypeScript type for DB row with new columns
@@ -18,6 +17,11 @@ type TriangleActivityRow = {
   world_slug?: string;
 };
 
+function fixedWorldSlug(slug: string = "") {
+  // Always use "original" for the blank world!
+  return (!slug || slug === "") ? "original" : slug;
+}
+
 // Store full triangle state on every write WITH world_slug
 export async function storeTriangleActivity(
   triangleId: string,
@@ -32,6 +36,7 @@ export async function storeTriangleActivity(
 ) {
   try {
     const { supabase } = await import('@/integrations/supabase/client');
+    const fixedSlug = fixedWorldSlug(world_slug);
     const { error, data } = await supabase
       .from('triangle_activities')
       .insert([
@@ -46,7 +51,7 @@ export async function storeTriangleActivity(
           color: color ?? null,
           notes: notes ?? null,
           action_type: action_type,
-          world_slug: world_slug,
+          world_slug: fixedSlug,
         }
       ])
       .select('id');
@@ -65,10 +70,11 @@ export async function storeTriangleActivity(
 export async function clearTriangleActivities(world_slug: string = "") {
   try {
     const { supabase } = await import('@/integrations/supabase/client');
+    const fixedSlug = fixedWorldSlug(world_slug);
     const { error } = await supabase
       .from('triangle_activities')
       .delete()
-      .eq("world_slug", world_slug);
+      .eq("world_slug", fixedSlug);
     if (error) throw error;
     return { success: true };
   } catch (error) {
@@ -81,10 +87,11 @@ export async function clearTriangleActivities(world_slug: string = "") {
 export async function getTriangleActivities(world_slug: string = "") {
   try {
     const { supabase } = await import('@/integrations/supabase/client');
+    const fixedSlug = fixedWorldSlug(world_slug);
     const { data, error } = await supabase
       .from('triangle_activities')
       .select('*')
-      .eq("world_slug", world_slug);
+      .eq("world_slug", fixedSlug);
     if (error) throw error;
     if (!Array.isArray(data)) return [];
     const activities: TriangleActivityRow[] = data.map((act) => ({
