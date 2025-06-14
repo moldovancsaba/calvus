@@ -1,3 +1,4 @@
+
 import { useEffect, useRef, useState } from 'react';
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
@@ -22,7 +23,6 @@ type Props = {
   settings?: WorldSettings;
 };
 
-// Always use this default map center
 const DEFAULT_CENTER: [number, number] = [33, 0];
 
 function getFixedWorldSlug(slug: string) {
@@ -54,12 +54,10 @@ const TriangleMeshMap = ({ worldSlug, settings }: Props) => {
         const ws = await fetchWorldSettings(fixedWorldSlug);
         if (mounted) setWorldSettings(ws);
       } catch (e) {
-        // Handle error or fallback to defaults?
         setWorldSettings(null);
       }
     }
     loadWorldSettings();
-    // Listen for changes to settings
     const handler = (e: StorageEvent) => {
       if (e.key === `worldSettings_${fixedWorldSlug}`) {
         loadWorldSettings();
@@ -72,7 +70,6 @@ const TriangleMeshMap = ({ worldSlug, settings }: Props) => {
     };
   }, [fixedWorldSlug]);
 
-  // Listen for meshVersion/storage events for reloads
   useEffect(() => {
     const reloadMeshOnStorage = (e: StorageEvent) => {
       if (
@@ -80,7 +77,7 @@ const TriangleMeshMap = ({ worldSlug, settings }: Props) => {
         e.key === "fixedMobileZoom" ||
         e.key === `refreshMesh_${fixedWorldSlug}`
       ) {
-        setMeshVersion(v => v); // trigger state
+        setMeshVersion(v => v);
       }
       if (e.key === `meshVersion_${fixedWorldSlug}`) {
         setMeshVersion(e.newValue || "");
@@ -97,7 +94,6 @@ const TriangleMeshMap = ({ worldSlug, settings }: Props) => {
 
   useLeafletMobileTouch(mapInstanceRef.current);
 
-  // Check if map instance is alive, rendered, and mounted
   function isMapInstanceReady(map: L.Map | null) {
     if (!map) return false;
     try {
@@ -112,17 +108,20 @@ const TriangleMeshMap = ({ worldSlug, settings }: Props) => {
     mapInstanceRef.current = map;
   }
 
+  // Use merged worldSettings from prop or loaded state (favor prop)
+  const mergedWorldSettings = settings || worldSettings;
+
   const handleTriangleClick = useTriangleMeshTap(
     identity,
     setTriangleMesh,
     isMobile,
     mapInstanceRef.current,
-    worldSlug,
-    settings
+    fixedWorldSlug,
+    mergedWorldSettings // Always use DB values, never hardcode
   );
 
   // Show a loading overlay until worldSettings is loaded
-  if (!worldSettings) {
+  if (!mergedWorldSettings) {
     return (
       <div className="relative w-full h-full flex-1 flex items-center justify-center">
         <LoadingOverlay />
@@ -138,10 +137,10 @@ const TriangleMeshMap = ({ worldSlug, settings }: Props) => {
         meshVersion={meshVersion}
         worldSlug={fixedWorldSlug}
         onMapReady={handleMapReady}
-        desktopMinZoom={worldSettings.desktop_min_zoom_level}
-        desktopMaxZoom={worldSettings.desktop_max_zoom_level}
-        fixedMobileZoomLevel={worldSettings.fixed_mobile_zoom_level}
-        forceMobileZoom={worldSettings.force_mobile_zoom}
+        desktopMinZoom={mergedWorldSettings.desktop_min_zoom_level}
+        desktopMaxZoom={mergedWorldSettings.desktop_max_zoom_level}
+        fixedMobileZoomLevel={mergedWorldSettings.fixed_mobile_zoom_level}
+        forceMobileZoom={mergedWorldSettings.force_mobile_zoom}
       />
       {isLoading && <LoadingOverlay />}
       <ErrorBanner message={null} />
@@ -153,6 +152,8 @@ const TriangleMeshMap = ({ worldSlug, settings }: Props) => {
           onTriangleClick={(triangleId, triangle, parentPath) => {
             handleTriangleClick(triangleId, triangle, prevMeshRef);
           }}
+          maxDivideLevel={mergedWorldSettings.max_divide_level}
+          clicksToDivide={mergedWorldSettings.clicks_to_divide}
         />
       )}
     </div>

@@ -1,3 +1,4 @@
+
 import L from "leaflet";
 import React from "react";
 import { createGeodesicTriangle } from "./GeodesicTriangle";
@@ -21,8 +22,8 @@ type Props = {
     triangle?: TriangleMesh,
     parentPath?: string
   ) => void;
-  maxDivideLevel?: number; // option: for custom max levels
-  clicksToDivide?: number; // option: for custom click count
+  maxDivideLevel?: number;
+  clicksToDivide?: number;
 };
 
 export function TriangleMeshRenderer({
@@ -30,10 +31,9 @@ export function TriangleMeshRenderer({
   triangleMesh,
   triangleLayersRef,
   onTriangleClick,
-  maxDivideLevel = 3, // sensible defaults
+  maxDivideLevel = 3,
   clicksToDivide = 3,
 }: Props) {
-  // Do not render if map not ready
   if (!map) return null;
   const container = map.getContainer?.();
   if (!container || !container.parentNode) {
@@ -43,13 +43,12 @@ export function TriangleMeshRenderer({
 
   const numberMarkersRef = React.useRef<Map<string, L.Marker>>(new Map());
 
-  // We'll need the current identity so we can associate emoji/avatar to triangles.
-  // However, the triangle itself knows its owner, so we do not rely on only current user
-  // The triangle stores `gametag`, `color`, and can (later maybe) have emoji.
+  // ENSURE settings are always respected, not hardcoded defaults
+  const configMaxDivideLevel = maxDivideLevel;
+  const configClicksToDivide = clicksToDivide;
 
   // Clean up effect on triangleMesh changes
   React.useEffect(() => {
-    // ... keep existing code (cleanup of old layers and markers) the same ...
     numberMarkersRef.current.forEach((marker) => {
       if (map.hasLayer(marker)) map.removeLayer(marker);
     });
@@ -76,21 +75,16 @@ export function TriangleMeshRenderer({
       }
     }
 
-    // ---- Main triangle mesh render (recursive) ----
     const renderTriangleMesh = (
       triangleList: TriangleMesh[], 
       parentPath: string = ""
     ) => {
       for (const triangle of triangleList) {
         const trianglePath = parentPath ? `${parentPath}-${triangle.id}` : triangle.id;
+        // Use the ACTUAL game settings directly
+        const isFinalLevel = triangle.level >= configMaxDivideLevel;
 
-        // We'll need to know at what level no further subdivision is allowed
-        // Check if the triangle is at the deepest allowed (final) level
-        const isFinalLevel = triangle.level >= maxDivideLevel;
-
-        // Only subdivide if not subdivided
         if (!triangle.subdivided) {
-          // ... previous checks unchanged ...
           const container = map.getContainer?.();
           if (!map || !container || !container.parentNode || !map.getPane("overlayPane")) {
             console.warn("[TriangleMeshRenderer render] map or container/overlayPane is not fully ready, skip triangle", trianglePath);
@@ -101,27 +95,23 @@ export function TriangleMeshRenderer({
 
           const coordinates = createGeodesicTriangle(triangle.vertices);
 
-          // Determine fill and opacity based on new rule:
-          // - If final level and has max clicks, show owner's color at 100% opacity
-          // - Otherwise, normal fading logic
+          // Determine fill and opacity
           let fill = "#fff";
           let fillOpacity = 0.5;
           let shouldShowAvatar = false;
           let avatarProps: null | { color: string, emoji: string } = null;
 
           if (
-            isFinalLevel && triangle.clickCount >= clicksToDivide && triangle.color
+            isFinalLevel && triangle.clickCount >= configClicksToDivide && triangle.color
           ) {
-            // (1) full owner color; (2) always at 100% opacity
+            // Properly always use the stored emoji (and fallback only if missing/empty)
             fill = triangle.color;
             fillOpacity = 1.0;
             shouldShowAvatar = true;
-            // Always show the CLAIMED/GAMER emoji, never default to star if non-empty
             avatarProps = { 
               color: triangle.color, 
               emoji: typeof triangle.emoji === "string" && triangle.emoji.trim() !== "" ? triangle.emoji : "🌟" 
-            }; 
-            // The emoji could be improved with a DB change, for now we fallback to a star.
+            };
           } else if (triangle.clickCount > 0) {
             fill = triangle.color || "#222";
             fillOpacity = Math.min(0.3 + triangle.clickCount * 0.07, 0.95);
@@ -132,7 +122,7 @@ export function TriangleMeshRenderer({
             return;
           }
           const polygon = L.polygon(coordinates, {
-            color: "#fff",                // Edge always WHITE
+            color: "#fff",
             weight: 2,
             opacity: 0.8,
             fillColor: fill,
@@ -159,12 +149,9 @@ export function TriangleMeshRenderer({
             polygon.addTo(safeMap);
             triangleLayersRef.current.set(trianglePath, polygon);
 
-            // ---- NEW: Draw emoji/avatar at centroid for final level triangles ----
+            // Avatar/emoji at centroid for claimed triangles: always show player’s emoji if present
             if (shouldShowAvatar && avatarProps) {
-              // Place a Leaflet marker at centroid with a custom emoji icon
               const centroid = getTriangleCentroid(triangle.vertices);
-
-              // Create a simple React render into static markup for the avatar.
               const size = 34;
               const markerDiv = document.createElement("div");
               markerDiv.style.width = `${size}px`;
@@ -178,7 +165,8 @@ export function TriangleMeshRenderer({
               markerDiv.style.background = avatarProps.color;
               markerDiv.style.fontSize = "1.45rem";
               markerDiv.style.userSelect = "none";
-              markerDiv.innerText = avatarProps.emoji; // This now always shows user emoji if set!
+              // ----- THIS IS CRITICAL: always use the triangle’s emoji, fallback ONLY if empty! -----
+              markerDiv.innerText = avatarProps.emoji;
 
               const icon = L.divIcon({
                 className: "",
@@ -219,7 +207,7 @@ export function TriangleMeshRenderer({
 
     renderTriangleMesh(triangleMesh);
 
-    // Cleanup function removes polygons AND number markers
+    // Cleanup function
     return () => {
       const cleanupContainer = map.getContainer?.();
       if (map && cleanupContainer && cleanupContainer.parentNode && map.getPane("overlayPane")) {
@@ -234,7 +222,7 @@ export function TriangleMeshRenderer({
       });
       numberMarkersRef.current.clear();
     };
-  }, [map, triangleMesh, triangleLayersRef, onTriangleClick, maxDivideLevel, clicksToDivide]);
+  }, [map, triangleMesh, triangleLayersRef, onTriangleClick, configMaxDivideLevel, configClicksToDivide]);
 
   return null;
 }

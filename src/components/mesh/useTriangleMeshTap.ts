@@ -1,3 +1,4 @@
+
 import { useCallback, useRef } from "react";
 import { storeTriangleActivity, subdivideTriangleMesh } from "../../utils/triangleMesh";
 
@@ -12,7 +13,7 @@ export function useTriangleMeshTap(
   worldSlug: string,
   settings?: { clicks_to_divide?: number, max_divide_level?: number, max_consecutive_clicks_per_user?: number }
 ) {
-  // Correct! These now reflect the settings passed, fetched from backend
+  // These strictly use the values passed from settings (backend), do NOT fallback except if not set at all:
   const clicksToDivide = settings?.clicks_to_divide ?? 3;
   const maxDivideLevel = settings?.max_divide_level ?? 3;
   const maxConsecutiveClicks =
@@ -71,15 +72,15 @@ export function useTriangleMeshTap(
           triangles.map(triangleEl => {
             if (triangleEl.id === triangleId) {
               const newClickCount = triangleEl.clickCount + 1;
+              // Always use player's emoji if present and non-empty, fallback only to star
               const winnerEmoji = identity.emoji && identity.emoji.trim() !== "" ? identity.emoji : "🌟";
-              // -- Final level logic: just color/owner/finalize, NO subdivide
               if (triangleEl.level >= maxDivideLevel) {
                 return {
                   ...triangleEl,
                   clickCount: Math.min(newClickCount, clicksToDivide),
                   color: identity.color,
                   gametag: identity.gametag,
-                  emoji: winnerEmoji, // Always set emoji on claim
+                  emoji: winnerEmoji,
                 };
               }
               if (newClickCount === clicksToDivide && triangleEl.level < maxDivideLevel && !triangleEl.subdivided) {
@@ -91,7 +92,7 @@ export function useTriangleMeshTap(
                   children,
                   color: identity.color,
                   gametag: identity.gametag,
-                  emoji: winnerEmoji, // Always set emoji on subdivision
+                  emoji: winnerEmoji,
                 };
               }
               return {
@@ -99,7 +100,7 @@ export function useTriangleMeshTap(
                 clickCount: newClickCount,
                 color: identity.color,
                 gametag: identity.gametag,
-                emoji: winnerEmoji, // Always update emoji on any click
+                emoji: winnerEmoji,
               };
             }
             if (triangleEl.children) {
@@ -125,6 +126,8 @@ export function useTriangleMeshTap(
           actionType = "subdivide";
           willSubdivide = true;
         }
+        // Always write the player's emoji to DB, fallback only to star
+        const emojiToStore = identity.emoji && identity.emoji.trim() !== "" ? identity.emoji : "🌟";
         const result = await storeTriangleActivity(
           triangleId,
           Math.min((triangle?.clickCount ?? 0) + 1, clicksToDivide),
@@ -133,7 +136,7 @@ export function useTriangleMeshTap(
           actionType,
           identity.gametag,
           identity.color,
-          identity.emoji, // Pass emoji to store function if supported
+          emojiToStore,
           worldSlug
         );
         if (!result?.success) {
@@ -145,7 +148,6 @@ export function useTriangleMeshTap(
         setTriangleMesh(prev => prevMeshRef.current);
       }
 
-      // -- existing mobile move-to-triangle logic unchanged --
       if (
         storeSuccess &&
         isMobile &&
