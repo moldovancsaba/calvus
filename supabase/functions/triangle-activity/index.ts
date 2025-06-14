@@ -1,3 +1,6 @@
+
+// Add extra debug logging and health check endpoint.
+
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts"
 import { MongoClient } from "https://deno.land/x/mongo@v0.32.0/mod.ts"
 
@@ -22,8 +25,32 @@ serve(async (req) => {
       );
     }
 
+    // Health check endpoint: GET with ?testdb=true only attempts to connect
+    const url = new URL(req.url);
+    if (req.method === 'GET' && url.searchParams.get('testdb') === 'true') {
+      console.log('Running MongoDB connection health check');
+      client = new MongoClient();
+      try {
+        await client.connect(MONGODB_URI);
+        await client.close();
+        return new Response(
+          JSON.stringify({ success: true, message: 'MongoDB connection OK' }),
+          { headers: { ...corsHeaders, 'Content-Type': 'application/json' }, status: 200 }
+        );
+      } catch (healthErr) {
+        console.error('MongoDB health check failed:', healthErr);
+        if (client) try { await client.close(); } catch(e) {}
+        return new Response(
+          JSON.stringify({ error: 'Failed MongoDB healthcheck', details: healthErr instanceof Error ? healthErr.message : String(healthErr) }),
+          { headers: { ...corsHeaders, 'Content-Type': 'application/json' }, status: 500 }
+        );
+      }
+    }
+
     client = new MongoClient();
+    console.log("Connecting to MongoDB...");
     await client.connect(MONGODB_URI);
+    console.log("MongoDB connection established.");
 
     const db = client.database("triangle_mesh");
     const collection = db.collection("triangle_activities");
@@ -44,7 +71,8 @@ serve(async (req) => {
 
       if (action === 'clear') {
         try {
-          await collection.deleteMany({});
+          const delRes = await collection.deleteMany({});
+          console.log('All triangle activities cleared. Result:', delRes);
         } catch (clearErr) {
           console.error('Error clearing activities:', clearErr);
           await client.close();
@@ -53,7 +81,6 @@ serve(async (req) => {
             { headers: { ...corsHeaders, 'Content-Type': 'application/json' }, status: 500 }
           );
         }
-        console.log('All triangle activities cleared from MongoDB');
         await client.close();
         return new Response(
           JSON.stringify({ success: true, message: 'Database cleared' }),
@@ -72,6 +99,7 @@ serve(async (req) => {
         let result: any = {};
         try {
           result = await collection.insertOne(activity);
+          console.log(`Stored triangle activity id ${result.insertedId}:`, activity);
         } catch (insertErr) {
           console.error('Insert error:', insertErr);
           await client.close();
@@ -80,7 +108,6 @@ serve(async (req) => {
             { headers: { ...corsHeaders, 'Content-Type': 'application/json' }, status: 500 }
           );
         }
-        console.log(`Stored triangle activity: ${JSON.stringify(activity)}`);
         await client.close();
         return new Response(
           JSON.stringify({ success: true, activityId: result.insertedId }),
@@ -99,6 +126,7 @@ serve(async (req) => {
       let activities: any[] = [];
       try {
         activities = await collection.find({}).toArray();
+        console.log("Fetched activities:", activities.length);
       } catch (err) {
         console.error("Mongo find error:", err);
         activities = [];
