@@ -21,17 +21,22 @@ export function TriangleMeshRenderer({
   triangleLayersRef,
   onTriangleClick
 }: Props) {
-  // SAFETY: Don't do anything if map not ready
+  // SAFETY: Don't do anything if map not ready or not mounted
   if (!map) return null;
+  const container = map.getContainer?.();
+  if (!container || !container.parentNode) {
+    console.warn("[TriangleMeshRenderer] map or container is not mounted, rendering aborted");
+    return null;
+  }
 
   React.useEffect(() => {
     // Guard: if map is destroyed, do not run effect
     if (!map || !triangleMesh) return;
 
-    // Extra defensive: abort if map has no container or is detached from DOM
     const mapContainer = map.getContainer?.();
     if (!mapContainer || !mapContainer.parentNode) {
       // Do not attempt any rendering if map container is not attached!
+      console.warn("[TriangleMeshRenderer useEffect] map container detached, aborting");
       return;
     }
 
@@ -41,7 +46,10 @@ export function TriangleMeshRenderer({
         if (!triangle.subdivided) {
           // Defensive: always fetch current container just before manipulating!
           const container = map.getContainer?.();
-          if (!map || !container || !container.parentNode) return;
+          if (!map || !container || !container.parentNode) {
+            console.warn("[TriangleMeshRenderer render] map or container is not mounted (inner loop), skip triangle", trianglePath);
+            return;
+          }
 
           // Remove existing layer first
           const existingLayer = triangleLayersRef.current.get(trianglePath);
@@ -58,7 +66,10 @@ export function TriangleMeshRenderer({
             : Math.min(0.3 + triangle.clickCount * 0.07, 0.95);
 
           // Defensive: check freshness again
-          if (!map || !container.parentNode) return;
+          if (!map || !container.parentNode) {
+            console.warn("[TriangleMeshRenderer renderPolygon] map or container is not fresh, skipping polygon add.");
+            return;
+          }
 
           const polygon = L.polygon(coordinates, {
             color: fill,
@@ -79,15 +90,12 @@ export function TriangleMeshRenderer({
             polygon.on("pointerdown", (e: any) => {
               onTriangleClick(triangle.id, triangle, trianglePath);
             });
-
             polygon.on("click", (e: any) => {
               onTriangleClick(triangle.id, triangle, trianglePath);
             });
-
             polygon.on("touchstart", (e: any) => {
               onTriangleClick(triangle.id, triangle, trianglePath);
             });
-
             polygon.on("touchend", (e: any) => {
               // Optionally add touch end logic if needed
             });
