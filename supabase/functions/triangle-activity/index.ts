@@ -29,10 +29,30 @@ serve(async (req) => {
     const collection = db.collection("triangle_activities");
 
     if (req.method === 'POST') {
-      const { action, triangleId, clickCount, level } = await req.json();
+      let body: any;
+      try {
+        body = await req.json();
+      } catch (jsonErr) {
+        console.error('POST body parse error:', jsonErr);
+        await client.close();
+        return new Response(
+          JSON.stringify({ error: 'Invalid JSON body' }),
+          { headers: { ...corsHeaders, 'Content-Type': 'application/json' }, status: 400 }
+        );
+      }
+      const { action, triangleId, clickCount, level } = body;
 
       if (action === 'clear') {
-        await collection.deleteMany({});
+        try {
+          await collection.deleteMany({});
+        } catch (clearErr) {
+          console.error('Error clearing activities:', clearErr);
+          await client.close();
+          return new Response(
+            JSON.stringify({ error: 'Failed to clear activities', details: clearErr instanceof Error ? clearErr.message : clearErr }),
+            { headers: { ...corsHeaders, 'Content-Type': 'application/json' }, status: 500 }
+          );
+        }
         console.log('All triangle activities cleared from MongoDB');
         await client.close();
         return new Response(
@@ -49,8 +69,17 @@ serve(async (req) => {
           level: level,
           timestamp: new Date()
         };
-
-        const result = await collection.insertOne(activity);
+        let result: any = {};
+        try {
+          result = await collection.insertOne(activity);
+        } catch (insertErr) {
+          console.error('Insert error:', insertErr);
+          await client.close();
+          return new Response(
+            JSON.stringify({ error: 'Failed to insert activity', details: insertErr instanceof Error ? insertErr.message : insertErr }),
+            { headers: { ...corsHeaders, 'Content-Type': 'application/json' }, status: 500 }
+          );
+        }
         console.log(`Stored triangle activity: ${JSON.stringify(activity)}`);
         await client.close();
         return new Response(
@@ -59,7 +88,6 @@ serve(async (req) => {
         );
       }
 
-      // If POST but not a supported action
       await client.close();
       return new Response(
         JSON.stringify({ error: 'Unsupported action' }),
@@ -83,7 +111,7 @@ serve(async (req) => {
       );
     }
 
-    // Method not allowed
+    // Method not allowed (still return JSON, not plain!)
     if (client) await client.close();
     return new Response(
       JSON.stringify({ error: 'Method not allowed' }),
@@ -92,11 +120,11 @@ serve(async (req) => {
   } catch (error) {
     console.error('MongoDB operation failed:', error);
     if (client) {
-      try { await client.close(); } catch {}
+      try { await client.close(); } catch(e) {console.error("Failed to close client:", e);}
     }
-    // Always return JSON, never HTML/plain text!
+    // Always return JSON, never plain/HTML!
     return new Response(
-      JSON.stringify({ error: error instanceof Error ? error.message : 'Unknown error' }),
+      JSON.stringify({ error: error instanceof Error ? error.message : String(error) }),
       { headers: { ...corsHeaders, 'Content-Type': 'application/json' }, status: 500 }
     );
   }
