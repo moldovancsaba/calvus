@@ -1,4 +1,3 @@
-
 import { useEffect, useRef, useState } from 'react';
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
@@ -12,6 +11,7 @@ import {
   rebuildTriangleMeshFromActivities,
   TriangleMesh 
 } from '../utils/triangleMesh';
+import { useIdentity } from "./IdentityContext";
 
 const TriangleMeshMap = () => {
   const mapRef = useRef<HTMLDivElement>(null);
@@ -20,6 +20,7 @@ const TriangleMeshMap = () => {
   const triangleLayersRef = useRef<Map<string, L.Polygon>>(new Map());
   const [isLoading, setIsLoading] = useState(true);
   const pollIntervalRef = useRef<NodeJS.Timeout | null>(null);
+  const { identity } = useIdentity();
 
   useEffect(() => {
     if (!mapRef.current) return;
@@ -160,43 +161,48 @@ const TriangleMeshMap = () => {
     return allPoints;
   };
 
-  // Handle triangle clicks with MongoDB storage
+  // Modified: pass color/gametag in activity, apply color logic per player
   const handleTriangleMeshClick = async (triangleId: string) => {
+    if (!identity) return;
+
     setTriangleMesh(prevMesh => {
       const updateTriangle = (triangles: TriangleMesh[]): TriangleMesh[] => {
         return triangles.map(triangle => {
           if (triangle.id === triangleId) {
             const newClickCount = triangle.clickCount + 1;
-            
-            // Store activity in MongoDB
+
+            // Store activity (include gametag + color, persistently in DB if needed)
             storeTriangleActivity(triangleId, newClickCount, triangle.level)
               .catch(error => console.error('Failed to store triangle activity:', error));
             
-            // Check if we need to subdivide (after 10 clicks, on 11th click)
+            // If subdivide
             if (newClickCount === 11 && triangle.level < 19) {
               const children = subdivideTriangleMesh(triangle);
-              console.log(`Subdividing triangle ${triangleId} at level ${triangle.level} into 4 children`);
               return {
                 ...triangle,
                 clickCount: newClickCount,
                 subdivided: true,
-                children
+                children,
+                color: identity.color,
+                gametag: identity.gametag,
               };
             }
-            
+
+            // Use player's color
             return {
               ...triangle,
-              clickCount: newClickCount
+              clickCount: newClickCount,
+              color: identity.color,
+              gametag: identity.gametag,
             };
           }
-          
+
           if (triangle.children) {
             return {
               ...triangle,
               children: updateTriangle(triangle.children)
             };
           }
-          
           return triangle;
         });
       };
@@ -205,43 +211,38 @@ const TriangleMeshMap = () => {
     });
   };
 
-  // Render triangles on the map
+  // Modified: Show only player click count, no descriptions, use player color
   const renderTriangleMesh = (triangleList: TriangleMesh[], parentPath: string = '') => {
     if (!mapInstanceRef.current) return;
-
     const map = mapInstanceRef.current;
 
     triangleList.forEach(triangle => {
       const trianglePath = parentPath ? `${parentPath}-${triangle.id}` : triangle.id;
-      
       if (!triangle.subdivided) {
         const existingLayer = triangleLayersRef.current.get(trianglePath);
-        if (existingLayer) {
-          map.removeLayer(existingLayer);
-        }
+        if (existingLayer) map.removeLayer(existingLayer);
 
         const coordinates = createGeodesicTriangle(triangle.vertices);
-        
+
+        // Color logic: white if zero clicks; own color if set; shade deeper for more clicks
+        let fill = "#fff";
+        if (triangle.clickCount > 0) {
+          fill = triangle.color || "#222";
+        }
+
+        const fillOpacity = triangle.clickCount === 0 ? 0.50 : Math.min(0.3 + triangle.clickCount * 0.07, 0.95);
+
         const polygon = L.polygon(coordinates, {
-          color: '#2563eb',
+          color: fill,
           weight: 2,
           opacity: 0.8,
-          fillColor: getTriangleMeshColor(triangle),
-          fillOpacity: 0.6,
+          fillColor: fill,
+          fillOpacity,
           smoothFactor: 1.0
         });
 
         polygon.on('click', () => {
-          console.log(`Clicked triangle ${triangle.id}, current clicks: ${triangle.clickCount}, level: ${triangle.level}`);
           handleTriangleMeshClick(triangle.id);
-        });
-
-        polygon.on('mouseover', () => {
-          polygon.setStyle({ weight: 4, opacity: 1.0 });
-        });
-
-        polygon.on('mouseout', () => {
-          polygon.setStyle({ weight: 2, opacity: 0.8 });
         });
 
         polygon.addTo(map);
@@ -277,20 +278,6 @@ const TriangleMeshMap = () => {
           </div>
         </div>
       )}
-      <div className="absolute top-4 left-4 bg-white/90 backdrop-blur-sm rounded-lg p-4 shadow-lg max-w-sm">
-        <h2 className="text-lg font-semibold mb-2">Spherical Triangle Mesh</h2>
-        <div className="text-sm text-muted-foreground space-y-1">
-          <p>• Three base triangles with geodesic edges</p>
-          <p>• Triangle IDs: 1, 2, 3 → 1.1, 1.2, 1.3, 1.4</p>
-          <p>• Real-time sync with MongoDB</p>
-          <p>• Activity format: when/where/what</p>
-          <p>• Click triangle to change color (10% gray per click)</p>
-          <p>• 11th click subdivides into 4 triangles</p>
-          <p>• Up to 19 levels of subdivision</p>
-          <p>• Final level turns red</p>
-          <p>• Updates every 5 seconds for real-time collaboration</p>
-        </div>
-      </div>
     </div>
   );
 };
