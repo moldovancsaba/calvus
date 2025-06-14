@@ -62,9 +62,13 @@ export default function SettingsPage() {
       setSettings(updated);
       setPendingSettings(updated);
       toast({ title: "Settings updated", duration: 1500, description: "Your new settings have been saved." });
+
+      // Ensure everyone re-reads settings for this world
       window.dispatchEvent(
         new StorageEvent("storage", { key: `worldSettings_${worldSlug}`, newValue: Date.now().toString() })
       );
+      // Immediately refetch fresh config so UI always reflects saved values
+      loadWorldSettings();
     } catch (e) {
       toast({ title: "Error updating settings", description: String((e as Error).message), variant: "destructive", duration: 2000 });
     } finally {
