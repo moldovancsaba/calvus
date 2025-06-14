@@ -1,4 +1,3 @@
-
 export interface Point3D {
   x: number;
   y: number;
@@ -17,6 +16,8 @@ export interface TriangleMesh {
   clickCount: number;
   subdivided: boolean;
   children?: TriangleMesh[];
+  color?: string; // ADDED: color of owner, for "paint"
+  gametag?: string; // Identify user
 }
 
 export function point3DToLatLng(point: Point3D): LatLng {
