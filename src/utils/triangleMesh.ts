@@ -48,15 +48,16 @@ export function latLngToPoint3D(latLng: LatLng): Point3D {
   };
 }
 
-// Generate the three base triangles for the spherical mesh
+// Generate the six base triangles for the spherical mesh
 export function generateBaseTriangleMesh(): TriangleMesh[] {
   const triangles: TriangleMesh[] = [
+    // North hemisphere base triangles
     {
       id: '1',
       vertices: [
-        { lat: 66.0, lng: 0.0 },      // Top point
-        { lat: 0.0, lng: -36.0 },     // Bottom left
-        { lat: 0.0, lng: 36.0 }       // Bottom right
+        { lat: 66.0, lng: 0.0 },      // Top point (north)
+        { lat: 0.0, lng: -36.0 },     // Bottom left (equator)
+        { lat: 0.0, lng: 36.0 }       // Bottom right (equator)
       ],
       level: 0,
       clickCount: 0,
@@ -65,9 +66,9 @@ export function generateBaseTriangleMesh(): TriangleMesh[] {
     {
       id: '2',
       vertices: [
-        { lat: 66.0, lng: 0.0 },      // Top point
-        { lat: 66.0, lng: 72.0 },     // Top right
-        { lat: 0.0, lng: 36.0 }       // Bottom
+        { lat: 66.0, lng: 0.0 },      // Top point (north)
+        { lat: 66.0, lng: 72.0 },     // Top right (north)
+        { lat: 0.0, lng: 36.0 }       // Bottom (equator)
       ],
       level: 0,
       clickCount: 0,
@@ -76,9 +77,43 @@ export function generateBaseTriangleMesh(): TriangleMesh[] {
     {
       id: '3',
       vertices: [
-        { lat: 66.0, lng: 0.0 },      // Top point
-        { lat: 66.0, lng: -72.0 },    // Top left
-        { lat: 0.0, lng: -36.0 }      // Bottom
+        { lat: 66.0, lng: 0.0 },      // Top point (north)
+        { lat: 66.0, lng: -72.0 },    // Top left (north)
+        { lat: 0.0, lng: -36.0 }      // Bottom (equator)
+      ],
+      level: 0,
+      clickCount: 0,
+      subdivided: false
+    },
+    // South hemisphere mirrored base triangles
+    {
+      id: '4',
+      vertices: [
+        { lat: -66.0, lng: 0.0 },      // Bottom point (south)
+        { lat: 0.0, lng: -36.0 },      // Top left (equator)
+        { lat: 0.0, lng: 36.0 }        // Top right (equator)
+      ],
+      level: 0,
+      clickCount: 0,
+      subdivided: false
+    },
+    {
+      id: '5',
+      vertices: [
+        { lat: -66.0, lng: 0.0 },       // Bottom point (south)
+        { lat: -66.0, lng: 72.0 },      // Bottom right (south)
+        { lat: 0.0, lng: 36.0 }         // Top (equator)
+      ],
+      level: 0,
+      clickCount: 0,
+      subdivided: false
+    },
+    {
+      id: '6',
+      vertices: [
+        { lat: -66.0, lng: 0.0 },       // Bottom point (south)
+        { lat: -66.0, lng: -72.0 },     // Bottom left (south)
+        { lat: 0.0, lng: -36.0 }        // Top (equator)
       ],
       level: 0,
       clickCount: 0,
@@ -86,7 +121,7 @@ export function generateBaseTriangleMesh(): TriangleMesh[] {
     }
   ];
 
-  console.log('Generated base triangle mesh with 3 triangles');
+  console.log('Generated base triangle mesh with 6 triangles (north and south hemispheres)');
   return triangles;
 }
 
