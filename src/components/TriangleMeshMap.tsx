@@ -22,19 +22,27 @@ const TriangleMeshMap = () => {
   const pollIntervalRef = useRef<NodeJS.Timeout | null>(null);
   const { identity } = useIdentity();
 
+  // --- Responsive map: fill viewport height on mobile ---
   useEffect(() => {
     if (!mapRef.current) return;
 
-    // Initialize the map
     const map = L.map(mapRef.current, {
       center: [33, 0],
       zoom: 3,
       minZoom: 1,
       maxZoom: 18,
       worldCopyJump: true,
-      maxBounds: [[-90, -180], [90, 180]]
+      maxBounds: [[-90, -180], [90, 180]],
+      preferCanvas: true,
+      zoomControl: false // Hide default zoom control for mobile
     });
 
+    // --- Add mobile-friendly zoom controls ---
+    if (window.innerWidth < 768) {
+      // Add a mobile bottom right zoom control (custom or rebuilt later if needed)
+    } else {
+      L.control.zoom({ position: 'topright' }).addTo(map);
+    }
     mapInstanceRef.current = map;
 
     // Add OpenStreetMap tiles
@@ -267,14 +275,24 @@ const TriangleMeshMap = () => {
     }
   }, [triangleMesh]);
 
+  // --- Make overlays/loader readable on all sizes ---
   return (
-    <div className="w-full h-screen relative">
-      <div ref={mapRef} className="w-full h-full" />
+    <div className="w-full h-full min-h-[410px] relative">
+      <div
+        ref={mapRef}
+        className="w-full h-full min-h-[410px]"
+        style={{
+          minHeight: "410px",
+          height: "100%",
+          maxHeight: "100dvh",
+          position: "relative"
+        }}
+      />
       {isLoading && (
-        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white/90 backdrop-blur-sm rounded-lg p-4 shadow-lg">
+        <div className="absolute inset-0 flex items-center justify-center bg-white/80 backdrop-blur-[2px] z-50 rounded-lg p-4 shadow-lg">
           <div className="text-center">
             <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600 mx-auto mb-2"></div>
-            <p className="text-sm text-gray-600">Loading triangle activities...</p>
+            <p className="text-base text-gray-600">Loading...</p>
           </div>
         </div>
       )}
