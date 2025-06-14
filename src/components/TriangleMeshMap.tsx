@@ -42,7 +42,6 @@ const TriangleMeshMap = () => {
       zoomControl: false,
       doubleClickZoom: false,
       boxZoom: false,
-      tap: false,
       scrollWheelZoom: false,
       dragging: true,
       touchZoom: "center"
@@ -54,8 +53,6 @@ const TriangleMeshMap = () => {
       map.scrollWheelZoom.disable();
       map.doubleClickZoom.disable();
       map.boxZoom.disable();
-      // Don't use map.tap handler (tapping is for triangles)
-      if (map.tap) map.tap.disable();
       // touchZoom 'center' means only two-finger will zoom
       map.touchZoom.enable(); // still allow pinch
       map.dragging.enable();
