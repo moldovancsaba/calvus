@@ -321,6 +321,28 @@ export function generateBaseTriangleMesh(): TriangleMesh[] {
       clickCount: 0,
       subdivided: false
     },
+    {
+      id: 'NEW2',
+      vertices: [
+        { lat: 0.0, lng: 108.0 },
+        { lat: -66.0, lng: 144.0 },
+        { lat: -66.0, lng: 72.0 }
+      ],
+      level: 0,
+      clickCount: 0,
+      subdivided: false
+    },
+    {
+      id: 'NEW3',
+      vertices: [
+        { lat: -66.0, lng: -144.0 },
+        { lat: -66.0, lng: -72.0 },
+        { lat: 0.0, lng: -108.0 }
+      ],
+      level: 0,
+      clickCount: 0,
+      subdivided: false
+    },
   ];
 
   // Log 20 base triangles (original 19, plus new north pole triangle N3)
