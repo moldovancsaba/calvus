@@ -1,3 +1,4 @@
+
 import { useEffect, useRef, useState } from 'react';
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
@@ -15,6 +16,17 @@ import { useLeafletMobileTouch } from "./hooks/useLeafletMobileTouch";
 import { TriangleMeshRenderer } from "./mesh/TriangleMeshRenderer";
 import { useTriangleMeshTap } from "./mesh/useTriangleMeshTap";
 
+// Helper to get user's geolocation (promise-based)
+function getUserLatLng(): Promise<[number, number]> {
+  return new Promise((resolve, reject) => {
+    if (!navigator.geolocation) return reject(new Error('Geolocation is not supported.'));
+    navigator.geolocation.getCurrentPosition(
+      pos => resolve([pos.coords.latitude, pos.coords.longitude]),
+      err => reject(err)
+    );
+  });
+}
+
 const TriangleMeshMap = () => {
   const mapRef = useRef<HTMLDivElement>(null);
   const mapInstanceRef = useRef<L.Map | null>(null);
@@ -28,13 +40,42 @@ const TriangleMeshMap = () => {
   // For UI revert on DB failure
   const prevMeshRef = useRef<TriangleMesh[]>([]);
 
-  // Map initialization
+  // New: Store initial center
+  const [mapCenter, setMapCenter] = useState<[number, number] | null>(null);
+  const [locationError, setLocationError] = useState<string | null>(null);
+
+  // Try to get user geolocation on initial mount
+  useEffect(() => {
+    let active = true;
+    getUserLatLng()
+      .then(center => {
+        if (active) {
+          setMapCenter(center);
+        }
+      })
+      .catch((err) => {
+        setLocationError("Could not get your location, showing map at default location.");
+        setMapCenter([33, 0]); // fallback
+      });
+    // Give 2s for geolocation, fallback to default after timeout if still waiting
+    const fallbackTimeout = setTimeout(() => {
+      if (!mapCenter) setMapCenter([33, 0]);
+    }, 2000);
+    return () => {
+      active = false;
+      clearTimeout(fallbackTimeout);
+    };
+    // eslint-disable-next-line
+  }, []);
+
+  // Map initialization (runs when mapCenter first resolved)
   useEffect(() => {
     if (!mapRef.current) return;
+    if (!mapCenter) return; // Wait for center
 
     // Always enable zoomControl (the +/- buttons) and DISABLE ALL other zooming gestures
     const map = L.map(mapRef.current, {
-      center: [33, 0],
+      center: mapCenter,
       zoom: 6,
       minZoom: 5,
       maxZoom: 15,
@@ -108,7 +149,8 @@ const TriangleMeshMap = () => {
         clearInterval(pollIntervalRef.current);
       }
     };
-  }, []);
+    // eslint-disable-next-line
+  }, [mapCenter]);
 
   // Custom mobile/touch logic (refactored, hook does nothing on desktop)
   useLeafletMobileTouch(mapInstanceRef.current);
@@ -121,25 +163,30 @@ const TriangleMeshMap = () => {
     mapInstanceRef.current
   );
 
-  // --- Responsive, minimal map shell ---
+  // --- Responsive, full-screen map shell ---
   return (
-    <div className="relative w-full h-[60vh] min-h-[320px] max-h-[90dvh] md:h-[75vh] rounded-lg border bg-white shadow-md mx-auto transition-all duration-300">
+    <div className="relative w-full h-full min-h-[0] flex-1 rounded-none border-0 p-0 m-0">
       <div
         ref={mapRef}
-        className="w-full h-full min-h-[320px] rounded-lg"
+        className="w-full h-full min-h-[0] rounded-none"
         style={{
-          minHeight: "320px",
-          maxHeight: "90dvh",
+          minHeight: "0",
+          maxHeight: "none",
           height: "100%",
           position: "relative"
         }}
       />
       {isLoading && (
-        <div className="absolute inset-0 flex items-center justify-center bg-white/90 backdrop-blur-[2px] z-50 rounded-lg p-4">
+        <div className="absolute inset-0 flex items-center justify-center bg-white/90 backdrop-blur-[2px] z-50 rounded-none p-4">
           <div className="text-center">
             <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600 mx-auto mb-2"></div>
             <p className="text-base text-gray-600">Loading...</p>
           </div>
+        </div>
+      )}
+      {locationError && (
+        <div className="absolute top-2 left-1/2 -translate-x-1/2 z-50 rounded bg-yellow-100 text-yellow-900 px-4 py-2 text-xs shadow border border-yellow-300">
+          {locationError}
         </div>
       )}
       <TriangleMeshRenderer
