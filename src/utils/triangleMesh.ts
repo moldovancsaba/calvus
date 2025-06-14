@@ -200,10 +200,10 @@ export async function storeTriangleActivity(triangleId: string, clickCount: numb
 export async function clearTriangleActivities() {
   try {
     const { supabase } = await import('@/integrations/supabase/client');
+    // Delete all rows by calling delete() without a filter
     const { error } = await supabase
       .from('triangle_activities')
-      .delete()
-      .neq('id', '');
+      .delete();
     if (error) {
       throw error;
     }
