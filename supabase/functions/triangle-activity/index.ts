@@ -12,13 +12,14 @@ serve(async (req) => {
     return new Response('ok', { headers: corsHeaders })
   }
 
+  let client: MongoClient | null = null;
   try {
     const MONGODB_URI = Deno.env.get('MONGODB_URI')
     if (!MONGODB_URI) {
       throw new Error('MongoDB URI not configured')
     }
 
-    const client = new MongoClient()
+    client = new MongoClient()
     await client.connect(MONGODB_URI)
     
     const db = client.database("triangle_mesh")
@@ -31,7 +32,6 @@ serve(async (req) => {
         // Clear all data from the collection
         await collection.deleteMany({})
         console.log('All triangle activities cleared from MongoDB')
-        
         await client.close()
         return new Response(
           JSON.stringify({ success: true, message: 'Database cleared' }),
@@ -45,16 +45,15 @@ serve(async (req) => {
       if (action === 'click') {
         // Store triangle click activity
         const activity = {
-          when: new Date().toISOString(), // UTC ISO 8601 with milliseconds
-          where: triangleId, // hierarchical triangle ID (e.g., "1.4.2")
-          what: clickCount, // level of clicks on this triangle
-          level: level, // subdivision level
+          when: new Date().toISOString(),
+          where: triangleId,
+          what: clickCount,
+          level: level,
           timestamp: new Date()
         }
 
         const result = await collection.insertOne(activity)
         console.log(`Stored triangle activity: ${JSON.stringify(activity)}`)
-        
         await client.close()
         return new Response(
           JSON.stringify({ success: true, activityId: result.insertedId }),
@@ -68,9 +67,19 @@ serve(async (req) => {
 
     if (req.method === 'GET') {
       // Retrieve all activities
-      const activities = await collection.find({}).toArray()
+      let activities = [];
+      try {
+        activities = await collection.find({}).toArray();
+      } catch (err) {
+        // Defensive: return empty array (not null, not undefined)
+        console.error("Mongo find error:", err);
+        activities = [];
+      }
+
+      // Defensive: always return as array
+      if (!Array.isArray(activities)) activities = [];
       
-      await client.close()
+      await client.close();
       return new Response(
         JSON.stringify({ activities }),
         { 
@@ -91,8 +100,12 @@ serve(async (req) => {
 
   } catch (error) {
     console.error('MongoDB operation failed:', error)
+    if (client) {
+      try { await client.close(); } catch {}
+    }
+    // Always return a valid JSON object, never plain text
     return new Response(
-      JSON.stringify({ error: error.message }),
+      JSON.stringify({ error: error instanceof Error ? error.message : 'Unknown error' }),
       { 
         headers: { ...corsHeaders, 'Content-Type': 'application/json' },
         status: 500 
