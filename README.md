@@ -227,8 +227,37 @@ For issues and questions:
 - Review browser console and edge function logs
 - Verify MongoDB connection and Supabase configuration
 
-## Technical Achievements
+## Security & Technical Audit (2025-06-14)
 
+### Security & Vulnerability Assessment
+- **Access Controls:** All sensitive write/clear actions are funneled through Supabase Edge Functions. RLS (Row Level Security) should be added to `triangle_activities` for further safety; currently, this is still open (⚠ see tech notes).
+- **User Data:** Gametag/identity is stored locally and attached to mesh activity. Input validation exists for gametag and worldSlug, but consider additional server-side validation.
+- **Secrets:** Project uses Supabase secrets for DB credentials; never exposed to the client.
+- **Container Reuse:** Map reuse errors are now trapped and prevented by the initialization logic, protecting map state on fast page transitions.
+- **Input Validation:** All user inputs for slugs and gametags are regex filtered for allowed chars.
+
+### Resilience & Edge Case Handling
+- **Subdivision:** Recursive mesh logic stops cleanly at 19, never deeper (avoiding memory/DOM explosion).
+- **State Corruption:** Triangle activity snapshots are always the latest per-triangle; mesh restoration is repeatable and lossless unless DB is tampered/corrupted.
+- **Race Conditions:** Polling logic means some rare conflicting writes can result in delayed updates between clients, but not data loss.
+
+### Recommendations from Audit
+- **Add RLS to `triangle_activities` for secure multi-tenant worlds.**
+- **Add more toasts/UI feedback for poll error states.**
+- **Break up large files for maintainability.**
+- **Improve global error banners for major API/db failures.**
+- **Automated e2e testing for user and mesh flows.**
+
+## Troubleshooting—Audit Edition
+
+- Container reuse: If you see “Map container is being reused,” ensure you don’t have stale components or open tabs rapidly switching worlds; refresh solves the state.
+- Slow polling: Check Supabase Function logs for triangle-activity. DB slowness causes lag.
+- Mesh not updating: Try leaving/rejoining the world, or clearing browser cache if mesh is stuck.
+- Edge Function errors: Review the Supabase logs for activity.
+
+---
+
+## Technical Achievements & Learnings
 ### Learnings & Innovations
 - **Geodesic Geometry**: Implemented proper spherical triangle subdivision
 - **Real-time Collaboration**: Achieved multi-user synchronization without WebSockets

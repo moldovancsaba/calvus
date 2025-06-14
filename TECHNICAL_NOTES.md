@@ -201,4 +201,95 @@ for (const activity of sortedActivities) {
 
 ---
 
+### Security, Edge, & Robustness (2025-06-14 Audit)
+
+#### Security Threats & Fixes
+- **Open Data:** All activities store world_slug but no RLS; multi-tenant attacks possible. Recommend strict RLS policies ASAP!
+- **Input Sanitization:** All world slugs and gametags filtered for valid characters on the client, but server API could be hardened further.
+- **Map Instance Reuse:** Leaflet would error when a container is initialized twice. We now forcibly destroy pre-existing map instances and clear container state in `LeafletMapContainer.tsx` before re-initialization, preventing memory leaks and stale state errors.
+- **Edge Function Exposure:** API routes should validate action type AND ensure user is allowed to mutate target world.
+
+#### Geometry & Mesh Learnings
+- **Subdivision Limit:** 19-level hard stop works and prevents resource exhaustion. Attempting to subdivide further returns error or is ignored.
+- **Restoration:** Mesh state is always rebuilt with last snapshot row per triangle. Sorting by timestamp is robust, but verify time sync between clients and DB.
+- **Internal Concurrency:** Minor risk if two clients act on the same triangle at the same instant; last write wins. True real-time would require websocket conflation or consensus.
+
+#### Performance Optimizations
+- **Layer Cleanup:** To maintain correct Leaflet layers, all previous triangle polygons are cleaned up before redraw (no memory leaks).
+- **Polling:** 5s interval balances real-time with reasonable API/DB load.
+
+#### Known Gaps
+- **No RLS on `triangle_activities`:** Security vulnerability, add policies!
+- **No server-side slug collision detection:** Relying on world_slug being unique is client-enforced only.
+- **No rate limiting in functions.**
+- **No global undo/redo for mesh actions.**
+
+---
+
+## Learnings
+
+- **Always destroy previous Leaflet map instances before mounting new ones.**  
+- **Keep component and hook files < 50 lines where possible.**  
+- **Test all edge cases on mobile (fixed zoom, slow drag, reload during subdivision).**  
+- **Activity snapshotting is robust—never combine incremental & snapshot state models!**  
+- **Throttle user actions per triangle to prevent accidental mesh spamming on mobile.**
+
+---
+
+## Edge Cases (2025-06-14)
+
+- **Rapid join/leave of worlds can lead to zombie map instances.** Use effect cleanup aggressively!
+- **Late arrival of polling can cause triangle overwrite, not actual data loss.**
+- **DB downtime means mesh reconstructs to latest persisted shape at next reconnect.**
+- **Max level (19) triangles turn red; clicks silently ignored past level 19.**
+
+## Known Technical Debt
+
+### File Size Issues
+- `TriangleMeshMap.tsx`: 299 lines (consider refactoring into smaller components)
+- `triangleMesh.ts`: 296 lines (could split geometry utils from state management)
+
+### Potential Improvements
+1. **WebSocket Integration**: Replace polling with real-time subscriptions
+2. **Spatial Indexing**: MongoDB geospatial queries for regional triangle loading
+3. **Caching Layer**: Redis or in-memory cache for frequently accessed triangles
+4. **Batch Operations**: Combine multiple triangle updates into single API calls
+5. **Progressive Loading**: Load only visible triangles at current zoom level
+
+## Security Considerations
+
+### MongoDB URI Storage
+- Stored securely in Supabase secrets (encrypted at rest)
+- Never exposed to client-side code
+- Accessed only through edge functions
+
+### Input Validation
+- Triangle ID format validation (dot notation pattern)
+- Click count bounds checking (0-11 range)
+- Level validation (0-19 range)
+- Coordinate validation for triangle vertices
+
+### CORS Configuration
+- Permissive CORS for development (`Access-Control-Allow-Origin: *`)
+- Should be restricted to specific domains in production
+
+## Future Scalability Considerations
+
+### Database Optimization
+- Consider sharding by geographic regions
+- Implement activity archiving for old data
+- Add indexes on frequently queried fields (triangle ID, timestamp)
+
+### Real-time Performance
+- WebSocket implementation for instant updates
+- Event-driven architecture for triangle state changes
+- Conflict resolution for simultaneous clicks
+
+### Global Distribution
+- CDN for static assets
+- Regional MongoDB clusters
+- Edge function deployment in multiple regions
+
+---
+
 This technical documentation serves as a guide for future development and debugging of the Triangle Mesh system.

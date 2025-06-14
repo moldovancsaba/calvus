@@ -70,3 +70,13 @@ Each triangle activity snapshot row now stores:
 ### Migration
 - All previous mesh activity data is wiped as state is not compatible.
 - Upgraded UI and backend for reliable world mesh restoration.
+
+## [1.2.1] - 2025-06-14
+
+### Audit & Documentation
+
+- Security/robustness audit performed on all mesh, map, and storage flows.
+- Large-file code paths identified and flagged for refactoring.
+- Map container reuse error handled and documented.
+- Documentation extended: edge cases, security threats, anti-patterns, lessons learned.
+- ideabank.md added with 10+ future function ideas.
