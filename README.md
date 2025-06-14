@@ -1,73 +1,236 @@
-# Welcome to your Lovable project
 
-## Project info
+# Triangle Mesh Interactive Map
 
-**URL**: https://lovable.dev/projects/702eabfd-f31a-4abc-8be5-a8625ec553df
+A collaborative spherical triangle mesh system built with React, Leaflet, and MongoDB. Users can click on triangles to progressively subdivide them, creating a real-time collaborative mapping experience.
 
-## How can I edit this code?
+![Triangle Mesh Demo](https://via.placeholder.com/800x400/2563eb/ffffff?text=Triangle+Mesh+Map)
 
-There are several ways of editing your application.
+## Features
 
-**Use Lovable**
+### 🌍 Interactive Spherical Mesh
+- Three base triangles with geodesic edges on world map
+- Click-based progressive subdivision (up to 19 levels)
+- Hierarchical triangle identification system
+- Real-time visual feedback with grayscale progression
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/702eabfd-f31a-4abc-8be5-a8625ec553df) and start prompting.
+### 🤝 Real-time Collaboration
+- MongoDB-powered activity storage
+- 5-second polling for live updates
+- Persistent state across sessions
+- Multi-user simultaneous interaction
 
-Changes made via Lovable will be committed automatically to this repo.
+### 🎨 Visual System
+- Progressive grayscale: 10% darker per click
+- Automatic subdivision after 10 clicks
+- Red highlighting for maximum subdivision level
+- Geodesic edge rendering prevents gaps/overlaps
 
-**Use your preferred IDE**
+## Quick Start
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+### Prerequisites
+- Node.js 18+ and npm
+- MongoDB Atlas account
+- Supabase project (for edge functions)
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
+### Installation
 
-Follow these steps:
+1. **Clone the repository**
+   ```bash
+   git clone <your-repo-url>
+   cd triangle-mesh-map
+   ```
 
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
+2. **Install dependencies**
+   ```bash
+   npm install
+   ```
 
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
+3. **Configure MongoDB**
+   - Create a MongoDB Atlas cluster
+   - Add your MongoDB URI to Supabase secrets as `MONGODB_URI`
+   - Format: `mongodb+srv://username:password@cluster.mongodb.net/?retryWrites=true&w=majority`
 
-# Step 3: Install the necessary dependencies.
-npm i
+4. **Start development server**
+   ```bash
+   npm run dev
+   ```
 
-# Step 4: Start the development server with auto-reloading and an instant preview.
-npm run dev
+## Architecture
+
+### Frontend Components
+- **TriangleMeshMap**: Main map component with Leaflet integration
+- **Index**: Root page component
+
+### Backend Services
+- **triangle-activity**: Supabase Edge Function for MongoDB operations
+- **triangleMesh.ts**: Core triangle geometry and subdivision logic
+
+### Data Structure
+
+#### Triangle Activity Schema
+```typescript
+{
+  when: "2025-01-14T12:34:56.789Z",  // UTC ISO 8601 with milliseconds
+  where: "1.4.2",                   // Hierarchical triangle ID
+  what: 5,                          // Click count on this triangle
+  level: 2,                         // Subdivision level
+  timestamp: Date                   // MongoDB timestamp
+}
 ```
 
-**Edit a file directly in GitHub**
+#### Triangle Mesh Interface
+```typescript
+interface TriangleMesh {
+  id: string;                       // Hierarchical ID (1, 1.1, 1.2, etc.)
+  vertices: [LatLng, LatLng, LatLng]; // Three corner coordinates
+  level: number;                    // Subdivision depth (0-19)
+  clickCount: number;               // Number of user clicks
+  subdivided: boolean;              // Whether triangle has children
+  children?: TriangleMesh[];        // Sub-triangles after subdivision
+}
+```
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+## Configuration
 
-**Use GitHub Codespaces**
+### Environment Variables (Supabase Secrets)
+- `MONGODB_URI`: MongoDB Atlas connection string
+- `SUPABASE_URL`: Auto-configured Supabase project URL
+- `SUPABASE_ANON_KEY`: Auto-configured Supabase anonymous key
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+### MongoDB Setup
+1. Create a new database called `triangle_mesh`
+2. Collection `triangle_activities` will be auto-created
+3. No additional configuration required
 
-## What technologies are used for this project?
+## Usage Guide
 
-This project is built with:
+### Basic Interaction
+1. **Click any triangle**: Increases gray level by 10%
+2. **10 clicks**: Triangle becomes fully gray
+3. **11th click**: Triangle subdivides into 4 smaller triangles
+4. **Continue clicking**: Subdivide up to 19 levels deep
+5. **Final level**: Triangles turn red when fully subdivided
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
+### Collaboration
+- **Real-time updates**: Changes appear across all connected users
+- **Persistent state**: Return anytime to see accumulated changes
+- **Global activity**: See worldwide triangle interactions
 
-## How can I deploy this project?
+### Data Management
+- Activities are automatically stored in MongoDB
+- Database is cleared on initial deployment for clean start
+- All triangle interactions are permanently logged
 
-Simply open [Lovable](https://lovable.dev/projects/702eabfd-f31a-4abc-8be5-a8625ec553df) and click on Share -> Publish.
+## API Reference
 
-## Can I connect a custom domain to my Lovable project?
+### Edge Function Endpoints
 
-Yes, you can!
+#### Store Triangle Activity
+```javascript
+POST /functions/v1/triangle-activity
+Content-Type: application/json
 
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
+{
+  "action": "click",
+  "triangleId": "1.4.2",
+  "clickCount": 5,
+  "level": 2
+}
+```
 
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/tips-tricks/custom-domain#step-by-step-guide)
+#### Get All Activities
+```javascript
+GET /functions/v1/triangle-activity
+```
+
+#### Clear All Activities
+```javascript
+POST /functions/v1/triangle-activity
+Content-Type: application/json
+
+{
+  "action": "clear"
+}
+```
+
+## Development
+
+### Key Files
+- `src/components/TriangleMeshMap.tsx`: Main map component (299 lines)
+- `src/utils/triangleMesh.ts`: Core triangle logic (296 lines)
+- `supabase/functions/triangle-activity/index.ts`: MongoDB API
+
+### Geometric Algorithms
+- **Spherical midpoint calculation**: Great circle interpolation
+- **Geodesic triangle rendering**: 50-point great circle approximation
+- **Coordinate conversion**: 3D sphere ↔ lat/lng transformation
+
+### Performance Considerations
+- 5-second polling interval balances real-time feel with API load
+- Triangle subdivision limited to 19 levels to prevent memory issues
+- Geodesic rendering uses 50 interpolation points for smooth edges
+
+## Troubleshooting
+
+### Common Issues
+
+1. **Triangles not appearing**
+   - Check MongoDB URI configuration in Supabase secrets
+   - Verify edge function deployment status
+
+2. **No real-time updates**
+   - Confirm MongoDB connection in function logs
+   - Check browser console for polling errors
+
+3. **Subdivision not working**
+   - Ensure 11 clicks registered (check console logs)
+   - Verify triangle level < 19
+
+### Debug Information
+- All triangle interactions logged to browser console
+- Edge function logs available in Supabase dashboard
+- MongoDB operations logged with timestamps
+
+## Contributing
+
+### Code Style
+- TypeScript strict mode enabled
+- Tailwind CSS for styling
+- Functional React components with hooks
+- Comprehensive error logging
+
+### Testing Workflow
+1. Test triangle clicking and subdivision
+2. Verify real-time synchronization with multiple browser tabs
+3. Check MongoDB data persistence after page reload
+4. Validate geodesic edge rendering at various zoom levels
+
+## License
+
+MIT License - see LICENSE file for details
+
+## Support
+
+For issues and questions:
+- Check the troubleshooting section above
+- Review browser console and edge function logs
+- Verify MongoDB connection and Supabase configuration
+
+## Technical Achievements
+
+### Learnings & Innovations
+- **Geodesic Geometry**: Implemented proper spherical triangle subdivision
+- **Real-time Collaboration**: Achieved multi-user synchronization without WebSockets
+- **Hierarchical Data**: Created intuitive dot-notation triangle identification
+- **Progressive Interaction**: Designed engaging click-to-subdivide mechanic
+- **Cross-Platform Storage**: Successfully integrated MongoDB with Supabase Edge Functions
+
+### Performance Optimizations
+- Efficient triangle rendering with polygon caching
+- Minimal API calls through batched updates
+- Memory-conscious subdivision limiting
+- Smooth geodesic edge approximation
+
+---
+
+Built with ❤️ using React, Leaflet, MongoDB, and Supabase
