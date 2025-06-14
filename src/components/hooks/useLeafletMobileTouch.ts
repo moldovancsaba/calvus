@@ -5,29 +5,35 @@ import L from "leaflet";
 export function useLeafletMobileTouch(map: L.Map | null) {
   useEffect(() => {
     if (!map) return;
-    // Detect mobile
     const mobile = window.innerWidth < 768;
     if (!mobile) return;
 
-    // Enable only pinch-zoom and drag, disable others
+    // Enable gestures
     map.scrollWheelZoom.disable();
     map.doubleClickZoom.disable();
     map.boxZoom.disable();
-    map.touchZoom.enable(); // only pinch
+    map.touchZoom.enable();
     map.dragging.enable();
 
-    // Only preventDefault if tapping base map, allow triangle interaction
+    // Improved: only preventDefault on map base, never on triangles or controls
     const handleTouchStart = function (e: TouchEvent) {
       if (e.touches.length === 1) {
         const target = e.target as HTMLElement;
-        if (!(target.classList.contains("leaflet-interactive"))) {
-          e.preventDefault();
+        // Allow all interactive (triangles), and controls to work
+        if (
+          target.classList.contains("leaflet-interactive") ||
+          target.closest(".leaflet-control") // do not block controls
+        ) {
+          // DO NOTHING, allow
+          return;
         }
-        // else: allow the triangle tap
+        // Block drawing/panning/scrolling for just background
+        e.preventDefault();
       }
     };
 
     const container = map.getContainer();
+    // passive: false is required so we can call preventDefault
     container.addEventListener("touchstart", handleTouchStart, { passive: false });
 
     return () => {
