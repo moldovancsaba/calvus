@@ -283,13 +283,13 @@ export function generateBaseTriangleMesh(): TriangleMesh[] {
       clickCount: 0,
       subdivided: false
     },
-    // Triangle C: (66°N, 216°), (66°N, 288°), (0°, -180°)
+    // Triangle C: (66°N, -216°), (66°N, -144°), (0°, -108°)
     {
       id: 'B3',
       vertices: [
-        { lat: 66.0, lng: 216.0 },
-        { lat: 66.0, lng: 288.0 },
-        { lat: 0.0, lng: -180.0 }
+        { lat: 66.0, lng: -216.0 },
+        { lat: 66.0, lng: -144.0 },
+        { lat: 0.0, lng: -108.0 },
       ],
       level: 0,
       clickCount: 0,
