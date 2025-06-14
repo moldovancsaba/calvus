@@ -62,12 +62,10 @@ export const SettingsMenu: React.FC<{ children: React.ReactNode }> = ({ children
         : "Fixed zoom disabled",
       duration: 2000,
     });
-    // Broadcast storage event for map tab to sync instantly
     window.dispatchEvent(new StorageEvent("storage", { key: "fixedMobileZoom", newValue: val ? "true" : "false" }));
   }
 
   function handleSetFixedZoomLevel(level: number) {
-    // clamp to range [1, 20], integer only
     let clamped = Math.min(Math.max(Math.round(level), 1), 20);
     setFixedZoomLevel(clamped);
     window.localStorage.setItem("fixedMobileZoomLevel", String(clamped));
@@ -76,24 +74,26 @@ export const SettingsMenu: React.FC<{ children: React.ReactNode }> = ({ children
       description: `Mobile zoom level set to ${clamped}`,
       duration: 2000,
     });
-    // Broadcast storage event so the map knows to re-read
     window.dispatchEvent(new StorageEvent("storage", { key: "fixedMobileZoomLevel", newValue: String(clamped) }));
   }
 
-  async function handleRestartWorld() {
+  async function handleStartNewWorld() {
     setBusy(true);
     try {
       await clearTriangleActivities();
       window.localStorage.removeItem("triangleMeshCache");
       setActivities([]); // clear gamer list instantly
-      // Broadcast a custom event so TriangleMeshMap refreshes itself instantly
       window.dispatchEvent(new StorageEvent("storage", { key: "refreshMesh", newValue: Date.now().toString() }));
-      // Also reload the page for a guaranteed hard reset
-      window.location.reload();
+      toast({
+        title: "World started",
+        description: "A brand new world has been launched! All previous clicks/data are cleared.",
+        duration: 2500,
+      });
+      setBusy(false);
     } catch (e) {
       toast({
         title: "Error",
-        description: "Failed to reset the world.",
+        description: "Failed to start a new world.",
         duration: 3000,
         variant: "destructive"
       });
@@ -133,12 +133,10 @@ export const SettingsMenu: React.FC<{ children: React.ReactNode }> = ({ children
             className="w-20 text-right"
             value={fixedZoomLevel}
             onChange={e => {
-              // keep only integer
               const n = Math.floor(Number((e.target as HTMLInputElement).value));
               if (!isNaN(n)) handleSetFixedZoomLevel(n);
             }}
             onBlur={e => {
-              // Clamp on blur in case user enters out-of-bounds or decimal
               let val = Math.round(Number((e.target as HTMLInputElement).value));
               if (isNaN(val)) val = 2;
               handleSetFixedZoomLevel(val);
@@ -146,16 +144,16 @@ export const SettingsMenu: React.FC<{ children: React.ReactNode }> = ({ children
           />
         </div>
       )}
-      {/* Restart World */}
+      {/* Start a New World */}
       <div className="flex items-center justify-between mb-4 gap-1">
-        <span>Restart world</span>
+        <span>Start a new world</span>
         <Button
           variant="destructive"
-          onClick={handleRestartWorld}
+          onClick={handleStartNewWorld}
           size="sm"
           disabled={busy}
         >
-          {busy ? "Resetting..." : "Restart"}
+          {busy ? "Starting..." : "Start"}
         </Button>
       </div>
       {/* Gamer stats */}
