@@ -55,14 +55,14 @@ export function sphericalMidpoint(p1: LatLng, p2: LatLng): LatLng {
   return point3DToLatLng(midpoint);
 }
 
-// Generate the 24 base triangles for the spherical mesh.
+// Generate the 26 base triangles for the spherical mesh.
 // These triangles are distributed to minimize distortion and support the subdivision system.
 // Canonical for v2.1+: See technical documentation.
 // 
 // As of June 2025, the base mesh contains the following triangles (IDs):
-// [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, N1, N2, S1, S2, B1, B3, N3, NEW1, NEW2, NEW3]
+// [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, N1, N2, S1, S2, B1, B3, N3, NEW1, NEW2, NEW3, SP1, SP2]
 // 
-// All per-triangle activity and mesh logic assumes 24 triangles at mesh genesis.
+// All per-triangle activity and mesh logic assumes 26 triangles at mesh genesis.
 export function generateBaseTriangleMesh(): TriangleMesh[] {
   const triangles: TriangleMesh[] = [
     // North hemisphere base triangles
@@ -329,9 +329,9 @@ export function generateBaseTriangleMesh(): TriangleMesh[] {
     {
       id: 'NEW2',
       vertices: [
-        { lat: 0.0, lng: 108.0 },
-        { lat: -66.0, lng: 144.0 },
-        { lat: -66.0, lng: 72.0 }
+        { lat: 0.0,    lng: 108.0 },
+        { lat: -66.0,  lng: 144.0 },
+        { lat: -66.0,  lng: 72.0 }
       ],
       level: 0,
       clickCount: 0,
@@ -340,18 +340,41 @@ export function generateBaseTriangleMesh(): TriangleMesh[] {
     {
       id: 'NEW3',
       vertices: [
-        { lat: -66.0, lng: -144.0 },
-        { lat: -66.0, lng: -72.0 },
-        { lat: 0.0, lng: -108.0 }
+        { lat: -66.0,  lng: -144.0 },
+        { lat: -66.0,  lng: -72.0 },
+        { lat: 0.0,    lng: -108.0 }
       ],
       level: 0,
       clickCount: 0,
       subdivided: false
     },
+    // ---- NEW: South Pole connector triangles ----
+    {
+      id: 'SP1',
+      vertices: [
+        { lat: -66.0,  lng: 144.0 },
+        { lat: -66.0,  lng: 72.0 },
+        { lat: -90.0,  lng: 0.0 }
+      ],
+      level: 0,
+      clickCount: 0,
+      subdivided: false
+    },
+    {
+      id: 'SP2',
+      vertices: [
+        { lat: -66.0,  lng: -144.0 },
+        { lat: -66.0,  lng: -72.0 },
+        { lat: -90.0,  lng: 0.0 }
+      ],
+      level: 0,
+      clickCount: 0,
+      subdivided: false
+    }
   ];
 
-  // Log 24 base triangles (v2.1 as of June 2025)
-  console.log('Generated base triangle mesh with 24 triangles (v2.1, June 2025)');
+  // Log 26 base triangles (v2.2, June 2025 South Pole patch)
+  console.log('Generated base triangle mesh with 26 triangles (v2.2, June 2025 South Pole patch)');
   return triangles;
 }
 
