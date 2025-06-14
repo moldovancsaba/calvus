@@ -175,6 +175,53 @@ export function generateBaseTriangleMesh(): TriangleMesh[] {
       subdivided: false
     },
 
+    // ---- South hemisphere mirror belt (equatorial) triangles ----
+    // These mirror triangles 7–10 but with -66 latitude
+    {
+      id: '11',
+      vertices: [
+        { lat: -66.0, lng: -72.0 },
+        { lat: 0.0, lng: -36.0 },
+        { lat: 0.0, lng: -108.0 }
+      ],
+      level: 0,
+      clickCount: 0,
+      subdivided: false
+    },
+    {
+      id: '12',
+      vertices: [
+        { lat: -66.0, lng: 72.0 },
+        { lat: 0.0, lng: 36.0 },
+        { lat: 0.0, lng: 108.0 }
+      ],
+      level: 0,
+      clickCount: 0,
+      subdivided: false
+    },
+    {
+      id: '13',
+      vertices: [
+        { lat: -66.0, lng: 144.0 },
+        { lat: 0.0, lng: 108.0 },
+        { lat: 0.0, lng: 180.0 }
+      ],
+      level: 0,
+      clickCount: 0,
+      subdivided: false
+    },
+    {
+      id: '14',
+      vertices: [
+        { lat: -66.0, lng: -144.0 },
+        { lat: 0.0, lng: -108.0 },
+        { lat: 0.0, lng: -180.0 }
+      ],
+      level: 0,
+      clickCount: 0,
+      subdivided: false
+    },
+
     // North pole caps
     {
       id: 'N1',
@@ -223,7 +270,7 @@ export function generateBaseTriangleMesh(): TriangleMesh[] {
     }
   ];
 
-  console.log('Generated base triangle mesh with 16 triangles (including corrected belt/side triangles)');
+  console.log('Generated base triangle mesh with 20 triangles (including corrected belt/side triangles)');
   return triangles;
 }
 
