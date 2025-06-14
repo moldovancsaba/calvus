@@ -102,62 +102,81 @@ const IdentityGate: React.FC<{ children: React.ReactNode }> = ({ children }) => 
     setUsedColor(color);
   };
 
+  // Form submit handler — calls onConfirm
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    onConfirm();
+  };
+
   return (
     <div className="min-h-dvh h-dvh w-full flex items-center justify-center bg-gradient-to-br from-blue-100 to-white px-3">
       <div className="bg-white/95 rounded-xl shadow-2xl mx-auto p-4 pb-6 w-full max-w-xs flex flex-col items-center gap-5">
         <h2 className="text-xl font-bold text-center my-1">Identify Yourself</h2>
-        <input
-          placeholder="Gametag"
-          maxLength={16}
-          value={tag}
-          onChange={e => setTag(e.target.value)}
-          className="w-full border border-gray-200 rounded-lg px-3 py-3 text-center text-lg focus:outline-none focus:ring-2 focus:ring-blue-300"
-          inputMode="text"
-          autoFocus
-          aria-label="Enter gametag"
-        />
-        <div className="grid grid-cols-4 gap-3 w-full my-1">
-          {colorEmojiPairs.map(({ color, emoji }, i) => (
-            <button
-              key={color}
-              type="button"
-              aria-label={`${emoji} on ${color}`}
-              tabIndex={0}
-              className="flex flex-col items-center justify-center transition-all group outline-none"
-              onClick={() => handleSelect(i)}
-            >
-              <span
-                style={{
-                  backgroundColor: color,
-                  border: selectedIdx === i ? "3px solid #222" : "2px solid #e5e7eb",
-                  boxShadow: selectedIdx === i ? "0 0 0 2px #0369a1" : "none",
-                  width: 48,
-                  height: 48,
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  borderRadius: "100%",
-                  marginBottom: 0,
-                  outline: "none",
-                  transition: "border 0.15s, box-shadow 0.15s",
-                  fontSize: "1.7rem",
-                  userSelect: "none",
-                  position: "relative"
+        <form onSubmit={handleSubmit} className="w-full flex flex-col items-center gap-5">
+          <input
+            placeholder="Gametag"
+            maxLength={16}
+            value={tag}
+            onChange={e => setTag(e.target.value)}
+            className="w-full border border-gray-200 rounded-lg px-3 py-3 text-center text-lg focus:outline-none focus:ring-2 focus:ring-blue-300"
+            inputMode="text"
+            autoFocus
+            aria-label="Enter gametag"
+          />
+          <div className="grid grid-cols-4 gap-3 w-full my-1">
+            {colorEmojiPairs.map(({ color, emoji }, i) => (
+              <button
+                key={color}
+                type="button"
+                aria-label={`${emoji} on ${color}`}
+                tabIndex={0}
+                className="flex flex-col items-center justify-center transition-all group outline-none"
+                onClick={() => handleSelect(i)}
+                onKeyDown={e => {
+                  // Let pressing Enter while a button is focused also submit
+                  if (e.key === "Enter" || e.key === " ") {
+                    setSelectedIdx(i);
+                    // Only submit if they're pressing Enter (not just selecting)
+                    if (e.key === "Enter") {
+                      onConfirm();
+                    }
+                  }
                 }}
-                className="sm:w-10 sm:h-10"
               >
-                <span className="select-none" style={{ lineHeight: 1 }}>{emoji}</span>
-              </span>
-            </button>
-          ))}
-        </div>
-        <Button className="w-full py-3 text-lg" onClick={onConfirm} size="lg">Start</Button>
-        {error && (
-          <div className="text-center text-red-500 text-xs mt-2">{error}</div>
-        )}
+                <span
+                  style={{
+                    backgroundColor: color,
+                    border: selectedIdx === i ? "3px solid #222" : "2px solid #e5e7eb",
+                    boxShadow: selectedIdx === i ? "0 0 0 2px #0369a1" : "none",
+                    width: 48,
+                    height: 48,
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    borderRadius: "100%",
+                    marginBottom: 0,
+                    outline: "none",
+                    transition: "border 0.15s, box-shadow 0.15s",
+                    fontSize: "1.7rem",
+                    userSelect: "none",
+                    position: "relative"
+                  }}
+                  className="sm:w-10 sm:h-10"
+                >
+                  <span className="select-none" style={{ lineHeight: 1 }}>{emoji}</span>
+                </span>
+              </button>
+            ))}
+          </div>
+          <Button className="w-full py-3 text-lg" type="submit" size="lg">Start</Button>
+          {error && (
+            <div className="text-center text-red-500 text-xs mt-2">{error}</div>
+          )}
+        </form>
       </div>
     </div>
   );
 };
 
 export default IdentityGate;
+
