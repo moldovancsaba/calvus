@@ -1,4 +1,7 @@
+
 # Technical Implementation Notes
+
+> **Warning:** This file is close to/exceeding 200 lines. Please split or modularize (or ask Lovable to automate) if adding more content.
 
 ## Architecture Decisions
 
@@ -293,3 +296,4 @@ for (const activity of sortedActivities) {
 ---
 
 This technical documentation serves as a guide for future development and debugging of the Triangle Mesh system.
+**If this file reaches 300 lines, split into smaller docs. Use the modular docs reader at `/documents`.**

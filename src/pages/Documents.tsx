@@ -1,4 +1,5 @@
 
+// Handle dynamic document list, allow future additions
 import React, { useState } from "react";
 
 // List of documentation files and their display names
@@ -10,13 +11,13 @@ const docsList = [
 
 function loadFile(filepath: string): Promise<string> {
   // Use dynamic fetch to load from public root or Vite static assets
-  // Fallback for Vite: try /public/ and /src/ folder (docs live outside src)
+  // Fallback: try /public/ and /src/ folder for dev-preview
   return fetch(`/${filepath}`)
     .then(r => r.ok ? r.text() : Promise.reject("not found"))
     .catch(() => fetch(`/src/${filepath}`).then(r => r.text()));
 }
 
-// A documentation reader that lists docs and shows content for selected
+// Documentation reader that lists docs and shows content for selected
 export default function DocumentsPage() {
   const [selected, setSelected] = useState(docsList[0].file);
   const [content, setContent] = useState<string>("Loading...");
