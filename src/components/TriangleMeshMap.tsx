@@ -1,21 +1,67 @@
-import React, { useEffect, useRef, useState } from 'react';
+
+import React, { useRef, useState, useEffect } from 'react';
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
-import { TriangleMesh, generateBaseTriangleMesh } from '../utils/triangleMesh';
-import { useIdentity } from "./IdentityContext";
+import { generateBaseTriangleMesh, TriangleMesh } from '../utils/triangleMesh';
 import { useIsMobile } from "../hooks/use-mobile";
-import { useLeafletMobileTouch } from "./hooks/useLeafletMobileTouch";
 import { TriangleMeshRenderer } from "./mesh/TriangleMeshRenderer";
-import { useTriangleMeshTap } from "./mesh/useTriangleMeshTap";
-import { LoadingOverlay } from './map/LoadingOverlay';
-import { ErrorBanner } from './map/ErrorBanner';
 import { LeafletMapContainer } from "./map/LeafletMapContainer";
-import { useTriangleMeshLoader } from "./map/useTriangleMeshLoader";
-import { fetchWorldSettings, WorldSettings } from "../utils/worldSettings";
+
+// Helper: mid-point on sphere (great-circle, normalized)
+function sphericalMidpoint(a: {lat:number, lng:number}, b: {lat:number, lng:number}) {
+  const toRad = (deg: number) => deg * Math.PI / 180;
+  const toDeg = (rad: number) => rad * 180 / Math.PI;
+  const lat1 = toRad(a.lat), lng1 = toRad(a.lng);
+  const lat2 = toRad(b.lat), lng2 = toRad(b.lng);
+  const x1 = Math.cos(lat1) * Math.cos(lng1),
+    y1 = Math.cos(lat1) * Math.sin(lng1),
+    z1 = Math.sin(lat1);
+  const x2 = Math.cos(lat2) * Math.cos(lng2),
+    y2 = Math.cos(lat2) * Math.sin(lng2),
+    z2 = Math.sin(lat2);
+  // Average and normalize
+  let x = x1 + x2,
+    y = y1 + y2,
+    z = z1 + z2;
+  const len = Math.sqrt(x * x + y * y + z * z);
+  x /= len; y /= len; z /= len;
+  // to lat/lng
+  const lat = Math.asin(z);
+  const lng = Math.atan2(y, x);
+  return { lat: toDeg(lat), lng: toDeg(lng) };
+}
+
+// Core subdivision logic: returns 4 triangles from a parent
+function subdivideTriangle(triangle: TriangleMesh, idPrefix: string): TriangleMesh[] {
+  const [v1, v2, v3] = triangle.vertices;
+  const m1 = sphericalMidpoint(v1, v2);
+  const m2 = sphericalMidpoint(v2, v3);
+  const m3 = sphericalMidpoint(v3, v1);
+  return [
+    { ...triangle, id: `${idPrefix}.1`, vertices: [v1, m1, m3], children: undefined, subdivided: false },
+    { ...triangle, id: `${idPrefix}.2`, vertices: [m1, v2, m2], children: undefined, subdivided: false },
+    { ...triangle, id: `${idPrefix}.3`, vertices: [m3, m2, v3], children: undefined, subdivided: false },
+    { ...triangle, id: `${idPrefix}.4`, vertices: [m1, m2, m3], children: undefined, subdivided: false },
+  ];
+}
+
+function divideTriangleById(triangles: TriangleMesh[], id: string): TriangleMesh[] {
+  // Recursively search for the triangle matching given ID and subdivide
+  return triangles.map(tri => {
+    if (tri.id === id && !tri.children) {
+      const children = subdivideTriangle(tri, tri.id);
+      return { ...tri, children, subdivided: true };
+    } else if (tri.children) {
+      return { ...tri, children: divideTriangleById(tri.children, id) };
+    } else {
+      return tri;
+    }
+  });
+}
 
 type Props = {
   worldSlug: string;
-  settings?: WorldSettings;
+  settings?: any;
 };
 
 const DEFAULT_CENTER: [number, number] = [33, 0];
@@ -24,195 +70,68 @@ function getFixedWorldSlug(slug: string) {
   return (!slug || slug === "") ? "original" : slug;
 }
 
-const TriangleMeshMap = ({ worldSlug, settings }: Props) => {
+const TriangleMeshMap = ({ worldSlug }: Props) => {
   const fixedWorldSlug = getFixedWorldSlug(worldSlug);
-
-  // 1. Refs and state
   const mapDivRef = useRef<HTMLDivElement>(null);
   const mapInstanceRef = useRef<L.Map | null>(null);
   const triangleLayersRef = useRef<Map<string, L.Polygon>>(new Map());
-  const prevMeshRef = useRef<any[]>([]);
-  const [worldSettings, setWorldSettings] = useState<WorldSettings | null>(null);
-  const [meshVersion, setMeshVersion] = useState(
-    () => window.localStorage.getItem(`meshVersion_${fixedWorldSlug}`) || ""
-  );
+  const isMobile = useIsMobile();
+
+  // --- Mesh state stored in memory ONLY ---
+  const [mesh, setMesh] = useState<TriangleMesh[]>(() => generateBaseTriangleMesh());
   const [fitDone, setFitDone] = useState(false);
   const [mapIsReady, setMapIsReady] = useState(false);
 
-  // 2. Hooks
-  const { identity } = useIdentity();
-  const isMobile = useIsMobile();
-  const { triangleMesh, setTriangleMesh, isLoading } = useTriangleMeshLoader(fixedWorldSlug, meshVersion);
-
-  // Debug: Log mesh contents
-  React.useEffect(() => {
-    console.log("[DEBUG TriangleMeshMap] triangleMesh length:", triangleMesh?.length, triangleMesh?.slice(0, 2));
-    if (Array.isArray(triangleMesh)) {
-      triangleMesh.forEach((t, idx) => {
-        if (!t.vertices || t.vertices.length !== 3) {
-          console.error(`[DEBUG TriangleMeshMap] Triangle ${idx} (${t.id}) has invalid vertices:`, t.vertices);
-        }
-      });
-    }
-  }, [triangleMesh]);
-
-  // 3. World settings loader
-  useEffect(() => {
-    let mounted = true;
-    async function loadWorldSettings() {
-      try {
-        const ws = await fetchWorldSettings(fixedWorldSlug);
-        if (mounted) setWorldSettings(ws);
-      } catch (e) {
-        setWorldSettings(null);
-      }
-    }
-    loadWorldSettings();
-    const handler = (e: StorageEvent) => {
-      if (e.key === `worldSettings_${fixedWorldSlug}`) {
-        loadWorldSettings();
-      }
-    };
-    window.addEventListener("storage", handler);
-    return () => {
-      mounted = false;
-      window.removeEventListener("storage", handler);
-    };
-  }, [fixedWorldSlug]);
-
-  // 4. Storage event mesh reloaders
-  useEffect(() => {
-    const reloadMeshOnStorage = (e: StorageEvent) => {
-      if (
-        e.key === "fixedMobileZoomLevel" ||
-        e.key === "fixedMobileZoom" ||
-        e.key === `refreshMesh_${fixedWorldSlug}`
-      ) {
-        setMeshVersion(v => v);
-      }
-      if (e.key === `meshVersion_${fixedWorldSlug}`) {
-        setMeshVersion(e.newValue || "");
-        window.localStorage.removeItem(`triangleMeshCache_${fixedWorldSlug}`);
-        setTriangleMesh([]);
-      }
-      if (e.key === `worldReset_${fixedWorldSlug}`) {
-        window.location.reload();
-      }
-    };
-    window.addEventListener("storage", reloadMeshOnStorage);
-    return () => window.removeEventListener("storage", reloadMeshOnStorage);
-  }, [fixedWorldSlug, setTriangleMesh]);
-
-  useLeafletMobileTouch(mapInstanceRef.current);
-
-  const mergedWorldSettings = settings || worldSettings;
-
-  // Reset fitDone when world changes or when triangleMesh resets (to fit new mesh)
+  // Fit map to mesh whenever map or mesh changes
   useEffect(() => {
     setFitDone(false);
-  }, [fixedWorldSlug, triangleMesh.length]);
+  }, [fixedWorldSlug, mesh.length]);
 
-  // 6. Handle triangle click
-  const handleTriangleClick = useTriangleMeshTap(
-    identity,
-    setTriangleMesh,
-    isMobile,
-    mapInstanceRef.current,
-    fixedWorldSlug,
-    mergedWorldSettings
-  );
-
-  function isMapInstanceReady(map: L.Map | null) {
-    if (!map) return false;
-    try {
-      const container = map.getContainer?.();
-      return !!(container && container.parentNode);
-    } catch (e) {
-      return false;
-    }
-  }
+  const handleTriangleClick = (triangleId: string) => {
+    setMesh(prevMesh => divideTriangleById(prevMesh, triangleId));
+  };
 
   function handleMapReady(map: L.Map) {
     mapInstanceRef.current = map;
     setMapIsReady(true);
-
-    // REMOVE DEBUG: Do not add marker at 0,0 or test rectangle.
-    // All debug/test overlays below have been removed.
   }
 
-  // Fit map to mesh whenever map/mesh changes and not already fit
   useEffect(() => {
     if (
       !fitDone &&
       mapIsReady &&
       mapInstanceRef.current &&
-      triangleMesh.length > 0
+      mesh.length > 0
     ) {
-      const allCoords = triangleMesh.flatMap(t => t.vertices.map(v => [v.lat, v.lng]));
-      if (allCoords.length >= 3) {
-        // DEBUG: Instead of fitBounds, force visible hemisphere
-        const bounds = L.latLngBounds([[-90, -180], [90, 180]]);
-        mapInstanceRef.current.fitBounds(bounds, { padding: [24, 24], animate: true, maxZoom: 2 });
-        setFitDone(true);
-        console.log("[DEBUG fitBounds] Bounds set to show full globe.");
-      }
+      const bounds = L.latLngBounds([[-90, -180], [90, 180]]);
+      mapInstanceRef.current.fitBounds(bounds, { padding: [24, 24], animate: true, maxZoom: 2 });
+      setFitDone(true);
     }
-  }, [triangleMesh, fitDone, mapIsReady]);
+  }, [mesh, fitDone, mapIsReady]);
 
-  // === 7. Render logic ===
-  if (!mergedWorldSettings) {
-    return (
-      <div className="relative w-full h-full flex-1 flex items-center justify-center">
-        <LoadingOverlay />
-      </div>
-    );
-  }
-
-  // Always guarantee triangleMesh is non-empty in renderer layer (NO REQUIRE, USE IMPORT)
-  // --- HARD fallback: always render mesh, just like /jusforfun ---
-  // If for any reason (bad state, effect order, loader bug) the mesh is missing or corrupt,
-  // ALWAYS use the canonical base mesh for rendering
-  let trianglesToRender: TriangleMesh[] = [];
-  if (Array.isArray(triangleMesh) && triangleMesh.length === 26) {
-    trianglesToRender = triangleMesh;
-  } else {
-    // Always fallback to base mesh, never empty!
-    trianglesToRender = generateBaseTriangleMesh();
-    console.warn("[TriangleMeshMap] Fallback: triangleMesh empty or corrupt, rendering BASE mesh (26 triangles).");
-  }
-
-  // Defensive: always log mesh status
-  if (!Array.isArray(trianglesToRender) || trianglesToRender.length === 0) {
-    console.error("[TriangleMeshMap] FATAL: No triangles to render even after fallback! Check mesh loader.");
-  } else {
-    console.log(`[TriangleMeshMap] Will render ${trianglesToRender.length} triangles. First:`, trianglesToRender[0]);
-  }
+  const trianglesToRender: TriangleMesh[] = mesh;
 
   return (
     <div className="relative w-full h-full min-h-[0] flex-1 rounded-none border-0 p-0 m-0">
       <LeafletMapContainer
         ref={mapDivRef}
         isMobile={isMobile}
-        meshVersion={meshVersion}
+        meshVersion={"local"}
         worldSlug={fixedWorldSlug}
         onMapReady={handleMapReady}
-        desktopMinZoom={mergedWorldSettings.desktop_min_zoom_level}
-        desktopMaxZoom={mergedWorldSettings.desktop_max_zoom_level}
-        fixedMobileZoomLevel={mergedWorldSettings.fixed_mobile_zoom_level}
-        forceMobileZoom={mergedWorldSettings.force_mobile_zoom}
+        desktopMinZoom={1}
+        desktopMaxZoom={4}
+        fixedMobileZoomLevel={2}
+        forceMobileZoom={false}
       />
-      {isLoading && <LoadingOverlay />}
-      <ErrorBanner message={null} />
       {mapIsReady && mapInstanceRef.current && trianglesToRender.length > 0 && (
         <TriangleMeshRenderer
           map={mapInstanceRef.current}
           triangleMesh={trianglesToRender}
           triangleLayersRef={triangleLayersRef}
-          onTriangleClick={(triangleId, triangle, parentPath) => {
-            handleTriangleClick(triangleId, triangle, prevMeshRef);
-          }}
-          maxDivideLevel={mergedWorldSettings.max_divide_level}
-          clicksToDivide={mergedWorldSettings.clicks_to_divide}
+          onTriangleClick={handleTriangleClick}
+          maxDivideLevel={3}
+          clicksToDivide={1}
         />
       )}
       {mapIsReady && mapInstanceRef.current && trianglesToRender.length === 0 && (
