@@ -1,3 +1,4 @@
+
 import { useEffect, useRef, useState } from "react";
 import {
   generateBaseTriangleMesh,
@@ -11,6 +12,15 @@ export function useTriangleMeshLoader(worldSlug: string, meshVersion: string) {
   const [isLoading, setIsLoading] = useState(true);
   const pollIntervalRef = useRef<NodeJS.Timeout | null>(null);
 
+  // Defensive force reset to base mesh if mesh ever becomes empty
+  useEffect(() => {
+    if (!Array.isArray(triangleMesh) || triangleMesh.length === 0) {
+      const base = generateBaseTriangleMesh();
+      setTriangleMesh(base);
+      console.warn("[useTriangleMeshLoader] Fallback: mesh was empty, forced base mesh (26 triangles)");
+    }
+  }, [triangleMesh]);
+
   useEffect(() => {
     let mounted = true;
     async function initializeMesh() {
@@ -20,7 +30,7 @@ export function useTriangleMeshLoader(worldSlug: string, meshVersion: string) {
         if (activities.length > 0) {
           const restoredMesh = rebuildTriangleMeshFromActivities(activities);
           if (mounted) {
-            // ALWAYS ensure canonical mesh (26)
+            // ALWAYS ensure canonical mesh (26 or more)
             if (!Array.isArray(restoredMesh) || restoredMesh.length !== 26) {
               const baseMesh = generateBaseTriangleMesh();
               setTriangleMesh(baseMesh);
