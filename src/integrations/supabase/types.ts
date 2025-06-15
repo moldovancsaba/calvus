@@ -59,32 +59,38 @@ export type Database = {
       }
       world_settings: {
         Row: {
+          clicks_to_divide: number
           desktop_max_zoom_level: number
           desktop_min_zoom_level: number
           fixed_mobile_zoom_level: number
           force_mobile_zoom: boolean
           id: string
           max_consecutive_clicks_per_user: number
+          max_divide_level: number
           updated_at: string
           world_slug: string
         }
         Insert: {
+          clicks_to_divide?: number
           desktop_max_zoom_level?: number
           desktop_min_zoom_level?: number
           fixed_mobile_zoom_level?: number
           force_mobile_zoom?: boolean
           id?: string
           max_consecutive_clicks_per_user?: number
+          max_divide_level?: number
           updated_at?: string
           world_slug: string
         }
         Update: {
+          clicks_to_divide?: number
           desktop_max_zoom_level?: number
           desktop_min_zoom_level?: number
           fixed_mobile_zoom_level?: number
           force_mobile_zoom?: boolean
           id?: string
           max_consecutive_clicks_per_user?: number
+          max_divide_level?: number
           updated_at?: string
           world_slug?: string
         }
