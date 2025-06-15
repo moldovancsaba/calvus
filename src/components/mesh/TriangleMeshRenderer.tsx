@@ -38,6 +38,7 @@ export function TriangleMeshRenderer({
   // Helper to recursively render triangles FLAT (no nested arrays)
   const renderTriangles = React.useCallback(
     (list: TriangleMesh[], parentPath = "") => {
+      if (!Array.isArray(list)) return null;  // guard: always produce ReactNode
       const out: React.ReactNode[] = [];
       for (const triangle of list) {
         // Log each triangle processed for debugging
@@ -111,7 +112,11 @@ export function TriangleMeshRenderer({
     console.log("[TriangleMeshRenderer] MOUNTED, triangleMesh length:", triangleMesh?.length, "Sample:", triangleMesh?.slice(0,2));
   }, []);
 
-  // Remove debug triangle rendering
+  // Always pass an array, never undefined or null
+  const safeTriangles: TriangleMesh[] = Array.isArray(triangleMesh) ? triangleMesh : [];
 
-  return <>{renderTriangles(triangleMesh)}</>;
+  // If empty, render nothing
+  if (!safeTriangles.length) return null;
+
+  return <>{renderTriangles(safeTriangles)}</>;
 }
