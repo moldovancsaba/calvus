@@ -26,6 +26,9 @@ export function TriangleMeshRenderer({
 }: Props) {
   const numberMarkersRef = React.useRef<Map<string, L.Marker>>(new Map());
 
+  // Always pass an array (empty allowed)
+  const safeTriangles: TriangleMesh[] = Array.isArray(triangleMesh) ? triangleMesh : [];
+
   React.useEffect(() => {
     console.log("[TRIANGLE_MESH]", Array.isArray(triangleMesh) ? triangleMesh.length : triangleMesh, triangleMesh);
     if (triangleMesh?.length > 0) {
@@ -158,9 +161,6 @@ export function TriangleMeshRenderer({
   React.useEffect(() => {
     console.log("[TriangleMeshRenderer] MOUNTED, triangleMesh length:", triangleMesh?.length, "Sample:", triangleMesh?.slice(0,2));
   }, []);
-
-  // Always pass an array (empty allowed)
-  const safeTriangles: TriangleMesh[] = Array.isArray(triangleMesh) ? triangleMesh : [];
 
   // Defensive render: output = array of ReactNode or null
   const output = renderTriangles(safeTriangles);
