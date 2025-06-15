@@ -1,38 +1,19 @@
+
 import React from "react";
 import L from "leaflet";
 import { renderGeodesicTriangle } from "./renderGeodesicTriangle";
 import { getTriangleMeshColor } from "../../utils/triangleMesh/color";
+import type { TriangleMesh } from "../../utils/triangleMesh/geometry";
 
-/**
- * Props for rendering a single triangle. 
- */
-type Triangle = {
-  id: string;
-  vertices: { lat: number; lng: number }[];
-  color?: string;
-  emoji?: string;
-  gametag?: string;
-  children?: Triangle[];
-  clickCount: number;
-  subdivided?: boolean;
-  level: number;
-};
 interface Props {
   map: L.Map;
-  triangle: Triangle;
+  triangle: TriangleMesh;
   trianglePath: string;
   triangleLayersRef: React.MutableRefObject<Map<string, L.Polygon>>;
   numberMarkersRef: React.MutableRefObject<Map<string, L.Marker>>;
-  onTriangleClick: (triangleId: string, triangle?: Triangle, parentPath?: string) => void;
+  onTriangleClick: (triangleId: string, triangle?: TriangleMesh, parentPath?: string) => void;
   maxDivideLevel: number;
   clicksToDivide: number;
-}
-
-// Utility: centroid for marker (still used internally but not for marker rendering)
-function centroid(vertices: {lat:number,lng:number}[]) {
-  const lat = (vertices[0].lat + vertices[1].lat + vertices[2].lat) / 3;
-  const lng = (vertices[0].lng + vertices[1].lng + vertices[2].lng) / 3;
-  return [lat, lng];
 }
 
 export function TriangleRenderer({
@@ -46,11 +27,12 @@ export function TriangleRenderer({
   clicksToDivide,
 }: Props) {
   React.useEffect(() => {
-    // Remove previous layer and marker
+    // Remove previous layer
     const prevLayer = triangleLayersRef.current.get(trianglePath);
     if (prevLayer) {
       map.removeLayer(prevLayer);
     }
+    // Remove any previous marker (shouldn't be any after last fixes)
     const prevMarker = numberMarkersRef.current.get(trianglePath);
     if (prevMarker) map.removeLayer(prevMarker);
 
@@ -69,7 +51,6 @@ export function TriangleRenderer({
     let fillOpacity = 0.93;
     let weight = 2;
 
-    let err = null;
     let polygon = null;
     try {
       if (!geodesicError && coordinates && Array.isArray(coordinates) && coordinates.length >= 3) {
@@ -77,11 +58,11 @@ export function TriangleRenderer({
           color: borderColor,
           weight,
           opacity: 1.0,
-          fillColor: fillColor,
-          fillOpacity: fillOpacity,
+          fillColor,
+          fillOpacity,
           smoothFactor: 1.0,
           interactive: true,
-          className: "leaflet-interactive",
+          className: "leaflet-interactive"
         });
         polygon.on("pointerdown", () =>
           onTriangleClick(triangle.id, triangle, trianglePath)
@@ -96,10 +77,8 @@ export function TriangleRenderer({
         triangleLayersRef.current.set(trianglePath, polygon);
       }
     } catch (e) {
-      err = e;
+      // silent
     }
-
-    // REMOVED: All centroid marker/pin/tooltips/ID rendering
 
     // Cleanup on unmount/re-render
     return () => {
@@ -108,7 +87,6 @@ export function TriangleRenderer({
         map.removeLayer(l);
       }
       triangleLayersRef.current.delete(trianglePath);
-      // NO marker cleanup needed; not added
       const marker = numberMarkersRef.current.get(trianglePath);
       if (marker && map.hasLayer(marker)) map.removeLayer(marker);
       numberMarkersRef.current.delete(trianglePath);
