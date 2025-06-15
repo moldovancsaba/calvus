@@ -1,7 +1,7 @@
 import React from "react";
 import L from "leaflet";
 import { renderGeodesicTriangle } from "./renderGeodesicTriangle";
-import { renderAvatarMarker } from "./renderAvatarMarker";
+import { getTriangleMeshColor } from "../../utils/triangleMesh/color";
 
 /**
  * Props for rendering a single triangle. 
@@ -28,24 +28,7 @@ interface Props {
   clicksToDivide: number;
 }
 
-// Utility: pastel random color by id (hash)
-function pastelColorFromId(str: string): string {
-  let hash = 0;
-  for (let i = 0; i < str.length; i++) hash = str.charCodeAt(i) + ((hash << 5) - hash);
-  const h = hash % 360;
-  return `hsl(${h}, 82%, 80%)`;
-}
-
-// Utility: random bright color by id (hash)
-function randomBrightColorById(str: string): string {
-  // Use a hash to generate distinct and high-contrast colors per triangle.
-  let hash = 0;
-  for (let i = 0; i < str.length; i++) hash = str.charCodeAt(i) + ((hash << 5) - hash);
-  const h = (hash % 360 + 360) % 360;
-  return `hsl(${h}, 94%, 56%)`;
-}
-
-// Utility: centroid for marker
+// Utility: centroid for marker (still used internally but not for marker rendering)
 function centroid(vertices: {lat:number,lng:number}[]) {
   const lat = (vertices[0].lat + vertices[1].lat + vertices[2].lat) / 3;
   const lng = (vertices[0].lng + vertices[1].lng + vertices[2].lng) / 3;
@@ -63,59 +46,28 @@ export function TriangleRenderer({
   clicksToDivide,
 }: Props) {
   React.useEffect(() => {
-    // Diagnostic: Print each triangle render
-    console.log("[TriangleRenderer] Rendering triangle", triangle.id, "Vertices:", triangle.vertices);
-
-    // Add heavy debug for vertex validity
-    if (!triangle || !triangle.vertices || triangle.vertices.length !== 3) {
-      console.error("[DEBUG TriangleRenderer] Invalid triangle or vertices", triangle);
-    }
-    triangle.vertices.forEach((v, i) => {
-      if (
-        typeof v.lat !== "number" ||
-        typeof v.lng !== "number" ||
-        isNaN(v.lat) ||
-        isNaN(v.lng)
-      ) {
-        console.error(`[DEBUG TriangleRenderer] Triangle ${triangle.id} vertex ${i} invalid:`, v);
-      }
-    });
-
     // Remove previous layer and marker
     const prevLayer = triangleLayersRef.current.get(trianglePath);
     if (prevLayer) {
       map.removeLayer(prevLayer);
-      console.log("[TriangleRenderer] Removed previous polygon for", trianglePath);
     }
     const prevMarker = numberMarkersRef.current.get(trianglePath);
     if (prevMarker) map.removeLayer(prevMarker);
 
-    // Create polygon with a deliberately visible style
-    // Orange-Yellow fill, thick red outline, no opacity
+    // Create polygon styled by the real triangle's color logic
     let coordinates: [number, number][] = [];
     let geodesicError = null;
     try {
       coordinates = renderGeodesicTriangle(triangle.vertices);
-      console.log(`[DEBUG TriangleRenderer] renderGeodesicTriangle output for ${triangle.id}:`, coordinates);
-
-      // Check for NaNs or malformed coordinates
-      if (!Array.isArray(coordinates) || coordinates.length < 3) {
-        console.error(`[DEBUG TriangleRenderer] Triangle ${triangle.id} geodesic points invalid:`, coordinates);
-      } else if (
-        coordinates.some((pt, i) => !Array.isArray(pt) || pt.length !== 2 || isNaN(pt[0]) || isNaN(pt[1]))
-      ) {
-        console.error(`[DEBUG TriangleRenderer] Triangle ${triangle.id} contains NaN/invalid points:`, coordinates);
-      }
     } catch (e) {
       geodesicError = e;
-      console.error("[DEBUG TriangleRenderer] ERROR in renderGeodesicTriangle:", e, triangle);
     }
 
-    // Highlight T1 with opposite colors to notice if it's attempted
-    let fillColor = triangle.id === "T1" ? "#0ff" : "#ff0";
-    let borderColor = triangle.id === "T1" ? "#800" : "#e11";
-    let fillOpacity = 1.0;
-    let weight = triangle.id === "T1" ? 8 : 6;
+    // Use actual game color logic for styling
+    let fillColor = getTriangleMeshColor(triangle);
+    let borderColor = "#222";
+    let fillOpacity = 0.93;
+    let weight = 2;
 
     let err = null;
     let polygon = null;
@@ -129,7 +81,7 @@ export function TriangleRenderer({
           fillOpacity: fillOpacity,
           smoothFactor: 1.0,
           interactive: true,
-          className: "leaflet-interactive z-[99999]",
+          className: "leaflet-interactive",
         });
         polygon.on("pointerdown", () =>
           onTriangleClick(triangle.id, triangle, trianglePath)
@@ -142,38 +94,21 @@ export function TriangleRenderer({
         );
         polygon.addTo(map);
         triangleLayersRef.current.set(trianglePath, polygon);
-        console.log("[TriangleRenderer] Added polygon for", triangle.id, "Path", trianglePath, "Coords", coordinates);
-      } else {
-        console.warn(`[TriangleRenderer] Skipped adding polygon for ${triangle.id} because of bad coordinates or error.`);
       }
     } catch (e) {
       err = e;
-      console.error("[TriangleRenderer ERROR] creating polygon:", e, "coords:", coordinates, "triangle=", triangle);
     }
 
-    // Add marker and tooltip at centroid
-    const [cLat, cLng] = centroid(triangle.vertices);
-    const idMarker = L.marker([cLat, cLng], {
-      title: triangle.id,
-      keyboard: false,
-      opacity: 0.88,
-      interactive: false,
-    }).bindTooltip(`<b>${triangle.id}</b>`, {
-      permanent: true,
-      direction: "center",
-      className: "bg-white text-xs rounded shadow-lg",
-    });
-    idMarker.addTo(map);
-    numberMarkersRef.current.set(trianglePath, idMarker);
+    // REMOVED: All centroid marker/pin/tooltips/ID rendering
 
     // Cleanup on unmount/re-render
     return () => {
       const l = triangleLayersRef.current.get(trianglePath);
       if (l && map.hasLayer(l)) {
         map.removeLayer(l);
-        console.log("[TriangleRenderer] Cleanup polygon for", trianglePath);
       }
       triangleLayersRef.current.delete(trianglePath);
+      // NO marker cleanup needed; not added
       const marker = numberMarkersRef.current.get(trianglePath);
       if (marker && map.hasLayer(marker)) map.removeLayer(marker);
       numberMarkersRef.current.delete(trianglePath);
