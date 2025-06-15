@@ -1,4 +1,3 @@
-
 import L from "leaflet";
 import React from "react";
 import { TriangleRenderer } from "./TriangleRenderer";
@@ -53,7 +52,7 @@ export function TriangleMeshRenderer({
           .bindPopup("DEBUG MARKER (0,0)")
           .addTo(map);
         numberMarkersRef.current.set("__debug_marker", debugMarker);
-        console.log("[DEBUG] Added marker (0,0):", debugMarker, debugMarker._leaflet_id);
+        console.log("[DEBUG] Added marker (0,0):", debugMarker);
       } catch (e) {
         console.error("[DEBUG] FAILED to add marker (0,0):", e);
       }
@@ -76,7 +75,8 @@ export function TriangleMeshRenderer({
         }).bindPopup("DEBUG TRIANGLE")
         .addTo(map);
         numberMarkersRef.current.set("__test_polygon", testPolygon as any);
-        console.log("[DEBUG] Added test polygon, Leaflet ID:", (testPolygon as any)._leaflet_id, testPolygon.getLatLngs());
+        // Just log the object, not the private property
+        console.log("[DEBUG] Added test polygon", testPolygon, testPolygon.getLatLngs());
         // Fit bounds to show it
         map.fitBounds(L.latLngBounds(testCoords), { padding: [50,50], animate: false });
       } catch (e) {
@@ -86,7 +86,8 @@ export function TriangleMeshRenderer({
       // Log all layer IDs after
       const allLayers = Object.values((map as any)._layers || {});
       const polyCount = allLayers.filter((l) => l instanceof L.Polygon).length;
-      console.info(`[DEBUG - after mount] Leaflet map has ${polyCount} polygons. Layer IDs:`, allLayers.map((l: any) => l._leaflet_id));
+      // Removed ._leaflet_id here as well
+      console.info(`[DEBUG - after mount] Leaflet map has ${polyCount} polygons.`, allLayers);
     }
 
     // Cleanup debug marker and test poly
