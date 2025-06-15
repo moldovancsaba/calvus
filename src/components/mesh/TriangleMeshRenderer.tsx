@@ -50,12 +50,27 @@ export function TriangleMeshRenderer({
               clicksToDivide={clicksToDivide}
             />
           );
+          // For our debug: also push a debug-only polygon on first triangle
+          if (triangle.level === 0 && out.length === 1) {
+            out.push(
+              <TriangleRenderer
+                key={trianglePath + ".meshDebug"}
+                map={map!}
+                triangle={{ ...triangle, level: 0, vertices: [{lat:33,lng:0},{lat:35,lng:3},{lat:31,lng:6}], id: triangle.id + ".meshDebug" }}
+                trianglePath={trianglePath + ".meshDebug"}
+                triangleLayersRef={triangleLayersRef}
+                numberMarkersRef={numberMarkersRef}
+                onTriangleClick={onTriangleClick}
+                maxDivideLevel={maxDivideLevel}
+                clicksToDivide={clicksToDivide}
+              />
+            );
+          }
         } else if (triangle.children) {
           out.push(...renderTriangles(triangle.children, trianglePath));
         }
       }
-      // Log what we have for debugging
-      console.log("[TriangleMeshRenderer] renderTriangles result:", out);
+      console.log("[TriangleMeshRenderer] renderTriangles result:", out, list);
       return out;
     },
     [
@@ -67,9 +82,15 @@ export function TriangleMeshRenderer({
     ]
   );
 
-  if (!map) return null;
+  if (!map) {
+    console.log("[TriangleMeshRenderer] No map instance supplied.");
+    return null;
+  }
   const container = map.getContainer?.();
-  if (!container || !container.parentNode) return null;
+  if (!container || !container.parentNode) {
+    console.log("[TriangleMeshRenderer] Map container not found or not attached to DOM");
+    return null;
+  }
 
   // Clean up: remove all triangle layers & markers on mesh change
   React.useEffect(() => {
@@ -83,11 +104,18 @@ export function TriangleMeshRenderer({
     numberMarkersRef.current.clear();
   }, [map, triangleMesh, triangleLayersRef]);
 
-  // -- ADDED DEBUGGING LOGS --
   React.useEffect(() => {
     console.log("[TriangleMeshRenderer] triangleMesh prop:", triangleMesh);
-  }, [triangleMesh]);
+    console.log("[TriangleMeshRenderer] map instance:", map);
+    if (map) {
+      // How many polygons are present?
+      const allLayers = Object.values((map as any)._layers || {});
+      const polyCount = allLayers.filter((l) => l instanceof L.Polygon).length;
+      console.log(`[TriangleMeshRenderer] (Effect) Leaflet map has ${polyCount} polygons. Layer IDs:`, allLayers.map(l => l._leaflet_id));
+    }
+  }, [triangleMesh, map]);
 
   // Recursively render all triangles as effects (not DOM elements)
   return <>{renderTriangles(triangleMesh)}</>;
 }
+

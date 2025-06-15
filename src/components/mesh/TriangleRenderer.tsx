@@ -39,9 +39,8 @@ export function TriangleRenderer({
   maxDivideLevel,
   clicksToDivide,
 }: Props) {
-  // Debugging: Log props on mount/update
   React.useEffect(() => {
-    console.log("[TriangleRenderer] Render", { triangle, trianglePath, maxDivideLevel, clicksToDivide });
+    console.log("[TriangleRenderer] Render", { triangle, trianglePath, maxDivideLevel, clicksToDivide, map });
     // Remove previous layer
     const prevLayer = triangleLayersRef.current.get(trianglePath);
     if (prevLayer) {
@@ -78,6 +77,17 @@ export function TriangleRenderer({
       fillOpacity = Math.min(0.3 + triangle.clickCount * 0.07, 0.95);
     }
 
+    // --- DEBUG: draw a demo polygon at a fixed place for visual debugging
+    if (triangle.level === 0 && trianglePath.endsWith(".meshDebug")) {
+      const debugPolygon = L.polygon([
+        [33, 0],
+        [35, 3],
+        [31, 6],
+      ], { color: "red", weight: 3, fillColor: "#f004", fillOpacity: 0.7 });
+      debugPolygon.addTo(map);
+      console.log("[TriangleRenderer] Debug polygon drawn", debugPolygon.getLatLngs());
+    }
+
     const polygon = L.polygon(coordinates, {
       color: "#fff",
       weight: 2,
@@ -88,13 +98,19 @@ export function TriangleRenderer({
       interactive: true,
       className: "leaflet-interactive"
     });
-    // DEBUG: Log polygon shape/info
-    console.log("[TriangleRenderer] Created polygon for", trianglePath, polygon.getLatLngs());
+
     polygon.on("pointerdown", () => onTriangleClick(triangle.id, triangle, trianglePath));
     polygon.on("click", () => onTriangleClick(triangle.id, triangle, trianglePath));
     polygon.on("touchstart", () => onTriangleClick(triangle.id, triangle, trianglePath));
     polygon.addTo(map);
     triangleLayersRef.current.set(trianglePath, polygon);
+
+    // Post-render check: see how many polygons are on the map
+    const allLayers = Object.values((map as any)._layers || {});
+    const polyCount = allLayers.filter((l) => l instanceof L.Polygon).length;
+    console.log(`[TriangleRenderer] After add: Leaflet map has ${polyCount} polygons. Layer IDs:`, allLayers.map(l => l._leaflet_id));
+    // DEBUG: Log polygon shape/info
+    console.log("[TriangleRenderer] Created polygon for", trianglePath, polygon.getLatLngs());
 
     // -- AVATAR --
     if (shouldShowAvatar && avatarProps) {
@@ -126,4 +142,3 @@ export function TriangleRenderer({
   ]);
   return null;
 }
-
