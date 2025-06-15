@@ -168,6 +168,15 @@ const TriangleMeshMap = ({ worldSlug, settings }: Props) => {
     );
   }
 
+  // Defensive: Always guarantee triangleMesh is non-empty in renderer layer
+  const displayMesh = Array.isArray(triangleMesh) && triangleMesh.length >= 1
+    ? triangleMesh
+    : (() => {
+        const forcedBase = require("../utils/triangleMesh").generateBaseTriangleMesh();
+        console.warn("[TriangleMeshMap] Defensive: triangleMesh was empty, forcing BASE.");
+        return forcedBase;
+      })();
+
   return (
     <div className="relative w-full h-full min-h-[0] flex-1 rounded-none border-0 p-0 m-0">
       <LeafletMapContainer
@@ -183,10 +192,10 @@ const TriangleMeshMap = ({ worldSlug, settings }: Props) => {
       />
       {isLoading && <LoadingOverlay />}
       <ErrorBanner message={null} />
-      {mapIsReady && mapInstanceRef.current && triangleMesh.length > 0 && (
+      {mapIsReady && mapInstanceRef.current && displayMesh.length > 0 && (
         <TriangleMeshRenderer
           map={mapInstanceRef.current}
-          triangleMesh={triangleMesh}
+          triangleMesh={displayMesh}
           triangleLayersRef={triangleLayersRef}
           onTriangleClick={(triangleId, triangle, parentPath) => {
             handleTriangleClick(triangleId, triangle, prevMeshRef);
