@@ -31,42 +31,64 @@ export function TriangleMeshRenderer({
   const safeTriangles: TriangleMesh[] = Array.isArray(triangleMesh) ? triangleMesh : [];
 
   React.useEffect(() => {
-    console.log("[TRIANGLE_MESH]", Array.isArray(triangleMesh) ? triangleMesh.length : triangleMesh, triangleMesh);
+    // DEBUG
+    console.log("[TRIANGLE_MESH][MOUNT] triangleMesh length:", triangleMesh?.length, triangleMesh);
     if (triangleMesh?.length > 0) {
       console.log("[TRIANGLE_SAMPLE]", triangleMesh[0]);
     }
     // --- VISUAL DEBUGGING ---
     if (map) {
-      // Debug marker at (0,0)
-      const debugMarker = L.marker([0,0], { title: "Debug Origin Marker" }).addTo(map);
-      numberMarkersRef.current.set("__debug_marker", debugMarker);
-      // Style map container
+      // Confirm map and container
+      console.log("[DEBUG] Leaflet map instance at mount:", map);
       const container = map.getContainer();
+      console.log("[DEBUG] Leaflet map container:", container);
+
+      // Set border/background on container
       container.style.border = "3px solid red";
       container.style.backgroundColor = "#fffbe7";
-      // Log polygons
-      const allLayers = Object.values((map as any)._layers || {});
-      const polyCount = allLayers.filter((l) => l instanceof L.Polygon).length;
-      console.info(`[DEBUG - after mount] Leaflet map has ${polyCount} polygons. Layer IDs:`, allLayers.map((l: any) => l._leaflet_id));
-      // Add a big blue triangle as test
+
+      // Try to add a debug marker at 0,0 with popup
+      try {
+        const debugMarker = L.marker([0,0], { title: "Debug Origin Marker" })
+          .bindPopup("DEBUG MARKER (0,0)")
+          .addTo(map);
+        numberMarkersRef.current.set("__debug_marker", debugMarker);
+        console.log("[DEBUG] Added marker (0,0):", debugMarker, debugMarker._leaflet_id);
+      } catch (e) {
+        console.error("[DEBUG] FAILED to add marker (0,0):", e);
+      }
+
+      // Try to add a test polygon (blue triangle) with popup
       const testCoords: [number, number][] = [
         [20, -20],
         [60, 0],
         [20, 20],
         [20, -20]
       ];
-      const testPolygon = L.polygon(testCoords, {
-        color: "#0074D9",
-        weight: 4,
-        opacity: 1.0,
-        fillColor: "#0074D9",
-        fillOpacity: 0.3,
-        dashArray: "10,5"
-      }).addTo(map);
-      numberMarkersRef.current.set("__test_polygon", testPolygon as any);
-      // And fit bounds to this region to ensure it's visible
-      map.fitBounds(L.latLngBounds(testCoords), { padding: [50,50], animate: false });
+      try {
+        const testPolygon = L.polygon(testCoords, {
+          color: "#0074D9",
+          weight: 4,
+          opacity: 1.0,
+          fillColor: "#0074D9",
+          fillOpacity: 0.3,
+          dashArray: "10,5"
+        }).bindPopup("DEBUG TRIANGLE")
+        .addTo(map);
+        numberMarkersRef.current.set("__test_polygon", testPolygon as any);
+        console.log("[DEBUG] Added test polygon, Leaflet ID:", (testPolygon as any)._leaflet_id, testPolygon.getLatLngs());
+        // Fit bounds to show it
+        map.fitBounds(L.latLngBounds(testCoords), { padding: [50,50], animate: false });
+      } catch (e) {
+        console.error("[DEBUG] FAILED to add test blue polygon:", e);
+      }
+
+      // Log all layer IDs after
+      const allLayers = Object.values((map as any)._layers || {});
+      const polyCount = allLayers.filter((l) => l instanceof L.Polygon).length;
+      console.info(`[DEBUG - after mount] Leaflet map has ${polyCount} polygons. Layer IDs:`, allLayers.map((l: any) => l._leaflet_id));
     }
+
     // Cleanup debug marker and test poly
     return () => {
       const marker = numberMarkersRef.current.get("__debug_marker");
