@@ -1,3 +1,4 @@
+
 import React, { useEffect, useRef, useState } from 'react';
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
@@ -34,6 +35,8 @@ const TriangleMeshMap = ({ worldSlug, settings }: Props) => {
   const mapInstanceRef = useRef<L.Map | null>(null);
   const triangleLayersRef = useRef<Map<string, L.Polygon>>(new Map());
   const prevMeshRef = useRef<any[]>([]);
+
+  // Use refs before any early returns is OK
   const { identity } = useIdentity();
   const isMobile = useIsMobile();
   const [meshVersion, setMeshVersion] = useState(
@@ -92,7 +95,30 @@ const TriangleMeshMap = ({ worldSlug, settings }: Props) => {
     return () => window.removeEventListener("storage", reloadMeshOnStorage);
   }, [fixedWorldSlug, setTriangleMesh]);
 
+  // MUST come after all useXXX but before any early return!
   useLeafletMobileTouch(mapInstanceRef.current);
+
+  // EARLY RETURN BEFORE ANY MORE HOOKS!! (fixes "Rendered more hooks than during the previous render")
+  // Use merged worldSettings from prop or loaded state (favor prop)
+  const mergedWorldSettings = settings || worldSettings;
+  if (!mergedWorldSettings) {
+    return (
+      <div className="relative w-full h-full flex-1 flex items-center justify-center">
+        <LoadingOverlay />
+      </div>
+    );
+  }
+
+  // Now it's safe to define callbacks (and any hook that might close over worldSettings)
+  // Always use values from worldSettings/backend!
+  const handleTriangleClick = useTriangleMeshTap(
+    identity,
+    setTriangleMesh,
+    isMobile,
+    mapInstanceRef.current,
+    fixedWorldSlug,
+    mergedWorldSettings // only pass settings read from DB!
+  );
 
   function isMapInstanceReady(map: L.Map | null) {
     if (!map) return false;
@@ -108,29 +134,7 @@ const TriangleMeshMap = ({ worldSlug, settings }: Props) => {
     mapInstanceRef.current = map;
   }
 
-  // Use merged worldSettings from prop or loaded state (favor prop)
-  const mergedWorldSettings = settings || worldSettings;
-
-  // Always use values from worldSettings/backend!
-  const handleTriangleClick = useTriangleMeshTap(
-    identity,
-    setTriangleMesh,
-    isMobile,
-    mapInstanceRef.current,
-    fixedWorldSlug,
-    mergedWorldSettings // only pass settings read from DB!
-  );
-
-  // Show a loading overlay until worldSettings is loaded
-  if (!mergedWorldSettings) {
-    return (
-      <div className="relative w-full h-full flex-1 flex items-center justify-center">
-        <LoadingOverlay />
-      </div>
-    );
-  }
-
-  React.useEffect(() => {
+  useEffect(() => {
     // On mesh load+map ready, fit to all triangles
     if (!fitDone && mapInstanceRef.current && triangleMesh.length > 0) {
       // Collect all mesh coordinates
