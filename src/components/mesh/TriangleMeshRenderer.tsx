@@ -39,7 +39,8 @@ export function TriangleMeshRenderer({
       debugMarker.bindTooltip("DEBUG: 0,0", {permanent: true });
 
       // *** NEW: add a hardcoded triangle in visible area as a baseline ***
-      const hardCodedPolygonLatLngs = [
+      // Explicit typing so TypeScript recognizes this as LatLngTuple[]
+      const hardCodedPolygonLatLngs: [number, number][] = [
         [3, -2],
         [7, 4],
         [8, -8],
