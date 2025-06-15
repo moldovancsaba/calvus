@@ -1,3 +1,4 @@
+
 import L from "leaflet";
 import React from "react";
 import { TriangleRenderer } from "./TriangleRenderer";
@@ -34,13 +35,35 @@ export function TriangleMeshRenderer({
     if (triangleMesh?.length > 0) {
       console.log("[TRIANGLE_SAMPLE]", triangleMesh[0]);
     }
+    // --- VISUAL DEBUGGING ---
+    if (map) {
+      // Place a debugging marker at (0,0)
+      const debugMarker = L.marker([0,0], { title: "Debug Origin Marker" }).addTo(map);
+      numberMarkersRef.current.set("__debug_marker", debugMarker);
+      // Style the map container for visibility
+      const container = map.getContainer();
+      container.style.border = "3px solid red";
+      container.style.backgroundColor = "#fffbe7";
+      // Log out current polygons
+      const allLayers = Object.values((map as any)._layers || {});
+      const polyCount = allLayers.filter((l) => l instanceof L.Polygon).length;
+      console.info(`[DEBUG - after mount] Leaflet map has ${polyCount} polygons. Layer IDs:`, allLayers.map((l: any) => l._leaflet_id));
+    }
+    // Cleanup debug marker
+    return () => {
+      const marker = numberMarkersRef.current.get("__debug_marker");
+      if (marker && map && map.hasLayer(marker)) map.removeLayer(marker);
+      numberMarkersRef.current.delete("__debug_marker");
+      // Unstyle
+      if (map) {
+        const container = map.getContainer();
+        container.style.border = "";
+        container.style.backgroundColor = "";
+      }
+    };
+    // eslint-disable-next-line
+  }, [map]);
 
-    // REMOVE DEBUG: Do not add marker at 0,0 or hardcoded polygon.
-    // All debug/test overlays below have been removed.
-
-    return undefined; // No cleanup needed here anymore.
-  }, [triangleMesh, map]);
-  
   // Defensive recursive render
   const renderTriangles = React.useCallback(
     (list: TriangleMesh[], parentPath = "") => {
@@ -48,10 +71,7 @@ export function TriangleMeshRenderer({
       const out: React.ReactNode[] = [];
       for (const triangle of list) {
         const trianglePath = parentPath ? `${parentPath}-${triangle.id}` : triangle.id;
-        // Add strong console logs before rendering
         console.log("[TriangleMeshRenderer] Will render TriangleRenderer for", triangle?.id, trianglePath, triangle.vertices);
-
-        // LOG: Output triangle vertices and their format for ALL triangles
         if (Array.isArray(triangle.vertices)) {
           console.log(
             `[TriangleMeshRenderer] Vertices for ${triangle.id}:`,
@@ -60,7 +80,6 @@ export function TriangleMeshRenderer({
         } else {
           console.error(`[TriangleMeshRenderer] Triangle ${triangle.id} has invalid vertices:`, triangle.vertices);
         }
-
         if (!triangle.subdivided) {
           out.push(
             <TriangleRenderer
@@ -111,9 +130,7 @@ export function TriangleMeshRenderer({
 
   // Only clear existing polygons/markers if new mesh is non-empty
   React.useEffect(() => {
-    // Only clear if we have triangles to render (prevents flicker if mesh is temporarily empty)
     if (safeTriangles.length === 0) return;
-
     triangleLayersRef.current.forEach(layer => {
       if (map.hasLayer(layer)) map.removeLayer(layer);
     });
@@ -141,7 +158,6 @@ export function TriangleMeshRenderer({
     console.log("[TriangleMeshRenderer] MOUNTED, triangleMesh length:", triangleMesh?.length, "Sample:", triangleMesh?.slice(0,2));
   }, []);
 
-  // Defensive render: output = array of ReactNode or null
   const output = renderTriangles(safeTriangles);
 
   if (!output) return null;
