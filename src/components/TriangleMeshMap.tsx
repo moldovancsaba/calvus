@@ -42,6 +42,7 @@ const TriangleMeshMap = ({ worldSlug, settings }: Props) => {
     () => window.localStorage.getItem(`meshVersion_${fixedWorldSlug}`) || ""
   );
   const [fitDone, setFitDone] = useState(false);
+  const [mapIsReady, setMapIsReady] = useState(false);
 
   // 2. All standard hooks (always at top)
   const { identity } = useIdentity();
@@ -122,6 +123,7 @@ const TriangleMeshMap = ({ worldSlug, settings }: Props) => {
 
   function handleMapReady(map: L.Map) {
     mapInstanceRef.current = map;
+    setMapIsReady(true);
   }
 
   useEffect(() => {
@@ -160,7 +162,7 @@ const TriangleMeshMap = ({ worldSlug, settings }: Props) => {
       />
       {isLoading && <LoadingOverlay />}
       <ErrorBanner message={null} />
-      {isMapInstanceReady(mapInstanceRef.current) && (
+      {mapIsReady && mapInstanceRef.current && (
         <TriangleMeshRenderer
           map={mapInstanceRef.current}
           triangleMesh={triangleMesh}
