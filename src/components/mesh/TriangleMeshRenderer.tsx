@@ -35,31 +35,10 @@ export function TriangleMeshRenderer({
       console.log("[TRIANGLE_SAMPLE]", triangleMesh[0]);
     }
 
-    // DEBUG: Add marker at 0,0 to confirm map & overlays are visible
-    if (map) {
-      const debugMarker = L.circleMarker([0, 0], { color: "#d00", radius: 8 }).addTo(map);
-      debugMarker.bindTooltip("DEBUG: 0,0", {permanent: true });
+    // REMOVE DEBUG: Do not add marker at 0,0 or hardcoded polygon.
+    // All debug/test overlays below have been removed.
 
-      // *** NEW: add a hardcoded triangle in visible area as a baseline ***
-      // Explicit typing so TypeScript recognizes this as LatLngTuple[]
-      const hardCodedPolygonLatLngs: [number, number][] = [
-        [3, -2],
-        [7, 4],
-        [8, -8],
-      ];
-      const debugPoly = L.polygon(hardCodedPolygonLatLngs, {
-        color: "#f0c",
-        weight: 5,
-        fillColor: "#f8f",
-        fillOpacity: 0.7,
-      }).addTo(map);
-      debugPoly.bindTooltip("HARDCODED POLY", {permanent: false});
-
-      return () => {
-        if (map.hasLayer(debugMarker)) map.removeLayer(debugMarker);
-        if (map.hasLayer(debugPoly)) map.removeLayer(debugPoly);
-      };
-    }
+    return undefined; // No cleanup needed here anymore.
   }, [triangleMesh, map]);
   
   // Defensive recursive render
