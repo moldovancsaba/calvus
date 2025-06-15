@@ -63,67 +63,113 @@ export function TriangleRenderer({
   clicksToDivide,
 }: Props) {
   React.useEffect(() => {
+    // Diagnostic: Print each triangle render
+    console.log("[TriangleRenderer] Rendering triangle", triangle.id, "Vertices:", triangle.vertices);
+
     // Add heavy debug for vertex validity
     if (!triangle || !triangle.vertices || triangle.vertices.length !== 3) {
       console.error("[DEBUG TriangleRenderer] Invalid triangle or vertices", triangle);
     }
     triangle.vertices.forEach((v, i) => {
-      if (typeof v.lat !== "number" || typeof v.lng !== "number" || isNaN(v.lat) || isNaN(v.lng)) {
+      if (
+        typeof v.lat !== "number" ||
+        typeof v.lng !== "number" ||
+        isNaN(v.lat) ||
+        isNaN(v.lng)
+      ) {
         console.error(`[DEBUG TriangleRenderer] Triangle ${triangle.id} vertex ${i} invalid:`, v);
       }
     });
 
     // Remove previous layer and marker
     const prevLayer = triangleLayersRef.current.get(trianglePath);
-    if (prevLayer) map.removeLayer(prevLayer);
+    if (prevLayer) {
+      map.removeLayer(prevLayer);
+      console.log("[TriangleRenderer] Removed previous polygon for", trianglePath);
+    }
     const prevMarker = numberMarkersRef.current.get(trianglePath);
     if (prevMarker) map.removeLayer(prevMarker);
 
-    // Create polygon with bold, colored outline and highly visible fill
+    // Create polygon with a deliberately visible style
+    // Orange-Yellow fill, thick red outline, no opacity
     const coordinates = renderGeodesicTriangle(triangle.vertices);
-    // For debug, use fully opaque fill and outline
-    const fill = "#ff00dd"; // magenta for max visibility
-    const polygon = L.polygon(coordinates, {
-      color: "#000",          // black outline for debug
-      weight: 5,
-      opacity: 1.0,
-      fillColor: fill,
-      fillOpacity: 0.85,      // almost fully opaque for debug
-      smoothFactor: 1.0,
-      interactive: true,
-      className: "leaflet-interactive"
-    });
 
-    polygon.on("pointerdown", () => onTriangleClick(triangle.id, triangle, trianglePath));
-    polygon.on("click", () => onTriangleClick(triangle.id, triangle, trianglePath));
-    polygon.on("touchstart", () => onTriangleClick(triangle.id, triangle, trianglePath));
-    polygon.addTo(map);
-    triangleLayersRef.current.set(trianglePath, polygon);
+    // Highlight T1 with opposite colors to notice if it's attempted
+    let fillColor = triangle.id === "T1" ? "#0ff" : "#ff0";
+    let borderColor = triangle.id === "T1" ? "#800" : "#e11";
+    let fillOpacity = 1.0;
+    let weight = triangle.id === "T1" ? 8 : 6;
 
-    // Add marker and always-visible tooltip at centroid
+    let err = null;
+    let polygon = null;
+    try {
+      polygon = L.polygon(coordinates, {
+        color: borderColor,
+        weight,
+        opacity: 1.0,
+        fillColor: fillColor,
+        fillOpacity: fillOpacity,
+        smoothFactor: 1.0,
+        interactive: true,
+        className: "leaflet-interactive z-[99999]",
+      });
+      polygon.on("pointerdown", () =>
+        onTriangleClick(triangle.id, triangle, trianglePath)
+      );
+      polygon.on("click", () =>
+        onTriangleClick(triangle.id, triangle, trianglePath)
+      );
+      polygon.on("touchstart", () =>
+        onTriangleClick(triangle.id, triangle, trianglePath)
+      );
+      polygon.addTo(map);
+      triangleLayersRef.current.set(trianglePath, polygon);
+      console.log("[TriangleRenderer] Added polygon for", triangle.id, "Path", trianglePath, "Coords", coordinates);
+    } catch (e) {
+      err = e;
+      console.error("[TriangleRenderer ERROR] creating polygon:", e, "coords:", coordinates, "triangle=", triangle);
+    }
+
+    // Add marker and tooltip at centroid
     const [cLat, cLng] = centroid(triangle.vertices);
     const idMarker = L.marker([cLat, cLng], {
       title: triangle.id,
       keyboard: false,
       opacity: 0.88,
-      interactive: false
-    }).bindTooltip(`<b>${triangle.id}</b>`, { permanent: true, direction: "center", className: "bg-white text-xs rounded shadow-lg" });
+      interactive: false,
+    }).bindTooltip(`<b>${triangle.id}</b>`, {
+      permanent: true,
+      direction: "center",
+      className: "bg-white text-xs rounded shadow-lg",
+    });
     idMarker.addTo(map);
     numberMarkersRef.current.set(trianglePath, idMarker);
 
-    // Cleanup
+    // Cleanup on unmount/re-render
     return () => {
       const l = triangleLayersRef.current.get(trianglePath);
-      if (l && map.hasLayer(l)) map.removeLayer(l);
+      if (l && map.hasLayer(l)) {
+        map.removeLayer(l);
+        console.log("[TriangleRenderer] Cleanup polygon for", trianglePath);
+      }
       triangleLayersRef.current.delete(trianglePath);
       const marker = numberMarkersRef.current.get(trianglePath);
       if (marker && map.hasLayer(marker)) map.removeLayer(marker);
       numberMarkersRef.current.delete(trianglePath);
     };
-  // eslint-disable-next-line
+    // eslint-disable-next-line
   }, [
-    map, triangle.id, triangle.vertices, triangle.color, triangle.emoji, triangle.clickCount, triangle.level, triangle.gametag, trianglePath,
-    maxDivideLevel, clicksToDivide
+    map,
+    triangle.id,
+    triangle.vertices,
+    triangle.color,
+    triangle.emoji,
+    triangle.clickCount,
+    triangle.level,
+    triangle.gametag,
+    trianglePath,
+    maxDivideLevel,
+    clicksToDivide,
   ]);
   return null;
 }
