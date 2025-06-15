@@ -1,17 +1,6 @@
 import { useCallback, useRef } from "react";
 import { storeTriangleActivity, subdivideTriangleMesh } from "../../utils/triangleMesh";
-
-// Helper to support tracking in-memory recently clicked per user/triangle.
-const userTriangleClickStreak: Record<string, { triangleId: string, streak: number }> = {};
-
-function resolveWinnerEmoji(identity, triangleEl) {
-  // Prefer identity emoji if present and nonempty
-  if (identity?.emoji && identity.emoji.trim()) return identity.emoji;
-  // Otherwise, traverse up triangleEl (and parents) for any set emoji
-  if (triangleEl?.emoji && triangleEl.emoji.trim()) return triangleEl.emoji;
-  // If still nothing, fallback to star
-  return "🌟";
-}
+import { resolveWinnerEmoji, userTriangleClickStreak } from "./tapHelpers";
 
 export function useTriangleMeshTap(
   identity: { gametag: string; color: string; emoji?: string } | null,
