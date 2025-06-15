@@ -1,4 +1,3 @@
-
 import React, { useEffect, useRef, useState } from 'react';
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
@@ -137,12 +136,8 @@ const TriangleMeshMap = ({ worldSlug, settings }: Props) => {
     mapInstanceRef.current = map;
     setMapIsReady(true);
 
-    // DEBUG: Add marker at 0,0 and a test rectangle at equator
-    const marker = L.marker([0, 0], { title: "Center of the world (0,0)" })
-      .addTo(map)
-      .bindTooltip('Test Marker (0,0)', { permanent: true });
-    const rect = L.rectangle([[10, -20], [-10, 20]], { color: "#0f0", weight: 3, fillOpacity: 0.3 }).addTo(map);
-    console.log("[DEBUG handleMapReady] Test marker and rectangle added.");
+    // REMOVE DEBUG: Do not add marker at 0,0 or test rectangle.
+    // All debug/test overlays below have been removed.
   }
 
   // Fit map to mesh whenever map/mesh changes and not already fit
