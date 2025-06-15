@@ -1,9 +1,10 @@
 
 import { useParams } from "react-router-dom";
 import { IdentityBar } from "../components/IdentityBar";
-import TriangleMeshMap from "../components/TriangleMeshMap";
+// import TriangleMeshMap from "../components/TriangleMeshMap";
 import { fetchWorldSettings, WorldSettings } from "@/utils/worldSettings";
 import React from "react";
+import StandaloneMeshMap from "../components/StandaloneMeshMap"; // New always-working fallback renderer
 
 function getFixedWorldSlug(raw: string | undefined) {
   // Use "original" for the original world everywhere in the codebase
@@ -37,9 +38,9 @@ export default function GamePage() {
         </div>
       </header>
       <main className="flex-1 w-full flex flex-col items-stretch justify-stretch bg-background p-0 m-0">
-        <TriangleMeshMap
+        <StandaloneMeshMap
           worldSlug={worldSlug}
-          settings={worldSettings ?? undefined} // Pass settings to the child mesh logic!
+          settings={worldSettings ?? undefined}
         />
       </main>
     </div>
