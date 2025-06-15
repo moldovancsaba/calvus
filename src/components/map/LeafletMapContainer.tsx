@@ -106,8 +106,8 @@ export const LeafletMapContainer = forwardRef<HTMLDivElement, LeafletMapContaine
 
       map.getContainer().style.backgroundColor = '#f0f0f0';
 
-      // DEBUG: highlight full visible map area with border
-      L.rectangle([[-89, -179], [89, 179]], { color: "#00f", weight: 2, fillOpacity: 0.01 }).addTo(map);
+      // REMOVED DEBUG: Do not add any rectangle overlay at all.
+      // Previously: L.rectangle([[-89, -179], [89, 179]], ...)
 
       // Notify parent
       onMapReady(map);
