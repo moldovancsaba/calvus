@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
-import { TriangleMesh } from '../utils/triangleMesh';
+import { TriangleMesh, generateBaseTriangleMesh } from '../utils/triangleMesh';
 import { useIdentity } from "./IdentityContext";
 import { useIsMobile } from "../hooks/use-mobile";
 import { useLeafletMobileTouch } from "./hooks/useLeafletMobileTouch";
@@ -168,14 +168,22 @@ const TriangleMeshMap = ({ worldSlug, settings }: Props) => {
     );
   }
 
-  // Defensive: Always guarantee triangleMesh is non-empty in renderer layer
-  const displayMesh = Array.isArray(triangleMesh) && triangleMesh.length >= 1
-    ? triangleMesh
-    : (() => {
-        const forcedBase = require("../utils/triangleMesh").generateBaseTriangleMesh();
-        console.warn("[TriangleMeshMap] Defensive: triangleMesh was empty, forcing BASE.");
-        return forcedBase;
-      })();
+  // Always guarantee triangleMesh is non-empty in renderer layer (NO REQUIRE, USE IMPORT)
+  let trianglesToRender: TriangleMesh[] = [];
+  if (Array.isArray(triangleMesh) && triangleMesh.length > 0) {
+    trianglesToRender = triangleMesh;
+  } else {
+    // Always fallback to base mesh, never empty!
+    trianglesToRender = generateBaseTriangleMesh();
+    console.warn("[TriangleMeshMap] Fallback: triangleMesh empty, rendering BASE mesh with 26 triangles.");
+  }
+
+  // Defensive: always log mesh status
+  if (!Array.isArray(trianglesToRender) || trianglesToRender.length === 0) {
+    console.error("[TriangleMeshMap] FATAL: No triangles to render even after fallback! Check mesh loader.");
+  } else {
+    console.log(`[TriangleMeshMap] Will render ${trianglesToRender.length} triangles. First:`, trianglesToRender[0]);
+  }
 
   return (
     <div className="relative w-full h-full min-h-[0] flex-1 rounded-none border-0 p-0 m-0">
@@ -192,10 +200,10 @@ const TriangleMeshMap = ({ worldSlug, settings }: Props) => {
       />
       {isLoading && <LoadingOverlay />}
       <ErrorBanner message={null} />
-      {mapIsReady && mapInstanceRef.current && displayMesh.length > 0 && (
+      {mapIsReady && mapInstanceRef.current && trianglesToRender.length > 0 && (
         <TriangleMeshRenderer
           map={mapInstanceRef.current}
-          triangleMesh={displayMesh}
+          triangleMesh={trianglesToRender}
           triangleLayersRef={triangleLayersRef}
           onTriangleClick={(triangleId, triangle, parentPath) => {
             handleTriangleClick(triangleId, triangle, prevMeshRef);
@@ -203,6 +211,11 @@ const TriangleMeshMap = ({ worldSlug, settings }: Props) => {
           maxDivideLevel={mergedWorldSettings.max_divide_level}
           clicksToDivide={mergedWorldSettings.clicks_to_divide}
         />
+      )}
+      {mapIsReady && mapInstanceRef.current && trianglesToRender.length === 0 && (
+        <div className="absolute left-0 right-0 top-0 bottom-0 flex items-center justify-center bg-white/70 z-50 font-bold text-red-600">
+          Error: No triangles to display!
+        </div>
       )}
     </div>
   );
