@@ -89,17 +89,16 @@ const DemoMeshMap: React.FC = () => {
         zoom: 2,
         minZoom: 1,
         maxZoom: 4,
-        zoomControl: false,
+        zoomControl: true,              // SHOW zoom in/out controls!
         worldCopyJump: true,
         attributionControl: false,
-        dragging: true,
-        doubleClickZoom: false,
-        boxZoom: false,
-        scrollWheelZoom: false,
-        keyboard: false,
-        touchZoom: true,
+        dragging: true,                 // Enable drag/move
+        doubleClickZoom: true,         // Enable double click zoom
+        boxZoom: true,                 // Enable box zoom
+        scrollWheelZoom: true,         // Enable scroll wheel zoom
+        keyboard: true,                // Enable keyboard navigation
+        touchZoom: true,               // Enable pinch zoom
         maxBounds: [[-90, -180], [90, 180]],
-        // tap: false (removed, not a valid type on MapOptions)
       });
 
       // Set bg color black faintly for demo page
@@ -132,7 +131,7 @@ const DemoMeshMap: React.FC = () => {
         opacity: 1,
         fillColor: "#000",        // black fill
         fillOpacity: 0.5,
-        interactive: false,
+        interactive: false,       // No mouse interactions on mesh
         smoothFactor: 1.0
       });
       polygon.addTo(map);
@@ -142,14 +141,7 @@ const DemoMeshMap: React.FC = () => {
     // Fit world on mount
     map.fitBounds([[-90, -180], [90, 180]], { padding: [0, 0], animate: false, maxZoom: 2 });
 
-    // Disable map dragging/zoom/pan
-    map.dragging.disable();
-    map.scrollWheelZoom.disable();
-    map.doubleClickZoom.disable();
-    map.boxZoom.disable();
-    map.keyboard.disable();
-    map.touchZoom.disable();
-    // No tap: property or method -- do not access map.tap
+    // Do NOT disable map movement/zoom! (because user requested controls)
 
     return () => {
       map.remove();
@@ -166,3 +158,4 @@ const DemoMeshMap: React.FC = () => {
 };
 
 export default DemoMeshMap;
+
