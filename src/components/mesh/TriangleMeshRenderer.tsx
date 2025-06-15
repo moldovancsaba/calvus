@@ -37,23 +37,44 @@ export function TriangleMeshRenderer({
     }
     // --- VISUAL DEBUGGING ---
     if (map) {
-      // Place a debugging marker at (0,0)
+      // Debug marker at (0,0)
       const debugMarker = L.marker([0,0], { title: "Debug Origin Marker" }).addTo(map);
       numberMarkersRef.current.set("__debug_marker", debugMarker);
-      // Style the map container for visibility
+      // Style map container
       const container = map.getContainer();
       container.style.border = "3px solid red";
       container.style.backgroundColor = "#fffbe7";
-      // Log out current polygons
+      // Log polygons
       const allLayers = Object.values((map as any)._layers || {});
       const polyCount = allLayers.filter((l) => l instanceof L.Polygon).length;
       console.info(`[DEBUG - after mount] Leaflet map has ${polyCount} polygons. Layer IDs:`, allLayers.map((l: any) => l._leaflet_id));
+      // Add a big blue triangle as test
+      const testCoords: [number, number][] = [
+        [20, -20],
+        [60, 0],
+        [20, 20],
+        [20, -20]
+      ];
+      const testPolygon = L.polygon(testCoords, {
+        color: "#0074D9",
+        weight: 4,
+        opacity: 1.0,
+        fillColor: "#0074D9",
+        fillOpacity: 0.3,
+        dashArray: "10,5"
+      }).addTo(map);
+      numberMarkersRef.current.set("__test_polygon", testPolygon as any);
+      // And fit bounds to this region to ensure it's visible
+      map.fitBounds(L.latLngBounds(testCoords), { padding: [50,50], animate: false });
     }
-    // Cleanup debug marker
+    // Cleanup debug marker and test poly
     return () => {
       const marker = numberMarkersRef.current.get("__debug_marker");
       if (marker && map && map.hasLayer(marker)) map.removeLayer(marker);
       numberMarkersRef.current.delete("__debug_marker");
+      const testPoly = numberMarkersRef.current.get("__test_polygon");
+      if (testPoly && map && map.hasLayer(testPoly)) map.removeLayer(testPoly);
+      numberMarkersRef.current.delete("__test_polygon");
       // Unstyle
       if (map) {
         const container = map.getContainer();
@@ -71,14 +92,27 @@ export function TriangleMeshRenderer({
       const out: React.ReactNode[] = [];
       for (const triangle of list) {
         const trianglePath = parentPath ? `${parentPath}-${triangle.id}` : triangle.id;
+        // Polygon vertex safety check
+        if (!Array.isArray(triangle.vertices) || triangle.vertices.length !== 3) {
+          console.warn(`[TriangleMeshRenderer] Triangle ${triangle.id} has invalid vertices:`, triangle.vertices);
+          continue;
+        }
+        let invalid = false;
+        triangle.vertices.forEach((v, idx) => {
+          if (!v || typeof v.lat !== "number" || typeof v.lng !== "number" || isNaN(v.lat) || isNaN(v.lng)) {
+            invalid = true;
+            console.error(`[TriangleMeshRenderer] Triangle ${triangle.id} vertex ${idx} is invalid:`, v);
+          }
+        });
+        if (invalid) {
+          continue;
+        }
         console.log("[TriangleMeshRenderer] Will render TriangleRenderer for", triangle?.id, trianglePath, triangle.vertices);
         if (Array.isArray(triangle.vertices)) {
           console.log(
             `[TriangleMeshRenderer] Vertices for ${triangle.id}:`,
             triangle.vertices.map((v, idx) => `(${idx}: lat=${v.lat}, lng=${v.lng})`).join("; ")
           );
-        } else {
-          console.error(`[TriangleMeshRenderer] Triangle ${triangle.id} has invalid vertices:`, triangle.vertices);
         }
         if (!triangle.subdivided) {
           out.push(
@@ -128,7 +162,6 @@ export function TriangleMeshRenderer({
     return null;
   }
 
-  // Only clear existing polygons/markers if new mesh is non-empty
   React.useEffect(() => {
     if (safeTriangles.length === 0) return;
     triangleLayersRef.current.forEach(layer => {
