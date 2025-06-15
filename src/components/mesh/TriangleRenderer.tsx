@@ -63,6 +63,16 @@ export function TriangleRenderer({
   clicksToDivide,
 }: Props) {
   React.useEffect(() => {
+    // Add heavy debug for vertex validity
+    if (!triangle || !triangle.vertices || triangle.vertices.length !== 3) {
+      console.error("[DEBUG TriangleRenderer] Invalid triangle or vertices", triangle);
+    }
+    triangle.vertices.forEach((v, i) => {
+      if (typeof v.lat !== "number" || typeof v.lng !== "number" || isNaN(v.lat) || isNaN(v.lng)) {
+        console.error(`[DEBUG TriangleRenderer] Triangle ${triangle.id} vertex ${i} invalid:`, v);
+      }
+    });
+
     // Remove previous layer and marker
     const prevLayer = triangleLayersRef.current.get(trianglePath);
     if (prevLayer) map.removeLayer(prevLayer);
@@ -71,13 +81,14 @@ export function TriangleRenderer({
 
     // Create polygon with bold, colored outline and highly visible fill
     const coordinates = renderGeodesicTriangle(triangle.vertices);
-    const fill = randomBrightColorById(triangle.id);
+    // For debug, use fully opaque fill and outline
+    const fill = "#ff00dd"; // magenta for max visibility
     const polygon = L.polygon(coordinates, {
-      color: "#222",          // high-contrast dark outline
-      weight: 4,
+      color: "#000",          // black outline for debug
+      weight: 5,
       opacity: 1.0,
       fillColor: fill,
-      fillOpacity: 0.28,      // lower opacity for overlap visibility
+      fillOpacity: 0.85,      // almost fully opaque for debug
       smoothFactor: 1.0,
       interactive: true,
       className: "leaflet-interactive"

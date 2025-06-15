@@ -61,8 +61,28 @@ import { BASE_TRIANGLE_MESH } from "./baseTriangleMesh";
 
 // Canonical mesh: 26 triangles, spiral from N pole, as originally approved.
 export function generateBaseTriangleMesh(): TriangleMesh[] {
+  // DIAGNOSTIC: Log the actual base mesh being generated
   console.log('Base triangle mesh generated as 26 triangles (T1–T26).');
-  // Always return a new array to avoid direct mutation of the source array
+  if (!Array.isArray(BASE_TRIANGLE_MESH) || BASE_TRIANGLE_MESH.length < 1) {
+    console.error("[DEBUG generateBaseTriangleMesh] BASE_TRIANGLE_MESH is empty or invalid!", BASE_TRIANGLE_MESH);
+  } else if (BASE_TRIANGLE_MESH.length !== 26) {
+    console.warn("[DEBUG generateBaseTriangleMesh] BASE_TRIANGLE_MESH expected 26 triangles, got", BASE_TRIANGLE_MESH.length);
+  }
+
+  // Check for invalid vertices
+  BASE_TRIANGLE_MESH.forEach((t, i) => {
+    if (!t.vertices || t.vertices.length !== 3) {
+      console.error(`[DEBUG generateBaseTriangleMesh] Triangle at index ${i} (${t.id}) has invalid vertices`, t.vertices);
+    } else {
+      t.vertices.forEach((v, vi) => {
+        if (typeof v.lat !== "number" || typeof v.lng !== "number" || isNaN(v.lat) || isNaN(v.lng)) {
+          console.error(`[DEBUG generateBaseTriangleMesh] Triangle ${t.id} vertex ${vi} invalid:`, v);
+        }
+      });
+    }
+  });
+
+  // Always return a new array
   return BASE_TRIANGLE_MESH.map(t => ({ ...t }));
 }
 

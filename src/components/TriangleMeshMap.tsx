@@ -1,4 +1,3 @@
-
 import React, { useEffect, useRef, useState } from 'react';
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
@@ -46,6 +45,18 @@ const TriangleMeshMap = ({ worldSlug, settings }: Props) => {
   const { identity } = useIdentity();
   const isMobile = useIsMobile();
   const { triangleMesh, setTriangleMesh, isLoading } = useTriangleMeshLoader(fixedWorldSlug, meshVersion);
+
+  // ADD DEBUG LOG: Length and sample triangles
+  React.useEffect(() => {
+    console.log("[DEBUG TriangleMeshMap] triangleMesh length:", triangleMesh?.length, triangleMesh?.slice(0, 2));
+    if (Array.isArray(triangleMesh)) {
+      triangleMesh.forEach((t, idx) => {
+        if (!t.vertices || t.vertices.length !== 3) {
+          console.error(`[DEBUG TriangleMeshMap] Triangle ${idx} (${t.id}) has invalid vertices:`, t.vertices);
+        }
+      });
+    }
+  }, [triangleMesh]);
 
   // 3. World settings loader
   useEffect(() => {
