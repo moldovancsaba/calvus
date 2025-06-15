@@ -29,6 +29,21 @@ interface Props {
   clicksToDivide: number;
 }
 
+// Utility: pastel random color by id (hash)
+function pastelColorFromId(str: string): string {
+  let hash = 0;
+  for (let i = 0; i < str.length; i++) hash = str.charCodeAt(i) + ((hash << 5) - hash);
+  const h = hash % 360;
+  return `hsl(${h}, 82%, 80%)`;
+}
+
+// Utility: centroid for marker
+function centroid(vertices: {lat:number,lng:number}[]) {
+  const lat = (vertices[0].lat + vertices[1].lat + vertices[2].lat) / 3;
+  const lng = (vertices[0].lng + vertices[1].lng + vertices[2].lng) / 3;
+  return [lat, lng];
+}
+
 export function TriangleRenderer({
   map,
   triangle,
@@ -40,7 +55,6 @@ export function TriangleRenderer({
   clicksToDivide,
 }: Props) {
   React.useEffect(() => {
-    console.log("[TriangleRenderer] Render", { triangle, trianglePath, maxDivideLevel, clicksToDivide, map });
     // Remove previous layer
     const prevLayer = triangleLayersRef.current.get(trianglePath);
     if (prevLayer) {
@@ -52,46 +66,16 @@ export function TriangleRenderer({
       map.removeLayer(prevMarker);
     }
     // --- RENDER POLYGON ---
-    const isFinalLevel = triangle.level >= maxDivideLevel;
     const coordinates = renderGeodesicTriangle(triangle.vertices);
 
-    let fill = "#fff";
-    let fillOpacity = 0.5;
-    let shouldShowAvatar = false;
-    let avatarProps: null | { color: string, emoji: string } = null;
-    const claimedEmoji =
-      triangle.emoji && triangle.emoji.trim() !== "" ? triangle.emoji : null;
-
-    if (
-      isFinalLevel && triangle.clickCount >= clicksToDivide && triangle.color
-    ) {
-      fill = triangle.color;
-      fillOpacity = 1.0;
-      shouldShowAvatar = true;
-      avatarProps = {
-        color: triangle.color,
-        emoji: claimedEmoji ?? "🌟"
-      };
-    } else if (triangle.clickCount > 0) {
-      fill = triangle.color || "#222";
-      fillOpacity = Math.min(0.3 + triangle.clickCount * 0.07, 0.95);
-    }
-
-    // --- DEBUG: draw a demo polygon at a fixed place for visual debugging
-    if (triangle.level === 0 && trianglePath.endsWith(".meshDebug")) {
-      const debugPolygon = L.polygon([
-        [33, 0],
-        [35, 3],
-        [31, 6],
-      ], { color: "red", weight: 3, fillColor: "#f004", fillOpacity: 0.7 });
-      debugPolygon.addTo(map);
-      console.log("[TriangleRenderer] Debug polygon drawn", debugPolygon.getLatLngs());
-    }
+    // Strong color & bold for debug
+    const fill = pastelColorFromId(triangle.id);
+    const fillOpacity = 0.65;
 
     const polygon = L.polygon(coordinates, {
-      color: "#fff",
-      weight: 2,
-      opacity: 0.8,
+      color: "#ff2222",
+      weight: 5,
+      opacity: 0.95,
       fillColor: fill,
       fillOpacity,
       smoothFactor: 1.0,
@@ -105,28 +89,16 @@ export function TriangleRenderer({
     polygon.addTo(map);
     triangleLayersRef.current.set(trianglePath, polygon);
 
-    // Post-render check: see how many polygons are on the map
-    const allLayers = Object.values((map as any)._layers || {});
-    const polyCount = allLayers.filter((l) => l instanceof L.Polygon).length;
-    // Type safe: print only if leaflet id present
-    const polyIds = allLayers
-      .filter((l): l is { _leaflet_id: number } => typeof l === "object" && l !== null && "_leaflet_id" in l)
-      .map((l) => (l as any)._leaflet_id);
-    console.log(`[TriangleRenderer] After add: Leaflet map has ${polyCount} polygons. Layer IDs:`, polyIds);
-    // DEBUG: Log polygon shape/info
-    console.log("[TriangleRenderer] Created polygon for", trianglePath, polygon.getLatLngs());
-
-    // -- AVATAR --
-    if (shouldShowAvatar && avatarProps) {
-      renderAvatarMarker({
-        map,
-        vertices: triangle.vertices,
-        color: avatarProps.color,
-        emoji: avatarProps.emoji,
-        trianglePath,
-        numberMarkersRef,
-      });
-    }
+    // Debug: Add a marker at centroid with triangle ID
+    const [cLat, cLng] = centroid(triangle.vertices);
+    const idMarker = L.marker([cLat, cLng], {
+      title: triangle.id,
+      keyboard: false,
+      opacity: 0.7,
+      interactive: false,
+    }).bindTooltip(triangle.id, { permanent: true, direction: "center", className: "bg-white text-xs rounded" });
+    idMarker.addTo(map);
+    numberMarkersRef.current.set(trianglePath, idMarker);
 
     // Cleanup on unmount
     return () => {
@@ -138,11 +110,11 @@ export function TriangleRenderer({
       if (marker && map.hasLayer(marker)) map.removeLayer(marker);
       numberMarkersRef.current.delete(trianglePath);
     };
-    // We want a full rerender if any relevant param changes
-    // eslint-disable-next-line
+  // eslint-disable-next-line
   }, [
     map, triangle.id, triangle.vertices, triangle.color, triangle.emoji, triangle.clickCount, triangle.level, triangle.gametag, trianglePath,
     maxDivideLevel, clicksToDivide
   ]);
   return null;
 }
+
