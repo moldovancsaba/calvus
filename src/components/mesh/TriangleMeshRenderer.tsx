@@ -4,9 +4,6 @@ import React from "react";
 import { TriangleRenderer } from "./TriangleRenderer";
 import type { TriangleMesh } from "../../utils/triangleMesh/geometry";
 
-/**
- * Recursively renders the triangle mesh using individual TriangleRenderer components.
- */
 type Props = {
   map: L.Map | null;
   triangleMesh: TriangleMesh[];
@@ -30,11 +27,21 @@ export function TriangleMeshRenderer({
 }: Props) {
   const numberMarkersRef = React.useRef<Map<string, L.Marker>>(new Map());
 
+  // Log mesh each render for debugging
+  React.useEffect(() => {
+    console.log("[TRIANGLE_MESH]", Array.isArray(triangleMesh) ? triangleMesh.length : triangleMesh, triangleMesh);
+    if (triangleMesh?.length > 0) {
+      console.log("[TRIANGLE_SAMPLE]", triangleMesh[0]);
+    }
+  }, [triangleMesh]);
+  
   // Helper to recursively render triangles FLAT (no nested arrays)
   const renderTriangles = React.useCallback(
     (list: TriangleMesh[], parentPath = "") => {
       const out: React.ReactNode[] = [];
       for (const triangle of list) {
+        // Log each triangle processed for debugging
+        console.log("[RENDER_TRIANGLE]", triangle);
         const trianglePath = parentPath ? `${parentPath}-${triangle.id}` : triangle.id;
         if (!triangle.subdivided) {
           out.push(
@@ -50,22 +57,6 @@ export function TriangleMeshRenderer({
               clicksToDivide={clicksToDivide}
             />
           );
-          // For our debug: also push a debug-only polygon on first triangle
-          if (triangle.level === 0 && out.length === 1) {
-            out.push(
-              <TriangleRenderer
-                key={trianglePath + ".meshDebug"}
-                map={map!}
-                triangle={{ ...triangle, level: 0, vertices: [{lat:33,lng:0},{lat:35,lng:3},{lat:31,lng:6}], id: triangle.id + ".meshDebug" }}
-                trianglePath={trianglePath + ".meshDebug"}
-                triangleLayersRef={triangleLayersRef}
-                numberMarkersRef={numberMarkersRef}
-                onTriangleClick={onTriangleClick}
-                maxDivideLevel={maxDivideLevel}
-                clicksToDivide={clicksToDivide}
-              />
-            );
-          }
         } else if (triangle.children) {
           out.push(...renderTriangles(triangle.children, trianglePath));
         }
@@ -92,7 +83,6 @@ export function TriangleMeshRenderer({
     return null;
   }
 
-  // Clean up: remove all triangle layers & markers on mesh change
   React.useEffect(() => {
     triangleLayersRef.current.forEach(layer => {
       if (map.hasLayer(layer)) map.removeLayer(layer);
@@ -108,10 +98,8 @@ export function TriangleMeshRenderer({
     console.log("[TriangleMeshRenderer] triangleMesh prop:", triangleMesh);
     console.log("[TriangleMeshRenderer] map instance:", map);
     if (map) {
-      // How many polygons are present?
       const allLayers = Object.values((map as any)._layers || {});
       const polyCount = allLayers.filter((l) => l instanceof L.Polygon).length;
-      // Type safe: print only if leaflet id present
       const polyIds = allLayers
         .filter((l): l is { _leaflet_id: number } => typeof l === "object" && l !== null && "_leaflet_id" in l)
         .map((l) => (l as any)._leaflet_id);
@@ -119,10 +107,11 @@ export function TriangleMeshRenderer({
     }
   }, [triangleMesh, map]);
 
-  // Recursively render all triangles as effects (not DOM elements)
   React.useEffect(() => {
     console.log("[TriangleMeshRenderer] MOUNTED, triangleMesh length:", triangleMesh?.length, "Sample:", triangleMesh?.slice(0,2));
   }, []);
+
+  // Remove debug triangle rendering
 
   return <>{renderTriangles(triangleMesh)}</>;
 }
