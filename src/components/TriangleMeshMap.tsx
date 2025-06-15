@@ -86,10 +86,19 @@ const TriangleMeshMap = ({ worldSlug }: Props) => {
   const [fitDone, setFitDone] = useState(false);
   const [mapIsReady, setMapIsReady] = useState(false);
 
+  // Always fallback to canonical mesh if mesh is empty/corrupt (this is the important bit)
+  const safeMesh: TriangleMesh[] = React.useMemo(() => {
+    if (!Array.isArray(mesh) || mesh.length !== 26) {
+      console.warn("[TriangleMeshMap] Mesh was empty/corrupt—forcing canonical base mesh (26 triangles)", mesh);
+      return generateBaseTriangleMesh();
+    }
+    return mesh;
+  }, [mesh]);
+
   // Fit map to mesh whenever map or mesh changes
   useEffect(() => {
     setFitDone(false);
-  }, [fixedWorldSlug, mesh.length]);
+  }, [fixedWorldSlug, safeMesh.length]);
 
   const handleTriangleClick = (triangleId: string) => {
     console.log("[TriangleMeshMap] Clicked triangle:", triangleId);
@@ -107,25 +116,23 @@ const TriangleMeshMap = ({ worldSlug }: Props) => {
       !fitDone &&
       mapIsReady &&
       mapInstanceRef.current &&
-      mesh.length > 0
+      safeMesh.length > 0
     ) {
       const bounds = L.latLngBounds([[-90, -180], [90, 180]]);
       mapInstanceRef.current.fitBounds(bounds, { padding: [24, 24], animate: true, maxZoom: 2 });
       setFitDone(true);
       console.log("[TriangleMeshMap] Map fitted to bounds");
     }
-  }, [mesh, fitDone, mapIsReady]);
-
-  const trianglesToRender: TriangleMesh[] = mesh;
+  }, [safeMesh, fitDone, mapIsReady]);
 
   useEffect(() => {
     console.log(
-      "[TriangleMeshMap] mesh:", mesh,
+      "[TriangleMeshMap] safeMesh:", safeMesh,
       "mapIsReady:", mapIsReady,
       "mapInstanceRef.current:", !!mapInstanceRef.current,
-      "trianglesToRender.length:", trianglesToRender.length
+      "trianglesToRender.length:", safeMesh.length
     );
-  }, [mesh, mapIsReady, trianglesToRender.length]);
+  }, [safeMesh, mapIsReady]);
 
   return (
     <div 
@@ -143,17 +150,17 @@ const TriangleMeshMap = ({ worldSlug }: Props) => {
         fixedMobileZoomLevel={2}
         forceMobileZoom={false}
       />
-      {mapIsReady && mapInstanceRef.current && trianglesToRender.length > 0 && (
+      {mapIsReady && mapInstanceRef.current && safeMesh.length > 0 && (
         <TriangleMeshRenderer
           map={mapInstanceRef.current}
-          triangleMesh={trianglesToRender}
+          triangleMesh={safeMesh}
           triangleLayersRef={triangleLayersRef}
           onTriangleClick={handleTriangleClick}
           maxDivideLevel={3}
           clicksToDivide={1}
         />
       )}
-      {mapIsReady && mapInstanceRef.current && trianglesToRender.length === 0 && (
+      {mapIsReady && mapInstanceRef.current && safeMesh.length === 0 && (
         <div className="absolute left-0 right-0 top-0 bottom-0 flex items-center justify-center bg-white/70 z-50 font-bold text-red-600">
           Error: No triangles to display!
         </div>
@@ -163,4 +170,3 @@ const TriangleMeshMap = ({ worldSlug }: Props) => {
 };
 
 export default TriangleMeshMap;
-
