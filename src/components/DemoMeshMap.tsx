@@ -98,14 +98,21 @@ const DemoMeshMap: React.FC = () => {
         scrollWheelZoom: false,
         keyboard: false,
         touchZoom: true,
-        tap: false,
         maxBounds: [[-90, -180], [90, 180]],
+        // tap: false (removed, not a valid type on MapOptions)
       });
+
       // Set bg color black faintly for demo page
       mapRef.current.getContainer().style.backgroundColor = "#000";
       // Hide UI controls
       const el = mapRef.current.getContainer();
       if (el) el.style.borderRadius = "0";
+
+      // Add OpenStreetMap tile layer
+      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '© OpenStreetMap contributors',
+        opacity: 0.9
+      }).addTo(mapRef.current);
     }
 
     const map = mapRef.current;
@@ -142,7 +149,7 @@ const DemoMeshMap: React.FC = () => {
     map.boxZoom.disable();
     map.keyboard.disable();
     map.touchZoom.disable();
-    map.tap && map.tap.disable();
+    // No tap: property or method -- do not access map.tap
 
     return () => {
       map.remove();
