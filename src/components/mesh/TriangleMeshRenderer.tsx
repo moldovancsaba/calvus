@@ -27,7 +27,6 @@ export function TriangleMeshRenderer({
 }: Props) {
   const numberMarkersRef = React.useRef<Map<string, L.Marker>>(new Map());
 
-  // Log mesh each render for debugging
   React.useEffect(() => {
     console.log("[TRIANGLE_MESH]", Array.isArray(triangleMesh) ? triangleMesh.length : triangleMesh, triangleMesh);
     if (triangleMesh?.length > 0) {
@@ -35,14 +34,12 @@ export function TriangleMeshRenderer({
     }
   }, [triangleMesh]);
   
-  // Helper to recursively render triangles FLAT (no nested arrays)
+  // Defensive recursive render
   const renderTriangles = React.useCallback(
     (list: TriangleMesh[], parentPath = "") => {
-      if (!Array.isArray(list)) return null;  // guard: always produce ReactNode
+      if (!Array.isArray(list) || !list.length) return null;
       const out: React.ReactNode[] = [];
       for (const triangle of list) {
-        // Log each triangle processed for debugging
-        console.log("[RENDER_TRIANGLE]", triangle);
         const trianglePath = parentPath ? `${parentPath}-${triangle.id}` : triangle.id;
         if (!triangle.subdivided) {
           out.push(
@@ -59,11 +56,22 @@ export function TriangleMeshRenderer({
             />
           );
         } else if (triangle.children) {
-          out.push(...renderTriangles(triangle.children, trianglePath));
+          const childNodes = renderTriangles(triangle.children, trianglePath);
+          // Only push childNodes if they're not null
+          if (childNodes) {
+            if (Array.isArray(childNodes)) {
+              out.push(...childNodes);
+            } else {
+              out.push(childNodes);
+            }
+          }
         }
       }
-      console.log("[TriangleMeshRenderer] renderTriangles output count:", out.length, "props.triangleMesh count:", list.length, "sample:", list.slice(0,3));
-      return out;
+      // Remove any undefined/null accidental insertions
+      const filteredOut = out.filter(Boolean);
+      console.log("[TriangleMeshRenderer] renderTriangles output count:", filteredOut.length, "props.triangleMesh count:", list.length, "sample:", list.slice(0,3));
+      // If nothing to render, return null for safety
+      return filteredOut.length > 0 ? filteredOut : null;
     },
     [
       map,
@@ -112,11 +120,12 @@ export function TriangleMeshRenderer({
     console.log("[TriangleMeshRenderer] MOUNTED, triangleMesh length:", triangleMesh?.length, "Sample:", triangleMesh?.slice(0,2));
   }, []);
 
-  // Always pass an array, never undefined or null
+  // Always pass an array (empty allowed)
   const safeTriangles: TriangleMesh[] = Array.isArray(triangleMesh) ? triangleMesh : [];
 
-  // If empty, render nothing
-  if (!safeTriangles.length) return null;
+  // Defensive render: output = array of ReactNode or null
+  const output = renderTriangles(safeTriangles);
 
-  return <>{renderTriangles(safeTriangles)}</>;
+  if (!output) return null;
+  return <>{output}</>;
 }
