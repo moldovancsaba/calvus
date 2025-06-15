@@ -78,7 +78,11 @@ const TriangleMeshMap = ({ worldSlug }: Props) => {
   const isMobile = useIsMobile();
 
   // ---- IN MEMORY MESH STATE, exactly like /jusforfun ----
-  const [mesh, setMesh] = useState<TriangleMesh[]>(() => generateBaseTriangleMesh());
+  const [mesh, setMesh] = useState<TriangleMesh[]>(() => {
+    const base = generateBaseTriangleMesh();
+    console.log("[TriangleMeshMap] Mesh initialized:", base);
+    return base;
+  });
   const [fitDone, setFitDone] = useState(false);
   const [mapIsReady, setMapIsReady] = useState(false);
 
@@ -88,12 +92,14 @@ const TriangleMeshMap = ({ worldSlug }: Props) => {
   }, [fixedWorldSlug, mesh.length]);
 
   const handleTriangleClick = (triangleId: string) => {
+    console.log("[TriangleMeshMap] Clicked triangle:", triangleId);
     setMesh(prevMesh => divideTriangleById(prevMesh, triangleId));
   };
 
   function handleMapReady(map: L.Map) {
     mapInstanceRef.current = map;
     setMapIsReady(true);
+    console.log("[TriangleMeshMap] Map is ready");
   }
 
   useEffect(() => {
@@ -106,13 +112,26 @@ const TriangleMeshMap = ({ worldSlug }: Props) => {
       const bounds = L.latLngBounds([[-90, -180], [90, 180]]);
       mapInstanceRef.current.fitBounds(bounds, { padding: [24, 24], animate: true, maxZoom: 2 });
       setFitDone(true);
+      console.log("[TriangleMeshMap] Map fitted to bounds");
     }
   }, [mesh, fitDone, mapIsReady]);
 
   const trianglesToRender: TriangleMesh[] = mesh;
 
+  useEffect(() => {
+    console.log(
+      "[TriangleMeshMap] mesh:", mesh,
+      "mapIsReady:", mapIsReady,
+      "mapInstanceRef.current:", !!mapInstanceRef.current,
+      "trianglesToRender.length:", trianglesToRender.length
+    );
+  }, [mesh, mapIsReady, trianglesToRender.length]);
+
   return (
-    <div className="relative w-full h-full min-h-[0] flex-1 rounded-none border-0 p-0 m-0">
+    <div 
+      className="relative w-full h-full min-h-[320px] flex-1 rounded-none border-0 p-0 m-0" 
+      style={{ minHeight: "320px" }}
+    >
       <LeafletMapContainer
         ref={mapDivRef}
         isMobile={isMobile}
