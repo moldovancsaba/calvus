@@ -30,14 +30,14 @@ export function TriangleMeshRenderer({
 }: Props) {
   const numberMarkersRef = React.useRef<Map<string, L.Marker>>(new Map());
 
-  // Helper to recursively render triangles
+  // Helper to recursively render triangles FLAT (no nested arrays)
   const renderTriangles = React.useCallback(
-    (list: TriangleMesh[], parentPath = "") =>
-      list.map(triangle => {
+    (list: TriangleMesh[], parentPath = "") => {
+      const out: React.ReactNode[] = [];
+      for (const triangle of list) {
         const trianglePath = parentPath ? `${parentPath}-${triangle.id}` : triangle.id;
         if (!triangle.subdivided) {
-          // Render a single triangle
-          return (
+          out.push(
             <TriangleRenderer
               key={trianglePath}
               map={map!}
@@ -51,11 +51,11 @@ export function TriangleMeshRenderer({
             />
           );
         } else if (triangle.children) {
-          // Recursively render children
-          return renderTriangles(triangle.children, trianglePath);
+          out.push(...renderTriangles(triangle.children, trianglePath));
         }
-        return null;
-      }),
+      }
+      return out;
+    },
     [
       map,
       triangleLayersRef,
@@ -84,3 +84,4 @@ export function TriangleMeshRenderer({
   // Recursively render all triangles as effects (not DOM elements)
   return <>{renderTriangles(triangleMesh)}</>;
 }
+
