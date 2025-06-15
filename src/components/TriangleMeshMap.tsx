@@ -39,6 +39,7 @@ const TriangleMeshMap = ({ worldSlug, settings }: Props) => {
   const [meshVersion, setMeshVersion] = useState(
     () => window.localStorage.getItem(`meshVersion_${fixedWorldSlug}`) || ""
   );
+  const [fitDone, setFitDone] = useState(false);
 
   // Loader hook (fetch, poll, manage mesh state)
   const { triangleMesh, setTriangleMesh, isLoading } = useTriangleMeshLoader(fixedWorldSlug, meshVersion);
@@ -128,6 +129,19 @@ const TriangleMeshMap = ({ worldSlug, settings }: Props) => {
       </div>
     );
   }
+
+  React.useEffect(() => {
+    // On mesh load+map ready, fit to all triangles
+    if (!fitDone && mapInstanceRef.current && triangleMesh.length > 0) {
+      // Collect all mesh coordinates
+      const allCoords = triangleMesh.flatMap(t => t.vertices.map(v => [v.lat, v.lng]));
+      if (allCoords.length >= 3) {
+        const bounds = L.latLngBounds(allCoords as [number, number][]);
+        mapInstanceRef.current.fitBounds(bounds, { padding: [24, 24], animate: true, maxZoom: 2 });
+        setFitDone(true);
+      }
+    }
+  }, [triangleMesh, fitDone]);
 
   return (
     <div className="relative w-full h-full min-h-[0] flex-1 rounded-none border-0 p-0 m-0">

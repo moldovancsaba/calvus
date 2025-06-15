@@ -1,4 +1,3 @@
-
 import React from "react";
 import L from "leaflet";
 import { renderGeodesicTriangle } from "./renderGeodesicTriangle";
@@ -37,6 +36,15 @@ function pastelColorFromId(str: string): string {
   return `hsl(${h}, 82%, 80%)`;
 }
 
+// Utility: random bright color by id (hash)
+function randomBrightColorById(str: string): string {
+  // Use a hash to generate distinct and high-contrast colors per triangle.
+  let hash = 0;
+  for (let i = 0; i < str.length; i++) hash = str.charCodeAt(i) + ((hash << 5) - hash);
+  const h = (hash % 360 + 360) % 360;
+  return `hsl(${h}, 94%, 56%)`;
+}
+
 // Utility: centroid for marker
 function centroid(vertices: {lat:number,lng:number}[]) {
   const lat = (vertices[0].lat + vertices[1].lat + vertices[2].lat) / 3;
@@ -55,29 +63,21 @@ export function TriangleRenderer({
   clicksToDivide,
 }: Props) {
   React.useEffect(() => {
-    // Remove previous layer
+    // Remove previous layer and marker
     const prevLayer = triangleLayersRef.current.get(trianglePath);
-    if (prevLayer) {
-      map.removeLayer(prevLayer);
-    }
-    // Remove marker if any
+    if (prevLayer) map.removeLayer(prevLayer);
     const prevMarker = numberMarkersRef.current.get(trianglePath);
-    if (prevMarker) {
-      map.removeLayer(prevMarker);
-    }
-    // --- RENDER POLYGON ---
+    if (prevMarker) map.removeLayer(prevMarker);
+
+    // Create polygon with bold, colored outline and highly visible fill
     const coordinates = renderGeodesicTriangle(triangle.vertices);
-
-    // Strong color & bold for debug
-    const fill = pastelColorFromId(triangle.id);
-    const fillOpacity = 0.65;
-
+    const fill = randomBrightColorById(triangle.id);
     const polygon = L.polygon(coordinates, {
-      color: "#ff2222",
-      weight: 5,
-      opacity: 0.95,
+      color: "#222",          // high-contrast dark outline
+      weight: 4,
+      opacity: 1.0,
       fillColor: fill,
-      fillOpacity,
+      fillOpacity: 0.28,      // lower opacity for overlap visibility
       smoothFactor: 1.0,
       interactive: true,
       className: "leaflet-interactive"
@@ -89,23 +89,22 @@ export function TriangleRenderer({
     polygon.addTo(map);
     triangleLayersRef.current.set(trianglePath, polygon);
 
-    // Debug: Add a marker at centroid with triangle ID
+    // Add marker and always-visible tooltip at centroid
     const [cLat, cLng] = centroid(triangle.vertices);
     const idMarker = L.marker([cLat, cLng], {
       title: triangle.id,
       keyboard: false,
-      opacity: 0.7,
-      interactive: false,
-    }).bindTooltip(triangle.id, { permanent: true, direction: "center", className: "bg-white text-xs rounded" });
+      opacity: 0.88,
+      interactive: false
+    }).bindTooltip(`<b>${triangle.id}</b>`, { permanent: true, direction: "center", className: "bg-white text-xs rounded shadow-lg" });
     idMarker.addTo(map);
     numberMarkersRef.current.set(trianglePath, idMarker);
 
-    // Cleanup on unmount
+    // Cleanup
     return () => {
       const l = triangleLayersRef.current.get(trianglePath);
       if (l && map.hasLayer(l)) map.removeLayer(l);
       triangleLayersRef.current.delete(trianglePath);
-
       const marker = numberMarkersRef.current.get(trianglePath);
       if (marker && map.hasLayer(marker)) map.removeLayer(marker);
       numberMarkersRef.current.delete(trianglePath);
@@ -117,4 +116,3 @@ export function TriangleRenderer({
   ]);
   return null;
 }
-
