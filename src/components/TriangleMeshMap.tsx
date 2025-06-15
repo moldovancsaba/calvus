@@ -31,24 +31,35 @@ function getFixedWorldSlug(slug: string) {
 
 const TriangleMeshMap = ({ worldSlug, settings }: Props) => {
   const fixedWorldSlug = getFixedWorldSlug(worldSlug);
+  // initialize refs and primitive state before any possible conditional return!
   const mapDivRef = useRef<HTMLDivElement>(null);
   const mapInstanceRef = useRef<L.Map | null>(null);
   const triangleLayersRef = useRef<Map<string, L.Polygon>>(new Map());
   const prevMeshRef = useRef<any[]>([]);
-
-  // Use refs before any early returns is OK
-  const { identity } = useIdentity();
-  const isMobile = useIsMobile();
   const [meshVersion, setMeshVersion] = useState(
     () => window.localStorage.getItem(`meshVersion_${fixedWorldSlug}`) || ""
   );
   const [fitDone, setFitDone] = useState(false);
 
+  // Use primitive worldSettings state (do this always unconditionally before returns)
+  const [worldSettings, setWorldSettings] = useState<WorldSettings | null>(null);
+
+  // Always decide early if we need to return a loading state before any custom hooks!
+  const mergedWorldSettings = settings || worldSettings;
+  if (!mergedWorldSettings) {
+    return (
+      <div className="relative w-full h-full flex-1 flex items-center justify-center">
+        <LoadingOverlay />
+      </div>
+    );
+  }
+
+  // Only now is it safe to use hooks!
+  const { identity } = useIdentity();
+  const isMobile = useIsMobile();
+
   // Loader hook (fetch, poll, manage mesh state)
   const { triangleMesh, setTriangleMesh, isLoading } = useTriangleMeshLoader(fixedWorldSlug, meshVersion);
-
-  // World settings
-  const [worldSettings, setWorldSettings] = useState<WorldSettings | null>(null);
 
   useEffect(() => {
     let mounted = true;
@@ -95,22 +106,8 @@ const TriangleMeshMap = ({ worldSlug, settings }: Props) => {
     return () => window.removeEventListener("storage", reloadMeshOnStorage);
   }, [fixedWorldSlug, setTriangleMesh]);
 
-  // MUST come after all useXXX but before any early return!
   useLeafletMobileTouch(mapInstanceRef.current);
 
-  // EARLY RETURN BEFORE ANY MORE HOOKS!! (fixes "Rendered more hooks than during the previous render")
-  // Use merged worldSettings from prop or loaded state (favor prop)
-  const mergedWorldSettings = settings || worldSettings;
-  if (!mergedWorldSettings) {
-    return (
-      <div className="relative w-full h-full flex-1 flex items-center justify-center">
-        <LoadingOverlay />
-      </div>
-    );
-  }
-
-  // Now it's safe to define callbacks (and any hook that might close over worldSettings)
-  // Always use values from worldSettings/backend!
   const handleTriangleClick = useTriangleMeshTap(
     identity,
     setTriangleMesh,
@@ -135,9 +132,7 @@ const TriangleMeshMap = ({ worldSlug, settings }: Props) => {
   }
 
   useEffect(() => {
-    // On mesh load+map ready, fit to all triangles
     if (!fitDone && mapInstanceRef.current && triangleMesh.length > 0) {
-      // Collect all mesh coordinates
       const allCoords = triangleMesh.flatMap(t => t.vertices.map(v => [v.lat, v.lng]));
       if (allCoords.length >= 3) {
         const bounds = L.latLngBounds(allCoords as [number, number][]);
@@ -179,3 +174,4 @@ const TriangleMeshMap = ({ worldSlug, settings }: Props) => {
 };
 
 export default TriangleMeshMap;
+
