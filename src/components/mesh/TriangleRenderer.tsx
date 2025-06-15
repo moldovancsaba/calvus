@@ -92,7 +92,24 @@ export function TriangleRenderer({
 
     // Create polygon with a deliberately visible style
     // Orange-Yellow fill, thick red outline, no opacity
-    const coordinates = renderGeodesicTriangle(triangle.vertices);
+    let coordinates: [number, number][] = [];
+    let geodesicError = null;
+    try {
+      coordinates = renderGeodesicTriangle(triangle.vertices);
+      console.log(`[DEBUG TriangleRenderer] renderGeodesicTriangle output for ${triangle.id}:`, coordinates);
+
+      // Check for NaNs or malformed coordinates
+      if (!Array.isArray(coordinates) || coordinates.length < 3) {
+        console.error(`[DEBUG TriangleRenderer] Triangle ${triangle.id} geodesic points invalid:`, coordinates);
+      } else if (
+        coordinates.some((pt, i) => !Array.isArray(pt) || pt.length !== 2 || isNaN(pt[0]) || isNaN(pt[1]))
+      ) {
+        console.error(`[DEBUG TriangleRenderer] Triangle ${triangle.id} contains NaN/invalid points:`, coordinates);
+      }
+    } catch (e) {
+      geodesicError = e;
+      console.error("[DEBUG TriangleRenderer] ERROR in renderGeodesicTriangle:", e, triangle);
+    }
 
     // Highlight T1 with opposite colors to notice if it's attempted
     let fillColor = triangle.id === "T1" ? "#0ff" : "#ff0";
@@ -103,28 +120,32 @@ export function TriangleRenderer({
     let err = null;
     let polygon = null;
     try {
-      polygon = L.polygon(coordinates, {
-        color: borderColor,
-        weight,
-        opacity: 1.0,
-        fillColor: fillColor,
-        fillOpacity: fillOpacity,
-        smoothFactor: 1.0,
-        interactive: true,
-        className: "leaflet-interactive z-[99999]",
-      });
-      polygon.on("pointerdown", () =>
-        onTriangleClick(triangle.id, triangle, trianglePath)
-      );
-      polygon.on("click", () =>
-        onTriangleClick(triangle.id, triangle, trianglePath)
-      );
-      polygon.on("touchstart", () =>
-        onTriangleClick(triangle.id, triangle, trianglePath)
-      );
-      polygon.addTo(map);
-      triangleLayersRef.current.set(trianglePath, polygon);
-      console.log("[TriangleRenderer] Added polygon for", triangle.id, "Path", trianglePath, "Coords", coordinates);
+      if (!geodesicError && coordinates && Array.isArray(coordinates) && coordinates.length >= 3) {
+        polygon = L.polygon(coordinates, {
+          color: borderColor,
+          weight,
+          opacity: 1.0,
+          fillColor: fillColor,
+          fillOpacity: fillOpacity,
+          smoothFactor: 1.0,
+          interactive: true,
+          className: "leaflet-interactive z-[99999]",
+        });
+        polygon.on("pointerdown", () =>
+          onTriangleClick(triangle.id, triangle, trianglePath)
+        );
+        polygon.on("click", () =>
+          onTriangleClick(triangle.id, triangle, trianglePath)
+        );
+        polygon.on("touchstart", () =>
+          onTriangleClick(triangle.id, triangle, trianglePath)
+        );
+        polygon.addTo(map);
+        triangleLayersRef.current.set(trianglePath, polygon);
+        console.log("[TriangleRenderer] Added polygon for", triangle.id, "Path", trianglePath, "Coords", coordinates);
+      } else {
+        console.warn(`[TriangleRenderer] Skipped adding polygon for ${triangle.id} because of bad coordinates or error.`);
+      }
     } catch (e) {
       err = e;
       console.error("[TriangleRenderer ERROR] creating polygon:", e, "coords:", coordinates, "triangle=", triangle);
