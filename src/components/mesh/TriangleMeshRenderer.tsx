@@ -1,4 +1,3 @@
-
 import L from "leaflet";
 import React from "react";
 import { TriangleRenderer } from "./TriangleRenderer";
@@ -32,7 +31,16 @@ export function TriangleMeshRenderer({
     if (triangleMesh?.length > 0) {
       console.log("[TRIANGLE_SAMPLE]", triangleMesh[0]);
     }
-  }, [triangleMesh]);
+
+    // DEBUG: Add marker at 0,0 to confirm map & overlays are visible
+    if (map) {
+      const debugMarker = L.circleMarker([0, 0], { color: "#d00", radius: 8 }).addTo(map);
+      debugMarker.bindTooltip("DEBUG: 0,0", {permanent: true });
+      return () => {
+        if (map.hasLayer(debugMarker)) map.removeLayer(debugMarker);
+      };
+    }
+  }, [triangleMesh, map]);
   
   // Defensive recursive render
   const renderTriangles = React.useCallback(

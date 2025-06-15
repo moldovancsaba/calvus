@@ -1,3 +1,4 @@
+
 import React, { useRef, useEffect, useImperativeHandle, forwardRef } from "react";
 import L from "leaflet";
 import "leaflet/dist/leaflet.css";
@@ -15,7 +16,6 @@ export interface LeafletMapContainerProps {
 
 export const DEFAULT_CENTER: [number, number] = [33, 0];
 
-// Expose map instance via ref if needed
 export const LeafletMapContainer = forwardRef<HTMLDivElement, LeafletMapContainerProps>(
   (
     {
@@ -45,8 +45,7 @@ export const LeafletMapContainer = forwardRef<HTMLDivElement, LeafletMapContaine
         mapRef.current.innerHTML = "";
       }
 
-      // Always pull in passed props for min/max zoom
-      // On mobile, min/max are fixed to fixedMobileZoomLevel
+      // Map zoom settings
       const minZoom = isMobile
         ? fixedMobileZoomLevel
         : desktopMinZoom;
@@ -107,6 +106,9 @@ export const LeafletMapContainer = forwardRef<HTMLDivElement, LeafletMapContaine
 
       map.getContainer().style.backgroundColor = '#f0f0f0';
 
+      // DEBUG: highlight full visible map area with border
+      L.rectangle([[-89, -179], [89, 179]], { color: "#00f", weight: 2, fillOpacity: 0.01 }).addTo(map);
+
       // Notify parent
       onMapReady(map);
 
@@ -135,3 +137,5 @@ export const LeafletMapContainer = forwardRef<HTMLDivElement, LeafletMapContaine
     );
   }
 );
+
+// No changes to rest of file
