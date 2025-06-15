@@ -54,6 +54,8 @@ export function TriangleMeshRenderer({
           out.push(...renderTriangles(triangle.children, trianglePath));
         }
       }
+      // Log what we have for debugging
+      console.log("[TriangleMeshRenderer] renderTriangles result:", out);
       return out;
     },
     [
@@ -81,7 +83,11 @@ export function TriangleMeshRenderer({
     numberMarkersRef.current.clear();
   }, [map, triangleMesh, triangleLayersRef]);
 
+  // -- ADDED DEBUGGING LOGS --
+  React.useEffect(() => {
+    console.log("[TriangleMeshRenderer] triangleMesh prop:", triangleMesh);
+  }, [triangleMesh]);
+
   // Recursively render all triangles as effects (not DOM elements)
   return <>{renderTriangles(triangleMesh)}</>;
 }
-

@@ -39,7 +39,9 @@ export function TriangleRenderer({
   maxDivideLevel,
   clicksToDivide,
 }: Props) {
+  // Debugging: Log props on mount/update
   React.useEffect(() => {
+    console.log("[TriangleRenderer] Render", { triangle, trianglePath, maxDivideLevel, clicksToDivide });
     // Remove previous layer
     const prevLayer = triangleLayersRef.current.get(trianglePath);
     if (prevLayer) {
@@ -86,6 +88,8 @@ export function TriangleRenderer({
       interactive: true,
       className: "leaflet-interactive"
     });
+    // DEBUG: Log polygon shape/info
+    console.log("[TriangleRenderer] Created polygon for", trianglePath, polygon.getLatLngs());
     polygon.on("pointerdown", () => onTriangleClick(triangle.id, triangle, trianglePath));
     polygon.on("click", () => onTriangleClick(triangle.id, triangle, trianglePath));
     polygon.on("touchstart", () => onTriangleClick(triangle.id, triangle, trianglePath));
@@ -122,3 +126,4 @@ export function TriangleRenderer({
   ]);
   return null;
 }
+
