@@ -29,8 +29,8 @@ function aggregateTriangleActivities(activities: any[]): Record<string, { clickC
 }
 
 /**
- * Deterministically rebuilds the full triangle mesh for rendering using ACTIVITIES array and world settings.
- * This function is PURE and does not mutate the canonical base mesh.
+ * PURE, DETERMINISTIC: Rebuild the mesh from scratch using activities only.
+ * Always starts from canonical mesh, applies clicks and subdivides "fresh".
  */
 export function rebuildTriangleMeshFromActivities(
   activities: any[],
@@ -43,44 +43,38 @@ export function rebuildTriangleMeshFromActivities(
   const clicksToDivide = settings?.clicks_to_divide ?? 3;
   const maxDivideLevel = settings?.max_divide_level ?? 3;
 
-  /**
-   * Recursive helper: applies click count/activity recursively, subdivides if needed.
-   */
-  function applyActivities(meshList: TriangleMesh[], currentLevel = 0): TriangleMesh[] {
-    return meshList.map(baseTri => {
-      const activity = activityMap[baseTri.id];
-      // Use clickCount and owner/color/gametag fields from latest activity, or original value
-      const clickCount = activity?.clickCount ?? baseTri.clickCount ?? 0;
-      const latest = activity?.mostRecent;
-      const color = latest?.color ?? baseTri.color;
-      const gametag = latest?.gametag ?? baseTri.gametag;
-      const emoji = latest?.emoji ?? baseTri.emoji;
-      let subdivided = baseTri.subdivided;
-      let children: TriangleMesh[] | undefined;
+  function recursivelyApplyActivities(triangle: TriangleMesh): TriangleMesh {
+    const activity = activityMap[triangle.id];
+    const clickCount = activity?.clickCount ?? triangle.clickCount ?? 0;
+    const latest = activity?.mostRecent;
+    const color = latest?.color ?? triangle.color;
+    const gametag = latest?.gametag ?? triangle.gametag;
+    const emoji = latest?.emoji ?? triangle.emoji;
 
-      // Subdivide if reached click threshold (unless at max level)
-      if (clickCount >= clicksToDivide && (baseTri.level < maxDivideLevel)) {
-        // Generate children and apply activities recursively
-        subdivided = true;
-        children = applyActivities(subdivideTriangleMesh(baseTri), currentLevel + 1);
-      }
+    // Only subdivide IF not at max level and clickCount >= threshold
+    let children: TriangleMesh[] | undefined = undefined;
+    let subdivided = triangle.subdivided;
+    if (clickCount >= clicksToDivide && triangle.level < maxDivideLevel) {
+      subdivided = true;
+      // Recursively apply activities to each child
+      children = subdivideTriangleMesh(triangle).map(child => recursivelyApplyActivities(child));
+    }
 
-      return {
-        ...baseTri,
-        clickCount,
-        color,
-        gametag,
-        emoji,
-        subdivided: subdivided ?? false,
-        children
-      };
-    });
+    return {
+      ...triangle,
+      clickCount,
+      color,
+      gametag,
+      emoji,
+      subdivided: subdivided ?? false,
+      ...(children ? { children } : {})
+    };
   }
 
-  const rebuilt = applyActivities(baseMesh, 0);
-  // Diagnostics
+  // Fully pure: reconstruct from scratch for every triangle
+  const rebuilt = baseMesh.map(triangle => recursivelyApplyActivities(triangle));
   if (typeof window !== "undefined") {
-    console.log("[rebuildTriangleMeshFromActivities] - Canonical rebuild, mesh triangles:", rebuilt.length, rebuilt.slice(0,2));
+    console.log("[rebuildTriangleMeshFromActivities] PURE REBUILD, triangle count:", rebuilt.length, rebuilt.slice(0,2));
   }
   return rebuilt;
 }
