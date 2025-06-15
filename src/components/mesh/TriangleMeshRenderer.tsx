@@ -70,7 +70,7 @@ export function TriangleMeshRenderer({
           out.push(...renderTriangles(triangle.children, trianglePath));
         }
       }
-      console.log("[TriangleMeshRenderer] renderTriangles result:", out, list);
+      console.log("[TriangleMeshRenderer] renderTriangles output count:", out.length, "props.triangleMesh count:", list.length, "sample:", list.slice(0,3));
       return out;
     },
     [
@@ -111,11 +111,18 @@ export function TriangleMeshRenderer({
       // How many polygons are present?
       const allLayers = Object.values((map as any)._layers || {});
       const polyCount = allLayers.filter((l) => l instanceof L.Polygon).length;
-      console.log(`[TriangleMeshRenderer] (Effect) Leaflet map has ${polyCount} polygons. Layer IDs:`, allLayers.map(l => l._leaflet_id));
+      // Type safe: print only if leaflet id present
+      const polyIds = allLayers
+        .filter((l): l is { _leaflet_id: number } => typeof l === "object" && l !== null && "_leaflet_id" in l)
+        .map((l) => (l as any)._leaflet_id);
+      console.log(`[TriangleMeshRenderer] (Effect) Leaflet map has ${polyCount} polygons. Layer IDs:`, polyIds);
     }
   }, [triangleMesh, map]);
 
   // Recursively render all triangles as effects (not DOM elements)
+  React.useEffect(() => {
+    console.log("[TriangleMeshRenderer] MOUNTED, triangleMesh length:", triangleMesh?.length, "Sample:", triangleMesh?.slice(0,2));
+  }, []);
+
   return <>{renderTriangles(triangleMesh)}</>;
 }
-
