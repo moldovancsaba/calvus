@@ -1,9 +1,17 @@
-
 import { useCallback, useRef } from "react";
 import { storeTriangleActivity, subdivideTriangleMesh } from "../../utils/triangleMesh";
 
 // Helper to support tracking in-memory recently clicked per user/triangle.
 const userTriangleClickStreak: Record<string, { triangleId: string, streak: number }> = {};
+
+function resolveWinnerEmoji(identity, triangleEl) {
+  // Prefer identity emoji if present and nonempty
+  if (identity?.emoji && identity.emoji.trim()) return identity.emoji;
+  // Otherwise, traverse up triangleEl (and parents) for any set emoji
+  if (triangleEl?.emoji && triangleEl.emoji.trim()) return triangleEl.emoji;
+  // If still nothing, fallback to star
+  return "🌟";
+}
 
 export function useTriangleMeshTap(
   identity: { gametag: string; color: string; emoji?: string } | null,
@@ -73,14 +81,17 @@ export function useTriangleMeshTap(
           triangles.map(triangleEl => {
             if (triangleEl.id === triangleId) {
               const newClickCount = triangleEl.clickCount + 1;
-              const winnerEmoji = (identity.emoji && identity.emoji.trim()) ? identity.emoji : (triangleEl.emoji && triangleEl.emoji.trim() ? triangleEl.emoji : "🌟");
+
+              // Use robust winner emoji: player identity emoji → existing triangle emoji → star
+              const winnerEmoji = resolveWinnerEmoji(identity, triangleEl);
+
               if (triangleEl.level >= maxDivideLevel) {
                 return {
                   ...triangleEl,
                   clickCount: Math.min(newClickCount, clicksToDivide),
                   color: identity.color,
                   gametag: identity.gametag,
-                  emoji: winnerEmoji, // always yours if present, else fallback
+                  emoji: winnerEmoji,
                 };
               }
               if (newClickCount === clicksToDivide && triangleEl.level < maxDivideLevel && !triangleEl.subdivided) {
@@ -126,10 +137,8 @@ export function useTriangleMeshTap(
           actionType = "subdivide";
           willSubdivide = true;
         }
-        // Always write the player's emoji to DB, fallback only to star if neither provided nor previously present
-        const emojiToStore = (identity.emoji && identity.emoji.trim())
-          ? identity.emoji
-          : (triangle?.emoji && triangle.emoji.trim() ? triangle.emoji : "🌟");
+        // Use robust emoji fallback for backend storage too
+        const emojiToStore = resolveWinnerEmoji(identity, triangle);
         const result = await storeTriangleActivity(
           triangleId,
           Math.min((triangle?.clickCount ?? 0) + 1, clicksToDivide),

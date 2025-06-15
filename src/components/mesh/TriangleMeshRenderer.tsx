@@ -99,15 +99,21 @@ export function TriangleMeshRenderer({
           let shouldShowAvatar = false;
           let avatarProps: null | { color: string, emoji: string } = null;
 
+          // --- PATCH: More robust fallback for avatar emoji ---
+          // Extract the correct emoji: prefer triangle.emoji if set and nonempty, otherwise fallback to null (don't use "🌟" for claimed triangles unless there is truly no info)
+          const claimedEmoji =
+            (triangle.emoji && triangle.emoji.trim() !== "") ? triangle.emoji : null;
+
           if (
             isFinalLevel && triangle.clickCount >= configClicksToDivide && triangle.color
           ) {
             fill = triangle.color;
             fillOpacity = 1.0;
             shouldShowAvatar = true;
+            // Only fallback to "🌟" if NO emoji. Not if empty string!
             avatarProps = { 
               color: triangle.color, 
-              emoji: (triangle.emoji && triangle.emoji.trim() !== "") ? triangle.emoji : "🌟"
+              emoji: claimedEmoji ?? "🌟"
             };
           } else if (triangle.clickCount > 0) {
             fill = triangle.color || "#222";
