@@ -10,6 +10,7 @@ interface RenderAvatarMarkerOptions {
   trianglePath: string;
   numberMarkersRef: React.MutableRefObject<Map<string, L.Marker>>;
 }
+
 export function renderAvatarMarker({
   map, vertices, color, emoji, trianglePath, numberMarkersRef
 }: RenderAvatarMarkerOptions) {
