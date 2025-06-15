@@ -169,13 +169,16 @@ const TriangleMeshMap = ({ worldSlug, settings }: Props) => {
   }
 
   // Always guarantee triangleMesh is non-empty in renderer layer (NO REQUIRE, USE IMPORT)
+  // --- HARD fallback: always render mesh, just like /jusforfun ---
+  // If for any reason (bad state, effect order, loader bug) the mesh is missing or corrupt,
+  // ALWAYS use the canonical base mesh for rendering
   let trianglesToRender: TriangleMesh[] = [];
-  if (Array.isArray(triangleMesh) && triangleMesh.length > 0) {
+  if (Array.isArray(triangleMesh) && triangleMesh.length === 26) {
     trianglesToRender = triangleMesh;
   } else {
     // Always fallback to base mesh, never empty!
     trianglesToRender = generateBaseTriangleMesh();
-    console.warn("[TriangleMeshMap] Fallback: triangleMesh empty, rendering BASE mesh with 26 triangles.");
+    console.warn("[TriangleMeshMap] Fallback: triangleMesh empty or corrupt, rendering BASE mesh (26 triangles).");
   }
 
   // Defensive: always log mesh status
