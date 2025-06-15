@@ -1,3 +1,4 @@
+
 import React, { useEffect, useRef, useState } from 'react';
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
@@ -9,10 +10,8 @@ import { TriangleMeshRenderer } from "./mesh/TriangleMeshRenderer";
 import { useTriangleMeshTap } from "./mesh/useTriangleMeshTap";
 import { LoadingOverlay } from './map/LoadingOverlay';
 import { ErrorBanner } from './map/ErrorBanner';
-
 import { LeafletMapContainer } from "./map/LeafletMapContainer";
 import { useTriangleMeshLoader } from "./map/useTriangleMeshLoader";
-
 import { fetchWorldSettings, WorldSettings } from "../utils/worldSettings";
 
 type Props = {
@@ -29,7 +28,7 @@ function getFixedWorldSlug(slug: string) {
 const TriangleMeshMap = ({ worldSlug, settings }: Props) => {
   const fixedWorldSlug = getFixedWorldSlug(worldSlug);
 
-  // 1. Refs and state -- always run first
+  // 1. Refs and state
   const mapDivRef = useRef<HTMLDivElement>(null);
   const mapInstanceRef = useRef<L.Map | null>(null);
   const triangleLayersRef = useRef<Map<string, L.Polygon>>(new Map());
@@ -41,12 +40,12 @@ const TriangleMeshMap = ({ worldSlug, settings }: Props) => {
   const [fitDone, setFitDone] = useState(false);
   const [mapIsReady, setMapIsReady] = useState(false);
 
-  // 2. All standard hooks (always at top)
+  // 2. Hooks
   const { identity } = useIdentity();
   const isMobile = useIsMobile();
   const { triangleMesh, setTriangleMesh, isLoading } = useTriangleMeshLoader(fixedWorldSlug, meshVersion);
 
-  // ADD DEBUG LOG: Length and sample triangles
+  // Debug: Log mesh contents
   React.useEffect(() => {
     console.log("[DEBUG TriangleMeshMap] triangleMesh length:", triangleMesh?.length, triangleMesh?.slice(0, 2));
     if (Array.isArray(triangleMesh)) {
@@ -107,7 +106,6 @@ const TriangleMeshMap = ({ worldSlug, settings }: Props) => {
 
   useLeafletMobileTouch(mapInstanceRef.current);
 
-  // 5. Compute merged settings after all hooks
   const mergedWorldSettings = settings || worldSettings;
 
   // Reset fitDone when world changes or when triangleMesh resets (to fit new mesh)
@@ -115,14 +113,14 @@ const TriangleMeshMap = ({ worldSlug, settings }: Props) => {
     setFitDone(false);
   }, [fixedWorldSlug, triangleMesh.length]);
 
-  // 6. Handle triangle click (only use settings from backend)
+  // 6. Handle triangle click
   const handleTriangleClick = useTriangleMeshTap(
     identity,
     setTriangleMesh,
     isMobile,
     mapInstanceRef.current,
     fixedWorldSlug,
-    mergedWorldSettings // read from DB only!
+    mergedWorldSettings
   );
 
   function isMapInstanceReady(map: L.Map | null) {
@@ -138,6 +136,13 @@ const TriangleMeshMap = ({ worldSlug, settings }: Props) => {
   function handleMapReady(map: L.Map) {
     mapInstanceRef.current = map;
     setMapIsReady(true);
+
+    // DEBUG: Add marker at 0,0 and a test rectangle at equator
+    const marker = L.marker([0, 0], { title: "Center of the world (0,0)" })
+      .addTo(map)
+      .bindTooltip('Test Marker (0,0)', { permanent: true });
+    const rect = L.rectangle([[10, -20], [-10, 20]], { color: "#0f0", weight: 3, fillOpacity: 0.3 }).addTo(map);
+    console.log("[DEBUG handleMapReady] Test marker and rectangle added.");
   }
 
   // Fit map to mesh whenever map/mesh changes and not already fit
@@ -150,15 +155,16 @@ const TriangleMeshMap = ({ worldSlug, settings }: Props) => {
     ) {
       const allCoords = triangleMesh.flatMap(t => t.vertices.map(v => [v.lat, v.lng]));
       if (allCoords.length >= 3) {
-        const bounds = L.latLngBounds(allCoords as [number, number][]);
+        // DEBUG: Instead of fitBounds, force visible hemisphere
+        const bounds = L.latLngBounds([[-90, -180], [90, 180]]);
         mapInstanceRef.current.fitBounds(bounds, { padding: [24, 24], animate: true, maxZoom: 2 });
         setFitDone(true);
+        console.log("[DEBUG fitBounds] Bounds set to show full globe.");
       }
     }
   }, [triangleMesh, fitDone, mapIsReady]);
 
   // === 7. Render logic ===
-  // Show loading spinner overlay if settings not ready
   if (!mergedWorldSettings) {
     return (
       <div className="relative w-full h-full flex-1 flex items-center justify-center">
