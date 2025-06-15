@@ -1,3 +1,4 @@
+
 import L from "leaflet";
 import React from "react";
 import { TriangleRenderer } from "./TriangleRenderer";
@@ -36,8 +37,24 @@ export function TriangleMeshRenderer({
     if (map) {
       const debugMarker = L.circleMarker([0, 0], { color: "#d00", radius: 8 }).addTo(map);
       debugMarker.bindTooltip("DEBUG: 0,0", {permanent: true });
+
+      // *** NEW: add a hardcoded triangle in visible area as a baseline ***
+      const hardCodedPolygonLatLngs = [
+        [3, -2],
+        [7, 4],
+        [8, -8],
+      ];
+      const debugPoly = L.polygon(hardCodedPolygonLatLngs, {
+        color: "#f0c",
+        weight: 5,
+        fillColor: "#f8f",
+        fillOpacity: 0.7,
+      }).addTo(map);
+      debugPoly.bindTooltip("HARDCODED POLY", {permanent: false});
+
       return () => {
         if (map.hasLayer(debugMarker)) map.removeLayer(debugMarker);
+        if (map.hasLayer(debugPoly)) map.removeLayer(debugPoly);
       };
     }
   }, [triangleMesh, map]);
@@ -51,6 +68,16 @@ export function TriangleMeshRenderer({
         const trianglePath = parentPath ? `${parentPath}-${triangle.id}` : triangle.id;
         // Add strong console logs before rendering
         console.log("[TriangleMeshRenderer] Will render TriangleRenderer for", triangle?.id, trianglePath, triangle.vertices);
+
+        // LOG: Output triangle vertices and their format for ALL triangles
+        if (Array.isArray(triangle.vertices)) {
+          console.log(
+            `[TriangleMeshRenderer] Vertices for ${triangle.id}:`,
+            triangle.vertices.map((v, idx) => `(${idx}: lat=${v.lat}, lng=${v.lng})`).join("; ")
+          );
+        } else {
+          console.error(`[TriangleMeshRenderer] Triangle ${triangle.id} has invalid vertices:`, triangle.vertices);
+        }
 
         if (!triangle.subdivided) {
           out.push(
@@ -137,3 +164,4 @@ export function TriangleMeshRenderer({
   if (!output) return null;
   return <>{output}</>;
 }
+
