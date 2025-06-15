@@ -6,17 +6,26 @@ import {
   TriangleMesh
 } from "../../utils/triangleMesh";
 
+// Fix: ALWAYS initialize and restore game mesh from the canonical BASE mesh if failed
 export function useTriangleMeshLoader(worldSlug: string, meshVersion: string) {
-  const [triangleMesh, setTriangleMesh] = useState<TriangleMesh[]>([]);
+  const [triangleMesh, setTriangleMesh] = useState<TriangleMesh[]>(() => {
+    // Always start with the canonical base mesh
+    const base = generateBaseTriangleMesh();
+    if (!base || base.length !== 26) {
+      console.error("[FIXED useTriangleMeshLoader] Initial base mesh missing/corrupt! Should be 26 triangles.", base);
+    }
+    return base;
+  });
   const [isLoading, setIsLoading] = useState(true);
   const pollIntervalRef = useRef<NodeJS.Timeout | null>(null);
 
-  // Always enforce non-empty mesh defensively
+  // Defensive effect: always re-assert mesh is non-empty
   useEffect(() => {
     if (!Array.isArray(triangleMesh) || triangleMesh.length === 0) {
+      // Always reset to canonical base mesh
       const base = generateBaseTriangleMesh();
       setTriangleMesh(base);
-      console.warn("[useTriangleMeshLoader] Fallback: mesh was empty, forced base mesh (26 triangles)");
+      console.warn("[FIXED useTriangleMeshLoader] Fallback: mesh was empty, forced base mesh (26 triangles)");
     }
   }, [triangleMesh]);
 
@@ -32,31 +41,31 @@ export function useTriangleMeshLoader(worldSlug: string, meshVersion: string) {
             // Always ensure canonical mesh (26)
             if (restoredMesh.length === 26) {
               setTriangleMesh(restoredMesh);
-              console.log("[useTriangleMeshLoader] Loaded mesh from activities", restoredMesh.length, restoredMesh.slice(0,3));
+              console.log("[FIXED useTriangleMeshLoader] Loaded mesh from activities", restoredMesh.length);
             } else {
               // Corrupt mesh, fallback
               const baseMesh = generateBaseTriangleMesh();
               setTriangleMesh(baseMesh);
-              console.warn("[useTriangleMeshLoader] Fallback to canonical base mesh (26 triangles):", baseMesh);
+              console.warn("[FIXED useTriangleMeshLoader] Fallback to canonical base mesh (26 triangles):", baseMesh);
             }
           } else {
             // Defensive fallback
             const baseMesh = generateBaseTriangleMesh();
             setTriangleMesh(baseMesh);
-            console.warn("[useTriangleMeshLoader] Restored mesh empty, fallback to base mesh");
+            console.warn("[FIXED useTriangleMeshLoader] Restored mesh empty, fallback to base mesh");
           }
         } else {
           const initialMesh = generateBaseTriangleMesh();
           if (mounted) {
             setTriangleMesh(initialMesh);
-            console.log("[useTriangleMeshLoader] Loaded canonical mesh from base", initialMesh.length, initialMesh.slice(0,3));
+            console.log("[FIXED useTriangleMeshLoader] Loaded canonical mesh from base", initialMesh.length);
           }
         }
       } catch (error) {
         // Fallback: canonical mesh (26)
         const initialMesh = generateBaseTriangleMesh();
         if (mounted) setTriangleMesh(initialMesh);
-        console.error("[useTriangleMeshLoader] Error loading mesh activities, fallback to base:", error);
+        console.error("[FIXED useTriangleMeshLoader] Error loading mesh activities, fallback to base:", error);
       } finally {
         if (mounted) setIsLoading(false);
       }
@@ -70,14 +79,14 @@ export function useTriangleMeshLoader(worldSlug: string, meshVersion: string) {
         let restoredMesh = rebuildTriangleMeshFromActivities(activities);
         if (!Array.isArray(restoredMesh) || restoredMesh.length !== 26) {
           restoredMesh = generateBaseTriangleMesh();
-          console.warn("[useTriangleMeshLoader] Poll fallback to canonical base mesh (26 triangles):", restoredMesh);
+          console.warn("[FIXED useTriangleMeshLoader] Poll fallback to canonical base mesh (26 triangles):", restoredMesh);
         }
         if (restoredMesh.length > 0 && mounted) {
           setTriangleMesh(restoredMesh);
         }
       } catch (error) {
         // on polling error, keep last mesh
-        console.error("[useTriangleMeshLoader] Error polling activities:", error);
+        console.error("[FIXED useTriangleMeshLoader] Error polling activities:", error);
       }
     }, 5000);
 
