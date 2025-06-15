@@ -20,10 +20,16 @@ export function useTriangleMeshLoader(worldSlug: string, meshVersion: string) {
         const activities = await getTriangleActivities(worldSlug);
         if (activities.length > 0) {
           const restoredMesh = rebuildTriangleMeshFromActivities(activities);
-          if (mounted) setTriangleMesh(restoredMesh);
+          if (mounted) {
+            setTriangleMesh(restoredMesh);
+            console.log("[useTriangleMeshLoader] Loaded mesh from activities", restoredMesh.length, restoredMesh.slice(0,3));
+          }
         } else {
           const initialMesh = generateBaseTriangleMesh();
-          if (mounted) setTriangleMesh(initialMesh);
+          if (mounted) {
+            setTriangleMesh(initialMesh);
+            console.log("[useTriangleMeshLoader] Loaded canonical mesh from base", initialMesh.length, initialMesh.slice(0,3));
+          }
         }
       } catch (error) {
         const initialMesh = generateBaseTriangleMesh();

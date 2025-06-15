@@ -108,7 +108,11 @@ export function TriangleRenderer({
     // Post-render check: see how many polygons are on the map
     const allLayers = Object.values((map as any)._layers || {});
     const polyCount = allLayers.filter((l) => l instanceof L.Polygon).length;
-    console.log(`[TriangleRenderer] After add: Leaflet map has ${polyCount} polygons. Layer IDs:`, allLayers.map(l => l._leaflet_id));
+    // Type safe: print only if leaflet id present
+    const polyIds = allLayers
+      .filter((l): l is { _leaflet_id: number } => typeof l === "object" && l !== null && "_leaflet_id" in l)
+      .map((l) => (l as any)._leaflet_id);
+    console.log(`[TriangleRenderer] After add: Leaflet map has ${polyCount} polygons. Layer IDs:`, polyIds);
     // DEBUG: Log polygon shape/info
     console.log("[TriangleRenderer] Created polygon for", trianglePath, polygon.getLatLngs());
 
