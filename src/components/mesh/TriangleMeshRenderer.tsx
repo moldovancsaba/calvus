@@ -1,4 +1,3 @@
-
 import L from "leaflet";
 import React from "react";
 import { TriangleRenderer } from "./TriangleRenderer";
@@ -128,7 +127,11 @@ export function TriangleMeshRenderer({
     return null;
   }
 
+  // Only clear existing polygons/markers if new mesh is non-empty
   React.useEffect(() => {
+    // Only clear if we have triangles to render (prevents flicker if mesh is temporarily empty)
+    if (safeTriangles.length === 0) return;
+
     triangleLayersRef.current.forEach(layer => {
       if (map.hasLayer(layer)) map.removeLayer(layer);
     });
@@ -137,7 +140,7 @@ export function TriangleMeshRenderer({
       if (map.hasLayer(marker)) map.removeLayer(marker);
     });
     numberMarkersRef.current.clear();
-  }, [map, triangleMesh, triangleLayersRef]);
+  }, [map, triangleLayersRef, safeTriangles.length]); // Remove direct triangleMesh dependency
 
   React.useEffect(() => {
     console.log("[TriangleMeshRenderer] triangleMesh prop:", triangleMesh);
@@ -165,4 +168,3 @@ export function TriangleMeshRenderer({
   if (!output) return null;
   return <>{output}</>;
 }
-
