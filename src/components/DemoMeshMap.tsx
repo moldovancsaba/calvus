@@ -1,10 +1,9 @@
-
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import L from "leaflet";
 import "leaflet/dist/leaflet.css";
 
-// Your demo mesh triangles: array of {id: string, vertices: [{lat, lng}, ...]}
-const DEMO_MESH = [
+// The mesh triangles, 26 base triangles, with id and vertices
+const BASE_MESH = [
   { id: "T1",  vertices: [{lat: 0, lng:-180}, {lat:66, lng:-144}, {lat:0, lng:-108}] },
   { id: "T2",  vertices: [{lat:66, lng:-144}, {lat:0, lng:-108}, {lat:66, lng:-72}] },
   { id: "T3",  vertices: [{lat:0, lng:-108}, {lat:66, lng:-72}, {lat:0, lng:-36}] },
@@ -33,7 +32,31 @@ const DEMO_MESH = [
   { id: "T26", vertices: [{lat:-66, lng:72}, {lat:-90, lng:0}, {lat:-66, lng:144}] },
 ];
 
-// Geodesic path util copied from your project
+// Helper: mid-point on sphere (great-circle, normalized)
+function sphericalMidpoint(a: {lat:number, lng:number}, b: {lat:number, lng:number}) {
+  const toRad = (deg: number) => deg * Math.PI / 180;
+  const toDeg = (rad: number) => rad * 180 / Math.PI;
+  const lat1 = toRad(a.lat), lng1 = toRad(a.lng);
+  const lat2 = toRad(b.lat), lng2 = toRad(b.lng);
+  const x1 = Math.cos(lat1) * Math.cos(lng1),
+    y1 = Math.cos(lat1) * Math.sin(lng1),
+    z1 = Math.sin(lat1);
+  const x2 = Math.cos(lat2) * Math.cos(lng2),
+    y2 = Math.cos(lat2) * Math.sin(lng2),
+    z2 = Math.sin(lat2);
+  // Average and normalize
+  let x = x1 + x2,
+    y = y1 + y2,
+    z = z1 + z2;
+  const len = Math.sqrt(x * x + y * y + z * z);
+  x /= len; y /= len; z /= len;
+  // to lat/lng
+  const lat = Math.asin(z);
+  const lng = Math.atan2(y, x);
+  return { lat: toDeg(lat), lng: toDeg(lng) };
+}
+
+// Generates array of [lat,lng] along sphere (used for curved triangle edges)
 function geodesicTriangleCoords(vertices: {lat:number, lng:number}[]) {
   if (!vertices || vertices.length !== 3) return [];
   const greatCirclePath = (start: any, end: any, steps = 50) => {
@@ -75,10 +98,106 @@ function geodesicTriangleCoords(vertices: {lat:number, lng:number}[]) {
   return [...edge1, ...edge2.slice(1), ...edge3.slice(1, -1)];
 }
 
+// Core subdivision (returns 4 triangles for 1 parent triangle)
+function subdivideTriangle(triangle: { id: string, vertices: {lat:number, lng:number}[] }, idPrefix: string) {
+  const [v1, v2, v3] = triangle.vertices;
+  const m1 = sphericalMidpoint(v1, v2);
+  const m2 = sphericalMidpoint(v2, v3);
+  const m3 = sphericalMidpoint(v3, v1);
+  // Unique child IDs (for re-rendering, not persisted)
+  return [
+    { id: `${idPrefix}.1`, vertices: [v1, m1, m3] },
+    { id: `${idPrefix}.2`, vertices: [m1, v2, m2] },
+    { id: `${idPrefix}.3`, vertices: [m3, m2, v3] },
+    { id: `${idPrefix}.4`, vertices: [m1, m2, m3] }
+  ];
+}
+
+interface MeshTriangle {
+  id: string;
+  vertices: {lat: number, lng: number}[];
+  children?: MeshTriangle[];
+}
+
+// Helper: recursively updates triangle in mesh by ID and subdivides it
+function divideTriangleById(triangles: MeshTriangle[], id: string): MeshTriangle[] {
+  // Recursively search for the triangle matching given ID and subdivide
+  return triangles.map(tri => {
+    if (tri.id === id) {
+      // Only subdivide if not already subdivided
+      if (!tri.children) {
+        const children = subdivideTriangle(tri, tri.id);
+        return { ...tri, children };
+      }
+      return tri; // already subdivided, ignore further click
+    } else if (tri.children) {
+      return { ...tri, children: divideTriangleById(tri.children, id) };
+    } else {
+      return tri;
+    }
+  });
+}
+
+// Recursive rendering of triangles (leaves only—non subdivided ones can be clicked & subdivided)
+function renderTriangles(
+  map: L.Map,
+  mesh: MeshTriangle[],
+  polygonLayers: React.MutableRefObject<L.Polygon[]>,
+  onTriangleClick: (id: string) => void
+) {
+  // Remove old polygons for redraw
+  polygonLayers.current.forEach(layer => {
+    map.removeLayer(layer);
+  });
+  polygonLayers.current = [];
+  // Recursively draw mesh
+  function draw(tris: MeshTriangle[]) {
+    tris.forEach(tri => {
+      if (tri.children) {
+        draw(tri.children);
+        return;
+      }
+      const coords = geodesicTriangleCoords(tri.vertices);
+      const polygon = L.polygon(coords, {
+        color: "#fff",            // 2px white border
+        weight: 2,
+        opacity: 1,
+        fillColor: "#000",        // black fill
+        fillOpacity: 0.5,
+        interactive: true,        // Make them clickable now!
+        smoothFactor: 1.0
+      });
+      polygon.on("click", () => onTriangleClick(tri.id));
+      polygon.on("touchstart", () => onTriangleClick(tri.id));
+      polygon.addTo(map);
+      polygonLayers.current.push(polygon);
+    });
+  }
+  draw(mesh);
+}
+
 const DemoMeshMap: React.FC = () => {
   const mapDiv = useRef<HTMLDivElement>(null);
   const mapRef = useRef<L.Map | null>(null);
   const polygonLayers = useRef<L.Polygon[]>([]);
+
+  // Store the mesh triangles in state for runtime-only subdivisions
+  const [mesh, setMesh] = useState<MeshTriangle[]>(() =>
+    BASE_MESH.map(t => ({ id: t.id, vertices: t.vertices }))
+  );
+
+  // Invalidate and redraw mesh when triangles change
+  useEffect(() => {
+    if (!mapRef.current) return;
+    const map = mapRef.current;
+    renderTriangles(map, mesh, polygonLayers, (id: string) => {
+      setMesh(prevMesh => divideTriangleById(prevMesh, id));
+    });
+    // fit bounds only on first mount (not every update)
+    // ... we keep this outside to avoid shifting on every subdivide
+    // Clean up handled in map effect
+    // eslint-disable-next-line
+  }, [mesh]);
 
   useEffect(() => {
     if (!mapDiv.current) return;
@@ -116,26 +235,9 @@ const DemoMeshMap: React.FC = () => {
 
     const map = mapRef.current;
 
-    // Remove old polygons
-    polygonLayers.current.forEach(layer => {
-      map.removeLayer(layer);
-    });
-    polygonLayers.current = [];
-
-    // Draw triangles
-    DEMO_MESH.forEach(tri => {
-      const coords = geodesicTriangleCoords(tri.vertices);
-      const polygon = L.polygon(coords, {
-        color: "#fff",            // 2px white border
-        weight: 2,
-        opacity: 1,
-        fillColor: "#000",        // black fill
-        fillOpacity: 0.5,
-        interactive: false,       // No mouse interactions on mesh
-        smoothFactor: 1.0
-      });
-      polygon.addTo(map);
-      polygonLayers.current.push(polygon);
+    // Draw the mesh initially
+    renderTriangles(map, mesh, polygonLayers, (id: string) => {
+      setMesh(prevMesh => divideTriangleById(prevMesh, id));
     });
 
     // Fit world on mount
@@ -148,6 +250,7 @@ const DemoMeshMap: React.FC = () => {
       mapRef.current = null;
       polygonLayers.current = [];
     };
+    // eslint-disable-next-line
   }, []);
 
   return (
@@ -158,4 +261,3 @@ const DemoMeshMap: React.FC = () => {
 };
 
 export default DemoMeshMap;
-
