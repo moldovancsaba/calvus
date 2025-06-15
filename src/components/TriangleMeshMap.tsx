@@ -77,7 +77,7 @@ const TriangleMeshMap = ({ worldSlug }: Props) => {
   const triangleLayersRef = useRef<Map<string, L.Polygon>>(new Map());
   const isMobile = useIsMobile();
 
-  // --- Mesh state stored in memory ONLY ---
+  // ---- IN MEMORY MESH STATE, exactly like /jusforfun ----
   const [mesh, setMesh] = useState<TriangleMesh[]>(() => generateBaseTriangleMesh());
   const [fitDone, setFitDone] = useState(false);
   const [mapIsReady, setMapIsReady] = useState(false);
@@ -144,3 +144,4 @@ const TriangleMeshMap = ({ worldSlug }: Props) => {
 };
 
 export default TriangleMeshMap;
+
