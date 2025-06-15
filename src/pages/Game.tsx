@@ -1,7 +1,6 @@
-
 import { useParams } from "react-router-dom";
 import { IdentityBar } from "../components/IdentityBar";
-// import TriangleMeshMap from "../components/TriangleMeshMap";
+import TriangleMeshMap from "../components/TriangleMeshMap";
 import { fetchWorldSettings, WorldSettings } from "@/utils/worldSettings";
 import React from "react";
 import StandaloneMeshMap from "../components/StandaloneMeshMap"; // New always-working fallback renderer
@@ -38,7 +37,7 @@ export default function GamePage() {
         </div>
       </header>
       <main className="flex-1 w-full flex flex-col items-stretch justify-stretch bg-background p-0 m-0">
-        <StandaloneMeshMap
+        <TriangleMeshMap
           worldSlug={worldSlug}
           settings={worldSettings ?? undefined}
         />
