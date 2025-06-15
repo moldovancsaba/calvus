@@ -2,9 +2,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
-import {
-  TriangleMesh
-} from '../utils/triangleMesh';
+import { TriangleMesh } from '../utils/triangleMesh';
 import { useIdentity } from "./IdentityContext";
 import { useIsMobile } from "../hooks/use-mobile";
 import { useLeafletMobileTouch } from "./hooks/useLeafletMobileTouch";
@@ -101,6 +99,11 @@ const TriangleMeshMap = ({ worldSlug, settings }: Props) => {
   // 5. Compute merged settings after all hooks
   const mergedWorldSettings = settings || worldSettings;
 
+  // Reset fitDone when world changes or when triangleMesh resets (to fit new mesh)
+  useEffect(() => {
+    setFitDone(false);
+  }, [fixedWorldSlug, triangleMesh.length]);
+
   // 6. Handle triangle click (only use settings from backend)
   const handleTriangleClick = useTriangleMeshTap(
     identity,
@@ -126,8 +129,14 @@ const TriangleMeshMap = ({ worldSlug, settings }: Props) => {
     setMapIsReady(true);
   }
 
+  // Fit map to mesh whenever map/mesh changes and not already fit
   useEffect(() => {
-    if (!fitDone && mapInstanceRef.current && triangleMesh.length > 0) {
+    if (
+      !fitDone &&
+      mapIsReady &&
+      mapInstanceRef.current &&
+      triangleMesh.length > 0
+    ) {
       const allCoords = triangleMesh.flatMap(t => t.vertices.map(v => [v.lat, v.lng]));
       if (allCoords.length >= 3) {
         const bounds = L.latLngBounds(allCoords as [number, number][]);
@@ -135,7 +144,7 @@ const TriangleMeshMap = ({ worldSlug, settings }: Props) => {
         setFitDone(true);
       }
     }
-  }, [triangleMesh, fitDone]);
+  }, [triangleMesh, fitDone, mapIsReady]);
 
   // === 7. Render logic ===
   // Show loading spinner overlay if settings not ready
@@ -162,7 +171,7 @@ const TriangleMeshMap = ({ worldSlug, settings }: Props) => {
       />
       {isLoading && <LoadingOverlay />}
       <ErrorBanner message={null} />
-      {mapIsReady && mapInstanceRef.current && (
+      {mapIsReady && mapInstanceRef.current && triangleMesh.length > 0 && (
         <TriangleMeshRenderer
           map={mapInstanceRef.current}
           triangleMesh={triangleMesh}
