@@ -49,6 +49,9 @@ export function TriangleMeshRenderer({
       const out: React.ReactNode[] = [];
       for (const triangle of list) {
         const trianglePath = parentPath ? `${parentPath}-${triangle.id}` : triangle.id;
+        // Add strong console logs before rendering
+        console.log("[TriangleMeshRenderer] Will render TriangleRenderer for", triangle?.id, trianglePath, triangle.vertices);
+
         if (!triangle.subdivided) {
           out.push(
             <TriangleRenderer
@@ -65,7 +68,6 @@ export function TriangleMeshRenderer({
           );
         } else if (triangle.children) {
           const childNodes = renderTriangles(triangle.children, trianglePath);
-          // Only push childNodes if they're not null
           if (childNodes) {
             if (Array.isArray(childNodes)) {
               out.push(...childNodes);
@@ -75,10 +77,8 @@ export function TriangleMeshRenderer({
           }
         }
       }
-      // Remove any undefined/null accidental insertions
       const filteredOut = out.filter(Boolean);
       console.log("[TriangleMeshRenderer] renderTriangles output count:", filteredOut.length, "props.triangleMesh count:", list.length, "sample:", list.slice(0,3));
-      // If nothing to render, return null for safety
       return filteredOut.length > 0 ? filteredOut : null;
     },
     [
