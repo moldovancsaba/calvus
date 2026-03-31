@@ -1,0 +1,16 @@
+<!doctype html>
+<html lang="hu">
+<head><meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" /><title>Esettanulmányok - Balsamic</title><link rel="stylesheet" href="./styles.css" /></head>
+<body>
+<header class="topbar"><div class="container row"><a class="brand" href="./index.html">Lexodont - Balsamic</a><nav class="menu"><a href="./index.html">Főoldal</a><a href="./szakteruletek.html">Szakterületek</a><a href="./araink.html">Áraink</a><a href="./esettanulmanyok.html">Esettanulmányok</a><a href="./csapat.html">Csapat</a></nav></div></header>
+<main class="section"><div class="container">
+  <article class="paper"><p class="kicker">Esettanulmányok</p><h1>Előtte-utána eredmények</h1><p>3 minta slider Balsamic stílusban.</p></article>
+  <section class="section"><div class="grid-2">
+    <article class="box"><h3>Minta 1</h3><div class="ba-slider" data-start="50"><img class="ba-after" src="https://picsum.photos/seed/after-01/1200/700" alt="" /><img class="ba-before" src="https://picsum.photos/seed/before-01/1200/700" alt="" /><span class="label left">Előtte</span><span class="label right">Utána</span><span class="handle"></span><input class="range" type="range" min="0" max="100" value="50" /></div></article>
+    <article class="box"><h3>Minta 2</h3><div class="ba-slider" data-start="40"><img class="ba-after" src="https://picsum.photos/seed/after-02/1200/700" alt="" /><img class="ba-before" src="https://picsum.photos/seed/before-02/1200/700" alt="" /><span class="label left">Előtte</span><span class="label right">Utána</span><span class="handle"></span><input class="range" type="range" min="0" max="100" value="40" /></div></article>
+    <article class="box"><h3>Minta 3</h3><div class="ba-slider" data-start="55"><img class="ba-after" src="https://picsum.photos/seed/after-03/1200/700" alt="" /><img class="ba-before" src="https://picsum.photos/seed/before-03/1200/700" alt="" /><span class="label left">Előtte</span><span class="label right">Utána</span><span class="handle"></span><input class="range" type="range" min="0" max="100" value="55" /></div></article>
+  </div></section>
+</div></main>
+<footer class="footer"><div class="container legal"><p>© Lexodont Kft.</p><a href="./index.html">Vissza a főoldalra</a></div></footer>
+<script>document.querySelectorAll(".ba-slider").forEach((s)=>{const r=s.querySelector(".range");const u=v=>s.style.setProperty("--split",v+"%");u(r.value);r.addEventListener("input",e=>u(e.target.value));});</script>
+</body></html>
