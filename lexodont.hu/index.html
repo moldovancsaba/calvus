@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Lexodont.hu - Wireframe v1</title>
+    <title>Lexodont.hu - Wireframe v2</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -15,11 +15,12 @@
   <body>
     <header class="site-header">
       <div class="container nav-wrap">
-        <a class="brand-text" href="#top">Lexodont Dental Studio</a>
+        <a class="brand-text" href="./index.html">Lexodont Dental Studio</a>
         <nav class="site-nav">
-          <a href="#bemutatkozas">Rólunk</a>
+          <a href="#rolunk">Rólunk</a>
           <a href="#szakteruletek">Szakterületek</a>
-          <a href="#elotte-utana">Előtte-utana</a>
+          <a href="./esettanulmanyok.html">Esettanulmányok</a>
+          <a href="./csapat.html">Csapat</a>
           <a href="#kapcsolat">Kapcsolat</a>
         </nav>
         <a class="btn btn-primary" href="https://wa.me/" target="_blank" rel="noreferrer">WhatsApp időpont</a>
@@ -27,9 +28,13 @@
     </header>
 
     <main id="top">
-      <section class="hero section">
-        <div class="container hero-grid">
-          <div class="hero-copy">
+      <section class="hero-banner">
+        <img
+          src="https://images.unsplash.com/photo-1629909613654-28e377c37b09?auto=format&fit=crop&w=1800&q=80"
+          alt="Fogászati kezelés közben"
+        />
+        <div class="hero-overlay">
+          <div class="container hero-copy">
             <p class="kicker">Címlap - azonos CTA, cserélhető média</p>
             <h1>Szebb mosoly, nyugodt élmény, modern fogászat.</h1>
             <p>
@@ -46,28 +51,37 @@
               <li>Átlátható kezelési terv és árak</li>
             </ul>
           </div>
-          <div class="hero-media">
-            <div class="media-tabs">
-              <button class="tab active">Kezelés közben</button>
-              <button class="tab">Csapatfotó</button>
-              <button class="tab">Rendelő</button>
-            </div>
-            <div class="media-frame">
-              <img
-                src="https://images.unsplash.com/photo-1629909613654-28e377c37b09?auto=format&fit=crop&w=1200&q=80"
-                alt="Fogászati kezelés közben"
-              />
-            </div>
-            <p class="wire-note">Wireframe megjegyzés: videónál lassabb vágás, átúszás, cinematic hangulat.</p>
+          <div class="container">
+            <p class="wire-note hero-note">Wireframe megjegyzés: videónál lassabb vágás, átúszás, cinematic hangulat.</p>
           </div>
         </div>
       </section>
 
-      <section id="bemutatkozas" class="section section-soft">
+      <section id="rolunk" class="section">
+        <div class="container">
+          <div class="team-cover">
+            <img
+              src="https://images.unsplash.com/photo-1527613426441-4da17471b66d?auto=format&fit=crop&w=1400&q=80"
+              alt="Lexodont csapatfotó helye"
+            />
+          </div>
+          <div class="team-cta">
+            <p class="kicker">Címlapi bemutatkozás</p>
+            <h2>Ismerd meg a Lexodont csapatát</h2>
+            <p class="muted">
+              Itt a csapatfotós bemutatkozás jelenik meg rövid üzenettel, a részletes orvosprofilok
+              és fun fact tartalom pedig külön landing oldalon.
+            </p>
+            <a class="btn btn-outline" href="./csapat.html">Csapat landing megnyitása</a>
+          </div>
+        </div>
+      </section>
+
+      <section class="section section-soft">
         <div class="container">
           <div class="section-head">
-            <p class="kicker">Címlapi bemutatkozás</p>
-            <h2>Miért vagyunk mások?</h2>
+            <p class="kicker">Miért vagyunk mások?</p>
+            <h2>Nyugodt betegút és modern szemlélet</h2>
           </div>
           <div class="why-grid">
             <article class="card">
@@ -86,47 +100,6 @@
         </div>
       </section>
 
-      <section class="section">
-        <div class="container">
-          <div class="team-cover">
-            <img
-              src="https://images.unsplash.com/photo-1527613426441-4da17471b66d?auto=format&fit=crop&w=1400&q=80"
-              alt="Lexodont csapatfotó helye"
-            />
-          </div>
-          <p class="wire-note center">Csapatfotó ajánlott: egységes háttér, azonos öltözet, barátságos tónus.</p>
-        </div>
-      </section>
-
-      <section class="section section-soft">
-        <div class="container">
-          <div class="section-head">
-            <p class="kicker">Bemutatkozás lista</p>
-            <h2>Orvosaink röviden</h2>
-          </div>
-          <div class="staff-grid">
-            <article class="staff-card">
-              <h3>Dr. Minta Anna</h3>
-              <p class="role">Fogpótlás, implantológia</p>
-              <p>10+ év tapasztalat teljes mosolyrehabilitációs esetekben.</p>
-              <p class="fun-fact">Fun fact: maratonfutó, évente 2 verseny.</p>
-            </article>
-            <article class="staff-card">
-              <h3>Dr. Minta Péter</h3>
-              <p class="role">Szájsebészet</p>
-              <p>Komplex sebészeti beavatkozások, nyugodt páciensvezetés.</p>
-              <p class="fun-fact">Fun fact: hobbija az analóg fotózás.</p>
-            </article>
-            <article class="staff-card">
-              <h3>Dr. Minta Júlia</h3>
-              <p class="role">Fogszabályozás</p>
-              <p>Láthatatlan és rögzített fogszabályozási megoldások.</p>
-              <p class="fun-fact">Fun fact: saját speciality kávépörkölés.</p>
-            </article>
-          </div>
-        </div>
-      </section>
-
       <section id="szakteruletek" class="section">
         <div class="container">
           <div class="section-head">
@@ -134,29 +107,35 @@
             <h2>Kiemelt kezelések dedikált landing oldalakkal</h2>
           </div>
           <div class="treatment-grid">
-            <a class="treatment-card" href="#fogpotlas">
+            <a class="treatment-card" href="./fogpotlas.html">
               <h3>Fogpótlás</h3>
               <p>Koronák, hidak, teljes funkció és esztétika helyreállítása.</p>
+              <span class="price">210 000 Ft-tól</span>
             </a>
-            <a class="treatment-card" href="#fogszabalyozas">
+            <a class="treatment-card" href="./fogszabalyozas.html">
               <h3>Fogszabályozás</h3>
               <p>Gyermek és felnőtt kezelések, diszkrét és klasszikus opciókkal.</p>
+              <span class="price">390 000 Ft-tól</span>
             </a>
-            <a class="treatment-card" href="#szajsebeszet">
+            <a class="treatment-card" href="./szajsebeszet.html">
               <h3>Szájsebészet</h3>
               <p>Biztonságos műtéti ellátás, pontos diagnózisra építve.</p>
+              <span class="price">85 000 Ft-tól</span>
             </a>
-            <a class="treatment-card" href="#implantologia">
+            <a class="treatment-card" href="./implantologia.html">
               <h3>Implantológia</h3>
               <p>Stabil, hosszú távú fogpótlási megoldás modern rendszerrel.</p>
+              <span class="price">320 000 Ft-tól</span>
             </a>
-            <a class="treatment-card" href="#fogkoeltavolitas">
+            <a class="treatment-card" href="./fogkoeltavolitas.html">
               <h3>Fogkőeltávolítás</h3>
               <p>Professzionális tisztítás és prevenciós protokoll.</p>
+              <span class="price">24 900 Ft-tól</span>
             </a>
-            <a class="treatment-card" href="#megtarto">
+            <a class="treatment-card" href="./megtarto-fogaszat.html">
               <h3>Megtartó fogászat</h3>
               <p>A természetes fogak megőrzése minimál invazív szemlélettel.</p>
+              <span class="price">29 900 Ft-tól</span>
             </a>
           </div>
         </div>
@@ -166,36 +145,16 @@
         <div class="container">
           <div class="section-head">
             <p class="kicker">Előtte-utana</p>
-            <h2>Esettanulmányok valós eredményekkel</h2>
+            <h2>Valós eredmények, külön esettanulmány landing oldalon</h2>
           </div>
-          <div class="case-grid">
-            <article class="case-card">
-              <div class="before-after">
-                <div>
-                  <span>Előtte</span>
-                </div>
-                <div>
-                  <span>Utána</span>
-                </div>
-              </div>
-              <h3>Fogpótlás - teljes mosolyzóna</h3>
-              <p>6 hónapos kezelési terv, funkcionális és esztétikai rehabilitáció.</p>
-              <a href="#fogpotlas">Részletes esetlap</a>
-            </article>
-            <article class="case-card">
-              <div class="before-after">
-                <div>
-                  <span>Előtte</span>
-                </div>
-                <div>
-                  <span>Utána</span>
-                </div>
-              </div>
-              <h3>Fogszabályozás - diszkrét megoldás</h3>
-              <p>16 hónap, láthatatlan sínrendszerrel, kontrollált eredménnyel.</p>
-              <a href="#fogszabalyozas">Részletes esetlap</a>
-            </article>
-          </div>
+          <article class="case-cta">
+            <h3>Nézd meg az összes előtte-utána eredményt egy dedikált oldalon</h3>
+            <p>
+              A főoldalon csak egy beszédes átvezető blokk marad. A konkrét esetek, képek és
+              kezelés részletek az esettanulmány landing oldalon jelennek meg.
+            </p>
+            <a class="btn btn-outline" href="./esettanulmanyok.html">Esettanulmányok megnyitása</a>
+          </article>
         </div>
       </section>
 
@@ -210,10 +169,10 @@
             </p>
           </div>
           <div class="knowledge-list">
-            <a href="#implantologia">Implantáció lépésről lépésre</a>
-            <a href="#fogkoeltavolitas">AirFlow tisztítás: kinek ajánlott?</a>
-            <a href="#szajsebeszet">Szájsebészeti beavatkozás utáni regeneráció</a>
-            <a href="#fogszabalyozas">Láthatatlan fogszabályozás GYIK</a>
+            <a href="./tudaskozpont-implantacio.html">Implantáció lépésről lépésre</a>
+            <a href="./tudaskozpont-airflow.html">AirFlow tisztítás: kinek ajánlott?</a>
+            <a href="./tudaskozpont-regeneralodas.html">Szájsebészeti beavatkozás utáni regeneráció</a>
+            <a href="./tudaskozpont-lathatatlan.html">Láthatatlan fogszabályozás GYIK</a>
           </div>
         </div>
       </section>
@@ -238,7 +197,7 @@
 
     <footer class="site-footer">
       <div class="container">
-        <p>Lexodont.hu - Wireframe v1 (belső tervezési verzió)</p>
+        <p>Lexodont.hu - Wireframe v2 (belső tervezési verzió)</p>
       </div>
     </footer>
   </body>
