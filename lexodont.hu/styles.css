@@ -49,6 +49,10 @@ a {
   background: var(--surface-soft);
 }
 
+.muted {
+  color: var(--muted);
+}
+
 .site-header {
   position: sticky;
   top: 0;
@@ -111,11 +115,27 @@ a {
   border-color: #bfb4a8;
 }
 
-.hero-grid {
-  display: grid;
-  grid-template-columns: 1.1fr 1fr;
-  gap: 34px;
-  align-items: center;
+.hero-banner {
+  position: relative;
+  min-height: 74vh;
+  display: flex;
+  align-items: flex-end;
+}
+
+.hero-banner > img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.hero-overlay {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  background: linear-gradient(to top, rgba(20, 20, 20, 0.68), rgba(20, 20, 20, 0.2));
+  padding: 80px 0 46px;
 }
 
 .kicker {
@@ -146,7 +166,7 @@ h2 {
 }
 
 .hero-copy > p {
-  color: var(--muted);
+  color: #ececec;
   max-width: 60ch;
 }
 
@@ -160,46 +180,16 @@ h2 {
 .trust-list {
   margin: 24px 0 0;
   padding-left: 20px;
-  color: var(--muted);
+  color: #ececec;
 }
 
-.hero-media {
-  background: var(--surface);
-  border: 1px solid var(--line);
-  border-radius: var(--radius);
-  padding: 16px;
-  box-shadow: var(--shadow);
+.hero-copy .kicker,
+.hero-copy h1 {
+  color: #fff;
 }
 
-.media-tabs {
-  display: flex;
-  gap: 8px;
-  margin-bottom: 14px;
-}
-
-.tab {
-  border: 1px solid #9ac2ff;
-  background: #d9e9ff;
-  color: #1654b7;
-  border-radius: 999px;
-  padding: 8px 14px;
-  font-weight: 600;
-}
-
-.tab.active {
-  background: #baddff;
-}
-
-.media-frame {
-  overflow: hidden;
-  border-radius: 12px;
-  border: 1px solid var(--line);
-}
-
-.media-frame img {
-  width: 100%;
-  aspect-ratio: 16 / 9;
-  object-fit: cover;
+.hero-note {
+  color: #e9e9e9;
 }
 
 .wire-note {
@@ -229,7 +219,6 @@ h2 {
 }
 
 .card,
-.staff-card,
 .treatment-card,
 .case-card {
   border: 1px solid var(--line);
@@ -239,7 +228,6 @@ h2 {
 }
 
 .card p,
-.staff-card p,
 .treatment-card p,
 .case-card p {
   color: var(--muted);
@@ -259,16 +247,19 @@ h2 {
   object-fit: cover;
 }
 
+.team-cta {
+  margin-top: 18px;
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  padding: 20px;
+  display: grid;
+  gap: 12px;
+}
+
 .staff-grid {
+  margin-top: 20px;
   grid-template-columns: repeat(3, minmax(0, 1fr));
-}
-
-.role {
-  font-weight: 600;
-}
-
-.fun-fact {
-  font-size: 0.95rem;
 }
 
 .treatment-grid {
@@ -276,7 +267,15 @@ h2 {
 }
 
 .treatment-card {
+  display: grid;
+  gap: 8px;
   transition: 0.2s ease;
+}
+
+.price {
+  margin-top: 8px;
+  color: #0f172a;
+  font-weight: 700;
 }
 
 .treatment-card:hover {
@@ -309,6 +308,15 @@ h2 {
 .case-card a {
   color: #1663d3;
   font-weight: 600;
+}
+
+.case-cta {
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  background: #fff;
+  padding: 22px;
+  display: grid;
+  gap: 12px;
 }
 
 .knowledge-grid {
@@ -362,7 +370,6 @@ h2 {
 }
 
 @media (max-width: 1024px) {
-  .hero-grid,
   .knowledge-grid,
   .contact-grid {
     grid-template-columns: 1fr;
