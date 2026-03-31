@@ -263,7 +263,28 @@ h2 {
 
 .staff-grid {
   margin-top: 20px;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-columns: 1fr;
+}
+
+.staff-grid .card {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  gap: 16px;
+  align-items: start;
+}
+
+.staff-grid .card h3,
+.staff-grid .card p {
+  grid-column: 2;
+}
+
+.staff-grid .card:nth-child(even) .staff-photo {
+  grid-column: 2;
+}
+
+.staff-grid .card:nth-child(even) h3,
+.staff-grid .card:nth-child(even) p {
+  grid-column: 1;
 }
 
 .staff-photo {
@@ -330,6 +351,29 @@ h2 {
   padding: 22px;
   display: grid;
   gap: 12px;
+  margin-top: 16px;
+}
+
+.review-grid,
+.partners-grid {
+  display: grid;
+  gap: 12px;
+}
+
+.review-grid {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.partners-grid {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.partner-item {
+  border: 1px solid var(--line);
+  background: #fff;
+  padding: 14px;
+  font-weight: 600;
+  text-align: center;
 }
 
 .knowledge-grid {
@@ -460,7 +504,9 @@ h2 {
   .why-grid,
   .staff-grid,
   .treatment-grid,
-  .feature-grid {
+  .feature-grid,
+  .review-grid,
+  .partners-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
@@ -483,5 +529,17 @@ h2 {
 
   .section {
     padding: 58px 0;
+  }
+
+  .staff-grid .card {
+    grid-template-columns: 1fr;
+  }
+
+  .staff-grid .card h3,
+  .staff-grid .card p,
+  .staff-grid .card:nth-child(even) h3,
+  .staff-grid .card:nth-child(even) p,
+  .staff-grid .card:nth-child(even) .staff-photo {
+    grid-column: 1;
   }
 }
