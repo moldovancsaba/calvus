@@ -8,8 +8,8 @@
   --primary: #16a34a;
   --primary-strong: #12813b;
   --accent: #3b82f6;
-  --radius: 16px;
-  --shadow: 0 10px 30px rgba(42, 38, 34, 0.08);
+  --radius: 0;
+  --shadow: none;
 }
 
 *,
@@ -59,7 +59,7 @@ a {
   z-index: 20;
   background: rgba(246, 243, 239, 0.92);
   border-bottom: 1px solid var(--line);
-  backdrop-filter: blur(8px);
+  backdrop-filter: none;
 }
 
 .nav-wrap {
@@ -90,7 +90,7 @@ a {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  border-radius: 999px;
+  border-radius: 0;
   padding: 12px 20px;
   font-weight: 600;
   border: 1px solid transparent;
@@ -292,8 +292,8 @@ h2 {
 }
 
 .treatment-card:hover {
-  transform: translateY(-2px);
-  box-shadow: var(--shadow);
+  transform: none;
+  box-shadow: none;
 }
 
 .case-grid {
@@ -368,11 +368,17 @@ h2 {
   border: 1px solid var(--line);
   border-radius: 14px;
   min-height: 280px;
-  background: linear-gradient(120deg, #ede6dc, #f8f5f0);
+  background: #f8f5f0;
   display: grid;
   place-items: center;
   color: #83796f;
   font-weight: 600;
+}
+
+/* Classic wireframe override */
+* {
+  border-radius: 0 !important;
+  box-shadow: none !important;
 }
 
 .site-footer {
