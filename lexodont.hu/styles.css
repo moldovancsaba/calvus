@@ -276,6 +276,7 @@ h2 {
 .staff-grid .card h3,
 .staff-grid .card p {
   grid-column: 2;
+  grid-row: 1;
 }
 
 .staff-grid .card:nth-child(even) .staff-photo {
@@ -285,6 +286,16 @@ h2 {
 .staff-grid .card:nth-child(even) h3,
 .staff-grid .card:nth-child(even) p {
   grid-column: 1;
+  grid-row: 1;
+}
+
+.staff-grid .card h3 {
+  margin-bottom: 8px;
+}
+
+.staff-grid .card p {
+  align-self: start;
+  margin-top: 34px;
 }
 
 .staff-grid .card:nth-child(even) {
