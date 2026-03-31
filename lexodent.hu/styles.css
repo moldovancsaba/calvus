@@ -1,0 +1,393 @@
+:root {
+  --bg: #f6f3ef;
+  --surface: #ffffff;
+  --surface-soft: #f3efe8;
+  --text: #2a2622;
+  --muted: #6d655d;
+  --line: #d9d1c8;
+  --primary: #16a34a;
+  --primary-strong: #12813b;
+  --accent: #3b82f6;
+  --radius: 16px;
+  --shadow: 0 10px 30px rgba(42, 38, 34, 0.08);
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: "Inter", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  color: var(--text);
+  background: var(--bg);
+  line-height: 1.6;
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.container {
+  width: min(1160px, 92%);
+  margin: 0 auto;
+}
+
+.section {
+  padding: 76px 0;
+}
+
+.section-soft {
+  background: var(--surface-soft);
+}
+
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  background: rgba(246, 243, 239, 0.92);
+  border-bottom: 1px solid var(--line);
+  backdrop-filter: blur(8px);
+}
+
+.nav-wrap {
+  min-height: 80px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.brand-text {
+  font-weight: 800;
+  letter-spacing: 0.01em;
+}
+
+.site-nav {
+  display: flex;
+  gap: 20px;
+  font-weight: 500;
+  color: var(--muted);
+}
+
+.site-nav a:hover {
+  color: var(--text);
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 999px;
+  padding: 12px 20px;
+  font-weight: 600;
+  border: 1px solid transparent;
+  transition: 0.2s ease;
+}
+
+.btn-primary {
+  background: var(--primary);
+  color: #fff;
+}
+
+.btn-primary:hover {
+  background: var(--primary-strong);
+}
+
+.btn-outline {
+  border-color: var(--line);
+  background: #fff;
+}
+
+.btn-outline:hover {
+  border-color: #bfb4a8;
+}
+
+.hero-grid {
+  display: grid;
+  grid-template-columns: 1.1fr 1fr;
+  gap: 34px;
+  align-items: center;
+}
+
+.kicker {
+  margin: 0 0 12px;
+  font-size: 0.86rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--muted);
+  font-weight: 600;
+}
+
+h1,
+h2,
+h3,
+p {
+  margin: 0;
+}
+
+h1 {
+  font-size: clamp(2rem, 3.6vw, 3rem);
+  line-height: 1.12;
+  margin-bottom: 16px;
+}
+
+h2 {
+  font-size: clamp(1.5rem, 2.6vw, 2.2rem);
+  line-height: 1.2;
+}
+
+.hero-copy > p {
+  color: var(--muted);
+  max-width: 60ch;
+}
+
+.hero-actions {
+  margin-top: 26px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.trust-list {
+  margin: 24px 0 0;
+  padding-left: 20px;
+  color: var(--muted);
+}
+
+.hero-media {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 16px;
+  box-shadow: var(--shadow);
+}
+
+.media-tabs {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 14px;
+}
+
+.tab {
+  border: 1px solid #9ac2ff;
+  background: #d9e9ff;
+  color: #1654b7;
+  border-radius: 999px;
+  padding: 8px 14px;
+  font-weight: 600;
+}
+
+.tab.active {
+  background: #baddff;
+}
+
+.media-frame {
+  overflow: hidden;
+  border-radius: 12px;
+  border: 1px solid var(--line);
+}
+
+.media-frame img {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+}
+
+.wire-note {
+  margin-top: 10px;
+  font-size: 0.9rem;
+  color: var(--muted);
+}
+
+.center {
+  text-align: center;
+}
+
+.section-head {
+  margin-bottom: 24px;
+}
+
+.why-grid,
+.staff-grid,
+.treatment-grid,
+.case-grid {
+  display: grid;
+  gap: 16px;
+}
+
+.why-grid {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.card,
+.staff-card,
+.treatment-card,
+.case-card {
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  background: var(--surface);
+  padding: 20px;
+}
+
+.card p,
+.staff-card p,
+.treatment-card p,
+.case-card p {
+  color: var(--muted);
+  margin-top: 8px;
+}
+
+.team-cover {
+  border-radius: var(--radius);
+  overflow: hidden;
+  border: 1px solid var(--line);
+  box-shadow: var(--shadow);
+}
+
+.team-cover img {
+  width: 100%;
+  aspect-ratio: 16 / 5;
+  object-fit: cover;
+}
+
+.staff-grid {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.role {
+  font-weight: 600;
+}
+
+.fun-fact {
+  font-size: 0.95rem;
+}
+
+.treatment-grid {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.treatment-card {
+  transition: 0.2s ease;
+}
+
+.treatment-card:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow);
+}
+
+.case-grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.before-after {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 8px;
+  margin-bottom: 14px;
+}
+
+.before-after div {
+  border: 1px dashed #c7bcaf;
+  border-radius: 10px;
+  background: #f8f5f0;
+  min-height: 120px;
+  display: grid;
+  place-items: center;
+  color: #8f867d;
+  font-weight: 600;
+}
+
+.case-card a {
+  color: #1663d3;
+  font-weight: 600;
+}
+
+.knowledge-grid {
+  display: grid;
+  grid-template-columns: 1.2fr 1fr;
+  gap: 20px;
+  align-items: start;
+}
+
+.knowledge-list {
+  display: grid;
+  gap: 10px;
+}
+
+.knowledge-list a {
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: #fff;
+  padding: 14px;
+}
+
+.contact-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  align-items: stretch;
+}
+
+.contact-list {
+  margin: 0 0 20px;
+  padding-left: 18px;
+  color: var(--muted);
+}
+
+.map-frame {
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  min-height: 280px;
+  background: linear-gradient(120deg, #ede6dc, #f8f5f0);
+  display: grid;
+  place-items: center;
+  color: #83796f;
+  font-weight: 600;
+}
+
+.site-footer {
+  border-top: 1px solid var(--line);
+  padding: 24px 0 36px;
+  color: var(--muted);
+  background: #efe9df;
+}
+
+@media (max-width: 1024px) {
+  .hero-grid,
+  .knowledge-grid,
+  .contact-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .why-grid,
+  .staff-grid,
+  .treatment-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 740px) {
+  .site-nav {
+    display: none;
+  }
+
+  .why-grid,
+  .staff-grid,
+  .treatment-grid,
+  .case-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .section {
+    padding: 58px 0;
+  }
+}
