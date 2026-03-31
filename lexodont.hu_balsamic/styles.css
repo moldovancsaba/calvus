@@ -1,0 +1,87 @@
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  font-family: "Comic Sans MS", "Segoe Print", "Marker Felt", sans-serif;
+  background: #f3f3f3;
+  color: #222;
+}
+.container { width: min(1160px, 94%); margin: 0 auto; }
+.topbar { border-bottom: 2px solid #444; background: #ebebeb; }
+.row { display: flex; gap: 14px; align-items: center; justify-content: space-between; min-height: 72px; }
+.brand { font-weight: 700; text-decoration: none; color: #111; }
+.menu { display: flex; gap: 14px; flex-wrap: wrap; }
+.menu a, .legal a { color: #111; text-decoration: underline; }
+
+.hero { padding: 28px 0; }
+.paper, .box {
+  border: 2px solid #444;
+  background: #efefef;
+  padding: 16px;
+}
+.paper {
+  background-image: repeating-linear-gradient(-45deg, #efefef, #efefef 8px, #e7e7e7 8px, #e7e7e7 16px);
+}
+.section { padding: 28px 0; }
+.kicker { margin: 0 0 8px; font-size: 0.82rem; letter-spacing: 0.08em; }
+h1, h2, h3, p { margin: 0 0 10px; }
+.actions { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 10px; }
+.btn {
+  display: inline-block;
+  border: 2px solid #444;
+  background: #efefef;
+  color: #111;
+  text-decoration: none;
+  padding: 8px 12px;
+}
+.btn-dark { background: #d8d8d8; }
+
+.grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.grid-3 { display: grid; grid-template-columns: 1.2fr 1fr 1fr; gap: 12px; }
+
+.ba-slider {
+  --split: 50%;
+  position: relative;
+  border: 2px solid #444;
+  background: #ddd;
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+}
+.ba-slider img { width: 100%; height: 100%; object-fit: cover; }
+.ba-after, .ba-before { position: absolute; inset: 0; }
+.ba-before { clip-path: inset(0 calc(100% - var(--split)) 0 0); }
+.handle {
+  position: absolute;
+  left: var(--split);
+  top: 0;
+  bottom: 0;
+  width: 3px;
+  background: #222;
+  transform: translateX(-1px);
+}
+.label {
+  position: absolute;
+  top: 8px;
+  border: 1px solid #444;
+  background: #e8e8e8;
+  padding: 2px 8px;
+  font-size: 0.82rem;
+}
+.label.left { left: 8px; }
+.label.right { right: 8px; }
+.range {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0.001;
+  cursor: ew-resize;
+}
+
+.footer { border-top: 2px solid #444; padding: 24px 0; background: #e5e5e5; }
+.map { width: 100%; min-height: 260px; border: 2px solid #444; }
+.legal { display: flex; gap: 18px; flex-wrap: wrap; padding-top: 14px; margin-top: 14px; border-top: 1px solid #888; }
+
+@media (max-width: 900px) {
+  .grid-2, .grid-3 { grid-template-columns: 1fr; }
+  .menu { display: none; }
+}
