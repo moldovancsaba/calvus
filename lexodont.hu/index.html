@@ -148,12 +148,28 @@
           <div class="case-grid">
             <article class="case-card">
               <h3>Fogpótlás - teljes mosolyzóna rehabilitáció</h3>
+              <div class="ba-slider" data-start="52">
+                <img class="ba-after" src="https://picsum.photos/seed/main-after-01/1200/700" alt="Utána állapot minta 1" />
+                <img class="ba-before" src="https://picsum.photos/seed/main-before-01/1200/700" alt="Előtte állapot minta 1" />
+                <span class="ba-label ba-label-left">Előtte</span>
+                <span class="ba-label ba-label-right">Utána</span>
+                <span class="ba-handle"></span>
+                <input class="ba-range" type="range" min="0" max="100" value="52" aria-label="Főoldali előtte-utána csúszka 1" />
+              </div>
               <p><strong>Kiinduló helyzet:</strong> hiányzó fogak, bizonytalan rágás.</p>
               <p><strong>Eredmény:</strong> stabilabb funkció és természetesebb mosoly.</p>
               <a href="./esettanulmanyok.html">Részletes esetlap</a>
             </article>
             <article class="case-card">
               <h3>Fogszabályozás - diszkrét kezelés felnőtteknek</h3>
+              <div class="ba-slider" data-start="48">
+                <img class="ba-after" src="https://picsum.photos/seed/main-after-02/1200/700" alt="Utána állapot minta 2" />
+                <img class="ba-before" src="https://picsum.photos/seed/main-before-02/1200/700" alt="Előtte állapot minta 2" />
+                <span class="ba-label ba-label-left">Előtte</span>
+                <span class="ba-label ba-label-right">Utána</span>
+                <span class="ba-handle"></span>
+                <input class="ba-range" type="range" min="0" max="100" value="48" aria-label="Főoldali előtte-utána csúszka 2" />
+              </div>
               <p><strong>Kiinduló helyzet:</strong> torlódás és harapási eltérés.</p>
               <p><strong>Eredmény:</strong> harmonikusabb fogív és könnyebb tisztíthatóság.</p>
               <a href="./esettanulmanyok.html">Részletes esetlap</a>
@@ -280,6 +296,14 @@
         </div>
       </section>
     </main>
+    <script>
+      document.querySelectorAll(".ba-slider").forEach((slider) => {
+        const range = slider.querySelector(".ba-range");
+        const setPos = (v) => slider.style.setProperty("--split", v + "%");
+        setPos(range.value);
+        range.addEventListener("input", (e) => setPos(e.target.value));
+      });
+    </script>
 
     <footer class="site-footer">
       <div class="container">
