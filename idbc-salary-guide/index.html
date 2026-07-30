@@ -321,7 +321,7 @@
     table { border-collapse: collapse; width: 100%; min-width: 760px; }
     th, td { padding: 12px 16px; text-align: left; border-bottom: 1px solid var(--line); font-size: 13px; }
     th { background: rgba(19,35,35,.05); font-size: 11px; text-transform: uppercase; letter-spacing: .05em; font-weight: 900; }
-    td.num { text-align: right; font-variant-numeric: tabular-nums; font-weight: 800; }
+    td.num { text-align: right; font-variant-numeric: tabular-nums; font-weight: 800; white-space: nowrap; }
 
     /* Expert pool */
     .expert-filters { max-width: 320px; margin-bottom: 26px; }
@@ -546,8 +546,6 @@
           <table>
             <thead>
               <tr>
-                <th>Terület</th>
-                <th>Szint</th>
                 <th>Pozíció</th>
                 <th style="text-align:right">Min. havi bruttó</th>
                 <th style="text-align:right">IDBC javasolt</th>
@@ -929,14 +927,12 @@
       const rows = allRows.slice(0, MAX_TABLE_ROWS);
       salaryTableBody.innerHTML = rows.map(r => `
         <tr>
-          <td>${escapeHtml(r.terulet)}</td>
-          <td>${escapeHtml(r.szint)}</td>
           <td>${escapeHtml(r.pozicio)}</td>
           <td class="num">${fmtHuf(r.min)}</td>
           <td class="num">${r.idbc != null ? fmtHuf(r.idbc) : '–'}</td>
           <td class="num">${fmtHuf(r.max)}</td>
           <td>${escapeHtml(r.juttatas)}</td>
-        </tr>`).join('') || '<tr><td colspan="7" class="no-data">Nincs további pozíció ehhez a szűréshez.</td></tr>';
+        </tr>`).join('') || '<tr><td colspan="5" class="no-data">Nincs további pozíció ehhez a szűréshez.</td></tr>';
       salaryCount.style.display = hasTop3 ? '' : 'none';
       salaryCount.textContent = allRows.length + ' további pozíció a kiválasztott területen';
     }
