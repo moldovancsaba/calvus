@@ -38,9 +38,42 @@
         font-weight: 600;
       }
       .links { display: flex; flex-wrap: wrap; gap: 10px; }
+      .site-header {
+        position: sticky;
+        top: 0;
+        z-index: 20;
+        background: rgba(247, 247, 247, 0.96);
+        border-bottom: 1px solid var(--line);
+        backdrop-filter: blur(6px);
+      }
+      .nav-wrap {
+        max-width: 960px;
+        margin: 0 auto;
+        padding: 0 20px;
+        min-height: 68px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 16px;
+        flex-wrap: wrap;
+      }
+      .brand-text { font-weight: 800; letter-spacing: 0.01em; color: var(--text); text-decoration: none; }
+      .site-nav { display: flex; gap: 20px; font-weight: 500; color: var(--muted); flex-wrap: wrap; }
+      .site-nav a { color: var(--muted); text-decoration: none; }
+      .site-nav a:hover { color: var(--text); }
     </style>
   </head>
   <body>
+    <header class="site-header">
+      <div class="nav-wrap">
+        <a class="brand-text" href="./index.html">Calvus</a>
+        <nav class="site-nav">
+          <a href="./lexodont.hu/index.html">Lexodont</a>
+          <a href="./lexodont.hu_balsamic/index.html">Lexodont (Balsamic)</a>
+          <a href="./idbc-salary-guide/index.html">IDBC Salary Guide</a>
+        </nav>
+      </div>
+    </header>
     <main class="wrap">
       <h1>Calvus Project Hub</h1>
       <p class="lead">Client-facing wireframe projects managed in parallel.</p>
