@@ -3,6 +3,8 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+  <meta http-equiv="Pragma" content="no-cache" />
   <title>IDBC – SAP piaci trendek és bérsávok</title>
   <style>
     :root {
@@ -299,9 +301,9 @@
                 <th>Pozíció</th>
                 <th>Szint</th>
                 <th style="text-align:right">Min. havi bruttó</th>
-                <th style="text-align:right">IDBC javasolt</th>
+                <th style="text-align:right" data-col="idbc">IDBC javasolt</th>
                 <th style="text-align:right">Max. havi bruttó</th>
-                <th>Juttatási megjegyzés</th>
+                <th data-col="juttatas">Juttatási megjegyzés</th>
               </tr>
             </thead>
             <tbody id="salaryTableBody"></tbody>
@@ -419,14 +421,23 @@
 
     const MAX_TABLE_ROWS = 10;
     const salaryTableBody = document.querySelector('#salaryTableBody');
-    salaryTableBody.innerHTML = sapRows.slice(0, MAX_TABLE_ROWS).map(r => `
+    const visibleSapRows = sapRows.slice(0, MAX_TABLE_ROWS);
+
+    // Hide a column entirely (header + cells) when every visible row has no value for it,
+    // instead of showing a column of dashes.
+    const hasIdbc = visibleSapRows.length ? visibleSapRows.some(r => r.idbc != null) : true;
+    const hasJuttatas = visibleSapRows.length ? visibleSapRows.some(r => r.juttatas && r.juttatas.trim()) : true;
+    document.querySelectorAll('[data-col="idbc"]').forEach(el => { el.style.display = hasIdbc ? '' : 'none'; });
+    document.querySelectorAll('[data-col="juttatas"]').forEach(el => { el.style.display = hasJuttatas ? '' : 'none'; });
+
+    salaryTableBody.innerHTML = visibleSapRows.map(r => `
       <tr>
         <td>${escapeHtml(r.pozicio)}</td>
         <td>${escapeHtml(r.szint)}</td>
         <td class="num">${fmtHuf(r.min)}</td>
-        <td class="num">${r.idbc != null ? fmtHuf(r.idbc) : '–'}</td>
+        ${hasIdbc ? `<td class="num" data-col="idbc">${r.idbc != null ? fmtHuf(r.idbc) : '–'}</td>` : ''}
         <td class="num">${fmtHuf(r.max)}</td>
-        <td>${escapeHtml(r.juttatas)}</td>
+        ${hasJuttatas ? `<td data-col="juttatas">${escapeHtml(r.juttatas)}</td>` : ''}
       </tr>`).join('');
     })();
   </script>
