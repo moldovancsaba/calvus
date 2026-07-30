@@ -686,7 +686,6 @@
     function renderSimple(title, c, rowLabel, note) {
       rowLabel = rowLabel || 'Összes válaszadó';
       const noteHtml = note ? `<p class="n-note segment-fallback-note">${escapeHtml(note)}</p>` : '';
-      const total = c.items.reduce((s, it) => s + it.count, 0);
       const sumPct = c.items.reduce((s, it) => s + it.percent, 0);
 
       // "Select all that apply" questions: percentages are independent per option and don't
@@ -703,7 +702,7 @@
           <section class="question-block">
             <h4 class="question-title">${escapeHtml(title)}</h4>
             ${noteHtml}
-            <p class="n-note">Többválasztós kérdés — az arányok nem adják ki a 100%-ot (n=${total})</p>
+            <p class="n-note">Többválasztós kérdés — az arányok nem adják ki a 100%-ot</p>
             ${rows}
           </section>`;
       }
@@ -719,7 +718,7 @@
           <h4 class="question-title">${escapeHtml(title)}</h4>
           ${noteHtml}
           <div class="answer-row">
-            <div class="answer-label">${escapeHtml(rowLabel)} <span class="n-note">(n=${total})</span></div>
+            <div class="answer-label">${escapeHtml(rowLabel)}</div>
             <div class="bar">${segments}</div>
           </div>
           <div class="legend">${legend}</div>
