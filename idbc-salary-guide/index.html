@@ -886,7 +886,7 @@
         // No curated TOP3 for this area — hide the chart entirely, table below covers everything.
         top3Panel.style.display = 'none';
         top3Panel.innerHTML = '';
-        return;
+        return false;
       }
       top3Panel.style.display = '';
       const legend = `
@@ -896,10 +896,12 @@
           <span class="legend-item"><span class="legend-dot" style="background:#132323"></span>Max. havi bruttó</span>
         </div>`;
       top3Panel.innerHTML = legend + renderPointLineChart(rows);
+      return true;
     }
 
-    // Table: the rest of the selected area's positions (TOP3 already covered by the chart above).
-    function renderTable() {
+    // Table: the rest of the selected area's positions (TOP3 already covered by the chart above,
+    // when there is one — otherwise this table is everything, so the "additional" caption doesn't apply).
+    function renderTable(hasTop3) {
       const terulet = teruletSelect.value;
       const szint = szintSelect.value;
       const rows = nonSapRows.filter(r => !r.top3 && r.terulet === terulet && (!szint || r.szint === szint));
@@ -913,12 +915,13 @@
           <td class="num">${fmtHuf(r.max)}</td>
           <td>${escapeHtml(r.juttatas)}</td>
         </tr>`).join('') || '<tr><td colspan="7" class="no-data">Nincs további pozíció ehhez a szűréshez.</td></tr>';
+      salaryCount.style.display = hasTop3 ? '' : 'none';
       salaryCount.textContent = rows.length + ' további pozíció a kiválasztott területen';
     }
 
     function renderSalarySection() {
-      renderTop3();
-      renderTable();
+      const hasTop3 = renderTop3();
+      renderTable(hasTop3);
     }
 
     populateSalaryFilters();
