@@ -1,0 +1,338 @@
+<!doctype html>
+<html lang="hu">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>IDBC Salary Guide – Interaktív adatvizualizáció</title>
+  <style>
+    :root{
+      --ink:#102222;
+      --ink2:#193434;
+      --paper:#eef5ec;
+      --card:#f8fbf7;
+      --accent:#9cdf82;
+      --accent2:#55aa8b;
+      --muted:#657474;
+      --line:#cbd8d1;
+      --white:#fff;
+      --shadow:0 14px 34px rgba(16,34,34,.10);
+      --r:22px;
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      font-family:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",Arial,sans-serif;
+      color:var(--ink);
+      background:
+        radial-gradient(circle at 20% 15%,rgba(16,34,34,.035) 0 1px,transparent 1px),
+        var(--paper);
+      background-size:8px 8px;
+    }
+    button,select{font:inherit}
+    .shell{max-width:1280px;margin:auto;padding:24px}
+    .hero{
+      background:var(--ink);
+      color:white;
+      border-radius:28px;
+      padding:32px;
+      display:grid;
+      grid-template-columns:1.3fr .7fr;
+      gap:28px;
+      align-items:end;
+      box-shadow:var(--shadow)
+    }
+    .brand{font-weight:900;font-size:14px;color:var(--accent);letter-spacing:.08em;text-transform:uppercase}
+    h1{font-size:clamp(34px,5vw,64px);line-height:.95;letter-spacing:-.045em;margin:10px 0 16px;max-width:760px}
+    .hero p{margin:0;max-width:710px;color:#dce7e2;font-size:16px}
+    .hero-stat{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+    .hero-stat div{border:1px solid rgba(255,255,255,.18);border-radius:16px;padding:16px}
+    .hero-stat strong{display:block;font-size:27px}
+    .hero-stat span{font-size:12px;color:#c6d4cf}
+    .controls{
+      margin-top:22px;background:var(--card);border:1px solid var(--line);border-radius:var(--r);
+      padding:18px;display:grid;grid-template-columns:2fr 1.4fr 1.2fr auto;gap:14px;align-items:end
+    }
+    label{display:grid;gap:7px;font-size:12px;font-weight:800;color:var(--muted)}
+    select,.btn{
+      min-height:46px;border:1px solid var(--line);border-radius:13px;background:white;
+      padding:0 14px;color:var(--ink);font-weight:750
+    }
+    .btn{background:var(--accent);border-color:var(--accent);cursor:pointer}
+    .kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:18px}
+    .kpi{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:17px}
+    .kpi span{font-size:12px;color:var(--muted);font-weight:700}
+    .kpi strong{display:block;font-size:30px;line-height:1;margin-top:8px;letter-spacing:-.03em}
+    .main-grid{display:grid;grid-template-columns:minmax(0,1.55fr) minmax(300px,.75fr);gap:18px;margin-top:18px}
+    .panel{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:22px}
+    .panel-head{display:flex;justify-content:space-between;gap:20px;align-items:start;margin-bottom:14px}
+    .panel h2{margin:0;font-size:26px;letter-spacing:-.025em}
+    .panel .sub{color:var(--muted);font-size:13px;margin-top:5px}
+    #chart{width:100%;min-height:430px}
+    .tooltip{
+      position:fixed;pointer-events:none;background:var(--ink);color:white;border-radius:10px;
+      padding:9px 11px;font-size:12px;opacity:0;transform:translate(-50%,-120%);
+      transition:opacity .12s;z-index:20;box-shadow:var(--shadow)
+    }
+    .insight{background:var(--ink);color:white;border-radius:18px;padding:18px;margin-bottom:16px}
+    .insight .eyebrow{color:var(--accent);font-size:11px;font-weight:900;text-transform:uppercase;letter-spacing:.09em}
+    .insight p{margin:9px 0 0;font-size:16px;font-weight:700;line-height:1.35}
+    .detail-list{display:grid;gap:10px}
+    .detail-row{display:grid;grid-template-columns:1fr auto;gap:10px;padding:11px 0;border-bottom:1px solid var(--line)}
+    .detail-row:last-child{border-bottom:0}
+    .detail-row span{font-size:13px}
+    .detail-row strong{font-size:13px}
+    .table-panel{margin-top:18px}
+    .table-wrap{overflow:auto;border:1px solid var(--line);border-radius:15px}
+    table{border-collapse:collapse;width:100%;min-width:620px;background:white}
+    th,td{padding:12px 14px;text-align:left;border-bottom:1px solid var(--line);font-size:13px}
+    th{background:#e4eee7;font-size:11px;text-transform:uppercase;letter-spacing:.05em}
+    td.num{text-align:right;font-variant-numeric:tabular-nums;font-weight:800}
+    .source{font-size:11px;color:var(--muted);margin-top:14px}
+    .empty{display:grid;place-items:center;height:420px;color:var(--muted)}
+    @media(max-width:900px){
+      .hero{grid-template-columns:1fr}.controls{grid-template-columns:1fr 1fr}.kpis{grid-template-columns:1fr 1fr}
+      .main-grid{grid-template-columns:1fr}
+    }
+    @media(max-width:560px){
+      .shell{padding:12px}.hero{padding:24px}.controls{grid-template-columns:1fr}.kpis{grid-template-columns:1fr 1fr}
+      .panel{padding:16px}.hero-stat{grid-template-columns:1fr 1fr}
+    }
+  </style>
+</head>
+<body>
+<div class="shell">
+  <section class="hero">
+    <div>
+      <div class="brand">IDBC Salary Guide 2026</div>
+      <h1>Interaktív munkaerőpiaci adatnézet</h1>
+      <p>Válassz témát, tapasztalati szintet és megjelenítési módot. A diagramok, KPI-k, részletes értékek és az automatikus értelmezés azonnal frissülnek.</p>
+    </div>
+    <div class="hero-stat">
+      <div><strong>157</strong><span>munkavállalói válaszadó</span></div>
+      <div><strong>6</strong><span>interaktív forgatókönyv</span></div>
+      <div><strong>3</strong><span>diagramtípus</span></div>
+      <div><strong>100%</strong><span>helyben futó HTML</span></div>
+    </div>
+  </section>
+
+  <section class="controls">
+    <label>Forgatókönyv
+      <select id="scenario"></select>
+    </label>
+    <label>Szegmens
+      <select id="segment"></select>
+    </label>
+    <label>Diagram
+      <select id="chartType">
+        <option value="bar">Vízszintes oszlop</option>
+        <option value="donut">Kördiagram</option>
+        <option value="stacked">100%-os sáv</option>
+      </select>
+    </label>
+    <button class="btn" id="reset" type="button">Alaphelyzet</button>
+  </section>
+
+  <section class="kpis" id="kpis"></section>
+
+  <section class="main-grid">
+    <article class="panel">
+      <div class="panel-head">
+        <div>
+          <h2 id="chartTitle"></h2>
+          <div class="sub" id="chartSubtitle"></div>
+        </div>
+      </div>
+      <div id="chart" role="img" aria-live="polite"></div>
+    </article>
+
+    <aside class="panel">
+      <div class="insight">
+        <div class="eyebrow">Automatikus értelmezés</div>
+        <p id="insightText"></p>
+      </div>
+      <h2 style="font-size:20px">Részletek</h2>
+      <div class="detail-list" id="details"></div>
+    </aside>
+  </section>
+
+  <section class="panel table-panel">
+    <div class="panel-head">
+      <div>
+        <h2>Adattábla</h2>
+        <div class="sub">A diagram mögötti pontos százalékos és darabszám adatok.</div>
+      </div>
+    </div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Kategória</th><th style="text-align:right">Arány</th><th style="text-align:right">Válaszadó</th></tr></thead>
+        <tbody id="tableBody"></tbody>
+      </table>
+    </div>
+    <div class="source">Forrás: IDBC Salary Guide 2026 mintafelmérés. Az „Összes válaszadó” nézet pontos közzétett arányokat használ; a tapasztalati bontások csak azoknál a témáknál választhatók, ahol a keresztmetszeti adatok rendelkezésre állnak.</div>
+  </section>
+</div>
+
+<div class="tooltip" id="tooltip"></div>
+
+<script>
+const DATA = {
+  status:{
+    label:"Munkaerőpiaci státusz",
+    question:"Melyik állítás írja le legjobban a jelenlegi státuszodat a munkaerőpiacon?",
+    segments:{
+      all:[
+        ["Nem keresek és nem vagyok nyitott",14.65,23],
+        ["Nem keresek aktívan, de nyitott vagyok",59.87,94],
+        ["Aktívan keresek új munkahelyet",25.48,40]
+      ],
+      "3-5":[["Nem keresek és nem vagyok nyitott",23.53,4],["Nem keresek aktívan, de nyitott vagyok",52.94,9],["Aktívan keresek",23.53,4]],
+      "6-10":[["Nem keresek és nem vagyok nyitott",16,4],["Nem keresek aktívan, de nyitott vagyok",64,16],["Aktívan keresek",20,5]],
+      "11-20":[["Nem keresek és nem vagyok nyitott",11.32,6],["Nem keresek aktívan, de nyitott vagyok",58.49,31],["Aktívan keresek",30.19,16]],
+      "20+":[["Nem keresek és nem vagyok nyitott",14.75,9],["Nem keresek aktívan, de nyitott vagyok",60.66,37],["Aktívan keresek",24.59,15]]
+    }
+  },
+  outlook:{
+    label:"12 havi munkaerőpiaci várakozás",
+    question:"Mire számítasz a munkaerő-piaci lehetőségek tekintetében a következő 12 hónapban?",
+    segments:{
+      all:[["Jelentősen több pozíció",11.46,18],["Mérsékelten több lehetőség",24.20,38],["Nincs jelentős változás",44.59,70],["Kevesebb lehetőség",14.01,22],["Jelentősen kevesebb",5.73,9]],
+      "3-5":[["Jelentősen több",11.76,2],["Mérsékelten több",11.76,2],["Nincs változás",47.06,8],["Kevesebb",23.53,4],["Jelentősen kevesebb",5.88,1]],
+      "6-10":[["Jelentősen több",20,5],["Mérsékelten több",20,5],["Nincs változás",44,11],["Kevesebb",4,1],["Jelentősen kevesebb",12,3]],
+      "11-20":[["Jelentősen több",15.09,8],["Mérsékelten több",22.64,12],["Nincs változás",50.94,27],["Kevesebb",9.43,5],["Jelentősen kevesebb",1.89,1]],
+      "20+":[["Jelentősen több",4.92,3],["Mérsékelten több",29.51,18],["Nincs változás",39.34,24],["Kevesebb",19.67,12],["Jelentősen kevesebb",6.56,4]]
+    }
+  },
+  currentHO:{
+    label:"Jelenlegi home office",
+    question:"Jelenleg heti hány nap home office-t engedélyez számodra a munkáltatód?",
+    segments:{
+      all:[["0 nap",18.47,29],["1 nap",10.83,17],["2 nap",29.30,46],["3 nap",19.11,30],["4 nap",14.01,22],["5 nap",8.28,13]],
+      "3-5":[["0 nap",11.76,2],["1 nap",5.88,1],["2 nap",23.53,4],["3 nap",23.53,4],["4 nap",23.53,4],["5 nap",11.76,2]],
+      "6-10":[["0 nap",24,6],["1 nap",12,3],["2 nap",40,10],["3 nap",12,3],["4 nap",0,0],["5 nap",12,3]],
+      "11-20":[["0 nap",16.98,9],["1 nap",16.98,9],["2 nap",22.64,12],["3 nap",28.30,15],["4 nap",9.43,5],["5 nap",5.66,3]],
+      "20+":[["0 nap",19.67,12],["1 nap",6.56,4],["2 nap",32.79,20],["3 nap",13.11,8],["4 nap",19.67,12],["5 nap",8.20,5]]
+    }
+  },
+  idealHO:{
+    label:"Ideális home office",
+    question:"Hetente hány nap home office lenne ideális számodra?",
+    segments:{
+      all:[["0 nap",4.46,7],["1 nap",5.10,8],["2 nap",23.57,37],["3 nap",29.30,46],["4 nap",24.20,38],["5 nap",13.38,21]],
+      "3-5":[["0 nap",0,0],["1 nap",0,0],["2 nap",29.41,5],["3 nap",17.65,3],["4 nap",35.29,6],["5 nap",17.65,3]],
+      "6-10":[["0 nap",4,1],["1 nap",4,1],["2 nap",32,8],["3 nap",44,11],["4 nap",12,3],["5 nap",4,1]],
+      "11-20":[["0 nap",3.77,2],["1 nap",3.77,2],["2 nap",24.53,13],["3 nap",24.53,13],["4 nap",26.42,14],["5 nap",16.98,9]],
+      "20+":[["0 nap",6.56,4],["1 nap",8.20,5],["2 nap",18.03,11],["3 nap",29.51,18],["4 nap",24.59,15],["5 nap",13.11,8]]
+    }
+  },
+  ai:{
+    label:"AI-használat gyakorisága",
+    question:"Milyen gyakran használsz mesterséges intelligencia alapú eszközöket a munkád során?",
+    segments:{
+      all:[["Napi szinten",42.04,66],["Hetente 1–2 alkalommal",29.94,47],["Havonta néhányszor",12.74,20],["Nem használok AI-t",15.29,24]],
+      "3-5":[["Napi szinten",35.29,6],["Hetente 1–2 alkalommal",41.18,7],["Havonta néhányszor",17.65,3],["Nem használok AI-t",5.88,1]],
+      "6-10":[["Napi szinten",44,11],["Hetente 1–2 alkalommal",28,7],["Havonta néhányszor",8,2],["Nem használok AI-t",20,5]],
+      "11-20":[["Napi szinten",49.06,26],["Hetente 1–2 alkalommal",28.30,15],["Havonta néhányszor",9.43,5],["Nem használok AI-t",13.21,7]],
+      "20+":[["Napi szinten",36.07,22],["Hetente 1–2 alkalommal",29.51,18],["Havonta néhányszor",16.39,10],["Nem használok AI-t",18.03,11]]
+    }
+  },
+  raise:{
+    label:"Idei béremelés",
+    question:"Hány százalékkal nőtt a fizetésed az idei évben?",
+    segments:{
+      all:[["Nem kaptam béremelést",38.22,60],["1–5%",39.49,62],["6–10%",12.10,19],["11–15%",3.18,5],["16–20%",1.91,3],["21% felett",5.10,8]]
+    }
+  }
+};
+
+const segmentLabels={all:"Összes válaszadó","3-5":"3–5 év tapasztalat","6-10":"6–10 év tapasztalat","11-20":"11–20 év tapasztalat","20+":"Több mint 20 év tapasztalat"};
+const scenario=document.querySelector("#scenario");
+const segment=document.querySelector("#segment");
+const chartType=document.querySelector("#chartType");
+const chart=document.querySelector("#chart");
+const tooltip=document.querySelector("#tooltip");
+
+Object.entries(DATA).forEach(([key,v])=>{
+  const o=document.createElement("option");o.value=key;o.textContent=v.label;scenario.appendChild(o);
+});
+
+function syncSegments(){
+  const available=Object.keys(DATA[scenario.value].segments);
+  const current=segment.value;
+  segment.innerHTML="";
+  available.forEach(k=>{const o=document.createElement("option");o.value=k;o.textContent=segmentLabels[k];segment.appendChild(o)});
+  if(available.includes(current)) segment.value=current;
+}
+
+function fmt(v){return new Intl.NumberFormat("hu-HU",{maximumFractionDigits:2}).format(v)+"%"}
+function escapeXML(s){return s.replace(/[&<>'"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;","'":"&apos;",'"':"&quot;"}[c]))}
+function wrap(text,max=25){
+  const words=text.split(" "); let lines=[],line="";
+  words.forEach(w=>{if((line+" "+w).trim().length>max){lines.push(line);line=w}else line=(line+" "+w).trim()});if(line)lines.push(line);return lines.slice(0,3)
+}
+function svgBar(data){
+  const W=900,H=Math.max(380,data.length*70+70),left=245,right=70,top=30,bottom=30,plot=W-left-right;
+  let s=`<svg viewBox="0 0 ${W} ${H}" style="width:100%;height:auto" aria-label="Vízszintes oszlopdiagram">`;
+  [0,25,50,75,100].forEach(t=>{const x=left+plot*t/100;s+=`<line x1="${x}" x2="${x}" y1="${top}" y2="${H-bottom}" stroke="#d2ddd7"/><text x="${x}" y="${H-6}" text-anchor="middle" font-size="11" fill="#657474">${t}%</text>`});
+  data.forEach((d,i)=>{
+    const y=top+i*70+12,w=plot*d[1]/100;
+    const lines=wrap(d[0],31);
+    lines.forEach((line,j)=>s+=`<text x="${left-14}" y="${y+19+j*14}" text-anchor="end" font-size="13" font-weight="700" fill="#102222">${escapeXML(line)}</text>`);
+    s+=`<rect class="mark" data-label="${escapeXML(d[0])}" data-value="${d[1]}" data-count="${d[2]}" x="${left}" y="${y}" width="${Math.max(w,1)}" height="38" rx="12" fill="#55aa8b"></rect>`;
+    s+=`<text x="${Math.min(left+w+9,W-43)}" y="${y+25}" font-size="13" font-weight="900" fill="#102222">${fmt(d[1])}</text>`;
+  });
+  return s+"</svg>";
+}
+function svgStacked(data){
+  const W=900,H=260,x0=40,y=90,w=820,h=72;let x=x0;
+  const colors=["#c9e5d8","#b5dbc8","#94cbaa","#6aae81","#4b8f7c","#2f6f63"];
+  let s=`<svg viewBox="0 0 ${W} ${H}" style="width:100%;height:auto" aria-label="100 százalékos sávdiagram">`;
+  data.forEach((d,i)=>{const sw=w*d[1]/100;s+=`<rect class="mark" data-label="${escapeXML(d[0])}" data-value="${d[1]}" data-count="${d[2]}" x="${x}" y="${y}" width="${Math.max(sw,1)}" height="${h}" fill="${colors[i%colors.length]}"></rect>`;if(sw>55)s+=`<text x="${x+sw/2}" y="${y+43}" text-anchor="middle" font-size="14" font-weight="900" fill="#102222">${fmt(d[1])}</text>`;x+=sw});
+  let lx=40,ly=195;data.forEach((d,i)=>{if(lx>720){lx=40;ly+=28}s+=`<circle cx="${lx}" cy="${ly}" r="6" fill="${colors[i%colors.length]}"/><text x="${lx+11}" y="${ly+4}" font-size="12" fill="#102222">${escapeXML(d[0])}</text>`;lx+=Math.max(145,d[0].length*7.2)});
+  return s+"</svg>";
+}
+function svgDonut(data){
+  const W=900,H=430,cx=330,cy=205,r=130,inner=76;let angle=-Math.PI/2;
+  const colors=["#c9e5d8","#94cbaa","#6aae81","#4b8f7c","#2f6f63","#173f3c"];
+  const polar=(a,rr)=>[cx+Math.cos(a)*rr,cy+Math.sin(a)*rr];
+  let s=`<svg viewBox="0 0 ${W} ${H}" style="width:100%;height:auto" aria-label="Kördiagram">`;
+  data.forEach((d,i)=>{const a2=angle+d[1]/100*Math.PI*2;const [x1,y1]=polar(angle,r),[x2,y2]=polar(a2,r),[ix1,iy1]=polar(a2,inner),[ix2,iy2]=polar(angle,inner);const large=(a2-angle)>Math.PI?1:0;const path=`M ${x1} ${y1} A ${r} ${r} 0 ${large} 1 ${x2} ${y2} L ${ix1} ${iy1} A ${inner} ${inner} 0 ${large} 0 ${ix2} ${iy2} Z`;s+=`<path class="mark" data-label="${escapeXML(d[0])}" data-value="${d[1]}" data-count="${d[2]}" d="${path}" fill="${colors[i%colors.length]}" stroke="#f8fbf7" stroke-width="3"></path>`;angle=a2});
+  s+=`<text x="${cx}" y="${cy-4}" text-anchor="middle" font-size="14" fill="#657474">Összesen</text><text x="${cx}" y="${cy+30}" text-anchor="middle" font-size="31" font-weight="900" fill="#102222">${data.reduce((a,b)=>a+b[2],0)}</text>`;
+  data.forEach((d,i)=>{const yy=75+i*52;s+=`<circle cx="570" cy="${yy}" r="8" fill="${colors[i%colors.length]}"/><text x="590" y="${yy-3}" font-size="13" font-weight="800" fill="#102222">${escapeXML(d[0])}</text><text x="590" y="${yy+18}" font-size="12" fill="#657474">${fmt(d[1])} · ${d[2]} fő</text>`});
+  return s+"</svg>";
+}
+function attachTooltip(){
+  document.querySelectorAll(".mark").forEach(el=>{
+    el.addEventListener("mousemove",e=>{tooltip.innerHTML=`<strong>${el.dataset.label}</strong><br>${fmt(+el.dataset.value)} · ${el.dataset.count} fő`;tooltip.style.left=e.clientX+"px";tooltip.style.top=e.clientY+"px";tooltip.style.opacity=1});
+    el.addEventListener("mouseleave",()=>tooltip.style.opacity=0);
+  });
+}
+function render(){
+  const d=DATA[scenario.value], rows=d.segments[segment.value]||d.segments.all;
+  document.querySelector("#chartTitle").textContent=d.label;
+  document.querySelector("#chartSubtitle").textContent=d.question+" — "+segmentLabels[segment.value];
+  chart.innerHTML=chartType.value==="donut"?svgDonut(rows):chartType.value==="stacked"?svgStacked(rows):svgBar(rows);
+  attachTooltip();
+
+  const sorted=[...rows].sort((a,b)=>b[1]-a[1]),top=sorted[0],second=sorted[1];
+  const total=rows.reduce((a,b)=>a+b[2],0);
+  const concentration=top[1]+(second?second[1]:0);
+  const weighted=rows.reduce((a,b,i)=>a+b[1]*i,0)/100;
+  const k=[
+    ["Legnagyobb kategória",fmt(top[1])],
+    ["Válaszadók",total+" fő"],
+    ["Top 2 koncentráció",fmt(concentration)],
+    ["Kategóriák",rows.length]
+  ];
+  document.querySelector("#kpis").innerHTML=k.map(x=>`<div class="kpi"><span>${x[0]}</span><strong>${x[1]}</strong></div>`).join("");
+  document.querySelector("#insightText").textContent=`A legnagyobb csoport: „${top[0]}” (${fmt(top[1])}). ${second?`A két vezető válasz együtt a minta ${fmt(concentration)}-át adja.`:""}`;
+  document.querySelector("#details").innerHTML=sorted.map(r=>`<div class="detail-row"><span>${r[0]}</span><strong>${fmt(r[1])}</strong></div>`).join("");
+  document.querySelector("#tableBody").innerHTML=rows.map(r=>`<tr><td>${r[0]}</td><td class="num">${fmt(r[1])}</td><td class="num">${r[2]}</td></tr>`).join("");
+}
+scenario.addEventListener("change",()=>{syncSegments();render()});
+segment.addEventListener("change",render);
+chartType.addEventListener("change",render);
+document.querySelector("#reset").addEventListener("click",()=>{scenario.value="status";syncSegments();segment.value="all";chartType.value="bar";render()});
+scenario.value="status";syncSegments();render();
+</script>
+</body>
+</html>
