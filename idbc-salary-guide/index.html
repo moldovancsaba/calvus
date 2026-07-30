@@ -231,6 +231,8 @@
     .panel-kicker { margin: 0 0 5px; font-size: 13px; font-weight: 900; color: rgba(19,35,35,.62); text-transform: uppercase; letter-spacing: .06em; }
     .panel-head h3 { margin: 0; font-size: clamp(28px, 3.6vw, 40px); line-height: 1; letter-spacing: -1.2px; }
     .panel-note { margin: 0 0 22px; font-size: 12px; font-weight: 700; color: var(--muted); }
+    .segment-select { margin: 0 0 22px; }
+    .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0; }
 
     .chart-area { display: grid; gap: 28px; }
     .question-block { display: grid; gap: 10px; }
@@ -244,6 +246,7 @@
     .multi-group { margin-bottom: 20px; }
     .multi-group-label { margin: 0 0 8px; font-size: 13px; font-weight: 900; }
     .n-note { font-weight: 700; color: var(--muted); }
+    .segment-fallback-note { font-size: 11px; font-style: italic; margin: -4px 0 4px; }
 
     .bar { min-height: 46px; border-radius: 20px; overflow: hidden; display: flex; background: rgba(19,35,35,.08); }
     .bar-compact { min-height: 26px; border-radius: 13px; }
@@ -279,6 +282,22 @@
     .pointline-row-label { font-size: 12px; font-weight: 900; }
     .pointline-row-sub { font-size: 11px; font-weight: 700; color: var(--muted); }
     .pointline-benefits { font-size: 11px; font-weight: 700; color: var(--muted); }
+
+    .sap-callout {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      margin: 0 0 34px;
+      padding: 22px 28px;
+      border-radius: var(--radius-medium);
+      background: var(--dark);
+      color: #fff;
+    }
+    .sap-callout-eyebrow { margin: 0 0 6px; font-size: 11px; font-weight: 900; text-transform: uppercase; letter-spacing: .06em; color: var(--green); }
+    .sap-callout h3 { margin: 0 0 8px; font-size: clamp(20px, 2.6vw, 28px); letter-spacing: -0.4px; }
+    .sap-callout-lead { margin: 0; max-width: 640px; font-size: 13px; font-weight: 700; color: rgba(255,255,255,.8); }
+    .sap-callout-arrow { font-size: 30px; font-weight: 900; color: var(--green); flex: none; }
 
     .salary-filters { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 260px)); gap: 14px; margin-bottom: 26px; }
     .salary-count { font-size: 12px; font-weight: 800; color: var(--muted); margin: 0 0 14px; }
@@ -335,6 +354,7 @@
       .answer-row-multi { grid-template-columns: 1fr; gap: 4px; }
       .answer-value { text-align: left; }
       .legend { padding-left: 0; }
+      .sap-callout { flex-direction: column; align-items: flex-start; }
       .hero-card { left: 0; width: calc(100% - 34px); padding: 20px 24px 25px; }
       .footer-bottom { flex-direction: column; }
       .footer-bottom div { flex-direction: column; gap: 8px; }
@@ -355,6 +375,7 @@
       <ul class="nav-links">
         <li><a href="#trends">Piaci trendek</a></li>
         <li><a href="#berezes">Bérezés</a></li>
+        <li><a href="./sap/index.html">SAP</a></li>
         <li><a href="#expertpool">Expert Pool</a></li>
         <li><a href="#kapcsolat">Kapcsolat</a></li>
       </ul>
@@ -440,7 +461,12 @@
                 <h3 id="b2c-title">B2C</h3>
               </div>
             </div>
-            <p class="panel-note">Bontás: tapasztalati szint szerint, ahol elérhető</p>
+            <div class="segment-select">
+              <label>
+                <span class="sr-only">Tapasztalati szint</span>
+                <select id="empSegmentSelect"></select>
+              </label>
+            </div>
             <div class="chart-area" id="b2cChart"></div>
           </article>
 
@@ -451,7 +477,12 @@
                 <h3 id="b2b-title">B2B</h3>
               </div>
             </div>
-            <p class="panel-note">Bontás: cégméret szerint, ahol elérhető</p>
+            <div class="segment-select">
+              <label>
+                <span class="sr-only">Cégméret</span>
+                <select id="erSegmentSelect"></select>
+              </label>
+            </div>
             <div class="chart-area" id="b2bChart"></div>
             <div class="profile-panel" id="profilePanel" aria-label="Válaszadói cégprofil"></div>
           </article>
@@ -469,11 +500,17 @@
           <p>
             Válassz területet: a TOP3 kiemelt pozíció munkaadó–munkavállaló bérsávját és az IDBC szakértői
             ajánlását chart formában mutatjuk, alatta a terület többi pozíciója szűrhető táblázatban következik.
-            A SAP terület — mivel az IDBC SAP-szakértő cég — saját, részletesebb piaci trendekkel és
-            termékbemutatóval bővített oldalon szerepel, ezért itt nem jelenik meg:
-            <a href="./sap/index.html" style="text-decoration:underline">SAP piaci trendek és bérsávok →</a>
           </p>
         </div>
+
+        <a class="sap-callout" href="./sap/index.html">
+          <div>
+            <p class="sap-callout-eyebrow">IDBC SAP-szakértő cég</p>
+            <h3>SAP piaci trendek és bérsávok</h3>
+            <p class="sap-callout-lead">A SAP terület saját, részletesebb piaci trendekkel és termékbemutatóval bővített oldalon szerepel, ezért itt nem jelenik meg.</p>
+          </div>
+          <span class="sap-callout-arrow">→</span>
+        </a>
 
         <div class="salary-filters">
           <label>
@@ -591,14 +628,51 @@
     }
 
     // ---------- Trends section ----------
+    const EXPERIENCE_ORDER = ["kevesebb, mint 1 év", "1-2 év", "3-5 év", "6-10 év", "11-20 év", "több, mint 20 év"];
+    const COMPANY_SIZE_ORDER = ["50 fő alatti", "51-100 fő", "101-350 fő", "351-1000 fő", "1000 fő feletti"];
+
     const editionSelect = document.querySelector('#editionSelect');
     const topicSelect = document.querySelector('#topicSelect');
+    const empSegmentSelect = document.querySelector('#empSegmentSelect');
+    const erSegmentSelect = document.querySelector('#erSegmentSelect');
     const b2cChart = document.querySelector('#b2cChart');
     const b2bChart = document.querySelector('#b2bChart');
     const profilePanel = document.querySelector('#profilePanel');
 
     editionSelect.innerHTML = DATA.editions.map(e => `<option value="${escapeHtml(e)}">${escapeHtml(e)}</option>`).join('');
     topicSelect.innerHTML = DATA.topics.map(t => `<option value="${escapeHtml(t.topic)}">${escapeHtml(t.topic)}</option>`).join('');
+
+    function collectSegments(edition, side, canonicalOrder) {
+      const found = new Set();
+      Object.values(DATA.answers[edition][side].cross).forEach(c => c.items.forEach(row => found.add(row.label)));
+      return canonicalOrder.filter(s => found.has(s));
+    }
+
+    function populateSegmentSelects() {
+      const edition = editionSelect.value;
+      const prevEmp = empSegmentSelect.value;
+      const prevEr = erSegmentSelect.value;
+      const empSegs = collectSegments(edition, 'employee', EXPERIENCE_ORDER);
+      const erSegs = collectSegments(edition, 'employer', COMPANY_SIZE_ORDER);
+      empSegmentSelect.innerHTML = empSegs.map(s => `<option value="${escapeHtml(s)}">${escapeHtml(s)}</option>`).join('');
+      erSegmentSelect.innerHTML = erSegs.map(s => `<option value="${escapeHtml(s)}">${escapeHtml(s)}</option>`).join('');
+      if (empSegs.includes(prevEmp)) empSegmentSelect.value = prevEmp;
+      if (erSegs.includes(prevEr)) erSegmentSelect.value = prevEr;
+    }
+
+    // For the selected segment, use that segment's crosstab row when the question has one;
+    // otherwise fall back to the overall total and say so.
+    function getSegmentSlice(sideData, question, segmentValue) {
+      const crossC = sideData.cross[question];
+      if (crossC) {
+        const row = crossC.items.find(r => r.label === segmentValue);
+        if (row) {
+          const items = row.values.map(v => ({ label: v.group, percent: v.percent, count: v.count }));
+          return { c: { kind: 'simple', items }, rowLabel: segmentValue, note: null };
+        }
+      }
+      return { c: sideData.base[question] || null, rowLabel: 'Összes válaszadó', note: 'Ehhez a kérdéshez nincs bontás — összesített adat.' };
+    }
 
     function getQuestions(topic, edition, sideKey) {
       const t = DATA.topics.find(x => x.topic === topic);
@@ -609,7 +683,9 @@
       return (ed[sideKey] || []).filter(q => !q.trim().toLowerCase().startsWith('jelöld'));
     }
 
-    function renderSimple(title, c) {
+    function renderSimple(title, c, rowLabel, note) {
+      rowLabel = rowLabel || 'Összes válaszadó';
+      const noteHtml = note ? `<p class="n-note segment-fallback-note">${escapeHtml(note)}</p>` : '';
       const total = c.items.reduce((s, it) => s + it.count, 0);
       const sumPct = c.items.reduce((s, it) => s + it.percent, 0);
 
@@ -626,6 +702,7 @@
         return `
           <section class="question-block">
             <h4 class="question-title">${escapeHtml(title)}</h4>
+            ${noteHtml}
             <p class="n-note">Többválasztós kérdés — az arányok nem adják ki a 100%-ot (n=${total})</p>
             ${rows}
           </section>`;
@@ -640,8 +717,9 @@
       return `
         <section class="question-block">
           <h4 class="question-title">${escapeHtml(title)}</h4>
+          ${noteHtml}
           <div class="answer-row">
-            <div class="answer-label">Összes válaszadó <span class="n-note">(n=${total})</span></div>
+            <div class="answer-label">${escapeHtml(rowLabel)} <span class="n-note">(n=${total})</span></div>
             <div class="bar">${segments}</div>
           </div>
           <div class="legend">${legend}</div>
@@ -699,27 +777,28 @@
       return `<section class="question-block"><h4 class="question-title">${escapeHtml(title)} <span class="scale-hint">(átlag, 1–4 skála)</span></h4>${rows}</section>`;
     }
 
-    function renderQuestion(question, c) {
+    function renderQuestion(question, c, rowLabel, note) {
       if (!c) return `<section class="question-block"><h4 class="question-title">${escapeHtml(question)}</h4><p class="no-data">Ehhez a kérdéshez nincs adat ebben a nézetben.</p></section>`;
-      if (c.kind === 'simple') return renderSimple(question, c);
+      if (c.kind === 'simple') return renderSimple(question, c, rowLabel, note);
       if (c.kind === 'matrix-percent') return renderMatrixPercent(question, c);
       if (c.kind === 'matrix-value') return renderMatrixValue(question, c);
       return '';
     }
 
-    function renderPanel(target, side, sideKey) {
-      const edition = editionSelect.value;
+    function renderPanel(target, side, sideKey, segmentValue) {
       const topic = topicSelect.value;
+      const edition = editionSelect.value;
       const questions = getQuestions(topic, edition, sideKey);
       const sideData = DATA.answers[edition][side];
       if (!questions.length) {
         target.innerHTML = '<p class="no-data">Ehhez a témához nincs kérdés ezen az oldalon.</p>';
         return;
       }
-      // Prefer the breakdown crosstab when one exists for this question, otherwise fall back to the total.
+      // Show only the selected segment's data (its crosstab row), falling back to the total
+      // for questions that have no breakdown at all.
       target.innerHTML = questions.map(q => {
-        const c = sideData.cross[q] || sideData.base[q];
-        return renderQuestion(q, c);
+        const { c, rowLabel, note } = getSegmentSlice(sideData, q, segmentValue);
+        return renderQuestion(q, c, rowLabel, note);
       }).join('');
     }
 
@@ -735,12 +814,14 @@
     }
 
     function renderAll() {
-      renderPanel(b2cChart, 'employee', 'Munkavállalók');
-      renderPanel(b2bChart, 'employer', 'Munkáltatók');
+      renderPanel(b2cChart, 'employee', 'Munkavállalók', empSegmentSelect.value);
+      renderPanel(b2bChart, 'employer', 'Munkáltatók', erSegmentSelect.value);
       renderProfile();
     }
 
-    [editionSelect, topicSelect].forEach(el => el.addEventListener('change', renderAll));
+    editionSelect.addEventListener('change', () => { populateSegmentSelects(); renderAll(); });
+    [topicSelect, empSegmentSelect, erSegmentSelect].forEach(el => el.addEventListener('change', renderAll));
+    populateSegmentSelects();
     renderAll();
 
     // ---------- Salary section ----------
@@ -806,6 +887,13 @@
     // Chart: TOP3 positions for the selected area only.
     function renderTop3() {
       const rows = nonSapRows.filter(r => r.top3 && r.terulet === teruletSelect.value);
+      if (!rows.length) {
+        // No curated TOP3 for this area — hide the chart entirely, table below covers everything.
+        top3Panel.style.display = 'none';
+        top3Panel.innerHTML = '';
+        return;
+      }
+      top3Panel.style.display = '';
       const legend = `
         <div class="pointline-legend">
           <span class="legend-item"><span class="legend-dot" style="background:#c9e5d8"></span>Min. havi bruttó</span>
