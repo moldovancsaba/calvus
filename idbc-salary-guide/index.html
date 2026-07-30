@@ -301,6 +301,21 @@
 
     .salary-filters { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 260px)); gap: 14px; margin-bottom: 26px; }
     .salary-count { font-size: 12px; font-weight: 800; color: var(--muted); margin: 0 0 14px; }
+    .download-cta { display: flex; justify-content: center; margin-top: 22px; }
+    .download-cta-button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 44px;
+      padding: 11px 22px;
+      border-radius: 10px;
+      background: rgba(19,35,35,.14);
+      color: rgba(16,24,24,.55);
+      font-size: 13px;
+      font-weight: 900;
+      cursor: not-allowed;
+      user-select: none;
+    }
 
     .table-wrap { overflow: auto; border-radius: 18px; border: 1px solid var(--line); background: #fff; }
     table { border-collapse: collapse; width: 100%; min-width: 760px; }
@@ -542,6 +557,9 @@
             </thead>
             <tbody id="salaryTableBody"></tbody>
           </table>
+        </div>
+        <div class="download-cta">
+          <span class="download-cta-button" aria-disabled="true">Töltse le a teljes listát</span>
         </div>
       </div>
     </section>
@@ -902,10 +920,13 @@
 
     // Table: the rest of the selected area's positions (TOP3 already covered by the chart above,
     // when there is one — otherwise this table is everything, so the "additional" caption doesn't apply).
+    const MAX_TABLE_ROWS = 10;
+
     function renderTable(hasTop3) {
       const terulet = teruletSelect.value;
       const szint = szintSelect.value;
-      const rows = nonSapRows.filter(r => !r.top3 && r.terulet === terulet && (!szint || r.szint === szint));
+      const allRows = nonSapRows.filter(r => !r.top3 && r.terulet === terulet && (!szint || r.szint === szint));
+      const rows = allRows.slice(0, MAX_TABLE_ROWS);
       salaryTableBody.innerHTML = rows.map(r => `
         <tr>
           <td>${escapeHtml(r.terulet)}</td>
@@ -917,7 +938,7 @@
           <td>${escapeHtml(r.juttatas)}</td>
         </tr>`).join('') || '<tr><td colspan="7" class="no-data">Nincs további pozíció ehhez a szűréshez.</td></tr>';
       salaryCount.style.display = hasTop3 ? '' : 'none';
-      salaryCount.textContent = rows.length + ' további pozíció a kiválasztott területen';
+      salaryCount.textContent = allRows.length + ' további pozíció a kiválasztott területen';
     }
 
     function renderSalarySection() {
