@@ -222,7 +222,7 @@
       margin: 0 0 32px;
     }
 
-    .top-filters label, .filter-grid label { display: grid; gap: 8px; font-size: 13px; font-weight: 900; }
+    .top-filters label { display: grid; gap: 8px; font-size: 13px; font-weight: 900; }
 
     .chart-panels { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 48px; }
     .trend-panel { min-width: 0; }
@@ -230,8 +230,7 @@
     .panel-head { display: flex; align-items: end; justify-content: space-between; gap: 20px; margin-bottom: 15px; }
     .panel-kicker { margin: 0 0 5px; font-size: 13px; font-weight: 900; color: rgba(19,35,35,.62); text-transform: uppercase; letter-spacing: .06em; }
     .panel-head h3 { margin: 0; font-size: clamp(28px, 3.6vw, 40px); line-height: 1; letter-spacing: -1.2px; }
-
-    .filter-grid { display: grid; grid-template-columns: 1fr; gap: 14px; margin-bottom: 26px; }
+    .panel-note { margin: 0 0 22px; font-size: 12px; font-weight: 700; color: var(--muted); }
 
     .chart-area { display: grid; gap: 28px; }
     .question-block { display: grid; gap: 10px; }
@@ -393,7 +392,8 @@
           <p>
             Válassz szegmenst és témát: a bal oldali B2C nézet a munkavállalói válaszokat,
             a jobb oldali B2B nézet a munkáltatói válaszokat mutatja, valós felmérési adatok alapján.
-            Mindkét oldal saját bontással (tapasztalati szint / cégméret) is megnézhető.
+            Mindkét oldal a saját bontásában jelenik meg (munkavállalói oldal: tapasztalati szint,
+            munkáltatói oldal: cégméret szerint), ahol a felmérés ezt lehetővé teszi.
           </p>
         </div>
 
@@ -433,15 +433,7 @@
                 <h3 id="b2c-title">B2C</h3>
               </div>
             </div>
-            <div class="filter-grid">
-              <label>
-                <span>Bontás</span>
-                <select id="empBreakdownSelect">
-                  <option value="base">Összesen</option>
-                  <option value="cross">Tapasztalati szint szerint</option>
-                </select>
-              </label>
-            </div>
+            <p class="panel-note">Bontás: tapasztalati szint szerint, ahol elérhető</p>
             <div class="chart-area" id="b2cChart"></div>
           </article>
 
@@ -452,15 +444,7 @@
                 <h3 id="b2b-title">B2B</h3>
               </div>
             </div>
-            <div class="filter-grid">
-              <label>
-                <span>Bontás</span>
-                <select id="erBreakdownSelect">
-                  <option value="base">Összesen</option>
-                  <option value="cross">Cégméret szerint</option>
-                </select>
-              </label>
-            </div>
+            <p class="panel-note">Bontás: cégméret szerint, ahol elérhető</p>
             <div class="chart-area" id="b2bChart"></div>
             <div class="profile-panel" id="profilePanel" aria-label="Válaszadói cégprofil"></div>
           </article>
@@ -602,8 +586,6 @@
     // ---------- Trends section ----------
     const editionSelect = document.querySelector('#editionSelect');
     const topicSelect = document.querySelector('#topicSelect');
-    const empBreakdownSelect = document.querySelector('#empBreakdownSelect');
-    const erBreakdownSelect = document.querySelector('#erBreakdownSelect');
     const b2cChart = document.querySelector('#b2cChart');
     const b2bChart = document.querySelector('#b2bChart');
     const profilePanel = document.querySelector('#profilePanel');
@@ -673,7 +655,7 @@
       return '';
     }
 
-    function renderPanel(target, side, sideKey, breakdownMode) {
+    function renderPanel(target, side, sideKey) {
       const edition = editionSelect.value;
       const topic = topicSelect.value;
       const questions = getQuestions(topic, edition, sideKey);
@@ -682,8 +664,9 @@
         target.innerHTML = '<p class="no-data">Ehhez a témához nincs kérdés ezen az oldalon.</p>';
         return;
       }
+      // Prefer the breakdown crosstab when one exists for this question, otherwise fall back to the total.
       target.innerHTML = questions.map(q => {
-        const c = (breakdownMode === 'cross' && sideData.cross[q]) ? sideData.cross[q] : sideData.base[q];
+        const c = sideData.cross[q] || sideData.base[q];
         return renderQuestion(q, c);
       }).join('');
     }
@@ -700,12 +683,12 @@
     }
 
     function renderAll() {
-      renderPanel(b2cChart, 'employee', 'Munkavállalók', empBreakdownSelect.value);
-      renderPanel(b2bChart, 'employer', 'Munkáltatók', erBreakdownSelect.value);
+      renderPanel(b2cChart, 'employee', 'Munkavállalók');
+      renderPanel(b2bChart, 'employer', 'Munkáltatók');
       renderProfile();
     }
 
-    [editionSelect, topicSelect, empBreakdownSelect, erBreakdownSelect].forEach(el => el.addEventListener('change', renderAll));
+    [editionSelect, topicSelect].forEach(el => el.addEventListener('change', renderAll));
     renderAll();
 
     // ---------- Salary section ----------
@@ -813,12 +796,12 @@
 
     function populateExpertFilter() {
       const iparagak = [...new Set(DATA.salary.expertPool.map(r => r.iparag))];
-      iparagSelect.innerHTML = '<option value="">Összes iparág</option>' + iparagak.map(i => `<option value="${escapeHtml(i)}">${escapeHtml(i)}</option>`).join('');
+      iparagSelect.innerHTML = iparagak.map(i => `<option value="${escapeHtml(i)}">${escapeHtml(i)}</option>`).join('');
     }
 
     function renderExpertPool() {
       const iparag = iparagSelect.value;
-      const rows = DATA.salary.expertPool.filter(r => !iparag || r.iparag === iparag);
+      const rows = DATA.salary.expertPool.filter(r => r.iparag === iparag);
       const max = Math.max(...DATA.salary.expertPool.map(r => r.darab));
       expertGrid.innerHTML = rows.map(r => `
         <article class="expert-card">
