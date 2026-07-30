@@ -191,6 +191,19 @@
       .navbar { width: calc(100% - 28px); min-height: 54px; }
       .menu-toggle { display: block; }
       .nav-links, .nav-actions { display: none; }
+      .navbar { flex-wrap: wrap; }
+      .navbar.is-open .nav-links,
+      .navbar.is-open .nav-actions {
+        display: flex;
+        flex-direction: column;
+        align-items: stretch;
+        width: 100%;
+        order: 3;
+        gap: 10px;
+        padding: 14px 2px 12px;
+      }
+      .navbar.is-open .nav-links { font-size: 13px; }
+      .navbar.is-open .nav-actions .button { width: 100%; }
       .summary-grid, .product-grid { grid-template-columns: 1fr; }
       .salary-head { display: grid; }
       .footer-inner { grid-template-columns: 1fr; gap: 30px; }
@@ -213,7 +226,7 @@
         <span class="brand-main">IDBC</span>
         <span class="brand-sub">group</span>
       </a>
-      <button class="menu-toggle" type="button" aria-label="Menü megnyitása">☰</button>
+      <button class="menu-toggle" type="button" aria-label="Menü megnyitása" aria-expanded="false">☰</button>
       <ul class="nav-links">
         <li><a href="#summary">Összefoglaló</a></li>
         <li><a href="#products">SAP szolgáltatások</a></li>
@@ -225,6 +238,26 @@
       </div>
     </nav>
   </header>
+
+  <script>
+    (() => {
+      const toggle = document.querySelector('.menu-toggle');
+      const navbar = document.querySelector('.navbar');
+      if (!toggle || !navbar) return;
+      toggle.addEventListener('click', () => {
+        const isOpen = navbar.classList.toggle('is-open');
+        toggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+        toggle.textContent = isOpen ? '✕' : '☰';
+      });
+      navbar.querySelectorAll('.nav-links a, .nav-actions a').forEach(a => {
+        a.addEventListener('click', () => {
+          navbar.classList.remove('is-open');
+          toggle.setAttribute('aria-expanded', 'false');
+          toggle.textContent = '☰';
+        });
+      });
+    })();
+  </script>
 
   <main>
     <section class="hero" aria-labelledby="hero-title">
