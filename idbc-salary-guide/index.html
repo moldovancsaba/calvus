@@ -482,7 +482,8 @@
           <p>
             A TOP3 kiemelt pozíció munkaadó–munkavállaló bérsávját és az IDBC szakértői ajánlását mutatjuk,
             majd alatta az összes felvett pozíció szűrhető, teljes bérsáv- és juttatás-táblázata következik.
-            A SAP terület saját, részletesebb piaci trendekkel és termékbemutatóval bővített oldalán is elérhető:
+            A SAP terület — mivel az IDBC SAP-szakértő cég — saját, részletesebb piaci trendekkel és
+            termékbemutatóval bővített oldalon szerepel, ezért itt nem jelenik meg:
             <a href="./sap/index.html" style="text-decoration:underline">SAP piaci trendek és bérsávok →</a>
           </p>
         </div>
@@ -638,7 +639,8 @@
       if (!t) return [];
       const ed = t.editions[edition];
       if (!ed) return [];
-      return ed[sideKey] || [];
+      // Exclude raw 1-4 rating-scale matrix questions ("Jelöld 1-4-ig...") — too noisy to show as-is.
+      return (ed[sideKey] || []).filter(q => !q.trim().toLowerCase().startsWith('jelöld'));
     }
 
     function renderSimple(title, c) {
@@ -736,10 +738,14 @@
     const salaryCount = document.querySelector('#salaryCount');
     const top3Panel = document.querySelector('#top3Panel');
 
+    // SAP is its own dedicated page (./sap/index.html) — kept in the same source sheet for easier
+    // data updates, but excluded here so it isn't duplicated in the general salary view.
+    const nonSapRows = DATA.salary.webBertabla.filter(r => r.terulet !== 'SAP');
+
     function populateSalaryFilters() {
-      const teruletek = [...new Set(DATA.salary.webBertabla.map(r => r.terulet))];
+      const teruletek = [...new Set(nonSapRows.map(r => r.terulet))];
       teruletSelect.innerHTML = teruletek.map(t => `<option value="${escapeHtml(t)}">${escapeHtml(t)}</option>`).join('');
-      const szintek = [...new Set(DATA.salary.webBertabla.map(r => r.szint))];
+      const szintek = [...new Set(nonSapRows.map(r => r.szint))];
       szintSelect.innerHTML = szintek.map(s => `<option value="${escapeHtml(s)}">${escapeHtml(s)}</option>`).join('');
     }
 
@@ -788,7 +794,7 @@
     const top3TableBody = document.querySelector('#top3TableBody');
 
     function renderTop3() {
-      const rows = DATA.salary.webBertabla.filter(r => r.top3);
+      const rows = nonSapRows.filter(r => r.top3);
       const legend = `
         <div class="pointline-legend">
           <span class="legend-item"><span class="legend-dot" style="background:#c9e5d8"></span>Min. havi bruttó</span>
@@ -811,7 +817,7 @@
     function renderTable() {
       const terulet = teruletSelect.value;
       const szint = szintSelect.value;
-      const rows = DATA.salary.webBertabla.filter(r => (!terulet || r.terulet === terulet) && (!szint || r.szint === szint));
+      const rows = nonSapRows.filter(r => (!terulet || r.terulet === terulet) && (!szint || r.szint === szint));
       salaryTableBody.innerHTML = rows.map(r => `
         <tr>
           <td>${escapeHtml(r.terulet)}</td>
