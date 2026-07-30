@@ -350,7 +350,7 @@
     function niceMaxHuf(values) {
       const maxVal = Math.max(...values);
       const step = maxVal > 2000000 ? 500000 : 250000;
-      return Math.ceil(maxVal / step) * step;
+      return { max: Math.ceil(maxVal / step) * step, step };
     }
 
     function renderPointLineChart(rows) {
@@ -358,9 +358,10 @@
       const W = 900, left = 230, right = 40, top = 30, rowH = 62, bottom = 34;
       const H = top + rows.length * rowH + bottom;
       const plot = W - left - right;
-      const domainMax = niceMaxHuf(rows.map(r => r.max));
+      const { max: domainMax, step } = niceMaxHuf(rows.map(r => r.max));
       const xPos = v => left + (v / domainMax) * plot;
-      const ticks = [0, 0.25, 0.5, 0.75, 1].map(f => Math.round(domainMax * f));
+      const ticks = [];
+      for (let t = step; t <= domainMax; t += step) ticks.push(t);
 
       let s = `<svg viewBox="0 0 ${W} ${H}" style="width:100%;height:auto" role="img" aria-label="SAP bérsáv pontvonal diagram">`;
       ticks.forEach(t => {
