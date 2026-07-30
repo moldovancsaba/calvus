@@ -1,0 +1,415 @@
+<!doctype html>
+<html lang="hu">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>IDBC – SAP piaci trendek és bérsávok</title>
+  <style>
+    :root {
+      --dark: #132323;
+      --dark-2: #0b1818;
+      --light-bg: #eef5ec;
+      --green: #a5df8f;
+      --green-2: #55aa8b;
+      --text: #101818;
+      --muted: rgba(16,24,24,.72);
+      --line: rgba(19,35,35,.18);
+      --container: 1180px;
+      --radius-large: 28px;
+      --radius-medium: 16px;
+      --shadow-soft: 0 16px 40px rgba(0, 0, 0, 0.12);
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      margin: 0;
+      background:
+        radial-gradient(circle at 18% 20%, rgba(0,0,0,0.035) 0 1px, transparent 1px),
+        radial-gradient(circle at 68% 60%, rgba(0,0,0,0.025) 0 1px, transparent 1px),
+        var(--light-bg);
+      background-size: 7px 7px, 9px 9px, auto;
+      color: var(--text);
+      font-family: "Inter", "Montserrat", "Segoe UI", Arial, sans-serif;
+      line-height: 1.35;
+      padding-top: 78px;
+    }
+
+    img { max-width: 100%; display: block; }
+    a { color: inherit; text-decoration: none; }
+
+    .container { width: min(var(--container), calc(100% - 56px)); margin-inline: auto; }
+
+    .site-header { position: fixed; top: 0; left: 0; right: 0; z-index: 20; display: flex; justify-content: center; pointer-events: none; }
+
+    .navbar {
+      width: min(980px, calc(100% - 80px));
+      min-height: 42px;
+      padding: 0 13px 0 20px;
+      border-radius: 0 0 14px 14px;
+      background: var(--dark);
+      color: #fff;
+      display: flex;
+      align-items: center;
+      gap: 22px;
+      box-shadow: var(--shadow-soft);
+      pointer-events: auto;
+      margin-top: 18px;
+    }
+
+    .brand { display: inline-flex; flex-direction: column; justify-content: center; min-width: 84px; color: #fff; font-weight: 900; line-height: 0.8; letter-spacing: -1px; }
+    .brand-main { font-size: 28px; }
+    .brand-sub { margin-left: 42px; color: var(--green); font-size: 12px; letter-spacing: 0; }
+
+    .nav-links { list-style: none; display: flex; align-items: center; gap: 22px; margin: 0 auto; padding: 0; font-size: 11px; font-weight: 800; white-space: nowrap; }
+    .nav-actions { display: flex; gap: 8px; margin-left: auto; }
+
+    .button, .cta-button { display: inline-flex; align-items: center; justify-content: center; border-radius: 10px; font-weight: 900; white-space: nowrap; }
+    .button { min-height: 25px; padding: 5px 16px; font-size: 10px; }
+    .button-primary { background: var(--green); color: var(--dark); }
+    .button-outline { border: 2px solid var(--green); color: #fff; }
+
+    .menu-toggle { display: none; margin-left: auto; border: 0; background: transparent; color: #fff; font-size: 22px; cursor: pointer; }
+
+    .hero { position: relative; min-height: 460px; margin: 18px 20px 0; border-radius: 0 0 0 var(--radius-large); overflow: hidden; background: #d9e2dc; box-shadow: var(--shadow-soft); }
+    .hero img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: center; }
+    .hero::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(90deg, rgba(9,20,20,.72), rgba(9,20,20,.38) 43%, rgba(9,20,20,.08)),
+        linear-gradient(180deg, rgba(9,20,20,.05), rgba(9,20,20,.25));
+    }
+
+    .hero-card {
+      position: absolute;
+      left: max(38px, calc((100vw - var(--container)) / 2));
+      bottom: 0;
+      z-index: 2;
+      width: min(610px, calc(100% - 70px));
+      padding: 24px 38px 30px;
+      border-radius: 0 var(--radius-medium) 0 0;
+      background: rgba(19,35,35,.94);
+      color: #fff;
+      backdrop-filter: blur(4px);
+    }
+
+    .eyebrow { margin: 0 0 10px; font-size: 12px; font-weight: 900; text-transform: uppercase; letter-spacing: .08em; color: var(--green); }
+    .hero-card h1 { margin: 0 0 12px; font-size: clamp(34px, 5vw, 58px); line-height: .92; letter-spacing: -1.7px; }
+    .hero-card p { margin: 0; max-width: 500px; font-size: 17px; font-weight: 800; line-height: 1.18; }
+
+    .article-section { padding: 58px 0 72px; }
+
+    .summary-grid { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(320px, .9fr); gap: 42px; padding-bottom: 52px; border-bottom: 2px solid rgba(19,35,35,.55); }
+
+    .article-copy h2, .section-title, .salary-title { margin: 0; font-size: clamp(32px, 4.5vw, 50px); line-height: 1; letter-spacing: -1.4px; }
+    .article-copy p { margin: 18px 0 0; font-size: 18px; font-weight: 800; line-height: 1.38; }
+
+    .bullet-list { display: grid; gap: 12px; margin: 24px 0 0; padding: 0; list-style: none; }
+    .bullet-list li { position: relative; padding-left: 28px; font-size: 15px; font-weight: 800; }
+    .bullet-list li::before { content: ""; position: absolute; left: 0; top: .45em; width: 12px; height: 12px; border-radius: 50%; background: var(--green); }
+
+    .side-stack { display: grid; gap: 22px; }
+
+    .video-card {
+      position: relative;
+      min-height: 270px;
+      border-radius: 22px;
+      overflow: hidden;
+      background:
+        linear-gradient(120deg, rgba(19,35,35,.7), rgba(19,35,35,.1)),
+        url("https://images.unsplash.com/photo-1552664730-d307ca884978?auto=format&fit=crop&w=1100&q=80") center / cover;
+      box-shadow: var(--shadow-soft);
+    }
+
+    .play-button { position: absolute; inset: 0; margin: auto; width: 78px; height: 78px; border-radius: 50%; background: rgba(10,24,24,.9); box-shadow: 0 12px 28px rgba(0,0,0,.25); }
+    .play-button::before { content: ""; position: absolute; left: 32px; top: 24px; border-left: 24px solid #fff; border-top: 15px solid transparent; border-bottom: 15px solid transparent; }
+
+    .contact-card { display: grid; grid-template-columns: 118px 1fr; gap: 18px; align-items: center; padding: 18px; border-radius: 20px; background: var(--dark); color: #fff; box-shadow: var(--shadow-soft); }
+    .contact-card img { width: 118px; height: 118px; object-fit: cover; object-position: center top; border-radius: 18px; }
+    .contact-card h3 { margin: 0 0 6px; font-size: 22px; line-height: 1; }
+    .contact-card p { margin: 0 0 14px; color: rgba(255,255,255,.82); font-size: 13px; font-weight: 800; }
+
+    .cta-button { min-height: 44px; padding: 11px 18px; border: 0; background: var(--green); color: var(--dark); font-size: 13px; cursor: pointer; }
+
+    .products-section { padding: 58px 0 74px; border-bottom: 2px solid rgba(19,35,35,.55); }
+    .section-lead { margin: 14px 0 0; max-width: 740px; font-size: 17px; font-weight: 800; color: var(--muted); }
+
+    .product-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px; margin-top: 34px; }
+    .product-card { padding: 28px; border-radius: 22px; background: #fff; box-shadow: 0 10px 26px rgba(0,0,0,.08); border: 1px solid rgba(19,35,35,.08); }
+    .product-card.is-dark { background: var(--dark); color: #fff; }
+    .product-card h3 { margin: 0 0 14px; font-size: 25px; line-height: 1.05; letter-spacing: -.5px; }
+    .product-card ul { display: grid; gap: 9px; margin: 0; padding-left: 18px; font-size: 14px; font-weight: 800; line-height: 1.25; }
+
+    .salary-section { padding: 58px 0 80px; }
+    .salary-head { display: flex; justify-content: space-between; align-items: end; gap: 30px; margin-bottom: 28px; }
+
+    .pointline-panel { background: #fff; border: 1px solid var(--line); border-radius: 20px; padding: 24px 26px 10px; margin-bottom: 36px; box-shadow: var(--shadow-soft); }
+    .pointline-legend { display: flex; flex-wrap: wrap; gap: 8px 20px; margin: 0 0 18px; }
+    .pointline-legend .legend-item { display: inline-flex; align-items: center; gap: 6px; font-size: 12px; font-weight: 800; color: rgba(16,24,24,.76); }
+    .pointline-legend .legend-dot { width: 12px; height: 12px; border-radius: 50%; flex: none; }
+    .no-data { font-size: 13px; font-weight: 700; color: var(--muted); font-style: italic; margin: 0; }
+
+    .salary-table-wrap { overflow-x: auto; border-radius: 20px; box-shadow: var(--shadow-soft); }
+    table { width: 100%; min-width: 820px; border-collapse: collapse; background: #fff; }
+    th, td { padding: 16px 18px; text-align: left; border-bottom: 1px solid rgba(19,35,35,.12); font-size: 14px; font-weight: 800; vertical-align: top; }
+    td.num { text-align: right; font-variant-numeric: tabular-nums; }
+    th { background: var(--dark); color: #fff; font-size: 13px; text-transform: uppercase; letter-spacing: .04em; }
+    tr:last-child td { border-bottom: 0; }
+
+    .bottom-cta { display: flex; justify-content: center; margin-top: 30px; }
+
+    .site-footer { position: relative; padding: 49px 0 34px; border-radius: var(--radius-large) var(--radius-large) 0 0; background: var(--dark-2); color: #fff; }
+    .footer-inner { display: grid; grid-template-columns: 1fr 190px; gap: 56px; padding-bottom: 44px; border-bottom: 1px solid rgba(255,255,255,.2); }
+    .brand-footer { margin-bottom: 20px; }
+    .footer-contact p { margin: 0 0 12px; color: #dbe4dd; font-size: 12px; line-height: 1.45; }
+    .footer-nav { display: grid; align-content: start; gap: 6px; padding-top: 6px; color: #dbe4dd; font-size: 12px; font-weight: 800; }
+    .footer-bottom { display: flex; justify-content: space-between; gap: 24px; padding-top: 22px; color: #dbe4dd; font-size: 11px; }
+    .footer-bottom p { margin: 0; }
+    .footer-bottom div { display: flex; gap: 18px; }
+
+    @media (max-width: 1020px) {
+      .navbar { width: calc(100% - 28px); min-height: 54px; }
+      .menu-toggle { display: block; }
+      .nav-links, .nav-actions { display: none; }
+      .summary-grid, .product-grid { grid-template-columns: 1fr; }
+      .salary-head { display: grid; }
+      .footer-inner { grid-template-columns: 1fr; gap: 30px; }
+    }
+
+    @media (max-width: 700px) {
+      .container { width: min(100% - 32px, var(--container)); }
+      .hero { min-height: 410px; margin-inline: 10px; }
+      .hero-card { left: 0; width: calc(100% - 34px); padding: 20px 24px 25px; }
+      .contact-card { grid-template-columns: 1fr; }
+      .contact-card img { width: 100%; height: 280px; }
+      .footer-bottom, .footer-bottom div { flex-direction: column; }
+    }
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <nav class="navbar" aria-label="Fő navigáció">
+      <a class="brand" href="../index.html" aria-label="IDBC Salary Guide">
+        <span class="brand-main">IDBC</span>
+        <span class="brand-sub">group</span>
+      </a>
+      <button class="menu-toggle" type="button" aria-label="Menü megnyitása">☰</button>
+      <ul class="nav-links">
+        <li><a href="#summary">Összefoglaló</a></li>
+        <li><a href="#products">SAP szolgáltatások</a></li>
+        <li><a href="#salary">Bérsávok</a></li>
+        <li><a href="../index.html">Salary Guide</a></li>
+      </ul>
+      <div class="nav-actions">
+        <a class="button button-primary" href="#salary">Bérsávok</a>
+        <a class="button button-outline" href="../../index.html">Calvus Hub</a>
+      </div>
+    </nav>
+  </header>
+
+  <main>
+    <section class="hero" aria-labelledby="hero-title">
+      <img src="https://idbc.hu/includes/images/GO_Hero2.webp?v=2" alt="IDBC SAP piaci trendek fejléckép nagyvállalati környezetben" />
+      <div class="hero-card">
+        <p class="eyebrow">IDBC Salary Guide</p>
+        <h1 id="hero-title">SAP piaci trendek</h1>
+        <p>Áttekintés a SAP szakértői piac aktuális trendjeiről, szolgáltatási területeiről és jellemző bérsávjairól.</p>
+      </div>
+    </section>
+
+    <section class="article-section" id="summary">
+      <div class="container summary-grid">
+        <article class="article-copy">
+          <p class="eyebrow">Cikkoldal</p>
+          <h2>Vezetői összefoglaló</h2>
+          <p>
+            A SAP ökoszisztémában egyszerre nő az S/4 HANA átállások, a cloud alapú ERP bevezetések,
+            a folyamatoptimalizálás és a specializált dokumentum- és adatkezelési megoldások szerepe.
+            A vállalatok a klasszikus moduláris szakértői tudás mellett egyre inkább end-to-end folyamat,
+            integrációs és transzformációs tapasztalatot keresnek.
+          </p>
+          <ul class="bullet-list">
+            <li>A S/4 HANA transzformációk és RISE bevezetések továbbra is kiemelt keresleti területet jelentenek.</li>
+            <li>A funkcionális tanácsadók iránti igény stabil, különösen pénzügyi, logisztikai, gyártási és eWM fókuszban.</li>
+            <li>A BTP, Signavio, SuccessFactors, xECM és archiválási kompetenciák prémium szakértői területekké váltak.</li>
+          </ul>
+        </article>
+
+        <aside class="side-stack">
+          <a class="video-card" href="#products" aria-label="SAP piaci trendek videó indítása">
+            <span class="play-button" aria-hidden="true"></span>
+          </a>
+
+          <article class="contact-card">
+            <img src="https://idbc.hu/uploads/2025/11/Baranyai_Zsolt-1.webp" alt="Baranyai Zsolt portréfotó" />
+            <div>
+              <h3>Baranyai Zsolt</h3>
+              <p>Head of SAP and ECM BU, Partner</p>
+              <a class="cta-button" href="mailto:contact@idbc.hu?subject=SAP%20piaci%20trendek%20konzult%C3%A1ci%C3%B3">Kapcsolatfelvétel</a>
+            </div>
+          </article>
+        </aside>
+      </div>
+    </section>
+
+    <section class="products-section" id="products">
+      <div class="container">
+        <p class="eyebrow">SAP termékek és szolgáltatások</p>
+        <h2 class="section-title">SAP megoldások bemutatása</h2>
+        <p class="section-lead">
+          A blokkok a legfontosabb SAP szolgáltatási irányokat foglalják össze: transzformáció,
+          funkcionális tanácsadás, specializált megoldások, Cloud ERP és egyedi partneri fejlesztések.
+        </p>
+        <div class="product-grid" id="productGrid"></div>
+      </div>
+    </section>
+
+    <section class="salary-section" id="salary">
+      <div class="container">
+        <div class="salary-head">
+          <div>
+            <p class="eyebrow">SAP bérpiaci iránytű</p>
+            <h2 class="salary-title">TOP3 kategória / terület</h2>
+          </div>
+        </div>
+
+        <div class="pointline-panel" id="top3Panel" aria-label="SAP TOP3 kiemelt pozíciók bérsávja"></div>
+
+        <div class="salary-table-wrap" id="salaryTableWrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Pozíció</th>
+                <th>Szint</th>
+                <th style="text-align:right">Min. havi bruttó</th>
+                <th style="text-align:right">IDBC javasolt</th>
+                <th style="text-align:right">Max. havi bruttó</th>
+                <th>Juttatási megjegyzés</th>
+              </tr>
+            </thead>
+            <tbody id="salaryTableBody"></tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer" id="contact">
+    <div class="container footer-inner">
+      <section class="footer-contact">
+        <a class="brand brand-footer" href="#" aria-label="IDBC Group">
+          <span class="brand-main">IDBC</span>
+          <span class="brand-sub">group</span>
+        </a>
+        <p>Your professional boost!</p>
+        <p>Telefon: <a href="tel:+36304790090">+36 30 479 0090</a></p>
+        <p>E-mail: <a href="mailto:contact@idbc.hu">contact@idbc.hu</a></p>
+        <p>Cím: Duna Tower Irodaház A torony 5. emelet<br />1138 Budapest, Népfürdő utca 22.</p>
+      </section>
+      <nav class="footer-nav" aria-label="Lábléc navigáció">
+        <a href="#summary">Összefoglaló</a>
+        <a href="#products">SAP szolgáltatások</a>
+        <a href="#salary">Bérsávok</a>
+        <a href="../index.html">IDBC Salary Guide</a>
+        <a href="../../index.html">Calvus Hub</a>
+      </nav>
+    </div>
+    <div class="container footer-bottom">
+      <p>© 2026 IDBC – IDBC Group | Minden jog fenntartva</p>
+      <div>
+        <a href="#">Panaszszabályzat</a>
+        <a href="#">Adatkezelési tájékoztató</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    (async () => {
+    const DATA = await fetch('../data/guide-data.json').then(r => r.json());
+
+    function escapeHtml(s) {
+      return String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+    }
+    function fmtHuf(n) {
+      return (n === null || n === undefined) ? '–' : new Intl.NumberFormat('hu-HU').format(n) + ' Ft';
+    }
+
+    // ---------- SAP product catalogue (real client content) ----------
+    const productGrid = document.querySelector('#productGrid');
+    productGrid.innerHTML = DATA.sapProducts.map((cat, i) => `
+      <article class="product-card${(i === 0 || i === 3) ? ' is-dark' : ''}">
+        <h3>${escapeHtml(cat.category)}</h3>
+        <ul>${cat.items.map(item => `<li>${escapeHtml(item)}</li>`).join('')}</ul>
+      </article>`).join('');
+
+    // ---------- SAP salary bands (real data, filtered to terulet = SAP) ----------
+    const sapRows = DATA.salary.webBertabla.filter(r => r.terulet === 'SAP');
+
+    function niceMaxHuf(values) {
+      const maxVal = Math.max(...values);
+      const step = maxVal > 2000000 ? 500000 : 250000;
+      return Math.ceil(maxVal / step) * step;
+    }
+
+    function renderPointLineChart(rows) {
+      if (!rows.length) return '<p class="no-data">Nincs kiemelt (TOP3) pozíció.</p>';
+      const W = 900, left = 230, right = 40, top = 30, rowH = 62, bottom = 34;
+      const H = top + rows.length * rowH + bottom;
+      const plot = W - left - right;
+      const domainMax = niceMaxHuf(rows.map(r => r.max));
+      const xPos = v => left + (v / domainMax) * plot;
+      const ticks = [0, 0.25, 0.5, 0.75, 1].map(f => Math.round(domainMax * f));
+
+      let s = `<svg viewBox="0 0 ${W} ${H}" style="width:100%;height:auto" role="img" aria-label="SAP bérsáv pontvonal diagram">`;
+      ticks.forEach(t => {
+        const gx = xPos(t);
+        s += `<line x1="${gx.toFixed(1)}" x2="${gx.toFixed(1)}" y1="${top - 8}" y2="${H - bottom + 4}" stroke="#e2e8e4" stroke-width="1"/>`;
+        s += `<text x="${gx.toFixed(1)}" y="${H - 12}" text-anchor="middle" font-size="11" fill="#657474">${fmtHuf(t)}</text>`;
+      });
+      rows.forEach((r, i) => {
+        const y = top + i * rowH + rowH / 2;
+        s += `<text x="0" y="${(y - 7).toFixed(1)}" font-size="12.5" font-weight="900" fill="#101818">${escapeHtml(r.pozicio)}</text>`;
+        s += `<text x="0" y="${(y + 10).toFixed(1)}" font-size="10.5" font-weight="700" fill="#657474">${escapeHtml(r.terulet)} · ${escapeHtml(r.szint)}</text>`;
+        const xmin = xPos(r.min), xmax = xPos(r.max);
+        s += `<line x1="${xmin.toFixed(1)}" x2="${xmax.toFixed(1)}" y1="${y}" y2="${y}" stroke="#132323" stroke-width="2" opacity="0.32"/>`;
+        s += `<circle cx="${xmin.toFixed(1)}" cy="${y}" r="7" fill="#c9e5d8" stroke="#132323" stroke-width="1.5"/>`;
+        s += `<text x="${xmin.toFixed(1)}" y="${(y - 15).toFixed(1)}" text-anchor="middle" font-size="10.5" font-weight="900" fill="#101818">${fmtHuf(r.min)}</text>`;
+        if (r.idbc != null) {
+          const xidbc = xPos(r.idbc);
+          s += `<circle cx="${xidbc.toFixed(1)}" cy="${y}" r="7.5" fill="#55aa8b" stroke="#132323" stroke-width="1.5"/>`;
+          s += `<text x="${xidbc.toFixed(1)}" y="${(y + 23).toFixed(1)}" text-anchor="middle" font-size="10.5" font-weight="900" fill="#132323">${fmtHuf(r.idbc)}</text>`;
+        }
+        s += `<circle cx="${xmax.toFixed(1)}" cy="${y}" r="7" fill="#132323" stroke="#132323" stroke-width="1.5"/>`;
+        s += `<text x="${xmax.toFixed(1)}" y="${(y - 15).toFixed(1)}" text-anchor="middle" font-size="10.5" font-weight="900" fill="#101818">${fmtHuf(r.max)}</text>`;
+      });
+      s += '</svg>';
+      return s;
+    }
+
+    const top3Panel = document.querySelector('#top3Panel');
+    const top3Rows = sapRows.filter(r => r.top3);
+    const legend = `
+      <div class="pointline-legend">
+        <span class="legend-item"><span class="legend-dot" style="background:#c9e5d8"></span>Min. havi bruttó</span>
+        <span class="legend-item"><span class="legend-dot" style="background:#55aa8b"></span>IDBC javasolt fizetés</span>
+        <span class="legend-item"><span class="legend-dot" style="background:#132323"></span>Max. havi bruttó</span>
+      </div>`;
+    top3Panel.innerHTML = legend + renderPointLineChart(top3Rows);
+
+    const salaryTableBody = document.querySelector('#salaryTableBody');
+    salaryTableBody.innerHTML = sapRows.map(r => `
+      <tr>
+        <td>${escapeHtml(r.pozicio)}</td>
+        <td>${escapeHtml(r.szint)}</td>
+        <td class="num">${fmtHuf(r.min)}</td>
+        <td class="num">${r.idbc != null ? fmtHuf(r.idbc) : '–'}</td>
+        <td class="num">${fmtHuf(r.max)}</td>
+        <td>${escapeHtml(r.juttatas)}</td>
+      </tr>`).join('');
+    })();
+  </script>
+</body>
+</html>
