@@ -276,11 +276,8 @@
     .pointline-row-sub { font-size: 11px; font-weight: 700; color: var(--muted); }
     .pointline-benefits { font-size: 11px; font-weight: 700; color: var(--muted); }
 
-    .salary-filters { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 260px)); gap: 14px; margin-bottom: 18px; }
+    .salary-filters { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 260px)); gap: 14px; margin-bottom: 26px; }
     .salary-count { font-size: 12px; font-weight: 800; color: var(--muted); margin: 0 0 14px; }
-    .top3-table-wrap { margin-bottom: 44px; }
-    .section-divider { border-top: 2px dashed var(--line); margin: 8px 0 26px; }
-    .subsection-title { margin: 0 0 20px; font-size: clamp(20px, 2.4vw, 26px); letter-spacing: -0.4px; }
 
     .table-wrap { overflow: auto; border-radius: 18px; border: 1px solid var(--line); background: #fff; }
     table { border-collapse: collapse; width: 100%; min-width: 760px; }
@@ -358,7 +355,6 @@
 
       <div class="nav-actions">
         <a class="button button-primary" href="#berezes">Bérsávok</a>
-        <a class="button button-outline" href="../index.html">Calvus Hub</a>
       </div>
     </nav>
   </header>
@@ -480,35 +476,13 @@
             <h2 id="berezes-title">Bérsávok területenként</h2>
           </div>
           <p>
-            A TOP3 kiemelt pozíció munkaadó–munkavállaló bérsávját és az IDBC szakértői ajánlását mutatjuk,
-            majd alatta az összes felvett pozíció szűrhető, teljes bérsáv- és juttatás-táblázata következik.
+            Válassz területet: a TOP3 kiemelt pozíció munkaadó–munkavállaló bérsávját és az IDBC szakértői
+            ajánlását chart formában mutatjuk, alatta a terület többi pozíciója szűrhető táblázatban következik.
             A SAP terület — mivel az IDBC SAP-szakértő cég — saját, részletesebb piaci trendekkel és
             termékbemutatóval bővített oldalon szerepel, ezért itt nem jelenik meg:
             <a href="./sap/index.html" style="text-decoration:underline">SAP piaci trendek és bérsávok →</a>
           </p>
         </div>
-
-        <div class="pointline-panel" id="top3Panel" aria-label="TOP3 kiemelt pozíciók bérsávja"></div>
-
-        <div class="table-wrap top3-table-wrap">
-          <table>
-            <thead>
-              <tr>
-                <th>Terület</th>
-                <th>Szint</th>
-                <th>Pozíció</th>
-                <th style="text-align:right">Min. havi bruttó</th>
-                <th style="text-align:right">IDBC javasolt</th>
-                <th style="text-align:right">Max. havi bruttó</th>
-                <th>Juttatási megjegyzés</th>
-              </tr>
-            </thead>
-            <tbody id="top3TableBody"></tbody>
-          </table>
-        </div>
-
-        <div class="section-divider"></div>
-        <h3 class="subsection-title">Összes felvett pozíció</h3>
 
         <div class="salary-filters">
           <label>
@@ -520,6 +494,9 @@
             <select id="szintSelect"></select>
           </label>
         </div>
+
+        <div class="pointline-panel" id="top3Panel" aria-label="TOP3 kiemelt pozíciók bérsávja"></div>
+
         <p class="salary-count" id="salaryCount"></p>
 
         <div class="table-wrap">
@@ -791,10 +768,9 @@
       return s;
     }
 
-    const top3TableBody = document.querySelector('#top3TableBody');
-
+    // Chart: TOP3 positions for the selected area only.
     function renderTop3() {
-      const rows = nonSapRows.filter(r => r.top3);
+      const rows = nonSapRows.filter(r => r.top3 && r.terulet === teruletSelect.value);
       const legend = `
         <div class="pointline-legend">
           <span class="legend-item"><span class="legend-dot" style="background:#c9e5d8"></span>Min. havi bruttó</span>
@@ -802,22 +778,13 @@
           <span class="legend-item"><span class="legend-dot" style="background:#132323"></span>Max. havi bruttó</span>
         </div>`;
       top3Panel.innerHTML = legend + renderPointLineChart(rows);
-      top3TableBody.innerHTML = rows.map(r => `
-        <tr>
-          <td>${escapeHtml(r.terulet)}</td>
-          <td>${escapeHtml(r.szint)}</td>
-          <td>${escapeHtml(r.pozicio)}</td>
-          <td class="num">${fmtHuf(r.min)}</td>
-          <td class="num">${r.idbc != null ? fmtHuf(r.idbc) : '–'}</td>
-          <td class="num">${fmtHuf(r.max)}</td>
-          <td>${escapeHtml(r.juttatas)}</td>
-        </tr>`).join('');
     }
 
+    // Table: the rest of the selected area's positions (TOP3 already covered by the chart above).
     function renderTable() {
       const terulet = teruletSelect.value;
       const szint = szintSelect.value;
-      const rows = nonSapRows.filter(r => (!terulet || r.terulet === terulet) && (!szint || r.szint === szint));
+      const rows = nonSapRows.filter(r => !r.top3 && r.terulet === terulet && (!szint || r.szint === szint));
       salaryTableBody.innerHTML = rows.map(r => `
         <tr>
           <td>${escapeHtml(r.terulet)}</td>
@@ -827,14 +794,18 @@
           <td class="num">${r.idbc != null ? fmtHuf(r.idbc) : '–'}</td>
           <td class="num">${fmtHuf(r.max)}</td>
           <td>${escapeHtml(r.juttatas)}</td>
-        </tr>`).join('') || '<tr><td colspan="7" class="no-data">Nincs találat a szűrésre.</td></tr>';
-      salaryCount.textContent = rows.length + ' pozíció a szűrésnek megfelelően';
+        </tr>`).join('') || '<tr><td colspan="7" class="no-data">Nincs további pozíció ehhez a szűréshez.</td></tr>';
+      salaryCount.textContent = rows.length + ' további pozíció a kiválasztott területen';
+    }
+
+    function renderSalarySection() {
+      renderTop3();
+      renderTable();
     }
 
     populateSalaryFilters();
-    [teruletSelect, szintSelect].forEach(el => el.addEventListener('change', renderTable));
-    renderTop3();
-    renderTable();
+    [teruletSelect, szintSelect].forEach(el => el.addEventListener('change', renderSalarySection));
+    renderSalarySection();
 
     // ---------- Expert pool ----------
     const iparagSelect = document.querySelector('#iparagSelect');
