@@ -668,10 +668,10 @@
         const row = crossC.items.find(r => r.label === segmentValue);
         if (row) {
           const items = row.values.map(v => ({ label: v.group, percent: v.percent, count: v.count }));
-          return { c: { kind: 'simple', items }, rowLabel: segmentValue, note: null };
+          return { c: { kind: 'simple', items }, note: null };
         }
       }
-      return { c: sideData.base[question] || null, rowLabel: 'Összes válaszadó', note: 'Ehhez a kérdéshez nincs bontás — összesített adat.' };
+      return { c: sideData.base[question] || null, note: 'Ehhez a kérdéshez nincs bontás — összesített adat.' };
     }
 
     function getQuestions(topic, edition, sideKey) {
@@ -683,8 +683,7 @@
       return (ed[sideKey] || []).filter(q => !q.trim().toLowerCase().startsWith('jelöld'));
     }
 
-    function renderSimple(title, c, rowLabel, note) {
-      rowLabel = rowLabel || 'Összes válaszadó';
+    function renderSimple(title, c, note) {
       const noteHtml = note ? `<p class="n-note segment-fallback-note">${escapeHtml(note)}</p>` : '';
       const sumPct = c.items.reduce((s, it) => s + it.percent, 0);
 
@@ -717,10 +716,7 @@
         <section class="question-block">
           <h4 class="question-title">${escapeHtml(title)}</h4>
           ${noteHtml}
-          <div class="answer-row">
-            <div class="answer-label">${escapeHtml(rowLabel)}</div>
-            <div class="bar">${segments}</div>
-          </div>
+          <div class="bar">${segments}</div>
           <div class="legend">${legend}</div>
         </section>`;
     }
@@ -776,9 +772,9 @@
       return `<section class="question-block"><h4 class="question-title">${escapeHtml(title)} <span class="scale-hint">(átlag, 1–4 skála)</span></h4>${rows}</section>`;
     }
 
-    function renderQuestion(question, c, rowLabel, note) {
+    function renderQuestion(question, c, note) {
       if (!c) return `<section class="question-block"><h4 class="question-title">${escapeHtml(question)}</h4><p class="no-data">Ehhez a kérdéshez nincs adat ebben a nézetben.</p></section>`;
-      if (c.kind === 'simple') return renderSimple(question, c, rowLabel, note);
+      if (c.kind === 'simple') return renderSimple(question, c, note);
       if (c.kind === 'matrix-percent') return renderMatrixPercent(question, c);
       if (c.kind === 'matrix-value') return renderMatrixValue(question, c);
       return '';
@@ -796,8 +792,8 @@
       // Show only the selected segment's data (its crosstab row), falling back to the total
       // for questions that have no breakdown at all.
       target.innerHTML = questions.map(q => {
-        const { c, rowLabel, note } = getSegmentSlice(sideData, q, segmentValue);
-        return renderQuestion(q, c, rowLabel, note);
+        const { c, note } = getSegmentSlice(sideData, q, segmentValue);
+        return renderQuestion(q, c, note);
       }).join('');
     }
 
