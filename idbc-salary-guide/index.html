@@ -278,6 +278,9 @@
 
     .salary-filters { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 260px)); gap: 14px; margin-bottom: 18px; }
     .salary-count { font-size: 12px; font-weight: 800; color: var(--muted); margin: 0 0 14px; }
+    .top3-table-wrap { margin-bottom: 44px; }
+    .section-divider { border-top: 2px dashed var(--line); margin: 8px 0 26px; }
+    .subsection-title { margin: 0 0 20px; font-size: clamp(20px, 2.4vw, 26px); letter-spacing: -0.4px; }
 
     .table-wrap { overflow: auto; border-radius: 18px; border: 1px solid var(--line); background: #fff; }
     table { border-collapse: collapse; width: 100%; min-width: 760px; }
@@ -485,6 +488,26 @@
         </div>
 
         <div class="pointline-panel" id="top3Panel" aria-label="TOP3 kiemelt pozíciók bérsávja"></div>
+
+        <div class="table-wrap top3-table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Terület</th>
+                <th>Szint</th>
+                <th>Pozíció</th>
+                <th style="text-align:right">Min. havi bruttó</th>
+                <th style="text-align:right">IDBC javasolt</th>
+                <th style="text-align:right">Max. havi bruttó</th>
+                <th>Juttatási megjegyzés</th>
+              </tr>
+            </thead>
+            <tbody id="top3TableBody"></tbody>
+          </table>
+        </div>
+
+        <div class="section-divider"></div>
+        <h3 class="subsection-title">Összes felvett pozíció</h3>
 
         <div class="salary-filters">
           <label>
@@ -715,9 +738,9 @@
 
     function populateSalaryFilters() {
       const teruletek = [...new Set(DATA.salary.webBertabla.map(r => r.terulet))];
-      teruletSelect.innerHTML = '<option value="">Összes terület</option>' + teruletek.map(t => `<option value="${escapeHtml(t)}">${escapeHtml(t)}</option>`).join('');
+      teruletSelect.innerHTML = teruletek.map(t => `<option value="${escapeHtml(t)}">${escapeHtml(t)}</option>`).join('');
       const szintek = [...new Set(DATA.salary.webBertabla.map(r => r.szint))];
-      szintSelect.innerHTML = '<option value="">Összes szint</option>' + szintek.map(s => `<option value="${escapeHtml(s)}">${escapeHtml(s)}</option>`).join('');
+      szintSelect.innerHTML = szintek.map(s => `<option value="${escapeHtml(s)}">${escapeHtml(s)}</option>`).join('');
     }
 
     function niceMaxHuf(values) {
@@ -762,6 +785,8 @@
       return s;
     }
 
+    const top3TableBody = document.querySelector('#top3TableBody');
+
     function renderTop3() {
       const rows = DATA.salary.webBertabla.filter(r => r.top3);
       const legend = `
@@ -771,6 +796,16 @@
           <span class="legend-item"><span class="legend-dot" style="background:#132323"></span>Max. havi bruttó</span>
         </div>`;
       top3Panel.innerHTML = legend + renderPointLineChart(rows);
+      top3TableBody.innerHTML = rows.map(r => `
+        <tr>
+          <td>${escapeHtml(r.terulet)}</td>
+          <td>${escapeHtml(r.szint)}</td>
+          <td>${escapeHtml(r.pozicio)}</td>
+          <td class="num">${fmtHuf(r.min)}</td>
+          <td class="num">${r.idbc != null ? fmtHuf(r.idbc) : '–'}</td>
+          <td class="num">${fmtHuf(r.max)}</td>
+          <td>${escapeHtml(r.juttatas)}</td>
+        </tr>`).join('');
     }
 
     function renderTable() {

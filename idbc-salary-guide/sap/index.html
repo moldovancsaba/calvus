@@ -151,6 +151,9 @@
     .pointline-legend .legend-item { display: inline-flex; align-items: center; gap: 6px; font-size: 12px; font-weight: 800; color: rgba(16,24,24,.76); }
     .pointline-legend .legend-dot { width: 12px; height: 12px; border-radius: 50%; flex: none; }
     .no-data { font-size: 13px; font-weight: 700; color: var(--muted); font-style: italic; margin: 0; }
+    .top3-table-wrap { margin-bottom: 36px; }
+    .section-divider { border-top: 2px dashed var(--line); margin: 8px 0 26px; }
+    .subsection-title { margin: 0 0 20px; font-size: clamp(20px, 2.4vw, 26px); letter-spacing: -0.4px; }
 
     .salary-table-wrap { overflow-x: auto; border-radius: 20px; box-shadow: var(--shadow-soft); }
     table { width: 100%; min-width: 820px; border-collapse: collapse; background: #fff; }
@@ -278,6 +281,25 @@
 
         <div class="pointline-panel" id="top3Panel" aria-label="SAP TOP3 kiemelt pozíciók bérsávja"></div>
 
+        <div class="salary-table-wrap top3-table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Pozíció</th>
+                <th>Szint</th>
+                <th style="text-align:right">Min. havi bruttó</th>
+                <th style="text-align:right">IDBC javasolt</th>
+                <th style="text-align:right">Max. havi bruttó</th>
+                <th>Juttatási megjegyzés</th>
+              </tr>
+            </thead>
+            <tbody id="top3TableBody"></tbody>
+          </table>
+        </div>
+
+        <div class="section-divider"></div>
+        <h3 class="subsection-title">Összes SAP pozíció</h3>
+
         <div class="salary-table-wrap" id="salaryTableWrap">
           <table>
             <thead>
@@ -398,6 +420,17 @@
         <span class="legend-item"><span class="legend-dot" style="background:#132323"></span>Max. havi bruttó</span>
       </div>`;
     top3Panel.innerHTML = legend + renderPointLineChart(top3Rows);
+
+    const top3TableBody = document.querySelector('#top3TableBody');
+    top3TableBody.innerHTML = top3Rows.map(r => `
+      <tr>
+        <td>${escapeHtml(r.pozicio)}</td>
+        <td>${escapeHtml(r.szint)}</td>
+        <td class="num">${fmtHuf(r.min)}</td>
+        <td class="num">${r.idbc != null ? fmtHuf(r.idbc) : '–'}</td>
+        <td class="num">${fmtHuf(r.max)}</td>
+        <td>${escapeHtml(r.juttatas)}</td>
+      </tr>`).join('');
 
     const salaryTableBody = document.querySelector('#salaryTableBody');
     salaryTableBody.innerHTML = sapRows.map(r => `
