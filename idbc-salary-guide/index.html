@@ -238,10 +238,15 @@
     .scale-hint { font-weight: 700; color: var(--muted); font-size: 12px; text-transform: none; letter-spacing: 0; }
 
     .answer-row { display: grid; grid-template-columns: minmax(130px, 200px) 1fr; gap: 18px; align-items: center; }
+    .answer-row-multi { display: grid; grid-template-columns: minmax(160px, 280px) 1fr 56px; gap: 12px; align-items: center; margin-bottom: 8px; }
     .answer-label { font-size: 13px; font-weight: 900; line-height: 1.15; }
+    .answer-value { font-size: 12px; font-weight: 900; text-align: right; }
+    .multi-group { margin-bottom: 20px; }
+    .multi-group-label { margin: 0 0 8px; font-size: 13px; font-weight: 900; }
     .n-note { font-weight: 700; color: var(--muted); }
 
     .bar { min-height: 46px; border-radius: 20px; overflow: hidden; display: flex; background: rgba(19,35,35,.08); }
+    .bar-compact { min-height: 26px; border-radius: 13px; }
     .segment { min-width: 2px; display: grid; place-items: center; color: #071010; font-size: 12px; font-weight: 900; transition: width .25s ease; overflow: hidden; }
 
     .legend { display: flex; flex-wrap: wrap; gap: 8px 14px; margin-top: -2px; padding-left: min(200px, 30%); }
@@ -327,6 +332,8 @@
     @media (max-width: 700px) {
       .container { width: min(100% - 32px, var(--container)); }
       .answer-row { grid-template-columns: 1fr; gap: 8px; }
+      .answer-row-multi { grid-template-columns: 1fr; gap: 4px; }
+      .answer-value { text-align: left; }
       .legend { padding-left: 0; }
       .hero-card { left: 0; width: calc(100% - 34px); padding: 20px 24px 25px; }
       .footer-bottom { flex-direction: column; }
@@ -604,6 +611,26 @@
 
     function renderSimple(title, c) {
       const total = c.items.reduce((s, it) => s + it.count, 0);
+      const sumPct = c.items.reduce((s, it) => s + it.percent, 0);
+
+      // "Select all that apply" questions: percentages are independent per option and don't
+      // sum to 100%, so a single stacked bar is both wrong and unreadable — use one bar per option instead.
+      if (sumPct > 110) {
+        const sorted = [...c.items].sort((a, b) => b.percent - a.percent);
+        const rows = sorted.map((it, i) => `
+          <div class="answer-row-multi">
+            <div class="answer-label">${escapeHtml(it.label)}</div>
+            <div class="bar bar-compact"><span class="segment" style="width:${it.percent}%;background:${paletteColor(i)}"></span></div>
+            <div class="answer-value">${fmtPct(it.percent)}</div>
+          </div>`).join('');
+        return `
+          <section class="question-block">
+            <h4 class="question-title">${escapeHtml(title)}</h4>
+            <p class="n-note">Többválasztós kérdés — az arányok nem adják ki a 100%-ot (n=${total})</p>
+            ${rows}
+          </section>`;
+      }
+
       const segments = c.items.map((it, i) => `
         <span class="segment" style="width:${it.percent}%;background:${paletteColor(i)}" title="${escapeHtml(it.label)}: ${fmtPct(it.percent)} (${it.count} fő)">${it.percent >= 8 ? fmtPct(it.percent) : ''}</span>
       `).join('');
@@ -622,6 +649,31 @@
     }
 
     function renderMatrixPercent(title, c) {
+      // Detect "select all that apply" crosstabs — a row's own values don't sum to 100%,
+      // so stacking them as one bar would misrepresent the data; show independent bars instead.
+      const multiSelect = c.items.some(row => row.values.reduce((s, v) => s + v.percent, 0) > 110);
+
+      if (multiSelect) {
+        const groups = c.items.map(row => {
+          const sorted = row.values
+            .map((v, i) => ({ percent: v.percent, group: c.groups[i] }))
+            .sort((a, b) => b.percent - a.percent);
+          const bars = sorted.map((v, i) => `
+            <div class="answer-row-multi">
+              <div class="answer-label">${escapeHtml(v.group)}</div>
+              <div class="bar bar-compact"><span class="segment" style="width:${v.percent}%;background:${paletteColor(i)}"></span></div>
+              <div class="answer-value">${fmtPct(v.percent)}</div>
+            </div>`).join('');
+          return `<div class="multi-group"><p class="multi-group-label">${escapeHtml(row.label)}</p>${bars}</div>`;
+        }).join('');
+        return `
+          <section class="question-block">
+            <h4 class="question-title">${escapeHtml(title)}</h4>
+            <p class="n-note">Többválasztós kérdés — az arányok bontásonként nem adják ki a 100%-ot</p>
+            ${groups}
+          </section>`;
+      }
+
       const rows = c.items.map(row => {
         const segments = row.values.map((v, i) => `
           <span class="segment" style="width:${v.percent}%;background:${paletteColor(i)}" title="${escapeHtml(c.groups[i])}: ${fmtPct(v.percent)}">${v.percent >= 10 ? fmtPct(v.percent) : ''}</span>
