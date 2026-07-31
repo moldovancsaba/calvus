@@ -588,6 +588,27 @@
       return "Egyéb";
     }
 
+    // Range-bucket questions ("Nem kaptam béremelést", "1-5", "6-10", ... "21+") are ordinal:
+    // sorting them by percentage instead of by the scale itself scrambles the order. Detect them by
+    // checking that (almost) every label starts with a number, and sort those by that leading number,
+    // with the one non-numeric "none" label pinned to the front.
+    function numericRangeStart(label) {
+      const m = label.match(/^(\d+)/);
+      return m ? parseInt(m[1], 10) : null;
+    }
+    function isOrdinalScale(labels) {
+      const numericCount = labels.filter(l => numericRangeStart(l) !== null).length;
+      return labels.length >= 3 && numericCount >= labels.length - 1;
+    }
+    function ordinalCompare(labelA, labelB) {
+      const na = numericRangeStart(labelA);
+      const nb = numericRangeStart(labelB);
+      if (na === null && nb === null) return 0;
+      if (na === null) return -1;
+      if (nb === null) return 1;
+      return na - nb;
+    }
+
     const editionSelect = document.querySelector('#editionSelect');
     const topicSelect = document.querySelector('#topicSelect');
     const empSegmentSelect = document.querySelector('#empSegmentSelect');
@@ -643,17 +664,27 @@
       const noteHtml = note ? `<p class="n-note segment-fallback-note">${escapeHtml(note)}</p>` : '';
       const sumPct = c.items.reduce((s, it) => s + it.percent, 0);
 
+      // Options nobody picked (0%) are pure clutter — no visible bar segment, just a dangling
+      // legend/list entry — so drop them everywhere before rendering.
+      const nonZero = c.items.filter(it => it.percent > 0);
+      if (!nonZero.length) {
+        return `<section class="question-block"><h4 class="question-title">${escapeHtml(title)}</h4>${noteHtml}<p class="no-data">Ehhez a szűréshez nincs válasz.</p></section>`;
+      }
+
       // "Select all that apply" questions: percentages are independent per option and don't
       // sum to 100%, so a single stacked bar is both wrong and unreadable — use one bar per option instead.
       const isMulti = sumPct > 110;
       // Questions with many answer options (e.g. 6+) don't work as one stacked bar either, even when
-      // single-select: slices under ~8% get no inline label, similar palette shades become hard to tell
-      // apart, and — critically — options nobody picked (0%) still get a legend dot with no visible bar
-      // segment to match it to. A one-row-per-option list scales to any number of options and makes a
-      // genuine "nobody chose this" result an explicit, labeled 0% row instead of a dangling legend entry.
+      // single-select: slices under ~8% get no inline label and similar palette shades become hard to
+      // tell apart. A one-row-per-option list scales to any number of options instead.
       const manyOptions = c.items.length > 5;
       if (isMulti || manyOptions) {
-        const sorted = [...c.items].sort((a, b) => b.percent - a.percent);
+        // Range-bucket questions ("Nem kaptam béremelést" ... "21+") must stay in scale order —
+        // sorting them by popularity instead would scramble the sequence.
+        const ordinal = !isMulti && isOrdinalScale(c.items.map(it => it.label));
+        const sorted = ordinal
+          ? [...nonZero].sort((a, b) => ordinalCompare(a.label, b.label))
+          : [...nonZero].sort((a, b) => b.percent - a.percent);
         const isBenefitQuestion = title === BENEFIT_QUESTION;
         const groupSelectHtml = isBenefitQuestion ? `
           <div class="group-filter">
@@ -683,10 +714,10 @@
           </section>`;
       }
 
-      const segments = c.items.map((it, i) => `
+      const segments = nonZero.map((it, i) => `
         <span class="segment" style="width:${it.percent}%;background:${paletteColor(i)}" title="${escapeHtml(it.label)}: ${fmtPct(it.percent)} (${it.count} fő)">${it.percent >= 8 ? fmtPct(it.percent) : ''}</span>
       `).join('');
-      const legend = c.items.map((it, i) => `
+      const legend = nonZero.map((it, i) => `
         <span class="legend-item"><span class="legend-dot" style="background:${paletteColor(i)}"></span>${escapeHtml(it.label)}</span>
       `).join('');
       return `
@@ -702,16 +733,23 @@
       // Detect "select all that apply" crosstabs — a row's own values don't sum to 100%,
       // so stacking them as one bar would misrepresent the data; show independent bars instead.
       const multiSelect = c.items.some(row => row.values.reduce((s, v) => s + v.percent, 0) > 110);
-      // Same reasoning as renderSimple: many answer options per segment don't read as one stacked
-      // bar, and options at 0% for a given segment would otherwise vanish from the visible bar while
-      // still cluttering the shared legend below it.
+      // Same reasoning as renderSimple: many answer options per segment don't read as one stacked bar.
       const manyOptions = c.groups.length > 5;
+      // Range-bucket questions must stay in scale order, not sorted by popularity.
+      const ordinal = !multiSelect && isOrdinalScale(c.groups);
 
       if (multiSelect || manyOptions) {
         const groups = c.items.map(row => {
-          const sorted = row.values
+          // Segments nobody in this breakdown row picked are clutter — drop them.
+          const nonZero = row.values
             .map((v, i) => ({ percent: v.percent, group: c.groups[i] }))
-            .sort((a, b) => b.percent - a.percent);
+            .filter(v => v.percent > 0);
+          if (!nonZero.length) {
+            return `<div class="multi-group"><p class="multi-group-label">${escapeHtml(row.label)}</p><p class="no-data">Ehhez a szűréshez nincs válasz.</p></div>`;
+          }
+          const sorted = ordinal
+            ? nonZero.sort((a, b) => ordinalCompare(a.group, b.group))
+            : nonZero.sort((a, b) => b.percent - a.percent);
           const bars = sorted.map((v, i) => `
             <div class="answer-row-multi">
               <div class="answer-label">${escapeHtml(v.group)}</div>
@@ -729,15 +767,24 @@
           </section>`;
       }
 
+      // A group that's 0% in every row shouldn't get a legend dot at all; a group that's 0% in just
+      // some rows still keeps its (invisible, 0-width) place in those rows but stays in the legend
+      // since it's genuinely present elsewhere in this chart.
+      const usedGroupIdx = new Set();
+      c.items.forEach(row => row.values.forEach((v, i) => { if (v.percent > 0) usedGroupIdx.add(i); }));
+
       const rows = c.items.map(row => {
-        const segments = row.values.map((v, i) => `
+        const segments = row.values.map((v, i) => v.percent > 0 ? `
           <span class="segment" style="width:${v.percent}%;background:${paletteColor(i)}" title="${escapeHtml(c.groups[i])}: ${fmtPct(v.percent)}">${v.percent >= 10 ? fmtPct(v.percent) : ''}</span>
-        `).join('');
+        ` : '').join('');
+        if (!segments.trim()) {
+          return `<div class="answer-row"><div class="answer-label">${escapeHtml(row.label)}</div><p class="no-data">Nincs válasz.</p></div>`;
+        }
         return `<div class="answer-row"><div class="answer-label">${escapeHtml(row.label)}</div><div class="bar">${segments}</div></div>`;
       }).join('');
-      const legend = c.groups.map((g, i) => `
+      const legend = c.groups.map((g, i) => usedGroupIdx.has(i) ? `
         <span class="legend-item"><span class="legend-dot" style="background:${paletteColor(i)}"></span>${escapeHtml(g)}</span>
-      `).join('');
+      ` : '').join('');
       return `<section class="question-block"><h4 class="question-title">${escapeHtml(title)}</h4>${rows}<div class="legend">${legend}</div></section>`;
     }
 
