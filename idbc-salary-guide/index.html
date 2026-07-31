@@ -247,6 +247,8 @@
     .answer-value { font-size: 12px; font-weight: 900; text-align: right; }
     .multi-group { margin-bottom: 20px; }
     .multi-group-label { margin: 0 0 8px; font-size: 13px; font-weight: 900; }
+
+    .group-filter { max-width: 280px; margin: -4px 0 16px; }
     .n-note { font-weight: 700; color: var(--muted); }
     .segment-fallback-note { font-size: 11px; font-style: italic; margin: -4px 0 4px; }
 
@@ -568,6 +570,24 @@
     const EXPERIENCE_ORDER = ["kevesebb, mint 1 év", "1-2 év", "3-5 év", "6-10 év", "11-20 év", "több, mint 20 év"];
     const COMPANY_SIZE_ORDER = ["50 fő alatti", "51-100 fő", "101-350 fő", "351-1000 fő", "1000 fő feletti"];
 
+    // The "béren kívüli juttatások" question has 21 answer options in one multi-select list —
+    // too many to scan at once. Group them into meaningful categories so a dropdown can narrow
+    // the list down instead.
+    const BENEFIT_QUESTION = "Milyen béren kívüli juttatásokat kínál vállalatod a munkavállalóinak? (Többet is választhatsz)";
+    const BENEFIT_CATEGORIES = {
+      "Anyagi juttatások": ["Bónusz", "SZÉP kártya", "Cafeteria az alapbérbe építve", "Részvénycsomag", "Önkéntes nyugdíjpénztár", "Kedvezmény a cég termékeire, szolgáltatásaira"],
+      "Közlekedés": ["Bérlet (tömegközlekedés)", "Extra utazási támogatás (a törvényileg meghatározott kötelező felett)", "Autó privát használatra", "Car sharing (pl. GreenGo, MOL Limo, Wigo)", "Relokációs támogatás"],
+      "Egészség és jóllét": ["Egészségbiztosítás", "Sport támogatás (pl. AYCM)", "Mentálhigiénés támogatás, életvezetési tanácsadás", "Ingyenes / kedvezményes étkeztetés"],
+      "Munka-magánélet és család": ["Extra szabadnapok", "Fizetett apasági szabadság (a törvényileg meghatározott kötelező felett)", "Élethelyzet támogatás (gyerek születés, esküvő, temetés, stb.)", "Cég által biztosított óvoda, bölcsőde", "Otthoni munkaállomás kialakításának finanszírozása"],
+      "Fejlődés": ["Egyéni tréning költségvetés"],
+    };
+    function benefitCategoryOf(label) {
+      for (const [cat, labels] of Object.entries(BENEFIT_CATEGORIES)) {
+        if (labels.includes(label)) return cat;
+      }
+      return "Egyéb";
+    }
+
     const editionSelect = document.querySelector('#editionSelect');
     const topicSelect = document.querySelector('#topicSelect');
     const empSegmentSelect = document.querySelector('#empSegmentSelect');
@@ -634,8 +654,20 @@
       const manyOptions = c.items.length > 5;
       if (isMulti || manyOptions) {
         const sorted = [...c.items].sort((a, b) => b.percent - a.percent);
+        const isBenefitQuestion = title === BENEFIT_QUESTION;
+        const groupSelectHtml = isBenefitQuestion ? `
+          <div class="group-filter">
+            <label>
+              <span class="sr-only">Juttatás kategória</span>
+              <select class="group-filter-select">
+                <option value="">Összes juttatás</option>
+                ${Object.keys(BENEFIT_CATEGORIES).map(cat => `<option value="${escapeHtml(cat)}">${escapeHtml(cat)}</option>`).join('')}
+                <option value="Egyéb">Egyéb</option>
+              </select>
+            </label>
+          </div>` : '';
         const rows = sorted.map((it, i) => `
-          <div class="answer-row-multi">
+          <div class="answer-row-multi"${isBenefitQuestion ? ` data-category="${escapeHtml(benefitCategoryOf(it.label))}"` : ''}>
             <div class="answer-label">${escapeHtml(it.label)}</div>
             <div class="bar bar-compact"><span class="segment" style="width:${it.percent}%;background:${paletteColor(i)}"></span></div>
             <div class="answer-value">${fmtPct(it.percent)}</div>
@@ -646,6 +678,7 @@
             <h4 class="question-title">${escapeHtml(title)}</h4>
             ${noteHtml}
             ${multiNote}
+            ${groupSelectHtml}
             ${rows}
           </section>`;
       }
@@ -755,6 +788,17 @@
     [topicSelect, empSegmentSelect, erSegmentSelect].forEach(el => el.addEventListener('change', renderAll));
     populateSegmentSelects();
     renderAll();
+
+    // Category dropdown for the "béren kívüli juttatások" question — delegated on the document
+    // since renderAll() replaces this markup (and its select) on every filter change.
+    document.addEventListener('change', (e) => {
+      if (!e.target.matches('.group-filter-select')) return;
+      const category = e.target.value;
+      const block = e.target.closest('.question-block');
+      block.querySelectorAll('.answer-row-multi').forEach(row => {
+        row.style.display = (!category || row.dataset.category === category) ? '' : 'none';
+      });
+    });
     })();
   </script>
 </body>
