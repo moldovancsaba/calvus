@@ -267,9 +267,6 @@
     .scale-fill { height: 100%; }
     .scale-value { font-size: 12px; font-weight: 900; text-align: right; }
 
-    .profile-panel { margin-top: 30px; padding-top: 22px; border-top: 2px dashed var(--line); display: grid; gap: 24px; }
-    .profile-panel .question-title { font-size: 15px; }
-
     .research-story { padding: 44px 0 6px; }
     .insight-cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-top: 30px; }
     .insight-card { min-height: 120px; padding: 19px 22px; border-radius: 18px; background: var(--dark); color: #fff; }
@@ -481,7 +478,6 @@
               </label>
             </div>
             <div class="chart-area" id="b2bChart"></div>
-            <div class="profile-panel" id="profilePanel" aria-label="Válaszadói cégprofil"></div>
           </article>
         </div>
       </div>
@@ -578,7 +574,6 @@
     const erSegmentSelect = document.querySelector('#erSegmentSelect');
     const b2cChart = document.querySelector('#b2cChart');
     const b2bChart = document.querySelector('#b2bChart');
-    const profilePanel = document.querySelector('#profilePanel');
 
     editionSelect.innerHTML = DATA.editions.map(e => `<option value="${escapeHtml(e)}">${escapeHtml(e)}</option>`).join('');
     topicSelect.innerHTML = DATA.topics.map(t => `<option value="${escapeHtml(t.topic)}">${escapeHtml(t.topic)}</option>`).join('');
@@ -751,20 +746,9 @@
       }).join('');
     }
 
-    function renderProfile() {
-      const edition = editionSelect.value;
-      const employer = DATA.answers[edition].employer.base;
-      const profileQs = [
-        "Milyen méretű a vállalatod?",
-        "Milyen tulajdonú a vállalatod?"
-      ];
-      profilePanel.innerHTML = '<p class="eyebrow">Válaszadói cégprofil</p>' + profileQs.map(q => employer[q] ? renderSimple(q, employer[q]) : '').join('');
-    }
-
     function renderAll() {
       renderPanel(b2cChart, 'employee', 'Munkavállalók', empSegmentSelect.value);
       renderPanel(b2bChart, 'employer', 'Munkáltatók', erSegmentSelect.value);
-      renderProfile();
     }
 
     editionSelect.addEventListener('change', () => { populateSegmentSelects(); renderAll(); });
