@@ -686,23 +686,29 @@
           ? [...nonZero].sort((a, b) => ordinalCompare(a.label, b.label))
           : [...nonZero].sort((a, b) => b.percent - a.percent);
         const isBenefitQuestion = title === BENEFIT_QUESTION;
+        // No "show all" option — the dropdown always has one category selected, so the list
+        // starts pre-filtered to the first category instead of dumping all 21 rows at once.
+        const defaultBenefitCategory = Object.keys(BENEFIT_CATEGORIES)[0];
         const groupSelectHtml = isBenefitQuestion ? `
           <div class="group-filter">
             <label>
               <span class="sr-only">Juttatás kategória</span>
               <select class="group-filter-select">
-                <option value="">Összes juttatás</option>
                 ${Object.keys(BENEFIT_CATEGORIES).map(cat => `<option value="${escapeHtml(cat)}">${escapeHtml(cat)}</option>`).join('')}
                 <option value="Egyéb">Egyéb</option>
               </select>
             </label>
           </div>` : '';
-        const rows = sorted.map((it, i) => `
-          <div class="answer-row-multi"${isBenefitQuestion ? ` data-category="${escapeHtml(benefitCategoryOf(it.label))}"` : ''}>
+        const rows = sorted.map((it, i) => {
+          const rowCategory = isBenefitQuestion ? benefitCategoryOf(it.label) : null;
+          const hiddenInitially = isBenefitQuestion && rowCategory !== defaultBenefitCategory;
+          return `
+          <div class="answer-row-multi"${isBenefitQuestion ? ` data-category="${escapeHtml(rowCategory)}"` : ''}${hiddenInitially ? ' style="display:none"' : ''}>
             <div class="answer-label">${escapeHtml(it.label)}</div>
             <div class="bar bar-compact"><span class="segment" style="width:${it.percent}%;background:${paletteColor(i)}"></span></div>
             <div class="answer-value">${fmtPct(it.percent)}</div>
-          </div>`).join('');
+          </div>`;
+        }).join('');
         const multiNote = isMulti ? '<p class="n-note">Többválasztós kérdés — az arányok nem adják ki a 100%-ot</p>' : '';
         return `
           <section class="question-block">
@@ -843,7 +849,7 @@
       const category = e.target.value;
       const block = e.target.closest('.question-block');
       block.querySelectorAll('.answer-row-multi').forEach(row => {
-        row.style.display = (!category || row.dataset.category === category) ? '' : 'none';
+        row.style.display = row.dataset.category === category ? '' : 'none';
       });
     });
     })();
