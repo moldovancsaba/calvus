@@ -32,10 +32,13 @@ folder is the single consolidated data source built from all of it.
 2. **No registration/paywall gate.** Every mockup and both specs describe
    content sitting behind a login wall. Not implementable on static GitHub
    Pages without a real backend/auth provider.
-3. **Salary TOP3 chart is the wrong shape.** Built as 3 static stat numbers
-   per card; the client's own mockup shows a point-line chart connecting
-   min → IDBC-recommended → max along one shared axis. This is fixable now
-   with data we already have (see below) — no new client data needed.
+3. ~~**Salary TOP3 chart is the wrong shape.**~~ **Closed.** The point-line
+   chart connecting min → IDBC-recommended → max along one shared axis is
+   now built, from the `3_SAP_TOP3_chart_gradient_tooltip_categories.html`
+   mockup: per-row gradient connector, three-tone dots, hover/focus tooltip.
+   Shared implementation in `assets/top3-chart.js` + `assets/chart.css`,
+   used by `sap/` and `berezes/`; `expert-pool/` reuses the tooltip and the
+   same colour ramp on its pool bars.
 4. **SAP gets no dedicated page.** The 20-item product catalogue is real
    client content (now captured in `sapProducts`) but isn't surfaced
    anywhere in the current build.
@@ -45,12 +48,21 @@ folder is the single consolidated data source built from all of it.
    the underlying survey was never fielded with those breakdowns. Building
    them would require the client re-running or re-tabulating the survey,
    not a code change.
-6. **"3 stakeholder ranges" (candidate / company / IDBC) is aspirational.**
-   The SAP mockup's static example shows three independently-sourced
-   expectation ranges. The real `webBertabla` sheet only has one range
-   (min/max) plus one IDBC-recommended point — a single perspective, not
-   three. Don't fabricate the other two; flag it as a data-collection gap
-   if the client wants that exact chart.
+6. **"3 stakeholder ranges" (candidate / company / IDBC) is aspirational —
+   and the shipped labels now assert it anyway (owner decision, 2026-08-17).**
+   The real `webBertabla` sheet has one range (`min`/`max`) plus one
+   IDBC-recommended point — a single perspective, not three independently
+   sourced ones. The chart, legend, summary cards and SAP table headers now
+   read `min` as "Vállalatok által kínált bér" and `max` as "Jelöltek által
+   elvárt bér", per the client mockup's wording, chosen by the owner over
+   the neutral "Min./Max. havi bruttó".
+
+   **This is a labelling choice, not new data.** No figure changed — only
+   what the two ends of the existing band are called. If the client reads
+   those labels as two separately surveyed populations, they are wrong, and
+   the fix is a data-collection change (survey candidates and employers
+   separately), not a code change. Revisit if the numbers are ever quoted
+   externally as employer-vs-candidate evidence.
 
 ## Schema in `guide-data.json`
 
@@ -59,3 +71,49 @@ folder is the single consolidated data source built from all of it.
 - `filterDimensions` — **new**: every filter named in the client's `Szűrők` doc, each flagged `available` / `partial` / not-available against what the real data supports, with a note explaining the gap.
 - `sapProducts` — **new**: the real 5-category, 20-item SAP product catalogue from the client's own SAP mockup/spec.
 - `siteMap` — **new**: the full intended 8-page site structure with a `status` (`built` / `partially built` / `not built`) and note per page.
+
+## Shared front-end assets
+
+- `assets/top3-chart.js` — `IDBCChart.renderTop3Chart(rows, opts)` returns the
+  legend + SVG for a set of salary rows; `IDBCChart.attachTooltip(root)` binds
+  the cursor-following tooltip to any `[data-tooltip]` element under `root`
+  (idempotent, so it is safe to re-call after a filter re-render).
+- `assets/chart.css` — chart card, legend, dot/label states and tooltip. Relies
+  on each page's own `:root` tokens.
+
+Two behaviours worth knowing before editing these:
+
+- The dot's hover growth uses `transform: scale()`, **not** the CSS `r`
+  geometry property. `r` is silently ignored in this environment (verified in
+  Chrome 148: neither `r: 9` nor `r: 9px` changes the rendered radius), which
+  is why the original mockup's hover effect never actually fired.
+- Value labels are nudged apart by an estimated-width collision pass, since
+  the IDBC and max dots frequently sit within a label-width of each other.
+
+## Layout adopted from the SAP mockup
+
+`3_SAP_TOP3_chart_gradient_tooltip_categories.html` is now the layout reference
+for all three subpages. Adopted: the fixed navbar sitting flush to the top and
+overlaying the hero (the pages previously pushed content down with
+`padding-top: 78px`), the hero eyebrow, the EN/HU switch, the three-card
+summary block above the chart, the Excel CTA in the section head and below the
+table, and a single flat green for all three summary cards.
+
+Data is unchanged — every figure still comes from `guide-data.json`. Where the
+mockup's static example had no equivalent in our data, the block was filled
+from what each page actually has rather than dropped:
+
+| Block | SAP | Bérsávok | Expert Pool |
+|---|---|---|---|
+| Summary cards | TOP3 band per perspective | same, per selected area | pool size / positions covered / largest pool |
+| Chart | TOP3 point-line | same, per area | n/a — bars keep the same colour ramp |
+
+Two mockup controls are rendered in position but visibly inert
+(`.is-unavailable`), because nothing exists behind them yet:
+
+- **Excel/`.xlsx` download** — no spreadsheet exists anywhere in this repo, so
+  the CTA does not link to a 404. Needs the client to supply the export.
+- **EN language** — `editions` are *Általános* / *IT + Contracting*, which are
+  content editions, not languages. There is no English copy to switch to.
+
+Remove the `is-unavailable` class (and add the real `href`) once either lands.

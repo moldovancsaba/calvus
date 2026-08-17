@@ -6,6 +6,7 @@
   <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
   <meta http-equiv="Pragma" content="no-cache" />
   <title>IDBC Salary Guide – Elérhető szakértői pool</title>
+  <link rel="stylesheet" href="../assets/chart.css?v=1" />
 
   <style>
     :root {
@@ -36,7 +37,6 @@
       color: var(--text);
       font-family: "Inter", "Montserrat", "Segoe UI", Arial, sans-serif;
       line-height: 1.35;
-      padding-top: 78px;
     }
 
     img { max-width: 100%; display: block; }
@@ -70,7 +70,6 @@
       gap: 22px;
       box-shadow: var(--shadow-soft);
       pointer-events: auto;
-      margin-top: 18px;
     }
 
     .brand {
@@ -115,6 +114,11 @@
 
     .button-primary { background: var(--green); color: var(--dark); }
     .button-outline { border: 2px solid var(--green); color: #fff; }
+
+    .language-switch { display: flex; align-items: center; gap: 6px; font-size: 10px; font-weight: 800; }
+    .language-link { min-width: 26px; padding: 4px 7px; border-radius: 999px; color: #d7e0db; text-align: center; }
+    .language-link.is-active { background: var(--green); color: var(--dark); }
+    .is-unavailable { opacity: .4; cursor: not-allowed; }
 
     .menu-toggle {
       display: none;
@@ -162,6 +166,8 @@
 
     .hero-card h1 { margin: 0 0 10px; max-width: 480px; font-size: clamp(30px, 4vw, 42px); line-height: 0.95; letter-spacing: -1px; }
     .hero-card p { margin: 0; max-width: 460px; font-size: 15px; font-weight: 800; line-height: 1.25; }
+    /* Page-level eyebrow is dark for light sections; green on the dark hero card. */
+    .hero-card .eyebrow { color: var(--green); }
 
     .eyebrow {
       margin: 0 0 9px;
@@ -212,12 +218,51 @@
 
     .expert-filters { max-width: 320px; margin-bottom: 26px; }
     .expert-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 16px; }
-    .expert-card { background: #fff; border: 1px solid var(--line); border-radius: 18px; padding: 18px 20px; }
+
+    .expert-card {
+      background: #fff;
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      padding: 18px 20px;
+      cursor: help;
+      outline: none;
+      transition: transform .16s ease, box-shadow .16s ease;
+    }
+
+    .expert-card:hover,
+    .expert-card:focus-visible {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 26px rgba(0,0,0,.10);
+    }
+
     .expert-iparag { margin: 0 0 4px; font-size: 11px; font-weight: 900; text-transform: uppercase; letter-spacing: .05em; color: var(--muted); }
     .expert-card h4 { margin: 0 0 14px; font-size: 16px; letter-spacing: -0.3px; }
     .expert-bar-track { height: 10px; border-radius: 6px; background: rgba(19,35,35,.08); overflow: hidden; margin-bottom: 10px; }
-    .expert-bar-fill { height: 100%; background: var(--green-strong); }
+
+    /* Same offered → recommended → expected ramp as the salary charts, so the
+       two visual languages read as one system. */
+    .expert-bar-fill {
+      height: 100%;
+      border-radius: 6px;
+      background: linear-gradient(90deg, #a5df8f 0%, #55aa8b 55%, #245d54 100%);
+      transition: width .3s ease;
+    }
+
     .expert-count { font-size: 20px; letter-spacing: -0.4px; }
+
+    .expert-legend {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px 24px;
+      margin: 0 0 18px;
+      padding: 0;
+      list-style: none;
+      font-size: 12px;
+      font-weight: 900;
+      color: rgba(16,24,24,.76);
+    }
+    .expert-legend li { display: inline-flex; align-items: center; gap: 8px; }
+    .expert-legend span { width: 11px; height: 11px; flex: 0 0 11px; border-radius: 50%; }
     .no-data { font-size: 13px; font-weight: 700; color: var(--muted); font-style: italic; margin: 0; }
 
     .site-footer { position: relative; padding: 49px 0 34px; border-radius: var(--radius-large) var(--radius-large) 0 0; background: var(--dark-2); color: #fff; }
@@ -267,6 +312,10 @@
         <span class="brand-sub">salary guide</span>
       </a>
 
+      <div class="language-switch" aria-label="Nyelvválasztó">
+        <span class="language-link is-unavailable" aria-disabled="true" title="Angol nyelvű változat egyelőre nem érhető el">EN</span>
+        <span class="language-link is-active" aria-current="true">HU</span>
+      </div>
       <button class="menu-toggle" type="button" aria-label="Menü megnyitása" aria-expanded="false">☰</button>
 
       <ul class="nav-links">
@@ -314,6 +363,7 @@
       </div>
 
       <div class="hero-card">
+        <p class="eyebrow">IDBC Salary Guide</p>
         <h1 id="hero-title">Elérhető szakértői pool</h1>
         <p>
           Iparág és pozíció szerint szűrve mutatjuk, mekkora jelölti pool áll rendelkezésre
@@ -340,6 +390,14 @@
             <select id="iparagSelect"></select>
           </label>
         </div>
+
+        <div class="top-cards" id="poolCards"></div>
+
+        <ul class="expert-legend" aria-label="Jelmagyarázat">
+          <li><span style="background:#a5df8f"></span>Kisebb pool</li>
+          <li><span style="background:#55aa8b"></span>Közepes pool</li>
+          <li><span style="background:#245d54"></span>Nagyobb pool</li>
+        </ul>
 
         <div class="expert-grid" id="expertGrid"></div>
       </div>
@@ -377,6 +435,7 @@
     </div>
   </footer>
 
+  <script src="../assets/top3-chart.js?v=1"></script>
   <script>
     (async () => {
     const DATA = await fetch('../data/guide-data.json').then(r => r.json());
@@ -396,14 +455,50 @@
     function renderExpertPool() {
       const iparag = iparagSelect.value;
       const rows = DATA.salary.expertPool.filter(r => r.iparag === iparag);
+      // Bars are scaled against the whole pool, not just the selected industry,
+      // so switching industries compares like with like.
       const max = Math.max(...DATA.salary.expertPool.map(r => r.darab));
-      expertGrid.innerHTML = rows.map(r => `
-        <article class="expert-card">
+      const total = rows.reduce((sum, r) => sum + r.darab, 0);
+
+      expertGrid.innerHTML = rows.map(r => {
+        const share = total ? Math.round(r.darab / total * 100) : 0;
+        const tip = `${r.iparag} – ${r.pozicio}: ${r.darab} fő (az iparág poolja ${total} fő, ebből ${share}%)`;
+        return `
+        <article class="expert-card" role="img" tabindex="0"
+                 aria-label="${escapeHtml(tip)}" data-tooltip="${escapeHtml(tip)}">
           <p class="expert-iparag">${escapeHtml(r.iparag)}</p>
           <h4>${escapeHtml(r.pozicio)}</h4>
           <div class="expert-bar-track"><div class="expert-bar-fill" style="width:${(r.darab / max * 100).toFixed(0)}%"></div></div>
           <strong class="expert-count">${r.darab} fő</strong>
-        </article>`).join('') || '<p class="no-data">Nincs elérhető jelölt ehhez az iparághoz.</p>';
+        </article>`;
+      }).join('') || '<p class="no-data">Nincs elérhető jelölt ehhez az iparághoz.</p>';
+
+      renderPoolCards(rows, total);
+      IDBCChart.attachTooltip(expertGrid);
+    }
+
+    // Same three-card summary block as the salary pages, filled with what this
+    // page actually has: pool size, breadth, and the strongest single position.
+    const poolCards = document.querySelector('#poolCards');
+
+    function renderPoolCards(rows, total) {
+      if (!rows.length) { poolCards.style.display = 'none'; poolCards.innerHTML = ''; return; }
+      poolCards.style.display = '';
+      const top = rows.reduce((a, b) => (b.darab > a.darab ? b : a));
+      const cards = [
+        { title: 'Elérhető szakértők', value: `${total} fő`,
+          note: `${escapeHtml(iparagSelect.value)} iparág teljes poolja az IDBC adatbázisában.` },
+        { title: 'Lefedett pozíciók', value: `${rows.length} pozíció`,
+          note: 'Ennyi különböző szerepkörre van azonnal mozgósítható jelöltünk.' },
+        { title: 'Legnagyobb pool', value: escapeHtml(top.pozicio),
+          note: `${top.darab} fő, az iparág pooljának ${Math.round(top.darab / total * 100)}%-a.` },
+      ];
+      poolCards.innerHTML = cards.map(c => `
+        <article class="range-card">
+          <h3>${c.title}</h3>
+          <p class="range-value">${c.value}</p>
+          <p>${c.note}</p>
+        </article>`).join('');
     }
 
     populateExpertFilter();

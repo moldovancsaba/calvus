@@ -6,6 +6,7 @@
   <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
   <meta http-equiv="Pragma" content="no-cache" />
   <title>IDBC – SAP piaci trendek és bérsávok</title>
+  <link rel="stylesheet" href="../assets/chart.css?v=1" />
   <style>
     :root {
       --dark: #132323;
@@ -35,7 +36,6 @@
       color: var(--text);
       font-family: "Inter", "Montserrat", "Segoe UI", Arial, sans-serif;
       line-height: 1.35;
-      padding-top: 78px;
     }
 
     img { max-width: 100%; display: block; }
@@ -57,7 +57,6 @@
       gap: 22px;
       box-shadow: var(--shadow-soft);
       pointer-events: auto;
-      margin-top: 18px;
     }
 
     .brand { display: inline-flex; flex-direction: column; justify-content: center; min-width: 84px; color: #fff; font-weight: 900; line-height: 0.8; letter-spacing: -1px; }
@@ -71,6 +70,18 @@
     .button { min-height: 25px; padding: 5px 16px; font-size: 10px; }
     .button-primary { background: var(--green); color: var(--dark); }
     .button-outline { border: 2px solid var(--green); color: #fff; }
+
+    .language-switch { display: flex; align-items: center; gap: 6px; font-size: 10px; font-weight: 800; }
+    .language-link { min-width: 26px; padding: 4px 7px; border-radius: 999px; color: #d7e0db; text-align: center; }
+    .language-link.is-active { background: var(--green); color: var(--dark); }
+
+    /* Controls the mockup shows but this build has nothing to point at yet:
+       no .xlsx export exists in the repo, and there is no English edition of
+       the guide data. Rendered in the mockup's position, visibly inert, so the
+       layout is right without faking a working control. */
+    .is-unavailable { opacity: .4; cursor: not-allowed; }
+    .button.is-unavailable { border-color: rgba(255,255,255,.4); color: rgba(255,255,255,.75); }
+    .cta-button.is-unavailable { background: rgba(19,35,35,.14); color: rgba(16,24,24,.55); opacity: 1; }
 
     .menu-toggle { display: none; margin-left: auto; border: 0; background: transparent; color: #fff; font-size: 22px; cursor: pointer; }
 
@@ -148,26 +159,7 @@
     .salary-section { padding: 58px 0 80px; }
     .salary-head { display: flex; justify-content: space-between; align-items: end; gap: 30px; margin-bottom: 28px; }
 
-    .pointline-panel { background: #fff; border: 1px solid var(--line); border-radius: 20px; padding: 24px 26px 10px; margin-bottom: 36px; box-shadow: var(--shadow-soft); }
-    .pointline-legend { display: flex; flex-wrap: wrap; gap: 8px 20px; margin: 0 0 18px; }
-    .pointline-legend .legend-item { display: inline-flex; align-items: center; gap: 6px; font-size: 12px; font-weight: 800; color: rgba(16,24,24,.76); }
-    .pointline-legend .legend-dot { width: 12px; height: 12px; border-radius: 50%; flex: none; }
     .no-data { font-size: 13px; font-weight: 700; color: var(--muted); font-style: italic; margin: 0; }
-    .download-cta { display: flex; justify-content: center; margin-top: 22px; }
-    .download-cta-button {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      min-height: 44px;
-      padding: 11px 22px;
-      border-radius: 10px;
-      background: rgba(19,35,35,.14);
-      color: rgba(16,24,24,.55);
-      font-size: 13px;
-      font-weight: 900;
-      cursor: not-allowed;
-      user-select: none;
-    }
 
     .salary-table-wrap { overflow-x: auto; border-radius: 20px; box-shadow: var(--shadow-soft); }
     table { width: 100%; min-width: 820px; border-collapse: collapse; background: #fff; }
@@ -226,6 +218,10 @@
         <span class="brand-main">IDBC</span>
         <span class="brand-sub">group</span>
       </a>
+      <div class="language-switch" aria-label="Nyelvválasztó">
+        <span class="language-link is-unavailable" aria-disabled="true" title="Angol nyelvű változat egyelőre nem érhető el">EN</span>
+        <span class="language-link is-active" aria-current="true">HU</span>
+      </div>
       <button class="menu-toggle" type="button" aria-label="Menü megnyitása" aria-expanded="false">☰</button>
       <ul class="nav-links">
         <li><a href="#summary">Összefoglaló</a></li>
@@ -235,6 +231,7 @@
       </ul>
       <div class="nav-actions">
         <a class="button button-primary" href="#salary">Bérsávok</a>
+        <span class="button button-outline is-unavailable" aria-disabled="true" title="Az Excel export még nem érhető el">Excel letöltés</span>
       </div>
     </nav>
   </header>
@@ -323,9 +320,15 @@
             <p class="eyebrow">SAP bérpiaci iránytű</p>
             <h2 class="salary-title">TOP3 kategória / terület</h2>
           </div>
+          <span class="cta-button is-unavailable" aria-disabled="true" title="Az Excel export még nem érhető el">Excel letöltése az összes bérrel</span>
         </div>
 
-        <div class="pointline-panel" id="top3Panel" aria-label="SAP TOP3 kiemelt pozíciók bérsávja"></div>
+        <div class="top-cards" id="topCards"></div>
+
+        <section class="top3-chart-card" aria-labelledby="top3-position-title">
+          <h3 id="top3-position-title">TOP 3 pozíció</h3>
+          <div id="top3Panel"></div>
+        </section>
 
         <div class="salary-table-wrap" id="salaryTableWrap">
           <table>
@@ -333,17 +336,17 @@
               <tr>
                 <th>Pozíció</th>
                 <th>Szint</th>
-                <th style="text-align:right">Min. havi bruttó</th>
+                <th style="text-align:right">Vállalatok által kínált</th>
                 <th style="text-align:right" data-col="idbc">IDBC javasolt</th>
-                <th style="text-align:right">Max. havi bruttó</th>
+                <th style="text-align:right">Jelöltek által elvárt</th>
                 <th data-col="juttatas">Juttatási megjegyzés</th>
               </tr>
             </thead>
             <tbody id="salaryTableBody"></tbody>
           </table>
         </div>
-        <div class="download-cta">
-          <span class="download-cta-button" aria-disabled="true">Töltse le a teljes listát</span>
+        <div class="bottom-cta">
+          <span class="cta-button is-unavailable" aria-disabled="true" title="Az Excel export még nem érhető el">Excel letöltése az összes bérrel</span>
         </div>
       </div>
     </section>
@@ -378,6 +381,7 @@
     </div>
   </footer>
 
+  <script src="../assets/top3-chart.js?v=1"></script>
   <script>
     (async () => {
     const DATA = await fetch('../data/guide-data.json').then(r => r.json());
@@ -400,57 +404,41 @@
     // ---------- SAP salary bands (real data, filtered to terulet = SAP) ----------
     const sapRows = DATA.salary.webBertabla.filter(r => r.terulet === 'SAP');
 
-    function niceMaxHuf(values) {
-      const maxVal = Math.max(...values);
-      const step = maxVal > 2000000 ? 500000 : 250000;
-      return { max: Math.ceil(maxVal / step) * step, step };
-    }
-
-    function renderPointLineChart(rows) {
-      if (!rows.length) return '<p class="no-data">Nincs kiemelt (TOP3) pozíció.</p>';
-      const W = 900, left = 230, right = 40, top = 30, rowH = 62, bottom = 34;
-      const H = top + rows.length * rowH + bottom;
-      const plot = W - left - right;
-      const { max: domainMax, step } = niceMaxHuf(rows.map(r => r.max));
-      const xPos = v => left + (v / domainMax) * plot;
-      const ticks = [];
-      for (let t = step; t <= domainMax; t += step) ticks.push(t);
-
-      let s = `<svg viewBox="0 0 ${W} ${H}" style="width:100%;height:auto" role="img" aria-label="SAP bérsáv pontvonal diagram">`;
-      ticks.forEach(t => {
-        const gx = xPos(t);
-        s += `<line x1="${gx.toFixed(1)}" x2="${gx.toFixed(1)}" y1="${top - 8}" y2="${H - bottom + 4}" stroke="#e2e8e4" stroke-width="1"/>`;
-        s += `<text x="${gx.toFixed(1)}" y="${H - 12}" text-anchor="middle" font-size="11" fill="#657474">${fmtHuf(t)}</text>`;
-      });
-      rows.forEach((r, i) => {
-        const y = top + i * rowH + rowH / 2;
-        s += `<text x="0" y="${(y - 7).toFixed(1)}" font-size="12.5" font-weight="900" fill="#101818">${escapeHtml(r.pozicio)}</text>`;
-        s += `<text x="0" y="${(y + 10).toFixed(1)}" font-size="10.5" font-weight="700" fill="#657474">${escapeHtml(r.terulet)} · ${escapeHtml(r.szint)}</text>`;
-        const xmin = xPos(r.min), xmax = xPos(r.max);
-        s += `<line x1="${xmin.toFixed(1)}" x2="${xmax.toFixed(1)}" y1="${y}" y2="${y}" stroke="#132323" stroke-width="2" opacity="0.32"/>`;
-        s += `<circle cx="${xmin.toFixed(1)}" cy="${y}" r="7" fill="#c9e5d8" stroke="#132323" stroke-width="1.5"/>`;
-        s += `<text x="${xmin.toFixed(1)}" y="${(y - 15).toFixed(1)}" text-anchor="middle" font-size="10.5" font-weight="900" fill="#101818">${fmtHuf(r.min)}</text>`;
-        if (r.idbc != null) {
-          const xidbc = xPos(r.idbc);
-          s += `<circle cx="${xidbc.toFixed(1)}" cy="${y}" r="7.5" fill="#55aa8b" stroke="#132323" stroke-width="1.5"/>`;
-          s += `<text x="${xidbc.toFixed(1)}" y="${(y + 23).toFixed(1)}" text-anchor="middle" font-size="10.5" font-weight="900" fill="#132323">${fmtHuf(r.idbc)}</text>`;
-        }
-        s += `<circle cx="${xmax.toFixed(1)}" cy="${y}" r="7" fill="#132323" stroke="#132323" stroke-width="1.5"/>`;
-        s += `<text x="${xmax.toFixed(1)}" y="${(y - 15).toFixed(1)}" text-anchor="middle" font-size="10.5" font-weight="900" fill="#101818">${fmtHuf(r.max)}</text>`;
-      });
-      s += '</svg>';
-      return s;
-    }
-
-    const top3Panel = document.querySelector('#top3Panel');
     const top3Rows = sapRows.filter(r => r.top3);
-    const legend = `
-      <div class="pointline-legend">
-        <span class="legend-item"><span class="legend-dot" style="background:#c9e5d8"></span>Min. havi bruttó</span>
-        <span class="legend-item"><span class="legend-dot" style="background:#55aa8b"></span>IDBC javasolt fizetés</span>
-        <span class="legend-item"><span class="legend-dot" style="background:#132323"></span>Max. havi bruttó</span>
-      </div>`;
-    top3Panel.innerHTML = legend + renderPointLineChart(top3Rows);
+
+    // ---------- TOP3 summary cards ----------
+    // Each card spans one perspective across the TOP3 rows, so the numbers stay
+    // tied to the same data the chart and table below are drawn from.
+    function bandOf(rows, key) {
+      const vals = rows.map(r => r[key]).filter(v => v != null);
+      if (!vals.length) return null;
+      const lo = Math.min(...vals), hi = Math.max(...vals);
+      return lo === hi ? fmtHuf(lo) : `${fmtHuf(lo)} – ${fmtHuf(hi)}`;
+    }
+
+    const juttatasNote = [...new Set(top3Rows.map(r => r.juttatas).filter(Boolean))][0] || '';
+    // Card order follows the mockup: candidate expectation, company offer, IDBC view.
+    const cards = [
+      { key: 'max', title: IDBCChart.LABEL.max },
+      { key: 'min', title: IDBCChart.LABEL.min },
+      { key: 'idbc', title: IDBCChart.LABEL.idbc },
+    ].filter(c => bandOf(top3Rows, c.key));
+
+    document.querySelector('#topCards').innerHTML = cards.map(c => `
+      <article class="range-card">
+        <h3>${escapeHtml(c.title)}</h3>
+        <p class="range-value">${escapeHtml(bandOf(top3Rows, c.key))}</p>
+        ${juttatasNote ? `<p>Egyéb juttatások: ${escapeHtml(juttatasNote)}</p>` : ''}
+      </article>`).join('');
+
+    // ---------- TOP3 point-line chart ----------
+    const top3Panel = document.querySelector('#top3Panel');
+    top3Panel.innerHTML = IDBCChart.renderTop3Chart(top3Rows, {
+      idPrefix: 'sap',
+      chartLabel: 'TOP 3 SAP pozíció havi bérértékei',
+      emptyText: 'Nincs kiemelt (TOP3) SAP pozíció.',
+    });
+    IDBCChart.attachTooltip(top3Panel);
 
     const MAX_TABLE_ROWS = 10;
     const salaryTableBody = document.querySelector('#salaryTableBody');
