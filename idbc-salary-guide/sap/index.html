@@ -63,7 +63,10 @@
     .brand-main { font-size: 28px; }
     .brand-sub { margin-left: 42px; color: var(--green); font-size: 12px; letter-spacing: 0; }
 
-    .nav-links { list-style: none; display: flex; align-items: center; gap: 22px; margin: 0 auto; padding: 0; font-size: 11px; font-weight: 800; white-space: nowrap; }
+    /* Six items at the mockup's 22px gap leave only ~11px spare just above the
+       1020px breakpoint, and the page has no webfont, so a client with Inter
+       installed measures wider. Let the gap shrink rather than overflow. */
+    .nav-links { list-style: none; display: flex; align-items: center; gap: clamp(12px, 1.8vw, 22px); margin: 0 auto; padding: 0; font-size: 11px; font-weight: 800; white-space: nowrap; }
     .nav-actions { display: flex; gap: 8px; margin-left: auto; }
 
     .button, .cta-button { display: inline-flex; align-items: center; justify-content: center; border-radius: 10px; font-weight: 900; white-space: nowrap; }
@@ -85,7 +88,7 @@
 
     .menu-toggle { display: none; margin-left: auto; border: 0; background: transparent; color: #fff; font-size: 22px; cursor: pointer; }
 
-    .hero { position: relative; min-height: 460px; margin: 18px 20px 0; border-radius: 0 0 0 var(--radius-large); overflow: hidden; background: #d9e2dc; box-shadow: var(--shadow-soft); }
+    .hero { position: relative; min-height: 500px; margin: 18px 20px 0; border-radius: 0 0 0 var(--radius-large); overflow: hidden; background: #d9e2dc; box-shadow: var(--shadow-soft); }
     .hero img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: center; }
     .hero::after {
       content: "";
@@ -229,6 +232,7 @@
         <li><a href="#salary">SAP bérsávok</a></li>
         <li><a href="../berezes/index.html">Bérsávok</a></li>
         <li><a href="../expert-pool/index.html">Expert Pool</a></li>
+        <li><a href="#contact">Kapcsolat</a></li>
       </ul>
       <div class="nav-actions">
         <a class="button button-primary" href="../index.html">Salary Guide</a>
@@ -335,11 +339,8 @@
           <table>
             <thead>
               <tr>
-                <th>Pozíció</th>
-                <th>Szint</th>
-                <th style="text-align:right">Vállalatok által kínált</th>
-                <th style="text-align:right" data-col="idbc">IDBC javasolt</th>
-                <th style="text-align:right">Jelöltek által elvárt</th>
+                <th>Job / terület</th>
+                <th style="text-align:right">Átlagos range</th>
                 <th data-col="juttatas">Juttatási megjegyzés</th>
               </tr>
             </thead>
@@ -371,6 +372,7 @@
         <a href="#salary">SAP bérsávok</a>
         <a href="../berezes/index.html">Bérsávok</a>
         <a href="../expert-pool/index.html">Expert Pool</a>
+        <a href="#contact">Kapcsolat</a>
         <a href="../index.html">IDBC Salary Guide</a>
         <a href="../../index.html">Calvus Hub</a>
       </nav>
@@ -447,20 +449,21 @@
     const salaryTableBody = document.querySelector('#salaryTableBody');
     const visibleSapRows = sapRows.slice(0, MAX_TABLE_ROWS);
 
-    // Hide a column entirely (header + cells) when every visible row has no value for it,
-    // instead of showing a column of dashes.
-    const hasIdbc = visibleSapRows.length ? visibleSapRows.some(r => r.idbc != null) : true;
+    // Hide the benefits column entirely (header + cells) when every visible row
+    // has no value for it, instead of showing a column of dashes.
     const hasJuttatas = visibleSapRows.length ? visibleSapRows.some(r => r.juttatas && r.juttatas.trim()) : true;
-    document.querySelectorAll('[data-col="idbc"]').forEach(el => { el.style.display = hasIdbc ? '' : 'none'; });
     document.querySelectorAll('[data-col="juttatas"]').forEach(el => { el.style.display = hasJuttatas ? '' : 'none'; });
+
+    // Three columns, per the mockup: the band collapses into one "Átlagos range"
+    // cell. The IDBC recommendation is not repeated here — the chart above
+    // carries it as its own point on every row.
+    const rangeOf = r => (r.min != null && r.max != null) ? `${fmtHuf(r.min)} – ${fmtHuf(r.max)}`
+                       : fmtHuf(r.min != null ? r.min : r.max);
 
     salaryTableBody.innerHTML = visibleSapRows.map(r => `
       <tr>
         <td>${escapeHtml(r.pozicio)}</td>
-        <td>${escapeHtml(r.szint)}</td>
-        <td class="num">${fmtHuf(r.min)}</td>
-        ${hasIdbc ? `<td class="num" data-col="idbc">${r.idbc != null ? fmtHuf(r.idbc) : '–'}</td>` : ''}
-        <td class="num">${fmtHuf(r.max)}</td>
+        <td class="num">${escapeHtml(rangeOf(r))}</td>
         ${hasJuttatas ? `<td data-col="juttatas">${escapeHtml(r.juttatas)}</td>` : ''}
       </tr>`).join('');
     })();

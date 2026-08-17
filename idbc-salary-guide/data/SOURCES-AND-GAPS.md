@@ -107,6 +107,22 @@ from what each page actually has rather than dropped:
 |---|---|---|---|
 | Summary cards | TOP3 band per perspective | same, per selected area | pool size / positions covered / largest pool |
 | Chart | TOP3 point-line | same, per area | n/a — bars keep the same colour ramp |
+| Salary table | 3 columns, mockup shape | 5 columns, split values | n/a |
+
+The SAP table follows the mockup exactly: `Job / terület` | `Átlagos range` |
+`Juttatási megjegyzés`, with the band collapsed into one `min – max` cell. That
+drops `Szint` and the IDBC figure from the table — the chart directly above
+carries the IDBC recommendation as its own point on every row. The Bérsávok
+table deliberately keeps the wider split-column layout; the mockup only ever
+covered the SAP page.
+
+`sapProducts` was aligned to the mockup's catalogue: the S/4 HANA conversion
+bullet is split back into "átállás és konverzió" plus "brownfield és bluefield
+megközelítések" (5 items, not 4), and the fifth category is titled "Egyedi SAP
+megoldások partnereinkre szabva". Item-level wording still differs from the
+mockup in a few places (`Rise`/`RISE`, `SAP Carve-out`/`SAP carve-out
+projektek`, colon-vs-parenthesis lists, and a few capitalisations) — the
+substance is identical, so these were left alone rather than churned.
 
 Two mockup controls are rendered in position but visibly inert
 (`.is-unavailable`), because nothing exists behind them yet:
