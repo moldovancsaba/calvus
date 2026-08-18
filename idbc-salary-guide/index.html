@@ -645,27 +645,49 @@
     editionSelect.innerHTML = DATA.editions.map(e => `<option value="${escapeHtml(e)}">${escapeHtml(e)}</option>`).join('');
     topicSelect.innerHTML = DATA.topics.map(t => `<option value="${escapeHtml(t.topic)}">${escapeHtml(t.topic)}</option>`).join('');
 
-    function collectSegments(edition, side, canonicalOrder) {
+    // Pseudo-segment meaning "no filter — show the whole sample". Always first in the list, and
+    // the default on load, so the panels start fully populated instead of on whichever real
+    // segment happens to sort first (which can be one with zero respondents for the current topic).
+    const ALL_SEGMENT = 'Összes';
+
+    // A row exists for every canonical segment value even when nobody in that segment answered —
+    // its percentages are just all 0. Only count a segment as real data for this topic+side if at
+    // least one of the topic's questions has a non-empty row for it; otherwise selecting it would
+    // show nothing but empty questions, so don't offer it at all.
+    function collectSegmentsForTopic(topic, edition, side, sideKey, canonicalOrder) {
+      const cross = DATA.answers[edition][side].cross;
+      const questions = getQuestions(topic, edition, sideKey);
       const found = new Set();
-      Object.values(DATA.answers[edition][side].cross).forEach(c => c.items.forEach(row => found.add(row.label)));
-      return canonicalOrder.filter(s => found.has(s));
+      questions.forEach(q => {
+        const c = cross[q];
+        if (!c) return;
+        c.items.forEach(row => {
+          if (row.values.some(v => v.percent > 0)) found.add(row.label);
+        });
+      });
+      return [ALL_SEGMENT, ...canonicalOrder.filter(s => found.has(s))];
     }
 
     function populateSegmentSelects() {
+      const topic = topicSelect.value;
       const edition = editionSelect.value;
-      const prevEmp = empSegmentSelect.value;
-      const prevEr = erSegmentSelect.value;
-      const empSegs = collectSegments(edition, 'employee', EXPERIENCE_ORDER);
-      const erSegs = collectSegments(edition, 'employer', COMPANY_SIZE_ORDER);
+      const prevEmp = empSegmentSelect.value || ALL_SEGMENT;
+      const prevEr = erSegmentSelect.value || ALL_SEGMENT;
+      const empSegs = collectSegmentsForTopic(topic, edition, 'employee', 'Munkavállalók', EXPERIENCE_ORDER);
+      const erSegs = collectSegmentsForTopic(topic, edition, 'employer', 'Munkáltatók', COMPANY_SIZE_ORDER);
       empSegmentSelect.innerHTML = empSegs.map(s => `<option value="${escapeHtml(s)}">${escapeHtml(s)}</option>`).join('');
       erSegmentSelect.innerHTML = erSegs.map(s => `<option value="${escapeHtml(s)}">${escapeHtml(s)}</option>`).join('');
-      if (empSegs.includes(prevEmp)) empSegmentSelect.value = prevEmp;
-      if (erSegs.includes(prevEr)) erSegmentSelect.value = prevEr;
+      empSegmentSelect.value = empSegs.includes(prevEmp) ? prevEmp : ALL_SEGMENT;
+      erSegmentSelect.value = erSegs.includes(prevEr) ? prevEr : ALL_SEGMENT;
     }
 
     // For the selected segment, use that segment's crosstab row when the question has one;
-    // otherwise fall back to the overall total and say so.
+    // otherwise fall back to the overall total and say so. "Összes" always means the total,
+    // deliberately chosen rather than fallen back into — no badge for that case.
     function getSegmentSlice(sideData, question, segmentValue) {
+      if (segmentValue === ALL_SEGMENT) {
+        return { c: sideData.base[question] || null, note: null };
+      }
       const crossC = sideData.cross[question];
       if (crossC) {
         const row = crossC.items.find(r => r.label === segmentValue);
@@ -693,9 +715,11 @@
       // Options nobody picked (0%) are pure clutter — no visible bar segment, just a dangling
       // legend/list entry — so drop them everywhere before rendering.
       const nonZero = c.items.filter(it => it.percent > 0);
-      if (!nonZero.length) {
-        return `<section class="question-block"><h4 class="question-title">${titleHtml}</h4><p class="no-data">Ehhez a szűréshez nincs válasz.</p></section>`;
-      }
+      // A segment with zero respondents for this question omits it entirely rather than showing
+      // an empty "no answer" placeholder — the dropdown itself already excludes segment/topic
+      // combinations with no data anywhere, so this is the narrower case of one question within
+      // an otherwise-populated segment having nothing.
+      if (!nonZero.length) return '';
 
       // "Select all that apply" questions: percentages are independent per option and don't
       // sum to 100%, so a single stacked bar is both wrong and unreadable — use one bar per option instead.
@@ -770,14 +794,13 @@
       const ordinal = !multiSelect && isOrdinalScale(c.groups);
 
       if (multiSelect || manyOptions) {
+        // A breakdown row nobody in it answered is omitted rather than shown as an empty
+        // placeholder; if every row turns out empty, the whole question is hidden below.
         const groups = c.items.map(row => {
-          // Segments nobody in this breakdown row picked are clutter — drop them.
           const nonZero = row.values
             .map((v, i) => ({ percent: v.percent, group: c.groups[i] }))
             .filter(v => v.percent > 0);
-          if (!nonZero.length) {
-            return `<div class="multi-group"><p class="multi-group-label">${escapeHtml(row.label)}</p><p class="no-data">Ehhez a szűréshez nincs válasz.</p></div>`;
-          }
+          if (!nonZero.length) return '';
           const sorted = ordinal
             ? nonZero.sort((a, b) => ordinalCompare(a.group, b.group))
             : nonZero.sort((a, b) => b.percent - a.percent);
@@ -788,7 +811,8 @@
               <div class="answer-value">${fmtPct(v.percent)}</div>
             </div>`).join('');
           return `<div class="multi-group"><p class="multi-group-label">${escapeHtml(row.label)}</p>${bars}</div>`;
-        }).join('');
+        }).filter(Boolean).join('');
+        if (!groups) return '';
         const multiNote = multiSelect ? '<p class="n-note">Többválasztós kérdés — az arányok bontásonként nem adják ki a 100%-ot</p>' : '';
         return `
           <section class="question-block">
@@ -804,15 +828,15 @@
       const usedGroupIdx = new Set();
       c.items.forEach(row => row.values.forEach((v, i) => { if (v.percent > 0) usedGroupIdx.add(i); }));
 
+      // Same omit-rather-than-placeholder treatment as above, per row of this matrix.
       const rows = c.items.map(row => {
         const segments = row.values.map((v, i) => v.percent > 0 ? `
           <span class="segment" style="width:${v.percent}%;background:${paletteColor(i)}" title="${escapeHtml(c.groups[i])}: ${fmtPct(v.percent)}">${v.percent >= 10 ? fmtPct(v.percent) : ''}</span>
         ` : '').join('');
-        if (!segments.trim()) {
-          return `<div class="answer-row"><div class="answer-label">${escapeHtml(row.label)}</div><p class="no-data">Nincs válasz.</p></div>`;
-        }
+        if (!segments.trim()) return '';
         return `<div class="answer-row"><div class="answer-label">${escapeHtml(row.label)}</div><div class="bar">${segments}</div></div>`;
-      }).join('');
+      }).filter(Boolean).join('');
+      if (!rows) return '';
       const legend = c.groups.map((g, i) => usedGroupIdx.has(i) ? `
         <span class="legend-item"><span class="legend-dot" style="background:${paletteColor(i)}"></span>${escapeHtml(g)}</span>
       ` : '').join('');
@@ -850,39 +874,36 @@
         return;
       }
       // Show only the selected segment's data (its crosstab row), falling back to the total
-      // for questions that have no breakdown at all.
-      target.innerHTML = questions.map(q => {
+      // for questions that have no breakdown at all. Individual questions can still come back
+      // empty (a real segment with zero respondents for that one question) and render nothing —
+      // if that empties the whole panel, say so instead of leaving it blank.
+      const html = questions.map(q => {
         const { c, note } = getSegmentSlice(sideData, q, segmentValue);
         return renderQuestion(q, c, note);
       }).join('');
+      target.innerHTML = html || '<p class="no-data">Ehhez a szűréshez nincs válasz.</p>';
     }
 
-    // The segment dropdown is only worth showing when it can actually change something: when
-    // the current topic has at least one question with a crosstab breakdown for this side, and
-    // the dropdown itself has options to pick from. Otherwise every question in view falls back
-    // to the aggregate regardless of selection, and the control would just be a distraction.
-    function segmentDropdownApplicable(topic, edition, side, sideKey, selectEl) {
-      if (!selectEl.options.length) return false;
-      const cross = DATA.answers[edition][side].cross;
-      return getQuestions(topic, edition, sideKey).some(q => !!cross[q]);
+    // The segment dropdown is only worth showing when it offers a real choice: "Összes" is always
+    // present, but if it's the only option (no real segment has data for this topic+side), picking
+    // it can't change anything, so the control is just a distraction.
+    function segmentDropdownApplicable(selectEl) {
+      return selectEl.options.length > 1;
     }
 
     function renderAll() {
-      const topic = topicSelect.value;
-      const edition = editionSelect.value;
+      // Options depend on the current topic (a segment only appears if it has data somewhere in
+      // it), so rebuild them on every render, not just on edition change.
+      populateSegmentSelects();
 
-      const empApplicable = segmentDropdownApplicable(topic, edition, 'employee', 'Munkavállalók', empSegmentSelect);
-      const erApplicable = segmentDropdownApplicable(topic, edition, 'employer', 'Munkáltatók', erSegmentSelect);
-      empSegmentSelect.closest('.segment-select').style.display = empApplicable ? '' : 'none';
-      erSegmentSelect.closest('.segment-select').style.display = erApplicable ? '' : 'none';
+      empSegmentSelect.closest('.segment-select').style.display = segmentDropdownApplicable(empSegmentSelect) ? '' : 'none';
+      erSegmentSelect.closest('.segment-select').style.display = segmentDropdownApplicable(erSegmentSelect) ? '' : 'none';
 
       renderPanel(b2cChart, 'employee', 'Munkavállalók', empSegmentSelect.value);
       renderPanel(b2bChart, 'employer', 'Munkáltatók', erSegmentSelect.value);
     }
 
-    editionSelect.addEventListener('change', () => { populateSegmentSelects(); renderAll(); });
-    [topicSelect, empSegmentSelect, erSegmentSelect].forEach(el => el.addEventListener('change', renderAll));
-    populateSegmentSelects();
+    [editionSelect, topicSelect, empSegmentSelect, erSegmentSelect].forEach(el => el.addEventListener('change', renderAll));
     renderAll();
 
     // Category dropdown for the "béren kívüli juttatások" question — delegated on the document
