@@ -250,7 +250,25 @@
 
     .group-filter { max-width: 280px; margin: -4px 0 16px; }
     .n-note { font-weight: 700; color: var(--muted); }
-    .segment-fallback-note { font-size: 11px; font-style: italic; margin: -4px 0 4px; }
+
+    /* Marks a question whose answer doesn't change with the segment dropdown above it —
+       the survey has no breakdown for it, so the aggregate (whole-sample) figure is shown
+       regardless of which segment is selected. Sits on the title so it reads as a property
+       of the question, not an easy-to-miss aside underneath it. */
+    .agg-badge {
+      display: inline-block;
+      margin-left: 8px;
+      padding: 2px 9px;
+      border-radius: 999px;
+      background: rgba(19,35,35,.08);
+      color: var(--muted);
+      font-size: 10px;
+      font-weight: 900;
+      text-transform: uppercase;
+      letter-spacing: .04em;
+      vertical-align: middle;
+      cursor: help;
+    }
 
     .bar { min-height: 46px; border-radius: 20px; overflow: hidden; display: flex; background: rgba(19,35,35,.08); }
     .bar-compact { min-height: 26px; border-radius: 13px; }
@@ -565,6 +583,14 @@
     function fmtPct(p) {
       return (Math.round(p * 10) / 10).toString().replace('.', ',') + '%';
     }
+    // Badge for a question whose result doesn't depend on the segment dropdown above it —
+    // `note` (from getSegmentSlice) carries the reason as the hover tooltip.
+    function aggBadge(note) {
+      return note ? `<span class="agg-badge" title="${escapeHtml(note)}">Összesített</span>` : '';
+    }
+    function titleWithBadge(title, note) {
+      return `${escapeHtml(title)}${aggBadge(note)}`;
+    }
 
     // ---------- Trends section ----------
     const EXPERIENCE_ORDER = ["kevesebb, mint 1 év", "1-2 év", "3-5 év", "6-10 év", "11-20 év", "több, mint 20 év"];
@@ -661,14 +687,14 @@
     }
 
     function renderSimple(title, c, note) {
-      const noteHtml = note ? `<p class="n-note segment-fallback-note">${escapeHtml(note)}</p>` : '';
+      const titleHtml = titleWithBadge(title, note);
       const sumPct = c.items.reduce((s, it) => s + it.percent, 0);
 
       // Options nobody picked (0%) are pure clutter — no visible bar segment, just a dangling
       // legend/list entry — so drop them everywhere before rendering.
       const nonZero = c.items.filter(it => it.percent > 0);
       if (!nonZero.length) {
-        return `<section class="question-block"><h4 class="question-title">${escapeHtml(title)}</h4>${noteHtml}<p class="no-data">Ehhez a szűréshez nincs válasz.</p></section>`;
+        return `<section class="question-block"><h4 class="question-title">${titleHtml}</h4><p class="no-data">Ehhez a szűréshez nincs válasz.</p></section>`;
       }
 
       // "Select all that apply" questions: percentages are independent per option and don't
@@ -712,8 +738,7 @@
         const multiNote = isMulti ? '<p class="n-note">Többválasztós kérdés — az arányok nem adják ki a 100%-ot</p>' : '';
         return `
           <section class="question-block">
-            <h4 class="question-title">${escapeHtml(title)}</h4>
-            ${noteHtml}
+            <h4 class="question-title">${titleHtml}</h4>
             ${multiNote}
             ${groupSelectHtml}
             ${rows}
@@ -728,14 +753,14 @@
       `).join('');
       return `
         <section class="question-block">
-          <h4 class="question-title">${escapeHtml(title)}</h4>
-          ${noteHtml}
+          <h4 class="question-title">${titleHtml}</h4>
           <div class="bar">${segments}</div>
           <div class="legend">${legend}</div>
         </section>`;
     }
 
-    function renderMatrixPercent(title, c) {
+    function renderMatrixPercent(title, c, note) {
+      const titleHtml = titleWithBadge(title, note);
       // Detect "select all that apply" crosstabs — a row's own values don't sum to 100%,
       // so stacking them as one bar would misrepresent the data; show independent bars instead.
       const multiSelect = c.items.some(row => row.values.reduce((s, v) => s + v.percent, 0) > 110);
@@ -767,7 +792,7 @@
         const multiNote = multiSelect ? '<p class="n-note">Többválasztós kérdés — az arányok bontásonként nem adják ki a 100%-ot</p>' : '';
         return `
           <section class="question-block">
-            <h4 class="question-title">${escapeHtml(title)}</h4>
+            <h4 class="question-title">${titleHtml}</h4>
             ${multiNote}
             ${groups}
           </section>`;
@@ -791,10 +816,10 @@
       const legend = c.groups.map((g, i) => usedGroupIdx.has(i) ? `
         <span class="legend-item"><span class="legend-dot" style="background:${paletteColor(i)}"></span>${escapeHtml(g)}</span>
       ` : '').join('');
-      return `<section class="question-block"><h4 class="question-title">${escapeHtml(title)}</h4>${rows}<div class="legend">${legend}</div></section>`;
+      return `<section class="question-block"><h4 class="question-title">${titleHtml}</h4>${rows}<div class="legend">${legend}</div></section>`;
     }
 
-    function renderMatrixValue(title, c) {
+    function renderMatrixValue(title, c, note) {
       const rows = c.items.map(row => {
         const bars = row.values.map((v, i) => `
           <div class="scale-row">
@@ -804,14 +829,14 @@
           </div>`).join('');
         return `<div class="scale-block"><div class="answer-label">${escapeHtml(row.label)}</div>${bars}</div>`;
       }).join('');
-      return `<section class="question-block"><h4 class="question-title">${escapeHtml(title)} <span class="scale-hint">(átlag, 1–4 skála)</span></h4>${rows}</section>`;
+      return `<section class="question-block"><h4 class="question-title">${titleWithBadge(title, note)} <span class="scale-hint">(átlag, 1–4 skála)</span></h4>${rows}</section>`;
     }
 
     function renderQuestion(question, c, note) {
       if (!c) return `<section class="question-block"><h4 class="question-title">${escapeHtml(question)}</h4><p class="no-data">Ehhez a kérdéshez nincs adat ebben a nézetben.</p></section>`;
       if (c.kind === 'simple') return renderSimple(question, c, note);
-      if (c.kind === 'matrix-percent') return renderMatrixPercent(question, c);
-      if (c.kind === 'matrix-value') return renderMatrixValue(question, c);
+      if (c.kind === 'matrix-percent') return renderMatrixPercent(question, c, note);
+      if (c.kind === 'matrix-value') return renderMatrixValue(question, c, note);
       return '';
     }
 
@@ -832,7 +857,25 @@
       }).join('');
     }
 
+    // The segment dropdown is only worth showing when it can actually change something: when
+    // the current topic has at least one question with a crosstab breakdown for this side, and
+    // the dropdown itself has options to pick from. Otherwise every question in view falls back
+    // to the aggregate regardless of selection, and the control would just be a distraction.
+    function segmentDropdownApplicable(topic, edition, side, sideKey, selectEl) {
+      if (!selectEl.options.length) return false;
+      const cross = DATA.answers[edition][side].cross;
+      return getQuestions(topic, edition, sideKey).some(q => !!cross[q]);
+    }
+
     function renderAll() {
+      const topic = topicSelect.value;
+      const edition = editionSelect.value;
+
+      const empApplicable = segmentDropdownApplicable(topic, edition, 'employee', 'Munkavállalók', empSegmentSelect);
+      const erApplicable = segmentDropdownApplicable(topic, edition, 'employer', 'Munkáltatók', erSegmentSelect);
+      empSegmentSelect.closest('.segment-select').style.display = empApplicable ? '' : 'none';
+      erSegmentSelect.closest('.segment-select').style.display = erApplicable ? '' : 'none';
+
       renderPanel(b2cChart, 'employee', 'Munkavállalók', empSegmentSelect.value);
       renderPanel(b2bChart, 'employer', 'Munkáltatók', erSegmentSelect.value);
     }
