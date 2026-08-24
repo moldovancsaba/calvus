@@ -72,6 +72,44 @@ folder is the single consolidated data source built from all of it.
 - `sapProducts` — **new**: the real 5-category, 20-item SAP product catalogue from the client's own SAP mockup/spec.
 - `siteMap` — **new**: the full intended 8-page site structure with a `status` (`built` / `partially built` / `not built`) and note per page.
 
+## Trends filters — what "no data" means
+
+The survey's crosstabs contain a row for **every** canonical segment value,
+including segments nobody in that topic actually answered — those rows exist
+with all percentages at `0`. The presence of a row is therefore not evidence
+of real data, and the filter logic on the main page is built around that:
+
+- **`Összes` is a pseudo-segment**, not a value from the data. It is always the
+  first option and the default on load, so the landing view shows the whole
+  sample rather than whichever real segment happens to sort first (which may be
+  one with zero respondents for the current topic).
+- **Segment options are computed per topic**, not per edition+side. A value is
+  offered only if at least one question in the *currently selected* topic has a
+  non-zero row for it. A value that is real under one topic but empty under
+  another appears only where it applies — e.g. on the employee side of
+  *Általános*, `3-5 év` is offered under *Munkahely váltás* but not under
+  *Béremelés és juttatások*, where `1-2 év` is the only experience band with
+  data. (`kevesebb, mint 1 év` is in the canonical order but has non-zero data
+  under no topic at all, so it is never offered.)
+- **Empty combinations are omitted, not rendered empty.** A single question with
+  no data under an otherwise-valid segment is dropped on its own; if nothing in
+  a panel renders at all, one panel-level fallback message replaces the panel
+  instead of a column of empty placeholders.
+- **The segment dropdown is hidden entirely** (tapasztalati szint on B2C,
+  cégméret on B2B) when no question on that side has a crosstab for the current
+  topic, or when it would have no options — selecting a value would change
+  nothing, so showing the control was actively misleading.
+
+Questions with no crosstab at all are answered from the aggregate (whole-sample)
+figure regardless of the selected segment. These carry an **`Összesített`
+badge** on the question title, with the reason as its hover tooltip, applied
+uniformly across every question kind on both sides.
+
+None of this changes any figure — it only stops the page from presenting
+zero-respondent slices as if they were findings. If the client needs a
+breakdown that is currently unavailable, that is a data-collection change
+(re-fielding or re-tabulating the survey), not a code change — see gap 5 above.
+
 ## Shared front-end assets
 
 - `assets/top3-chart.js` — `IDBCChart.renderTop3Chart(rows, opts)` returns the
