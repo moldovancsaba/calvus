@@ -48,6 +48,14 @@ folder is the single consolidated data source built from all of it.
    the underlying survey was never fielded with those breakdowns. Building
    them would require the client re-running or re-tabulating the survey,
    not a code change.
+
+   Update (2026-08-24): the client's change round asks for an 11-area filter
+   at the top of the trends page. A **skeleton** is now built: the 11-option
+   dropdown plus a per-area summary block (text + inert video slot) that swaps
+   with the selection. It deliberately does *not* filter the survey answers —
+   that still needs re-tabulated data — and every area shows a placeholder
+   line until the client supplies the promised ~1800–2000-character summary
+   per area (drop them into `AREA_SUMMARIES` in `index.html`) and the videos.
 6. **"3 stakeholder ranges" (candidate / company / IDBC) is aspirational —
    and the shipped labels now assert it anyway (owner decision, 2026-08-17).**
    The real `webBertabla` sheet has one range (`min`/`max`) plus one
@@ -63,6 +71,13 @@ folder is the single consolidated data source built from all of it.
    the fix is a data-collection change (survey candidates and employers
    separately), not a code change. Revisit if the numbers are ever quoted
    externally as employer-vs-candidate evidence.
+
+   Update (2026-08): the Bérsávok *table* returned to neutral `Minimum` /
+   `Maximum` headers at the client's request, while the chart, legend and
+   summary cards keep the stakeholder labels. The client's own note under the
+   table now also asserts the figures are "valós piaci adatokon alapuló" —
+   their copy, shipped as requested; the source sheet's UTMUTATO still calls
+   the same figures szemléltető MINTAADATOK awaiting szakmai jóváhagyás.
 
 ## Schema in `guide-data.json`
 
@@ -87,23 +102,32 @@ of real data, and the filter logic on the main page is built around that:
   offered only if at least one question in the *currently selected* topic has a
   non-zero row for it. A value that is real under one topic but empty under
   another appears only where it applies — e.g. on the employee side of
-  *Általános*, `3-5 év` is offered under *Munkahely váltás* but not under
-  *Béremelés és juttatások*, where `1-2 év` is the only experience band with
-  data. (`kevesebb, mint 1 év` is in the canonical order but has non-zero data
+  *Általános*, `3-5 év` is offered under *Munkahely váltás és toborzási
+  kilátások* but not under *Bérezés és juttatások*, where `1-2 év` is the only
+  experience band with data. (`kevesebb, mint 1 év` is in the canonical order but has non-zero data
   under no topic at all, so it is never offered.)
-- **Empty combinations are omitted, not rendered empty.** A single question with
-  no data under an otherwise-valid segment is dropped on its own; if nothing in
-  a panel renders at all, one panel-level fallback message replaces the panel
-  instead of a column of empty placeholders.
-- **The segment dropdown is hidden entirely** (tapasztalati szint on B2C,
-  cégméret on B2B) when no question on that side has a crosstab for the current
-  topic, or when it would have no options — selecting a value would change
-  nothing, so showing the control was actively misleading.
+- **Empty combinations show a uniform message, not the aggregate** (client
+  request, 2026-08-24 — supersedes the earlier omit-or-fall-back behaviour). A
+  question with no data under the selected real segment stays visible with its
+  title and the single sentence "A kiválasztott szűrési feltételekhez nem
+  érhető el adat." — questions with no crosstab at all get the same message
+  under any real segment instead of silently falling back to the aggregate
+  (the "Összesített" badge that marked that fallback is gone with it).
+  `Összes` still deliberately shows the whole-sample figure.
+- **The segment dropdown is hidden entirely** (tapasztalati szint on the
+  munkavállalói side, cégméret on the munkáltatói side) when no question on
+  that side has a crosstab for the current topic, or when it would have no
+  options — selecting a value would change nothing, so showing the control was
+  actively misleading.
 
-Questions with no crosstab at all are answered from the aggregate (whole-sample)
-figure regardless of the selected segment. These carry an **`Összesített`
-badge** on the question title, with the reason as its hover tooltip, applied
-uniformly across every question kind on both sides.
+Also at client request (same round): the two "Jelöld 1-4-ig terjedő skálán…"
+matrix questions are now displayed (previously filtered out as too noisy) —
+the váltási-szempontok question renders the whole-sample percentage matrix
+under `Összes` and per-segment mean scores under a real segment; the
+juttatási-elemek question has no crosstab, so real segments show the uniform
+message. The benefits category dropdown (the one question-level group filter)
+and the "Többválasztós kérdés…" notes were removed — every multi-select list
+now renders in full.
 
 None of this changes any figure — it only stops the page from presenting
 zero-respondent slices as if they were findings. If the client needs a
@@ -145,14 +169,22 @@ from what each page actually has rather than dropped:
 |---|---|---|---|
 | Summary cards | TOP3 band per perspective | same, per selected area | pool size / positions covered / largest pool |
 | Chart | TOP3 point-line | same, per area | n/a — bars keep the same colour ramp |
-| Salary table | 3 columns, mockup shape | 5 columns, split values | n/a |
+| Salary table | 3 columns, mockup shape | grouped: Pozíció / Tapasztalati szint / Minimum / Maximum / Egyéb juttatás | n/a |
 
 The SAP table follows the mockup exactly: `Job / terület` | `Átlagos range` |
 `Juttatási megjegyzés`, with the band collapsed into one `min – max` cell. That
 drops `Szint` and the IDBC figure from the table — the chart directly above
-carries the IDBC recommendation as its own point on every row. The Bérsávok
-table deliberately keeps the wider split-column layout; the mockup only ever
-covered the SAP page.
+carries the IDBC recommendation as its own point on every row.
+
+The Bérsávok table was regrouped per the client's 2026-08 change round: the
+szint filter is gone, every position of the selected area shows as one
+three-row group (Junior/Medior/Senior with the client-supplied year ranges in
+the label), columns are the neutral `Minimum` / `Maximum` plus `Egyéb
+juttatás`, the IDBC figure lives only in the chart, and the 10-row cap was
+dropped. TOP3 rows are included in the table too — the `top3` flag marks
+Senior rows only, so excluding them would leave two-row orphan groups. The
+"havi bruttó, egész Magyarországra vonatkozó" scope note the client asked for
+sits above the table under the "További bérek" heading.
 
 `sapProducts` was aligned to the mockup's catalogue: the S/4 HANA conversion
 bullet is split back into "átállás és konverzió" plus "brownfield és bluefield

@@ -438,7 +438,7 @@
   <script src="../assets/top3-chart.js?v=1"></script>
   <script>
     (async () => {
-    const DATA = await fetch('../data/guide-data.json').then(r => r.json());
+    const DATA = await fetch('../data/guide-data.json', { cache: 'no-cache' }).then(r => r.json());
 
     function escapeHtml(s) {
       return String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));

@@ -253,6 +253,8 @@
     .sap-callout-arrow { font-size: 30px; font-weight: 900; color: var(--green); flex: none; }
 
     .salary-filters { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 260px)); gap: 14px; margin-bottom: 26px; }
+    .table-title { margin: 26px 0 8px; font-size: clamp(20px, 2.4vw, 26px); letter-spacing: -0.4px; }
+    .table-note { margin: 0 0 10px; font-size: 12px; font-weight: 800; color: var(--muted); max-width: 720px; }
     .salary-count { font-size: 12px; font-weight: 800; color: var(--muted); margin: 0 0 14px; }
 
     .table-wrap { overflow: auto; border-radius: 18px; border: 1px solid var(--line); background: #fff; }
@@ -260,6 +262,8 @@
     th, td { padding: 12px 16px; text-align: left; border-bottom: 1px solid var(--line); font-size: 13px; }
     th { background: rgba(19,35,35,.05); font-size: 11px; text-transform: uppercase; letter-spacing: .05em; font-weight: 900; }
     td.num { text-align: right; font-variant-numeric: tabular-nums; font-weight: 800; white-space: nowrap; }
+    tbody td { vertical-align: top; }
+    td.pos-cell { font-weight: 800; }
 
     .text-section { padding: 0 0 70px; }
     .text-section hr { margin: 0 0 22px; border: 0; border-top: 2px solid var(--dark); opacity: 0.75; }
@@ -369,8 +373,8 @@
         <p class="eyebrow">IDBC Salary Guide</p>
         <h1 id="hero-title">Bérsávok területenként</h1>
         <p>
-          270 szűrhető pozíció-bérsáv, valós piaci adatok alapján — terület és tapasztalati
-          szint szerint szűrve, TOP3 kiemelt pozíciókkal.
+          270 pozíció-bérsáv valós piaci adatok alapján — területenként, junior–medior–senior
+          bontásban, TOP3 kiemelt pozíciókkal.
         </p>
       </div>
     </section>
@@ -384,7 +388,8 @@
           </div>
           <p>
             Válassz területet: a TOP3 kiemelt pozíció munkaadó–munkavállaló bérsávját és az IDBC szakértői
-            ajánlását chart formában mutatjuk, alatta a terület többi pozíciója szűrhető táblázatban következik.
+            ajánlását chart formában mutatjuk, alatta a terület pozíciói következnek táblázatban,
+            tapasztalati szint szerinti bontásban.
           </p>
         </div>
 
@@ -402,16 +407,14 @@
             <span class="sr-only">Terület</span>
             <select id="teruletSelect"></select>
           </label>
-          <label>
-            <span class="sr-only">Tapasztalati szint</span>
-            <select id="szintSelect"></select>
-          </label>
         </div>
 
         <div class="top-cards" id="topCards"></div>
 
         <div class="top3-chart-card" id="top3Panel" aria-label="TOP3 kiemelt pozíciók bérsávja"></div>
 
+        <h3 class="table-title">További bérek</h3>
+        <p class="table-note">A bemutatott, 2026-os valós piaci adatokon alapuló bérsávok egész Magyarországra vonatkozó, havi bruttó forintösszegek.</p>
         <p class="salary-count" id="salaryCount"></p>
 
         <div class="table-wrap">
@@ -419,10 +422,10 @@
             <thead>
               <tr>
                 <th>Pozíció</th>
-                <th style="text-align:right">Vállalatok által kínált</th>
-                <th style="text-align:right" data-col="idbc">IDBC javasolt</th>
-                <th style="text-align:right">Jelöltek által elvárt</th>
-                <th data-col="juttatas">Juttatási megjegyzés</th>
+                <th>Tapasztalati szint</th>
+                <th style="text-align:right">Minimum</th>
+                <th style="text-align:right">Maximum</th>
+                <th>Egyéb juttatás</th>
               </tr>
             </thead>
             <tbody id="salaryTableBody"></tbody>
@@ -469,7 +472,7 @@
   <script src="../assets/top3-chart.js?v=1"></script>
   <script>
     (async () => {
-    const DATA = await fetch('../data/guide-data.json').then(r => r.json());
+    const DATA = await fetch('../data/guide-data.json', { cache: 'no-cache' }).then(r => r.json());
 
     function escapeHtml(s) {
       return String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
@@ -480,7 +483,6 @@
 
     // ---------- Salary section ----------
     const teruletSelect = document.querySelector('#teruletSelect');
-    const szintSelect = document.querySelector('#szintSelect');
     const salaryTableBody = document.querySelector('#salaryTableBody');
     const salaryCount = document.querySelector('#salaryCount');
     const top3Panel = document.querySelector('#top3Panel');
@@ -492,8 +494,6 @@
     function populateSalaryFilters() {
       const teruletek = [...new Set(nonSapRows.map(r => r.terulet))];
       teruletSelect.innerHTML = teruletek.map(t => `<option value="${escapeHtml(t)}">${escapeHtml(t)}</option>`).join('');
-      const szintek = [...new Set(nonSapRows.map(r => r.szint))];
-      szintSelect.innerHTML = szintek.map(s => `<option value="${escapeHtml(s)}">${escapeHtml(s)}</option>`).join('');
     }
 
     // Summary cards above the chart, same block as the SAP page: one card per
@@ -548,44 +548,47 @@
       return true;
     }
 
-    // Table: the rest of the selected area's positions (TOP3 already covered by the chart above,
-    // when there is one — otherwise this table is everything, so the "additional" caption doesn't apply).
-    const MAX_TABLE_ROWS = 10;
+    // Table: every position of the selected area, grouped into Junior/Medior/Senior rows per
+    // position. TOP3 rows are included too — the top3 flag marks Senior rows only, so excluding
+    // them would leave two-row orphan groups; the chart above stays the highlight, the table the
+    // complete reference.
+    const SZINT_LABELS = {
+      Junior: 'Junior (1-2 év tapasztalat)',
+      Medior: 'Medior (3-5 év tapasztalat)',
+      Senior: 'Senior (5+ év tapasztalat)',
+    };
+    const SZINT_ORDER = ['Junior', 'Medior', 'Senior'];
 
-    // Columns with data that can legitimately be missing for a given filter (IDBC recommendation,
-    // benefits note) are hidden entirely — header and cells — when every row in the current
-    // filtered view has no value, instead of showing a column of dashes.
-    function renderTable(hasTop3) {
-      const terulet = teruletSelect.value;
-      const szint = szintSelect.value;
-      const allRows = nonSapRows.filter(r => !r.top3 && r.terulet === terulet && (!szint || r.szint === szint));
-      const rows = allRows.slice(0, MAX_TABLE_ROWS);
-
-      const hasIdbc = allRows.length ? allRows.some(r => r.idbc != null) : true;
-      const hasJuttatas = allRows.length ? allRows.some(r => r.juttatas && r.juttatas.trim()) : true;
-      document.querySelectorAll('[data-col="idbc"]').forEach(el => { el.style.display = hasIdbc ? '' : 'none'; });
-      document.querySelectorAll('[data-col="juttatas"]').forEach(el => { el.style.display = hasJuttatas ? '' : 'none'; });
-      const colspan = 1 + 2 + (hasIdbc ? 1 : 0) + (hasJuttatas ? 1 : 0);
-
-      salaryTableBody.innerHTML = rows.map(r => `
-        <tr>
-          <td>${escapeHtml(r.pozicio)}</td>
-          <td class="num">${fmtHuf(r.min)}</td>
-          ${hasIdbc ? `<td class="num" data-col="idbc">${r.idbc != null ? fmtHuf(r.idbc) : '–'}</td>` : ''}
-          <td class="num">${fmtHuf(r.max)}</td>
-          ${hasJuttatas ? `<td data-col="juttatas">${escapeHtml(r.juttatas)}</td>` : ''}
-        </tr>`).join('') || `<tr><td colspan="${colspan}" class="no-data">Nincs további pozíció ehhez a szűréshez.</td></tr>`;
-      salaryCount.style.display = hasTop3 ? '' : 'none';
-      salaryCount.textContent = allRows.length + ' további pozíció a kiválasztott területen';
+    function renderTable() {
+      const areaRows = nonSapRows.filter(r => r.terulet === teruletSelect.value);
+      // Source rows are already adjacent per position, but sort defensively and take the
+      // rowspan from the actual group size in case a position ever misses a level.
+      const byPos = new Map();
+      areaRows.forEach(r => {
+        if (!byPos.has(r.pozicio)) byPos.set(r.pozicio, []);
+        byPos.get(r.pozicio).push(r);
+      });
+      salaryTableBody.innerHTML = [...byPos.entries()].map(([pozicio, group]) => {
+        const rows = [...group].sort((a, b) => SZINT_ORDER.indexOf(a.szint) - SZINT_ORDER.indexOf(b.szint));
+        return rows.map((r, i) => `
+          <tr>
+            ${i === 0 ? `<td class="pos-cell" rowspan="${rows.length}">${escapeHtml(pozicio)}</td>` : ''}
+            <td>${escapeHtml(SZINT_LABELS[r.szint] || r.szint)}</td>
+            <td class="num">${fmtHuf(r.min)}</td>
+            <td class="num">${fmtHuf(r.max)}</td>
+            <td>${escapeHtml(r.juttatas)}</td>
+          </tr>`).join('');
+      }).join('') || '<tr><td colspan="5" class="no-data">Nincs pozíció ehhez a szűréshez.</td></tr>';
+      salaryCount.textContent = byPos.size + ' pozíció a kiválasztott területen';
     }
 
     function renderSalarySection() {
-      const hasTop3 = renderTop3();
-      renderTable(hasTop3);
+      renderTop3();
+      renderTable();
     }
 
     populateSalaryFilters();
-    [teruletSelect, szintSelect].forEach(el => el.addEventListener('change', renderSalarySection));
+    teruletSelect.addEventListener('change', renderSalarySection);
     renderSalarySection();
     })();
   </script>
