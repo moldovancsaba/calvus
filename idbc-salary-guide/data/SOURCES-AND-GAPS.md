@@ -51,11 +51,17 @@ folder is the single consolidated data source built from all of it.
 
    Update (2026-08-24): the client's change round asks for an 11-area filter
    at the top of the trends page. A **skeleton** is now built: the 11-option
-   dropdown plus a per-area summary block (text + inert video slot) that swaps
-   with the selection. It deliberately does *not* filter the survey answers —
-   that still needs re-tabulated data — and every area shows a placeholder
-   line until the client supplies the promised ~1800–2000-character summary
-   per area (drop them into `AREA_SUMMARIES` in `index.html`) and the videos.
+   dropdown plus a per-area summary block (text + video) that swaps with the
+   selection. It deliberately does *not* filter the survey answers — that
+   still needs re-tabulated data. The block is filled with **illustrative
+   sample content at the spec length** (owner request, 2026-08-24): eleven
+   ~1800–2000-character (space-free count) Hungarian market summaries written
+   for the mockup, and one shared sample YouTube embed (Blender's Big Buck
+   Bunny) in the video slot. Both are placeholders demonstrating the final
+   layout's content weight — replace each entry in `AREA_SUMMARIES` in
+   `index.html` and the iframe `src` when the client's real texts and
+   per-area videos arrive. The sample texts are generic market commentary,
+   not client-approved copy, and must not ship to production as-is.
 6. **"3 stakeholder ranges" (candidate / company / IDBC) is aspirational —
    and the shipped labels now assert it anyway (owner decision, 2026-08-17).**
    The real `webBertabla` sheet has one range (`min`/`max`) plus one
