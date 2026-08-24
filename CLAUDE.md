@@ -176,3 +176,17 @@ If you want either of these built out for real, that's a substantial,
 separate scope decision (issue taxonomy + tooling, or an actual build
 pipeline) — ask before assuming it should happen as a side effect of an
 unrelated task.
+
+## Portable lesson: a framework silently picking one of two ambiguous configs is a real failure mode
+
+A production outage in a sibling project (the `management` engine repo, built on Next.js, 2026-08-20)
+came from two files that, by the framework's own routing rules, resolved to the identical URL. The
+framework did not error at build time — it silently picked one and discarded the other, with no warning
+anywhere, and the discarded one became completely unreachable. The bug was invisible until a real user
+hit it in production; every prior check had only ever exercised the winning path.
+
+The general lesson, applicable beyond Next.js: when a framework or tool allows two pieces of config to
+plausibly resolve to the same identity (a route, a key, a slot, a registration), do not assume it will
+error on the collision — verify it does, or add an explicit check that greps/validates for duplicates
+before deploy. "The build succeeded" is not evidence of no collision unless the build step actually checks
+for one.
