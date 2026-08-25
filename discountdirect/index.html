@@ -17,6 +17,8 @@
       --green-soft: #e3f5ec;
       --red: #d64545;
       --red-soft: #fbecec;
+      --amber: #b07716;
+      --amber-soft: #fdf3e0;
       --radius: 14px;
       --shadow: 0 10px 30px rgba(28, 35, 51, 0.08);
     }
@@ -28,6 +30,7 @@
       color: var(--text);
     }
     button { font: inherit; cursor: pointer; }
+    select { font: inherit; }
 
     .topbar {
       display: flex; align-items: center; justify-content: space-between; gap: 16px;
@@ -43,6 +46,13 @@
     }
     .view-toggle button.is-active { background: #fff; color: #141a2e; }
     .topbar-note { font-size: 11px; font-weight: 700; color: rgba(255,255,255,.55); }
+
+    .seller-tabs { display: flex; gap: 8px; max-width: 1400px; margin: 14px auto 0; padding: 0 22px; }
+    .seller-tabs button {
+      border: 1.5px solid var(--line); background: var(--surface); border-radius: 999px;
+      padding: 8px 18px; font-weight: 800; font-size: 13px; color: var(--muted);
+    }
+    .seller-tabs button.is-active { background: var(--accent); border-color: var(--accent); color: #fff; }
 
     .app {
       display: grid; grid-template-columns: 290px minmax(0, 1fr) 330px;
@@ -78,9 +88,11 @@
 
     /* Offer card inside the thread */
     .offer { max-width: 82%; border: 1.5px solid var(--accent); border-radius: 16px; background: var(--surface); overflow: hidden; }
+    .offer.is-flash { border-color: var(--amber); }
     .offer.from-me { justify-self: end; }
     .offer.from-them { justify-self: start; }
     .offer-tag { display: flex; justify-content: space-between; gap: 10px; background: var(--accent-soft); color: var(--accent); font-size: 10px; font-weight: 900; text-transform: uppercase; letter-spacing: .06em; padding: 5px 13px; }
+    .offer.is-flash .offer-tag { background: var(--amber-soft); color: var(--amber); }
     .offer-body { padding: 11px 14px 13px; }
     .offer-product { margin: 0; font-weight: 800; font-size: 14px; }
     .offer-reason { margin: 4px 0 8px; font-size: 12px; color: var(--muted); }
@@ -88,9 +100,12 @@
     .offer-old { text-decoration: line-through; color: var(--muted); font-size: 13px; }
     .offer-new { font-weight: 900; font-size: 18px; }
     .offer-pct { background: var(--green-soft); color: var(--green); font-size: 11px; font-weight: 900; border-radius: 999px; padding: 2px 8px; }
+    .offer-channels { display: flex; flex-wrap: wrap; gap: 5px; margin-top: 9px; }
+    .channel-chip { font-size: 10px; font-weight: 800; color: var(--muted); background: #f1f2f7; border-radius: 999px; padding: 2px 9px; }
     .offer-actions { display: flex; gap: 8px; margin-top: 11px; }
     .offer-actions button { flex: 1; border-radius: 9px; padding: 8px 0; font-weight: 800; font-size: 13px; border: 1.5px solid var(--line); background: var(--surface); }
     .offer-actions .accept { background: var(--accent); border-color: var(--accent); color: #fff; }
+    .offer.is-flash .offer-actions .accept { background: var(--amber); border-color: var(--amber); }
     .offer-status { display: inline-block; margin-top: 10px; font-size: 11px; font-weight: 900; border-radius: 999px; padding: 3px 10px; }
     .offer-status.accepted { background: var(--green-soft); color: var(--green); }
     .offer-status.declined { background: var(--red-soft); color: var(--red); }
@@ -113,9 +128,59 @@
     .rec:last-child { margin-bottom: 0; }
     .rec-title { margin: 0; font-weight: 800; font-size: 13px; }
     .rec-reason { margin: 4px 0 9px; font-size: 12px; color: var(--muted); }
-    .rec button { width: 100%; border: 0; background: var(--accent); color: #fff; border-radius: 9px; padding: 8px 0; font-weight: 800; font-size: 13px; }
     .rec .rec-prices { display: flex; align-items: baseline; gap: 8px; margin-bottom: 9px; }
+    .rec-send { display: flex; gap: 7px; }
+    .rec-send select { flex: 1; border: 1.5px solid var(--line); border-radius: 9px; padding: 7px 8px; font-size: 12px; font-weight: 700; color: var(--text); background: var(--surface); }
+    .rec-send button { flex: 1.4; border: 0; background: var(--accent); color: #fff; border-radius: 9px; padding: 8px 0; font-weight: 800; font-size: 13px; }
     .ctx-empty { font-size: 12px; color: var(--muted); font-style: italic; margin: 0; }
+
+    /* Campaigns screen */
+    .campaigns {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+      gap: 16px; padding: 16px 22px 30px; max-width: 1400px; margin: 0 auto; align-items: start;
+    }
+    .campaign-head { padding: 15px 18px 12px; border-bottom: 1px solid var(--line); }
+    .campaign-head h2 { margin: 0; font-size: 16px; }
+    .campaign-head p { margin: 4px 0 0; font-size: 12px; color: var(--muted); }
+    .campaign-body { padding: 14px 18px 18px; }
+    .field { margin-bottom: 13px; }
+    .field > span { display: block; font-size: 11px; font-weight: 900; text-transform: uppercase; letter-spacing: .05em; color: var(--muted); margin-bottom: 6px; }
+    .product-option { display: flex; align-items: center; gap: 9px; padding: 8px 10px; border: 1.5px solid var(--line); border-radius: 10px; margin-bottom: 7px; font-size: 13px; cursor: pointer; }
+    .product-option:last-child { margin-bottom: 0; }
+    .product-option.is-selected { border-color: var(--accent); background: var(--accent-soft); }
+    .product-option strong { font-weight: 800; }
+    .product-option .p-meta { margin-left: auto; text-align: right; }
+    .product-option .p-price { display: block; font-weight: 800; white-space: nowrap; }
+    .product-option .p-rel { display: block; font-size: 11px; color: var(--muted); }
+    .inline-fields { display: flex; gap: 9px; flex-wrap: wrap; }
+    .inline-fields label { flex: 1; min-width: 90px; }
+    .inline-fields label span { display: block; font-size: 11px; font-weight: 800; color: var(--muted); margin-bottom: 4px; }
+    .inline-fields select { width: 100%; border: 1.5px solid var(--line); border-radius: 9px; padding: 8px; font-size: 13px; font-weight: 700; background: var(--surface); }
+    .channel-checks { display: flex; gap: 7px; flex-wrap: wrap; }
+    .channel-checks label {
+      display: flex; align-items: center; gap: 6px; border: 1.5px solid var(--line); border-radius: 999px;
+      padding: 6px 12px; font-size: 12px; font-weight: 800; cursor: pointer; background: var(--surface);
+    }
+    .channel-checks label.is-checked { border-color: var(--accent); background: var(--accent-soft); color: var(--accent); }
+    .channel-checks input { display: none; }
+    .campaign-cta { width: 100%; border: 0; border-radius: 10px; padding: 11px 0; font-weight: 900; font-size: 14px; color: #fff; background: var(--accent); margin-top: 4px; }
+    .campaign-cta.flash { background: var(--amber); }
+    .campaign-result { margin-top: 12px; border-radius: 10px; padding: 10px 13px; font-size: 12.5px; font-weight: 700; background: var(--green-soft); color: var(--green); display: none; }
+    .campaign-result.is-visible { display: block; }
+
+    .automation { border: 1px solid var(--line); border-radius: 12px; padding: 12px 14px; margin-bottom: 10px; background: #fafbfe; }
+    .automation:last-child { margin-bottom: 0; }
+    .automation-top { display: flex; justify-content: space-between; align-items: baseline; gap: 10px; }
+    .automation-title { margin: 0; font-weight: 800; font-size: 13px; }
+    .automation-freq { font-size: 11px; font-weight: 900; color: var(--accent); background: var(--accent-soft); border-radius: 999px; padding: 2px 9px; white-space: nowrap; }
+    .automation-products { margin: 6px 0 8px; font-size: 12px; color: var(--muted); }
+    .automation-buyers { margin: 0 0 9px; padding: 0; list-style: none; font-size: 12px; }
+    .automation-buyers li { padding: 3px 0; border-bottom: 1px dashed var(--line); }
+    .automation-buyers li:last-child { border-bottom: 0; }
+    .automation-buyers strong { font-weight: 800; }
+    .automation-foot { display: flex; justify-content: space-between; align-items: center; gap: 10px; }
+    .automation-next { font-size: 11px; color: var(--muted); font-weight: 700; }
+    .automation-stop { border: 1.5px solid var(--line); background: var(--surface); border-radius: 8px; padding: 5px 12px; font-size: 12px; font-weight: 800; color: var(--red); }
 
     .wireframe-note { max-width: 1400px; margin: 0 auto; padding: 0 22px 34px; font-size: 11px; font-weight: 700; color: var(--muted); }
     .wireframe-note a { color: var(--accent); }
@@ -138,7 +203,12 @@
     <span class="topbar-note">Kattintható prototípus — mintaadatokkal</span>
   </header>
 
-  <main class="app">
+  <nav class="seller-tabs" id="sellerTabs" aria-label="Eladói funkciók">
+    <button id="chatTabBtn" class="is-active">Csevegések</button>
+    <button id="campaignTabBtn">Kampányok</button>
+  </nav>
+
+  <main class="app" id="chatScreen">
     <section class="pane" aria-label="Beszélgetések">
       <div class="pane-head"><h2 id="convListTitle">Vevők</h2></div>
       <div id="convList"></div>
@@ -171,9 +241,74 @@
     </section>
   </main>
 
+  <main class="campaigns" id="campaignScreen" hidden>
+    <section class="pane">
+      <div class="campaign-head">
+        <h2>⚡ Villámajánlat</h2>
+        <p>Egy kiválasztott termék azonnali, korlátozott idejű és darabszámú ajánlatként megy ki minden releváns vevőnek — a rendszer a vásárlási előzmények alapján dönti el, kinek.</p>
+      </div>
+      <div class="campaign-body">
+        <div class="field">
+          <span>Termék</span>
+          <div id="flashProducts"></div>
+        </div>
+        <div class="field inline-fields">
+          <label><span>Kedvezmény</span>
+            <select id="flashPct"><option>10</option><option selected>15</option><option>20</option><option>25</option></select>
+          </label>
+          <label><span>Időkorlát</span>
+            <select id="flashHours"><option>6</option><option selected>24</option><option>48</option></select>
+          </label>
+          <label><span>Darabkorlát</span>
+            <select id="flashQty"><option>10</option><option selected>20</option><option>50</option></select>
+          </label>
+        </div>
+        <div class="field">
+          <span>Csatornák</span>
+          <div class="channel-checks" id="flashChannels"></div>
+        </div>
+        <button class="campaign-cta flash" id="flashSend">Küldés a releváns vevőknek</button>
+        <div class="campaign-result" id="flashResult"></div>
+      </div>
+    </section>
+
+    <section class="pane">
+      <div class="campaign-head">
+        <h2>🗞 Személyre szabott ajánlatlista</h2>
+        <p>Több termékből a rendszer vevőnként állítja össze a listát — mindenki csak a rá releváns termékeket kapja, a beállított gyakorisággal, hírlevélszerűen.</p>
+      </div>
+      <div class="campaign-body">
+        <div class="field">
+          <span>Termékek</span>
+          <div id="listProducts"></div>
+        </div>
+        <div class="field inline-fields">
+          <label><span>Gyakoriság</span>
+            <select id="listFreq"><option>Hetente</option><option selected>Kéthetente</option><option>Havonta</option></select>
+          </label>
+        </div>
+        <div class="field">
+          <span>Csatornák</span>
+          <div class="channel-checks" id="listChannels"></div>
+        </div>
+        <button class="campaign-cta" id="listCreate">Automatikus küldés indítása</button>
+        <div class="campaign-result" id="listResult"></div>
+      </div>
+    </section>
+
+    <section class="pane">
+      <div class="campaign-head">
+        <h2>Aktív automatizmusok</h2>
+        <p>A futó időzített listák — vevőnkénti tartalommal és a következő küldés idejével.</p>
+      </div>
+      <div class="campaign-body" id="automationList"></div>
+    </section>
+  </main>
+
   <p class="wireframe-note">
     DiscountDirect wireframe — üzenetküldő felület, amely az eladó és a vevő közös vásárlási
-    előzményeire és ajánlásokra építve küld személyre szabott ajánlatokat. Minden adat minta.
+    előzményeire és ajánlásokra építve küld személyre szabott ajánlatokat, villámajánlat-kampányokat
+    és időzített, vevőnként összeállított ajánlatlistákat. Minden adat minta.
     <a href="../index.html">← Calvus Hub</a>
   </p>
 
@@ -182,13 +317,16 @@
     'use strict';
 
     const fmtFt = n => n.toLocaleString('hu-HU') + ' Ft';
+    const esc = s => String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+    const el = id => document.getElementById(id);
+
+    const CHANNELS = ['Azonnali üzenet', 'E-mail', 'Mailing'];
+    const SELLER = { name: 'ElektroHome Kft.', sub: 'Elektronikai webáruház · válaszidő ~1 óra' };
 
     // ponytail: in-memory sample data, resets on reload — a wireframe needs no persistence
     const CONVERSATIONS = [
       {
-        id: 'anna',
-        buyer: 'Kiss Anna', seller: 'ElektroHome Kft.', color: '#3b5bdb',
-        buyerSub: 'Törzsvásárló · 7 rendelés', sellerSub: 'Elektronikai webáruház · válaszidő ~1 óra',
+        id: 'anna', buyer: 'Kiss Anna', color: '#3b5bdb', buyerSub: 'Törzsvásárló · 7 rendelés',
         history: [
           { item: 'Robotporszívó X200', when: '2026. május 12.', price: 89990 },
           { item: 'HEPA szűrő (2 db)', when: '2026. június 30.', price: 7990 },
@@ -201,68 +339,81 @@
         messages: [
           { from: 'buyer', text: 'Jó napot! Az akkumulátor megérkezett, köszönöm a gyors szállítást.', at: '08:42' },
           { from: 'seller', text: 'Örülünk! Ha bármi kérdés van a beszereléshez, szóljon bátran.', at: '09:05' },
-          { from: 'seller', offer: { product: 'HEPA szűrő (2 db) – törzsvásárlói ár', reason: 'Vásárlási előzményei alapján', orig: 7990, pct: 15, status: 'accepted' }, at: '09:06' },
+          { from: 'seller', offer: { product: 'HEPA szűrő (2 db) – törzsvásárlói ár', reason: 'Vásárlási előzményei alapján', orig: 7990, pct: 15, status: 'accepted', channels: ['Azonnali üzenet'] }, at: '09:06' },
           { from: 'buyer', text: 'Az ajánlatot elfogadtam, jöhet a szokásos címre. 👍', at: '10:12' },
         ],
       },
       {
-        id: 'gabor',
-        buyer: 'Szabó Gábor', seller: 'KávéMester Bt.', color: '#2f9e6e',
-        buyerSub: 'Visszatérő vevő · 4 rendelés', sellerSub: 'Pörkölő műhely · válaszidő ~3 óra',
+        id: 'gabor', buyer: 'Szabó Gábor', color: '#2f9e6e', buyerSub: 'Visszatérő vevő · 4 rendelés',
         history: [
-          { item: 'Brazil szemes kávé 1 kg', when: '2026. június 3.', price: 6490 },
-          { item: 'Brazil szemes kávé 1 kg', when: '2026. július 1.', price: 6490 },
-          { item: 'Etióp szemes kávé 250 g', when: '2026. július 28.', price: 2990 },
+          { item: 'Kávéfőző BaristaOne', when: '2026. június 3.', price: 64990 },
+          { item: 'Kávékapszula variáció (30 db)', when: '2026. július 1.', price: 4990 },
+          { item: 'Vízkőmentesítő szett', when: '2026. július 28.', price: 2990 },
         ],
         recs: [
-          { product: 'Brazil 1 kg havi csomag', reason: 'Havonta rendeli ugyanazt — az ismétlődő csomag kedvezménnyel megtartja.', orig: 6490, pct: 12 },
-          { product: 'Etióp 1 kg felfedező ár', reason: 'A 250 g-os kiszerelést kipróbálta; a nagy kiszerelésre érdemes rásegíteni.', orig: 9990, pct: 18 },
+          { product: 'Kávékapszula törzscsomag (60 db)', reason: 'Havonta vesz kapszulát — a dupla kiszerelés kedvezménnyel megtartja.', orig: 8990, pct: 12 },
+          { product: 'MilkPro tejhabosító', reason: 'A BaristaOne mellé ez a leggyakrabban vásárolt kiegészítő.', orig: 18990, pct: 18 },
         ],
         messages: [
-          { from: 'buyer', text: 'Sziasztok! Az etióp nagyon bejött, van belőle nagyobb kiszerelés?', at: 'tegnap' },
-          { from: 'seller', text: 'Van, 1 kg-os pörkölésből most készült friss adag. Küldök rá ajánlatot!', at: 'tegnap' },
+          { from: 'buyer', text: 'Sziasztok! A BaristaOne mellé milyen tejhabosítót ajánlotok?', at: 'tegnap' },
+          { from: 'seller', text: 'A MilkPro illik hozzá a legjobban — küldök rá ajánlatot!', at: 'tegnap' },
         ],
       },
       {
-        id: 'reka',
-        buyer: 'Nagy Réka', seller: 'SportDepo Zrt.', color: '#d6772e',
-        buyerSub: 'Új vevő · 1 rendelés', sellerSub: 'Sportfelszerelés · válaszidő ~2 óra',
+        id: 'reka', buyer: 'Nagy Réka', color: '#d6772e', buyerSub: 'Új vevő · 1 rendelés',
         history: [
-          { item: 'Futócipő TrailGrip 42', when: '2026. augusztus 18.', price: 34990 },
+          { item: 'Okosóra FitRun', when: '2026. augusztus 18.', price: 44990 },
         ],
         recs: [
-          { product: 'Futózokni csomag (3 pár)', reason: 'Első vásárlás után kiegészítő termékkel a legkönnyebb visszahozni.', orig: 5990, pct: 25 },
+          { product: 'FitRun sportszíj szett', reason: 'Első vásárlás után kiegészítő termékkel a legkönnyebb visszahozni.', orig: 9990, pct: 25 },
         ],
         messages: [
-          { from: 'seller', text: 'Kedves Réka, megérkezett a futócipő? Minden rendben volt a mérettel?', at: 'hétfő' },
+          { from: 'seller', text: 'Kedves Réka, megérkezett az okosóra? Minden rendben volt vele?', at: 'hétfő' },
           { from: 'buyer', text: 'Igen, tökéletes! Köszönöm, hogy rákérdeztek.', at: 'hétfő' },
         ],
       },
     ];
 
+    // Which buyers a catalogue product is relevant to comes from purchase history —
+    // hardcoded here the way a recommendation engine's output would look.
+    const CATALOG = [
+      { id: 'hepa', name: 'HEPA szűrő (2 db)', price: 7990, relevant: ['anna'] },
+      { id: 'x200pro', name: 'Robotporszívó X200 Pro', price: 129990, relevant: ['anna'] },
+      { id: 'kapszula', name: 'Kávékapszula variáció (60 db)', price: 8990, relevant: ['gabor'] },
+      { id: 'milkpro', name: 'MilkPro tejhabosító', price: 18990, relevant: ['gabor'] },
+      { id: 'szij', name: 'FitRun sportszíj szett', price: 9990, relevant: ['reka'] },
+      { id: 'fulhallgato', name: 'AirBeat Bluetooth fülhallgató', price: 24990, relevant: ['anna', 'gabor', 'reka'] },
+    ];
+
+    const AUTOMATIONS = [
+      {
+        title: 'Tartozék-ajánló', freq: 'Havonta', channels: ['E-mail'],
+        products: ['HEPA szűrő (2 db)', 'MilkPro tejhabosító', 'FitRun sportszíj szett'],
+        next: 'szeptember 1.',
+      },
+    ];
+
     let view = 'seller';           // 'seller' | 'buyer'
+    let sellerTab = 'chat';        // 'chat' | 'campaigns'
     let activeId = CONVERSATIONS[0].id;
 
-    const el = id => document.getElementById(id);
     const active = () => CONVERSATIONS.find(c => c.id === activeId);
-    const esc = s => String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+    const byId = id => CONVERSATIONS.find(c => c.id === id);
+    const initials = name => name.split(' ').map(w => w[0]).join('').slice(0, 2).toUpperCase();
 
-    function initials(name) {
-      return name.split(' ').map(w => w[0]).join('').slice(0, 2).toUpperCase();
-    }
+    /* ---------- chat screen ---------- */
 
     function renderConvList() {
-      el('convListTitle').textContent = view === 'seller' ? 'Vevők' : 'Eladók';
+      el('convListTitle').textContent = view === 'seller' ? 'Vevők' : 'Vevő kiválasztása';
       el('convList').innerHTML = CONVERSATIONS.map(c => {
-        const name = view === 'seller' ? c.buyer : c.seller;
         const last = c.messages[c.messages.length - 1];
         const lastText = last.text || ('Ajánlat: ' + last.offer.product);
         const pending = c.messages.filter(m => m.offer && m.offer.status === 'pending').length;
         return `
           <button class="conv${c.id === activeId ? ' is-active' : ''}" data-id="${c.id}">
-            <span class="avatar" style="background:${c.color}">${esc(initials(name))}</span>
+            <span class="avatar" style="background:${c.color}">${esc(initials(c.buyer))}</span>
             <span class="conv-meta">
-              <p class="conv-name">${esc(name)}</p>
+              <p class="conv-name">${esc(c.buyer)}</p>
               <p class="conv-last">${esc(lastText)}</p>
             </span>
             ${pending ? `<span class="conv-badge">${pending}</span>` : ''}
@@ -273,13 +424,19 @@
     function offerHtml(m, idx) {
       const mine = (view === 'seller') === (m.from === 'seller');
       const o = m.offer;
+      const flash = o.kind === 'flash';
       const price = Math.round(o.orig * (1 - o.pct / 100));
-      const statusLabel = { pending: 'Válaszra vár', accepted: 'Elfogadva', declined: 'Elutasítva' }[o.status];
-      // The buyer decides on a pending offer; everyone else just sees the state.
+      const statusLabel = flash
+        ? { pending: 'Válaszra vár', accepted: 'Megvásárolva', declined: 'Kihagyva' }[o.status]
+        : { pending: 'Válaszra vár', accepted: 'Elfogadva', declined: 'Elutasítva' }[o.status];
+      const tag = flash
+        ? `⚡ Villámajánlat · ${o.limitH} óráig · ${o.limitQty} db`
+        : 'Személyre szabott ajánlat';
+      const channels = (o.channels || []).map(ch => `<span class="channel-chip">${esc(ch)}</span>`).join('');
       const buyerCanAct = view === 'buyer' && m.from === 'seller' && o.status === 'pending';
       return `
-        <div class="offer ${mine ? 'from-me' : 'from-them'}">
-          <div class="offer-tag"><span>Személyre szabott ajánlat</span><span>${esc(m.at)}</span></div>
+        <div class="offer${flash ? ' is-flash' : ''} ${mine ? 'from-me' : 'from-them'}">
+          <div class="offer-tag"><span>${tag}</span><span>${esc(m.at)}</span></div>
           <div class="offer-body">
             <p class="offer-product">${esc(o.product)}</p>
             <p class="offer-reason">${esc(o.reason)}</p>
@@ -288,10 +445,11 @@
               <span class="offer-new">${fmtFt(price)}</span>
               <span class="offer-pct">−${o.pct}%</span>
             </div>
+            ${channels ? `<div class="offer-channels">${channels}</div>` : ''}
             ${buyerCanAct ? `
               <div class="offer-actions">
-                <button class="accept" data-offer="${idx}" data-act="accepted">Elfogadom</button>
-                <button data-offer="${idx}" data-act="declined">Most nem</button>
+                <button class="accept" data-offer="${idx}" data-act="accepted">${flash ? 'Megveszem most' : 'Elfogadom'}</button>
+                <button data-offer="${idx}" data-act="declined">${flash ? 'Kihagyom' : 'Most nem'}</button>
               </div>` : `<span class="offer-status ${o.status}">${statusLabel}</span>`}
           </div>
         </div>`;
@@ -299,11 +457,11 @@
 
     function renderThread() {
       const c = active();
-      const name = view === 'seller' ? c.buyer : c.seller;
-      el('threadAvatar').textContent = initials(name);
-      el('threadAvatar').style.background = c.color;
-      el('threadName').textContent = name;
-      el('threadSub').textContent = view === 'seller' ? c.buyerSub : c.sellerSub;
+      const headName = view === 'seller' ? c.buyer : SELLER.name;
+      el('threadAvatar').textContent = initials(headName);
+      el('threadAvatar').style.background = view === 'seller' ? c.color : '#141a2e';
+      el('threadName').textContent = headName;
+      el('threadSub').textContent = view === 'seller' ? c.buyerSub : SELLER.sub;
       el('thread').innerHTML = c.messages.map((m, i) => {
         if (m.offer) return offerHtml(m, i);
         const mine = (view === 'seller') === (m.from === 'seller');
@@ -336,7 +494,12 @@
                 <span class="offer-new">${fmtFt(price)}</span>
                 <span class="offer-pct">−${r.pct}%</span>
               </div>
-              <button data-rec="${i}">Ajánlat küldése a csevegésbe</button>
+              <div class="rec-send">
+                <select data-rec-channel="${i}" aria-label="Csatorna">
+                  ${CHANNELS.map(ch => `<option>${esc(ch)}</option>`).join('')}
+                </select>
+                <button data-rec="${i}">Ajánlat küldése</button>
+              </div>
             </div>`;
         }).join('') : '<p class="ctx-empty">Most nincs több javasolt ajánlat ehhez a vevőhöz.</p>';
       } else {
@@ -348,13 +511,95 @@
       }
     }
 
+    /* ---------- campaigns screen ---------- */
+
+    let flashSelected = null;
+    const listSelected = new Set();
+
+    function relevantNames(product) {
+      return product.relevant.map(id => byId(id).buyer);
+    }
+
+    function renderFlashProducts() {
+      el('flashProducts').innerHTML = CATALOG.map(p => `
+        <div class="product-option${flashSelected === p.id ? ' is-selected' : ''}" data-flash-product="${p.id}" role="radio" aria-checked="${flashSelected === p.id}">
+          <strong>${esc(p.name)}</strong>
+          <span class="p-meta">
+            <span class="p-price">${fmtFt(p.price)}</span>
+            <span class="p-rel">${p.relevant.length} releváns vevő</span>
+          </span>
+        </div>`).join('');
+    }
+
+    function renderListProducts() {
+      el('listProducts').innerHTML = CATALOG.map(p => `
+        <div class="product-option${listSelected.has(p.id) ? ' is-selected' : ''}" data-list-product="${p.id}" role="checkbox" aria-checked="${listSelected.has(p.id)}">
+          <strong>${esc(p.name)}</strong>
+          <span class="p-meta">
+            <span class="p-price">${fmtFt(p.price)}</span>
+            <span class="p-rel">${esc(relevantNames(p).join(', '))}</span>
+          </span>
+        </div>`).join('');
+    }
+
+    function channelChecksHtml(prefix, defaults) {
+      return CHANNELS.map(ch => `
+        <label class="${defaults.includes(ch) ? 'is-checked' : ''}">
+          <input type="checkbox" data-channel-group="${prefix}" value="${esc(ch)}" ${defaults.includes(ch) ? 'checked' : ''} />
+          ${esc(ch)}
+        </label>`).join('');
+    }
+
+    function checkedChannels(prefix) {
+      return [...document.querySelectorAll(`input[data-channel-group="${prefix}"]:checked`)].map(i => i.value);
+    }
+
+    function renderAutomations() {
+      el('automationList').innerHTML = AUTOMATIONS.length ? AUTOMATIONS.map((a, i) => {
+        const perBuyer = CONVERSATIONS.map(c => {
+          const items = a.products.filter(name => {
+            const p = CATALOG.find(x => x.name === name);
+            return p && p.relevant.includes(c.id);
+          });
+          return items.length ? `<li><strong>${esc(c.buyer)}:</strong> ${esc(items.join(', '))}</li>` : '';
+        }).join('');
+        return `
+          <div class="automation">
+            <div class="automation-top">
+              <p class="automation-title">${esc(a.title)}</p>
+              <span class="automation-freq">${esc(a.freq)}</span>
+            </div>
+            <p class="automation-products">${a.products.length} termék · ${esc(a.channels.join(' + '))}</p>
+            <ul class="automation-buyers">${perBuyer || '<li>Jelenleg egyik vevőnek sincs releváns termék a listában.</li>'}</ul>
+            <div class="automation-foot">
+              <span class="automation-next">Következő küldés: ${esc(a.next)}</span>
+              <button class="automation-stop" data-automation="${i}">Leállítás</button>
+            </div>
+          </div>`;
+      }).join('') : '<p class="ctx-empty">Nincs futó automatizmus — indíts egyet a bal oldali panelen.</p>';
+    }
+
+    /* ---------- shell ---------- */
+
+    function renderScreens() {
+      const campaigns = view === 'seller' && sellerTab === 'campaigns';
+      el('sellerTabs').style.display = view === 'seller' ? '' : 'none';
+      el('chatScreen').hidden = campaigns;
+      el('campaignScreen').hidden = !campaigns;
+    }
+
     function renderAll() {
+      renderScreens();
       renderConvList();
       renderThread();
       renderContext();
+      renderFlashProducts();
+      renderListProducts();
+      renderAutomations();
     }
 
-    // conversation switching
+    /* ---------- events ---------- */
+
     el('convList').addEventListener('click', e => {
       const btn = e.target.closest('.conv');
       if (!btn) return;
@@ -362,15 +607,17 @@
       renderAll();
     });
 
-    // seller sends a recommended offer into the chat
+    // seller sends a recommended offer into the chat on the chosen channel
     el('recList').addEventListener('click', e => {
       const btn = e.target.closest('button[data-rec]');
       if (!btn) return;
       const c = active();
-      const r = c.recs.splice(Number(btn.dataset.rec), 1)[0];
+      const i = Number(btn.dataset.rec);
+      const channel = document.querySelector(`select[data-rec-channel="${i}"]`).value;
+      const r = c.recs.splice(i, 1)[0];
       c.messages.push({
         from: 'seller', at: 'most',
-        offer: { product: r.product, reason: r.reason, orig: r.orig, pct: r.pct, status: 'pending' },
+        offer: { product: r.product, reason: r.reason, orig: r.orig, pct: r.pct, status: 'pending', channels: [channel] },
       });
       renderAll();
     });
@@ -383,7 +630,6 @@
       renderAll();
     });
 
-    // plain text message from whichever side is active
     function sendText() {
       const input = el('composerInput');
       const text = input.value.trim();
@@ -394,6 +640,93 @@
     }
     el('composerSend').addEventListener('click', sendText);
     el('composerInput').addEventListener('keydown', e => { if (e.key === 'Enter') sendText(); });
+
+    // flash campaign: product picker + send to every relevant buyer
+    el('flashProducts').addEventListener('click', e => {
+      const opt = e.target.closest('[data-flash-product]');
+      if (!opt) return;
+      flashSelected = opt.dataset.flashProduct;
+      renderFlashProducts();
+    });
+
+    el('flashSend').addEventListener('click', () => {
+      const result = el('flashResult');
+      const p = CATALOG.find(x => x.id === flashSelected);
+      if (!p) {
+        result.textContent = 'Előbb válassz egy terméket.';
+        result.classList.add('is-visible');
+        return;
+      }
+      const channels = checkedChannels('flash');
+      const pct = Number(el('flashPct').value);
+      const hours = Number(el('flashHours').value);
+      const qty = Number(el('flashQty').value);
+      p.relevant.forEach(id => {
+        byId(id).messages.push({
+          from: 'seller', at: 'most',
+          offer: {
+            kind: 'flash', product: p.name,
+            reason: `Csak ${hours} óráig vagy a készlet erejéig (${qty} db) — a korábbi vásárlásaid alapján neked szól.`,
+            orig: p.price, pct, status: 'pending', channels, limitH: hours, limitQty: qty,
+          },
+        });
+      });
+      result.textContent = `Elküldve ${p.relevant.length} releváns vevőnek (${relevantNames(p).join(', ')}) — csatorna: ${channels.join(', ') || 'Azonnali üzenet'}.`;
+      result.classList.add('is-visible');
+      renderAll();
+    });
+
+    // personalised list automation
+    el('listProducts').addEventListener('click', e => {
+      const opt = e.target.closest('[data-list-product]');
+      if (!opt) return;
+      const id = opt.dataset.listProduct;
+      listSelected.has(id) ? listSelected.delete(id) : listSelected.add(id);
+      renderListProducts();
+    });
+
+    el('listCreate').addEventListener('click', () => {
+      const result = el('listResult');
+      if (!listSelected.size) {
+        result.textContent = 'Előbb jelölj ki legalább egy terméket.';
+        result.classList.add('is-visible');
+        return;
+      }
+      AUTOMATIONS.push({
+        title: 'Ajánlatlista #' + (AUTOMATIONS.length + 1),
+        freq: el('listFreq').value,
+        channels: checkedChannels('list').length ? checkedChannels('list') : ['E-mail'],
+        products: [...listSelected].map(id => CATALOG.find(p => p.id === id).name),
+        next: el('listFreq').value === 'Hetente' ? 'hétfő' : el('listFreq').value === 'Kéthetente' ? 'szeptember 7.' : 'szeptember 1.',
+      });
+      listSelected.clear();
+      result.textContent = 'Automatizmus elindítva — a vevőnkénti bontást az Aktív automatizmusok panel mutatja.';
+      result.classList.add('is-visible');
+      renderAll();
+    });
+
+    el('automationList').addEventListener('click', e => {
+      const btn = e.target.closest('button[data-automation]');
+      if (!btn) return;
+      AUTOMATIONS.splice(Number(btn.dataset.automation), 1);
+      renderAutomations();
+    });
+
+    // channel chip toggle styling (both campaign forms)
+    document.addEventListener('change', e => {
+      if (!e.target.matches('input[data-channel-group]')) return;
+      e.target.closest('label').classList.toggle('is-checked', e.target.checked);
+    });
+
+    // seller sub-tabs
+    function setSellerTab(t) {
+      sellerTab = t;
+      el('chatTabBtn').classList.toggle('is-active', t === 'chat');
+      el('campaignTabBtn').classList.toggle('is-active', t === 'campaigns');
+      renderAll();
+    }
+    el('chatTabBtn').addEventListener('click', () => setSellerTab('chat'));
+    el('campaignTabBtn').addEventListener('click', () => setSellerTab('campaigns'));
 
     // view toggle
     function setView(v) {
@@ -406,6 +739,10 @@
     }
     el('sellerViewBtn').addEventListener('click', () => setView('seller'));
     el('buyerViewBtn').addEventListener('click', () => setView('buyer'));
+
+    // init channel checkboxes
+    el('flashChannels').innerHTML = channelChecksHtml('flash', ['Azonnali üzenet', 'E-mail']);
+    el('listChannels').innerHTML = channelChecksHtml('list', ['E-mail']);
 
     renderAll();
     })();
