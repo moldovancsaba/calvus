@@ -116,6 +116,15 @@
     .offer-status.declined { background: var(--red-soft); color: var(--red); }
     .offer-status.pending { background: #f1f2f7; color: var(--muted); }
 
+    /* Timeline events: interactions that happened on a non-chat channel, logged in
+       chronological order between the chat bubbles. */
+    .tl-event { justify-self: stretch; max-width: 100%; border: 1px solid var(--line); border-left: 4px solid var(--accent); border-radius: 12px; background: #fafbfe; overflow: hidden; }
+    .tl-event.is-flash { border-left-color: var(--amber); }
+    .tl-event-head { display: flex; justify-content: space-between; gap: 10px; padding: 6px 14px; font-size: 10px; font-weight: 900; text-transform: uppercase; letter-spacing: .06em; color: var(--muted); background: rgba(19,26,46,.04); }
+    .tl-event-body { padding: 10px 14px 12px; font-size: 13px; }
+    .tl-event-body p { margin: 0; }
+    .tl-event .offer-body { padding: 0; }
+
     .composer { display: flex; gap: 9px; padding: 13px 16px; border-top: 1px solid var(--line); }
     .composer input { flex: 1; border: 1.5px solid var(--line); border-radius: 999px; padding: 9px 16px; font: inherit; }
     .composer button { border: 0; background: var(--accent); color: #fff; border-radius: 999px; padding: 9px 18px; font-weight: 800; }
@@ -270,7 +279,7 @@
       <span>Vevő:</span>
       <select id="personaSelect" aria-label="Melyik vevőként nézed"></select>
     </label>
-    <span class="topbar-note">Kattintható prototípus — mintaadatokkal · v13</span>
+    <span class="topbar-note">Kattintható prototípus — mintaadatokkal · v14</span>
   </header>
 
   <nav class="seller-tabs" id="sellerTabs" aria-label="Eladói funkciók">
@@ -491,6 +500,8 @@
           { product: 'X200 Pro csere-akció', reason: 'Az X100-ról már váltott egyszer; a Pro modellre váltóknak beszámítást adhatsz.', orig: 129990, pct: 15 },
         ],
         messages: [
+          { from: 'seller', event: { channel: 'Mailing', text: 'Tavaszi DM levél kiküldve kuponkóddal (DIRECT-15-KA) — a kupont beváltotta.' }, at: 'ápr. 15.' },
+          { from: 'seller', event: { channel: 'Hírlevél', text: 'Személyre szabott ajánlatlista kiküldve — 6 releváns termék.' }, at: 'aug. 1.' },
           { from: 'buyer', text: 'Jó napot! Az akkumulátor megérkezett, köszönöm a gyors szállítást.', at: '08:42' },
           { from: 'seller', text: 'Örülünk! Ha bármi kérdés van a beszereléshez, szóljon bátran.', at: '09:05' },
           { from: 'seller', offer: { product: 'HEPA szűrő (2 db) – törzsvásárlói ár', reason: 'Vásárlási előzményei alapján', orig: 7990, pct: 15, status: 'accepted', channels: ['Azonnali üzenet'] }, at: '09:06' },
@@ -607,6 +618,7 @@
         messages: [
           { from: 'buyer', text: 'A powerbank tudja tölteni a laptopomat is?', at: 'csütörtök' },
           { from: 'seller', text: '65W-os PD kimenete van, a legtöbb laptopot igen. Küldjük a kompatibilitási listát!', at: 'csütörtök' },
+          { from: 'seller', event: { channel: 'E-mail', text: 'Kompatibilitási lista elküldve e-mailben.' }, at: 'csütörtök' },
         ],
       },
       {
@@ -620,6 +632,7 @@
           { product: 'PowerDrill tartalék akku (4Ah)', reason: 'Két akkus gépe is közös platformon van — a tartalék akku a tipikus következő vétel.', orig: 14990, pct: 20 },
         ],
         messages: [
+          { from: 'seller', event: { channel: 'Hírlevél', text: 'Első személyre szabott ajánlatlista kiküldve — 2 releváns termék.' }, at: 'júl. 20.' },
           { from: 'seller', text: 'Kedves Márton, bevált a fűkasza? Az akkuja a fúróéval is kompatibilis.', at: 'vasárnap' },
           { from: 'buyer', text: 'Igen, ez nagyon jó hír — akkor elég egy tartalék akkut vennem.', at: 'vasárnap' },
         ],
@@ -704,7 +717,7 @@
 
     function convButton(c, name, color) {
       const last = c.messages[c.messages.length - 1];
-      const lastText = last.text || ('Ajánlat: ' + last.offer.product);
+      const lastText = last.text || (last.event ? last.event.text : 'Ajánlat: ' + last.offer.product);
       const pending = c.messages.filter(m => m.offer && m.offer.status === 'pending').length;
       return `
         <button class="conv${c.id === activeId ? ' is-active' : ''}" data-id="${c.id}">
@@ -730,22 +743,19 @@
       }
     }
 
-    function offerHtml(m, idx) {
-      const mine = (view === 'seller') === (m.from === 'seller');
+    const CHANNEL_ICON = { 'Azonnali üzenet': '💬', 'E-mail': '✉️', 'Mailing': '📮', 'Hírlevél': '🗞' };
+    const channelLabel = ch => `${CHANNEL_ICON[ch] || ''} ${ch}`.trim();
+
+    function offerBodyHtml(m, idx) {
       const o = m.offer;
       const flash = o.kind === 'flash';
       const price = Math.round(o.orig * (1 - o.pct / 100));
       const statusLabel = flash
         ? { pending: 'Válaszra vár', accepted: 'Megvásárolva', declined: 'Kihagyva' }[o.status]
         : { pending: 'Válaszra vár', accepted: 'Elfogadva', declined: 'Elutasítva' }[o.status];
-      const tag = flash
-        ? `⚡ Villámajánlat · ${o.limitH} óráig · ${o.limitQty} db`
-        : 'Személyre szabott ajánlat';
-      const channels = (o.channels || []).map(ch => `<span class="channel-chip">${esc(ch)}</span>`).join('');
+      const channels = (o.channels || []).map(ch => `<span class="channel-chip">${esc(channelLabel(ch))}</span>`).join('');
       const buyerCanAct = view === 'buyer' && m.from === 'seller' && o.status === 'pending';
       return `
-        <div class="offer${flash ? ' is-flash' : ''} ${mine ? 'from-me' : 'from-them'}">
-          <div class="offer-tag"><span>${tag}</span><span>${esc(m.at)}</span></div>
           <div class="offer-body">
             <p class="offer-product">${esc(o.product)}</p>
             <p class="offer-reason">${esc(o.reason)}</p>
@@ -760,7 +770,39 @@
                 <button class="accept" data-offer="${idx}" data-act="accepted">${flash ? 'Megveszem most' : 'Elfogadom'}</button>
                 <button data-offer="${idx}" data-act="declined">${flash ? 'Kihagyom' : 'Most nem'}</button>
               </div>` : `<span class="offer-status ${o.status}">${statusLabel}</span>`}
-          </div>
+          </div>`;
+    }
+
+    function offerHtml(m, idx) {
+      const o = m.offer;
+      const flash = o.kind === 'flash';
+      const tag = flash
+        ? `⚡ Villámajánlat · ${o.limitH} óráig · ${o.limitQty} db`
+        : 'Személyre szabott ajánlat';
+      const chans = o.channels || ['Azonnali üzenet'];
+      // An offer only lives in the chat stream if it was actually delivered there;
+      // e-mail/mailing deliveries appear as full-width timeline events instead.
+      if (chans.includes('Azonnali üzenet')) {
+        const mine = (view === 'seller') === (m.from === 'seller');
+        return `
+        <div class="offer${flash ? ' is-flash' : ''} ${mine ? 'from-me' : 'from-them'}">
+          <div class="offer-tag"><span>${tag}</span><span>${esc(m.at)}</span></div>
+          ${offerBodyHtml(m, idx)}
+        </div>`;
+      }
+      const headLabel = chans.map(channelLabel).join(' + ') + (flash ? ' · villámajánlat' : ' · ajánlat kiküldve');
+      return `
+        <div class="tl-event${flash ? ' is-flash' : ''}">
+          <div class="tl-event-head"><span>${esc(headLabel)}</span><span>${esc(m.at)}</span></div>
+          <div class="tl-event-body">${offerBodyHtml(m, idx)}</div>
+        </div>`;
+    }
+
+    function eventHtml(m) {
+      return `
+        <div class="tl-event">
+          <div class="tl-event-head"><span>${esc(channelLabel(m.event.channel))}</span><span>${esc(m.at)}</span></div>
+          <div class="tl-event-body"><p>${esc(m.event.text)}</p></div>
         </div>`;
     }
 
@@ -773,6 +815,7 @@
       el('threadSub').textContent = view === 'seller' ? c.buyerSub : SELLER.sub;
       el('thread').innerHTML = c.messages.map((m, i) => {
         if (m.offer) return offerHtml(m, i);
+        if (m.event) return eventHtml(m);
         const mine = (view === 'seller') === (m.from === 'seller');
         return `<div class="bubble ${mine ? 'from-me' : 'from-them'}">${esc(m.text)}<time>${esc(m.at)}</time></div>`;
       }).join('');
