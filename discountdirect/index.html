@@ -170,6 +170,14 @@
     .campaign-result { margin-top: 12px; border-radius: 10px; padding: 10px 13px; font-size: 12.5px; font-weight: 700; background: var(--green-soft); color: var(--green); display: none; }
     .campaign-result.is-visible { display: block; }
 
+    .target { display: flex; align-items: center; gap: 10px; padding: 8px 0; border-bottom: 1px dashed var(--line); }
+    .target:last-child { border-bottom: 0; }
+    .target .avatar { width: 34px; height: 34px; font-size: 12px; }
+    .target-name { margin: 0; font-weight: 800; font-size: 13px; }
+    .target-why { margin: 1px 0 0; font-size: 12px; color: var(--muted); }
+    .offer.preview { max-width: 100%; }
+    .offer.preview .offer-actions button { cursor: default; opacity: .85; }
+
     .automation { border: 1px solid var(--line); border-radius: 12px; padding: 12px 14px; margin-bottom: 10px; background: #fafbfe; }
     .automation:last-child { margin-bottom: 0; }
     .automation-top { display: flex; justify-content: space-between; align-items: baseline; gap: 10px; }
@@ -211,7 +219,8 @@
 
   <nav class="seller-tabs" id="sellerTabs" aria-label="Eladói funkciók">
     <button id="chatTabBtn" class="is-active">Csevegések</button>
-    <button id="campaignTabBtn">Kampányok</button>
+    <button id="flashTabBtn">⚡ Villámajánlat</button>
+    <button id="listTabBtn">🗞 Ajánlatlisták</button>
   </nav>
 
   <main class="app" id="chatScreen">
@@ -247,11 +256,12 @@
     </section>
   </main>
 
-  <main class="campaigns" id="campaignScreen" hidden>
+  <main class="campaigns" id="flashScreen" hidden>
     <section class="pane">
       <div class="campaign-head">
         <h2>⚡ Villámajánlat</h2>
-        <p>Egy kiválasztott termék azonnali, korlátozott idejű és darabszámú ajánlatként megy ki minden releváns vevőnek — a rendszer a vásárlási előzmények alapján dönti el, kinek.</p>
+        <p>Egy kiválasztott termék azonnali, korlátozott idejű és darabszámú ajánlatként megy ki
+        minden releváns vevőnek — a rendszer a vásárlási előzmények alapján dönti el, kinek.</p>
       </div>
       <div class="campaign-body">
         <div class="field">
@@ -280,8 +290,29 @@
 
     <section class="pane">
       <div class="campaign-head">
-        <h2>🗞 Személyre szabott ajánlatlista</h2>
-        <p>Több termékből a rendszer vevőnként állítja össze a listát — mindenki csak a rá releváns termékeket kapja, a beállított gyakorisággal, hírlevélszerűen.</p>
+        <h2>Célzás és előnézet</h2>
+        <p>Nem tömegküldés: itt látod pontosan, kik kapják az ajánlatot, miért ők — és hogy
+        a vevő mit lát majd a saját csevegésében.</p>
+      </div>
+      <div class="campaign-body">
+        <div class="field">
+          <span>Kik kapják?</span>
+          <div id="flashTargets"></div>
+        </div>
+        <div class="field">
+          <span>Így látja a vevő</span>
+          <div id="flashPreview"></div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <main class="campaigns" id="listScreen" hidden>
+    <section class="pane">
+      <div class="campaign-head">
+        <h2>🗞 Új automatikus ajánlatlista</h2>
+        <p>Több termékből a rendszer vevőnként állítja össze a listát — mindenki csak a rá
+        releváns termékeket kapja, a beállított gyakorisággal, hírlevélszerűen.</p>
       </div>
       <div class="campaign-body">
         <div class="field">
@@ -300,6 +331,15 @@
         <button class="campaign-cta" id="listCreate">Automatikus küldés indítása</button>
         <div class="campaign-result" id="listResult"></div>
       </div>
+    </section>
+
+    <section class="pane">
+      <div class="campaign-head">
+        <h2>Vevőnkénti előnézet</h2>
+        <p>A kijelölt termékekből minden vevő csak a rá relevánsakat kapja — ez a bontás
+        a kijelöléssel együtt frissül.</p>
+      </div>
+      <div class="campaign-body" id="listPreview"></div>
     </section>
 
     <section class="pane">
@@ -383,12 +423,18 @@
     // Which buyers a catalogue product is relevant to comes from purchase history —
     // hardcoded here the way a recommendation engine's output would look.
     const CATALOG = [
-      { id: 'hepa', name: 'HEPA szűrő (2 db)', price: 7990, relevant: ['anna'] },
-      { id: 'x200pro', name: 'Robotporszívó X200 Pro', price: 129990, relevant: ['anna'] },
-      { id: 'kapszula', name: 'Kávékapszula variáció (60 db)', price: 8990, relevant: ['gabor'] },
-      { id: 'milkpro', name: 'MilkPro tejhabosító', price: 18990, relevant: ['gabor'] },
-      { id: 'szij', name: 'FitRun sportszíj szett', price: 9990, relevant: ['reka'] },
-      { id: 'fulhallgato', name: 'AirBeat Bluetooth fülhallgató', price: 24990, relevant: ['anna', 'gabor', 'reka'] },
+      { id: 'hepa', name: 'HEPA szűrő (2 db)', price: 7990, relevant: ['anna'],
+        why: { anna: 'X200 tulajdonos — 8 hetente vesz szűrőt' } },
+      { id: 'x200pro', name: 'Robotporszívó X200 Pro', price: 129990, relevant: ['anna'],
+        why: { anna: 'Több mint egy éve vette az X200-at — csereidőszak' } },
+      { id: 'kapszula', name: 'Kávékapszula variáció (60 db)', price: 8990, relevant: ['gabor'],
+        why: { gabor: 'Havonta rendel kapszulát a BaristaOne-hoz' } },
+      { id: 'milkpro', name: 'MilkPro tejhabosító', price: 18990, relevant: ['gabor'],
+        why: { gabor: 'BaristaOne tulajdonos — leggyakoribb kiegészítő' } },
+      { id: 'szij', name: 'FitRun sportszíj szett', price: 9990, relevant: ['reka'],
+        why: { reka: 'Most vett FitRun okosórát — kiegészítő ajánlat' } },
+      { id: 'fulhallgato', name: 'AirBeat Bluetooth fülhallgató', price: 24990, relevant: ['anna', 'gabor', 'reka'],
+        why: { anna: 'Aktív törzsvásárló', gabor: 'Visszatérő vevő', reka: 'Új vevő — aktiválási ajánlat' } },
     ];
 
     const AUTOMATIONS = [
@@ -400,7 +446,7 @@
     ];
 
     let view = 'seller';           // 'seller' | 'buyer'
-    let sellerTab = 'chat';        // 'chat' | 'campaigns'
+    let sellerTab = 'chat';        // 'chat' | 'flash' | 'list'
     let activeId = CONVERSATIONS[0].id;
 
     const active = () => CONVERSATIONS.find(c => c.id === activeId);
@@ -570,6 +616,67 @@
       return [...document.querySelectorAll(`input[data-channel-group="${prefix}"]:checked`)].map(i => i.value);
     }
 
+    function targetRow(c, why) {
+      return `
+        <div class="target">
+          <span class="avatar" style="background:${c.color}">${esc(initials(c.buyer))}</span>
+          <span>
+            <p class="target-name">${esc(c.buyer)}</p>
+            <p class="target-why">${esc(why || c.buyerSub)}</p>
+          </span>
+        </div>`;
+    }
+
+    function renderFlashTargets() {
+      const p = CATALOG.find(x => x.id === flashSelected);
+      el('flashTargets').innerHTML = p
+        ? p.relevant.map(id => targetRow(byId(id), p.why[id])).join('')
+        : '<p class="ctx-empty">Válassz terméket a bal oldalon — itt jelenik meg, mely vevők relevánsak rá és miért.</p>';
+    }
+
+    function renderFlashPreview() {
+      const p = CATALOG.find(x => x.id === flashSelected);
+      if (!p) {
+        el('flashPreview').innerHTML = '<p class="ctx-empty">A beállításokkal együtt frissülő ajánlatkártya-előnézet.</p>';
+        return;
+      }
+      const pct = Number(el('flashPct').value);
+      const hours = Number(el('flashHours').value);
+      const qty = Number(el('flashQty').value);
+      const price = Math.round(p.price * (1 - pct / 100));
+      const channels = checkedChannels('flash').map(ch => `<span class="channel-chip">${esc(ch)}</span>`).join('');
+      el('flashPreview').innerHTML = `
+        <div class="offer is-flash preview">
+          <div class="offer-tag"><span>⚡ Villámajánlat · ${hours} óráig · ${qty} db</span><span>most</span></div>
+          <div class="offer-body">
+            <p class="offer-product">${esc(p.name)}</p>
+            <p class="offer-reason">Csak ${hours} óráig vagy a készlet erejéig (${qty} db) — a korábbi vásárlásaid alapján neked szól.</p>
+            <div class="offer-prices">
+              <span class="offer-old">${fmtFt(p.price)}</span>
+              <span class="offer-new">${fmtFt(price)}</span>
+              <span class="offer-pct">−${pct}%</span>
+            </div>
+            ${channels ? `<div class="offer-channels">${channels}</div>` : ''}
+            <div class="offer-actions">
+              <button class="accept" disabled>Megveszem most</button>
+              <button disabled>Kihagyom</button>
+            </div>
+          </div>
+        </div>`;
+    }
+
+    function renderListPreview() {
+      if (!listSelected.size) {
+        el('listPreview').innerHTML = '<p class="ctx-empty">Jelölj ki termékeket a bal oldalon — itt jelenik meg, melyik vevő pontosan mit kapna.</p>';
+        return;
+      }
+      const names = [...listSelected].map(id => CATALOG.find(p => p.id === id));
+      el('listPreview').innerHTML = CONVERSATIONS.map(c => {
+        const items = names.filter(p => p.relevant.includes(c.id));
+        return items.length ? targetRow(c, items.map(p => p.name).join(', ')) : '';
+      }).join('') || '<p class="ctx-empty">A kijelölt termékek egyik vevőnek sem relevánsak.</p>';
+    }
+
     function renderAutomations() {
       el('automationList').innerHTML = AUTOMATIONS.length ? AUTOMATIONS.map((a, i) => {
         const perBuyer = CONVERSATIONS.map(c => {
@@ -598,10 +705,11 @@
     /* ---------- shell ---------- */
 
     function renderScreens() {
-      const campaigns = view === 'seller' && sellerTab === 'campaigns';
+      const t = view === 'seller' ? sellerTab : 'chat';
       el('sellerTabs').style.display = view === 'seller' ? '' : 'none';
-      el('chatScreen').hidden = campaigns;
-      el('campaignScreen').hidden = !campaigns;
+      el('chatScreen').hidden = t !== 'chat';
+      el('flashScreen').hidden = t !== 'flash';
+      el('listScreen').hidden = t !== 'list';
     }
 
     function renderAll() {
@@ -610,7 +718,10 @@
       renderThread();
       renderContext();
       renderFlashProducts();
+      renderFlashTargets();
+      renderFlashPreview();
       renderListProducts();
+      renderListPreview();
       renderAutomations();
     }
 
@@ -663,7 +774,11 @@
       if (!opt) return;
       flashSelected = opt.dataset.flashProduct;
       renderFlashProducts();
+      renderFlashTargets();
+      renderFlashPreview();
     });
+    ['flashPct', 'flashHours', 'flashQty'].forEach(id =>
+      el(id).addEventListener('change', renderFlashPreview));
 
     el('flashSend').addEventListener('click', () => {
       const result = el('flashResult');
@@ -699,6 +814,7 @@
       const id = opt.dataset.listProduct;
       listSelected.has(id) ? listSelected.delete(id) : listSelected.add(id);
       renderListProducts();
+      renderListPreview();
     });
 
     el('listCreate').addEventListener('click', () => {
@@ -732,17 +848,20 @@
     document.addEventListener('change', e => {
       if (!e.target.matches('input[data-channel-group]')) return;
       e.target.closest('label').classList.toggle('is-checked', e.target.checked);
+      if (e.target.dataset.channelGroup === 'flash') renderFlashPreview();
     });
 
-    // seller sub-tabs
+    // seller sub-tabs — one screen per function
     function setSellerTab(t) {
       sellerTab = t;
       el('chatTabBtn').classList.toggle('is-active', t === 'chat');
-      el('campaignTabBtn').classList.toggle('is-active', t === 'campaigns');
+      el('flashTabBtn').classList.toggle('is-active', t === 'flash');
+      el('listTabBtn').classList.toggle('is-active', t === 'list');
       renderAll();
     }
     el('chatTabBtn').addEventListener('click', () => setSellerTab('chat'));
-    el('campaignTabBtn').addEventListener('click', () => setSellerTab('campaigns'));
+    el('flashTabBtn').addEventListener('click', () => setSellerTab('flash'));
+    el('listTabBtn').addEventListener('click', () => setSellerTab('list'));
 
     // view toggle
     function setView(v) {
