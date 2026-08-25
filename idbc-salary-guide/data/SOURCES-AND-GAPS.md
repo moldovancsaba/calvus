@@ -131,13 +131,16 @@ of real data, and the filter logic on the main page is built around that:
   actively misleading.
 
 Also at client request (same round): the two "Jelöld 1-4-ig terjedő skálán…"
-matrix questions are now displayed (previously filtered out as too noisy) —
-the váltási-szempontok question renders the whole-sample percentage matrix
-under `Összes` and per-segment mean scores under a real segment; the
-juttatási-elemek question has no crosstab, so real segments show the uniform
-message. The benefits category dropdown (the one question-level group filter)
-and the "Többválasztós kérdés…" notes were removed — every multi-select list
-now renders in full.
+matrix questions are now displayed (previously filtered out as too noisy),
+always as the stacked whole-sample percentage chart. The váltási-szempontok
+question's crosstab holds only mean scores per experience level — no
+per-segment distributions exist — and a mean-bar rendering of those was
+tried and rejected (owner decision, 2026-08-25: "the stacked chart is the
+good one"), so under a real segment both scale questions show the uniform
+no-data message; the mean crosstab stays in the data unused. The benefits
+category dropdown (the one question-level group filter) and the
+"Többválasztós kérdés…" notes were removed — every multi-select list now
+renders in full.
 
 None of this changes any figure — it only stops the page from presenting
 zero-respondent slices as if they were findings. If the client needs a

@@ -247,7 +247,6 @@
     .chart-area { display: grid; gap: 44px; }
     .question-block { display: grid; gap: 10px; }
     .question-title { margin: 0; max-width: 96%; min-height: 2.4em; font-size: clamp(16px, 1.8vw, 19px); line-height: 1.15; font-weight: 900; }
-    .scale-hint { font-weight: 700; color: var(--muted); font-size: 12px; text-transform: none; letter-spacing: 0; }
 
     .answer-row { display: grid; grid-template-columns: minmax(130px, 200px) 1fr; gap: 18px; align-items: center; }
     .answer-row-multi { display: grid; grid-template-columns: minmax(160px, 280px) 1fr 56px; gap: 12px; align-items: center; margin-bottom: 8px; }
@@ -265,9 +264,9 @@
     /* Every filter change re-renders the bars as fresh nodes (innerHTML replacement), so a
        from-only keyframe re-fires on each render and the bars fill left-to-right on load. */
     @keyframes bar-grow { from { width: 0; } }
-    .segment, .scale-fill { animation: bar-grow .5s ease-out; }
+    .segment { animation: bar-grow .5s ease-out; }
     @media (prefers-reduced-motion: reduce) {
-      .segment, .scale-fill { animation: none; }
+      .segment { animation: none; }
     }
 
     .legend { display: flex; flex-wrap: wrap; gap: 8px 14px; margin-top: -2px; }
@@ -275,13 +274,6 @@
     .legend-dot { width: 12px; height: 12px; border-radius: 50%; flex: none; }
 
     .no-data { font-size: 13px; font-weight: 700; color: var(--muted); font-style: italic; margin: 0; }
-
-    .scale-block { display: grid; gap: 6px; padding: 10px 0; border-bottom: 1px solid var(--line); }
-    .scale-row { display: grid; grid-template-columns: 90px 1fr 44px; align-items: center; gap: 10px; }
-    .scale-label { font-size: 11px; font-weight: 700; color: var(--muted); }
-    .scale-track { height: 10px; border-radius: 6px; background: rgba(19,35,35,.08); overflow: hidden; }
-    .scale-fill { height: 100%; }
-    .scale-value { font-size: 12px; font-weight: 900; text-align: right; }
 
     .research-story { padding: 44px 0 6px; }
     .insight-cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-top: 30px; }
@@ -702,7 +694,7 @@
         const c = cross[q];
         if (!c) return;
         c.items.forEach(row => {
-          if (row.values.some(v => (v.percent ?? v.value) > 0)) found.add(row.label);
+          if (row.values.some(v => v.percent > 0)) found.add(row.label);
         });
       });
       return [ALL_SEGMENT, ...canonicalOrder.filter(s => found.has(s))];
@@ -724,19 +716,15 @@
     // For the selected segment, use that segment's crosstab row when the question has one.
     // "Összes" always means the whole-sample total. A real segment with no crosstab (or an
     // all-zero row) returns null — the caller renders the uniform no-data message instead of
-    // quietly falling back to the aggregate.
+    // quietly falling back to the aggregate. Mean-score (matrix-value) crosstabs also return
+    // null: the owner chose the stacked distribution as this question type's one chart shape,
+    // and a distribution per segment simply doesn't exist in the survey data.
     function getSegmentSlice(sideData, question, segmentValue) {
       if (segmentValue === ALL_SEGMENT) return sideData.base[question] || null;
       const crossC = sideData.cross[question];
-      if (!crossC) return null;
+      if (!crossC || crossC.kind === 'matrix-value') return null;
       const row = crossC.items.find(r => r.label === segmentValue);
       if (!row) return null;
-      if (crossC.kind === 'matrix-value') {
-        // Mean-score crosstabs carry {group, value} rows, not percentages.
-        return row.values.some(v => v.value > 0)
-          ? { kind: 'matrix-value', groups: crossC.groups, items: [row] }
-          : null;
-      }
       if (!row.values.some(v => v.percent > 0)) return null;
       const items = row.values.map(v => ({ label: v.group, percent: v.percent, count: v.count }));
       return { kind: 'simple', items };
@@ -858,28 +846,10 @@
       return `<section class="question-block"><h4 class="question-title">${titleHtml}</h4>${rows}<div class="legend">${legend}</div></section>`;
     }
 
-    function renderMatrixValue(title, c) {
-      // Mean scores, not distributions — one consistent color, since color would otherwise
-      // read as encoding something. The row label (the segment name) only appears when a
-      // block genuinely holds several rows; with one row it just repeats the dropdown.
-      const rows = c.items.map(row => {
-        const bars = row.values.map((v, i) => `
-          <div class="scale-row">
-            <span class="scale-label">${escapeHtml(c.groups[i])}</span>
-            <div class="scale-track"><div class="scale-fill" style="width:${(v.value / 4 * 100).toFixed(0)}%;background:${paletteColor(3)}"></div></div>
-            <span class="scale-value">${v.value.toFixed(2)}</span>
-          </div>`).join('');
-        const label = c.items.length > 1 ? `<div class="answer-label">${escapeHtml(row.label)}</div>` : '';
-        return `<div class="scale-block">${label}${bars}</div>`;
-      }).join('');
-      return `<section class="question-block"><h4 class="question-title">${escapeHtml(title)} <span class="scale-hint">(átlag, 1–4 skála)</span></h4>${rows}</section>`;
-    }
-
     function renderQuestion(question, c) {
       if (!c) return noDataBlock(question);
       if (c.kind === 'simple') return renderSimple(question, c);
       if (c.kind === 'matrix-percent') return renderMatrixPercent(question, c);
-      if (c.kind === 'matrix-value') return renderMatrixValue(question, c);
       return '';
     }
 
