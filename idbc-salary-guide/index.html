@@ -575,13 +575,11 @@
     function fmtPct(p) {
       return (Math.round(p * 10) / 10).toString().replace('.', ',') + '%';
     }
-    // Uniform empty state: whenever a selected filter combination has no data for a question,
-    // the question stays visible with this one message — never a silent omission, and never a
-    // quiet fallback to the aggregate, which read as if the filter had worked.
+    // A question with no data for the selected filter is hidden outright (owner decision,
+    // 2026-08-25 — supersedes the per-question message the client's change doc asked for).
+    // The client's uniform sentence still appears once, at panel level, when nothing in a
+    // panel matches the filter — and there is still never a quiet fallback to the aggregate.
     const NO_DATA_MESSAGE = 'A kiválasztott szűrési feltételekhez nem érhető el adat.';
-    function noDataBlock(title) {
-      return `<section class="question-block"><h4 class="question-title">${escapeHtml(title)}</h4><p class="no-data">${NO_DATA_MESSAGE}</p></section>`;
-    }
 
     // ---------- Trends section ----------
     const EXPERIENCE_ORDER = ["kevesebb, mint 1 év", "1-2 év", "3-5 év", "6-10 év", "11-20 év", "több, mint 20 év"];
@@ -745,7 +743,7 @@
       // Options nobody picked (0%) are pure clutter — no visible bar segment, just a dangling
       // legend/list entry — so drop them everywhere before rendering.
       const nonZero = c.items.filter(it => it.percent > 0);
-      if (!nonZero.length) return noDataBlock(title);
+      if (!nonZero.length) return '';
 
       // "Select all that apply" questions: percentages are independent per option and don't
       // sum to 100%, so a single stacked bar is both wrong and unreadable — use one bar per option instead.
@@ -799,8 +797,8 @@
       const ordinal = !multiSelect && isOrdinalScale(c.groups);
 
       if (multiSelect || manyOptions) {
-        // A breakdown row nobody in it answered is omitted; if every row is empty, the
-        // question stays visible with the uniform no-data message below.
+        // A breakdown row nobody in it answered is omitted; a fully empty question is
+        // hidden and the panel-level fallback speaks for it if nothing else renders.
         const groups = c.items.map(row => {
           const nonZero = row.values
             .map((v, i) => ({ percent: v.percent, group: c.groups[i] }))
@@ -817,7 +815,7 @@
             </div>`).join('');
           return `<div class="multi-group"><p class="multi-group-label">${escapeHtml(row.label)}</p>${bars}</div>`;
         }).filter(Boolean).join('');
-        if (!groups) return noDataBlock(title);
+        if (!groups) return '';
         return `
           <section class="question-block">
             <h4 class="question-title">${titleHtml}</h4>
@@ -839,7 +837,7 @@
         if (!segments.trim()) return '';
         return `<div class="answer-row"><div class="answer-label">${escapeHtml(row.label)}</div><div class="bar">${segments}</div></div>`;
       }).filter(Boolean).join('');
-      if (!rows) return noDataBlock(title);
+      if (!rows) return '';
       const legend = c.groups.map((g, i) => usedGroupIdx.has(i) ? `
         <span class="legend-item"><span class="legend-dot" style="background:${paletteColor(i)}"></span>${escapeHtml(g)}</span>
       ` : '').join('');
@@ -847,7 +845,7 @@
     }
 
     function renderQuestion(question, c) {
-      if (!c) return noDataBlock(question);
+      if (!c) return '';
       if (c.kind === 'simple') return renderSimple(question, c);
       if (c.kind === 'matrix-percent') return renderMatrixPercent(question, c);
       return '';
@@ -862,10 +860,10 @@
         target.innerHTML = '<p class="no-data">Ehhez a témához nincs kérdés ezen az oldalon.</p>';
         return;
       }
-      // Every question renders a block: its data for the selected segment, or the uniform
-      // no-data message. The || fallback below only guards the unknown-kind edge case.
+      // Questions without data for this filter render nothing; if that empties the whole
+      // panel, the client's uniform sentence takes its place instead of a blank column.
       const html = questions.map(q => renderQuestion(q, getSegmentSlice(sideData, q, segmentValue))).join('');
-      target.innerHTML = html || '<p class="no-data">Ehhez a szűréshez nincs válasz.</p>';
+      target.innerHTML = html || `<p class="no-data">${NO_DATA_MESSAGE}</p>`;
     }
 
     // The segment dropdown is only worth showing when it offers a real choice: "Összes" is always

@@ -116,13 +116,14 @@ of real data, and the filter logic on the main page is built around that:
   kilátások* but not under *Bérezés és juttatások*, where `1-2 év` is the only
   experience band with data. (`kevesebb, mint 1 év` is in the canonical order but has non-zero data
   under no topic at all, so it is never offered.)
-- **Empty combinations show a uniform message, not the aggregate** (client
-  request, 2026-08-24 — supersedes the earlier omit-or-fall-back behaviour). A
-  question with no data under the selected real segment stays visible with its
-  title and the single sentence "A kiválasztott szűrési feltételekhez nem
-  érhető el adat." — questions with no crosstab at all get the same message
-  under any real segment instead of silently falling back to the aggregate
-  (the "Összesített" badge that marked that fallback is gone with it).
+- **Empty combinations are hidden; the aggregate is never shown in their
+  place.** A question with no data under the selected real segment (including
+  questions with no crosstab at all) is omitted outright — owner decision,
+  2026-08-25, refining the client's 2026-08-24 ask for a per-question message
+  after seeing it live. The client's uniform sentence ("A kiválasztott
+  szűrési feltételekhez nem érhető el adat.") still appears once, at panel
+  level, if nothing in a panel matches the filter. The earlier
+  aggregate-fallback-with-"Összesített"-badge behaviour remains gone.
   `Összes` still deliberately shows the whole-sample figure.
 - **The segment dropdown is hidden entirely** (tapasztalati szint on the
   munkavállalói side, cégméret on the munkáltatói side) when no question on
@@ -136,8 +137,8 @@ always as the stacked whole-sample percentage chart. The váltási-szempontok
 question's crosstab holds only mean scores per experience level — no
 per-segment distributions exist — and a mean-bar rendering of those was
 tried and rejected (owner decision, 2026-08-25: "the stacked chart is the
-good one"), so under a real segment both scale questions show the uniform
-no-data message; the mean crosstab stays in the data unused. The benefits
+good one"), so under a real segment both scale questions are hidden (see
+the no-data bullet above); the mean crosstab stays in the data unused. The benefits
 category dropdown (the one question-level group filter) and the
 "Többválasztós kérdés…" notes were removed — every multi-select list now
 renders in full.
