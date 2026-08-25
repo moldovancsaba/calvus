@@ -851,14 +851,18 @@
     }
 
     function renderMatrixValue(title, c) {
+      // Mean scores, not distributions — one consistent color, since color would otherwise
+      // read as encoding something. The row label (the segment name) only appears when a
+      // block genuinely holds several rows; with one row it just repeats the dropdown.
       const rows = c.items.map(row => {
         const bars = row.values.map((v, i) => `
           <div class="scale-row">
             <span class="scale-label">${escapeHtml(c.groups[i])}</span>
-            <div class="scale-track"><div class="scale-fill" style="width:${(v.value / 4 * 100).toFixed(0)}%;background:${paletteColor(i)}"></div></div>
+            <div class="scale-track"><div class="scale-fill" style="width:${(v.value / 4 * 100).toFixed(0)}%;background:${paletteColor(3)}"></div></div>
             <span class="scale-value">${v.value.toFixed(2)}</span>
           </div>`).join('');
-        return `<div class="scale-block"><div class="answer-label">${escapeHtml(row.label)}</div>${bars}</div>`;
+        const label = c.items.length > 1 ? `<div class="answer-label">${escapeHtml(row.label)}</div>` : '';
+        return `<div class="scale-block">${label}${bars}</div>`;
       }).join('');
       return `<section class="question-block"><h4 class="question-title">${escapeHtml(title)} <span class="scale-hint">(átlag, 1–4 skála)</span></h4>${rows}</section>`;
     }
