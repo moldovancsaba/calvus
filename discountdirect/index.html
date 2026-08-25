@@ -165,6 +165,8 @@
     .campaign-body { padding: 14px 18px 18px; }
     .field { margin-bottom: 13px; }
     .field > span { display: block; font-size: 11px; font-weight: 900; text-transform: uppercase; letter-spacing: .05em; color: var(--muted); margin-bottom: 6px; }
+    #flashProducts, #listProducts { max-height: 320px; overflow-y: auto; padding-right: 4px; }
+    #historyList { max-height: 300px; overflow-y: auto; }
     .product-option { display: flex; align-items: center; gap: 9px; padding: 8px 10px; border: 1.5px solid var(--line); border-radius: 10px; margin-bottom: 7px; font-size: 13px; cursor: pointer; }
     .product-option:last-child { margin-bottom: 0; }
     .product-option.is-selected { border-color: var(--accent); background: var(--accent-soft); }
@@ -268,7 +270,7 @@
       <span>Vevő:</span>
       <select id="personaSelect" aria-label="Melyik vevőként nézed"></select>
     </label>
-    <span class="topbar-note">Kattintható prototípus — mintaadatokkal · v12</span>
+    <span class="topbar-note">Kattintható prototípus — mintaadatokkal · v13</span>
   </header>
 
   <nav class="seller-tabs" id="sellerTabs" aria-label="Eladói funkciók">
@@ -472,15 +474,21 @@
     // ponytail: in-memory sample data, resets on reload — a wireframe needs no persistence
     const CONVERSATIONS = [
       {
-        id: 'anna', buyer: 'Kiss Anna', color: '#3b5bdb', buyerSub: 'Törzsvásárló · 7 rendelés',
+        id: 'anna', buyer: 'Kiss Anna', color: '#3b5bdb', buyerSub: 'Törzsvásárló · 9 rendelés · 2023 óta',
         history: [
-          { item: 'Robotporszívó X200', when: '2026. május 12.', price: 89990 },
+          { item: 'Robotporszívó X100', when: '2023. november 2.', price: 59990 },
+          { item: 'HEPA szűrő (2 db)', when: '2024. március 14.', price: 6990 },
+          { item: 'HEPA szűrő (2 db)', when: '2024. szeptember 20.', price: 6990 },
+          { item: 'Robotporszívó X200', when: '2025. április 8.', price: 89990 },
+          { item: 'Feltörlő modul X200', when: '2025. július 19.', price: 12990 },
+          { item: 'HEPA szűrő (2 db)', when: '2025. november 30.', price: 7490 },
+          { item: 'Oldalkefe szett X-szériához', when: '2026. február 11.', price: 3990 },
           { item: 'HEPA szűrő (2 db)', when: '2026. június 30.', price: 7990 },
           { item: 'Akkumulátor X200-hoz', when: '2026. augusztus 2.', price: 15990 },
         ],
         recs: [
-          { product: 'HEPA szűrő előfizetés (negyedéves)', reason: 'A vevő 8 hetente vesz szűrőt — az előfizetés mindkét félnek kiszámíthatóbb.', orig: 7990, pct: 20 },
-          { product: 'X200 Pro csere-akció', reason: 'Az X200-at több mint egy éve vette; a Pro modellre váltóknak beszámítást adhatsz.', orig: 129990, pct: 15 },
+          { product: 'HEPA szűrő előfizetés (negyedéves)', reason: 'Három éve rendszeresen vesz szűrőt — az előfizetés mindkét félnek kiszámíthatóbb.', orig: 7990, pct: 20 },
+          { product: 'X200 Pro csere-akció', reason: 'Az X100-ról már váltott egyszer; a Pro modellre váltóknak beszámítást adhatsz.', orig: 129990, pct: 15 },
         ],
         messages: [
           { from: 'buyer', text: 'Jó napot! Az akkumulátor megérkezett, köszönöm a gyors szállítást.', at: '08:42' },
@@ -490,15 +498,18 @@
         ],
       },
       {
-        id: 'gabor', buyer: 'Szabó Gábor', color: '#2f9e6e', buyerSub: 'Visszatérő vevő · 4 rendelés',
+        id: 'gabor', buyer: 'Szabó Gábor', color: '#2f9e6e', buyerSub: 'Visszatérő vevő · 7 rendelés · 2024 óta',
         history: [
-          { item: 'Kávéfőző BaristaOne', when: '2026. június 3.', price: 64990 },
+          { item: 'Kávédaráló GrindPro', when: '2024. május 10.', price: 21990 },
+          { item: 'Kávéfőző BaristaOne', when: '2024. december 1.', price: 64990 },
+          { item: 'Kávékapszula variáció (30 db)', when: '2025. március 3.', price: 4990 },
+          { item: 'Vízkőmentesítő szett', when: '2025. június 15.', price: 2990 },
+          { item: 'Kávékapszula variáció (30 db)', when: '2026. június 3.', price: 4990 },
           { item: 'Kávékapszula variáció (30 db)', when: '2026. július 1.', price: 4990 },
           { item: 'Vízkőmentesítő szett', when: '2026. július 28.', price: 2990 },
         ],
         recs: [
           { product: 'Kávékapszula törzscsomag (60 db)', reason: 'Havonta vesz kapszulát — a dupla kiszerelés kedvezménnyel megtartja.', orig: 8990, pct: 12 },
-          { product: 'MilkPro tejhabosító', reason: 'A BaristaOne mellé ez a leggyakrabban vásárolt kiegészítő.', orig: 18990, pct: 18 },
         ],
         messages: [
           { from: 'buyer', text: 'Sziasztok! A BaristaOne mellé milyen tejhabosítót ajánlotok?', at: 'tegnap' },
@@ -507,9 +518,10 @@
         ],
       },
       {
-        id: 'reka', buyer: 'Nagy Réka', color: '#d6772e', buyerSub: 'Új vevő · 1 rendelés',
+        id: 'reka', buyer: 'Nagy Réka', color: '#d6772e', buyerSub: 'Új vevő · 2 rendelés',
         history: [
           { item: 'Okosóra FitRun', when: '2026. augusztus 18.', price: 44990 },
+          { item: 'Kijelzővédő fólia FitRun', when: '2026. augusztus 21.', price: 1990 },
         ],
         recs: [
           { product: 'FitRun sportszíj szett', reason: 'Első vásárlás után kiegészítő termékkel a legkönnyebb visszahozni.', orig: 9990, pct: 25 },
@@ -519,23 +531,156 @@
           { from: 'buyer', text: 'Igen, tökéletes! Köszönöm, hogy rákérdeztek.', at: 'hétfő' },
         ],
       },
+      {
+        id: 'peter', buyer: 'Tóth Péter', color: '#7048b5', buyerSub: 'Törzsvásárló · 8 rendelés · 2023 óta',
+        history: [
+          { item: '4K TV Vision 55"', when: '2023. december 9.', price: 219990 },
+          { item: 'Soundbar S300', when: '2024. február 14.', price: 49990 },
+          { item: 'HDMI 2.1 kábel szett', when: '2024. november 29.', price: 5990 },
+          { item: 'Médialejátszó StreamBox', when: '2025. május 22.', price: 24990 },
+          { item: 'Fali TV konzol', when: '2025. december 5.', price: 12990 },
+          { item: 'Bluetooth mélynyomó', when: '2026. március 18.', price: 39990 },
+          { item: 'Univerzális távirányító', when: '2026. május 30.', price: 8990 },
+          { item: 'TV tisztító szett', when: '2026. augusztus 10.', price: 2490 },
+        ],
+        recs: [
+          { product: '4K TV Vision 65" csereakció', reason: 'A 2023-as 55"-os készülékét két és fél éve bővíti kiegészítőkkel — csereidőszak.', orig: 329990, pct: 12 },
+        ],
+        messages: [
+          { from: 'buyer', text: 'Üdv! A mélynyomó firmware-frissítés után néha szaggat — mit tegyek?', at: 'kedd' },
+          { from: 'seller', text: 'Küldtünk egy javított firmware-t e-mailben, az megoldja. Szóljon, ha marad a gond!', at: 'kedd' },
+          { from: 'seller', offer: { product: 'HDMI 2.1 kábel szett – hűségár', reason: 'Házimozi-bővítéseihez', orig: 5990, pct: 20, status: 'accepted', channels: ['E-mail'] }, at: 'május 30.' },
+        ],
+      },
+      {
+        id: 'judit', buyer: 'Horváth Judit', color: '#b5486b', buyerSub: 'Visszatérő vevő · 6 rendelés · 2024 óta',
+        history: [
+          { item: 'Turmixgép MixMax', when: '2024. április 2.', price: 18990 },
+          { item: 'Konyhai mérleg', when: '2024. október 12.', price: 4990 },
+          { item: 'Airfryer CrispPro XL', when: '2025. február 27.', price: 42990 },
+          { item: 'Botmixer szett', when: '2025. szeptember 14.', price: 14990 },
+          { item: 'Airfryer sütőpapír (100 db)', when: '2026. április 5.', price: 2990 },
+          { item: 'Kenyérpirító RetroLine', when: '2026. július 22.', price: 12990 },
+        ],
+        recs: [
+          { product: 'CrispPro grillrács + nyárs szett', reason: 'Airfryer-tulajdonos — a leggyakrabban vásárolt kiegészítő.', orig: 9990, pct: 18 },
+        ],
+        messages: [
+          { from: 'buyer', text: 'Sziasztok! A CrispPro-hoz kapható külön grillrács?', at: 'szerda' },
+          { from: 'seller', text: 'Igen, szett is van hozzá nyársakkal — összekészítek egy ajánlatot!', at: 'szerda' },
+        ],
+      },
+      {
+        id: 'bence', buyer: 'Varga Bence', color: '#2e7bb5', buyerSub: 'Törzsvásárló · 9 rendelés · 2023 óta',
+        history: [
+          { item: 'Gamer egér ClickStorm', when: '2023. szeptember 30.', price: 15990 },
+          { item: 'Egérpad XL', when: '2023. szeptember 30.', price: 3990 },
+          { item: 'Mechanikus billentyűzet KeyForge', when: '2024. június 6.', price: 34990 },
+          { item: 'Gamer monitor 27" 165Hz', when: '2024. december 20.', price: 94990 },
+          { item: 'Headset HX7', when: '2025. március 11.', price: 27990 },
+          { item: 'Webkamera StreamCam', when: '2025. augusztus 25.', price: 19990 },
+          { item: 'Konzol kontroller Pro', when: '2026. január 15.', price: 22990 },
+          { item: 'SSD 2TB TurboDrive', when: '2026. május 9.', price: 32990 },
+          { item: 'Egértalp szett', when: '2026. augusztus 14.', price: 1990 },
+        ],
+        recs: [
+          { product: 'Gamer szék ErgoRace', reason: 'Három év alatt teljes szettet épített nálunk — a szék a leggyakoribb következő vásárlás.', orig: 89990, pct: 15 },
+        ],
+        messages: [
+          { from: 'buyer', text: 'A KeyForge-hoz jönnek még magyar kiosztású kupakok?', at: 'péntek' },
+          { from: 'seller', text: 'Két héten belül érkezik az új PBT szett — félretegyünk egyet?', at: 'péntek' },
+          { from: 'seller', offer: { product: 'Headset állvány RGB', reason: 'Setupjához illő kiegészítő', orig: 7990, pct: 10, status: 'declined', channels: ['Azonnali üzenet'] }, at: 'múlt héten' },
+        ],
+      },
+      {
+        id: 'eszter', buyer: 'Farkas Eszter', color: '#3a9d92', buyerSub: 'Visszatérő vevő · 5 rendelés · 2025 óta',
+        history: [
+          { item: 'Okostelefon Nova X', when: '2025. január 20.', price: 189990 },
+          { item: 'Kijelzővédő üvegfólia', when: '2025. január 20.', price: 3990 },
+          { item: 'Telefontok Nova X', when: '2025. február 2.', price: 5990 },
+          { item: 'Autós tartó + töltő', when: '2025. október 10.', price: 8990 },
+          { item: 'Powerbank 20000 mAh', when: '2026. június 19.', price: 12990 },
+        ],
+        recs: [
+          { product: 'Nova X Pro elővásárlási ajánlat', reason: 'Bő másfél éve vette a Nova X-et — a Pro váltóknak beszámítást adhatsz.', orig: 249990, pct: 10 },
+        ],
+        messages: [
+          { from: 'buyer', text: 'A powerbank tudja tölteni a laptopomat is?', at: 'csütörtök' },
+          { from: 'seller', text: '65W-os PD kimenete van, a legtöbb laptopot igen. Küldjük a kompatibilitási listát!', at: 'csütörtök' },
+        ],
+      },
+      {
+        id: 'marton', buyer: 'Oláh Márton', color: '#8a6d3b', buyerSub: 'Új vevő · 3 rendelés · 2026 óta',
+        history: [
+          { item: 'Akkus fúró-csavarozó PowerDrill', when: '2026. április 12.', price: 29990 },
+          { item: 'Bitfej készlet (32 db)', when: '2026. április 12.', price: 4990 },
+          { item: 'Akkus fűkasza GrassCut', when: '2026. július 5.', price: 44990 },
+        ],
+        recs: [
+          { product: 'PowerDrill tartalék akku (4Ah)', reason: 'Két akkus gépe is közös platformon van — a tartalék akku a tipikus következő vétel.', orig: 14990, pct: 20 },
+        ],
+        messages: [
+          { from: 'seller', text: 'Kedves Márton, bevált a fűkasza? Az akkuja a fúróéval is kompatibilis.', at: 'vasárnap' },
+          { from: 'buyer', text: 'Igen, ez nagyon jó hír — akkor elég egy tartalék akkut vennem.', at: 'vasárnap' },
+        ],
+      },
     ];
 
     // Which buyers a catalogue product is relevant to comes from purchase history —
     // hardcoded here the way a recommendation engine's output would look.
     const CATALOG = [
       { id: 'hepa', name: 'HEPA szűrő (2 db)', price: 7990, relevant: ['anna'],
-        why: { anna: 'X200 tulajdonos — 8 hetente vesz szűrőt' } },
+        why: { anna: 'X200 tulajdonos — rendszeresen vesz szűrőt' } },
       { id: 'x200pro', name: 'Robotporszívó X200 Pro', price: 129990, relevant: ['anna'],
-        why: { anna: 'Több mint egy éve vette az X200-at — csereidőszak' } },
+        why: { anna: 'Az X100-ról már váltott egyszer — csereidőszak' } },
+      { id: 'feltorlo', name: 'Feltörlő modul X200', price: 12990, relevant: ['anna'],
+        why: { anna: 'X200 tulajdonos — egyszer már vett feltörlő modult' } },
+      { id: 'oldalkefe', name: 'Oldalkefe szett X-szériához', price: 3990, relevant: ['anna'],
+        why: { anna: 'Kopó alkatrész az X-szériához' } },
       { id: 'kapszula', name: 'Kávékapszula variáció (60 db)', price: 8990, relevant: ['gabor'],
         why: { gabor: 'Havonta rendel kapszulát a BaristaOne-hoz' } },
       { id: 'milkpro', name: 'MilkPro tejhabosító', price: 18990, relevant: ['gabor'],
         why: { gabor: 'BaristaOne tulajdonos — leggyakoribb kiegészítő' } },
+      { id: 'csesze', name: 'Kávéscsésze szett (6 db)', price: 8990, relevant: ['gabor'],
+        why: { gabor: 'Kávéfelszerelését folyamatosan bővíti' } },
       { id: 'szij', name: 'FitRun sportszíj szett', price: 9990, relevant: ['reka'],
         why: { reka: 'Most vett FitRun okosórát — kiegészítő ajánlat' } },
-      { id: 'fulhallgato', name: 'AirBeat Bluetooth fülhallgató', price: 24990, relevant: ['anna', 'gabor', 'reka'],
-        why: { anna: 'Aktív törzsvásárló', gabor: 'Visszatérő vevő', reka: 'Új vevő — aktiválási ajánlat' } },
+      { id: 'fitrun2', name: 'Okosóra FitRun 2', price: 59990, relevant: ['reka'],
+        why: { reka: 'FitRun tulajdonos — következő generáció' } },
+      { id: 'mellkaspant', name: 'Pulzusmérő mellkaspánt', price: 12990, relevant: ['reka'],
+        why: { reka: 'Sportóra mellé gyakori pontosító kiegészítő' } },
+      { id: 'tv65', name: '4K TV Vision 65"', price: 329990, relevant: ['peter'],
+        why: { peter: '2023-as 55"-os készülék — csereidőszak' } },
+      { id: 'soundbar500', name: 'Soundbar S500 Dolby Atmos', price: 89990, relevant: ['peter'],
+        why: { peter: 'S300 tulajdonos — hangzásbővítés a következő lépés' } },
+      { id: 'ledszalag', name: 'TV backlight LED szalag', price: 7990, relevant: ['peter'],
+        why: { peter: 'Házimozi-építő — népszerű hangulatkiegészítő' } },
+      { id: 'tavpro', name: 'Univerzális távirányító Pro', price: 12990, relevant: ['peter'],
+        why: { peter: 'Az alapmodellt idén vette — Pro váltás' } },
+      { id: 'crisprack', name: 'CrispPro grillrács + nyárs szett', price: 9990, relevant: ['judit'],
+        why: { judit: 'Airfryer-tulajdonos — leggyakoribb kiegészítő' } },
+      { id: 'mixpohar', name: 'MixMax tartalék pohár (2 db)', price: 5990, relevant: ['judit'],
+        why: { judit: 'MixMax turmixgép tulajdonos' } },
+      { id: 'chefmate', name: 'Konyhai robotgép ChefMate', price: 74990, relevant: ['judit'],
+        why: { judit: 'Konyhai gépparkját évek óta bővíti' } },
+      { id: 'ergorace', name: 'Gamer szék ErgoRace', price: 89990, relevant: ['bence'],
+        why: { bence: 'Teljes gamer szett után a szék a tipikus következő vétel' } },
+      { id: 'keycaps', name: 'KeyForge PBT kupakszett', price: 12990, relevant: ['bence'],
+        why: { bence: 'KeyForge billentyűzet tulajdonos — rákérdezett a csevegésben' } },
+      { id: 'monitor32', name: 'Gamer monitor 32" 240Hz', price: 149990, relevant: ['bence'],
+        why: { bence: 'A 27"-os monitort két éve vette — felsőkategóriás váltás' } },
+      { id: 'novapro', name: 'Okostelefon Nova X Pro', price: 249990, relevant: ['eszter'],
+        why: { eszter: 'Nova X tulajdonos — Pro váltás beszámítással' } },
+      { id: 'toltoallomas', name: 'Vezeték nélküli töltőállomás', price: 15990, relevant: ['eszter'],
+        why: { eszter: 'Telefon-kiegészítőket rendszeresen vásárol' } },
+      { id: 'drillakku', name: 'PowerDrill tartalék akku (4Ah)', price: 14990, relevant: ['marton'],
+        why: { marton: 'Két akkus gépe van közös platformon' } },
+      { id: 'hedgecut', name: 'Akkus sövényvágó HedgeCut', price: 34990, relevant: ['marton'],
+        why: { marton: 'Kerti gépsorát idén kezdte építeni' } },
+      { id: 'okosizzo', name: 'Okosizzó szett (3 db)', price: 11990, relevant: ['anna', 'peter', 'eszter'],
+        why: { anna: 'Okosotthon-eszközt már használ', peter: 'Házimozi mellé hangulatvilágítás', eszter: 'Okostelefonról vezérelhető' } },
+      { id: 'fulhallgato', name: 'AirBeat Bluetooth fülhallgató', price: 24990, relevant: ['anna', 'gabor', 'reka', 'bence', 'eszter'],
+        why: { anna: 'Aktív törzsvásárló', gabor: 'Visszatérő vevő', reka: 'Új vevő — aktiválási ajánlat', bence: 'Gamer headset mellé mobil fülhallgató', eszter: 'Telefonjához illő kiegészítő' } },
     ];
 
     const AUTOMATIONS = [
