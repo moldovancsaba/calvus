@@ -72,6 +72,7 @@ once its job — getting everyone to agreement — is done.
 | `lexodont.hu/` | Dental clinic marketing site — services, team, pricing, case studies | Polished |
 | `lexodont.hu_balsamic/` | Same site, sketch-style | Low-fidelity / Balsamiq |
 | `idbc-salary-guide/` | SAP and general market salary-survey dashboard, real client data, filterable by area/segment/experience level | Polished |
+| `discountdirect/` | Seller–buyer messaging app concept — chat with personalised offer cards driven by recommendations and purchase history, seller/buyer view toggle | Interactive prototype |
 | `index.html` | The hub page linking every project above | — |
 | `public/` | Image assets — currently unreferenced by any page in this repo; worth checking before assuming it's live |
 

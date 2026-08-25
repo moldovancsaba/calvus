@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>DiscountDirect – Ajánlatküldő üzenetváltás eladók és vevők között</title>
+  <style>
+    :root {
+      --bg: #f4f5f9;
+      --surface: #ffffff;
+      --text: #1c2333;
+      --muted: #67708a;
+      --line: #e3e6ef;
+      --accent: #3b5bdb;
+      --accent-soft: #e7ecfb;
+      --green: #2f9e6e;
+      --green-soft: #e3f5ec;
+      --red: #d64545;
+      --red-soft: #fbecec;
+      --radius: 14px;
+      --shadow: 0 10px 30px rgba(28, 35, 51, 0.08);
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+    }
+    button { font: inherit; cursor: pointer; }
+
+    .topbar {
+      display: flex; align-items: center; justify-content: space-between; gap: 16px;
+      padding: 14px 22px; background: #141a2e; color: #fff; flex-wrap: wrap;
+    }
+    .brand { display: flex; align-items: baseline; gap: 8px; text-decoration: none; color: #fff; }
+    .brand-main { font-weight: 900; font-size: 19px; letter-spacing: -0.3px; }
+    .brand-sub { font-size: 11px; font-weight: 700; color: #93a5f5; text-transform: uppercase; letter-spacing: .08em; }
+    .view-toggle { display: flex; background: rgba(255,255,255,.12); border-radius: 999px; padding: 3px; }
+    .view-toggle button {
+      border: 0; background: transparent; color: rgba(255,255,255,.75);
+      padding: 7px 16px; border-radius: 999px; font-weight: 800; font-size: 13px;
+    }
+    .view-toggle button.is-active { background: #fff; color: #141a2e; }
+    .topbar-note { font-size: 11px; font-weight: 700; color: rgba(255,255,255,.55); }
+
+    .app {
+      display: grid; grid-template-columns: 290px minmax(0, 1fr) 330px;
+      gap: 16px; padding: 16px 22px 30px; max-width: 1400px; margin: 0 auto;
+      align-items: start;
+    }
+    .pane { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); box-shadow: var(--shadow); }
+    .pane-head { padding: 14px 16px 10px; border-bottom: 1px solid var(--line); }
+    .pane-head h2 { margin: 0; font-size: 13px; text-transform: uppercase; letter-spacing: .06em; color: var(--muted); }
+
+    /* Conversation list */
+    .conv { display: flex; gap: 11px; width: 100%; text-align: left; border: 0; background: transparent; padding: 12px 16px; border-bottom: 1px solid var(--line); align-items: center; }
+    .conv:last-child { border-bottom: 0; }
+    .conv.is-active { background: var(--accent-soft); }
+    .avatar {
+      flex: none; width: 40px; height: 40px; border-radius: 50%;
+      display: grid; place-items: center; font-weight: 900; font-size: 14px; color: #fff;
+    }
+    .conv-meta { min-width: 0; }
+    .conv-name { margin: 0; font-weight: 800; font-size: 14px; }
+    .conv-last { margin: 2px 0 0; font-size: 12px; color: var(--muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .conv-badge { margin-left: auto; flex: none; background: var(--accent); color: #fff; font-size: 11px; font-weight: 900; border-radius: 999px; padding: 2px 8px; }
+
+    /* Thread */
+    .thread-head { display: flex; align-items: center; gap: 11px; padding: 13px 18px; border-bottom: 1px solid var(--line); }
+    .thread-head h2 { margin: 0; font-size: 16px; }
+    .thread-head p { margin: 1px 0 0; font-size: 12px; color: var(--muted); }
+    .thread { padding: 18px; display: grid; gap: 12px; min-height: 380px; align-content: start; }
+    .bubble { max-width: 78%; padding: 10px 14px; border-radius: 16px; font-size: 14px; line-height: 1.35; }
+    .bubble.from-them { background: #eef0f6; border-bottom-left-radius: 5px; justify-self: start; }
+    .bubble.from-me { background: var(--accent); color: #fff; border-bottom-right-radius: 5px; justify-self: end; }
+    .bubble time { display: block; margin-top: 4px; font-size: 10px; opacity: .65; }
+
+    /* Offer card inside the thread */
+    .offer { max-width: 82%; border: 1.5px solid var(--accent); border-radius: 16px; background: var(--surface); overflow: hidden; }
+    .offer.from-me { justify-self: end; }
+    .offer.from-them { justify-self: start; }
+    .offer-tag { display: flex; justify-content: space-between; gap: 10px; background: var(--accent-soft); color: var(--accent); font-size: 10px; font-weight: 900; text-transform: uppercase; letter-spacing: .06em; padding: 5px 13px; }
+    .offer-body { padding: 11px 14px 13px; }
+    .offer-product { margin: 0; font-weight: 800; font-size: 14px; }
+    .offer-reason { margin: 4px 0 8px; font-size: 12px; color: var(--muted); }
+    .offer-prices { display: flex; align-items: baseline; gap: 9px; }
+    .offer-old { text-decoration: line-through; color: var(--muted); font-size: 13px; }
+    .offer-new { font-weight: 900; font-size: 18px; }
+    .offer-pct { background: var(--green-soft); color: var(--green); font-size: 11px; font-weight: 900; border-radius: 999px; padding: 2px 8px; }
+    .offer-actions { display: flex; gap: 8px; margin-top: 11px; }
+    .offer-actions button { flex: 1; border-radius: 9px; padding: 8px 0; font-weight: 800; font-size: 13px; border: 1.5px solid var(--line); background: var(--surface); }
+    .offer-actions .accept { background: var(--accent); border-color: var(--accent); color: #fff; }
+    .offer-status { display: inline-block; margin-top: 10px; font-size: 11px; font-weight: 900; border-radius: 999px; padding: 3px 10px; }
+    .offer-status.accepted { background: var(--green-soft); color: var(--green); }
+    .offer-status.declined { background: var(--red-soft); color: var(--red); }
+    .offer-status.pending { background: #f1f2f7; color: var(--muted); }
+
+    .composer { display: flex; gap: 9px; padding: 13px 16px; border-top: 1px solid var(--line); }
+    .composer input { flex: 1; border: 1.5px solid var(--line); border-radius: 999px; padding: 9px 16px; font: inherit; }
+    .composer button { border: 0; background: var(--accent); color: #fff; border-radius: 999px; padding: 9px 18px; font-weight: 800; }
+
+    /* Context panel */
+    .ctx-section { padding: 13px 16px; border-bottom: 1px solid var(--line); }
+    .ctx-section:last-child { border-bottom: 0; }
+    .ctx-section h3 { margin: 0 0 9px; font-size: 12px; text-transform: uppercase; letter-spacing: .06em; color: var(--muted); }
+    .history-item { display: flex; justify-content: space-between; gap: 10px; padding: 6px 0; border-bottom: 1px dashed var(--line); font-size: 13px; }
+    .history-item:last-child { border-bottom: 0; }
+    .history-item .item { font-weight: 700; }
+    .history-item .when { color: var(--muted); font-size: 11px; display: block; margin-top: 1px; }
+    .history-item .price { font-weight: 800; white-space: nowrap; }
+    .rec { border: 1px solid var(--line); border-radius: 12px; padding: 11px 13px; margin-bottom: 10px; background: #fafbfe; }
+    .rec:last-child { margin-bottom: 0; }
+    .rec-title { margin: 0; font-weight: 800; font-size: 13px; }
+    .rec-reason { margin: 4px 0 9px; font-size: 12px; color: var(--muted); }
+    .rec button { width: 100%; border: 0; background: var(--accent); color: #fff; border-radius: 9px; padding: 8px 0; font-weight: 800; font-size: 13px; }
+    .rec .rec-prices { display: flex; align-items: baseline; gap: 8px; margin-bottom: 9px; }
+    .ctx-empty { font-size: 12px; color: var(--muted); font-style: italic; margin: 0; }
+
+    .wireframe-note { max-width: 1400px; margin: 0 auto; padding: 0 22px 34px; font-size: 11px; font-weight: 700; color: var(--muted); }
+    .wireframe-note a { color: var(--accent); }
+
+    @media (max-width: 1080px) {
+      .app { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="../index.html">
+      <span class="brand-main">DiscountDirect</span>
+      <span class="brand-sub">wireframe</span>
+    </a>
+    <div class="view-toggle" role="tablist" aria-label="Nézet váltása">
+      <button id="sellerViewBtn" class="is-active" role="tab" aria-selected="true">Eladó nézet</button>
+      <button id="buyerViewBtn" role="tab" aria-selected="false">Vevő nézet</button>
+    </div>
+    <span class="topbar-note">Kattintható prototípus — mintaadatokkal</span>
+  </header>
+
+  <main class="app">
+    <section class="pane" aria-label="Beszélgetések">
+      <div class="pane-head"><h2 id="convListTitle">Vevők</h2></div>
+      <div id="convList"></div>
+    </section>
+
+    <section class="pane" aria-label="Üzenetváltás">
+      <div class="thread-head">
+        <span class="avatar" id="threadAvatar"></span>
+        <div>
+          <h2 id="threadName"></h2>
+          <p id="threadSub"></p>
+        </div>
+      </div>
+      <div class="thread" id="thread"></div>
+      <div class="composer">
+        <input id="composerInput" type="text" placeholder="Írj üzenetet…" aria-label="Üzenet" />
+        <button id="composerSend">Küldés</button>
+      </div>
+    </section>
+
+    <section class="pane" aria-label="Kontextus">
+      <div class="ctx-section">
+        <h3 id="historyTitle">Vásárlási előzmények</h3>
+        <div id="historyList"></div>
+      </div>
+      <div class="ctx-section">
+        <h3 id="recTitle">Ajánlott ajánlatok</h3>
+        <div id="recList"></div>
+      </div>
+    </section>
+  </main>
+
+  <p class="wireframe-note">
+    DiscountDirect wireframe — üzenetküldő felület, amely az eladó és a vevő közös vásárlási
+    előzményeire és ajánlásokra építve küld személyre szabott ajánlatokat. Minden adat minta.
+    <a href="../index.html">← Calvus Hub</a>
+  </p>
+
+  <script>
+    (function () {
+    'use strict';
+
+    const fmtFt = n => n.toLocaleString('hu-HU') + ' Ft';
+
+    // ponytail: in-memory sample data, resets on reload — a wireframe needs no persistence
+    const CONVERSATIONS = [
+      {
+        id: 'anna',
+        buyer: 'Kiss Anna', seller: 'ElektroHome Kft.', color: '#3b5bdb',
+        buyerSub: 'Törzsvásárló · 7 rendelés', sellerSub: 'Elektronikai webáruház · válaszidő ~1 óra',
+        history: [
+          { item: 'Robotporszívó X200', when: '2026. május 12.', price: 89990 },
+          { item: 'HEPA szűrő (2 db)', when: '2026. június 30.', price: 7990 },
+          { item: 'Akkumulátor X200-hoz', when: '2026. augusztus 2.', price: 15990 },
+        ],
+        recs: [
+          { product: 'HEPA szűrő előfizetés (negyedéves)', reason: 'A vevő 8 hetente vesz szűrőt — az előfizetés mindkét félnek kiszámíthatóbb.', orig: 7990, pct: 20 },
+          { product: 'X200 Pro csere-akció', reason: 'Az X200-at több mint egy éve vette; a Pro modellre váltóknak beszámítást adhatsz.', orig: 129990, pct: 15 },
+        ],
+        messages: [
+          { from: 'buyer', text: 'Jó napot! Az akkumulátor megérkezett, köszönöm a gyors szállítást.', at: '08:42' },
+          { from: 'seller', text: 'Örülünk! Ha bármi kérdés van a beszereléshez, szóljon bátran.', at: '09:05' },
+          { from: 'seller', offer: { product: 'HEPA szűrő (2 db) – törzsvásárlói ár', reason: 'Vásárlási előzményei alapján', orig: 7990, pct: 15, status: 'accepted' }, at: '09:06' },
+          { from: 'buyer', text: 'Az ajánlatot elfogadtam, jöhet a szokásos címre. 👍', at: '10:12' },
+        ],
+      },
+      {
+        id: 'gabor',
+        buyer: 'Szabó Gábor', seller: 'KávéMester Bt.', color: '#2f9e6e',
+        buyerSub: 'Visszatérő vevő · 4 rendelés', sellerSub: 'Pörkölő műhely · válaszidő ~3 óra',
+        history: [
+          { item: 'Brazil szemes kávé 1 kg', when: '2026. június 3.', price: 6490 },
+          { item: 'Brazil szemes kávé 1 kg', when: '2026. július 1.', price: 6490 },
+          { item: 'Etióp szemes kávé 250 g', when: '2026. július 28.', price: 2990 },
+        ],
+        recs: [
+          { product: 'Brazil 1 kg havi csomag', reason: 'Havonta rendeli ugyanazt — az ismétlődő csomag kedvezménnyel megtartja.', orig: 6490, pct: 12 },
+          { product: 'Etióp 1 kg felfedező ár', reason: 'A 250 g-os kiszerelést kipróbálta; a nagy kiszerelésre érdemes rásegíteni.', orig: 9990, pct: 18 },
+        ],
+        messages: [
+          { from: 'buyer', text: 'Sziasztok! Az etióp nagyon bejött, van belőle nagyobb kiszerelés?', at: 'tegnap' },
+          { from: 'seller', text: 'Van, 1 kg-os pörkölésből most készült friss adag. Küldök rá ajánlatot!', at: 'tegnap' },
+        ],
+      },
+      {
+        id: 'reka',
+        buyer: 'Nagy Réka', seller: 'SportDepo Zrt.', color: '#d6772e',
+        buyerSub: 'Új vevő · 1 rendelés', sellerSub: 'Sportfelszerelés · válaszidő ~2 óra',
+        history: [
+          { item: 'Futócipő TrailGrip 42', when: '2026. augusztus 18.', price: 34990 },
+        ],
+        recs: [
+          { product: 'Futózokni csomag (3 pár)', reason: 'Első vásárlás után kiegészítő termékkel a legkönnyebb visszahozni.', orig: 5990, pct: 25 },
+        ],
+        messages: [
+          { from: 'seller', text: 'Kedves Réka, megérkezett a futócipő? Minden rendben volt a mérettel?', at: 'hétfő' },
+          { from: 'buyer', text: 'Igen, tökéletes! Köszönöm, hogy rákérdeztek.', at: 'hétfő' },
+        ],
+      },
+    ];
+
+    let view = 'seller';           // 'seller' | 'buyer'
+    let activeId = CONVERSATIONS[0].id;
+
+    const el = id => document.getElementById(id);
+    const active = () => CONVERSATIONS.find(c => c.id === activeId);
+    const esc = s => String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+
+    function initials(name) {
+      return name.split(' ').map(w => w[0]).join('').slice(0, 2).toUpperCase();
+    }
+
+    function renderConvList() {
+      el('convListTitle').textContent = view === 'seller' ? 'Vevők' : 'Eladók';
+      el('convList').innerHTML = CONVERSATIONS.map(c => {
+        const name = view === 'seller' ? c.buyer : c.seller;
+        const last = c.messages[c.messages.length - 1];
+        const lastText = last.text || ('Ajánlat: ' + last.offer.product);
+        const pending = c.messages.filter(m => m.offer && m.offer.status === 'pending').length;
+        return `
+          <button class="conv${c.id === activeId ? ' is-active' : ''}" data-id="${c.id}">
+            <span class="avatar" style="background:${c.color}">${esc(initials(name))}</span>
+            <span class="conv-meta">
+              <p class="conv-name">${esc(name)}</p>
+              <p class="conv-last">${esc(lastText)}</p>
+            </span>
+            ${pending ? `<span class="conv-badge">${pending}</span>` : ''}
+          </button>`;
+      }).join('');
+    }
+
+    function offerHtml(m, idx) {
+      const mine = (view === 'seller') === (m.from === 'seller');
+      const o = m.offer;
+      const price = Math.round(o.orig * (1 - o.pct / 100));
+      const statusLabel = { pending: 'Válaszra vár', accepted: 'Elfogadva', declined: 'Elutasítva' }[o.status];
+      // The buyer decides on a pending offer; everyone else just sees the state.
+      const buyerCanAct = view === 'buyer' && m.from === 'seller' && o.status === 'pending';
+      return `
+        <div class="offer ${mine ? 'from-me' : 'from-them'}">
+          <div class="offer-tag"><span>Személyre szabott ajánlat</span><span>${esc(m.at)}</span></div>
+          <div class="offer-body">
+            <p class="offer-product">${esc(o.product)}</p>
+            <p class="offer-reason">${esc(o.reason)}</p>
+            <div class="offer-prices">
+              <span class="offer-old">${fmtFt(o.orig)}</span>
+              <span class="offer-new">${fmtFt(price)}</span>
+              <span class="offer-pct">−${o.pct}%</span>
+            </div>
+            ${buyerCanAct ? `
+              <div class="offer-actions">
+                <button class="accept" data-offer="${idx}" data-act="accepted">Elfogadom</button>
+                <button data-offer="${idx}" data-act="declined">Most nem</button>
+              </div>` : `<span class="offer-status ${o.status}">${statusLabel}</span>`}
+          </div>
+        </div>`;
+    }
+
+    function renderThread() {
+      const c = active();
+      const name = view === 'seller' ? c.buyer : c.seller;
+      el('threadAvatar').textContent = initials(name);
+      el('threadAvatar').style.background = c.color;
+      el('threadName').textContent = name;
+      el('threadSub').textContent = view === 'seller' ? c.buyerSub : c.sellerSub;
+      el('thread').innerHTML = c.messages.map((m, i) => {
+        if (m.offer) return offerHtml(m, i);
+        const mine = (view === 'seller') === (m.from === 'seller');
+        return `<div class="bubble ${mine ? 'from-me' : 'from-them'}">${esc(m.text)}<time>${esc(m.at)}</time></div>`;
+      }).join('');
+      el('thread').scrollTop = el('thread').scrollHeight;
+    }
+
+    function renderContext() {
+      const c = active();
+      el('historyTitle').textContent = view === 'seller'
+        ? 'A vevő korábbi vásárlásai nálad'
+        : 'Korábbi vásárlásaid ennél az eladónál';
+      el('historyList').innerHTML = c.history.map(h => `
+        <div class="history-item">
+          <span><span class="item">${esc(h.item)}</span><span class="when">${esc(h.when)}</span></span>
+          <span class="price">${fmtFt(h.price)}</span>
+        </div>`).join('');
+
+      if (view === 'seller') {
+        el('recTitle').textContent = 'Ajánlott ajánlatok';
+        el('recList').innerHTML = c.recs.length ? c.recs.map((r, i) => {
+          const price = Math.round(r.orig * (1 - r.pct / 100));
+          return `
+            <div class="rec">
+              <p class="rec-title">${esc(r.product)}</p>
+              <p class="rec-reason">${esc(r.reason)}</p>
+              <div class="rec-prices">
+                <span class="offer-old">${fmtFt(r.orig)}</span>
+                <span class="offer-new">${fmtFt(price)}</span>
+                <span class="offer-pct">−${r.pct}%</span>
+              </div>
+              <button data-rec="${i}">Ajánlat küldése a csevegésbe</button>
+            </div>`;
+        }).join('') : '<p class="ctx-empty">Most nincs több javasolt ajánlat ehhez a vevőhöz.</p>';
+      } else {
+        el('recTitle').textContent = 'Miért kapod ezeket az ajánlatokat?';
+        el('recList').innerHTML = `
+          <p class="ctx-empty">Az eladó a nála leadott korábbi rendeléseid és a hozzájuk illő
+          ajánlások alapján küldhet személyre szabott kedvezményt — kéretlen tömegajánlat helyett
+          csak olyat, ami a vásárlási előzményeidhez kapcsolódik.</p>`;
+      }
+    }
+
+    function renderAll() {
+      renderConvList();
+      renderThread();
+      renderContext();
+    }
+
+    // conversation switching
+    el('convList').addEventListener('click', e => {
+      const btn = e.target.closest('.conv');
+      if (!btn) return;
+      activeId = btn.dataset.id;
+      renderAll();
+    });
+
+    // seller sends a recommended offer into the chat
+    el('recList').addEventListener('click', e => {
+      const btn = e.target.closest('button[data-rec]');
+      if (!btn) return;
+      const c = active();
+      const r = c.recs.splice(Number(btn.dataset.rec), 1)[0];
+      c.messages.push({
+        from: 'seller', at: 'most',
+        offer: { product: r.product, reason: r.reason, orig: r.orig, pct: r.pct, status: 'pending' },
+      });
+      renderAll();
+    });
+
+    // buyer accepts / declines a pending offer
+    el('thread').addEventListener('click', e => {
+      const btn = e.target.closest('button[data-offer]');
+      if (!btn) return;
+      active().messages[Number(btn.dataset.offer)].offer.status = btn.dataset.act;
+      renderAll();
+    });
+
+    // plain text message from whichever side is active
+    function sendText() {
+      const input = el('composerInput');
+      const text = input.value.trim();
+      if (!text) return;
+      active().messages.push({ from: view, text, at: 'most' });
+      input.value = '';
+      renderAll();
+    }
+    el('composerSend').addEventListener('click', sendText);
+    el('composerInput').addEventListener('keydown', e => { if (e.key === 'Enter') sendText(); });
+
+    // view toggle
+    function setView(v) {
+      view = v;
+      el('sellerViewBtn').classList.toggle('is-active', v === 'seller');
+      el('buyerViewBtn').classList.toggle('is-active', v === 'buyer');
+      el('sellerViewBtn').setAttribute('aria-selected', v === 'seller');
+      el('buyerViewBtn').setAttribute('aria-selected', v === 'buyer');
+      renderAll();
+    }
+    el('sellerViewBtn').addEventListener('click', () => setView('seller'));
+    el('buyerViewBtn').addEventListener('click', () => setView('buyer'));
+
+    renderAll();
+    })();
+  </script>
+</body>
+</html>
