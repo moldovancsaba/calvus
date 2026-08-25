@@ -210,6 +210,42 @@
     .automation-next { font-size: 11px; color: var(--muted); font-weight: 700; }
     .automation-stop { border: 1.5px solid var(--line); background: var(--surface); border-radius: 8px; padding: 5px 12px; font-size: 12px; font-weight: 800; color: var(--red); }
 
+    /* Buyer-side channel mocks */
+    .mock-wrap { max-width: 720px; margin: 0 auto; padding: 16px 22px 30px; }
+    .mock-caption { margin: 0 0 12px; font-size: 12px; font-weight: 700; color: var(--muted); font-style: italic; }
+    .email-head { padding: 14px 18px; border-bottom: 1px solid var(--line); background: #fafbfe; border-radius: var(--radius) var(--radius) 0 0; }
+    .email-line { margin: 0 0 3px; font-size: 12px; color: var(--muted); }
+    .email-line strong { color: var(--text); }
+    .email-subject { margin: 7px 0 0; font-size: 16px; font-weight: 900; }
+    .email-body { padding: 18px; font-size: 14px; line-height: 1.5; }
+    .email-body p { margin: 0 0 12px; }
+    .email-body .offer { max-width: 100%; margin: 14px 0; }
+    .email-cta { display: block; text-align: center; background: var(--accent); color: #fff; border-radius: 10px; padding: 12px 0; font-weight: 900; text-decoration: none; margin: 14px 0; }
+    .email-footer { font-size: 11px; color: var(--muted); border-top: 1px solid var(--line); padding-top: 10px; margin-top: 16px; }
+
+    .letter { background: #fffdf7; border: 1px solid #e8e2d0; border-radius: 4px; box-shadow: var(--shadow); padding: 34px 38px; font-size: 14px; line-height: 1.55; }
+    .letter-head { display: flex; justify-content: space-between; align-items: baseline; border-bottom: 2px solid #141a2e; padding-bottom: 10px; margin-bottom: 18px; }
+    .letter-brand { font-weight: 900; font-size: 18px; letter-spacing: -0.3px; }
+    .letter-date { font-size: 12px; color: var(--muted); }
+    .letter-address { margin: 0 0 18px; font-size: 13px; color: var(--muted); white-space: pre-line; }
+    .letter p { margin: 0 0 12px; }
+    .coupon { border: 2px dashed var(--accent); border-radius: 12px; padding: 14px 18px; margin: 16px 0; text-align: center; background: var(--accent-soft); }
+    .coupon-code { font-size: 21px; font-weight: 900; letter-spacing: 2px; color: var(--accent); }
+    .coupon-desc { margin: 5px 0 0; font-size: 12px; font-weight: 700; color: var(--muted); }
+    .letter-sign { margin-top: 22px; font-weight: 800; }
+
+    .news { overflow: hidden; }
+    .news-banner { background: #141a2e; color: #fff; padding: 20px 22px; }
+    .news-banner h2 { margin: 0; font-size: 20px; letter-spacing: -0.4px; }
+    .news-banner p { margin: 4px 0 0; font-size: 12px; color: rgba(255,255,255,.65); font-weight: 700; }
+    .news-body { padding: 16px 18px; }
+    .news-greet { margin: 0 0 13px; font-size: 14px; }
+    .news-item { display: flex; justify-content: space-between; align-items: center; gap: 12px; border: 1px solid var(--line); border-radius: 12px; padding: 12px 14px; margin-bottom: 9px; }
+    .news-item-name { margin: 0; font-weight: 800; font-size: 14px; }
+    .news-item-why { margin: 2px 0 0; font-size: 12px; color: var(--muted); }
+    .news-item-prices { text-align: right; white-space: nowrap; }
+    .news-footer { font-size: 11px; color: var(--muted); border-top: 1px solid var(--line); padding: 12px 18px; }
+
     .wireframe-note { max-width: 1400px; margin: 0 auto; padding: 0 22px 34px; font-size: 11px; font-weight: 700; color: var(--muted); }
     .wireframe-note a { color: var(--accent); }
 
@@ -239,6 +275,13 @@
     <button id="chatTabBtn" class="is-active">Csevegések</button>
     <button id="flashTabBtn">⚡ Villámajánlat</button>
     <button id="listTabBtn">🗞 Ajánlatlisták</button>
+  </nav>
+
+  <nav class="seller-tabs" id="buyerTabs" aria-label="Vevői csatornák" hidden>
+    <button id="bChatTabBtn" class="is-active">Csevegés</button>
+    <button id="bEmailTabBtn">E-mail</button>
+    <button id="bMailTabBtn">Postai levél</button>
+    <button id="bNewsTabBtn">Hírlevél</button>
   </nav>
 
   <main class="app" id="chatScreen">
@@ -390,6 +433,24 @@
     </section>
   </main>
 
+  <main class="mock-wrap" id="emailScreen" hidden>
+    <p class="mock-caption">Így érkezik meg ugyanaz a személyre szabott ajánlat e-mailben — minta a kiválasztott vevőre szabva.</p>
+    <section class="pane">
+      <div class="email-head" id="emailHead"></div>
+      <div class="email-body" id="emailBody"></div>
+    </section>
+  </main>
+
+  <main class="mock-wrap" id="mailScreen" hidden>
+    <p class="mock-caption">A Mailing csatorna: nyomtatott DM-levél kuponkóddal — minta a kiválasztott vevőre szabva.</p>
+    <section class="letter" id="letterBody"></section>
+  </main>
+
+  <main class="mock-wrap" id="newsScreen" hidden>
+    <p class="mock-caption">A személyre szabott hírlevél: minden vevő csak a saját vásárlási előzményeihez illő ajánlatokat kapja.</p>
+    <section class="pane news" id="newsBody"></section>
+  </main>
+
   <p class="wireframe-note">
     DiscountDirect wireframe — üzenetküldő felület, amely az eladó és a vevő közös vásárlási
     előzményeire és ajánlásokra építve küld személyre szabott ajánlatokat, villámajánlat-kampányokat
@@ -442,6 +503,7 @@
         messages: [
           { from: 'buyer', text: 'Sziasztok! A BaristaOne mellé milyen tejhabosítót ajánlotok?', at: 'tegnap' },
           { from: 'seller', text: 'A MilkPro illik hozzá a legjobban — küldök rá ajánlatot!', at: 'tegnap' },
+          { from: 'seller', offer: { product: 'MilkPro tejhabosító', reason: 'A BaristaOne mellé ez a leggyakrabban vásárolt kiegészítő.', orig: 18990, pct: 18, status: 'pending', channels: ['Azonnali üzenet', 'E-mail'] }, at: 'tegnap' },
         ],
       },
       {
@@ -486,6 +548,7 @@
 
     let view = 'seller';           // 'seller' | 'buyer'
     let sellerTab = 'chat';        // 'chat' | 'flash' | 'list'
+    let buyerTab = 'chat';         // 'chat' | 'email' | 'mail' | 'news' 
     let activeId = CONVERSATIONS[0].id;
 
     const active = () => CONVERSATIONS.find(c => c.id === activeId);
@@ -741,14 +804,117 @@
       }).join('') : '<p class="ctx-empty">Nincs futó automatizmus — indíts egyet a bal oldali panelen.</p>';
     }
 
+    /* ---------- buyer channel mocks ---------- */
+
+    // The offer featured in the e-mail and letter samples: the newest offer in the thread,
+    // falling back to the first recommendation so every persona has something to show.
+    function personaDeal(c) {
+      const lastOffer = [...c.messages].reverse().find(m => m.offer);
+      if (lastOffer) return lastOffer.offer;
+      if (c.recs[0]) return c.recs[0];
+      const cat = CATALOG.find(x => x.relevant.includes(c.id));
+      return { product: cat.name, orig: cat.price, pct: 15, reason: cat.why[c.id] };
+    }
+    const firstName = name => name.split(' ').pop();
+    const dealPrice = d => Math.round(d.orig * (1 - d.pct / 100));
+
+    function renderEmailMock() {
+      const c = active();
+      const d = personaDeal(c);
+      el('emailHead').innerHTML = `
+        <p class="email-line"><strong>Feladó:</strong> ElektroHome Kft. &lt;ajanlat@elektrohome.hu&gt;</p>
+        <p class="email-line"><strong>Címzett:</strong> ${esc(c.buyer)}</p>
+        <p class="email-subject">Személyre szabott ajánlat: ${esc(d.product)} −${d.pct}%</p>`;
+      el('emailBody').innerHTML = `
+        <p>Kedves ${esc(firstName(c.buyer))}!</p>
+        <p>A nálunk leadott korábbi rendeléseid alapján összeállítottunk egy ajánlatot,
+        amiről úgy gondoljuk, tényleg hasznos lehet számodra:</p>
+        <div class="offer">
+          <div class="offer-tag"><span>Személyre szabott ajánlat</span><span>E-mail</span></div>
+          <div class="offer-body">
+            <p class="offer-product">${esc(d.product)}</p>
+            <p class="offer-reason">${esc(d.reason)}</p>
+            <div class="offer-prices">
+              <span class="offer-old">${fmtFt(d.orig)}</span>
+              <span class="offer-new">${fmtFt(dealPrice(d))}</span>
+              <span class="offer-pct">−${d.pct}%</span>
+            </div>
+          </div>
+        </div>
+        <a class="email-cta" href="#" onclick="return false">Ajánlat megnyitása a DiscountDirectben</a>
+        <p>Ha kérdésed van, válaszolj erre a levélre — a beszélgetés a DiscountDirect
+        csevegésében folytatódik.</p>
+        <p class="email-footer">Ezt az ajánlatot azért kaptad, mert az ElektroHome Kft. vásárlója vagy.
+        Leiratkozás · Ajánlatbeállítások módosítása</p>`;
+    }
+
+    function renderMailMock() {
+      const c = active();
+      const d = personaDeal(c);
+      el('letterBody').innerHTML = `
+        <div class="letter-head">
+          <span class="letter-brand">ElektroHome Kft.</span>
+          <span class="letter-date">Budapest, 2026. augusztus 25.</span>
+        </div>
+        <p class="letter-address">${esc(c.buyer)}
+1111 Budapest, Minta utca 12.</p>
+        <p><strong>Tisztelt ${esc(firstName(c.buyer))}${c.buyer.endsWith('Anna') || c.buyer.endsWith('Réka') ? '' : ' Úr'}!</strong></p>
+        <p>Köszönjük, hogy vásárlásaival megtisztelt bennünket. Korábbi rendelései alapján
+        egy kifejezetten Önnek szóló kedvezményt készítettünk elő:</p>
+        <p><strong>${esc(d.product)}</strong> — ${esc(d.reason)}</p>
+        <div class="coupon">
+          <span class="coupon-code">DIRECT-${d.pct}-${esc(initials(c.buyer))}</span>
+          <p class="coupon-desc">−${d.pct}% kedvezmény: ${fmtFt(d.orig)} helyett ${fmtFt(dealPrice(d))} · A kupon a boltban és online is beváltható</p>
+        </div>
+        <p>Az ajánlat részleteit a DiscountDirect alkalmazásban, a csevegésünkben is megtalálja.</p>
+        <p class="letter-sign">Üdvözlettel,<br>az ElektroHome csapata</p>`;
+    }
+
+    function renderNewsMock() {
+      const c = active();
+      const items = CATALOG.filter(p => p.relevant.includes(c.id));
+      const freq = (AUTOMATIONS[0] && AUTOMATIONS[0].freq) || 'Kéthetente';
+      el('newsBody').innerHTML = `
+        <div class="news-banner">
+          <h2>Ajánlataink — csak Neked</h2>
+          <p>ElektroHome személyre szabott ajánlatlista · ${esc(freq.toLowerCase())} érkezik</p>
+        </div>
+        <div class="news-body">
+          <p class="news-greet">Kedves ${esc(firstName(c.buyer))}! Ezen a héten ${items.length} ajánlat
+          illik a korábbi vásárlásaidhoz:</p>
+          ${items.map(p => {
+            const pct = (c.recs.find(r => r.product === p.name) || {}).pct || 10;
+            return `
+            <div class="news-item">
+              <span>
+                <p class="news-item-name">${esc(p.name)}</p>
+                <p class="news-item-why">${esc(p.why[c.id])}</p>
+              </span>
+              <span class="news-item-prices">
+                <span class="offer-old">${fmtFt(p.price)}</span><br>
+                <span class="offer-new">${fmtFt(Math.round(p.price * (1 - pct / 100)))}</span>
+                <span class="offer-pct">−${pct}%</span>
+              </span>
+            </div>`;
+          }).join('')}
+        </div>
+        <p class="news-footer">Ezt a listát a nálunk leadott korábbi rendeléseid alapján állítjuk össze
+        automatikusan — mindig csak a rád releváns termékekkel. Leiratkozás · Gyakoriság módosítása</p>`;
+    }
+
     /* ---------- shell ---------- */
 
     function renderScreens() {
-      const t = view === 'seller' ? sellerTab : 'chat';
       el('sellerTabs').style.display = view === 'seller' ? '' : 'none';
-      el('chatScreen').hidden = t !== 'chat';
-      el('flashScreen').hidden = t !== 'flash';
-      el('listScreen').hidden = t !== 'list';
+      el('buyerTabs').hidden = view !== 'buyer';
+      const st = view === 'seller' ? sellerTab : 'chat';
+      const bt = view === 'buyer' ? buyerTab : 'chat';
+      el('chatScreen').hidden = view === 'seller' ? st !== 'chat' : bt !== 'chat';
+      el('flashScreen').hidden = view !== 'seller' || st !== 'flash';
+      el('listScreen').hidden = view !== 'seller' || st !== 'list';
+      el('emailScreen').hidden = view !== 'buyer' || bt !== 'email';
+      el('mailScreen').hidden = view !== 'buyer' || bt !== 'mail';
+      el('newsScreen').hidden = view !== 'buyer' || bt !== 'news';
     }
 
     function renderAll() {
@@ -762,6 +928,9 @@
       renderListProducts();
       renderListPreview();
       renderAutomations();
+      renderEmailMock();
+      renderMailMock();
+      renderNewsMock();
     }
 
     /* ---------- events ---------- */
@@ -901,6 +1070,20 @@
     el('chatTabBtn').addEventListener('click', () => setSellerTab('chat'));
     el('flashTabBtn').addEventListener('click', () => setSellerTab('flash'));
     el('listTabBtn').addEventListener('click', () => setSellerTab('list'));
+
+    // buyer channel tabs — how the same offer reaches the buyer per channel
+    function setBuyerTab(t) {
+      buyerTab = t;
+      el('bChatTabBtn').classList.toggle('is-active', t === 'chat');
+      el('bEmailTabBtn').classList.toggle('is-active', t === 'email');
+      el('bMailTabBtn').classList.toggle('is-active', t === 'mail');
+      el('bNewsTabBtn').classList.toggle('is-active', t === 'news');
+      renderAll();
+    }
+    el('bChatTabBtn').addEventListener('click', () => setBuyerTab('chat'));
+    el('bEmailTabBtn').addEventListener('click', () => setBuyerTab('email'));
+    el('bMailTabBtn').addEventListener('click', () => setBuyerTab('mail'));
+    el('bNewsTabBtn').addEventListener('click', () => setBuyerTab('news'));
 
     // view toggle
     function setView(v) {
