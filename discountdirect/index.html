@@ -46,6 +46,8 @@
     }
     .view-toggle button.is-active { background: #fff; color: #141a2e; }
     .topbar-note { font-size: 11px; font-weight: 700; color: rgba(255,255,255,.55); }
+    .persona { display: flex; align-items: center; gap: 8px; font-size: 12px; font-weight: 800; color: rgba(255,255,255,.75); }
+    .persona select { border: 0; border-radius: 999px; padding: 7px 12px; font-size: 13px; font-weight: 800; background: #fff; color: #141a2e; }
 
     .seller-tabs { display: flex; gap: 8px; max-width: 1400px; margin: 14px auto 0; padding: 0 22px; }
     .seller-tabs button {
@@ -200,6 +202,10 @@
       <button id="sellerViewBtn" class="is-active" role="tab" aria-selected="true">Eladó nézet</button>
       <button id="buyerViewBtn" role="tab" aria-selected="false">Vevő nézet</button>
     </div>
+    <label class="persona" id="personaWrap" hidden>
+      <span>Vevő:</span>
+      <select id="personaSelect" aria-label="Melyik vevőként nézed"></select>
+    </label>
     <span class="topbar-note">Kattintható prototípus — mintaadatokkal</span>
   </header>
 
@@ -403,22 +409,32 @@
 
     /* ---------- chat screen ---------- */
 
+    function convButton(c, name, color) {
+      const last = c.messages[c.messages.length - 1];
+      const lastText = last.text || ('Ajánlat: ' + last.offer.product);
+      const pending = c.messages.filter(m => m.offer && m.offer.status === 'pending').length;
+      return `
+        <button class="conv${c.id === activeId ? ' is-active' : ''}" data-id="${c.id}">
+          <span class="avatar" style="background:${color}">${esc(initials(name))}</span>
+          <span class="conv-meta">
+            <p class="conv-name">${esc(name)}</p>
+            <p class="conv-last">${esc(lastText)}</p>
+          </span>
+          ${pending ? `<span class="conv-badge">${pending}</span>` : ''}
+        </button>`;
+    }
+
     function renderConvList() {
-      el('convListTitle').textContent = view === 'seller' ? 'Vevők' : 'Vevő kiválasztása';
-      el('convList').innerHTML = CONVERSATIONS.map(c => {
-        const last = c.messages[c.messages.length - 1];
-        const lastText = last.text || ('Ajánlat: ' + last.offer.product);
-        const pending = c.messages.filter(m => m.offer && m.offer.status === 'pending').length;
-        return `
-          <button class="conv${c.id === activeId ? ' is-active' : ''}" data-id="${c.id}">
-            <span class="avatar" style="background:${c.color}">${esc(initials(c.buyer))}</span>
-            <span class="conv-meta">
-              <p class="conv-name">${esc(c.buyer)}</p>
-              <p class="conv-last">${esc(lastText)}</p>
-            </span>
-            ${pending ? `<span class="conv-badge">${pending}</span>` : ''}
-          </button>`;
-      }).join('');
+      if (view === 'seller') {
+        el('convListTitle').textContent = 'Vevők';
+        el('convList').innerHTML = CONVERSATIONS.map(c => convButton(c, c.buyer, c.color)).join('');
+      } else {
+        // The buyer's own inbox: their one conversation with this seller. Which buyer you are
+        // is a demo choice and lives in the topbar persona selector, not in this list —
+        // mixing the seller's buyer roster into the buyer view read as two views at once.
+        el('convListTitle').textContent = 'Csevegéseid';
+        el('convList').innerHTML = convButton(active(), SELLER.name, '#141a2e');
+      }
     }
 
     function offerHtml(m, idx) {
@@ -735,10 +751,19 @@
       el('buyerViewBtn').classList.toggle('is-active', v === 'buyer');
       el('sellerViewBtn').setAttribute('aria-selected', v === 'seller');
       el('buyerViewBtn').setAttribute('aria-selected', v === 'buyer');
+      el('personaWrap').hidden = v !== 'buyer';
+      el('personaSelect').value = activeId;
       renderAll();
     }
     el('sellerViewBtn').addEventListener('click', () => setView('seller'));
     el('buyerViewBtn').addEventListener('click', () => setView('buyer'));
+
+    // persona selector (buyer view): which buyer's inbox the demo shows
+    el('personaSelect').innerHTML = CONVERSATIONS.map(c => `<option value="${c.id}">${esc(c.buyer)}</option>`).join('');
+    el('personaSelect').addEventListener('change', () => {
+      activeId = el('personaSelect').value;
+      renderAll();
+    });
 
     // init channel checkboxes
     el('flashChannels').innerHTML = channelChecksHtml('flash', ['Azonnali üzenet', 'E-mail']);
