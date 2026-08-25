@@ -53,15 +53,19 @@ folder is the single consolidated data source built from all of it.
    at the top of the trends page. A **skeleton** is now built: the 11-option
    dropdown plus a per-area summary block (text + video) that swaps with the
    selection. It deliberately does *not* filter the survey answers — that
-   still needs re-tabulated data. The summaries are now the **client's final
+   still needs re-tabulated data. The summaries are the **client's final
    texts** (`SG_Területi_összefoglalók_final.docx`, received 2026-08-25),
-   replacing the interim sample copy; the doc's own headings map onto the
-   filter's area names in three places (Pénzügy és számvitel → Finance,
-   Logisztika és szállítás → Szállítás, beszerzés, Office Support &
-   Ügyfélszolgálat → Ügyfélszolgálat, Adminisztráció). The video slot still
-   plays one shared sample YouTube embed (Blender's Big Buck Bunny) —
-   per-area videos remain outstanding; swap the iframe `src` when they
-   arrive.
+   and the client confirmed the same doc's headings are the final filter
+   names — five labels were renamed accordingly (Finance → Pénzügy és
+   számvitel, Szállítás, beszerzés → Logisztika és szállítás,
+   Ügyfélszolgálat, Adminisztráció → Office Support & Ügyfélszolgálat,
+   Pharma, Life sciences → Pharma & Life Sciences, BSC (Business Services
+   Center) → BSC; the doc's two all-caps headings were title-cased and pure
+   capitalisation differences left alone). The media slot shows the client's
+   infographic images instead of the earlier sample video: per-area files go
+   in `assets/` and the `AREA_IMAGES` map in `index.html`; only the Finance
+   infographic has arrived so far, so it doubles as the shared default until
+   the rest come.
 6. **"3 stakeholder ranges" (candidate / company / IDBC) is aspirational —
    and the shipped labels now assert it anyway (owner decision, 2026-08-17).**
    The real `webBertabla` sheet has one range (`min`/`max`) plus one
