@@ -49,6 +49,29 @@ folder is the single consolidated data source built from all of it.
    them would require the client re-running or re-tabulating the survey,
    not a code change.
 
+   Update (2026-08-25, client feedback round 2): the area dropdown is gone. The
+   trends page now shows **11 bubble links**, each opening a dedicated area page
+   (`terulet/index.html?terulet=<slug>`) with that area's summary, infographic
+   and research results. One template serves all 11 areas — separate files would
+   mean eleven copies of the same renderer in a repo with no build step. The
+   area texts and per-area image/edition mapping moved out of `index.html` into
+   `data/areas.json`, which both pages read.
+
+   **The per-area results are edition-mapped, not area-tabulated** (owner
+   decision, 2026-08-25): the survey still has no area breakdown, so `IT` and
+   `IT Contracting` show the genuinely matching *IT + Contracting* sample, and
+   the other nine show *Általános* (whole sample). Each page states in words
+   which sample is on screen and never claims area-level data. When re-tabulated
+   survey data arrives, only the `edition` field per area in `data/areas.json`
+   and the answers file need to change.
+
+   Also in this round: `Kapcsolat` removed from every page header (the footer
+   contact block stays), a visible but inert `Kijelentkezés` button added
+   top-right on all five pages — there is still no auth behind it, so it carries
+   the same `is-unavailable` treatment as the Excel and EN controls — and the
+   area summary text is clamped to the infographic's height with an "Olvass
+   tovább" toggle.
+
    Update (2026-08-24): the client's change round asks for an 11-area filter
    at the top of the trends page. A **skeleton** is now built: the 11-option
    dropdown plus a per-area summary block (text + video) that swaps with the

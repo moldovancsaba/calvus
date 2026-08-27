@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Területi összefoglaló – Talent Market &amp; Salary Guide 2026</title>
+  <style>
+    :root {
+      --bg: #eef2ec;
+      --surface: #ffffff;
+      --dark: #132323;
+      --text: #101818;
+      --muted: #5d6b66;
+      --line: rgba(19, 35, 35, 0.14);
+      --green: #a5df8f;
+      --radius-medium: 22px;
+      --shadow-soft: 0 18px 40px rgba(19, 35, 35, 0.1);
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--text);
+      font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+      font-weight: 800;
+    }
+    a { color: inherit; }
+    button { font: inherit; cursor: pointer; }
+
+    .site-header { position: sticky; top: 0; z-index: 20; }
+    .navbar {
+      display: flex; align-items: center; gap: 18px;
+      margin: 0 auto; max-width: 1180px; padding: 14px 26px;
+      background: var(--dark); color: #fff; border-radius: 0 0 20px 20px;
+    }
+    .brand { display: grid; text-decoration: none; color: #fff; line-height: 1; }
+    .brand-main { font-size: 21px; font-weight: 900; letter-spacing: -0.4px; }
+    .brand-sub { font-size: 11px; font-weight: 700; color: var(--green); text-transform: lowercase; }
+    .nav-links { display: flex; gap: 18px; list-style: none; margin: 0; padding: 0; font-size: 13px; font-weight: 800; }
+    .nav-links a { color: rgba(255,255,255,.82); text-decoration: none; }
+    .nav-links a:hover { color: #fff; }
+    .nav-actions { margin-left: auto; display: flex; gap: 10px; align-items: center; }
+    .button {
+      display: inline-block; padding: 10px 18px; border-radius: 999px;
+      font-size: 13px; font-weight: 900; text-decoration: none; border: 1.5px solid transparent;
+    }
+    .button-primary { background: var(--green); color: var(--dark); }
+    .button-logout { background: transparent; border-color: rgba(255,255,255,.45); color: #fff; }
+    .is-unavailable { opacity: .55; cursor: not-allowed; }
+
+    .container { max-width: 1180px; margin: 0 auto; padding: 0 26px; }
+    .section { padding: 32px 0 60px; }
+
+    .back-link {
+      display: inline-flex; align-items: center; gap: 7px; margin: 22px 0 18px;
+      font-size: 13px; font-weight: 900; text-decoration: none; color: var(--muted);
+    }
+    .back-link:hover { color: var(--text); }
+
+    .eyebrow { margin: 0 0 8px; font-size: 12px; font-weight: 900; text-transform: uppercase; letter-spacing: .08em; color: var(--muted); }
+    h1 { margin: 0 0 6px; font-size: clamp(28px, 4vw, 42px); line-height: 1.02; letter-spacing: -1px; }
+    .lede { margin: 0; font-size: 13px; font-weight: 700; color: var(--muted); }
+
+    /* Summary: text column clamped to the infographic's height, expandable. */
+    .area-summary { display: grid; grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr); gap: 26px; align-items: start; margin: 24px 0 0; }
+    .summary-text { position: relative; }
+    .summary-body { position: relative; overflow: hidden; }
+    .summary-body.is-clamped::after {
+      content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 78px;
+      background: linear-gradient(to bottom, rgba(238,242,236,0), var(--bg));
+      pointer-events: none;
+    }
+    .summary-body p { margin: 0 0 11px; font-size: 13.5px; font-weight: 700; line-height: 1.55; color: var(--muted); }
+    .read-more {
+      margin-top: 12px; padding: 9px 18px; border-radius: 999px;
+      border: 1.5px solid var(--dark); background: transparent; color: var(--dark); font-size: 13px; font-weight: 900;
+    }
+    .read-more:hover { background: var(--dark); color: #fff; }
+    .area-media { position: relative; aspect-ratio: 16 / 9; border-radius: 18px; overflow: hidden; background: rgba(19,35,35,.1); }
+    .area-media img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+
+    .results-head { margin: 46px 0 0; padding-top: 26px; border-top: 2px solid var(--dark); }
+    .results-head h2 { margin: 0 0 6px; font-size: clamp(22px, 3vw, 30px); letter-spacing: -0.6px; }
+    .sample-note { margin: 0; font-size: 12px; font-weight: 800; color: var(--muted); max-width: 720px; }
+    .topic-filter { margin: 20px 0 0; max-width: 340px; }
+    .topic-filter label { display: grid; gap: 8px; font-size: 13px; font-weight: 900; }
+    select {
+      font: inherit; font-weight: 800; padding: 11px 14px; border-radius: 999px;
+      border: 1.5px solid var(--line); background: var(--green); color: var(--dark);
+    }
+
+    .panels { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 40px; margin-top: 26px; }
+    .panel h3 { margin: 0 0 4px; font-size: clamp(20px, 2.6vw, 26px); letter-spacing: -0.6px; }
+    .panel-note { margin: 0 0 18px; font-size: 12px; font-weight: 700; color: var(--muted); }
+    .chart-area { display: grid; gap: 34px; }
+    .question-block { display: grid; gap: 10px; }
+    .question-title { margin: 0; font-size: clamp(15px, 1.7vw, 17px); line-height: 1.2; font-weight: 900; }
+    .bar { min-height: 42px; border-radius: 20px; overflow: hidden; display: flex; background: rgba(19,35,35,.08); }
+    .bar-compact { min-height: 24px; border-radius: 12px; }
+    .segment { min-width: 2px; display: grid; place-items: center; color: #071010; font-size: 12px; font-weight: 900; overflow: hidden; animation: bar-grow .5s ease-out; }
+    @keyframes bar-grow { from { width: 0; } }
+    @media (prefers-reduced-motion: reduce) { .segment { animation: none; } }
+    .legend { display: flex; flex-wrap: wrap; gap: 8px 14px; }
+    .legend-item { display: inline-flex; align-items: center; gap: 6px; font-size: 11px; font-weight: 800; color: rgba(16,24,24,.76); }
+    .legend-dot { width: 12px; height: 12px; border-radius: 50%; flex: none; }
+    .answer-row-multi { display: grid; grid-template-columns: minmax(150px, 260px) 1fr 54px; gap: 12px; align-items: center; margin-bottom: 8px; }
+    .answer-label { font-size: 13px; font-weight: 900; line-height: 1.15; }
+    .answer-value { font-size: 12px; font-weight: 900; text-align: right; }
+    .multi-group { margin-bottom: 20px; }
+    .multi-group-label { margin: 0 0 8px; font-size: 13px; font-weight: 900; }
+    .no-data { font-size: 13px; font-weight: 700; color: var(--muted); font-style: italic; margin: 0; }
+
+    .site-footer { background: var(--dark); color: #fff; padding: 30px 0; margin-top: 40px; }
+    .site-footer .container { display: flex; justify-content: space-between; gap: 18px; flex-wrap: wrap; font-size: 12px; font-weight: 700; }
+    .site-footer a { color: var(--green); }
+
+    @media (max-width: 900px) {
+      .area-summary, .panels { grid-template-columns: 1fr; }
+      .nav-links { display: none; }
+    }
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <nav class="navbar" aria-label="Fő navigáció">
+      <a class="brand" href="../index.html" aria-label="IDBC Group">
+        <span class="brand-main">IDBC</span>
+        <span class="brand-sub">salary guide</span>
+      </a>
+      <ul class="nav-links">
+        <li><a href="../index.html#trends">Piaci trendek</a></li>
+        <li><a href="../berezes/index.html">Bérezés</a></li>
+        <li><a href="../sap/index.html">SAP</a></li>
+        <li><a href="../expert-pool/index.html">Expert Pool</a></li>
+      </ul>
+      <div class="nav-actions">
+        <a class="button button-primary" href="../berezes/index.html">Bérsávok</a>
+        <button class="button button-logout is-unavailable" type="button" aria-disabled="true"
+          title="A be- és kijelentkezés a prototípusban még nincs bekötve">Kijelentkezés</button>
+      </div>
+    </nav>
+  </header>
+
+  <main class="section">
+    <div class="container">
+      <a class="back-link" href="../index.html#trends">← Vissza a munkaerő-piaci trendekhez</a>
+
+      <p class="eyebrow">Területi összefoglaló</p>
+      <h1 id="areaTitle">Terület</h1>
+      <p class="lede" id="areaLede"></p>
+
+      <div class="area-summary">
+        <div class="summary-text">
+          <div class="summary-body is-clamped" id="summaryBody"></div>
+          <button class="read-more" id="readMore" aria-expanded="false">Olvass tovább</button>
+        </div>
+        <div class="area-media">
+          <img id="areaMedia" src="../assets/infografika-finance.png" alt="Területi infografika" />
+        </div>
+      </div>
+
+      <div class="results-head">
+        <h2>A terület kutatási eredményei</h2>
+        <p class="sample-note" id="sampleNote"></p>
+        <div class="topic-filter">
+          <label>
+            <span>Téma</span>
+            <select id="topicSelect"></select>
+          </label>
+        </div>
+      </div>
+
+      <div class="panels">
+        <article class="panel">
+          <h3>Munkavállalók</h3>
+          <p class="panel-note">A munkavállalói oldal válaszai</p>
+          <div class="chart-area" id="employeeChart"></div>
+        </article>
+        <article class="panel">
+          <h3>Munkáltatók</h3>
+          <p class="panel-note">A munkáltatói oldal válaszai</p>
+          <div class="chart-area" id="employerChart"></div>
+        </article>
+      </div>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <span>IDBC Salary Guide — Talent Market &amp; Salary Guide 2026</span>
+      <span><a href="../index.html#trends">Vissza a trendekhez</a></span>
+    </div>
+  </footer>
+
+  <script>
+    (async function () {
+    'use strict';
+
+    const el = id => document.getElementById(id);
+    const esc = s => String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+    const fmtPct = p => (Math.round(p * 10) / 10).toString().replace('.', ',') + '%';
+    const PALETTE = ["#c9e5d8","#b5dbc8","#94cbaa","#6aae81","#4ba184","#3c8a70","#2f6f5c","#a5df8f","#8fd474","#55aa8b","#dcd08a","#e0a45a"];
+    const paletteColor = i => PALETTE[i % PALETTE.length];
+    const NO_DATA = 'A kiválasztott szűrési feltételekhez nem érhető el adat.';
+
+    const [AREAS, DATA] = await Promise.all([
+      fetch('../data/areas.json', { cache: 'no-cache' }).then(r => r.json()).then(d => d.areas),
+      fetch('../data/guide-data.json', { cache: 'no-cache' }).then(r => r.json()),
+    ]);
+
+    const slug = new URLSearchParams(location.search).get('terulet');
+    const area = AREAS.find(a => a.slug === slug) || AREAS[0];
+
+    // ---------- summary ----------
+    document.title = `${area.name} – Területi összefoglaló – Talent Market & Salary Guide 2026`;
+    el('areaTitle').textContent = area.name;
+    el('areaLede').textContent = 'Piaci helyzetkép, kereslet és bérezési trendek — az IDBC 2026-os kutatása alapján.';
+    el('areaMedia').src = area.image;
+    el('areaMedia').alt = `Területi infografika – ${area.name}`;
+    el('summaryBody').innerHTML = area.summary.split('\n\n')
+      .map(t => `<p>${esc(t)}</p>`).join('');
+
+    // Clamp the text to the infographic's rendered height; expand on request. Falls back to a
+    // fixed clamp on the stacked layout, where the image is full-width and its height means
+    // nothing for the text column.
+    const media = document.querySelector('.area-media');
+    const body = el('summaryBody');
+    const btn = el('readMore');
+    let expanded = false;
+
+    function applyClamp() {
+      if (expanded) { body.style.maxHeight = ''; return; }
+      const stacked = window.matchMedia('(max-width: 900px)').matches;
+      const h = stacked ? 260 : Math.max(220, Math.round(media.getBoundingClientRect().height));
+      body.style.maxHeight = h + 'px';
+      // Nothing to expand if the text already fits.
+      const overflows = body.scrollHeight > h + 8;
+      btn.style.display = overflows ? '' : 'none';
+      body.classList.toggle('is-clamped', overflows);
+    }
+    btn.addEventListener('click', () => {
+      expanded = !expanded;
+      btn.textContent = expanded ? 'Mutass kevesebbet' : 'Olvass tovább';
+      btn.setAttribute('aria-expanded', String(expanded));
+      body.classList.toggle('is-clamped', !expanded);
+      applyClamp();
+      if (!expanded) body.scrollIntoView({ block: 'nearest' });
+    });
+    el('areaMedia').addEventListener('load', applyClamp);
+    window.addEventListener('resize', applyClamp);
+    applyClamp();
+
+    // ---------- research results ----------
+    // The survey was fielded by edition, not by area: IT and IT Contracting genuinely match the
+    // "IT + Contracting" sample, every other area can only be shown against the whole sample.
+    // The note below states which one is on screen — it never claims area-level data.
+    const edition = area.edition;
+    el('sampleNote').textContent = edition === 'IT + Contracting'
+      ? 'A felmérés az „IT + Contracting" mintán készült — ez a terület saját adata.'
+      : `A felmérés nem tartalmaz ${area.name} szerinti bontást, ezért az „Általános" (teljes minta) eredményei láthatók.`;
+
+    const topics = DATA.topics.map(t => t.topic);
+    el('topicSelect').innerHTML = topics.map(t => `<option>${esc(t)}</option>`).join('');
+
+    function getQuestions(topic, sideKey) {
+      const t = DATA.topics.find(x => x.topic === topic);
+      const ed = t && t.editions[edition];
+      return (ed && ed[sideKey]) || [];
+    }
+
+    function isMultiSum(items) {
+      return items.reduce((s, it) => s + it.percent, 0) > 110;
+    }
+
+    function renderSimple(title, c) {
+      const nonZero = c.items.filter(it => it.percent > 0);
+      if (!nonZero.length) return '';
+      const multi = isMultiSum(c.items) || c.items.length > 5;
+      if (multi) {
+        const sorted = [...nonZero].sort((a, b) => b.percent - a.percent);
+        const rows = sorted.map((it, i) => `
+          <div class="answer-row-multi">
+            <div class="answer-label">${esc(it.label)}</div>
+            <div class="bar bar-compact"><span class="segment" style="width:${it.percent}%;background:${paletteColor(i)}"></span></div>
+            <div class="answer-value">${fmtPct(it.percent)}</div>
+          </div>`).join('');
+        return `<section class="question-block"><h4 class="question-title">${esc(title)}</h4>${rows}</section>`;
+      }
+      const segments = nonZero.map((it, i) => `
+        <span class="segment" style="width:${it.percent}%;background:${paletteColor(i)}" title="${esc(it.label)}: ${fmtPct(it.percent)}">${it.percent >= 8 ? fmtPct(it.percent) : ''}</span>`).join('');
+      const legend = nonZero.map((it, i) => `
+        <span class="legend-item"><span class="legend-dot" style="background:${paletteColor(i)}"></span>${esc(it.label)}</span>`).join('');
+      return `<section class="question-block"><h4 class="question-title">${esc(title)}</h4><div class="bar">${segments}</div><div class="legend">${legend}</div></section>`;
+    }
+
+    function renderMatrixPercent(title, c) {
+      const groups = c.items.map(row => {
+        const nonZero = row.values.map((v, i) => ({ percent: v.percent, group: c.groups[i] })).filter(v => v.percent > 0);
+        if (!nonZero.length) return '';
+        const bars = nonZero.sort((a, b) => b.percent - a.percent).map((v, i) => `
+          <div class="answer-row-multi">
+            <div class="answer-label">${esc(v.group)}</div>
+            <div class="bar bar-compact"><span class="segment" style="width:${v.percent}%;background:${paletteColor(i)}"></span></div>
+            <div class="answer-value">${fmtPct(v.percent)}</div>
+          </div>`).join('');
+        return `<div class="multi-group"><p class="multi-group-label">${esc(row.label)}</p>${bars}</div>`;
+      }).filter(Boolean).join('');
+      if (!groups) return '';
+      return `<section class="question-block"><h4 class="question-title">${esc(title)}</h4>${groups}</section>`;
+    }
+
+    function renderPanel(target, side, sideKey) {
+      const topic = el('topicSelect').value;
+      const questions = getQuestions(topic, sideKey);
+      const base = DATA.answers[edition][side].base;
+      const html = questions.map(q => {
+        const c = base[q];
+        if (!c) return '';
+        if (c.kind === 'simple') return renderSimple(q, c);
+        if (c.kind === 'matrix-percent') return renderMatrixPercent(q, c);
+        return '';
+      }).join('');
+      target.innerHTML = html || `<p class="no-data">${NO_DATA}</p>`;
+    }
+
+    function renderAll() {
+      renderPanel(el('employeeChart'), 'employee', 'Munkavállalók');
+      renderPanel(el('employerChart'), 'employer', 'Munkáltatók');
+    }
+    el('topicSelect').addEventListener('change', renderAll);
+    renderAll();
+    })();
+  </script>
+</body>
+</html>

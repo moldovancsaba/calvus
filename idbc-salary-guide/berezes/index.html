@@ -118,6 +118,7 @@
     }
 
     .button-primary { background: var(--green); color: var(--dark); }
+    .button-logout { background: transparent; border: 1.5px solid rgba(255,255,255,.45); color: #fff; }
     .button-outline { border: 2px solid var(--green); color: #fff; }
 
     .cta-button { display: inline-flex; align-items: center; justify-content: center; min-height: 44px; padding: 11px 18px; border: 0; border-radius: 10px; background: var(--green); color: var(--dark); font-size: 13px; font-weight: 900; white-space: nowrap; cursor: pointer; }
@@ -330,11 +331,12 @@
         <li><a href="#berezes">Bérsávok</a></li>
         <li><a href="../sap/index.html">SAP</a></li>
         <li><a href="../expert-pool/index.html">Expert Pool</a></li>
-        <li><a href="#kapcsolat">Kapcsolat</a></li>
       </ul>
 
       <div class="nav-actions">
         <a class="button button-primary" href="../index.html">Salary Guide</a>
+        <button class="button button-logout is-unavailable" type="button" aria-disabled="true"
+          title="A be- és kijelentkezés a prototípusban még nincs bekötve">Kijelentkezés</button>
       </div>
     </nav>
   </header>

@@ -113,6 +113,7 @@
     }
 
     .button-primary { background: var(--green); color: var(--dark); }
+    .button-logout { background: transparent; border: 1.5px solid rgba(255,255,255,.45); color: #fff; }
     .button-outline { border: 2px solid var(--green); color: #fff; }
 
     .language-switch { display: flex; align-items: center; gap: 6px; font-size: 10px; font-weight: 800; }
@@ -323,11 +324,12 @@
         <li><a href="../berezes/index.html">Bérsávok</a></li>
         <li><a href="../sap/index.html">SAP</a></li>
         <li><a href="#expertpool">Expert Pool</a></li>
-        <li><a href="#kapcsolat">Kapcsolat</a></li>
       </ul>
 
       <div class="nav-actions">
         <a class="button button-primary" href="../index.html">Salary Guide</a>
+        <button class="button button-logout is-unavailable" type="button" aria-disabled="true"
+          title="A be- és kijelentkezés a prototípusban még nincs bekötve">Kijelentkezés</button>
       </div>
     </nav>
   </header>
