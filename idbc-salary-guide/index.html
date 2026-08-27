@@ -214,19 +214,22 @@
       width: 100%;
     }
 
+    .filter-block { margin: 0 0 30px; padding-top: 26px; border-top: 1px solid var(--line); }
+    .filter-block-label { margin: 0 0 14px; font-size: 13px; font-weight: 900; }
     .top-filters {
       display: grid;
       grid-template-columns: repeat(2, minmax(220px, 340px));
       gap: 14px 18px;
-      margin: 0 0 32px;
+      margin: 0;
     }
 
     .top-filters label { display: grid; gap: 8px; font-size: 13px; font-weight: 900; }
 
     .area-picker { margin: 34px 0 0; }
     .area-picker-label { margin: 0 0 14px; font-size: 13px; font-weight: 900; }
-    .area-cards { grid-template-columns: repeat(auto-fit, minmax(330px, 1fr)); text-decoration: none; }
+    .split-links.area-cards { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; margin-bottom: 40px; }
     .area-cards .split-card { text-decoration: none; color: inherit; transition: transform .15s ease, box-shadow .15s ease; }
+    .area-cards .split-card .split-card-title { font-size: clamp(17px, 1.6vw, 20px); }
     .area-cards .split-card:hover, .area-cards .split-card:focus-visible { transform: translateY(-2px); box-shadow: 0 22px 46px rgba(19, 35, 35, 0.14); }
     .button-logout { background: transparent; border: 1.5px solid rgba(255,255,255,.45); color: #fff; }
        slot and the summary copy are placeholders until the client supplies the real content. */
@@ -324,11 +327,13 @@
       .insight-cards { grid-template-columns: 1fr; }
       .top-filters { grid-template-columns: 1fr; }
       .split-links { grid-template-columns: 1fr; }
+      .split-links.area-cards { grid-template-columns: repeat(2, minmax(0, 1fr)); }
       .footer-inner { grid-template-columns: 1fr; gap: 30px; }
     }
 
     @media (max-width: 700px) {
       .container { width: min(100% - 32px, var(--container)); }
+      .split-links.area-cards { grid-template-columns: 1fr; }
       .answer-row { grid-template-columns: 1fr; gap: 8px; }
       .answer-row-multi { grid-template-columns: 1fr; gap: 4px; }
       .answer-value { text-align: left; }
@@ -481,15 +486,18 @@
           </nav>
         </div>
 
-        <div class="top-filters">
-          <label>
-            <span>Szegmens</span>
-            <select id="editionSelect"></select>
-          </label>
-          <label>
-            <span>Téma</span>
-            <select id="topicSelect"></select>
-          </label>
+        <div class="filter-block">
+          <p class="filter-block-label">Vagy nézd meg a teljes kutatás eredményeit szegmens és téma szerint:</p>
+          <div class="top-filters">
+            <label>
+              <span>Szegmens</span>
+              <select id="editionSelect"></select>
+            </label>
+            <label>
+              <span>Téma</span>
+              <select id="topicSelect"></select>
+            </label>
+          </div>
         </div>
 
         <div class="chart-panels">
