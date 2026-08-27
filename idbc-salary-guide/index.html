@@ -224,15 +224,10 @@
     .top-filters label { display: grid; gap: 8px; font-size: 13px; font-weight: 900; }
 
     .area-picker { margin: 34px 0 0; }
-    .area-picker-label { margin: 0 0 12px; font-size: 13px; font-weight: 900; }
-    .area-bubbles { display: flex; flex-wrap: wrap; gap: 10px; }
-    .area-bubble {
-      display: inline-block; padding: 11px 20px; border-radius: 999px;
-      border: 1.5px solid var(--dark); background: var(--surface); color: var(--dark);
-      font-size: 14px; font-weight: 900; text-decoration: none; line-height: 1.1;
-      transition: background .15s ease, color .15s ease, transform .15s ease;
-    }
-    .area-bubble:hover, .area-bubble:focus-visible { background: var(--dark); color: #fff; transform: translateY(-1px); }
+    .area-picker-label { margin: 0 0 14px; font-size: 13px; font-weight: 900; }
+    .area-cards { grid-template-columns: repeat(auto-fit, minmax(330px, 1fr)); text-decoration: none; }
+    .area-cards .split-card { text-decoration: none; color: inherit; transition: transform .15s ease, box-shadow .15s ease; }
+    .area-cards .split-card:hover, .area-cards .split-card:focus-visible { transform: translateY(-2px); box-shadow: 0 22px 46px rgba(19, 35, 35, 0.14); }
     .button-logout { background: transparent; border: 1.5px solid rgba(255,255,255,.45); color: #fff; }
        slot and the summary copy are placeholders until the client supplies the real content. */
 
@@ -438,18 +433,51 @@
 
         <div class="area-picker">
           <p class="area-picker-label">Válassz területet a részletes összefoglalóhoz és a terület kutatási eredményeihez:</p>
-          <nav class="area-bubbles" aria-label="Területek">
-          <a class="area-bubble" href="./terulet/index.html?terulet=it">IT</a>
-          <a class="area-bubble" href="./terulet/index.html?terulet=it-contracting">IT Contracting</a>
-          <a class="area-bubble" href="./terulet/index.html?terulet=penzugy-es-szamvitel">Pénzügy és számvitel</a>
-          <a class="area-bubble" href="./terulet/index.html?terulet=sales-marketing">Sales & Marketing</a>
-          <a class="area-bubble" href="./terulet/index.html?terulet=hr">HR</a>
-          <a class="area-bubble" href="./terulet/index.html?terulet=bsc">BSC</a>
-          <a class="area-bubble" href="./terulet/index.html?terulet=epitoipar-ingatlan">Építőipar, ingatlan</a>
-          <a class="area-bubble" href="./terulet/index.html?terulet=gyartas-termeles-mernokseg">Gyártás, termelés, mérnökség</a>
-          <a class="area-bubble" href="./terulet/index.html?terulet=office-support-ugyfelszolgalat">Office Support & Ügyfélszolgálat</a>
-          <a class="area-bubble" href="./terulet/index.html?terulet=logisztika-es-szallitas">Logisztika és szállítás</a>
-          <a class="area-bubble" href="./terulet/index.html?terulet=pharma-life-sciences">Pharma & Life Sciences</a>
+          <nav class="split-links area-cards" aria-label="Területek">
+            <a class="split-card" href="./terulet/index.html?terulet=it">
+              <span class="split-card-eyebrow">Terület</span>
+              <span class="split-card-title">IT →</span>
+            </a>
+            <a class="split-card" href="./terulet/index.html?terulet=it-contracting">
+              <span class="split-card-eyebrow">Terület</span>
+              <span class="split-card-title">IT Contracting →</span>
+            </a>
+            <a class="split-card" href="./terulet/index.html?terulet=penzugy-es-szamvitel">
+              <span class="split-card-eyebrow">Terület</span>
+              <span class="split-card-title">Pénzügy és számvitel →</span>
+            </a>
+            <a class="split-card" href="./terulet/index.html?terulet=sales-marketing">
+              <span class="split-card-eyebrow">Terület</span>
+              <span class="split-card-title">Sales &amp; Marketing →</span>
+            </a>
+            <a class="split-card" href="./terulet/index.html?terulet=hr">
+              <span class="split-card-eyebrow">Terület</span>
+              <span class="split-card-title">HR →</span>
+            </a>
+            <a class="split-card" href="./terulet/index.html?terulet=bsc">
+              <span class="split-card-eyebrow">Terület</span>
+              <span class="split-card-title">BSC →</span>
+            </a>
+            <a class="split-card" href="./terulet/index.html?terulet=epitoipar-ingatlan">
+              <span class="split-card-eyebrow">Terület</span>
+              <span class="split-card-title">Építőipar, ingatlan →</span>
+            </a>
+            <a class="split-card" href="./terulet/index.html?terulet=gyartas-termeles-mernokseg">
+              <span class="split-card-eyebrow">Terület</span>
+              <span class="split-card-title">Gyártás, termelés, mérnökség →</span>
+            </a>
+            <a class="split-card" href="./terulet/index.html?terulet=office-support-ugyfelszolgalat">
+              <span class="split-card-eyebrow">Terület</span>
+              <span class="split-card-title">Office Support &amp; Ügyfélszolgálat →</span>
+            </a>
+            <a class="split-card" href="./terulet/index.html?terulet=logisztika-es-szallitas">
+              <span class="split-card-eyebrow">Terület</span>
+              <span class="split-card-title">Logisztika és szállítás →</span>
+            </a>
+            <a class="split-card" href="./terulet/index.html?terulet=pharma-life-sciences">
+              <span class="split-card-eyebrow">Terület</span>
+              <span class="split-card-title">Pharma &amp; Life Sciences →</span>
+            </a>
           </nav>
         </div>
 
