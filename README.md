@@ -72,7 +72,7 @@ once its job — getting everyone to agreement — is done.
 | `lexodont.hu/` | Dental clinic marketing site — services, team, pricing, case studies | Polished |
 | `lexodont.hu_balsamic/` | Same site, sketch-style | Low-fidelity / Balsamiq |
 | `idbc-salary-guide/` | SAP and general market salary-survey dashboard, real client data, filterable by area/segment/experience level | Polished |
-| `discountdirect/` | Seller–buyer messaging app concept — chat with personalised offer cards, channel selection (chat/e-mail/mailing), one-product flash campaigns with time/quantity limits, and automated per-buyer offer lists | Interactive prototype |
+| `discountdirect/` | Seller–buyer messaging app concept — communication timeline with personalised offer cards, channel selection (chat/e-mail/mailing), one-product flash campaigns with time/quantity limits, and automated per-buyer offer lists. CSS custom properties are named after GDS 6.5.0 roles for a 1:1 dev handoff (`discountdirect/GDS-TOKEN-MAP.md`) — naming only, no dependency | Interactive prototype |
 | `index.html` | The hub page linking every project above | — |
 | `public/` | Image assets — currently unreferenced by any page in this repo; worth checking before assuming it's live |
 
