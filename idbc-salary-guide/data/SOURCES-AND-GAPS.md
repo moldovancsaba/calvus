@@ -49,6 +49,15 @@ folder is the single consolidated data source built from all of it.
    them would require the client re-running or re-tabulating the survey,
    not a code change.
 
+   Update (2026-09-01): the area pages (`terulet/index.html`) gained the same
+   per-side segment dropdowns as the main trends page — tapasztalati szint on
+   the munkavállalói panel, cégméret on the munkáltatói panel. Same rules
+   apply: options are computed per topic from the real crosstabs (a segment
+   with no non-zero row for the current topic isn't offered), `Összes` is the
+   default/whole-sample view, and a dropdown hides itself entirely when
+   `Összes` would be its only option. Previously these pages only had the
+   shared Téma filter.
+
    Update (2026-08-25, client feedback round 2): the area dropdown is gone. The
    trends page now shows **11 bubble links**, each opening a dedicated area page
    (`terulet/index.html?terulet=<slug>`) with that area's summary, infographic

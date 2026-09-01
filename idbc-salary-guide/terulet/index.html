@@ -92,6 +92,8 @@
     .panels { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 40px; margin-top: 26px; }
     .panel h3 { margin: 0 0 4px; font-size: clamp(20px, 2.6vw, 26px); letter-spacing: -0.6px; }
     .panel-note { margin: 0 0 18px; font-size: 12px; font-weight: 700; color: var(--muted); }
+    .segment-select { margin: 0 0 18px; }
+    .segment-select label { display: grid; gap: 8px; font-size: 13px; font-weight: 900; }
     .chart-area { display: grid; gap: 34px; }
     .question-block { display: grid; gap: 10px; }
     .question-title { margin: 0; font-size: clamp(15px, 1.7vw, 17px); line-height: 1.2; font-weight: 900; }
@@ -174,11 +176,23 @@
         <article class="panel">
           <h3>Munkavállalók</h3>
           <p class="panel-note">A munkavállalói oldal válaszai</p>
+          <div class="segment-select">
+            <label>
+              <span>Válaszok szűrése tapasztalati szint szerint</span>
+              <select id="empSegmentSelect"></select>
+            </label>
+          </div>
           <div class="chart-area" id="employeeChart"></div>
         </article>
         <article class="panel">
           <h3>Munkáltatók</h3>
           <p class="panel-note">A munkáltatói oldal válaszai</p>
+          <div class="segment-select">
+            <label>
+              <span>Válaszok szűrése cégméret szerint</span>
+              <select id="erSegmentSelect"></select>
+            </label>
+          </div>
           <div class="chart-area" id="employerChart"></div>
         </article>
       </div>
@@ -268,6 +282,56 @@
       return (ed && ed[sideKey]) || [];
     }
 
+    // Same segment-filter behaviour as the main trends page (see ../index.html): a per-side
+    // dropdown (tapasztalati szint / cégméret) that only offers segments with real data for the
+    // current topic, and hides itself when "Összes" would be the only option.
+    const EXPERIENCE_ORDER = ["kevesebb, mint 1 év", "1-2 év", "3-5 év", "6-10 év", "11-20 év", "több, mint 20 év"];
+    const COMPANY_SIZE_ORDER = ["50 fő alatti", "51-100 fő", "101-350 fő", "351-1000 fő", "1000 fő feletti"];
+    const ALL_SEGMENT = 'Összes';
+
+    function collectSegmentsForTopic(topic, side, sideKey, canonicalOrder) {
+      const cross = DATA.answers[edition][side].cross;
+      const questions = getQuestions(topic, sideKey);
+      const found = new Set();
+      questions.forEach(q => {
+        const c = cross[q];
+        if (!c) return;
+        c.items.forEach(row => {
+          if (row.values.some(v => v.percent > 0)) found.add(row.label);
+        });
+      });
+      return [ALL_SEGMENT, ...canonicalOrder.filter(s => found.has(s))];
+    }
+
+    function populateSegmentSelects() {
+      const topic = el('topicSelect').value;
+      const empSelect = el('empSegmentSelect');
+      const erSelect = el('erSegmentSelect');
+      const prevEmp = empSelect.value || ALL_SEGMENT;
+      const prevEr = erSelect.value || ALL_SEGMENT;
+      const empSegs = collectSegmentsForTopic(topic, 'employee', 'Munkavállalók', EXPERIENCE_ORDER);
+      const erSegs = collectSegmentsForTopic(topic, 'employer', 'Munkáltatók', COMPANY_SIZE_ORDER);
+      empSelect.innerHTML = empSegs.map(s => `<option value="${esc(s)}">${esc(s)}</option>`).join('');
+      erSelect.innerHTML = erSegs.map(s => `<option value="${esc(s)}">${esc(s)}</option>`).join('');
+      empSelect.value = empSegs.includes(prevEmp) ? prevEmp : ALL_SEGMENT;
+      erSelect.value = erSegs.includes(prevEr) ? prevEr : ALL_SEGMENT;
+    }
+
+    function getSegmentSlice(sideData, question, segmentValue) {
+      if (segmentValue === ALL_SEGMENT) return sideData.base[question] || null;
+      const crossC = sideData.cross[question];
+      if (!crossC || crossC.kind === 'matrix-value') return null;
+      const row = crossC.items.find(r => r.label === segmentValue);
+      if (!row) return null;
+      if (!row.values.some(v => v.percent > 0)) return null;
+      const items = row.values.map(v => ({ label: v.group, percent: v.percent, count: v.count }));
+      return { kind: 'simple', items };
+    }
+
+    function segmentDropdownApplicable(selectEl) {
+      return selectEl.options.length > 1;
+    }
+
     function isMultiSum(items) {
       return items.reduce((s, it) => s + it.percent, 0) > 110;
     }
@@ -309,12 +373,12 @@
       return `<section class="question-block"><h4 class="question-title">${esc(title)}</h4>${groups}</section>`;
     }
 
-    function renderPanel(target, side, sideKey) {
+    function renderPanel(target, side, sideKey, segmentValue) {
       const topic = el('topicSelect').value;
       const questions = getQuestions(topic, sideKey);
-      const base = DATA.answers[edition][side].base;
+      const sideData = DATA.answers[edition][side];
       const html = questions.map(q => {
-        const c = base[q];
+        const c = getSegmentSlice(sideData, q, segmentValue);
         if (!c) return '';
         if (c.kind === 'simple') return renderSimple(q, c);
         if (c.kind === 'matrix-percent') return renderMatrixPercent(q, c);
@@ -324,10 +388,17 @@
     }
 
     function renderAll() {
-      renderPanel(el('employeeChart'), 'employee', 'Munkavállalók');
-      renderPanel(el('employerChart'), 'employer', 'Munkáltatók');
+      // Options depend on the current topic, so rebuild them on every render, not just on topic change.
+      populateSegmentSelects();
+      const empSelect = el('empSegmentSelect');
+      const erSelect = el('erSegmentSelect');
+      empSelect.closest('.segment-select').style.display = segmentDropdownApplicable(empSelect) ? '' : 'none';
+      erSelect.closest('.segment-select').style.display = segmentDropdownApplicable(erSelect) ? '' : 'none';
+
+      renderPanel(el('employeeChart'), 'employee', 'Munkavállalók', empSelect.value);
+      renderPanel(el('employerChart'), 'employer', 'Munkáltatók', erSelect.value);
     }
-    el('topicSelect').addEventListener('change', renderAll);
+    [el('topicSelect'), el('empSegmentSelect'), el('erSegmentSelect')].forEach(sel => sel.addEventListener('change', renderAll));
     renderAll();
     })();
   </script>
