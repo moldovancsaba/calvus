@@ -265,13 +265,12 @@
     applyClamp();
 
     // ---------- research results ----------
-    // The survey was fielded by edition, not by area: IT and IT Contracting genuinely match the
-    // "IT + Contracting" sample, every other area can only be shown against the whole sample.
-    // The note below states which one is on screen — it never claims area-level data.
+    // `edition` still selects which question set applies (the survey instrument itself only
+    // ever had two variants — general and IT/IT Contracting — see data/SOURCES-AND-GAPS.md), but
+    // the actual figures now come from this area's own real crosstab, not a pooled sample.
     const edition = area.edition;
-    el('sampleNote').textContent = edition === 'IT + Contracting'
-      ? 'A felmérés az „IT + Contracting" mintán készült — ez a terület saját adata.'
-      : `A felmérés nem tartalmaz ${area.name} szerinti bontást, ezért az „Általános" (teljes minta) eredményei láthatók.`;
+    const areaData = DATA.areaAnswers[area.slug];
+    el('sampleNote').textContent = `Az alábbi eredmények a(z) ${area.name} terület saját válaszain alapulnak.`;
 
     const topics = DATA.topics.map(t => t.topic);
     el('topicSelect').innerHTML = topics.map(t => `<option>${esc(t)}</option>`).join('');
@@ -290,7 +289,7 @@
     const ALL_SEGMENT = 'Összes';
 
     function collectSegmentsForTopic(topic, side, sideKey, canonicalOrder) {
-      const cross = DATA.answers[edition][side].cross;
+      const cross = areaData[side].cross;
       const questions = getQuestions(topic, sideKey);
       const found = new Set();
       questions.forEach(q => {
@@ -376,7 +375,7 @@
     function renderPanel(target, side, sideKey, segmentValue) {
       const topic = el('topicSelect').value;
       const questions = getQuestions(topic, sideKey);
-      const sideData = DATA.answers[edition][side];
+      const sideData = areaData[side];
       const html = questions.map(q => {
         const c = getSegmentSlice(sideData, q, segmentValue);
         if (!c) return '';

@@ -11,6 +11,7 @@ folder is the single consolidated data source built from all of it.
 | File | Type | Contribution |
 |---|---|---|
 | `Salary Guide - munkaerőpiaci trendek - minta` | Google Sheet | Real survey data → `answers` (9 tabs: employee/employer × general/IT+Contracting × base/crosstab). 157 respondents, 89 questions, 1,450 response rows. |
+| `Salary Guide- kutatási eredmények-final (1).xlsx` | Excel (2026-09-01) | Real **per-area** re-tabulation → `areaAnswers` (11 areas × 4 tabs: B2C Total/Tapasztalat, B2B Total/Cégméret). Supersedes the edition-mapped stand-in for every `terulet/` page — see the 2026-09-01 update note below. |
 | `IDBC_bertabla` | Google Sheet | Real salary-band data → `salary.webBertabla` (270 rows, 8 areas) and `salary.expertPool` (15 rows). Includes the `UTMUTATO` instructions tab, captured verbatim in `salary.readme`. |
 | `IDBC_web_bertabla_roviditett_import_v9.xlsx`, `Salary Guide ... minta.xlsx` | Excel | Duplicate exports of the two sheets above — not separately re-parsed, no new data. |
 | `IDBC Salary Guide specifikáció` | Google Doc | Functional spec: registration/paywall gate, 3 data-driven functions (Bérezés, Igény-elvárás, Expert Pool), Google-Sheets-via-API + WordPress block-editor architecture. |
@@ -49,14 +50,31 @@ folder is the single consolidated data source built from all of it.
    them would require the client re-running or re-tabulating the survey,
    not a code change.
 
-   Update (2026-09-01): the area pages (`terulet/index.html`) gained the same
-   per-side segment dropdowns as the main trends page — tapasztalati szint on
-   the munkavállalói panel, cégméret on the munkáltatói panel. Same rules
-   apply: options are computed per topic from the real crosstabs (a segment
-   with no non-zero row for the current topic isn't offered), `Összes` is the
-   default/whole-sample view, and a dropdown hides itself entirely when
-   `Összes` would be its only option. Previously these pages only had the
-   shared Téma filter.
+   Update (2026-09-01, real per-area data arrives): the client sent
+   `Salary Guide- kutatási eredmények-final (1).xlsx`, which re-tabulates the
+   whole survey **per area** — 11 areas × 4 sheets each (B2C Total, B2C
+   Tapasztalat, B2B Total, B2B Cégméret). This supersedes the 2026-08-25
+   edition-mapped stand-in described below: `guide-data.json` now carries a
+   new `areaAnswers` key, keyed by the same 11 area slugs as `data/areas.json`,
+   each holding real `{employee, employer}` base + crosstab data for that
+   area alone — not a pooled Általános/IT+Contracting sample. `terulet/`
+   reads from `areaAnswers[area.slug]` instead of `answers[edition]`; the
+   `edition` field on each area in `areas.json` is kept only to pick the
+   right *question set* (the survey instrument itself still only has two
+   variants — general and IT/IT Contracting — verified question-for-question
+   against `topics[].editions`), not to select which sample's numbers to
+   show. The sample-note copy changed accordingly (no longer claims an area
+   is showing someone else's data). The main trends page (`index.html`) is
+   untouched — it still shows the Általános/IT + Contracting pooled view;
+   this file has no combined-sample sheet to replace that with.
+
+   Concretely, this closes the client's 2026-09-01 feedback that the AI and
+   Bérezés és juttatások topics had no tapasztalati szint / cégméret filter
+   on the area pages: that was a genuine data gap in the old pooled samples
+   (zero non-zero segment rows for those two topics under IT + Contracting),
+   not a code bug, and the new per-area crosstabs have real segment data for
+   both topics in all 11 areas. Generáció and Cégtulajdon crosstabs are
+   still absent from this file — gap 5 above still stands for those two.
 
    Update (2026-08-25, client feedback round 2): the area dropdown is gone. The
    trends page now shows **11 bubble links**, each opening a dedicated area page
