@@ -97,6 +97,7 @@
     .chart-area { display: grid; gap: 34px; }
     .question-block { display: grid; gap: 10px; }
     .question-title { margin: 0; font-size: clamp(15px, 1.7vw, 17px); line-height: 1.2; font-weight: 900; }
+    .scale-hint { font-weight: 700; color: var(--muted); font-size: 12px; }
     .bar { min-height: 42px; border-radius: 20px; overflow: hidden; display: flex; background: rgba(19,35,35,.08); }
     .bar-compact { min-height: 24px; border-radius: 12px; }
     .segment { min-width: 2px; display: grid; place-items: center; color: #071010; font-size: 12px; font-weight: 900; overflow: hidden; animation: bar-grow .5s ease-out; }
@@ -268,25 +269,28 @@
     // `edition` still selects which question set applies (the survey instrument itself only
     // ever had two variants — general and IT/IT Contracting — see data/SOURCES-AND-GAPS.md), but
     // the actual figures now come from this area's own real crosstab, not a pooled sample.
-    const edition = area.edition;
-    const areaData = DATA.areaAnswers[area.slug];
-    el('sampleNote').textContent = `Az alábbi eredmények a(z) ${area.name} terület saját válaszain alapulnak.`;
+    const dsKey = DATA.datasets[area.name] ? area.name : DATA.totalKey;
+    const dataset = DATA.datasets[dsKey];
+    const areaData = dataset;
+    el('sampleNote').textContent = dsKey === area.name
+      ? `Az alábbi eredmények a(z) ${area.name} terület saját válaszain alapulnak.`
+      : `Ehhez a területhez még nem érkezett külön bontás, ezért az „${DATA.totalLabel}" eredményei láthatók.`;
 
     const topics = DATA.topics.map(t => t.topic);
     el('topicSelect').innerHTML = topics.map(t => `<option>${esc(t)}</option>`).join('');
 
     function getQuestions(topic, sideKey) {
       const t = DATA.topics.find(x => x.topic === topic);
-      const ed = t && t.editions[edition];
-      return (ed && ed[sideKey]) || [];
+      const set = t && t.questionSets[dataset.questionSet];
+      return (set && set[sideKey]) || [];
     }
 
     // Same segment-filter behaviour as the main trends page (see ../index.html): a per-side
     // dropdown (tapasztalati szint / cégméret) that only offers segments with real data for the
-    // current topic, and hides itself when "Összes" would be the only option.
+    // current topic, and hides itself when the aggregate would be the only option.
     const EXPERIENCE_ORDER = ["kevesebb, mint 1 év", "1-2 év", "3-5 év", "6-10 év", "11-20 év", "több, mint 20 év"];
     const COMPANY_SIZE_ORDER = ["50 fő alatti", "51-100 fő", "101-350 fő", "351-1000 fő", "1000 fő feletti"];
-    const ALL_SEGMENT = 'Összes';
+    const ALL_SEGMENT = DATA.totalLabel || 'Összesített adatok';
 
     function collectSegmentsForTopic(topic, side, sideKey, canonicalOrder) {
       const cross = areaData[side].cross;
@@ -372,6 +376,18 @@
       return `<section class="question-block"><h4 class="question-title">${esc(title)}</h4>${groups}</section>`;
     }
 
+    // Client (2026-09-08): the two 1-4 scale questions show only the weighted average.
+    function renderWeighted(title, c) {
+      const max = c.scaleMax || 4;
+      const rows = c.items.map(it => `
+        <div class="answer-row-multi">
+          <div class="answer-label">${esc(it.label)}</div>
+          <div class="bar bar-compact"><span class="segment" style="width:${(it.value / max * 100).toFixed(1)}%;background:${paletteColor(3)}"></span></div>
+          <div class="answer-value">${it.value.toFixed(2).replace('.', ',')}</div>
+        </div>`).join('');
+      return `<section class="question-block"><h4 class="question-title">${esc(title)} <span class="scale-hint">(súlyozott átlag, 1–${max} skála)</span></h4>${rows}</section>`;
+    }
+
     function renderPanel(target, side, sideKey, segmentValue) {
       const topic = el('topicSelect').value;
       const questions = getQuestions(topic, sideKey);
@@ -381,6 +397,7 @@
         if (!c) return '';
         if (c.kind === 'simple') return renderSimple(q, c);
         if (c.kind === 'matrix-percent') return renderMatrixPercent(q, c);
+        if (c.kind === 'weighted') return renderWeighted(q, c);
         return '';
       }).join('');
       target.innerHTML = html || `<p class="no-data">${NO_DATA}</p>`;

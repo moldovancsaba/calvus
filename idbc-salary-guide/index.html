@@ -246,6 +246,7 @@
     .chart-area { display: grid; gap: 44px; }
     .question-block { display: grid; gap: 10px; }
     .question-title { margin: 0; max-width: 96%; min-height: 2.4em; font-size: clamp(16px, 1.8vw, 19px); line-height: 1.15; font-weight: 900; }
+    .scale-hint { font-weight: 700; color: var(--muted); font-size: 12px; text-transform: none; letter-spacing: 0; }
 
     .answer-row { display: grid; grid-template-columns: minmax(130px, 200px) 1fr; gap: 18px; align-items: center; }
     .answer-row-multi { display: grid; grid-template-columns: minmax(160px, 280px) 1fr 56px; gap: 12px; align-items: center; margin-bottom: 8px; }
@@ -652,20 +653,24 @@
     const b2cChart = document.querySelector('#b2cChart');
     const b2bChart = document.querySelector('#b2bChart');
 
-    editionSelect.innerHTML = DATA.editions.map(e => `<option value="${escapeHtml(e)}">${escapeHtml(e)}</option>`).join('');
+    // The final research file is tabulated per area, with a whole-sample "Összesített adatok"
+    // dataset alongside. The dataset key is what the panels read.
+    const DATASET_KEYS = Object.keys(DATA.datasets);
+    editionSelect.innerHTML = DATASET_KEYS
+      .map(k => `<option value="${escapeHtml(k)}">${escapeHtml(DATA.datasets[k].label)}</option>`).join('');
     topicSelect.innerHTML = DATA.topics.map(t => `<option value="${escapeHtml(t.topic)}">${escapeHtml(t.topic)}</option>`).join('');
 
     // Pseudo-segment meaning "no filter — show the whole sample". Always first in the list, and
     // the default on load, so the panels start fully populated instead of on whichever real
     // segment happens to sort first (which can be one with zero respondents for the current topic).
-    const ALL_SEGMENT = 'Összes';
+    const ALL_SEGMENT = DATA.totalLabel || 'Összesített adatok';
 
     // A row exists for every canonical segment value even when nobody in that segment answered —
     // its percentages are just all 0. Only count a segment as real data for this topic+side if at
     // least one of the topic's questions has a non-empty row for it; otherwise selecting it would
     // show nothing but empty questions, so don't offer it at all.
     function collectSegmentsForTopic(topic, edition, side, sideKey, canonicalOrder) {
-      const cross = DATA.answers[edition][side].cross;
+      const cross = DATA.datasets[edition][side].cross;
       const questions = getQuestions(topic, edition, sideKey);
       const found = new Set();
       questions.forEach(q => {
@@ -710,10 +715,10 @@
 
     function getQuestions(topic, edition, sideKey) {
       const t = DATA.topics.find(x => x.topic === topic);
-      if (!t) return [];
-      const ed = t.editions[edition];
-      if (!ed) return [];
-      return ed[sideKey] || [];
+      const ds = DATA.datasets[edition];
+      if (!t || !ds) return [];
+      const set = t.questionSets[ds.questionSet];
+      return (set && set[sideKey]) || [];
     }
 
     function renderSimple(title, c) {
@@ -824,10 +829,22 @@
       return `<section class="question-block"><h4 class="question-title">${titleHtml}</h4>${rows}<div class="legend">${legend}</div></section>`;
     }
 
+    function renderWeighted(title, c) {
+      const max = c.scaleMax || 4;
+      const rows = c.items.map(it => `
+        <div class="answer-row-multi">
+          <div class="answer-label">${escapeHtml(it.label)}</div>
+          <div class="bar bar-compact"><span class="segment" style="width:${(it.value / max * 100).toFixed(1)}%;background:${paletteColor(3)}"></span></div>
+          <div class="answer-value">${it.value.toFixed(2).replace('.', ',')}</div>
+        </div>`).join('');
+      return `<section class="question-block"><h4 class="question-title">${escapeHtml(title)} <span class="scale-hint">(súlyozott átlag, 1–${max} skála)</span></h4>${rows}</section>`;
+    }
+
     function renderQuestion(question, c) {
       if (!c) return '';
       if (c.kind === 'simple') return renderSimple(question, c);
       if (c.kind === 'matrix-percent') return renderMatrixPercent(question, c);
+      if (c.kind === 'weighted') return renderWeighted(question, c);
       return '';
     }
 
@@ -835,7 +852,7 @@
       const topic = topicSelect.value;
       const edition = editionSelect.value;
       const questions = getQuestions(topic, edition, sideKey);
-      const sideData = DATA.answers[edition][side];
+      const sideData = DATA.datasets[edition][side];
       if (!questions.length) {
         target.innerHTML = '<p class="no-data">Ehhez a témához nincs kérdés ezen az oldalon.</p>';
         return;

@@ -147,6 +147,35 @@ folder is the single consolidated data source built from all of it.
 - `sapProducts` — **new**: the real 5-category, 20-item SAP product catalogue from the client's own SAP mockup/spec.
 - `siteMap` — **new**: the full intended 8-page site structure with a `status` (`built` / `partially built` / `not built`) and note per page.
 
+## Final research data (2026-09-08)
+
+`guide-data.json`'s survey half is now generated from the client's final workbook,
+`Salary Guide- kutatási eredmények-final.xlsx` ("ez már a teljesen végleges kutatási
+anyag, mást nem fogunk már átadni"). Three things changed materially:
+
+- **The survey is now tabulated per area.** The workbook carries a whole-sample set plus
+  its own Total + crosstab sheets for all eleven areas. The long-standing gap 5 — no area
+  breakdown — is **closed**: every area page shows that area's own responses, and the
+  earlier edition-mapped fallback (and its apologetic note) is gone. `datasets` replaces
+  the old `editions`/`answers` pair; `topics[].questionSets` replaces `topics[].editions`,
+  since the survey instrument still only has two question variants (Általános and
+  IT + Contracting) and each dataset declares which one it follows.
+- **The two "Jelöld 1-4-ig terjedő skálán…" questions show only the weighted average**
+  (client request). The workbook supplies a `Súlyozott átlag` column for them; the
+  per-option percentages are deliberately dropped, and these questions render as
+  `kind: "weighted"` bars scaled to 1–4. They carry no crosstab, so under a real segment
+  they are hidden by the existing no-data rule.
+- **The aggregate option is labelled `Összesített adatok`** everywhere (client request),
+  replacing `Összes`.
+
+The client's earlier editorial decisions are re-applied by the converter, because the
+workbook's own topic sheet predates them: the two topic renames (Munkahely váltás →
+… és toborzási kilátások, Béremelés → Bérezés és juttatások) and the move of the EU
+pay-transparency question to the end of the Bérezés topic's employer list. The converter
+validates that every question a topic lists resolves in every dataset that uses that
+question set. The salary half of the file (`salary`, `sapProducts`, `siteMap`,
+`filterDimensions`) is carried over untouched — the workbook contains no salary data.
+
 ## Trends filters — what "no data" means
 
 The survey's crosstabs contain a row for **every** canonical segment value,
