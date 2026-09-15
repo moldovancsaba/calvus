@@ -147,6 +147,29 @@ folder is the single consolidated data source built from all of it.
 - `sapProducts` — **new**: the real 5-category, 20-item SAP product catalogue from the client's own SAP mockup/spec.
 - `siteMap` — **new**: the full intended 8-page site structure with a `status` (`built` / `partially built` / `not built`) and note per page.
 
+## Mobile audit follow-ups (2026-09-15)
+
+A measured pass over all five guide pages at 375px produced two fixes:
+
+- **The area subpages had no mobile navigation.** `terulet/` hid `.nav-links` below 900px but,
+  unlike the other four pages, shipped no `.menu-toggle` — so on a phone only the brand link,
+  Bérsávok and Kijelentkezés were reachable, and Piaci trendek / SAP / Expert Pool were dead
+  ends. The standard hamburger (same markup, CSS and script as the other pages) is now ported
+  across.
+- **Tap targets below the 44px floor** (WCAG 2.5.5 / Apple HIG). The hamburger itself measured
+  31×29px, footer and nav links 14–19px tall, and two of the newer controls — the Bérsávok
+  accordion toggle and the area pages' "Olvass tovább" — sat at 40px and 36px. A small-screen
+  rule sets a 44px minimum on navigation, footer links, selects and the brand, and the two
+  components carry their own `min-height`. Measured after: **0 undersized targets on all five
+  pages**, desktop density untouched (the rules are inside a `max-width: 980px` query).
+
+**Known and deliberately not changed yet:** the TOP3 point-line chart renders 900px wide inside a
+305px scroller on phones — only 34% is visible at a time, and that scroller has no `tabindex`,
+`role` or label, so a keyboard user cannot reach the rest. The SVG's `aria-label` does read out
+all three bands, so screen-reader users are served. Options are a focusable labelled region with
+a visible scroll hint, or a compact mobile variant of the chart; the latter is a design change
+the client would see, so it is waiting on a decision.
+
 ## Salary tables on mobile — cards instead of sideways scrolling (2026-09-15)
 
 Measured before the change, at a 375px viewport: the Bérsávok table was forced to

@@ -301,7 +301,7 @@
       td.pos-cell { grid-column: 1 / -1; padding: 0; background: rgba(19,35,35,.05); border-bottom: 1px solid var(--line); }
       .pos-name-plain { display: none; }
       .pos-toggle {
-        display: flex; align-items: center; gap: 10px; width: 100%;
+        display: flex; align-items: center; gap: 10px; width: 100%; min-height: 44px;
         padding: 12px 14px; border: 0; background: transparent; text-align: left;
         font: inherit; color: inherit; cursor: pointer;
       }
@@ -364,6 +364,21 @@
       .hero-card { left: 0; width: calc(100% - 34px); padding: 20px 24px 25px; }
       .footer-bottom { flex-direction: column; }
       .footer-bottom div { flex-direction: column; gap: 8px; }
+    }
+
+    /* Mobile tap targets: WCAG 2.5.5 / HIG floor of 44px for anything tappable.
+       Applied only on small screens so desktop density is unchanged. */
+    @media (max-width: 980px) {
+      .menu-toggle { min-width: 44px; min-height: 44px; }
+      .nav-links a,
+      .nav-actions .button,
+      .nav-actions .language-link,
+      .site-footer a,
+      .footer-nav a,
+      .footer-bottom a,
+      .back-link { display: inline-flex; align-items: center; min-height: 44px; }
+      .brand { min-height: 44px; display: inline-flex; flex-direction: column; justify-content: center; }
+      select { min-height: 44px; }
     }
   </style>
 </head>

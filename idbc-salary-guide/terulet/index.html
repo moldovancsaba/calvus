@@ -47,6 +47,10 @@
     .button-primary { background: var(--green); color: var(--dark); }
     .button-logout { background: transparent; border-color: rgba(255,255,255,.45); color: #fff; }
     .is-unavailable { opacity: .55; cursor: not-allowed; }
+    .menu-toggle {
+      display: none; margin-left: auto; border: 0; background: transparent; color: #fff;
+      font-size: 22px; line-height: 1; cursor: pointer; min-width: 44px; min-height: 44px;
+    }
 
     .container { max-width: 1180px; margin: 0 auto; padding: 0 26px; }
     .section { padding: 32px 0 60px; }
@@ -72,7 +76,7 @@
     }
     .summary-body p { margin: 0 0 11px; font-size: 13.5px; font-weight: 700; line-height: 1.55; color: var(--muted); }
     .read-more {
-      margin-top: 12px; padding: 9px 18px; border-radius: 999px;
+      margin-top: 12px; padding: 9px 18px; border-radius: 999px; min-height: 44px;
       border: 1.5px solid var(--dark); background: transparent; color: var(--dark); font-size: 13px; font-weight: 900;
     }
     .read-more:hover { background: var(--dark); color: #fff; }
@@ -119,7 +123,32 @@
 
     @media (max-width: 900px) {
       .area-summary, .panels { grid-template-columns: 1fr; }
-      .nav-links { display: none; }
+      .navbar { flex-wrap: wrap; gap: 14px; }
+      .menu-toggle { display: block; }
+      .nav-links, .nav-actions { display: none; }
+      .navbar.is-open .nav-links,
+      .navbar.is-open .nav-actions {
+        display: flex; flex-direction: column; align-items: stretch;
+        width: 100%; order: 3; gap: 10px; padding: 14px 2px 12px; margin-left: 0;
+      }
+      .navbar.is-open .nav-links { font-size: 13px; }
+      .navbar.is-open .nav-links a { display: block; padding: 10px 2px; }
+      .navbar.is-open .nav-actions .button { width: 100%; text-align: center; }
+    }
+
+    /* Mobile tap targets: WCAG 2.5.5 / HIG floor of 44px for anything tappable.
+       Applied only on small screens so desktop density is unchanged. */
+    @media (max-width: 980px) {
+      .menu-toggle { min-width: 44px; min-height: 44px; }
+      .nav-links a,
+      .nav-actions .button,
+      .nav-actions .language-link,
+      .site-footer a,
+      .footer-nav a,
+      .footer-bottom a,
+      .back-link { display: inline-flex; align-items: center; min-height: 44px; }
+      .brand { min-height: 44px; display: inline-flex; flex-direction: column; justify-content: center; }
+      select { min-height: 44px; }
     }
   </style>
 </head>
@@ -130,6 +159,8 @@
         <span class="brand-main">IDBC</span>
         <span class="brand-sub">salary guide</span>
       </a>
+      <button class="menu-toggle" type="button" aria-label="Menü megnyitása" aria-expanded="false">☰</button>
+
       <ul class="nav-links">
         <li><a href="../index.html#trends">Piaci trendek</a></li>
         <li><a href="../berezes/index.html">Bérezés</a></li>
@@ -206,6 +237,26 @@
       <span><a href="../index.html#trends">Vissza a trendekhez</a></span>
     </div>
   </footer>
+
+  <script>
+    (() => {
+      const toggle = document.querySelector('.menu-toggle');
+      const navbar = document.querySelector('.navbar');
+      if (!toggle || !navbar) return;
+      toggle.addEventListener('click', () => {
+        const isOpen = navbar.classList.toggle('is-open');
+        toggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+        toggle.textContent = isOpen ? '✕' : '☰';
+      });
+      navbar.querySelectorAll('.nav-links a, .nav-actions a').forEach(a => {
+        a.addEventListener('click', () => {
+          navbar.classList.remove('is-open');
+          toggle.setAttribute('aria-expanded', 'false');
+          toggle.textContent = '☰';
+        });
+      });
+    })();
+  </script>
 
   <script>
     (async function () {
