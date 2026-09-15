@@ -258,13 +258,68 @@
     .table-note { margin: 0 0 10px; font-size: 12px; font-weight: 800; color: var(--muted); max-width: 720px; }
     .salary-count { font-size: 12px; font-weight: 800; color: var(--muted); margin: 0 0 14px; }
 
-    .table-wrap { overflow: auto; border-radius: 18px; border: 1px solid var(--line); background: #fff; }
+    .table-wrap { overflow: auto; border-radius: 18px; border: 1px solid var(--line); background: #fff; container-type: inline-size; }
+    .table-wrap:focus-visible { outline: 3px solid var(--dark); outline-offset: 2px; }
     table { border-collapse: collapse; width: 100%; min-width: 760px; }
+    /* The position name is plain text in the table; the toggle only exists in card mode. */
+    .pos-toggle { display: none; }
     th, td { padding: 12px 16px; text-align: left; border-bottom: 1px solid var(--line); font-size: 13px; }
     th { background: rgba(19,35,35,.05); font-size: 11px; text-transform: uppercase; letter-spacing: .05em; font-weight: 900; }
     td.num { text-align: right; font-variant-numeric: tabular-nums; font-weight: 800; white-space: nowrap; }
     tbody td { vertical-align: top; }
     td.pos-cell { font-weight: 800; }
+
+    /* ---- Card mode ----------------------------------------------------------------
+       Below ~600px of *container* width each position group (one <tbody>) becomes a card:
+       the position is its header, the three experience levels are rows inside it, and the
+       levels collapse behind the header so a long area list stays scannable. The table
+       keeps its markup and its ARIA roles, so the header/cell association survives the
+       display change — see data/SOURCES-AND-GAPS.md. */
+    @container (max-width: 600px) {
+      table { min-width: 0; }
+      thead { display: none; }
+      table, tbody, tr, td { display: block; }
+
+      tbody { margin: 0 0 12px; border: 1px solid var(--line); border-radius: 14px; overflow: hidden; }
+      tbody:last-child { margin-bottom: 0; }
+
+      tr { display: grid; grid-template-columns: 1fr 1fr; padding: 0; border: 0; }
+      tr + tr { border-top: 1px solid var(--line); }
+
+      td { border: 0; padding: 4px 14px; }
+      td:first-child:not(.pos-cell), tr > td:nth-child(1) { padding-top: 10px; }
+      td:last-child { padding-bottom: 12px; }
+
+      /* value labels — visual only; the real <th> association is intact for screen readers */
+      td[data-label]::before {
+        content: attr(data-label);
+        display: block;
+        font-size: 10px; font-weight: 900; text-transform: uppercase; letter-spacing: .05em;
+        color: var(--muted); margin-bottom: 1px;
+      }
+
+      td.pos-cell { grid-column: 1 / -1; padding: 0; background: rgba(19,35,35,.05); border-bottom: 1px solid var(--line); }
+      .pos-name-plain { display: none; }
+      .pos-toggle {
+        display: flex; align-items: center; gap: 10px; width: 100%;
+        padding: 12px 14px; border: 0; background: transparent; text-align: left;
+        font: inherit; color: inherit; cursor: pointer;
+      }
+      .pos-toggle:focus-visible { outline: 3px solid var(--dark); outline-offset: -3px; }
+      .pos-name { font-size: 14px; font-weight: 900; line-height: 1.15; }
+      .pos-band { margin-left: auto; font-size: 12px; font-weight: 800; color: var(--muted); font-variant-numeric: tabular-nums; white-space: nowrap; }
+      .pos-chevron { flex: none; width: 10px; height: 10px; border-right: 2.5px solid var(--dark); border-bottom: 2.5px solid var(--dark); transform: rotate(45deg) translate(-2px, -2px); transition: transform .15s ease; }
+      .pos-toggle[aria-expanded="true"] .pos-chevron { transform: rotate(-135deg) translate(-2px, -2px); }
+
+      td[data-label="Tapasztalati szint"] { grid-column: 1 / -1; }
+      td[data-label="Egyéb juttatás"] { grid-column: 1 / -1; }
+      td.num { text-align: left; }
+
+      /* collapsed: keep the header, drop the levels */
+      tbody.is-collapsed tr:not(.pos-row) { display: none; }
+      tbody.is-collapsed .pos-row > td:not(.pos-cell) { display: none; }
+    }
+    @media (prefers-reduced-motion: reduce) { .pos-chevron { transition: none; } }
 
     .text-section { padding: 0 0 70px; }
     .text-section hr { margin: 0 0 22px; border: 0; border-top: 2px solid var(--dark); opacity: 0.75; }
@@ -419,18 +474,18 @@
         <p class="table-note">A bemutatott, 2026-os valós piaci adatokon alapuló bérsávok egész Magyarországra vonatkozó, havi bruttó forintösszegek.</p>
         <p class="salary-count" id="salaryCount"></p>
 
-        <div class="table-wrap">
-          <table>
-            <thead>
-              <tr>
-                <th>Pozíció</th>
-                <th>Tapasztalati szint</th>
-                <th style="text-align:right">Minimum</th>
-                <th style="text-align:right">Maximum</th>
-                <th>Egyéb juttatás</th>
+        <div class="table-wrap" role="region" aria-labelledby="salaryTableCaption" tabindex="0">
+          <table role="table">
+            <caption id="salaryTableCaption" class="sr-only">További bérek — pozíciónként, tapasztalati szint szerinti bontásban</caption>
+            <thead role="rowgroup">
+              <tr role="row">
+                <th scope="col" role="columnheader">Pozíció</th>
+                <th scope="col" role="columnheader">Tapasztalati szint</th>
+                <th scope="col" role="columnheader" style="text-align:right">Minimum</th>
+                <th scope="col" role="columnheader" style="text-align:right">Maximum</th>
+                <th scope="col" role="columnheader">Egyéb juttatás</th>
               </tr>
             </thead>
-            <tbody id="salaryTableBody"></tbody>
           </table>
         </div>
         <div class="bottom-cta">
@@ -485,7 +540,7 @@
 
     // ---------- Salary section ----------
     const teruletSelect = document.querySelector('#teruletSelect');
-    const salaryTableBody = document.querySelector('#salaryTableBody');
+    const salaryTable = document.querySelector('.table-wrap table');
     const salaryCount = document.querySelector('#salaryCount');
     const top3Panel = document.querySelector('#top3Panel');
 
@@ -570,17 +625,30 @@
         if (!byPos.has(r.pozicio)) byPos.set(r.pozicio, []);
         byPos.get(r.pozicio).push(r);
       });
-      salaryTableBody.innerHTML = [...byPos.entries()].map(([pozicio, group]) => {
+      // One <tbody> per position: harmless on desktop, and in card mode it *is* the card,
+      // which is what lets the rowspan grouping survive the switch to block layout.
+      const bodyHtml = [...byPos.entries()].map(([pozicio, group]) => {
         const rows = [...group].sort((a, b) => SZINT_ORDER.indexOf(a.szint) - SZINT_ORDER.indexOf(b.szint));
-        return rows.map((r, i) => `
-          <tr>
-            ${i === 0 ? `<td class="pos-cell" rowspan="${rows.length}">${escapeHtml(pozicio)}</td>` : ''}
-            <td>${escapeHtml(SZINT_LABELS[r.szint] || r.szint)}</td>
-            <td class="num">${fmtHuf(r.min)}</td>
-            <td class="num">${fmtHuf(r.max)}</td>
-            <td>${escapeHtml(r.juttatas)}</td>
+        const band = `${fmtHuf(Math.min(...rows.map(r => r.min)))} – ${fmtHuf(Math.max(...rows.map(r => r.max)))}`;
+        const cells = rows.map((r, i) => `
+          <tr role="row"${i === 0 ? ' class="pos-row"' : ''}>
+            ${i === 0 ? `<td class="pos-cell" role="cell" rowspan="${rows.length}">
+              <span class="pos-name-plain">${escapeHtml(pozicio)}</span>
+              <button type="button" class="pos-toggle" aria-expanded="false">
+                <span class="pos-name">${escapeHtml(pozicio)}</span>
+                <span class="pos-band">${band}</span>
+                <span class="pos-chevron" aria-hidden="true"></span>
+              </button>
+            </td>` : ''}
+            <td role="cell" data-label="Tapasztalati szint">${escapeHtml(SZINT_LABELS[r.szint] || r.szint)}</td>
+            <td class="num" role="cell" data-label="Minimum">${fmtHuf(r.min)}</td>
+            <td class="num" role="cell" data-label="Maximum">${fmtHuf(r.max)}</td>
+            <td role="cell" data-label="Egyéb juttatás">${escapeHtml(r.juttatas)}</td>
           </tr>`).join('');
-      }).join('') || '<tr><td colspan="5" class="no-data">Nincs pozíció ehhez a szűréshez.</td></tr>';
+        return `<tbody role="rowgroup" class="pos-group is-collapsed">${cells}</tbody>`;
+      }).join('') || '<tbody role="rowgroup"><tr role="row"><td role="cell" colspan="5" class="no-data">Nincs pozíció ehhez a szűréshez.</td></tr></tbody>';
+      salaryTable.querySelectorAll('tbody').forEach(tb => tb.remove());
+      salaryTable.insertAdjacentHTML('beforeend', bodyHtml);
       salaryCount.textContent = byPos.size + ' pozíció a kiválasztott területen';
     }
 
@@ -588,6 +656,16 @@
       renderTop3();
       renderTable();
     }
+
+    // Card-mode accordion. Only reachable when the toggle is visible (card mode); on wider
+    // containers the button is display:none, so it is not focusable and cannot fire.
+    salaryTable.addEventListener('click', e => {
+      const btn = e.target.closest('.pos-toggle');
+      if (!btn) return;
+      const group = btn.closest('tbody');
+      const open = group.classList.toggle('is-collapsed') === false;
+      btn.setAttribute('aria-expanded', String(open));
+    });
 
     populateSalaryFilters();
     teruletSelect.addEventListener('change', renderSalarySection);

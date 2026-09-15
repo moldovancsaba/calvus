@@ -147,6 +147,47 @@ folder is the single consolidated data source built from all of it.
 - `sapProducts` — **new**: the real 5-category, 20-item SAP product catalogue from the client's own SAP mockup/spec.
 - `siteMap` — **new**: the full intended 8-page site structure with a `status` (`built` / `partially built` / `not built`) and note per page.
 
+## Salary tables on mobile — cards instead of sideways scrolling (2026-09-15)
+
+Measured before the change, at a 375px viewport: the Bérsávok table was forced to
+`min-width: 760px` inside a 343px container — **419px of horizontal overflow**, more than the
+visible width. `Minimum` was cut mid-number and `Maximum` and `Egyéb juttatás` sat entirely
+off-screen, reachable only by discovering that the table scrolls sideways. The scroll container
+was also not keyboard-reachable.
+
+Below **600px of container width** (a container query on the table wrapper, not a viewport media
+query — the same markup appears at different widths), both salary tables now render as cards:
+
+- **Bérsávok**: each position group is its own `<tbody>`, which *is* the card. That is what lets
+  the `rowspan` grouping survive the switch to block layout — a spanning cell stops spanning under
+  `display: block`, so levels 2 and 3 would otherwise lose their position name. The card header
+  carries the position and its **full band across all three levels**, so the headline figure needs
+  no interaction; the three experience levels collapse behind it, because the largest area (IT, 24
+  positions) is 10.2 phone screens tall fully expanded versus ~1.4 collapsed.
+- **SAP**: flat three-column table, so one row is one card and nothing collapses — nine rows do
+  not need an accordion.
+
+**Accessibility notes, since this is the part that is easy to get wrong:**
+
+- Changing a table's `display` historically strips its semantics (screen readers stop associating
+  headers with cells). Fixed across Chromium/Gecko/WebKit since Safari 17, but the explicit
+  `role="table" / rowgroup / row / columnheader / cell` attributes are emitted anyway as
+  belt-and-braces for older iOS Safari. Note `cell`, not `gridcell`.
+- Visible labels come from `data-label` + `::before`, which is **purely decorative**: the real
+  `<th>` association is intact, so assistive tech already announces the header. Deliberately **no
+  `aria-label` on cells** — it is poorly supported on static content (JAWS ignores it) and here it
+  would cause the column name to be announced twice.
+- Both scroll wrappers gained `tabindex="0"` + `role="region"` + an accessible name, and both
+  tables gained a visually-hidden `<caption>` and `scope="col"` headers. Those were missing
+  before and are worth having regardless of the card layout.
+- The accordion toggle is `display: none` above the breakpoint, so on desktop it is neither
+  focusable nor operable, and the collapse rules live *inside* the container query — desktop
+  cannot be affected by the collapsed class.
+
+**Not verified here:** no screen-reader pass. Structure, roles, labels and layout were checked in
+the browser at 375px and 1280px, but VoiceOver/NVDA behaviour on a real device has not been
+tested. Worth doing before this is relied on by an audience that includes screen-reader users.
+
 ## Final research data (2026-09-08)
 
 `guide-data.json`'s survey half is now generated from the client's final workbook,

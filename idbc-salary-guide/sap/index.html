@@ -165,12 +165,37 @@
 
     .no-data { font-size: 13px; font-weight: 700; color: var(--muted); font-style: italic; margin: 0; }
 
-    .salary-table-wrap { overflow-x: auto; border-radius: 20px; box-shadow: var(--shadow-soft); }
+    .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0; }
+    .salary-table-wrap { overflow-x: auto; border-radius: 20px; box-shadow: var(--shadow-soft); container-type: inline-size; }
+    .salary-table-wrap:focus-visible { outline: 3px solid var(--dark); outline-offset: 2px; }
     table { width: 100%; min-width: 820px; border-collapse: collapse; background: #fff; }
     th, td { padding: 16px 18px; text-align: left; border-bottom: 1px solid rgba(19,35,35,.12); font-size: 14px; font-weight: 800; vertical-align: top; }
     td.num { text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap; }
     th { background: var(--dark); color: #fff; font-size: 13px; text-transform: uppercase; letter-spacing: .04em; }
     tr:last-child td { border-bottom: 0; }
+
+    /* ---- Card mode: below ~600px of container width each row becomes a card. The table
+       markup and its ARIA roles stay put, so header/cell association survives the
+       display change — see ../data/SOURCES-AND-GAPS.md. This table is flat (no grouping)
+       and short, so the rows stay open; only Bérsávok needs the accordion. */
+    @container (max-width: 600px) {
+      table { min-width: 0; }
+      thead { display: none; }
+      table, tbody, tr, td { display: block; }
+      tbody { padding: 10px; }
+      tr { background: #fff; border: 1px solid rgba(19,35,35,.12); border-radius: 14px; margin-bottom: 10px; padding: 4px 0; }
+      tr:last-child { margin-bottom: 0; }
+      tr:last-child td { border-bottom: 0; }
+      td { border: 0; padding: 6px 14px; font-size: 13px; }
+      td::before {
+        content: attr(data-label);
+        display: block;
+        font-size: 10px; font-weight: 900; text-transform: uppercase; letter-spacing: .05em;
+        color: var(--muted); margin-bottom: 1px;
+      }
+      td.pos-cell { font-size: 15px; font-weight: 900; }
+      td.num { text-align: left; }
+    }
 
     .bottom-cta { display: flex; justify-content: center; margin-top: 30px; }
 
@@ -337,16 +362,17 @@
           <div id="top3Panel"></div>
         </section>
 
-        <div class="salary-table-wrap" id="salaryTableWrap">
-          <table>
-            <thead>
-              <tr>
-                <th>Job / terület</th>
-                <th style="text-align:right">Átlagos range</th>
-                <th data-col="juttatas">Juttatási megjegyzés</th>
+        <div class="salary-table-wrap" id="salaryTableWrap" role="region" aria-labelledby="sapTableCaption" tabindex="0">
+          <table role="table">
+            <caption id="sapTableCaption" class="sr-only">SAP bérsávok pozíciónként</caption>
+            <thead role="rowgroup">
+              <tr role="row">
+                <th scope="col" role="columnheader">Job / terület</th>
+                <th scope="col" role="columnheader" style="text-align:right">Átlagos range</th>
+                <th scope="col" role="columnheader" data-col="juttatas">Juttatási megjegyzés</th>
               </tr>
             </thead>
-            <tbody id="salaryTableBody"></tbody>
+            <tbody id="salaryTableBody" role="rowgroup"></tbody>
           </table>
         </div>
         <div class="bottom-cta">
@@ -463,10 +489,10 @@
                        : fmtHuf(r.min != null ? r.min : r.max);
 
     salaryTableBody.innerHTML = visibleSapRows.map(r => `
-      <tr>
-        <td>${escapeHtml(r.pozicio)}</td>
-        <td class="num">${escapeHtml(rangeOf(r))}</td>
-        ${hasJuttatas ? `<td data-col="juttatas">${escapeHtml(r.juttatas)}</td>` : ''}
+      <tr role="row">
+        <td role="cell" class="pos-cell" data-label="Job / terület">${escapeHtml(r.pozicio)}</td>
+        <td class="num" role="cell" data-label="Átlagos range">${escapeHtml(rangeOf(r))}</td>
+        ${hasJuttatas ? `<td role="cell" data-col="juttatas" data-label="Juttatási megjegyzés">${escapeHtml(r.juttatas)}</td>` : ''}
       </tr>`).join('');
     })();
   </script>
