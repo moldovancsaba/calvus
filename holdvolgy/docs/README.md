@@ -6,6 +6,7 @@ record. Each file is dated inside; this index is the process log.
 
 | File | What it holds |
 |---|---|
+| `bemutato.md` | **A birtoknak szóló bemutató, magyarul** — mit nézzenek, miért így, mi valódi, mit mértünk, mit kérünk tőlük |
 | `00-plan.md` | Research findings and the phased implementation plan — the approval document |
 | `01-research-benchmarks.md` | Every estate site read, what it returned, and the sites that could not be reached |
 | `02-brand-and-site-audit.md` | Holdvölgy's measured brand tokens, fonts, page architecture, product/booking/club pages, and defects found |
@@ -129,5 +130,11 @@ the live page's tabs — parsing them properly put a tasting note, vintage note 
 full technical sheet on 31 product pages (closing a §6 gap); the tagline printed
 twice; the fact-sheet section's class collided with the menu dialog and floated over
 the page (D18). The claude.ai plan page was republished with its status.
+
+**2026-09-17 — client presentation page.** The owner asked whether the plan and the
+client presentation live on GitHub Pages or only as a claude.ai artifact. The plan
+did (`plan.html`); a client-facing presentation did not exist. `bemutato.html` is
+now that page, in Hungarian: what to look at, why it looks this way, what is real,
+what was measured, what we ask of the estate, and what comes next.
 
 **Next.** Client review of the whole; then the items in §6 of the plan as they arrive.

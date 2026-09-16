@@ -11,6 +11,7 @@ import re, pathlib, markdown
 HERE = pathlib.Path(__file__).parent
 PAGES = [  # (source, output, nav label)
     ("README.md", "index.html", "Overview"),
+    ("bemutato.md", "bemutato.html", "Bemutató"),
     ("00-plan.md", "plan.html", "Plan"),
     ("01-research-benchmarks.md", "benchmarks.html", "Benchmarks"),
     ("02-brand-and-site-audit.md", "audit.html", "Brand & site audit"),
