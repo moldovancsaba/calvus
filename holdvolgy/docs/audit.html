@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Holdvölgy brand and live-site audit — 2026-09-16 — Holdvölgy 2026 docs</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:opsz,wght@6..96,400;6..96,500&family=Archivo:wdth,wght@112.5,400;112.5,500;112.5,600&display=swap">
+<style>:root{--ground:#FAFAFA;--card:#FFFFFF;--ink:#1D1D1B;--text:#4A4744;--muted:#7A7672;--accent:#B8A689;--accent-deep:#8B705B;--line:#E4E0D9;--line-soft:#EFECE6;--note:#F4F1EB}
+@media (prefers-color-scheme:dark){:root{--ground:#1D1D1B;--card:#252321;--ink:#F3EFE8;--text:#CFC9C0;--muted:#9B9796;--accent:#BAA793;--accent-deep:#D2BFA6;--line:#3A3733;--line-soft:#2E2B28;--note:#2A2724}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--ground);color:var(--text);font-family:"Archivo","Helvetica Neue",Arial,sans-serif;font-stretch:112.5%;font-size:15.5px;line-height:1.6;padding-block:0 64px;padding-inline:clamp(16px,4vw,40px)}
+.wrap{max-width:72ch;margin-inline:auto}
+.docnav{display:flex;flex-wrap:wrap;gap:4px 18px;align-items:center;padding:16px 0;border-bottom:1px solid var(--line);font-size:12px;letter-spacing:.06em;text-transform:uppercase}
+.docnav a{color:var(--muted);text-decoration:none;min-height:44px;display:inline-flex;align-items:center;border-bottom:2px solid transparent}
+.docnav a:hover,.docnav a[aria-current]{color:var(--ink);border-color:var(--accent)}
+.docnav-brand{color:var(--accent-deep);font-weight:600;margin-right:6px}
+.docnav-hub{margin-left:auto}
+header{padding-block:40px 24px;border-bottom:1px solid var(--line);margin-bottom:28px}
+.eyebrow{font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--accent-deep);margin:0 0 12px}
+h1,h2,h3{font-family:"Bodoni Moda",Didot,"Bodoni 72",serif;font-weight:400;color:var(--ink);line-height:1.1;text-wrap:balance;margin:0}
+h1{font-size:clamp(32px,6.5vw,50px);font-optical-sizing:auto}
+h2{font-size:clamp(25px,4.5vw,32px);margin:48px 0 14px;padding-top:20px;border-top:1px solid var(--line)}
+h3{font-size:19px;margin:30px 0 8px;font-weight:500}
+p{margin:0 0 14px} strong{color:var(--ink);font-weight:600}
+ul,ol{padding-left:22px;margin:0 0 16px} li{margin:5px 0} li>ul{margin:6px 0 0}
+code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.86em;background:var(--note);padding:1px 5px;border-radius:2px;color:var(--ink)}
+a{color:var(--accent-deep)} :focus-visible{outline:2px solid var(--accent-deep);outline-offset:2px}
+.tbl{overflow-x:auto;margin:14px 0 22px;border:1px solid var(--line)}
+table{border-collapse:collapse;width:100%;font-size:13.5px;min-width:560px}
+th{text-align:left;font-weight:600;color:var(--ink);background:var(--note);padding:10px 12px;border-bottom:1px solid var(--line);font-size:11.5px;letter-spacing:.06em;text-transform:uppercase}
+td{padding:10px 12px;border-top:1px solid var(--line-soft);vertical-align:top;background:var(--card)} td:first-child{color:var(--ink)}
+footer{margin-top:56px;padding-top:18px;border-top:1px solid var(--line);font-size:12px;color:var(--muted)}
+</style>
+</head>
+<body>
+<div class="wrap">
+<nav class="docnav" aria-label="Project documentation"><span class="docnav-brand">Holdvölgy 2026 · docs</span><a href="index.html">Overview</a><a href="plan.html">Plan</a><a href="benchmarks.html">Benchmarks</a><a href="audit.html" aria-current=page>Brand & site audit</a><a href="assets.html">Assets</a><a href="decisions.html">Decisions</a><a class="docnav-hub" href="../../index.html">Calvus Hub</a></nav>
+<header><p class="eyebrow">Calvus · Holdvölgy · project documentation</p><h1>Holdvölgy brand and live-site audit — 2026-09-16</h1></header>
+<p>Everything here was read from holdvolgy.com over HTTP; nothing is inferred.</p>
+<h2>Brand tokens (Elementor kit <code>post-16.css</code>)</h2>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>Role</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>primary</td>
+<td><code>#B8A689</code> warm greige</td>
+</tr>
+<tr>
+<td>secondary</td>
+<td><code>#1D1D1B</code> near-black</td>
+</tr>
+<tr>
+<td>text</td>
+<td><code>#666666</code></td>
+</tr>
+<tr>
+<td>grounds</td>
+<td><code>#FFFFFF</code>, <code>#FAFAFA</code>, <code>#F4F4F4</code>, <code>#D9D9D9</code></td>
+</tr>
+<tr>
+<td>supporting</td>
+<td><code>#BAA793</code>, <code>#8B705B</code> brown, <code>#9B9796</code> grey</td>
+</tr>
+<tr>
+<td>accent (Elementor default, unused in design)</td>
+<td><code>#61CE70</code></td>
+</tr>
+</tbody>
+</table></div>
+<p>Fonts: <code>AkzidenzGroteskBQ-Ext</code> on all four Elementor typography roles (196
+declarations, <code>akzidenzgroteskbq-ext-webfont.ttf</code>); <code>Didot</code> on <code>h1</code>–<code>h6</code> at kit
+level (<code>Didot-Regular.ttf</code>) and on a few scroll-text widgets; Open Sans residual.
+Both brand fonts are served as TTF — no WOFF2 (work-list item HV-W14).</p>
+<h2>Page architecture as rendered (heading order)</h2>
+<p><strong>Home</strong> — four <code>h1</code>s compete: Év pincészete 2026 · Borkóstolóélmény ajándékba ·
+TOKAJI ASZÚ · TOKAJI ASZÚ ELŐJEGYZÉS. Then ten wine-category <code>h2</code>s (6 puttonyos
+aszúk · édes birtokszelekció · édes szamorodni · Zéta szamorodni · fordítás · édes
+sárgamuskotály · száraz birtokszelekció · száraz furmint Király · száraz hárslevelű
+Becsek), Holdvölgy kezdetek, "több mint borászat", the tagline, Aktualitások,
+"látogass meg minket", team roles, newsletter. CTAs: BŐVEBBEN · TOVÁBB · ÉRDEKEL ·
+TELJES VÁLASZTÉK · időpontfoglalás · "ahol megtalálod borainkat".</p>
+<p><strong>EN home</strong> mirrors HU (Winery of the Year 2026 · THE PERFECT GIFT · TOKAJI ASZÚ ·
+EN PRIMEUR …) but three news headings remain in Hungarian.</p>
+<p><strong>Birtok</strong> — A birtok alapjai → tagline → ten-step timeline (születésnapi ajándék
+1998 → megalakulás 2004 → névadó dűlő 2005 → első aszú 2006 → portfólió 2007 →
+épület és pince 2011–13 → első látogatók 2014 → Trezor 2016 → építészeti díj 2018 →
+PreCulture 2019) → gallery → Dűlők és terroir → kőzetek → szőlőfajták → évjáratok
+2021–2025 → Csapat (Demkó Pascal, Jójárt Gergő, Erdélyi Károly, Jákób Bianka, Demkó
+Natália, Molnár Balázs, Körtvélyesi Kornél, Gellén Fruzsina) → per-dűlő panels with
+Telepítések · Expozíció · Kőzet · Fajták for Holdvölgy, Úrágya, Nyulászó,
+Dorgó-tető, Becsek, Király, Kakasok.</p>
+<p><strong>Tokaji aszú</strong> — Culture → készítés → érlelés → Időkapszula (születés · testvérek ·
+család · diploma · eljegyzés · házasság · siker · generációk) → ajándék → Holdvölgy
+garancia → Culture 6 puttonyos → PreCulture 6 / 3 palack → Tokaj örökség (eleven
+milestones from Vitis Tokaiensis to "Az első Holdvölgy évjárat").</p>
+<p><strong>Borkóstoló</strong> — "Borkóstoló a föld alatt" (duplicated <code>h1</code>) → 1,8 km · 3 szint ·
+500 év (each rendered twice) → pincetörténet (seven milestones incl. Vince díj,
+építészeti díj) → jegyek: 6 aszú évjárat / térképes aszúval / térképes → Experience →
+Geológia "10 millió éves vulkáni nyomok" → látogatás → hasznos információk →
+vendégkönyv.</p>
+<p><strong>Shop</strong> — categories Borválogatások · Culture · Édes borok · Száraz és félszáraz ·
+Hold and Hollo · Díszdobozok és ajándéktasakok; tasting tickets sold as products.
+EN shop exists and mirrors.</p>
+<h2>Product pages</h2>
+<p><code>/bor/szaraz-valogatas-vision</code>: 1 705 characters of visible text; product-specific
+content = name, three vintages, prices (5 500 / 9 500 / 19 000 Ft). No tasting
+note, dűlő, variety, alcohol, sugar, acidity, serving, award or pairing.
+<code>/bor/culture-aszu</code>: one paragraph on Culture, then thirteen vintages 2006–2018
+with prices (2006/2007 67 000, 2008 40 500, 2009 36 500 … 2018 27 500; a 133 000 Ft
+item also appears — format unconfirmed). The information architecture puts wine
+facts in category names, not on product pages.</p>
+<h2>Booking, gift, club, Trezor</h2>
+<ul>
+<li><code>/borkostolo-idopontfoglalas/</code> is a contact form: Név · E-mail · Telefonszám ·
+  Borkóstolók (select: Kincskereső 6 / 8 borral / Tokaji aszú élmény) · Dátum ·
+  Vendégek száma · Üzenet · GDPR. No availability, no payment.</li>
+<li>Gift cards from 6 500 Ft/fő; five programmes listed.</li>
+<li>Borklub is a real loyalty ladder: 5 % at 50 000 Ft, 10 % at 150 000, 15 % at
+  300 000, up to 20 %; 12-month tier validity; quarterly offers; limited reserves.</li>
+<li>Bortrezor: guests take part in the blend ("házasítás") and receive a certificate.</li>
+</ul>
+<h2>Defects observed (beyond the technical brief)</h2>
+<ul>
+<li>Four <code>h1</code>s on home, two on Borkóstoló (W22 cites three on one page).</li>
+<li>Three AI-generated images live (<code>ChatGPT-Image-2026.-apr.-27…</code>) on Borkóstoló
+  and Experience.</li>
+<li>Hungarian news headings on the EN home.</li>
+<li>Eleven top-level nav items plus a mega-menu duplicate.</li>
+<li>Product pages carry no product information.</li>
+<li>Fonts served as TTF only.</li>
+</ul>
+<footer>Source: <code>holdvolgy/docs/02-brand-and-site-audit.md</code> · rendered by <code>docs/build.py</code>. Set in Bodoni Moda and Archivo (Google Fonts, SIL OFL) on Holdvölgy's measured palette — decision D3.</footer>
+</div>
+</body>
+</html>

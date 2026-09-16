@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Holdvölgy 2026 — research findings and implementation plan — Holdvölgy 2026 docs</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:opsz,wght@6..96,400;6..96,500&family=Archivo:wdth,wght@112.5,400;112.5,500;112.5,600&display=swap">
+<style>:root{--ground:#FAFAFA;--card:#FFFFFF;--ink:#1D1D1B;--text:#4A4744;--muted:#7A7672;--accent:#B8A689;--accent-deep:#8B705B;--line:#E4E0D9;--line-soft:#EFECE6;--note:#F4F1EB}
+@media (prefers-color-scheme:dark){:root{--ground:#1D1D1B;--card:#252321;--ink:#F3EFE8;--text:#CFC9C0;--muted:#9B9796;--accent:#BAA793;--accent-deep:#D2BFA6;--line:#3A3733;--line-soft:#2E2B28;--note:#2A2724}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--ground);color:var(--text);font-family:"Archivo","Helvetica Neue",Arial,sans-serif;font-stretch:112.5%;font-size:15.5px;line-height:1.6;padding-block:0 64px;padding-inline:clamp(16px,4vw,40px)}
+.wrap{max-width:72ch;margin-inline:auto}
+.docnav{display:flex;flex-wrap:wrap;gap:4px 18px;align-items:center;padding:16px 0;border-bottom:1px solid var(--line);font-size:12px;letter-spacing:.06em;text-transform:uppercase}
+.docnav a{color:var(--muted);text-decoration:none;min-height:44px;display:inline-flex;align-items:center;border-bottom:2px solid transparent}
+.docnav a:hover,.docnav a[aria-current]{color:var(--ink);border-color:var(--accent)}
+.docnav-brand{color:var(--accent-deep);font-weight:600;margin-right:6px}
+.docnav-hub{margin-left:auto}
+header{padding-block:40px 24px;border-bottom:1px solid var(--line);margin-bottom:28px}
+.eyebrow{font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--accent-deep);margin:0 0 12px}
+h1,h2,h3{font-family:"Bodoni Moda",Didot,"Bodoni 72",serif;font-weight:400;color:var(--ink);line-height:1.1;text-wrap:balance;margin:0}
+h1{font-size:clamp(32px,6.5vw,50px);font-optical-sizing:auto}
+h2{font-size:clamp(25px,4.5vw,32px);margin:48px 0 14px;padding-top:20px;border-top:1px solid var(--line)}
+h3{font-size:19px;margin:30px 0 8px;font-weight:500}
+p{margin:0 0 14px} strong{color:var(--ink);font-weight:600}
+ul,ol{padding-left:22px;margin:0 0 16px} li{margin:5px 0} li>ul{margin:6px 0 0}
+code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.86em;background:var(--note);padding:1px 5px;border-radius:2px;color:var(--ink)}
+a{color:var(--accent-deep)} :focus-visible{outline:2px solid var(--accent-deep);outline-offset:2px}
+.tbl{overflow-x:auto;margin:14px 0 22px;border:1px solid var(--line)}
+table{border-collapse:collapse;width:100%;font-size:13.5px;min-width:560px}
+th{text-align:left;font-weight:600;color:var(--ink);background:var(--note);padding:10px 12px;border-bottom:1px solid var(--line);font-size:11.5px;letter-spacing:.06em;text-transform:uppercase}
+td{padding:10px 12px;border-top:1px solid var(--line-soft);vertical-align:top;background:var(--card)} td:first-child{color:var(--ink)}
+footer{margin-top:56px;padding-top:18px;border-top:1px solid var(--line);font-size:12px;color:var(--muted)}
+</style>
+</head>
+<body>
+<div class="wrap">
+<nav class="docnav" aria-label="Project documentation"><span class="docnav-brand">Holdvölgy 2026 · docs</span><a href="index.html">Overview</a><a href="plan.html" aria-current=page>Plan</a><a href="benchmarks.html">Benchmarks</a><a href="audit.html">Brand & site audit</a><a href="assets.html">Assets</a><a href="decisions.html">Decisions</a><a class="docnav-hub" href="../../index.html">Calvus Hub</a></nav>
+<header><p class="eyebrow">Calvus · Holdvölgy · project documentation</p><h1>Holdvölgy 2026 — research findings and implementation plan</h1></header>
+<p>Written 2026-09-16, before any second build. Part of the documentation set in <code>holdvolgy/docs/</code> — see <a href="index.html"><code>README.md</code></a> there for the index and process log. The first prototype (commit <code>8342956</code>) is
+withdrawn as a design direction: it used a dark ground, a saturated gold accent and a
+serif display face — none of which come from the Holdvölgy brand or from the wine
+world's best sites. Everything below is what was actually measured or read.</p>
+<h2>1. What the benchmark sites do</h2>
+<p>Sites read directly (homepage plus what the fetcher could reach): Château Margaux,
+Krug, Château d'Yquem, Château Suduiraut, Château Smith Haut Lafitte (FR); Opus One,
+Stag's Leap Wine Cellars, Jordan (Napa/Sonoma); Catena Zapata (AR); IXSIR (LB);
+Antinori, Tenuta San Guido (IT); Penfolds (AU); Bodega Garzón (UY); VIK (CL);
+Klein Constantia (ZA); Royal Tokaji, Disznókő, Barta (Tokaj/Mád); Zorah (AM,
+Awwwards HM); Pasqua (IT, Awwwards Site of the Month). Also the World's 50 Best
+Vineyards 2025 list and the Awwwards wine gallery.</p>
+<p>Unreachable from this environment and therefore not claimed: Château Musar and
+Schloss Johannisberg (age gate blocks the fetcher), Vega Sicilia, Oremus, Egon Müller,
+Château Climens, Dönnhoff, Château Héritage, Château Ksara, Szepsy (cert/TLS/empty).</p>
+<h3>1.1 Ground and colour — 13 light, 1 dark</h3>
+<p>Every Old World reference and every hospitality-led estate sits on a white or cream
+ground with dark type: Margaux, Krug, Yquem, Suduiraut, Smith Haut Lafitte, Opus One,
+Stag's Leap, Jordan, Antinori, San Guido, Penfolds, Garzón, Klein Constantia, Royal
+Tokaji, Disznókő, Barta, IXSIR, Zorah. Accent colour is carried by photography, not by
+CSS — "earth tones emerge through photography rather than bold digital colors"
+(Zorah), "no aggressive accent colors compete for attention" (Smith Haut Lafitte).
+The single dark-ground site is VIK (#1 on the 50 Best list), which is a hotel-and-art
+estate with titanium-gold architecture to justify it.</p>
+<p>Conclusion: the dark-cellar-and-gold treatment is the exception, and it belongs to a
+brand that isn't Holdvölgy.</p>
+<h3>1.2 Typography — sans body everywhere, serif only as accent</h3>
+<p>Antinori, Disznókő, Penfolds, Garzón, Catena, Smith Haut Lafitte, Stag's Leap, IXSIR,
+VIK: sans-serif throughout. Krug and Pasqua: sans body with an italic serif used as
+punctuation ("HOUSE OF THE <em>UNCONVENTIONAL</em>"). Jordan and Royal Tokaji: serif reserved
+for the wordmark. Nobody sets running text or cards in a serif.</p>
+<h3>1.3 How they sell — three distinct models, and Holdvölgy is in the third</h3>
+<ol>
+<li><strong>No transaction at all</strong> — Margaux, Yquem, Krug, San Guido, Suduiraut, Catena,
+   Royal Tokaji, Disznókő, Zorah. First growths and allocation houses: "Find a
+   retailer", trade extranet, visits. Prices never shown.</li>
+<li><strong>Allocation / membership gate</strong> — Opus One ("Acquire our wines", no prices),
+   Stag's Leap (four membership tiers, prices behind login), VIK (R.E.D. Society),
+   Jordan (mailing list = 3 000 reward points). Scarcity as the mechanism.</li>
+<li><strong>Open DTC with prices</strong> — Penfolds (RRP on every card, 6-packs, badges "LIMITED
+   EDITION / 100 POINT", filters by type/varietal/region/occasion, gift guide, member
+   pricing), Garzón ("Online bottle price from $U 9860"), Barta (free delivery over
+   15 000 Ft on the hero), Klein Constantia (shop + tasting room + club).</li>
+</ol>
+<p>Holdvölgy already sells openly with prices, a loyalty programme (5–20 % at
+50k/150k/300k Ft annual spend, 12-month tiers, quarterly offers, limited reserves),
+gift cards from 6 500 Ft, a pre-order product (PreCulture) and an experiential
+programme (Trezor: guests take part in the blend and receive a certificate). That is
+the Penfolds/Garzón model with an Opus-One-style allocation layer on top. The site
+should be designed as a <strong>shop-and-hospitality estate</strong>, not as a first growth
+pretending prices don't exist. In Tokaj this is also a genuine differentiator:
+neither Royal Tokaji nor Disznókő sells online.</p>
+<h3>1.4 Navigation — the same five words</h3>
+<p>Across the set the top level is some ordering of: Estate · Wines · Visit/Experiences ·
+Club/Membership · Contact, with Shop as a persistent button. Nobody exceeds seven
+items. Holdvölgy's current header has eleven plus a mega-menu duplicate.</p>
+<h3>1.5 Storytelling devices that recur</h3>
+<ul>
+<li>A single sentence over the hero photograph: "Praise the balance in life" (SHL),
+  "A unique terroir / Unparalleled surroundings" (Garzón), "The wine of kings and the
+  king of wines" (Disznókő). Never a paragraph.</li>
+<li>Named vineyards as first-class objects: FAY and S.L.V. (Stag's Leap), Adrianna
+  (Catena), six mapped sites with soil and altitude (IXSIR), Öreg Király and Kővágó
+  (Barta). Holdvölgy has seven named dűlők <strong>and a rock photograph for each</strong> — no
+  benchmark site has that asset.</li>
+<li>A founding number: 1843 (Krug), 1855 (Margaux, Suduiraut), 1976 (Stag's Leap),
+  26 generations (Antinori), 1 800 m (IXSIR), 6 000 years (Zorah). Holdvölgy's are
+  1,8 km / 3 szint / 500 év — already on the tasting page, badly duplicated (each
+  appears twice in the DOM).</li>
+<li>Vintage as narrative: "The story of a year" (Krug), 2023 microsite (Yquem),
+  Culture 2006–2018 vertical (Holdvölgy already lists thirteen vintages with prices,
+  and PreCulture is an en-primeur programme like Yquem's). Nobody else in Tokaj
+  presents a vertical.</li>
+<li>Provenance: Krug iD (app per bottle), VIK "Authentication". Holdvölgy's Trezor
+  certificate and Time Capsule ("Kóstold vissza életed nagy pillanatait") are the
+  same idea and are already written.</li>
+<li>Hospitality-first CTAs: "Book a visit", "Reserve your seat", "Secure a reservation"
+  — always above "Shop".</li>
+</ul>
+<h3>1.6 Award galleries are not a reliable source</h3>
+<p>Of the Awwwards wine listings, Post Familiar (Site of the Day 2024) no longer
+resolves and Bijou (HM 2025) is a parked domain. Pasqua's award site is a loading
+screen with "START THE EXPERIENCE". The estates that endure are the ones on the 50
+Best list, and their sites are quiet.</p>
+<h2>2. What Holdvölgy actually is (measured from the live site)</h2>
+<p><strong>Palette (Elementor kit 16):</strong> primary <code>#B8A689</code> warm greige, secondary <code>#1D1D1B</code>
+near-black, text <code>#666666</code>, grounds <code>#FFFFFF</code> / <code>#FAFAFA</code> / <code>#F4F4F4</code> / <code>#D9D9D9</code>,
+supporting <code>#BAA793</code>, <code>#8B705B</code> brown, <code>#9B9796</code> grey. <strong>Light ground, muted
+champagne-greige accent, no saturated gold.</strong></p>
+<p><strong>Type:</strong> Akzidenz-Grotesk BQ Extended for everything (196 declarations) with Didot
+on h1–h6 (kit-level rule). A wide grotesque plus a high-contrast Didone wordmark — a
+distinctive, defensible pairing that the benchmark pattern supports (sans body,
+serif as accent). The first prototype used neither.</p>
+<p><strong>Language:</strong> HU primary, EN full mirror including shop (<code>/en/shop</code>, "EN PRIMEUR",
+"MUSCAT BLANC À PETITS GRAINS"). Per the technical brief EN visitors are up 145 %
+this year. EN is a primary surface.</p>
+<p><strong>Current page architecture (heading order as rendered):</strong>
+- Home: four competing <code>h1</code>s (Év pincészete / Ajándék / Tokaji aszú / Előjegyzés),
+  then ten wine-category <code>h2</code>s, then Kezdetek, tagline, news, visit, team, newsletter.
+- Birtok: foundations → ten-step timeline (1998–2019, each an illustrated card) →
+  gallery → dűlők and terroir → rocks → varieties → vintages 2021–2025 → team (9
+  people).
+- Tokaji aszú: Culture → making → ageing → Time Capsule (eight life moments) →
+  gift → guarantee → Culture vintages → PreCulture → Tokaj heritage (eleven dated
+  milestones from Vitis Tokaiensis to the first Holdvölgy vintage).
+- Borkóstoló: "Borkóstoló a föld alatt" → 1,8 km / 3 szint / 500 év → cellar
+  history (seven milestones) → tickets (three programmes) → Experience → geology
+  ("10 millió éves vulkáni nyomok") → visit info → guestbook.
+- Shop: categories = Borválogatások · Culture · Édes · Száraz és félszáraz · Hold
+  and Hollo · Díszdobozok. Culture page lists 13 vintages 2006–2018 (27 500 → 67 000 Ft
+  on the vintage list; 133 000 Ft also appears on the page).</p>
+<p><strong>Product pages are thin.</strong> <code>/bor/szaraz-valogatas-vision</code> has 1 705 characters of
+visible text, of which the product-specific part is the name, three vintages and
+prices. No tasting note, no dűlő, no alcohol/sugar/acid, no serving temperature, no
+award, no pairing. The category <em>names</em> carry the information ("TOKAJI SZÁRAZ
+FURMINT, KIRÁLY") — the pages don't.</p>
+<p><strong>Booking is a contact form</strong>, not a booking engine: Név, E-mail, Telefonszám,
+Borkóstolók (select), Dátum, Vendégek száma, Üzenet, GDPR. No availability, no
+payment. The technical brief's "foglalási rendszer" is this form.</p>
+<p><strong>Three AI-generated images are live</strong> on Borkóstoló and Experience
+(<code>ChatGPT-Image-2026.-apr.-27…png</code>). Given the brief and the owner's instruction,
+these must not be carried into the prototype; real photography replaces them.</p>
+<h2>3. Asset inventory (180 unique base images on the crawled pages)</h2>
+<p>Nothing has been downloaded. Sizes and formats were read from HTTP headers and the
+first 33 bytes of each file.</p>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>Group</th>
+<th>Count / spec</th>
+<th>Use in prototype</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Bottle renders <code>HV_&lt;Line&gt;_&lt;yy&gt;-NEW-1347x1347[_DIJ].png</code></td>
+<td>40, 1347², <strong>RGBA transparent</strong>, ~290 KB each</td>
+<td>Every product card and hero; sit on the greige ground with a soft shadow. <code>_DIJ</code> = award-badge variant.</td>
+</tr>
+<tr>
+<td>Culture vertical 2006–2018</td>
+<td>13 of the above</td>
+<td>The vintage wall on the Aszú page</td>
+</tr>
+<tr>
+<td>PreCulture barrel/bottle per year 2018–2025</td>
+<td>8, 1347² RGBA</td>
+<td>En-primeur timeline</td>
+</tr>
+<tr>
+<td>Hold and Hollo Dry / Sweet / Uppp</td>
+<td>3, 1347² RGBA</td>
+<td>Entry line</td>
+</tr>
+<tr>
+<td>Tasting-programme mockups</td>
+<td>4 (2022) + 5 icons (600²)</td>
+<td>Ticket cards</td>
+</tr>
+<tr>
+<td>Cellar photography <code>hv-pince-hero.jpg</code> (521 KB), <code>hv_pincerendszer_pincealagut_lepcsovel_4-3.jpg</code>, <code>…trezor_uvegtabla…</code>, <code>Aszu_Landing_11-1.jpg</code></td>
+<td>JPEG</td>
+<td>Page heroes — the single sentence over a photograph</td>
+</tr>
+<tr>
+<td>Vineyard photography <code>hv_ke_szolo_dulok_furmint…holdvolgy_dulo_5_2018</code>, <code>dulok_becsek_dulo_latvany</code>, <code>hv_ke_hangulat_bebujik_a_nap</code>, <code>2021_riport_koverszolo</code></td>
+<td>JPEG</td>
+<td>Dűlő section, EN home</td>
+</tr>
+<tr>
+<td>Founder <code>pascal_founder_2.jpg</code></td>
+<td>22 KB (small)</td>
+<td>Estate story — ask for a larger file</td>
+</tr>
+<tr>
+<td>Rock photographs <code>MVW_HV_kozet_*</code></td>
+<td>7, 1400² RGBA, ~1 MB each</td>
+<td>One per dűlő — the asset nobody else has. Must be converted to WebP/AVIF; at 1 MB each they'd blow the 1,5 MB page budget on their own.</td>
+</tr>
+<tr>
+<td>Vineyard map <code>hv_dulok_birtok.png</code></td>
+<td>2000×1180 RGBA</td>
+<td>Dűlő overview</td>
+</tr>
+<tr>
+<td>Timeline cards <code>*_birtok-413.png</code>, cellar history <code>*_pince_honlap.png</code></td>
+<td>413×462 RGBA</td>
+<td>Illustrated cards, only usable at ≤ 413 px — fine for a card strip, not for heroes</td>
+</tr>
+<tr>
+<td><code>aszusodas_folyamata-1.png</code></td>
+<td>not a PNG despite the name (462 KB)</td>
+<td>Aszú process diagram — inspect before use</td>
+</tr>
+<tr>
+<td>Logos <code>HV-web-logo.png</code>, <code>hv-megamenu-logo.svg</code>, <code>LOGO2.svg</code></td>
+<td>SVG available</td>
+<td>Header</td>
+</tr>
+<tr>
+<td>AI-generated (3)</td>
+<td>—</td>
+<td><strong>Excluded</strong></td>
+</tr>
+</tbody>
+</table></div>
+<p>Gaps to request from the client: a large founder portrait, team portraits (nine
+names, no images on the crawled pages), a horizontal cellar photograph for mobile
+heroes, the aszú process diagram as a real PNG/SVG.</p>
+<h2>4. Design direction — derived, not chosen</h2>
+<ol>
+<li><strong>Light ground, their palette.</strong> <code>#FAFAFA</code> page, <code>#FFFFFF</code> cards, <code>#1D1D1B</code>
+   type, <code>#B8A689</code> as the only accent, <code>#8B705B</code> for hover. No gold, no dark
+   sections.</li>
+<li><strong>Their type, in free faces.</strong> Owner decision 2026-09-16: commercially free
+   web fonts only, Google Fonts preferred. The live site's pairing (Akzidenz-Grotesk
+   BQ Extended + Didot) is therefore reproduced with <strong>Archivo</strong> at width 112–125
+   (variable <code>wdth</code> axis) for nav, body, cards and prices, and <strong>Bodoni Moda</strong>
+   (variable optical size) for h1/h2 and the wordmark, and for nothing else. Both
+   are SIL OFL. Fallbacks <code>"Helvetica Neue", Arial, sans-serif</code> and
+   <code>Didot, "Bodoni 72", serif</code>. See <a href="decisions.html"><code>04-decisions.md</code></a> D3.</li>
+<li><strong>Photograph + one sentence</strong> heroes, per §1.5. Existing copy already has the
+   sentences: "A tokaji álmot töltjük pohárba az élet nagy pillanataihoz" (home),
+   "Borkóstoló a föld alatt" (tasting), "A gondolatok bora" (estate).</li>
+<li><strong>Bottles on the ground colour, never on a coloured panel.</strong> The renders are
+   transparent; treat them as objects (Penfolds' isolated-bottle grid is the
+   reference, with Holdvölgy's greige instead of white).</li>
+<li><strong>Seven dűlők, seven rocks.</strong> A section no competitor can copy: the vineyard map
+   with each rock photograph, soil, exposure, varieties (the Birtok page already has
+   "Telepítések · Expozíció · Kőzet · Fajták" per dűlő).</li>
+<li><strong>Culture vertical as a wall</strong>, 2006 → 2018, each vintage a bottle and a price;
+   PreCulture as the en-primeur row beneath it. This is Yquem's vintage microsite
+   idea with Holdvölgy's own catalogue.</li>
+<li><strong>Five-item navigation</strong>: Birtok · Borok · Látogatás · Borklub · Kapcsolat, with
+   Foglalás as the button and the cart icon. Everything else (Aszú, Trezor, Ajándék,
+   Experience) lives one level down.</li>
+<li><strong>Hospitality before shop</strong> in every CTA pair, per the benchmarks.</li>
+<li><strong>One <code>h1</code> per page</strong>; the four competing hero blocks on the current home become
+   one hero and three cards.</li>
+<li><strong>Product pages carry the content</strong> they currently lack: dűlő, variety, vintage,
+    residual sugar / alcohol where the client provides it, serving, awards (the
+    <code>_DIJ</code> renders exist because awards exist), pairing, "Kóstold a birtokon".</li>
+<li><strong>Two experiences, not one layout that reflows.</strong> Desktop and phone are designed
+    separately, each at its own reference size (1440 and 390), and tablet is a
+    resolved third state rather than whatever falls out in between.<ul>
+<li><em>Desktop is the editorial estate</em>: wide photography, the dűlő map with the
+  seven rocks laid out spatially, the Culture vertical as a single row of
+  thirteen bottles, a visible mega-navigation, hover states, a four-up product
+  grid of isolated bottles. It exists to make the estate felt.</li>
+<li><em>Phone is a hospitality-and-buying tool</em>: the technical brief records that
+  more than half of gifting-season purchases happen on mobile. Booking, shop,
+  club and cart reachable in two taps from anywhere via a persistent bottom
+  action bar; the vertical becomes a swipeable rail; the dűlők a stack with the
+  rock as the card image; the product grid two-up; the story sections
+  shortened to their sentence and a "tovább". It exists to let someone book or
+  buy in the car park at Mád.</li>
+<li>Photography is art-directed per device with <code>&lt;picture&gt;</code> and <code>media</code>, not
+  scaled: a landscape cellar frame for desktop and a separately cropped
+  portrait frame for phone. This is why the asset gaps in §3 ask for both.</li>
+<li>Navigation is two systems (mega-nav; bottom bar plus sheet), not one menu
+  collapsed behind a hamburger.</li>
+</ul>
+</li>
+</ol>
+<h2>5. Implementation plan</h2>
+<p>Constraints: static HTML, no build step; two languages; the 1,5 MB home-page and
+one-<code>h1</code> targets from the technical brief are adopted as the prototype's own gate;
+mobile-first with the 44 px floor and zero horizontal overflow already established
+in this repo.</p>
+<h3>Phase 0 — approval (this document)</h3>
+<p>Owner confirms the direction in §4 and the page list below. Nothing is built before.</p>
+<h3>Phase 1 — foundation (one commit)</h3>
+<ul>
+<li><code>holdvolgy/assets/tokens.css</code> with the kit-16 palette and the two type families.</li>
+<li>Two layout specs before any page: desktop at 1440 and phone at 390, each with its
+  own navigation system, hero framing and grid, per §4.11; tablet resolved
+  explicitly.</li>
+<li>Shared header/footer markup — mega-nav for desktop, bottom action bar plus sheet
+  for phone — and the age gate restyled on the light ground.</li>
+<li>Home rebuilt: one hero (cellar photograph + tagline), three cards (Év pincészete,
+  Borkóstoló, PreCulture), wine lines strip with bottle renders, dűlő teaser, visit,
+  newsletter. Home weight measured against 1,5 MB with the real renders in place.</li>
+</ul>
+<h3>Phase 2 — the pages that carry the estate (one commit each)</h3>
+<ul>
+<li><strong>Birtok</strong>: story, ten-step timeline with the illustrated cards, seven dűlők with
+  rocks and map, varieties, team (placeholders until portraits arrive).</li>
+<li><strong>Tokaji aszú</strong>: Culture vertical wall, aszú making/ageing, Time Capsule, PreCulture
+  en-primeur row.</li>
+<li><strong>Látogatás</strong>: 1,8 km / 3 szint / 500 év, cellar history, three tickets with the
+  mockups, Experience, Trezor, geology, practical info, booking form modelled on the
+  current fields (it stays a request form — no fake availability).</li>
+</ul>
+<h3>Phase 3 — commerce</h3>
+<ul>
+<li><strong>Borok</strong> grid with the 40 renders, filters Száraz / Édes / Aszú / Hold and Hollo /
+  Válogatások, sort by price, two-up on phones.</li>
+<li><strong>Product page template</strong> per §4.10, driven from one JSON catalogue file so HU
+  and EN share data.</li>
+<li><strong>Borklub</strong> page with the real tiers and rules.</li>
+</ul>
+<h3>Phase 4 — English</h3>
+<ul>
+<li><code>holdvolgy/en/</code> mirror of every page from the same JSON, <code>hreflang</code> pairs with
+  <code>x-default</code>, EN copy taken from the live <code>/en/</code> pages where it exists.</li>
+</ul>
+<h3>Phase 5 — gate and hand-off</h3>
+<ul>
+<li>Per-page measurement run <strong>twice, as two checklists</strong>: desktop at 1440 (weight,
+  requests, <code>h1</code> count, alt coverage, hover/focus states, console) and phone at 390
+  (weight with the phone-cropped images, tap targets, overflow, two-tap reach of
+  Foglalás / Borok / Kosár, console); Product/Offer JSON-LD on product pages.</li>
+<li>SOURCES note listing every asset URL used and every gap still open.</li>
+</ul>
+<p>Each phase ends with the Rule-2 gate and a live verification, as with the other
+projects in this repo.</p>
+<h2>6. What needs the client</h2>
+<p>Large founder and team portraits; the aszú process diagram as a real image;
+technical data per wine (residual sugar, alcohol, acidity) — owner confirmed
+2026-09-16 that item data will be supplied; confirmation of the Culture 133 000 Ft
+item (which vintage/format); whether EN copy should be carried verbatim from the
+live site. The webfont question is closed (D3).</p>
+<footer>Source: <code>holdvolgy/docs/00-plan.md</code> · rendered by <code>docs/build.py</code>. Set in Bodoni Moda and Archivo (Google Fonts, SIL OFL) on Holdvölgy's measured palette — decision D3.</footer>
+</div>
+</body>
+</html>

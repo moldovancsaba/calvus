@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Holdvölgy 2026 — project documentation — Holdvölgy 2026 docs</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:opsz,wght@6..96,400;6..96,500&family=Archivo:wdth,wght@112.5,400;112.5,500;112.5,600&display=swap">
+<style>:root{--ground:#FAFAFA;--card:#FFFFFF;--ink:#1D1D1B;--text:#4A4744;--muted:#7A7672;--accent:#B8A689;--accent-deep:#8B705B;--line:#E4E0D9;--line-soft:#EFECE6;--note:#F4F1EB}
+@media (prefers-color-scheme:dark){:root{--ground:#1D1D1B;--card:#252321;--ink:#F3EFE8;--text:#CFC9C0;--muted:#9B9796;--accent:#BAA793;--accent-deep:#D2BFA6;--line:#3A3733;--line-soft:#2E2B28;--note:#2A2724}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--ground);color:var(--text);font-family:"Archivo","Helvetica Neue",Arial,sans-serif;font-stretch:112.5%;font-size:15.5px;line-height:1.6;padding-block:0 64px;padding-inline:clamp(16px,4vw,40px)}
+.wrap{max-width:72ch;margin-inline:auto}
+.docnav{display:flex;flex-wrap:wrap;gap:4px 18px;align-items:center;padding:16px 0;border-bottom:1px solid var(--line);font-size:12px;letter-spacing:.06em;text-transform:uppercase}
+.docnav a{color:var(--muted);text-decoration:none;min-height:44px;display:inline-flex;align-items:center;border-bottom:2px solid transparent}
+.docnav a:hover,.docnav a[aria-current]{color:var(--ink);border-color:var(--accent)}
+.docnav-brand{color:var(--accent-deep);font-weight:600;margin-right:6px}
+.docnav-hub{margin-left:auto}
+header{padding-block:40px 24px;border-bottom:1px solid var(--line);margin-bottom:28px}
+.eyebrow{font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--accent-deep);margin:0 0 12px}
+h1,h2,h3{font-family:"Bodoni Moda",Didot,"Bodoni 72",serif;font-weight:400;color:var(--ink);line-height:1.1;text-wrap:balance;margin:0}
+h1{font-size:clamp(32px,6.5vw,50px);font-optical-sizing:auto}
+h2{font-size:clamp(25px,4.5vw,32px);margin:48px 0 14px;padding-top:20px;border-top:1px solid var(--line)}
+h3{font-size:19px;margin:30px 0 8px;font-weight:500}
+p{margin:0 0 14px} strong{color:var(--ink);font-weight:600}
+ul,ol{padding-left:22px;margin:0 0 16px} li{margin:5px 0} li>ul{margin:6px 0 0}
+code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.86em;background:var(--note);padding:1px 5px;border-radius:2px;color:var(--ink)}
+a{color:var(--accent-deep)} :focus-visible{outline:2px solid var(--accent-deep);outline-offset:2px}
+.tbl{overflow-x:auto;margin:14px 0 22px;border:1px solid var(--line)}
+table{border-collapse:collapse;width:100%;font-size:13.5px;min-width:560px}
+th{text-align:left;font-weight:600;color:var(--ink);background:var(--note);padding:10px 12px;border-bottom:1px solid var(--line);font-size:11.5px;letter-spacing:.06em;text-transform:uppercase}
+td{padding:10px 12px;border-top:1px solid var(--line-soft);vertical-align:top;background:var(--card)} td:first-child{color:var(--ink)}
+footer{margin-top:56px;padding-top:18px;border-top:1px solid var(--line);font-size:12px;color:var(--muted)}
+</style>
+</head>
+<body>
+<div class="wrap">
+<nav class="docnav" aria-label="Project documentation"><span class="docnav-brand">Holdvölgy 2026 · docs</span><a href="index.html" aria-current=page>Overview</a><a href="plan.html">Plan</a><a href="benchmarks.html">Benchmarks</a><a href="audit.html">Brand & site audit</a><a href="assets.html">Assets</a><a href="decisions.html">Decisions</a><a class="docnav-hub" href="../../index.html">Calvus Hub</a></nav>
+<header><p class="eyebrow">Calvus · Holdvölgy · project documentation</p><h1>Holdvölgy 2026 — project documentation</h1></header>
+<p>Owner directive 2026-09-16: the whole process is documented next to the project —
+research, findings, decisions, assets, and every build round. This folder is that
+record. Each file is dated inside; this index is the process log.</p>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>File</th>
+<th>What it holds</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="plan.html"><code>00-plan.md</code></a></td>
+<td>Research findings and the phased implementation plan — the approval document</td>
+</tr>
+<tr>
+<td><a href="benchmarks.html"><code>01-research-benchmarks.md</code></a></td>
+<td>Every estate site read, what it returned, and the sites that could not be reached</td>
+</tr>
+<tr>
+<td><a href="audit.html"><code>02-brand-and-site-audit.md</code></a></td>
+<td>Holdvölgy's measured brand tokens, fonts, page architecture, product/booking/club pages, and defects found</td>
+</tr>
+<tr>
+<td><a href="assets.html"><code>03-asset-inventory.md</code></a></td>
+<td>The 180 real images on the live site, grouped by use, with formats and sizes read from headers</td>
+</tr>
+<tr>
+<td><code>asset-inventory.json</code></td>
+<td>The same inventory, machine-readable: base image URL → pages it appears on</td>
+</tr>
+<tr>
+<td><a href="decisions.html"><code>04-decisions.md</code></a></td>
+<td>Decision log — what was decided, by whom, why, and what it replaced</td>
+</tr>
+</tbody>
+</table></div>
+<h2>Reading these on the web</h2>
+<p>GitHub Pages serves this folder. The styled, phone-readable versions are the
+rendered pages — <code>index.html</code> (this file), <code>plan.html</code>, <code>benchmarks.html</code>,
+<code>audit.html</code>, <code>assets.html</code>, <code>decisions.html</code> — generated from the markdown by
+<code>build.py</code> (run <code>python3 holdvolgy/docs/build.py</code> after editing any <code>.md</code>; needs
+the <code>markdown</code> package). The <code>.md</code> files stay the source of truth. Pages' Jekyll
+pass also auto-renders each <code>.md</code> to an unstyled <code>&lt;name&gt;.html</code>; the generated
+names above are deliberately different so the two never collide.</p>
+<h2>Process log</h2>
+<p><strong>2026-09-16 — first prototype (withdrawn as a direction).</strong> Commit <code>8342956</code> built a
+two-page prototype on a dark ground with a gold accent and a serif display face, from
+content fetched off holdvolgy.com. Owner rejected the aesthetic as generic ("the same
+colour and typography everywhere") and required industry research before any
+further build.</p>
+<p><strong>2026-09-16 — technical context received.</strong> The client's technical situation report,
+25-task work list, offer template, the incumbent developer's priced offer and their
+scheduling note were shared so the prototype work has the full picture. Commercial
+response to those is explicitly not part of this project; the four acceptance
+targets (server response &lt; 800 ms, home page &lt; 1,5 MB, &lt; 12 front-end plugins, live
+alerting) and the 15 Oct – 15 Jan change freeze are carried as constraints.</p>
+<p><strong>2026-09-16 — research round.</strong> 21 estate sites read (Napa, Sonoma, Bordeaux,
+Champagne, Sauternes, Tuscany, Bolgheri, Mendoza, Lebanon, Uruguay, Chile, South
+Africa, Rheingau, Tokaj/Mád, Armenia), the World's 50 Best Vineyards 2025 list, the
+Awwwards wine gallery; Holdvölgy's own Elementor kit, fonts, page structures, product
+pages, booking form, loyalty and Trezor pages read from the live site; 180 images
+inventoried without downloading any. Findings in <code>01</code>–<code>03</code>, plan in <code>00</code>.</p>
+<p><strong>2026-09-16 — decisions.</strong> Owner: mobile and desktop are two designed experiences
+(D5); commercially free web fonts, Google Fonts preferred (D3); the five-item
+navigation is approved (D4); item data will be supplied by the client; full
+documentation next to the project (this folder). Plan updated accordingly.</p>
+<p><strong>Next.</strong> Phase 1 of <a href="plan.html"><code>00-plan.md</code></a> on approval of the direction in its §4.</p>
+<footer>Source: <code>holdvolgy/docs/README.md</code> · rendered by <code>docs/build.py</code>. Set in Bodoni Moda and Archivo (Google Fonts, SIL OFL) on Holdvölgy's measured palette — decision D3.</footer>
+</div>
+</body>
+</html>

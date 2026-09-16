@@ -13,6 +13,16 @@ record. Each file is dated inside; this index is the process log.
 | `asset-inventory.json` | The same inventory, machine-readable: base image URL → pages it appears on |
 | `04-decisions.md` | Decision log — what was decided, by whom, why, and what it replaced |
 
+## Reading these on the web
+
+GitHub Pages serves this folder. The styled, phone-readable versions are the
+rendered pages — `index.html` (this file), `plan.html`, `benchmarks.html`,
+`audit.html`, `assets.html`, `decisions.html` — generated from the markdown by
+`build.py` (run `python3 holdvolgy/docs/build.py` after editing any `.md`; needs
+the `markdown` package). The `.md` files stay the source of truth. Pages' Jekyll
+pass also auto-renders each `.md` to an unstyled `<name>.html`; the generated
+names above are deliberately different so the two never collide.
+
 ## Process log
 
 **2026-09-16 — first prototype (withdrawn as a direction).** Commit `8342956` built a
