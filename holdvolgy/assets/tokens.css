@@ -1,0 +1,36 @@
+/* Holdvölgy 2026 — design tokens. Palette measured from the live site's Elementor
+   kit (docs/02-brand-and-site-audit.md); type per decision D3 (docs/04-decisions.md). */
+:root {
+  --hv-ground: #FAFAFA;
+  --hv-card: #FFFFFF;
+  --hv-band: #F4F4F4;
+  --hv-line: #D9D9D9;
+  --hv-line-soft: #EAEAE6;
+  --hv-ink: #1D1D1B;
+  --hv-text: #4A4744;
+  --hv-muted: #666666;
+  --hv-grey: #9B9796;
+  --hv-accent: #B8A689;       /* greige — the only accent */
+  --hv-accent-2: #BAA793;
+  --hv-accent-deep: #8B705B;  /* hover / pressed */
+
+  --hv-display: "Bodoni Moda", Didot, "Bodoni 72", "Bodoni MT", serif;
+  --hv-sans: "Archivo", "Helvetica Neue", Arial, sans-serif;
+  --hv-sans-width: 112.5%;    /* Archivo wdth axis: the "Extended" of Akzidenz BQ Ext */
+
+  /* type scale — desktop (1440) / phone (390) values are set in the layout CSS */
+  --hv-t-hero: clamp(34px, 4.6vw, 64px);
+  --hv-t-h2: clamp(26px, 2.9vw, 40px);
+  --hv-t-h3: clamp(20px, 2vw, 28px);
+  --hv-t-body: 15px;
+  --hv-t-label: 12px;
+  --hv-track-label: .14em;
+
+  --hv-radius: 2px;           /* the brand is square-cornered; 2px only softens aliasing */
+  --hv-tap: 44px;
+  --hv-gutter: 24px;
+  --hv-margin-desktop: 80px;
+  --hv-margin-phone: 16px;
+  --hv-content-max: 1280px;
+  --hv-measure: 62ch;
+}

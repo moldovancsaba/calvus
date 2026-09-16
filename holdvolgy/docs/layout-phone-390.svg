@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 390 1960" width="100%" role="img" aria-label="Phone layout schematic, 390 wide">
+<rect width="390" height="1960" fill="#FAFAFA"/>
+<rect x="0" y="0" width="390" height="60" fill="#FFFFFF" stroke="#1D1D1B" stroke-width="1"/>
+<text x="8" y="15" font-family="Archivo, Helvetica, Arial, sans-serif" font-size="9" fill="#1D1D1B">HEADER 60 · wordmark · HU EN · cart</text>
+<rect x="0" y="60" width="390" height="520" fill="#E9E4DA" stroke="#1D1D1B" stroke-width="1"/>
+<text x="8" y="75" font-family="Archivo, Helvetica, Arial, sans-serif" font-size="9" fill="#1D1D1B">HERO 390×520 · PORTRAIT CROP of the cellar photo</text>
+<text x="8" y="87" font-family="Archivo, Helvetica, Arial, sans-serif" font-size="9" fill="#1D1D1B">(picture/media, not scaled)</text>
+<text x="8" y="99" font-family="Archivo, Helvetica, Arial, sans-serif" font-size="9" fill="#1D1D1B">sentence Bodoni 34 · [Foglalás]</text>
+<rect x="16" y="596" width="358" height="112" fill="#FFFFFF" stroke="#1D1D1B" stroke-width="1"/>
+<text x="24" y="611" font-family="Archivo, Helvetica, Arial, sans-serif" font-size="9" fill="#1D1D1B">CARD compact · image 96px left · Év pincészete 2026</text>
+<rect x="16" y="716" width="358" height="112" fill="#FFFFFF" stroke="#1D1D1B" stroke-width="1"/>
+<text x="24" y="731" font-family="Archivo, Helvetica, Arial, sans-serif" font-size="9" fill="#1D1D1B">CARD compact · Borkóstoló a föld alatt</text>
+<rect x="16" y="836" width="358" height="112" fill="#FFFFFF" stroke="#1D1D1B" stroke-width="1"/>
+<text x="24" y="851" font-family="Archivo, Helvetica, Arial, sans-serif" font-size="9" fill="#1D1D1B">CARD compact · PreCulture 2025</text>
+<rect x="0" y="964" width="390" height="300" fill="#F4F4F4" stroke="#1D1D1B" stroke-width="1"/>
+<text x="8" y="979" font-family="Archivo, Helvetica, Arial, sans-serif" font-size="9" fill="#1D1D1B">WINE LINES · horizontal snap rail</text>
+<text x="8" y="991" font-family="Archivo, Helvetica, Arial, sans-serif" font-size="9" fill="#1D1D1B">bottles 140px · name · price · tap → product</text>
+<text x="8" y="1003" font-family="Archivo, Helvetica, Arial, sans-serif" font-size="9" fill="#1D1D1B">"Teljes választék"</text>
+<rect x="16" y="1280" width="358" height="60" fill="#FFFFFF" stroke="#1D1D1B" stroke-width="1"/>
+<text x="24" y="1295" font-family="Archivo, Helvetica, Arial, sans-serif" font-size="9" fill="#1D1D1B">DŰLŐ row · rock 56px · Holdvölgy · Furmint…</text>
+<rect x="16" y="1348" width="358" height="60" fill="#FFFFFF" stroke="#1D1D1B" stroke-width="1"/>
+<text x="24" y="1363" font-family="Archivo, Helvetica, Arial, sans-serif" font-size="9" fill="#1D1D1B">DŰLŐ row · Úrágya</text>
+<rect x="16" y="1416" width="358" height="60" fill="#FFFFFF" stroke="#1D1D1B" stroke-width="1"/>
+<text x="24" y="1431" font-family="Archivo, Helvetica, Arial, sans-serif" font-size="9" fill="#1D1D1B">DŰLŐ row · Nyulászó  ·  "mind a hét →"</text>
+<rect x="0" y="1492" width="390" height="220" fill="#FFFFFF" stroke="#1D1D1B" stroke-width="1"/>
+<text x="8" y="1507" font-family="Archivo, Helvetica, Arial, sans-serif" font-size="9" fill="#1D1D1B">VISIT · 1,8 km · 3 szint · 500 év (Bodoni 30)</text>
+<text x="8" y="1519" font-family="Archivo, Helvetica, Arial, sans-serif" font-size="9" fill="#1D1D1B">nyitvatartás · tel: link</text>
+<text x="8" y="1531" font-family="Archivo, Helvetica, Arial, sans-serif" font-size="9" fill="#1D1D1B">[Foglalás] full width</text>
+<rect x="0" y="1728" width="390" height="140" fill="#FFFFFF" stroke="#1D1D1B" stroke-width="1" stroke-dasharray="4 4"/>
+<text x="8" y="1743" font-family="Archivo, Helvetica, Arial, sans-serif" font-size="9" fill="#1D1D1B">FOOTER compact · cím · tel · socials · felelősséggel</text>
+<rect x="0" y="1884" width="390" height="64" fill="#B8A689" stroke="#1D1D1B" stroke-width="1"/>
+<text x="8" y="1899" font-family="Archivo, Helvetica, Arial, sans-serif" font-size="9" fill="#1D1D1B">BOTTOM ACTION BAR fixed · Foglalás · Borok · Kosár · Menü (sheet) · 44px · safe-area</text>
+</svg>

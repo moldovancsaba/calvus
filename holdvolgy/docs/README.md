@@ -12,6 +12,7 @@ record. Each file is dated inside; this index is the process log.
 | `03-asset-inventory.md` | The 180 real images on the live site, grouped by use, with formats and sizes read from headers |
 | `asset-inventory.json` | The same inventory, machine-readable: base image URL → pages it appears on |
 | `04-decisions.md` | Decision log — what was decided, by whom, why, and what it replaced |
+| `05-layout-specs.md` | Phase 1: the desktop-1440 and phone-390 layout specifications with schematics, tablet resolution and the home weight budget |
 
 ## Reading these on the web
 
