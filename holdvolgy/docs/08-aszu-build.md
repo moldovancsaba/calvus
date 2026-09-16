@@ -46,6 +46,7 @@ are lazy-loaded.
 - The hero is the site's own Aszú landing photograph (1512 × 798) — the phone
   portrait crop is upscaled and provisional; a portrait frame is in the client-gap
   list.
-- Reservation buttons go to the contact block until Phase 3 builds the shop.
+- PreCulture reservation buttons go to the contact block: the live site sells the
+  reservation as a product, but a reservation flow is outside this prototype.
 - The link audit caught a wrong filename for the 2025 PreCulture render before the
   push; fixed in the renderer.

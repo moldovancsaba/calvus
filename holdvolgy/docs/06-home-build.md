@@ -21,8 +21,8 @@ phone ≤ 767, tablet 768–1023, desktop ≥ 1024.
   seven dűlők (3 rows + link on phone; map + 7 rows above); visit; newsletter; footer.
 - Every string, alt text and label lives once in `build.py` for both languages.
   `hreflang` hu / en / x-default on both pages.
-- The withdrawn first-prototype shop page (`borok/`) was removed; wine links go to
-  the band until Phase 3.
+- The withdrawn first-prototype shop page (`borok/`) was removed; wine links went to
+  the band until Phase 3 (now a redirect to the shop; wine links land on product pages).
 
 ## Measured (local, browser at each reference size)
 
@@ -58,8 +58,9 @@ For comparison the live holdvolgy.com home page measures 8,8 MB and 226 requests
 
 ## Known limits, carried forward
 
-- Wine, card and dűlő links point to in-page anchors until Phase 2–3 build their
-  pages.
+- Wine, card and dűlő links pointed to in-page anchors until Phases 2–3 built their
+  pages — resolved the same day: they now land on Birtok, Tokaji aszú, Látogatás and
+  the product pages.
 - The phone hero is a centre crop of the landscape photograph (§6 gap).
 - Úrágya and Kakasok show a marked gap instead of a rock photograph (§6 gap).
 - Hidden dűlő rows on the phone still download their thumbnails (4 × ~17 KB); the
