@@ -143,7 +143,11 @@ as a "known issue."
 When a change affects how a section of the site works or what data feeds it,
 update the relevant doc in the same change set — currently that means
 `idbc-salary-guide/data/SOURCES-AND-GAPS.md` for anything touching the
-Salary Guide's data/design-intent, and this file for anything changing how
+Salary Guide's data/design-intent, `holdvolgy/docs/` for anything on the
+Holdvölgy project (owner directive 2026-09-16: research, findings, decisions,
+assets and every build round are recorded there — add a dated entry to the
+process log in `holdvolgy/docs/README.md` and a numbered entry to
+`04-decisions.md` for every decision), and this file for anything changing how
 agents should operate here.
 
 ## 5. Environment quirks discovered in practice

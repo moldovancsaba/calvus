@@ -1,0 +1,50 @@
+# Decision log
+
+Format: what was decided · who · when · why · what it replaces.
+
+**D1 — The first prototype's visual direction is withdrawn.** Owner, 2026-09-16.
+Dark ground, gold accent, serif display read as a generic template rather than the
+brand. Replaces commit `8342956` as a direction; the code stays in history only.
+
+**D2 — Light ground with Holdvölgy's own palette.** Derived from research, 2026-09-16.
+13 of 14 benchmark sites sit on white or cream; Holdvölgy's Elementor kit is
+`#FAFAFA`/`#FFFFFF` ground, `#1D1D1B` ink, `#B8A689` accent, `#8B705B` hover. No
+saturated gold, no dark sections. Replaces the prototype's `#14100c` / `#c8a55c`.
+
+**D3 — Fonts: Bodoni Moda + Archivo (expanded), Google Fonts, SIL OFL.** Owner
+constraint 2026-09-16: commercially free web fonts, Google Fonts preferred. These
+reproduce the live site's Didot (h1–h6) + Akzidenz-Grotesk BQ Extended (everything
+else) pairing. Archivo is used at `wdth` 112–125 to keep the extended character;
+Bodoni Moda with `opsz` for display sizes only. Replaces the open question in the
+plan's first draft about licensing Akzidenz-Grotesk BQ.
+
+**D4 — Five-item navigation.** Owner approved 2026-09-16. Birtok · Borok ·
+Látogatás · Borklub · Kapcsolat, plus Foglalás button and cart. Aszú, Trezor,
+Ajándék and Experience move one level down. Replaces the live site's eleven items
+plus mega-menu duplicate; matches the ≤ 7-item pattern across every benchmark.
+
+**D5 — Mobile and desktop are two designed experiences.** Owner, 2026-09-16.
+Desktop is the editorial estate; phone is a hospitality-and-buying tool with a
+persistent bottom action bar; art-directed image crops per device; two navigation
+systems; two QA checklists. Replaces "responsive reflow" as the mobile strategy.
+Grounded in the brief's finding that over half of gifting-season purchases are
+mobile.
+
+**D6 — AI-generated images are excluded.** Standing, 2026-09-16. Three
+`ChatGPT-Image-2026…png` files are live on Borkóstoló and Experience; they are not
+carried into the prototype. Real photography or a marked placeholder instead.
+
+**D7 — No asset is downloaded before the build phase.** Standing, 2026-09-16.
+Inventory was taken from URLs, HTTP headers and the first 33 bytes of PNGs. Assets
+are fetched only when a page that uses them is built, per the owner's sequencing
+("before that make a research and implementation plan first").
+
+**D8 — One JSON catalogue drives HU and EN.** Derived, 2026-09-16. Product data
+(line, name, vintage, dűlő, variety, price, render URL, technical data when supplied)
+lives once; both language trees render from it. Replaces duplicated inline arrays in
+the first prototype.
+
+**D9 — Commercial model is shop-and-hospitality, not allocation-only.** Derived,
+2026-09-16. Holdvölgy already shows prices, runs a 5–20 % loyalty ladder, gift cards,
+en-primeur and the Trezor experience — the Penfolds/Garzón model with an Opus-One
+style allocation layer. Nobody else in Tokaj sells online. Design accordingly.
