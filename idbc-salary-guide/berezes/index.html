@@ -6,7 +6,7 @@
   <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
   <meta http-equiv="Pragma" content="no-cache" />
   <title>IDBC Salary Guide – Bérsávok területenként</title>
-  <link rel="stylesheet" href="../assets/chart.css?v=1" />
+  <link rel="stylesheet" href="../assets/chart.css?v=4" />
 
   <style>
     :root {
@@ -259,6 +259,7 @@
     .salary-count { font-size: 12px; font-weight: 800; color: var(--muted); margin: 0 0 14px; }
 
     .table-wrap { overflow: auto; border-radius: 18px; border: 1px solid var(--line); background: #fff; container-type: inline-size; }
+    @media (max-width: 640px) { .table-wrap { border: 0; border-radius: 0; background: transparent; overflow: visible; } }
     .table-wrap:focus-visible { outline: 3px solid var(--dark); outline-offset: 2px; }
     table { border-collapse: collapse; width: 100%; min-width: 760px; }
     /* The position name is plain text in the table; the toggle only exists in card mode. */
@@ -280,7 +281,9 @@
       thead { display: none; }
       table, tbody, tr, td { display: block; }
 
-      tbody { margin: 0 0 12px; border: 1px solid var(--line); border-radius: 14px; overflow: hidden; }
+      /* Client asked for the page's own background to show through rather than white cards. */
+      .table-wrap, table { background: transparent; }
+      tbody { margin: 0 0 12px; border: 1px solid rgba(19,35,35,.22); border-radius: 14px; overflow: hidden; background: transparent; }
       tbody:last-child { margin-bottom: 0; }
 
       tr { display: grid; grid-template-columns: 1fr 1fr; padding: 0; border: 0; }
@@ -298,7 +301,8 @@
         color: var(--muted); margin-bottom: 1px;
       }
 
-      td.pos-cell { grid-column: 1 / -1; padding: 0; background: rgba(19,35,35,.05); border-bottom: 1px solid var(--line); }
+      td.pos-cell { grid-column: 1 / -1; padding: 0; background: rgba(19,35,35,.05); border-bottom: 1px solid rgba(19,35,35,.14); }
+      tbody.is-collapsed td.pos-cell { border-bottom: 0; }
       .pos-name-plain { display: none; }
       .pos-toggle {
         display: flex; align-items: center; gap: 10px; width: 100%; min-height: 44px;
@@ -541,7 +545,7 @@
     </div>
   </footer>
 
-  <script src="../assets/top3-chart.js?v=1"></script>
+  <script src="../assets/top3-chart.js?v=4"></script>
   <script>
     (async () => {
     const DATA = await fetch('../data/guide-data.json', { cache: 'no-cache' }).then(r => r.json());
@@ -684,6 +688,9 @@
 
     populateSalaryFilters();
     teruletSelect.addEventListener('change', renderSalarySection);
+    // The TOP3 chart has a distinct narrow layout, so re-render when crossing that line.
+    const compactQuery = window.matchMedia('(max-width: 700px)');
+    compactQuery.addEventListener('change', renderSalarySection);
     renderSalarySection();
     })();
   </script>

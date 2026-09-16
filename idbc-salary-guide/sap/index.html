@@ -6,7 +6,7 @@
   <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
   <meta http-equiv="Pragma" content="no-cache" />
   <title>IDBC – SAP piaci trendek és bérsávok</title>
-  <link rel="stylesheet" href="../assets/chart.css?v=1" />
+  <link rel="stylesheet" href="../assets/chart.css?v=4" />
   <style>
     :root {
       --dark: #132323;
@@ -165,9 +165,11 @@
 
     .no-data { font-size: 13px; font-weight: 700; color: var(--muted); font-style: italic; margin: 0; }
 
+    .pos-toggle { display: none; }
     .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0; }
     .salary-table-wrap { overflow-x: auto; border-radius: 20px; box-shadow: var(--shadow-soft); container-type: inline-size; }
     .salary-table-wrap:focus-visible { outline: 3px solid var(--dark); outline-offset: 2px; }
+    @media (max-width: 640px) { .salary-table-wrap { box-shadow: none; border-radius: 0; background: transparent; overflow: visible; } }
     table { width: 100%; min-width: 820px; border-collapse: collapse; background: #fff; }
     th, td { padding: 16px 18px; text-align: left; border-bottom: 1px solid rgba(19,35,35,.12); font-size: 14px; font-weight: 800; vertical-align: top; }
     td.num { text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap; }
@@ -179,11 +181,12 @@
        display change — see ../data/SOURCES-AND-GAPS.md. This table is flat (no grouping)
        and short, so the rows stay open; only Bérsávok needs the accordion. */
     @container (max-width: 600px) {
-      table { min-width: 0; }
+      table { min-width: 0; background: transparent; }
       thead { display: none; }
       table, tbody, tr, td { display: block; }
-      tbody { padding: 10px; }
-      tr { background: #fff; border: 1px solid rgba(19,35,35,.12); border-radius: 14px; margin-bottom: 10px; padding: 4px 0; }
+      tbody { padding: 0; }
+      /* Client asked for the page's own background to show through rather than white cards. */
+      tr { background: transparent; border: 1px solid rgba(19,35,35,.22); border-radius: 14px; margin-bottom: 10px; padding: 0; overflow: hidden; }
       tr:last-child { margin-bottom: 0; }
       tr:last-child td { border-bottom: 0; }
       td { border: 0; padding: 6px 14px; font-size: 13px; }
@@ -193,8 +196,26 @@
         font-size: 10px; font-weight: 900; text-transform: uppercase; letter-spacing: .05em;
         color: var(--muted); margin-bottom: 1px;
       }
-      td.pos-cell { font-size: 15px; font-weight: 900; }
       td.num { text-align: left; }
+
+      td.pos-cell { padding: 0; }
+      td.pos-cell::before { content: none; }
+      .pos-name-plain { display: none; }
+      .pos-toggle {
+        display: flex; align-items: center; gap: 10px; width: 100%; min-height: 44px;
+        padding: 12px 14px; border: 0; background: transparent; text-align: left;
+        font: inherit; color: inherit; cursor: pointer;
+      }
+      .pos-toggle:focus-visible { outline: 3px solid var(--dark); outline-offset: -3px; }
+      .pos-name { font-size: 14px; font-weight: 900; line-height: 1.15; }
+      .pos-band { margin-left: auto; font-size: 12px; font-weight: 800; color: var(--muted); font-variant-numeric: tabular-nums; white-space: nowrap; }
+      .pos-chevron { flex: none; width: 10px; height: 10px; border-right: 2.5px solid var(--dark); border-bottom: 2.5px solid var(--dark); transform: rotate(45deg) translate(-2px,-2px); transition: transform .15s ease; }
+      .pos-toggle[aria-expanded="true"] .pos-chevron { transform: rotate(-135deg) translate(-2px,-2px); }
+
+      /* collapsed: header only. The range already sits in the header, so its own row hides too. */
+      tr.is-collapsed > td:not(.pos-cell) { display: none; }
+      tr:not(.is-collapsed) > td:not(.pos-cell) { padding-bottom: 10px; }
+      tr:not(.is-collapsed) td.pos-cell { border-bottom: 1px solid rgba(19,35,35,.14); }
     }
 
     .bottom-cta { display: flex; justify-content: center; margin-top: 30px; }
@@ -305,7 +326,7 @@
 
   <main>
     <section class="hero" aria-labelledby="hero-title">
-      <img src="https://idbc.hu/includes/images/GO_Hero2.webp?v=2" alt="IDBC SAP piaci trendek fejléckép nagyvállalati környezetben" />
+      <img src="https://idbc.hu/includes/images/GO_Hero2.webp?v=4" alt="IDBC SAP piaci trendek fejléckép nagyvállalati környezetben" />
       <div class="hero-card">
         <p class="eyebrow">IDBC Salary Guide</p>
         <h1 id="hero-title">SAP piaci trendek</h1>
@@ -429,7 +450,7 @@
     </div>
   </footer>
 
-  <script src="../assets/top3-chart.js?v=1"></script>
+  <script src="../assets/top3-chart.js?v=4"></script>
   <script>
     (async () => {
     const DATA = await fetch('../data/guide-data.json', { cache: 'no-cache' }).then(r => r.json());
@@ -481,12 +502,17 @@
 
     // ---------- TOP3 point-line chart ----------
     const top3Panel = document.querySelector('#top3Panel');
-    top3Panel.innerHTML = IDBCChart.renderTop3Chart(top3Rows, {
-      idPrefix: 'sap',
-      chartLabel: 'TOP 3 SAP pozíció havi bérértékei',
-      emptyText: 'Nincs kiemelt (TOP3) SAP pozíció.',
-    });
-    IDBCChart.attachTooltip(top3Panel);
+    function renderTop3() {
+      top3Panel.innerHTML = IDBCChart.renderTop3Chart(top3Rows, {
+        idPrefix: 'sap',
+        chartLabel: 'TOP 3 SAP pozíció havi bérértékei',
+        emptyText: 'Nincs kiemelt (TOP3) SAP pozíció.',
+      });
+      IDBCChart.attachTooltip(top3Panel);
+    }
+    renderTop3();
+    // The TOP3 chart has a distinct narrow layout, so re-render when crossing that line.
+    window.matchMedia('(max-width: 700px)').addEventListener('change', renderTop3);
 
     const MAX_TABLE_ROWS = 10;
     const salaryTableBody = document.querySelector('#salaryTableBody');
@@ -504,11 +530,28 @@
                        : fmtHuf(r.min != null ? r.min : r.max);
 
     salaryTableBody.innerHTML = visibleSapRows.map(r => `
-      <tr role="row">
-        <td role="cell" class="pos-cell" data-label="Job / terület">${escapeHtml(r.pozicio)}</td>
+      <tr role="row" class="is-collapsed">
+        <td role="cell" class="pos-cell" data-label="Job / terület">
+          <span class="pos-name-plain">${escapeHtml(r.pozicio)}</span>
+          <button type="button" class="pos-toggle" aria-expanded="false">
+            <span class="pos-name">${escapeHtml(r.pozicio)}</span>
+            <span class="pos-band">${escapeHtml(rangeOf(r))}</span>
+            <span class="pos-chevron" aria-hidden="true"></span>
+          </button>
+        </td>
         <td class="num" role="cell" data-label="Átlagos range">${escapeHtml(rangeOf(r))}</td>
         ${hasJuttatas ? `<td role="cell" data-col="juttatas" data-label="Juttatási megjegyzés">${escapeHtml(r.juttatas)}</td>` : ''}
       </tr>`).join('');
+
+    // Card-mode accordion (the toggle is display:none above the breakpoint, so this
+    // cannot fire on desktop). One row = one card here; Bérsávok groups by position.
+    salaryTableBody.addEventListener('click', e => {
+      const btn = e.target.closest('.pos-toggle');
+      if (!btn) return;
+      const row = btn.closest('tr');
+      const open = row.classList.toggle('is-collapsed') === false;
+      btn.setAttribute('aria-expanded', String(open));
+    });
     })();
   </script>
 </body>

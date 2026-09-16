@@ -147,6 +147,33 @@ folder is the single consolidated data source built from all of it.
 - `sapProducts` — **new**: the real 5-category, 20-item SAP product catalogue from the client's own SAP mockup/spec.
 - `siteMap` — **new**: the full intended 8-page site structure with a `status` (`built` / `partially built` / `not built`) and note per page.
 
+## Workshop feedback round (2026-09-16)
+
+Three changes after the client's workshop:
+
+- **SAP's mobile cards collapse like Bérsávok'.** Each SAP row is now a card whose header holds
+  the position and its range, with the juttatási megjegyzés behind the toggle. Bérsávok groups
+  three experience levels per card; SAP is a flat table, so one row is one card.
+- **Cards show the page background instead of white.** The card surfaces, the tables and both
+  scroll wrappers go transparent below the breakpoint, so the site's green ground reads through
+  and the card borders do the separating. Desktop keeps its white table surface.
+- **The TOP3 chart has a narrow layout.** Instead of one 900px-wide chart with the role names in
+  a left gutter (34% of it visible on a phone, sideways-scrolled), each position now renders as
+  its own block — name and sub-label above, a short band chart below — sharing one domain so the
+  bands stay comparable, with a single axis underneath. Values are abbreviated to millions in
+  Hungarian notation (`1,25M`, `1,3M`, `2M`). The wide layout is unchanged above 700px; the
+  component picks a layout from `matchMedia` and both pages re-render when that line is crossed.
+
+**Two implementation notes worth keeping:**
+
+- An element that declares `container-type` **cannot be styled by its own `@container` query**.
+  Both table wrappers declare it, so their own background/border/shadow in card mode comes from a
+  `@media (max-width: 640px)` rule instead. Their descendants still use the container query.
+- The shared chart assets are cache-busted with a version query (`top3-chart.js?v=4`,
+  `chart.css?v=4`). **Bump it whenever either file changes** — without it the browser pane and
+  GitHub Pages both serve the previous renderer, which looks exactly like the change silently
+  failing.
+
 ## Mobile audit follow-ups (2026-09-15)
 
 A measured pass over all five guide pages at 375px produced two fixes:

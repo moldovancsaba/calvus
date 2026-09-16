@@ -15,6 +15,15 @@
   const hufFormat = new Intl.NumberFormat('hu-HU');
   const fmtHuf = n => (n === null || n === undefined) ? '–' : hufFormat.format(n) + ' Ft';
 
+  // Compact millions for the narrow layout: 1 250 000 -> "1,25M", 1 300 000 -> "1,3M".
+  // Hungarian decimal comma, trailing zeros trimmed.
+  function fmtMillions(n) {
+    if (n === null || n === undefined) return '–';
+    const m = n / 1e6;
+    const s = (Math.round(m * 100) / 100).toString().replace('.', ',');
+    return s + 'M';
+  }
+
   const escapeHtml = s => String(s).replace(/[&<>"']/g, c => (
     { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]
   ));
@@ -56,11 +65,82 @@
     }
   }
 
+  // Narrow layout (client request, 2026-09-16): instead of one wide chart with the role names
+  // in a left gutter, stack one block per position — name and sub-label above, a short band
+  // chart below — so nothing needs sideways scrolling. All blocks share one domain so the
+  // bands stay comparable, and values are abbreviated to millions.
+  function renderCompactChart(rows, opts) {
+    const W = 340, PLOT_MIN = 10, PLOT_MAX = 330, MID = 46, H = 64;
+    const values = rows.flatMap(r => [r.min, r.max, r.idbc].filter(v => v != null));
+    const domain = niceDomain(values);
+    const xPos = v => PLOT_MIN + ((v - domain.min) / (domain.max - domain.min)) * (PLOT_MAX - PLOT_MIN);
+    const ticks = [];
+    for (let t = domain.min; t <= domain.max + 1; t += domain.step) ticks.push(t);
+
+    const blocks = rows.map((r, i) => {
+      const uid = `t3c-${opts.idPrefix || 'chart'}-${i}`;
+      const points = [
+        { key: 'min', value: r.min, color: COLOR_MIN },
+        { key: 'idbc', value: r.idbc, color: COLOR_IDBC },
+        { key: 'max', value: r.max, color: COLOR_MAX },
+      ].filter(p => p.value != null);
+      points.forEach(p => { p.x = xPos(p.value); p.text = fmtMillions(p.value); });
+      points.sort((a, b) => a.x - b.x);
+      layoutLabels(points, PLOT_MIN, PLOT_MAX);
+
+      let defs = '', body = '';
+      body += ticks.map(t => `<line class="grid-line" x1="${xPos(t).toFixed(1)}" y1="14" x2="${xPos(t).toFixed(1)}" y2="${MID + 12}" />`).join('');
+      body += `<line class="row-line" x1="${PLOT_MIN}" y1="${MID}" x2="${PLOT_MAX}" y2="${MID}" />`;
+      const first = points[0], last = points[points.length - 1];
+      if (last.x - first.x > 0.5) {
+        const stops = points.map(p => `<stop offset="${(((p.x - first.x) / (last.x - first.x)) * 100).toFixed(2)}%" stop-color="${p.color}" />`).join('');
+        defs += `<linearGradient id="${uid}" gradientUnits="userSpaceOnUse" x1="${first.x.toFixed(1)}" y1="${MID}" x2="${last.x.toFixed(1)}" y2="${MID}">${stops}</linearGradient>`;
+        body += `<line class="salary-connector" x1="${first.x.toFixed(1)}" y1="${MID}" x2="${last.x.toFixed(1)}" y2="${MID}" stroke="url(#${uid})" />`;
+      }
+      points.forEach(p => {
+        const tip = `${r.pozicio} – ${LABEL[p.key]}: ${fmtHuf(p.value)}`;
+        body += `<g class="salary-point" role="img" tabindex="0" aria-label="${escapeHtml(tip)}" data-tooltip="${escapeHtml(tip)}">` +
+          `<text class="value-label" x="${p.labelX.toFixed(1)}" y="${MID - 14}" text-anchor="middle">${escapeHtml(p.text)}</text>` +
+          `<circle class="salary-dot" cx="${p.x.toFixed(1)}" cy="${MID}" r="6" fill="${p.color}" />` +
+          `</g>`;
+      });
+
+      const sub = [r.terulet, r.szint].filter(Boolean).join(' · ');
+      return `
+        <div class="top3-compact-row">
+          <p class="top3-compact-name">${escapeHtml(r.pozicio)}</p>
+          ${sub ? `<p class="top3-compact-sub">${escapeHtml(sub)}</p>` : ''}
+          <svg class="top3-chart top3-chart-compact" viewBox="0 0 ${W} ${H}" role="img"
+               aria-label="${escapeHtml(`${r.pozicio}: ${LABEL.min} ${fmtHuf(r.min)}, ${LABEL.idbc} ${fmtHuf(r.idbc)}, ${LABEL.max} ${fmtHuf(r.max)}`)}">
+            <defs>${defs}</defs>${body}
+          </svg>
+        </div>`;
+    }).join('');
+
+    const axisLabels = ticks.map(t =>
+      `<text class="axis-label" x="${xPos(t).toFixed(1)}" y="14" text-anchor="middle">${escapeHtml(fmtMillions(t))}</text>`).join('');
+
+    return `
+      <ul class="top3-chart-legend" aria-label="Jelmagyarázat">
+        <li><span style="background:${COLOR_MIN}"></span>${LABEL.min}</li>
+        <li><span style="background:${COLOR_IDBC}"></span>${LABEL.idbc}</li>
+        <li><span style="background:${COLOR_MAX}"></span>${LABEL.max}</li>
+      </ul>
+      <div class="top3-compact">${blocks}
+        <svg class="top3-chart top3-compact-axis" viewBox="0 0 ${W} 20" aria-hidden="true">${axisLabels}</svg>
+      </div>`;
+  }
+
   function renderTop3Chart(rows, options) {
     const opts = options || {};
     if (!rows || !rows.length) {
       return `<p class="no-data">${escapeHtml(opts.emptyText || 'Nincs kiemelt (TOP3) pozíció.')}</p>`;
     }
+    const compact = opts.compact !== undefined
+      ? opts.compact
+      : (typeof window !== 'undefined' && window.matchMedia
+          ? window.matchMedia('(max-width: 700px)').matches : false);
+    if (compact) return renderCompactChart(rows, opts);
 
     const W = 1080, PLOT_MIN = 280, PLOT_MAX = 1020, TOP = 42, ROW_H = 74;
     const rowY = i => TOP + 44 + i * ROW_H;
@@ -193,5 +273,5 @@
     return hide;
   }
 
-  window.IDBCChart = { renderTop3Chart, attachTooltip, fmtHuf, escapeHtml, LABEL, COLOR_MIN, COLOR_IDBC, COLOR_MAX };
+  window.IDBCChart = { renderTop3Chart, attachTooltip, fmtHuf, fmtMillions, escapeHtml, LABEL, COLOR_MIN, COLOR_IDBC, COLOR_MAX };
 })();

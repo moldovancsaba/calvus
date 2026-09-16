@@ -195,3 +195,18 @@
 @media (max-width: 700px) {
   .top3-chart-card { padding: 24px 18px 18px; }
 }
+
+/* ---- Narrow layout: one block per position, name above its band chart ----
+   Client request (2026-09-16): position name and description above the chart,
+   the chart itself tightened, and values abbreviated to millions, so the TOP3
+   no longer needs sideways scrolling on a phone. */
+.top3-compact { display: grid; gap: 4px; }
+.top3-compact-row { padding: 6px 0 0; }
+.top3-compact-name { margin: 0; font-size: 14px; font-weight: 900; line-height: 1.15; }
+.top3-compact-sub { margin: 1px 0 0; font-size: 11px; font-weight: 700; color: var(--muted, rgba(16,24,24,.66)); }
+/* the wide layout's 900px floor must not apply to the compact blocks */
+.top3-chart.top3-chart-compact,
+.top3-chart.top3-compact-axis { min-width: 0; width: 100%; height: auto; display: block; }
+.top3-chart-compact { margin-top: 2px; }
+.top3-chart-compact .value-label { font-size: 13px; font-weight: 900; }
+.top3-compact-axis .axis-label { font-size: 12px; font-weight: 800; }
