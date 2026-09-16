@@ -38,7 +38,7 @@ def render(src, out, label):
         body = body.replace(f"<code>{s}</code>", f'<a href="{o}"><code>{s}</code></a>')
     nav = nav_html(out)
     html = f"""<!DOCTYPE html>
-<html lang="en">
+<html lang="{"hu" if src == "bemutato.md" else "en"}">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -53,7 +53,7 @@ def render(src, out, label):
 <header><p class="eyebrow">Calvus · Holdvölgy · project documentation</p><h1>{title}</h1></header>
 {body}
 <script>(function(){{function f(){{document.querySelectorAll('.scale-d').forEach(function(e){{e.style.setProperty('--w',e.clientWidth)}});document.querySelectorAll('.scale-p').forEach(function(e){{e.style.setProperty('--pw',e.clientWidth)}})}}f();addEventListener('resize',f)}})();</script>
-<footer>Source: <code>holdvolgy/docs/{src}</code> · rendered by <code>docs/build.py</code>. Set in Bodoni Moda and Archivo (Google Fonts, SIL OFL) on Holdvölgy's measured palette — decision D3.</footer>
+<footer>{("Calvus · Holdvölgy 2026 prototípus · a birtok saját arculatával, betűi a Google Fonts Bodoni Moda és Archivo családjából." if src == "bemutato.md" else f"Source: <code>holdvolgy/docs/{src}</code> · rendered by <code>docs/build.py</code>. Set in Bodoni Moda and Archivo (Google Fonts, SIL OFL) on Holdvölgy's measured palette — decision D3.")}</footer>
 </div>
 </body>
 </html>
