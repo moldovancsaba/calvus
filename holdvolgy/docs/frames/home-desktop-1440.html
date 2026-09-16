@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=1440">
+<title>Home — desktop frame 1440 — Holdvölgy 2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:opsz,wght@6..96,400;6..96,500&family=Archivo:wdth,wght@112.5,400;112.5,500;112.5,600&display=swap">
+<link rel="stylesheet" href="../../assets/tokens.css">
+<style>
+/* Gate-2 frame: a static composition at the desktop reference size. No behaviour, no breakpoints — the page itself (gate 3) adds those. */
+*{box-sizing:border-box} html{width:1440px} body{margin:0;width:1440px;background:var(--hv-ground);color:var(--hv-text);font-family:var(--hv-sans);font-stretch:var(--hv-sans-width);font-size:15px;line-height:1.55}
+.wrap{width:1280px;margin-inline:80px}
+h1,h2,h3,.display{font-family:var(--hv-display);font-weight:400;color:var(--hv-ink);line-height:1.06;margin:0;font-optical-sizing:auto}
+.label{font-size:12px;letter-spacing:.14em;text-transform:uppercase}
+.btn{display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:12px 24px;border:1px solid var(--hv-accent);border-radius:var(--hv-radius);background:var(--hv-accent);color:var(--hv-ink);font-size:12px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;text-decoration:none}
+.btn-2{background:transparent;color:var(--hv-ink)} .btn-3{background:transparent;border-color:transparent;color:var(--hv-accent-deep);padding-inline:0} .btn-w{background:transparent;border-color:#fff;color:#fff}
+.price{font-weight:500;color:var(--hv-ink);font-variant-numeric:tabular-nums}
+/* header */
+header{height:88px;display:flex;align-items:center;gap:28px;padding:0 80px;background:rgba(250,250,250,.92);border-bottom:1px solid var(--hv-line)}
+.wordmark{font-family:var(--hv-display);font-size:22px;letter-spacing:.18em;color:var(--hv-ink)}
+header nav{margin:0 auto;display:flex;gap:26px} header nav a{color:var(--hv-text);text-decoration:none;display:inline-flex;min-height:44px;align-items:center;border-bottom:2px solid transparent} header nav a.on{color:var(--hv-ink);border-color:var(--hv-accent)}
+.lang{color:var(--hv-muted)} .cart{width:44px;height:44px;display:grid;place-items:center;color:var(--hv-ink)}
+/* hero */
+.hero{position:relative;height:720px;background:#2b2621 url(../../assets/img/hero-cellar-1440.webp) center/cover}
+.hero::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(29,29,27,0) 35%,rgba(29,29,27,.72) 100%)}
+.hero .wrap{position:absolute;left:0;right:0;bottom:80px;z-index:1;color:#fff} .hero h1{font-size:64px;color:#fff;max-width:17ch} .hero .row{display:flex;gap:12px;margin-top:32px}
+.hero .badge{display:inline-block;margin-bottom:18px;color:#F3EFE8;border:1px solid rgba(255,255,255,.5);padding:8px 14px}
+/* cards */
+.cards{display:grid;grid-template-columns:repeat(3,405px);gap:32px;padding:40px 0 56px}
+.card{background:var(--hv-card);border:1px solid var(--hv-line-soft)} .card img{width:100%;height:453px;object-fit:cover;display:block} .card div{padding:20px 22px 24px} .card h3{font-size:28px;margin-bottom:8px} .card p{margin:0 0 12px;color:var(--hv-muted)}
+/* wine band */
+.band{background:var(--hv-band);padding:56px 0 64px} .band .head{display:flex;align-items:baseline;justify-content:space-between;margin-bottom:36px} .band h2{font-size:40px}
+.bottles{display:grid;grid-template-columns:repeat(6,1fr);gap:20px;align-items:end} .bottle{text-align:center} .bottle img{height:180px;width:auto;filter:drop-shadow(0 16px 16px rgba(29,29,27,.14))} .bottle b{display:block;margin-top:14px;font-weight:500;color:var(--hv-ink)} .bottle span{display:block;font-size:12px;color:var(--hv-muted);letter-spacing:.04em} .bottle em{font-style:normal;display:block;margin-top:4px}
+/* dűlők */
+.dulok{display:grid;grid-template-columns:620px 620px;gap:40px;padding:80px 0;align-items:start} .dulok img.map{width:620px;display:block;border:1px solid var(--hv-line-soft)} .dulok h2{font-size:40px;margin-bottom:6px} .dulok p.lede{margin:0 0 20px;color:var(--hv-muted);max-width:52ch}
+.rock{display:grid;grid-template-columns:64px 1fr auto;gap:14px;align-items:center;padding:9px 0;border-top:1px solid var(--hv-line-soft)} .rock:last-child{border-bottom:1px solid var(--hv-line-soft)} .rock img,.rock i{width:64px;height:64px;object-fit:cover;display:block} .rock i{background:var(--hv-band);display:grid;place-items:center;font-size:9px;color:var(--hv-grey);text-align:center;font-style:normal} .rock b{font-family:var(--hv-display);font-weight:400;font-size:22px;color:var(--hv-ink)} .rock span{font-size:12px;color:var(--hv-muted);letter-spacing:.04em;display:block} .rock a{color:var(--hv-accent-deep)}
+/* visit */
+.visit{display:grid;grid-template-columns:560px 680px;gap:40px;padding:0 0 80px;align-items:center} .visit img{width:560px;height:420px;object-fit:cover;display:block} .nums{display:flex;gap:40px;margin-bottom:22px} .nums b{display:block;font-family:var(--hv-display);font-weight:400;font-size:56px;color:var(--hv-ink);line-height:1} .nums span{display:block;margin-top:6px;font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--hv-muted)} .visit h2{font-size:40px;margin-bottom:14px} .visit p{margin:0 0 6px}
+/* newsletter + footer */
+.news{border-top:1px solid var(--hv-accent);border-bottom:1px solid var(--hv-line);padding:28px 0;display:flex;align-items:center;justify-content:space-between} .news h3{font-size:28px} .news form{display:flex;gap:8px} .news input{font:inherit;font-stretch:inherit;min-height:44px;width:320px;padding:10px 12px;border:1px solid var(--hv-line);background:var(--hv-card)}
+footer{padding:40px 0 48px;display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr 1fr;gap:32px;font-size:13px;color:var(--hv-muted)} footer b{display:block;color:var(--hv-ink);font-weight:600;margin-bottom:10px} footer a{display:block;color:var(--hv-muted);text-decoration:none;padding:4px 0} footer small{display:block;margin-top:14px;font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--hv-grey)}
+</style>
+</head>
+<body>
+<header><span class="wordmark">HOLDVÖLGY</span><nav class="label"><a class="on" href="#">Birtok</a><a href="#">Borok</a><a href="#">Látogatás</a><a href="#">Borklub</a><a href="#">Kapcsolat</a></nav><span class="label lang">HU · EN</span><a class="btn btn-2" href="#">Foglalás</a><span class="cart" aria-label="Kosár, üres">◯</span></header>
+<section class="hero"><div class="wrap"><span class="label badge">Év pincészete 2026</span><h1>A tokaji álmot töltjük pohárba az élet nagy pillanataihoz</h1><div class="row"><a class="btn" href="#">Foglalás</a><a class="btn btn-w" href="#">Borok</a></div></div></section>
+<section class="wrap cards">
+  <article class="card"><img src="../../assets/img/card-ev-pinceszete.webp" alt=""><div><h3>Év pincészete 2026</h3><p>A Holdvölgy elnyerte az Év pincészete elismerést — hagyománytisztelő, de mégis kreatív kísérletezés Mádon.</p><a class="btn btn-3" href="#">A birtokról →</a></div></article>
+  <article class="card"><img src="../../assets/img/card-pince.webp" alt=""><div><h3>Borkóstoló a föld alatt</h3><p>Térképes kincskeresés a háromszintes labirintusban, vagy ültetett aszúkóstoló hat évjárattal.</p><a class="btn btn-3" href="#">Foglalás →</a></div></article>
+  <article class="card"><img src="../../assets/img/preculture-barrel-2025.webp" alt="" style="object-fit:contain;background:var(--hv-band)"><div><h3>PreCulture 2025</h3><p>Szüret előtti előjegyzés 6 puttonyos tokaji aszúra, nyolcéves érleléssel.</p><a class="btn btn-3" href="#">Előjegyzés →</a></div></article>
+</section>
+<section class="band"><div class="wrap"><div class="head"><h2>Tokaji borok</h2><a class="btn btn-3" href="#">Teljes választék →</a></div><div class="bottles">
+  <div class="bottle"><img src="../../assets/img/bottle-culture.webp" alt=""><b>Culture</b><span>6 puttonyos tokaji aszú</span><em class="price">27 500 Ft-tól</em></div>
+  <div class="bottle"><img src="../../assets/img/bottle-signature-13.webp" alt=""><b>Signature 2013</b><span>édes birtokválogatás</span><em class="price">10 000 Ft</em></div>
+  <div class="bottle"><img src="../../assets/img/bottle-eloquence-14.webp" alt=""><b>Eloquence 2014</b><span>édes szamorodni</span><em class="price">7 000 Ft</em></div>
+  <div class="bottle"><img src="../../assets/img/bottle-vision-21.webp" alt=""><b>Vision 2021</b><span>száraz birtokválogatás</span><em class="price">5 500 Ft</em></div>
+  <div class="bottle"><img src="../../assets/img/bottle-meditation-23.webp" alt=""><b>Meditation 2023</b><span>Furmint · Király-dűlő</span><em class="price">15 500 Ft</em></div>
+  <div class="bottle"><img src="../../assets/img/bottle-hh-dry.webp" alt=""><b>Hold and Hollo Dry</b><span>száraz válogatás 2024</span><em class="price">4 000 Ft</em></div>
+</div></div></section>
+<section class="wrap dulok">
+  <img class="map" src="../../assets/img/dulok-map-1000.webp" alt="A birtok dűlőinek térképe">
+  <div><h2>Hét dűlő, harminc parcella</h2><p class="lede">Riolittufa, agyag, zeolit és barna erdőtalaj — minden dűlő más karaktert ad. Minden dűlőhöz a saját kőzete.</p>
+    <div class="rock"><img src="../../assets/img/rock-holdvolgy.webp" alt=""><div><b>Holdvölgy</b><span>kvarcit, riolit · száraz és édes</span></div><a class="label" href="#">→</a></div>
+    <div class="rock"><i>kőzetfotó<br>hiányzik</i><div><b>Úrágya</b><span>kötött agyag, kvarc · Furmint</span></div><a class="label" href="#">→</a></div>
+    <div class="rock"><img src="../../assets/img/rock-nyulaszo.webp" alt=""><div><b>Nyulászó</b><span>perlit, bentonitos riolit · Sárgamuskotály</span></div><a class="label" href="#">→</a></div>
+    <div class="rock"><img src="../../assets/img/rock-dorgo.webp" alt=""><div><b>Dorgó-tető</b><span>perlit, riolittufa · Furmint, Zéta</span></div><a class="label" href="#">→</a></div>
+    <div class="rock"><img src="../../assets/img/rock-becsek.webp" alt=""><div><b>Becsek</b><span>zeolitos riolittufa, andezit · Hárslevelű, Furmint</span></div><a class="label" href="#">→</a></div>
+    <div class="rock"><img src="../../assets/img/rock-kiraly.webp" alt=""><div><b>Király</b><span>vasas riolittufa · Furmint</span></div><a class="label" href="#">→</a></div>
+    <div class="rock"><i>kőzetfotó<br>hiányzik</i><div><b>Kakasok</b><span>zeolitos riolittufa · Furmint</span></div><a class="label" href="#">→</a></div>
+  </div>
+</section>
+<section class="wrap visit">
+  <img src="../../assets/img/visit-tunnel-1120.webp" alt="Pincealagút lépcsővel">
+  <div><div class="nums"><div><b>1,8 km</b><span>pincelabirintus</span></div><div><b>3 szint</b><span>a föld alatt</span></div><div><b>500 év</b><span>pincetörténet</span></div></div>
+    <h2>Látogass el Mádra</h2><p>Vasárnap–csütörtök 10:00–15:00 · péntek–szombat 10:00–17:00</p><p>3909 Mád, Árpád u. 13. · +36 70 391 4643 · visit@holdvolgy.com</p><p style="margin-top:22px"><a class="btn" href="#">Foglalás</a></p></div>
+</section>
+<section class="wrap news"><h3>Iratkozz fel hírlevelünkre</h3><form><input type="email" placeholder="E-mail cím" aria-label="E-mail cím"><a class="btn btn-2" href="#">Feliratkozom</a></form></section>
+<footer class="wrap"><div><span class="wordmark" style="font-size:18px">HOLDVÖLGY</span><p style="margin:12px 0 0">3909 Mád, Árpád u. 13.<br>Tokaj-Hegyalja</p><small>Fogyaszd felelősséggel a Holdvölgy borokat</small></div><div><b>Birtok</b><a href="#">Történet</a><a href="#">Dűlők és terroir</a><a href="#">Csapat</a></div><div><b>Borok</b><a href="#">Tokaji aszú</a><a href="#">Édes borok</a><a href="#">Száraz borok</a><a href="#">Hold and Hollo</a></div><div><b>Látogatás</b><a href="#">Borkóstoló</a><a href="#">Experience</a><a href="#">Bortrezor</a><a href="#">Ajándék</a></div><div><b>Kapcsolat</b><a href="#">visit@holdvolgy.com</a><a href="#">+36 70 391 4643</a><a href="#">Instagram · Facebook</a></div></footer>
+</body>
+</html>

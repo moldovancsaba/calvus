@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=390">
+<title>Home — phone frame 390 — Holdvölgy 2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:opsz,wght@6..96,400;6..96,500&family=Archivo:wdth,wght@112.5,400;112.5,500;112.5,600&display=swap">
+<link rel="stylesheet" href="../../assets/tokens.css">
+<style>
+/* Gate-2 frame: a static composition at the phone reference size. Its own design, not the desktop squeezed. */
+*{box-sizing:border-box} html{width:390px} body{margin:0;width:390px;background:var(--hv-ground);color:var(--hv-text);font-family:var(--hv-sans);font-stretch:var(--hv-sans-width);font-size:15px;line-height:1.5;padding-bottom:64px}
+.wrap{padding:0 16px}
+h1,h2,h3{font-family:var(--hv-display);font-weight:400;color:var(--hv-ink);line-height:1.08;margin:0;font-optical-sizing:auto}
+.label{font-size:12px;letter-spacing:.14em;text-transform:uppercase}
+.btn{display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:12px 22px;border:1px solid var(--hv-accent);border-radius:var(--hv-radius);background:var(--hv-accent);color:var(--hv-ink);font-size:12px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;text-decoration:none} .btn-3{background:transparent;border-color:transparent;color:var(--hv-accent-deep);padding-inline:0} .btn-full{width:100%}
+.price{font-weight:500;color:var(--hv-ink);font-variant-numeric:tabular-nums}
+header{height:60px;display:flex;align-items:center;justify-content:space-between;padding:0 16px;border-bottom:1px solid var(--hv-line-soft);background:var(--hv-ground)}
+.wordmark{font-family:var(--hv-display);font-size:18px;letter-spacing:.18em;color:var(--hv-ink)} .right{display:flex;align-items:center;gap:12px;color:var(--hv-muted)} .cart{width:44px;height:44px;display:grid;place-items:center;color:var(--hv-ink)}
+.hero{position:relative;height:520px;background:#2b2621 url(../../assets/img/hero-cellar-portrait-780.webp) center/cover} .hero::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(29,29,27,0) 40%,rgba(29,29,27,.74) 100%)}
+.hero .wrap{position:absolute;left:0;right:0;bottom:28px;z-index:1} .hero .badge{display:inline-block;margin-bottom:12px;color:#F3EFE8;border:1px solid rgba(255,255,255,.5);padding:6px 10px;font-size:11px} .hero h1{font-size:34px;color:#fff} .hero .btn{margin-top:18px}
+.cards{display:grid;gap:8px;padding:16px 16px 8px} .card{display:grid;grid-template-columns:96px 1fr;gap:14px;align-items:center;background:var(--hv-card);border:1px solid var(--hv-line-soft);min-height:112px} .card img{width:96px;height:112px;object-fit:cover;display:block} .card h3{font-size:20px;margin-bottom:4px} .card p{margin:0;font-size:13px;color:var(--hv-muted)} .card div{padding-right:12px}
+.band{background:var(--hv-band);padding:24px 0 22px;margin-top:16px} .band .head{display:flex;justify-content:space-between;align-items:baseline;padding:0 16px 14px} .band h2{font-size:26px}
+.rail{display:flex;gap:16px;overflow-x:auto;padding:8px 16px 4px;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch} .bottle{flex:0 0 140px;scroll-snap-align:start;text-align:center} .bottle img{height:170px;width:auto;filter:drop-shadow(0 12px 12px rgba(29,29,27,.14))} .bottle b{display:block;margin-top:10px;font-weight:500;color:var(--hv-ink);font-size:14px} .bottle span{display:block;font-size:11px;color:var(--hv-muted)} .bottle em{font-style:normal;display:block;font-size:14px;margin-top:2px}
+.dulok{padding:28px 16px 8px} .dulok h2{font-size:26px;margin-bottom:10px}
+.rock{display:grid;grid-template-columns:56px 1fr;gap:12px;align-items:center;min-height:60px;border-top:1px solid var(--hv-line-soft)} .rock img{width:56px;height:56px;object-fit:cover;display:block} .rock b{font-family:var(--hv-display);font-weight:400;font-size:19px;color:var(--hv-ink)} .rock span{display:block;font-size:12px;color:var(--hv-muted)}
+.visit{padding:28px 16px 8px} .nums{display:flex;justify-content:space-between;margin-bottom:14px} .nums b{display:block;font-family:var(--hv-display);font-weight:400;font-size:30px;color:var(--hv-ink);line-height:1} .nums span{display:block;font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--hv-muted);margin-top:4px} .visit p{margin:0 0 6px;font-size:14px} .visit a.tel{color:var(--hv-ink);display:inline-flex;min-height:44px;align-items:center}
+footer{padding:24px 16px 20px;border-top:1px solid var(--hv-line);font-size:13px;color:var(--hv-muted)} footer p{margin:0 0 6px} footer small{display:block;margin-top:10px;font-size:10px;letter-spacing:.06em;text-transform:uppercase;color:var(--hv-grey)}
+.bar{position:fixed;left:0;right:0;bottom:0;width:390px;height:64px;display:grid;grid-template-columns:repeat(4,1fr);background:var(--hv-ink);padding-bottom:env(safe-area-inset-bottom)} .bar a{color:#F3EFE8;text-decoration:none;font-size:11px;letter-spacing:.1em;text-transform:uppercase;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;min-height:64px} .bar a.on{color:var(--hv-accent)} .bar i{font-style:normal;font-size:16px}
+</style>
+</head>
+<body>
+<header><span class="wordmark">HOLDVÖLGY</span><span class="right"><span class="label">HU · EN</span><span class="cart" aria-label="Kosár, üres">◯</span></span></header>
+<section class="hero"><div class="wrap"><span class="label badge">Év pincészete 2026</span><h1>A tokaji álmot töltjük pohárba az élet nagy pillanataihoz</h1><a class="btn" href="#">Foglalás</a></div></section>
+<section class="cards">
+  <article class="card"><img src="../../assets/img/card-ev-pinceszete.webp" alt=""><div><h3>Év pincészete 2026</h3><p>Az Év pincészete elismerés</p></div></article>
+  <article class="card"><img src="../../assets/img/card-pince.webp" alt=""><div><h3>Borkóstoló a föld alatt</h3><p>Térképes kincskeresés · foglalás</p></div></article>
+  <article class="card"><img src="../../assets/img/preculture-barrel-2025.webp" alt="" style="object-fit:contain;background:var(--hv-band)"><div><h3>PreCulture 2025</h3><p>Aszú előjegyzés, 8 év érlelés</p></div></article>
+</section>
+<section class="band"><div class="head"><h2>Tokaji borok</h2><a class="btn btn-3" href="#">Mind →</a></div><div class="rail">
+  <div class="bottle"><img src="../../assets/img/bottle-culture.webp" alt=""><b>Culture</b><span>6 puttonyos aszú</span><em class="price">27 500 Ft-tól</em></div>
+  <div class="bottle"><img src="../../assets/img/bottle-signature-13.webp" alt=""><b>Signature 2013</b><span>édes válogatás</span><em class="price">10 000 Ft</em></div>
+  <div class="bottle"><img src="../../assets/img/bottle-eloquence-14.webp" alt=""><b>Eloquence 2014</b><span>édes szamorodni</span><em class="price">7 000 Ft</em></div>
+  <div class="bottle"><img src="../../assets/img/bottle-vision-21.webp" alt=""><b>Vision 2021</b><span>száraz válogatás</span><em class="price">5 500 Ft</em></div>
+  <div class="bottle"><img src="../../assets/img/bottle-meditation-23.webp" alt=""><b>Meditation 2023</b><span>Furmint · Király</span><em class="price">15 500 Ft</em></div>
+  <div class="bottle"><img src="../../assets/img/bottle-hh-dry.webp" alt=""><b>Hold and Hollo</b><span>száraz 2024</span><em class="price">4 000 Ft</em></div>
+</div></section>
+<section class="dulok"><h2>Hét dűlő, harminc parcella</h2>
+  <div class="rock"><img src="../../assets/img/rock-holdvolgy.webp" alt=""><div><b>Holdvölgy</b><span>kvarcit, riolit · száraz és édes</span></div></div>
+  <div class="rock"><img src="../../assets/img/rock-nyulaszo.webp" alt=""><div><b>Nyulászó</b><span>perlit · Sárgamuskotály</span></div></div>
+  <div class="rock"><img src="../../assets/img/rock-becsek.webp" alt=""><div><b>Becsek</b><span>zeolitos riolittufa · Hárslevelű</span></div></div>
+  <p style="margin:10px 0 0"><a class="btn btn-3" href="#">Mind a hét dűlő →</a></p>
+</section>
+<section class="visit"><div class="nums"><div><b>1,8 km</b><span>labirintus</span></div><div><b>3 szint</b><span>a föld alatt</span></div><div><b>500 év</b><span>pince</span></div></div>
+  <p>Vas–csüt 10–15 · pén–szo 10–17</p><p>3909 Mád, Árpád u. 13.</p><p><a class="tel" href="tel:+36703914643">+36 70 391 4643</a></p><a class="btn btn-full" href="#">Foglalás</a></section>
+<footer><p><span class="wordmark" style="font-size:15px">HOLDVÖLGY</span></p><p>3909 Mád, Árpád u. 13. · visit@holdvolgy.com</p><p>Instagram · Facebook · Tripadvisor</p><small>Fogyaszd felelősséggel</small></footer>
+<nav class="bar" aria-label="Alsó navigáció"><a class="on" href="#"><i>◷</i>Foglalás</a><a href="#"><i>▯</i>Borok</a><a href="#"><i>◯</i>Kosár</a><a href="#"><i>≡</i>Menü</a></nav>
+</body>
+</html>

@@ -5,8 +5,20 @@ are two designed experiences, not one layout reflowed. Each is specified at its
 reference size; tablet is resolved as its own state at the end. Nothing here is
 coded yet — this document is the thing to approve before the home page is built.
 
-The schematics are generated boxes, not renderings: they fix **what is in frame,
-in what order, at what size**. Colour and type come from `assets/tokens.css`.
+Gate 1 (the design system) was approved 2026-09-16 (D12). The two frames below are
+composed from those approved components and the real assets at the exact reference
+sizes; the box schematics further down fix the same thing in diagram form. Approve
+the frames, and the home page is built from them and measured.
+
+<div class="frames">
+<figure><figcaption>Desktop · 1440 — <a href="frames/home-desktop-1440.html">open at full size</a></figcaption><div class="scale-d"><iframe src="frames/home-desktop-1440.html" title="Desktop frame, 1440 wide" loading="lazy"></iframe></div></figure>
+<figure><figcaption>Phone · 390 — <a href="frames/home-phone-390.html">open at full size</a></figcaption><div class="scale-p"><iframe src="frames/home-phone-390.html" title="Phone frame, 390 wide" loading="lazy"></iframe></div></figure>
+</div>
+
+Two things the frames make visible that the boxes did not: the dűlő list needs
+**two rock photographs the site does not have** (Úrágya, Kakasok — shown as marked
+gaps, added to §6 of the plan), and the phone hero is a **provisional centre crop**
+of the landscape frame until a portrait photograph is supplied.
 
 ## Shared rules
 

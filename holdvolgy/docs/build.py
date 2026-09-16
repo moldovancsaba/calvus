@@ -46,6 +46,7 @@ def render(src, out, label):
 <nav class="docnav" aria-label="Project documentation"><span class="docnav-brand">Holdvölgy 2026 · docs</span>{nav}<a class="docnav-hub" href="../../index.html">Calvus Hub</a></nav>
 <header><p class="eyebrow">Calvus · Holdvölgy · project documentation</p><h1>{title}</h1></header>
 {body}
+<script>(function(){{function f(){{document.querySelectorAll('.scale-d').forEach(function(e){{e.style.setProperty('--w',e.clientWidth)}});document.querySelectorAll('.scale-p').forEach(function(e){{e.style.setProperty('--pw',e.clientWidth)}})}}f();addEventListener('resize',f)}})();</script>
 <footer>Source: <code>holdvolgy/docs/{src}</code> · rendered by <code>docs/build.py</code>. Set in Bodoni Moda and Archivo (Google Fonts, SIL OFL) on Holdvölgy's measured palette — decision D3.</footer>
 </div>
 </body>

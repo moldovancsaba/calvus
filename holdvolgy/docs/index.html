@@ -31,6 +31,14 @@ table{border-collapse:collapse;width:100%;font-size:13.5px;min-width:560px}
 th{text-align:left;font-weight:600;color:var(--ink);background:var(--note);padding:10px 12px;border-bottom:1px solid var(--line);font-size:11.5px;letter-spacing:.06em;text-transform:uppercase}
 td{padding:10px 12px;border-top:1px solid var(--line-soft);vertical-align:top;background:var(--card)} td:first-child{color:var(--ink)}
 footer{margin-top:56px;padding-top:18px;border-top:1px solid var(--line);font-size:12px;color:var(--muted)}
+
+/* embedded gate-2 frames */
+.frames{display:grid;gap:28px;margin:18px 0 30px}
+.frames figure{margin:0} .frames figcaption{font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);margin-bottom:8px}
+.scale-d{width:100%;aspect-ratio:1440/2900;position:relative;overflow:hidden;border:1px solid var(--line);background:#FAFAFA}
+.scale-d iframe{position:absolute;top:0;left:0;width:1440px;height:2900px;border:0;transform-origin:0 0;transform:scale(calc(var(--w,720) / 1440))}
+.scale-p{width:390px;max-width:100%;aspect-ratio:390/2100;position:relative;overflow:hidden;border:1px solid var(--line);background:#FAFAFA}
+.scale-p iframe{position:absolute;top:0;left:0;width:390px;height:2100px;border:0;transform-origin:0 0;transform:scale(calc(var(--pw,390) / 390))}
 </style>
 </head>
 <body>
@@ -126,8 +134,14 @@ had been approved; it had not. A live design-system page (<code>design-system.ht
 now gate 1 of Phase 1, before the layouts. Assets for the home page were fetched
 and converted (<code>assets-used.md</code>, 22 originals → 27 derivatives, 1,2 MB, originals
 not committed) so the system page shows the real bottles on the real ground.</p>
-<p><strong>Next.</strong> Gate 1: approval of the design system. Then gate 2, the layouts; then the
-home page.</p>
+<p><strong>2026-09-16 — gate 1 approved (D12).</strong> Owner approved the design system. Gate 2
+opened as two composed frames at the reference sizes (<code>frames/home-desktop-1440.html</code>,
+<code>frames/home-phone-390.html</code>) built from the approved components and real assets,
+embedded in <code>layouts.html</code>. Composing them surfaced two missing rock photographs
+(Úrágya, Kakasok) — added to the plan's client-gap list.</p>
+<p><strong>Next.</strong> Gate 2: approval of the frames. Then gate 3, the home page, measured at
+both sizes.</p>
+<script>(function(){function f(){document.querySelectorAll('.scale-d').forEach(function(e){e.style.setProperty('--w',e.clientWidth)});document.querySelectorAll('.scale-p').forEach(function(e){e.style.setProperty('--pw',e.clientWidth)})}f();addEventListener('resize',f)})();</script>
 <footer>Source: <code>holdvolgy/docs/README.md</code> · rendered by <code>docs/build.py</code>. Set in Bodoni Moda and Archivo (Google Fonts, SIL OFL) on Holdvölgy's measured palette — decision D3.</footer>
 </div>
 </body>

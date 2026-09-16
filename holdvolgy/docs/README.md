@@ -65,5 +65,11 @@ now gate 1 of Phase 1, before the layouts. Assets for the home page were fetched
 and converted (`assets-used.md`, 22 originals → 27 derivatives, 1,2 MB, originals
 not committed) so the system page shows the real bottles on the real ground.
 
-**Next.** Gate 1: approval of the design system. Then gate 2, the layouts; then the
-home page.
+**2026-09-16 — gate 1 approved (D12).** Owner approved the design system. Gate 2
+opened as two composed frames at the reference sizes (`frames/home-desktop-1440.html`,
+`frames/home-phone-390.html`) built from the approved components and real assets,
+embedded in `layouts.html`. Composing them surfaced two missing rock photographs
+(Úrágya, Kakasok) — added to the plan's client-gap list.
+
+**Next.** Gate 2: approval of the frames. Then gate 3, the home page, measured at
+both sizes.

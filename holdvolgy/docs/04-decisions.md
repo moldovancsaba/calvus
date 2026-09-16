@@ -60,3 +60,8 @@ plan had gone from direction straight to layout specs. Phase 1 now has three gat
 in order: design system → layouts → home page. `docs/design-system.html` is gate 1
 and renders the system live from the tokens and the converted assets. Replaces the
 two-step Phase 1 in the plan's first draft.
+
+**D12 — Design system approved (gate 1).** Owner, 2026-09-16: "I am satisfied."
+`docs/design-system.html` is the fixed system; layouts arrange it, pages are built
+from it, anything new is brought to that page first. Gate 2 opened the same day
+with composed frames at 1440 and 390 in `docs/frames/`.

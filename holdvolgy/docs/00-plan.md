@@ -239,9 +239,10 @@ Owner confirms the direction in §4 and the page list below. Nothing is built be
   corners, buttons, card, bottle component, dűlő row, both navigation systems, form
   field. Approved on its own before anything is arranged. (Inserted 2026-09-16 after
   the owner asked whether the system had been approved — it had not; D11.)
-- **Gate 2 — layout specs** (`docs/05-layout-specs.md`): desktop at 1440 and phone
-  at 390, each with its own navigation, hero framing and grid per §4.11; tablet
-  resolved explicitly. Arranges gate-1 components only.
+- **Gate 2 — layout frames** (`docs/05-layout-specs.md`, frames in `docs/frames/`):
+  desktop at 1440 and phone at 390 composed from the gate-1 components and the real
+  assets, each with its own navigation, hero framing and grid per §4.11; tablet
+  resolved explicitly. Gate 1 approved 2026-09-16 (D12).
 - **Gate 3 — the home page**, built from gates 1 and 2 and measured at both sizes.
 - Shared header/footer markup — mega-nav for desktop, bottom action bar plus sheet
   for phone — and the age gate restyled on the light ground.
@@ -285,4 +286,5 @@ Large founder and team portraits; the aszú process diagram as a real image;
 technical data per wine (residual sugar, alcohol, acidity) — owner confirmed
 2026-09-16 that item data will be supplied; confirmation of the Culture 133 000 Ft
 item (which vintage/format); whether EN copy should be carried verbatim from the
-live site. The webfont question is closed (D3).
+live site; rock photographs for Úrágya and Kakasok (the live site has none — found
+when composing the gate-2 frames). The webfont question is closed (D3).
