@@ -30,6 +30,27 @@ same collection; delivery line; a link to the live product page; Product/Offer J
 (validates, carries HUF price and the live URL). Exaltation 2017 Reserve shows
 "Ár egyeztetés alatt" with *Érdeklődöm* — the live page shows 0 Ft.
 
+## The product page, second pass (readiness review, 2026-09-16)
+
+The readiness pass found the description running into the live page's tabs. Parsing
+those tabs properly turned out to close a plan §6 gap: the live product pages carry
+a **technical sheet** — alcohol, sugar, acidity, volatile acidity, SO₂ free/total,
+sugar-free extract, varieties, vineyards, Aszú base wine, bottles produced,
+classification — plus a **tasting note**, a **vintage note** and storage/serving
+lines. The catalogue now holds them for 31 of 32 wines (tech sheet), 22
+(tasting note) and 32 (vintage note), in HU and, where the live EN page has
+them, in EN; the product page renders Kóstolási jegyzet · Az évjárat · Adatlap.
+
+Not shipped, deliberately: the live pages' harvest date (every page reads
+"Szüret 2012. Október" — a template artefact), the awards block (parsed cleanly for
+4 wines only) and the ageing-potential text (mangled by the parse). Half-parsed data
+is a surprise; these wait for the client's structured data.
+
+Two defects fixed in the same pass: the tagline printed twice (as the display line
+and again as the first sentence of the description — 49 fields de-duplicated), and
+the fact-sheet section was named `.sheet`, the same class as the phone's bottom
+menu dialog (`position: fixed`), so it floated over the page at every width (D18).
+
 ## Borklub
 
 The real programme: 5 / 10 / 15 / 20 % at 50 000 / 150 000 / 300 000 / 600 000 Ft

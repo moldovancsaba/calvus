@@ -122,4 +122,12 @@ anchor and docs-nav audits. Its first run found the shop's collection anchors
 existing only after JavaScript (now rendered statically) and the design-system page
 still carrying its pre-approval eyebrow. CLAUDE.md rule 2 names the command.
 
+**2026-09-16 — readiness review.** Every site file compared live against the repo
+(238 identical), every EN page scanned for Hungarian, every page type looked at top
+to bottom on the phone and desktop. Findings fixed: product descriptions ran into
+the live page's tabs — parsing them properly put a tasting note, vintage note and
+full technical sheet on 31 product pages (closing a §6 gap); the tagline printed
+twice; the fact-sheet section's class collided with the menu dialog and floated over
+the page (D18). The claude.ai plan page was republished with its status.
+
 **Next.** Client review of the whole; then the items in §6 of the plan as they arrive.

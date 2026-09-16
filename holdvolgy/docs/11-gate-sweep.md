@@ -34,6 +34,13 @@ all zero.
 Link audit at the same commit: 3 738 relative references across 93 HTML files, 0
 broken; every cross-page anchor resolves; every doc page links every other.
 
+## Re-run after the readiness review (2026-09-17)
+
+The product template changed (tasting note, vintage note, fact sheet), so the sweep
+ran again on the new build: **76 pages, 152 measurements, 0 defects**, with one
+criterion added — no fixed-positioned element inside `main` — after the fact-sheet
+section's class collided with the menu dialog's (D18).
+
 ## Hand-off state
 
 - `holdvolgy/build.py` generates every page in both languages from one content

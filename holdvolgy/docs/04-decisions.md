@@ -98,3 +98,9 @@ A percentage height inside an `aspect-ratio` grid cell resolves to `auto`, so th
 image falls back to its attribute height and overflows. Figure boxes are
 `position: relative` and the image is absolutely centred with `max-height` and
 `max-width` bounds. Found in the Phase 3 gate by looking, not by the numbers.
+
+**D18 — Component class names are namespaced; the gate checks for collisions.**
+Standing, 2026-09-16. A fact-sheet section named `.sheet` collided with the menu
+dialog's `.sheet` (fixed-position) and floated over the page. Section classes that
+could read as generic (`sheet`, `bar`, `card`, `grid`) are either namespaced
+(`factsheet`) or checked for a second definition before use.

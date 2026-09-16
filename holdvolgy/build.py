@@ -147,7 +147,8 @@ C = {
      filters=[("mind","Mind"),("szaraz","Száraz"),("edes","Édes"),("aszu","Aszú"),("hh","Hold and Hollo")], sort=[("line","Kollekció"),("asc","Ár szerint növekvő"),("desc","Ár szerint csökkenő")], sort_label="Rendezés", count="tétel",
      cta_cart="Kosárba", cta_ask="Érdekel", no_price="Ár egyeztetés alatt", no_image="Fotó érkezik", from_="-tól"),
    product=dict(back="← Borok", cat_label="Kategória", vintage="Évjárat", size="Kiszerelés", variety="Fajta", dulo="Dűlő", price="Ár", cart="Kosárba teszem", ask="Érdeklődöm", taste="Kóstold a birtokon", taste_href="latogatas.html#jegyek",
-     delivery="Házhozszállítás Magyarországon futárral; a rendelés utánvéttel is leadható. Külföldre egyedi ajánlat 2 munkanapon belül.", related="Ugyanebből a kollekcióból", tech_note="Analitikai adatok (alkohol, cukor, sav) a birtoktól érkeznek.", live="Élő termékoldal a holdvolgy.com-on", proto="Prototípus — a kosár nem működik; a vásárlás a holdvolgy.com-on él."),
+     delivery="Házhozszállítás Magyarországon futárral; a rendelés utánvéttel is leadható. Külföldre egyedi ajánlat 2 munkanapon belül.", related="Ugyanebből a kollekcióból", tech_note="Analitikai adatok ehhez a tételhez a birtoktól érkeznek.", live="Élő termékoldal a holdvolgy.com-on",
+     tasting_h="Kóstolási jegyzet", vintage_h="Az évjárat", sheet_h="Adatlap", f_alk="Alkohol", f_cukor="Cukor", f_sav="Sav", f_illo="Illó sav", f_so2="SO₂ (szabad/összes)", f_extrakt="Cukormentes extrakt", f_fajta="Fajták", f_dulok="Dűlők", f_alapbor="Aszú alapbor", f_palack="Palackozott mennyiség", f_besorolas="Besorolás", f_storage="Tárolás", f_temp="Fogyasztási hőmérséklet"),
    club=dict(title="Holdvölgy Borklub — hűségprogram", desc="Törzsvásárlói kedvezmény 5–20 %, negyedéves egyedi ajánlatok, limitált reserve tételek, ajándék kóstolók.", eyebrow="Borklub", h1="Kedvezmények, ajándékok és egyedi ajánlatok",
      lede="Új hűségprogramunk törzsvásárlói kedvezményt ad már egy palackra is, negyedévente frissülő ajánlatokkal, limitált reserve tételekkel és bevezetés előtt álló borokkal.",
      benefits=["Törzsvásárlói kedvezmény (5–20 %) már egy palackra is.","Negyedévente frissülő egyedi ajánlatok, borválogatások.","Limitált reserve tételek és bevezetés előtt álló borok megvásárlása.","Hírlevél újdonságokkal, sztorikkal, eseményekkel, tippekkel és receptekkel."],
@@ -297,7 +298,8 @@ C = {
      filters=[("mind","All"),("szaraz","Dry"),("edes","Sweet"),("aszu","Aszú"),("hh","Hold and Hollo")], sort=[("line","Collection"),("asc","Price, low to high"),("desc","Price, high to low")], sort_label="Sort", count="wines",
      cta_cart="Add to cart", cta_ask="Enquire", no_price="Price on request", no_image="Photo to come", from_="from "),
    product=dict(back="← Wines", cat_label="Category", vintage="Vintage", size="Size", variety="Variety", dulo="Vineyard", price="Price", cart="Add to cart", ask="Enquire", taste="Taste it at the estate", taste_href="latogatas.html#jegyek",
-     delivery="Courier delivery in Hungary, cash on delivery available. Abroad: an individual quote within two working days.", related="From the same collection", tech_note="Analytical data (alcohol, sugar, acidity) to come from the estate.", live="Live product page on holdvolgy.com", proto="Prototype — the cart is inert; purchases run on holdvolgy.com."),
+     delivery="Courier delivery in Hungary, cash on delivery available. Abroad: an individual quote within two working days.", related="From the same collection", tech_note="Analytical data for this wine to come from the estate.", live="Live product page on holdvolgy.com",
+     tasting_h="Tasting note", vintage_h="The vintage", sheet_h="Fact sheet", f_alk="Alcohol", f_cukor="Sugar", f_sav="Acidity", f_illo="Volatile acidity", f_so2="SO₂ (free/total)", f_extrakt="Sugar-free extract", f_fajta="Varieties", f_dulok="Vineyards", f_alapbor="Aszú base wine", f_palack="Bottles produced", f_besorolas="Classification", f_storage="Storage", f_temp="Serving temperature"),
    club=dict(title="Holdvölgy Wine Club — loyalty programme", desc="Loyalty discount of 5–20 %, quarterly offers, limited reserve lots, tasting gifts.", eyebrow="Wine Club", h1="Discounts, gifts and personal offers",
      lede="Our loyalty programme gives a returning-customer discount from the very first bottle, with quarterly offers, limited reserve lots and wines before release.",
      benefits=["A returning-customer discount (5–20 %) from a single bottle.","Personal offers and selections refreshed every quarter.","Access to limited reserve lots and wines before release.","A newsletter with news, stories, events, tips and recipes."],
@@ -452,6 +454,7 @@ footer{padding:24px 0 96px;font-size:13px;color:var(--hv-muted);display:grid;gap
 .prod .note{font-size:12px;color:var(--hv-grey);margin:12px 0 0} .prod .note a{color:var(--hv-accent-deep);display:inline-flex;align-items:center;min-height:44px}
 @media(min-width:768px){.prod{grid-template-columns:1fr 1fr;gap:40px;padding:32px 0 56px;align-items:start} .prod h1{font-size:44px}}
 @media(min-width:1024px){.prod{grid-template-columns:5fr 6fr;gap:64px} .prod h1{font-size:52px}}
+.detail{display:grid;gap:24px;padding:0 0 40px} .detail h2{font-size:24px;margin-bottom:8px} .detail p{margin:0;max-width:62ch;color:var(--hv-text)} .detail.factsheet .facts{grid-template-columns:auto 1fr;max-width:620px} @media(min-width:768px){.detail{grid-template-columns:1fr 1fr;gap:40px;padding:0 0 56px} .detail.factsheet{display:block} .detail h2{font-size:28px}}
 .rel{padding:0 0 56px} .rel h2{font-size:26px;margin-bottom:14px} .rel .grid{grid-template-columns:repeat(2,minmax(0,1fr))} @media(min-width:768px){.rel .grid{grid-template-columns:repeat(4,1fr)}}
 /* ---- club ---- */
 .ben{display:grid;gap:10px;padding:0;margin:0;list-style:none} .ben li{background:var(--hv-card);border:1px solid var(--hv-line-soft);padding:14px 16px;font-size:14px;color:var(--hv-text)} @media(min-width:768px){.ben{grid-template-columns:1fr 1fr;gap:16px}}
@@ -688,8 +691,11 @@ def product_main(c, p):
     e = html.escape; L = c["lang"]; pr = c["product"]; sh = c["shop"]
     img = f'<img src="{IMG}{p["render"]}.webp" alt="{e(p["name"])}, {e(p["cat"][L])}" height="720" fetchpriority="high">' if p["render"] else f'<i>{e(sh["no_image"])}</i>'
     price = _fmt(p["price"], L)
-    facts = "".join(f'<dt>{e(k)}</dt><dd>{e(v)}</dd>' for k,v in [(pr["cat_label"],p["cat"][L]),(pr["vintage"],p["vintage"]),(pr["size"],p["size"]),(pr["variety"],p["variety"]),(pr["dulo"],p["dulo"])] if v)
+    t = p.get("tech", {}); unit = lambda v,u: (v.replace(".",",") if L=="hu" else v.replace(",",".")) + u if v else ""
+    facts = "".join(f'<dt>{e(k)}</dt><dd>{e(v)}</dd>' for k,v in [(pr["cat_label"],p["cat"][L]),(pr["vintage"],p["vintage"]),(pr["size"],p["size"]),(pr["f_fajta"],t.get("fajta") or p["variety"]),(pr["f_dulok"],t.get("dulok") or p["dulo"])] if v)
+    sheet = "".join(f'<dt>{e(k)}</dt><dd>{e(v)}</dd>' for k,v in [(pr["f_alk"],unit(t.get("alkohol",""),"&nbsp;% vol")),(pr["f_cukor"],unit(t.get("cukor",""),"&nbsp;g/l")),(pr["f_sav"],unit(t.get("sav",""),"&nbsp;g/l")),(pr["f_illo"],unit(t.get("illo",""),"&nbsp;g/l")),(pr["f_so2"],(t.get("so2","")+"&nbsp;mg/l") if t.get("so2") else ""),(pr["f_extrakt"],unit(t.get("extrakt",""),"&nbsp;g/l")),(pr["f_alapbor"],t.get("alapbor","")),(pr["f_palack"],t.get("palack","")),(pr["f_besorolas"],t.get("besorolas","")),(pr["f_storage"],p.get("storage",{}).get(L,"")),(pr["f_temp"],p.get("serve_temp",{}).get(L,""))] if v).replace("&amp;nbsp;","&nbsp;")
     tag = p["tagline"][L] or p["tagline"]["hu"]; desc = p["desc"][L] or p["desc"]["hu"]
+    tasting = p.get("tasting",{}).get(L,"") or p.get("tasting",{}).get("hu",""); vint = p.get("vintage_note",{}).get(L,"") or p.get("vintage_note",{}).get("hu","")
     rel = [q for q in CAT if q["line"]==p["line"] and q["id"]!=p["id"]][:4]
     relh = f'<section class="wrap rel"><h2>{e(pr["related"])}</h2><div class="grid">{"".join(_card(q, c) for q in rel)}</div></section>' if rel else ""
     ld = json.dumps({"@context":"https://schema.org","@type":"Product","name":p["name"],"brand":{"@type":"Brand","name":"Holdvölgy"},"category":p["cat"][L],"image":(f'https://moldovancsaba.github.io/calvus/holdvolgy/assets/img/{p["render"]}.webp' if p["render"] else None),"description":desc[:300],"offers":({"@type":"Offer","priceCurrency":"HUF","price":p["price"],"availability":"https://schema.org/InStock","url":p["live_url"]} if p["price"] else None)},ensure_ascii=False)
@@ -701,8 +707,10 @@ def product_main(c, p):
 <p class="l">{e(p['line'])}</p><h1>{e(p['name'])}</h1><p class="cat">{e(p['cat'][L])} · {e(p['size'])}</p>
 {f'<p class="tag">{e(tag)}</p>' if tag else ''}<p class="desc">{e(desc)}</p>
 <dl class="facts">{facts}</dl>{buy}
-<p class="note">{e(pr['delivery'])}</p><p class="note">{e(pr['tech_note'])} · <a href="{p['live_url']}" rel="noopener">{e(pr['live'])}</a></p>
-</div></section>{relh}
+<p class="note">{e(pr['delivery'])}</p><p class="note">{(e(pr['tech_note']) + ' · ') if not sheet else ''}<a href="{p['live_url']}" rel="noopener">{e(pr['live'])}</a></p>
+</div></section>
+{f'<section class="wrap detail"><div><h2>{e(pr["tasting_h"])}</h2><p>{e(tasting)}</p></div><div><h2>{e(pr["vintage_h"])}</h2><p>{e(vint)}</p></div></section>' if (tasting or vint) else ''}
+{f'<section class="wrap detail factsheet"><h2>{e(pr["sheet_h"])}</h2><dl class="facts">{sheet}</dl></section>' if sheet else ''}{relh}
 <script type="application/ld+json">{ld}</script>
 """
 def club_main(c):

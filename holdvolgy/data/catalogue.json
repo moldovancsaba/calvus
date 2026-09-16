@@ -21,11 +21,39 @@
     "en": "PROFOUND, RICH, POWERFUL."
    },
    "desc": {
-    "hu": "MEGHATÁROZÓ, GAZDAG, ÉLETTEL TELI - A TOKAJI KULTÚRA MEGTESTESÜLÉSE A CULTURE 6 puttonyos tokaji aszú készítésekor nem csak a legkiválóbb aszúszemeket, hanem az első osztályú, klasszifikált dűlők kivételességét, Tokaj gazdag történelmi és kulturális örökségét, a Holdvölgy történetének élettel teli pillanatait, az évjáratok értékeit és az évek megismételhetetlen és meghatározó emlékeit is palackba zárjuk. Ettől válnak igazán különlegessé és maradandóvá ezek a tételek. “As the soil, however rich it may be, cannot be productive without cultivation, so the mind without culture can never produce good fruit.” – Seneca borleírás évjárat tárolás és fogyasztás Első kimagasló szüretünk ékköve. Puha és krémes struktúra, mely illatban gombával és avarral nyit, majd érkeznek a mazsolás, fügés, aszalt kajszis jegyek. Idővel egyre frissebbnek mutatkozik az illat, narancslekvárral, őszibarackbefőttel, fűszerekkel, némi trópusi gyümölccsel gazdagodik. Telt, komplex, már érezhetően kialakult aszú-karakterrel rendelkezik. Savai hihetetlenül lendületesek, szinte lemossák a cukortartalmat és feszesre, hosszúra húzzák a kortyot.",
-    "en": "THE EMBODIMENT OF TOKAJ’S CULTURE. Holdvölgy Culture 6 Puttonyos Tokaji Aszú is more than just a selection of high-quality aszú berries. Each bottle embodies the excellence of Tokaj's historic classified first growths, showcasing the region's rich history and cultural heritage. It reflects the vibrant moments experienced at Holdvölgy, the values of each vintage, and the unforgettable memories that come alive with every sip. “As the soil, however rich it may be, cannot be productive without cultivation, so the mind without culture can never produce good fruit.” – Seneca TASTING NOTES VINTAGE STORAGE AND SERVING A deeper colour, turning into golden. Opens with a slight fungus and leaf mould, followed by raisin, fig, and dried apricot notes, but after a while gets fresher and fresher on the nose, enriched by orange jam, peach, spices and some tropical fruit. It has a mellow, complex and very intensive, noticeably evolved aszú- character. Its acidity is incredibly tight and youthful, almost washing away the sugar content, stretching out the sip to be tense and long."
+    "hu": "MEGHATÁROZÓ, GAZDAG, ÉLETTEL TELI - A TOKAJI KULTÚRA MEGTESTESÜLÉSE A CULTURE 6 puttonyos tokaji aszú készítésekor nem csak a legkiválóbb aszúszemeket, hanem az első osztályú, klasszifikált dűlők kivételességét, Tokaj gazdag történelmi és kulturális örökségét, a Holdvölgy történetének élettel teli pillanatait, az évjáratok értékeit és az évek megismételhetetlen és meghatározó emlékeit is palackba zárjuk. Ettől válnak igazán különlegessé és maradandóvá ezek a tételek. “As the soil, however rich it may be, cannot be productive without cultivation, so the mind without culture can never produce good fruit.” – Seneca",
+    "en": "THE EMBODIMENT OF TOKAJ’S CULTURE. Holdvölgy Culture 6 Puttonyos Tokaji Aszú is more than just a selection of high-quality aszú berries. Each bottle embodies the excellence of Tokaj's historic classified first growths, showcasing the region's rich history and cultural heritage. It reflects the vibrant moments experienced at Holdvölgy, the values of each vintage, and the unforgettable memories that come alive with every sip. “As the soil, however rich it may be, cannot be productive without cultivation, so the mind without culture can never produce good fruit.” – Seneca"
    },
    "render": "bottle-culture-06",
-   "live_url": "https://holdvolgy.com/bor/tokaji-aszu-2006"
+   "live_url": "https://holdvolgy.com/bor/tokaji-aszu-2006",
+   "tasting": {
+    "hu": "Első kimagasló szüretünk ékköve. Puha és krémes struktúra, mely illatban gombával és avarral nyit, majd érkeznek a mazsolás, fügés, aszalt kajszis jegyek. Idővel egyre frissebbnek mutatkozik az illat, narancslekvárral, őszibarackbefőttel, fűszerekkel, némi trópusi gyümölccsel gazdagodik. Telt, komplex, már érezhetően kialakult aszú-karakterrel rendelkezik. Savai hihetetlenül lendületesek, szinte lemossák a cukortartalmat és feszesre, hosszúra húzzák a kortyot. Ízét narancs-, kajszibarack lekvár, édes citrusok, pici dohány és gazdag fűszeresség jellemzi.",
+    "en": "A deeper colour, turning into golden. Opens with a slight fungus and leaf mould, followed by raisin, fig, and dried apricot notes, but after a while gets fresher and fresher on the nose, enriched by orange jam, peach, spices and some tropical fruit. It has a mellow, complex and very intensive, noticeably evolved aszú- character. Its acidity is incredibly tight and youthful, almost washing away the sugar content, stretching out the sip to be tense and long. Its taste is characterized by orange marmalade, apricot marmalade, sweet citrus fruits, a hint of tobacco and rich spiciness."
+   },
+   "tech": {
+    "alkohol": "12",
+    "cukor": "174",
+    "sav": "10,8",
+    "illo": "1,06",
+    "so2": "60/300",
+    "extrakt": "53,8",
+    "fajta": "furmint, hárslevelű, zéta",
+    "alapbor": "100 % furmint",
+    "palack": "4266",
+    "besorolas": "Oltalom alatt álló, tokaji védett eredetű édes borkülönlegesség"
+   },
+   "vintage_note": {
+    "hu": "Októbertől november elejéig szüreteltük az aszúszemeket.",
+    "en": "We harvested the aszú berries from October to early November."
+   },
+   "storage": {
+    "hu": "hűvös helyen, fektetve",
+    "en": "in a cool place, lying down"
+   },
+   "serve_temp": {
+    "hu": "10-13°C",
+    "en": "10-13°C"
+   }
   },
   {
    "id": "culture-2007",
@@ -46,11 +74,39 @@
     "en": "PROFOUND, RICH, POWERFUL."
    },
    "desc": {
-    "hu": "MEGHATÁROZÓ, GAZDAG, ÉLETTEL TELI - A TOKAJI KULTÚRA MEGTESTESÜLÉSE A CULTURE 6 puttonyos tokaji aszú készítésekor nem csak a legkiválóbb aszúszemeket, hanem az első osztályú, klasszifikált dűlők kivételességét, Tokaj gazdag történelmi és kulturális örökségét, a Holdvölgy történetének élettel teli pillanatait, az évjáratok értékeit és az évek megismételhetetlen és meghatározó emlékeit is palackba zárjuk. Ettől válnak igazán különlegessé és maradandóvá ezek a tételek. “As the soil, however rich it may be, cannot be productive without cultivation, so the mind without culture can never produce good fruit.” – Seneca borleírás évjárat tárolás és fogyasztás Kajszibarack- és narancslekvár illatával, kandírozott sárgadinnyével és trópusi gyümölcsökkel fogad. Krémesebb érzetű bor, alacsonyabb savtartalma miatt az alkohol melegítő hatása is érezhető. A 2007-es évre jellemző forróság itt érezteti leginkább hatását. Aromatikája nagyon gazdag, tele aszalt gyümölcsökkel, kajszibarackkal, sárgadinnyével, mazsolával és egzotikus fűszerekkel. mint a szegfűbors, vanília, szegfűszeg. A végén enyhe dohány és méz ízek adják meg kerekségét.",
-    "en": "THE EMBODIMENT OF TOKAJ’S CULTURE. Holdvölgy Culture 6 Puttonyos Tokaji Aszú is more than just a selection of high-quality aszú berries. Each bottle embodies the excellence of Tokaj's historic classified first growths, showcasing the region's rich history and cultural heritage. It reflects the vibrant moments experienced at Holdvölgy, the values of each vintage, and the unforgettable memories that come alive with every sip. “As the soil, however rich it may be, cannot be productive without cultivation, so the mind without culture can never produce good fruit.” – Seneca TASTING NOTES VINTAGE STORAGE AND SERVING Its fragrance welcomes you with apricot and orange marmalade, then to pamper you with candied muskmelon and tropical fruit. It is a charming, more creamy-feeling wine. Very rich aromatics full with dried fruits – apricot, muskmelon, a range of tropical fruits and raisin and exotic spiciness – allspice, vanilla, clove – with a slight tobacco and honey note added. Fills up the palate completely, a sip of a slow rhythm, which rather pampers you – an aszú wine rendering a true, great, soft, melting experience."
+    "hu": "MEGHATÁROZÓ, GAZDAG, ÉLETTEL TELI - A TOKAJI KULTÚRA MEGTESTESÜLÉSE A CULTURE 6 puttonyos tokaji aszú készítésekor nem csak a legkiválóbb aszúszemeket, hanem az első osztályú, klasszifikált dűlők kivételességét, Tokaj gazdag történelmi és kulturális örökségét, a Holdvölgy történetének élettel teli pillanatait, az évjáratok értékeit és az évek megismételhetetlen és meghatározó emlékeit is palackba zárjuk. Ettől válnak igazán különlegessé és maradandóvá ezek a tételek. “As the soil, however rich it may be, cannot be productive without cultivation, so the mind without culture can never produce good fruit.” – Seneca",
+    "en": "THE EMBODIMENT OF TOKAJ’S CULTURE. Holdvölgy Culture 6 Puttonyos Tokaji Aszú is more than just a selection of high-quality aszú berries. Each bottle embodies the excellence of Tokaj's historic classified first growths, showcasing the region's rich history and cultural heritage. It reflects the vibrant moments experienced at Holdvölgy, the values of each vintage, and the unforgettable memories that come alive with every sip. “As the soil, however rich it may be, cannot be productive without cultivation, so the mind without culture can never produce good fruit.” – Seneca"
    },
    "render": "bottle-culture-07",
-   "live_url": "https://holdvolgy.com/bor/tokaji-aszu-2007"
+   "live_url": "https://holdvolgy.com/bor/tokaji-aszu-2007",
+   "tasting": {
+    "hu": "Kajszibarack- és narancslekvár illatával, kandírozott sárgadinnyével és trópusi gyümölcsökkel fogad. Krémesebb érzetű bor, alacsonyabb savtartalma miatt az alkohol melegítő hatása is érezhető. A 2007-es évre jellemző forróság itt érezteti leginkább hatását. Aromatikája nagyon gazdag, tele aszalt gyümölcsökkel, kajszibarackkal, sárgadinnyével, mazsolával és egzotikus fűszerekkel. mint a szegfűbors, vanília, szegfűszeg. A végén enyhe dohány és méz ízek adják meg kerekségét.",
+    "en": "Its fragrance welcomes you with apricot and orange marmalade, then to pamper you with candied muskmelon and tropical fruit. It is a charming, more creamy-feeling wine. Very rich aromatics full with dried fruits – apricot, muskmelon, a range of tropical fruits and raisin and exotic spiciness – allspice, vanilla, clove – with a slight tobacco and honey note added. Fills up the palate completely, a sip of a slow rhythm, which rather pampers you – an aszú wine rendering a true, great, soft, melting experience."
+   },
+   "tech": {
+    "alkohol": "12",
+    "cukor": "164,5",
+    "sav": "7,8",
+    "illo": "1,29",
+    "so2": "16/208",
+    "extrakt": "59,8",
+    "fajta": "furmint, hárslevelű, zéta",
+    "alapbor": "100% furmint",
+    "palack": "7 290",
+    "besorolas": "Oltalom alatt álló, tokaji védett eredetű édes borkülönlegesség"
+   },
+   "vintage_note": {
+    "hu": "Ősszel a szőlőtermesztésnek kedvező időjárás volt a jellemző. Szeptember elején 80 mm csapadék esett, amely kiválóan beindította az aszúsodási folyamatot az érett szőlőfürtökben. Már szeptember 24-től nagy gazdagságú aszúszemeket lehetett szedni. A Zéta és a Furmint szőlőbogyókból lettek a legszebb aszúszemek. A szőlősorokat a szüreti időszak alatt gyakran 3-4 szer is megszedtük az érett aszúszemekért. Ebben az évben a szüreti időszak egészen november végéig tartott.",
+    "en": "During Fall, the weather was favorable. In early September we had 80 mm of rain, which started the botrytisation on the perfectly mature berries. From September 24th, aszú berries of great richness could be harvested. Zeta and Furmint varieties provided us with the most beautiful ones, going back to the same raws from 3 to 4 times during the harvest period that lasted until the end of November."
+   },
+   "storage": {
+    "hu": "hűvös helyen, fektetve",
+    "en": "in a cool place, lying down"
+   },
+   "serve_temp": {
+    "hu": "10-13°C",
+    "en": "10-13°C"
+   }
   },
   {
    "id": "culture-2008",
@@ -71,11 +127,39 @@
     "en": "PROFOUND, RICH, POWERFUL."
    },
    "desc": {
-    "hu": "MEGHATÁROZÓ, GAZDAG, ÉLETTEL TELI - A TOKAJI KULTÚRA MEGTESTESÜLÉSE A CULTURE 6 puttonyos tokaji aszú készítésekor nem csak a legkiválóbb aszúszemeket, hanem az első osztályú, klasszifikált dűlők kivételességét, Tokaj gazdag történelmi és kulturális örökségét, a Holdvölgy történetének élettel teli pillanatait, az évjáratok értékeit és az évek megismételhetetlen és meghatározó emlékeit is palackba zárjuk. Ettől válnak igazán különlegessé és maradandóvá ezek a tételek. “As the soil, however rich it may be, cannot be productive without cultivation, so the mind without culture can never produce good fruit.” – Seneca borleírás évjárat tárolás és fogyasztás Illatban vaníliával és sok gyümölccsel indít, majd megjelennek benne hűvösebb gyógynövényes jegyek és gombás-kenyérhéjas tercier aromák is. Telt és sűrű, szájban komoly koncentrációt mutat. Ízében az aszalt gyümölcsök – elsősorban sárgabarack-, vanílliakrém és édes fűszeresség dominálnak. Utóbbi a lecsengésben is hangsúlyosan érezhető. Nagy ígéret, egy kimondottan aszús évjáratból. ALKOHOL (% vol) 11,5 CUKOR (g/l) 176,9 SAV (g/l) 8,8 ILLÓ (g/l) 1,03 SO2 (mg/l) 22/203 CUKORM.",
-    "en": "THE EMBODIMENT OF TOKAJ’S CULTURE. Holdvölgy Culture 6 Puttonyos Tokaji Aszú is more than just a selection of high-quality aszú berries. Each bottle embodies the excellence of Tokaj's historic classified first growths, showcasing the region's rich history and cultural heritage. It reflects the vibrant moments experienced at Holdvölgy, the values of each vintage, and the unforgettable memories that come alive with every sip. “As the soil, however rich it may be, cannot be productive without cultivation, so the mind without culture can never produce good fruit.” – Seneca TASTING NOTES VINTAGE STORAGE AND SERVING It starts off with vanilla and lots of tropical fruit on the nose, followed by cooler herbal notes, as well as with tertiary aromas of fungus and bread-crust. Full and thick, demonstrating a serious concentration on the palate, with a taste dominated by dried fruit (apricot in the first place), vanilla cream and sweet spiciness – with the latter one to prevail in the finish. A great promise from a specifically „aszús” vintage year."
+    "hu": "MEGHATÁROZÓ, GAZDAG, ÉLETTEL TELI - A TOKAJI KULTÚRA MEGTESTESÜLÉSE A CULTURE 6 puttonyos tokaji aszú készítésekor nem csak a legkiválóbb aszúszemeket, hanem az első osztályú, klasszifikált dűlők kivételességét, Tokaj gazdag történelmi és kulturális örökségét, a Holdvölgy történetének élettel teli pillanatait, az évjáratok értékeit és az évek megismételhetetlen és meghatározó emlékeit is palackba zárjuk. Ettől válnak igazán különlegessé és maradandóvá ezek a tételek. “As the soil, however rich it may be, cannot be productive without cultivation, so the mind without culture can never produce good fruit.” – Seneca",
+    "en": "THE EMBODIMENT OF TOKAJ’S CULTURE. Holdvölgy Culture 6 Puttonyos Tokaji Aszú is more than just a selection of high-quality aszú berries. Each bottle embodies the excellence of Tokaj's historic classified first growths, showcasing the region's rich history and cultural heritage. It reflects the vibrant moments experienced at Holdvölgy, the values of each vintage, and the unforgettable memories that come alive with every sip. “As the soil, however rich it may be, cannot be productive without cultivation, so the mind without culture can never produce good fruit.” – Seneca"
    },
    "render": "bottle-culture-08",
-   "live_url": "https://holdvolgy.com/bor/tokaji-aszu-2008"
+   "live_url": "https://holdvolgy.com/bor/tokaji-aszu-2008",
+   "tasting": {
+    "hu": "Illatban vaníliával és sok gyümölccsel indít, majd megjelennek benne hűvösebb gyógynövényes jegyek és gombás-kenyérhéjas tercier aromák is. Telt és sűrű, szájban komoly koncentrációt mutat. Ízében az aszalt gyümölcsök – elsősorban sárgabarack-, vanílliakrém és édes fűszeresség dominálnak. Utóbbi a lecsengésben is hangsúlyosan érezhető. Nagy ígéret, egy kimondottan aszús évjáratból.",
+    "en": "It starts off with vanilla and lots of tropical fruit on the nose, followed by cooler herbal notes, as well as with tertiary aromas of fungus and bread-crust. Full and thick, demonstrating a serious concentration on the palate, with a taste dominated by dried fruit (apricot in the first place), vanilla cream and sweet spiciness – with the latter one to prevail in the finish. A great promise from a specifically „aszús” vintage year."
+   },
+   "tech": {
+    "alkohol": "11,5",
+    "cukor": "176,9",
+    "sav": "8,8",
+    "illo": "1,03",
+    "so2": "22/203",
+    "extrakt": "60,7",
+    "fajta": "furmint, hárslevelű, zéta",
+    "alapbor": "100% furmint",
+    "palack": "10 500",
+    "besorolas": "Oltalom alatt álló, tokaji védett eredetű édes borkülönlegesség"
+   },
+   "vintage_note": {
+    "hu": "FACT SHEET Szeptember végétől egészen november közepéig tartó rendkívül száraz és meleg időszaknak köszönhetően időben beindult a botritiszesedés.",
+    "en": "Due to end of September until mid-November the weather was favorably dry and warm for botrytisation. The characteristic of acidity was given a fantastic basis to a birth of a complex botrytisated wine."
+   },
+   "storage": {
+    "hu": "hűvös helyen, fektetve",
+    "en": "in a cool place, lying down"
+   },
+   "serve_temp": {
+    "hu": "10-13°C",
+    "en": "10-13°C"
+   }
   },
   {
    "id": "culture-2009",
@@ -96,11 +180,39 @@
     "en": "PROFOUND, RICH, POWERFUL."
    },
    "desc": {
-    "hu": "MEGHATÁROZÓ, GAZDAG, ÉLETTEL TELI - A TOKAJI KULTÚRA MEGTESTESÜLÉSE A CULTURE 6 puttonyos tokaji aszú készítésekor nem csak a legkiválóbb aszúszemeket, hanem az első osztályú, klasszifikált dűlők kivételességét, Tokaj gazdag történelmi és kulturális örökségét, a Holdvölgy történetének élettel teli pillanatait, az évjáratok értékeit és az évek megismételhetetlen és meghatározó emlékeit is palackba zárjuk. Ettől válnak igazán különlegessé és maradandóvá ezek a tételek. “As the soil, however rich it may be, cannot be productive without cultivation, so the mind without culture can never produce good fruit.” – Seneca borleírás évjárat tárolás és fogyasztás Illatvilágában pici gombával, aszaltba hajló, lekváros állagú sárgabarackkal, sárgadinnyével, ananásszal, vaníliával, finom fűszerességgel, csipetnyi dohány kivételes kombinációjával találkozhatunk. Légiesen könnyed és emellett kiváló arányokkal rendelkezik. Savai finomak, a korty gördülékeny és selymes. Ízképét fiatalos, gyümölcsös jegyek uralják, sok trópusival, mangóval, ananásszal, sárgadinnyével, édes citrusokkal, kajszibarackkal. Szép egyensúlyt mutató, elegáns aszú.",
-    "en": "THE EMBODIMENT OF TOKAJ’S CULTURE. Holdvölgy Culture 6 Puttonyos Tokaji Aszú is more than just a selection of high-quality aszú berries. Each bottle embodies the excellence of Tokaj's historic classified first growths, showcasing the region's rich history and cultural heritage. It reflects the vibrant moments experienced at Holdvölgy, the values of each vintage, and the unforgettable memories that come alive with every sip. “As the soil, however rich it may be, cannot be productive without cultivation, so the mind without culture can never produce good fruit.” – Seneca TASTING NOTES VINTAGE STORAGE AND SERVING On the nose, it displays an exceptional combination of a slight fungus, apricot, muskmelon and pineapple of marmalade in consistency but tending to dried fruit, a subtle spiciness and a touch of tobacco. An ethereal lightness combined with excellent proportions. Its appeal lies rather in its elegance and less in its strength or complexity. The acids produce their effects finely, surrendering themselves to the texture of the wine. The sip is smooth and silky, leaving the palate clean."
+    "hu": "MEGHATÁROZÓ, GAZDAG, ÉLETTEL TELI - A TOKAJI KULTÚRA MEGTESTESÜLÉSE A CULTURE 6 puttonyos tokaji aszú készítésekor nem csak a legkiválóbb aszúszemeket, hanem az első osztályú, klasszifikált dűlők kivételességét, Tokaj gazdag történelmi és kulturális örökségét, a Holdvölgy történetének élettel teli pillanatait, az évjáratok értékeit és az évek megismételhetetlen és meghatározó emlékeit is palackba zárjuk. Ettől válnak igazán különlegessé és maradandóvá ezek a tételek. “As the soil, however rich it may be, cannot be productive without cultivation, so the mind without culture can never produce good fruit.” – Seneca",
+    "en": "THE EMBODIMENT OF TOKAJ’S CULTURE. Holdvölgy Culture 6 Puttonyos Tokaji Aszú is more than just a selection of high-quality aszú berries. Each bottle embodies the excellence of Tokaj's historic classified first growths, showcasing the region's rich history and cultural heritage. It reflects the vibrant moments experienced at Holdvölgy, the values of each vintage, and the unforgettable memories that come alive with every sip. “As the soil, however rich it may be, cannot be productive without cultivation, so the mind without culture can never produce good fruit.” – Seneca"
    },
    "render": "bottle-culture-09",
-   "live_url": "https://holdvolgy.com/bor/tokaji-aszu-2009"
+   "live_url": "https://holdvolgy.com/bor/tokaji-aszu-2009",
+   "tasting": {
+    "hu": "Illatvilágában pici gombával, aszaltba hajló, lekváros állagú sárgabarackkal, sárgadinnyével, ananásszal, vaníliával, finom fűszerességgel, csipetnyi dohány kivételes kombinációjával találkozhatunk. Légiesen könnyed és emellett kiváló arányokkal rendelkezik. Savai finomak, a korty gördülékeny és selymes. Ízképét fiatalos, gyümölcsös jegyek uralják, sok trópusival, mangóval, ananásszal, sárgadinnyével, édes citrusokkal, kajszibarackkal. Szép egyensúlyt mutató, elegáns aszú.",
+    "en": "On the nose, it displays an exceptional combination of a slight fungus, apricot, muskmelon and pineapple of marmalade in consistency but tending to dried fruit, a subtle spiciness and a touch of tobacco. An ethereal lightness combined with excellent proportions. Its appeal lies rather in its elegance and less in its strength or complexity. The acids produce their effects finely, surrendering themselves to the texture of the wine. The sip is smooth and silky, leaving the palate clean. Its taste-profile is dominated by still youthful, fruity notes with lots of tropical fruit, mango, pineapple, muskmelon, sweet citrus fruits and apricot. The more ripen aszú notes have not developed yet. An elegant aszú displaying a good balance."
+   },
+   "tech": {
+    "alkohol": "11",
+    "cukor": "174,3",
+    "sav": "8,7",
+    "illo": "1,15",
+    "so2": "38/229",
+    "extrakt": "49,7",
+    "fajta": "furmint, hárslevelű, zéta, kabar",
+    "alapbor": "100% furmint",
+    "palack": "5200",
+    "besorolas": "Oltalom alatt álló, tokaji védett eredetű édes borkülönlegesség"
+   },
+   "vintage_note": {
+    "hu": "FACT SHEET A kezdeti időjárás rendkívül kedvezően alakult a szőlő fejlődése szempontjából. A szélsőséges hatásokat a szőlő tolerálta (pl. csapadékeloszlás), azonban a fejlődés minőségi iránya megkérdőjelezhetetlen volt.",
+    "en": "The ripening process was fast – which normally results in alcohol accumulation and low acidity in wine – but thanks to the carefully selected harvesting times our 2009th vintage wines are characterised by freshness, mineral content, fruitiness and dynamism. In the late harvested wines the full body and creamy texture is emphasized. From mid October it rained continuously, which destroyed the major part of the crop yielding sweet wine."
+   },
+   "storage": {
+    "hu": "hűvös helyen, fektetve",
+    "en": "in a cool place, lying down"
+   },
+   "serve_temp": {
+    "hu": "10-13°C",
+    "en": "10-13°C"
+   }
   },
   {
    "id": "culture-2010",
@@ -121,11 +233,39 @@
     "en": "PROFOUND, RICH, POWERFUL."
    },
    "desc": {
-    "hu": "MEGHATÁROZÓ, GAZDAG, ÉLETTEL TELI - A TOKAJI KULTÚRA MEGTESTESÜLÉSE A CULTURE 6 puttonyos tokaji aszú készítésekor nem csak a legkiválóbb aszúszemeket, hanem az első osztályú, klasszifikált dűlők kivételességét, Tokaj gazdag történelmi és kulturális örökségét, a Holdvölgy történetének élettel teli pillanatait, az évjáratok értékeit és az évek megismételhetetlen és meghatározó emlékeit is palackba zárjuk. Ettől válnak igazán különlegessé és maradandóvá ezek a tételek. “As the soil, however rich it may be, cannot be productive without cultivation, so the mind without culture can never produce good fruit.” – Seneca borleírás évjárat tárolás és fogyasztás Tiszta, világos, mégis mélyebb aranysárgába hajló szín. Trópusi gyümölcsös illatjegyekkel, sok keleti fűszerrel, zöld teával, finom virágossággal, kis vaníliával és mentával. Közepes test mellett a sav remekül ellensúlyozza a cukortartalmat, a korty végén szinte eltűnik az édességérzet, melyet frissítő lime-os és citrusos jegyek tesznek még izgalmasabbá. Az aszúélményt narancs és kajszibarack friss lekvárja és aszalványai teszik teljessé, az aromaprofilt édesebb citrusos és finom fűszeres keret egészíti ki.",
-    "en": "THE EMBODIMENT OF TOKAJ’S CULTURE. Holdvölgy Culture 6 Puttonyos Tokaji Aszú is more than just a selection of high-quality aszú berries. Each bottle embodies the excellence of Tokaj's historic classified first growths, showcasing the region's rich history and cultural heritage. It reflects the vibrant moments experienced at Holdvölgy, the values of each vintage, and the unforgettable memories that come alive with every sip. “As the soil, however rich it may be, cannot be productive without cultivation, so the mind without culture can never produce good fruit.” – Seneca TASTING NOTES VINTAGE STORAGE AND SERVING Pure, bright, yet deeper golden colour. Besides the usual tropical-fruit flavour notes, lots of oriental spices, green tea, delicate floral scents, a little vanilla and mint provide this wine an exciting, elegantly cool character. This is an aszú with medium body and vibrant acidity – well concentrated despite its young age. The acidity is a great counterbalance to the sugar content, the sensation of sweetness almost disappears at the end of the sip, and rather the citrus notes linger on the palate."
+    "hu": "MEGHATÁROZÓ, GAZDAG, ÉLETTEL TELI - A TOKAJI KULTÚRA MEGTESTESÜLÉSE A CULTURE 6 puttonyos tokaji aszú készítésekor nem csak a legkiválóbb aszúszemeket, hanem az első osztályú, klasszifikált dűlők kivételességét, Tokaj gazdag történelmi és kulturális örökségét, a Holdvölgy történetének élettel teli pillanatait, az évjáratok értékeit és az évek megismételhetetlen és meghatározó emlékeit is palackba zárjuk. Ettől válnak igazán különlegessé és maradandóvá ezek a tételek. “As the soil, however rich it may be, cannot be productive without cultivation, so the mind without culture can never produce good fruit.” – Seneca",
+    "en": "THE EMBODIMENT OF TOKAJ’S CULTURE. Holdvölgy Culture 6 Puttonyos Tokaji Aszú is more than just a selection of high-quality aszú berries. Each bottle embodies the excellence of Tokaj's historic classified first growths, showcasing the region's rich history and cultural heritage. It reflects the vibrant moments experienced at Holdvölgy, the values of each vintage, and the unforgettable memories that come alive with every sip. “As the soil, however rich it may be, cannot be productive without cultivation, so the mind without culture can never produce good fruit.” – Seneca"
    },
    "render": "bottle-culture-10",
-   "live_url": "https://holdvolgy.com/bor/tokaji-aszu-2010"
+   "live_url": "https://holdvolgy.com/bor/tokaji-aszu-2010",
+   "tasting": {
+    "hu": "Tiszta, világos, mégis mélyebb aranysárgába hajló szín. Trópusi gyümölcsös illatjegyekkel, sok keleti fűszerrel, zöld teával, finom virágossággal, kis vaníliával és mentával. Közepes test mellett a sav remekül ellensúlyozza a cukortartalmat, a korty végén szinte eltűnik az édességérzet, melyet frissítő lime-os és citrusos jegyek tesznek még izgalmasabbá. Az aszúélményt narancs és kajszibarack friss lekvárja és aszalványai teszik teljessé, az aromaprofilt édesebb citrusos és finom fűszeres keret egészíti ki. Filigrán, elegáns és precíz: egy igazi egyéniség.",
+    "en": "Pure, bright, yet deeper golden colour. Besides the usual tropical-fruit flavour notes, lots of oriental spices, green tea, delicate floral scents, a little vanilla and mint provide this wine an exciting, elegantly cool character. This is an aszú with medium body and vibrant acidity – well concentrated despite its young age. The acidity is a great counterbalance to the sugar content, the sensation of sweetness almost disappears at the end of the sip, and rather the citrus notes linger on the palate. The aroma profile is characterised by fresh marmalade and dried fruits of orange and apricot and a little spice. Boldly attractive and elegantly precise: a true personality."
+   },
+   "tech": {
+    "alkohol": "11",
+    "cukor": "176,2",
+    "sav": "9,6",
+    "illo": "1,01",
+    "so2": "30/237",
+    "extrakt": "50,2",
+    "fajta": "furmint, hárslevelű, zéta",
+    "alapbor": "100% furmint",
+    "palack": "2 876",
+    "besorolas": "Oltalom alatt álló, tokaji védett eredetű édes borkülönlegesség"
+   },
+   "vintage_note": {
+    "hu": "FACT SHEET Szélsőséges eloszlású, rekord mennyiségű csapadék jellemezte ezt az évjáratot. Mégis, talán a szüreti időszakban kellett a lehető legprecízebben helyt állnunk. Minden nehézség ellenére, a rendkívüli kihívásoknak leküzdve, szeptember 23-án kezdhettük el birtokunk legnemesebb szőlőfürtjeinek válogatását. Kedvező fordulatot is tartogatott 2010: októberben csak egyetlen napon esett az eső, talán ennek is volt köszönhető, hogy hűvös és kiegyensúlyozatlan évjáratunk „megmenekülhetett”.",
+    "en": "A record quantity of rain characterized this vintage. We had to be as precise as possible during the harvest. Despite the difficulties, on the 23th of September we started the harvest with selecting the healthiest bunches for our dry wines. 2010 was also favorable to us as in October it was raining only on one day."
+   },
+   "storage": {
+    "hu": "hűvös helyen, fektetve",
+    "en": "in a cool place, lying down"
+   },
+   "serve_temp": {
+    "hu": "10-13°C",
+    "en": "10-13°C"
+   }
   },
   {
    "id": "culture-2011",
@@ -146,11 +286,39 @@
     "en": "PROFOUND, RICH, POWERFUL."
    },
    "desc": {
-    "hu": "MEGHATÁROZÓ, GAZDAG, ÉLETTEL TELI - A TOKAJI KULTÚRA MEGTESTESÜLÉSE A CULTURE 6 puttonyos tokaji aszú készítésekor nem csak a legkiválóbb aszúszemeket, hanem az első osztályú, klasszifikált dűlők kivételességét, Tokaj gazdag történelmi és kulturális örökségét, a Holdvölgy történetének élettel teli pillanatait, az évjáratok értékeit és az évek megismételhetetlen és meghatározó emlékeit is palackba zárjuk. Ettől válnak igazán különlegessé és maradandóvá ezek a tételek. “As the soil, however rich it may be, cannot be productive without cultivation, so the mind without culture can never produce good fruit.” – Seneca borleírás évjárat tárolás és fogyasztás Aranysárga, tiszta szín. Az első pillanatban őszibarack befőtt illata árad a pohárból, melyet egy igazi gyümölcskavalkád követ: vilmoskörte, ananász, sárgadinnye, sárgabarack, szamóca, keleti fűszerek. Friss, fiatalos és nagyon összetett ízélményt ad, rengeteg trópusi gyümölccsel, mangóval, ananásszal, vilmoskörtével, sárgabarackkal. A hordó pedig finom fűszerességet kölcsönöz számára. ALKOHOL (% vol) 11 CUKOR (g/l) 206 SAV (g/l) 10,4 ILLÓ (g/l) 1,17 SO2 (mg/l) 37/216 CUKORM.",
-    "en": "THE EMBODIMENT OF TOKAJ’S CULTURE. Holdvölgy Culture 6 Puttonyos Tokaji Aszú is more than just a selection of high-quality aszú berries. Each bottle embodies the excellence of Tokaj's historic classified first growths, showcasing the region's rich history and cultural heritage. It reflects the vibrant moments experienced at Holdvölgy, the values of each vintage, and the unforgettable memories that come alive with every sip. “As the soil, however rich it may be, cannot be productive without cultivation, so the mind without culture can never produce good fruit.” – Seneca TASTING NOTES VINTAGE STORAGE AND SERVING Golden yellow, clear color. In the first moment the perfume of peach compote comes from the glass, followed by an incredible fruit cocktail: Williams pear, pineapple, melon, apricot, strawberries with a touch of oriental spices. Fresh, youthful and despite being almost exclusively composed of fruit notes it already provides a very complex taste experience: lots of tropical fruits, mango, pineapple, Williams pear, apricot."
+    "hu": "MEGHATÁROZÓ, GAZDAG, ÉLETTEL TELI - A TOKAJI KULTÚRA MEGTESTESÜLÉSE A CULTURE 6 puttonyos tokaji aszú készítésekor nem csak a legkiválóbb aszúszemeket, hanem az első osztályú, klasszifikált dűlők kivételességét, Tokaj gazdag történelmi és kulturális örökségét, a Holdvölgy történetének élettel teli pillanatait, az évjáratok értékeit és az évek megismételhetetlen és meghatározó emlékeit is palackba zárjuk. Ettől válnak igazán különlegessé és maradandóvá ezek a tételek. “As the soil, however rich it may be, cannot be productive without cultivation, so the mind without culture can never produce good fruit.” – Seneca",
+    "en": "THE EMBODIMENT OF TOKAJ’S CULTURE. Holdvölgy Culture 6 Puttonyos Tokaji Aszú is more than just a selection of high-quality aszú berries. Each bottle embodies the excellence of Tokaj's historic classified first growths, showcasing the region's rich history and cultural heritage. It reflects the vibrant moments experienced at Holdvölgy, the values of each vintage, and the unforgettable memories that come alive with every sip. “As the soil, however rich it may be, cannot be productive without cultivation, so the mind without culture can never produce good fruit.” – Seneca"
    },
    "render": "bottle-culture-11",
-   "live_url": "https://holdvolgy.com/bor/tokaji-aszu-2011"
+   "live_url": "https://holdvolgy.com/bor/tokaji-aszu-2011",
+   "tasting": {
+    "hu": "Aranysárga, tiszta szín. Az első pillanatban őszibarack befőtt illata árad a pohárból, melyet egy igazi gyümölcskavalkád követ: vilmoskörte, ananász, sárgadinnye, sárgabarack, szamóca, keleti fűszerek. Friss, fiatalos és nagyon összetett ízélményt ad, rengeteg trópusi gyümölccsel, mangóval, ananásszal, vilmoskörtével, sárgabarackkal. A hordó pedig finom fűszerességet kölcsönöz számára.",
+    "en": "Golden yellow, clear color. In the first moment the perfume of peach compote comes from the glass, followed by an incredible fruit cocktail: Williams pear, pineapple, melon, apricot, strawberries with a touch of oriental spices. Fresh, youthful and despite being almost exclusively composed of fruit notes it already provides a very complex taste experience: lots of tropical fruits, mango, pineapple, Williams pear, apricot. The barrel adds delicious spicy notes and an exciting twist to this overwhelming 6 puttonyos aszú!"
+   },
+   "tech": {
+    "alkohol": "11",
+    "cukor": "206",
+    "sav": "10,4",
+    "illo": "1,17",
+    "so2": "37/216",
+    "extrakt": "56,5",
+    "fajta": "furmint, hárslevelű, zéta",
+    "alapbor": "100% furmint",
+    "palack": "4300",
+    "besorolas": "Oltalom alatt álló, tokaji védett eredetű édes borkülönlegesség"
+   },
+   "vintage_note": {
+    "hu": "Az év első hónapjai csapadékhiányosak voltak. Ültetvényeink, – a jó vízgazdálkodású nyiroktalajoknak is hála, – aszálytünet nélkül, elegáns toleranciával vészelték át ezt a nehéz időszakot. A nyári időszak viszont egészen más arcát mutatta: júliusban már szélsőséges időjárással, augusztustól októberig száraz, hőhullámokkal is tarkított szüreti napokkal kellett számolni. Mindezek ellenére az évjáratban rejlő lehetőségek maximális kinyerésével szőlészeti és borászati csapatunk újra garantálni tudta Culture borunk egyik legkiemelkedőbb darabjának megszületését.",
+    "en": "During the first few month of the year there was a lack of rain. Thanks to the good water supply of the vinyards our vines survived this difficult period without water stress. On the other hand the summer was really hectic, having extreme weather in July followed by a dry harvest season with heatwaves from August until October."
+   },
+   "storage": {
+    "hu": "",
+    "en": ""
+   },
+   "serve_temp": {
+    "hu": "",
+    "en": ""
+   }
   },
   {
    "id": "culture-2012",
@@ -171,11 +339,39 @@
     "en": "PROFOUND, RICH, POWERFUL."
    },
    "desc": {
-    "hu": "MEGHATÁROZÓ, GAZDAG, ÉLETTEL TELI - A TOKAJI KULTÚRA MEGTESTESÜLÉSE A CULTURE 6 puttonyos tokaji aszú készítésekor nem csak a legkiválóbb aszúszemeket, hanem az első osztályú, klasszifikált dűlők kivételességét, Tokaj gazdag történelmi és kulturális örökségét, a Holdvölgy történetének élettel teli pillanatait, az évjáratok értékeit és az évek megismételhetetlen és meghatározó emlékeit is palackba zárjuk. Ettől válnak igazán különlegessé és maradandóvá ezek a tételek. “As the soil, however rich it may be, cannot be productive without cultivation, so the mind without culture can never produce good fruit.” – Seneca borleírás évjárat tárolás és fogyasztás Illatában akácvirággal és kamillával nyit, majd lágy akácméz kíséretében egzotikus és klasszikus gyümölcsöket fedezhetünk fel benne. A kortyot finom rétegzettség jellemzi, melyben a sárgabarack pikáns citrusos-narancsos vonallal és vibráló savak kíséretében mutatkozik meg. Lecsengésében folytatódik az elegáns gyümölcsös és fűszeres ízkavalkád, mely tovább fokozza az aszú hosszan elnyúló élvezetét. A Culture 2012 6 puttonyos tokaji aszú tételünk, Vertikális aszú kollekciónk részeként is megvásárolható.",
-    "en": "Holdvölgy Culture 6 Puttonyos Tokaji Aszú is more than just a selection of high-quality aszú berries. Each bottle embodies the excellence of Tokaj's historic classified first growths, showcasing the region's rich history and cultural heritage. It reflects the vibrant moments experienced at Holdvölgy, the values of each vintage, and the unforgettable memories that come alive with every sip. “As the soil, however rich it may be, cannot be productive without cultivation, so the mind without culture can never produce good fruit.” – Seneca TASTING NOTES VINTAGE STORAGE AND SERVING Light gold color with silvery contours. On the nose aroma of acacia flowers and chamomile, followed by exotic and classic fruits accompanied by soft acacia honey. The sip is fine layered, with apricot and a spicy citrus- orange aromas and a vibrant accompaniment of playful acidity. Its unique finish has a multitude of elegant fruity-spicy taste, further enhancing the long-lasting enjoyment of Aszú wine. The Culture 2012 tokaji aszú wine can be purchased as part of our Vertical collection as well."
+    "hu": "MEGHATÁROZÓ, GAZDAG, ÉLETTEL TELI - A TOKAJI KULTÚRA MEGTESTESÜLÉSE A CULTURE 6 puttonyos tokaji aszú készítésekor nem csak a legkiválóbb aszúszemeket, hanem az első osztályú, klasszifikált dűlők kivételességét, Tokaj gazdag történelmi és kulturális örökségét, a Holdvölgy történetének élettel teli pillanatait, az évjáratok értékeit és az évek megismételhetetlen és meghatározó emlékeit is palackba zárjuk. Ettől válnak igazán különlegessé és maradandóvá ezek a tételek. “As the soil, however rich it may be, cannot be productive without cultivation, so the mind without culture can never produce good fruit.” – Seneca",
+    "en": "- THE EMBODIMENT OF TOKAJ’S CULTURE Holdvölgy Culture 6 Puttonyos Tokaji Aszú is more than just a selection of high-quality aszú berries. Each bottle embodies the excellence of Tokaj's historic classified first growths, showcasing the region's rich history and cultural heritage. It reflects the vibrant moments experienced at Holdvölgy, the values of each vintage, and the unforgettable memories that come alive with every sip. “As the soil, however rich it may be, cannot be productive without cultivation, so the mind without culture can never produce good fruit.” – Seneca"
    },
    "render": "bottle-culture-12",
-   "live_url": "https://holdvolgy.com/bor/tokaji-aszu-2012"
+   "live_url": "https://holdvolgy.com/bor/tokaji-aszu-2012",
+   "tasting": {
+    "hu": "Illatában akácvirággal és kamillával nyit, majd lágy akácméz kíséretében egzotikus és klasszikus gyümölcsöket fedezhetünk fel benne. A kortyot finom rétegzettség jellemzi, melyben a sárgabarack pikáns citrusos-narancsos vonallal és vibráló savak kíséretében mutatkozik meg. Lecsengésében folytatódik az elegáns gyümölcsös és fűszeres ízkavalkád, mely tovább fokozza az aszú hosszan elnyúló élvezetét. A Culture 2012 6 puttonyos tokaji aszú tételünk, Vertikális aszú kollekciónk részeként is megvásárolható.",
+    "en": "Light gold color with silvery contours. On the nose aroma of acacia flowers and chamomile, followed by exotic and classic fruits accompanied by soft acacia honey. The sip is fine layered, with apricot and a spicy citrus- orange aromas and a vibrant accompaniment of playful acidity. Its unique finish has a multitude of elegant fruity-spicy taste, further enhancing the long-lasting enjoyment of Aszú wine. The Culture 2012 tokaji aszú wine can be purchased as part of our Vertical collection as well."
+   },
+   "tech": {
+    "alkohol": "11",
+    "cukor": "173,8",
+    "sav": "7,1",
+    "illo": "1,31",
+    "so2": "30/308",
+    "extrakt": "57,7",
+    "fajta": "furmint, hárslevelű, zéta",
+    "alapbor": "100% furmint",
+    "palack": "1 616",
+    "besorolas": "Oltalom alatt álló, tokaji védett eredetű édes borkülönlegesség"
+   },
+   "vintage_note": {
+    "hu": "A téli hónapokra kevés csapadék volt jellemző, ősszel pedig korán bekövetkezett az érés, melynek oka az aszályos, meleg nyár volt – ebben a forró időszakban a mélyebb talajrétegekben lévő nedvesség nyújtott támaszt a szőlő számára. A szüretet tovább nehezítették a nagy hőingadozások és az elmaradó hűvösebb hajnalok is. Culture 2012 aszú csúcsborunk alapanyagának mennyiségét kevésbé, azonban első osztályú minőségét újfent garantálni tudtuk, sorozatban a 7.",
+    "en": "Similar to the previous vintage, the winter months were characterized by lack of rain."
+   },
+   "storage": {
+    "hu": "hűvös helyen, fektetve",
+    "en": "in a cool place, lying down"
+   },
+   "serve_temp": {
+    "hu": "10-13°C",
+    "en": "10-13°C"
+   }
   },
   {
    "id": "culture-2013",
@@ -196,11 +392,39 @@
     "en": "PROFOUND, RICH, POWERFUL."
    },
    "desc": {
-    "hu": "MEGHATÁROZÓ, GAZDAG, ÉLETTEL TELI - A TOKAJI KULTÚRA MEGTESTESÜLÉSE A CULTURE 6 puttonyos tokaji aszú készítésekor nem csak a legkiválóbb aszúszemeket, hanem az első osztályú, klasszifikált dűlők kivételességét, Tokaj gazdag történelmi és kulturális örökségét, a Holdvölgy történetének élettel teli pillanatait, az évjáratok értékeit és az évek megismételhetetlen és meghatározó emlékeit is palackba zárjuk. Ettől válnak igazán különlegessé és maradandóvá ezek a tételek. “As the soil, however rich it may be, cannot be productive without cultivation, so the mind without culture can never produce good fruit.” – Seneca borleírás évjárat tárolás és fogyasztás Tiszta, világos aranysárga szín, platinába hajló reflexekkel. Illata olajosan lágy őszibarackkal, lédús ananásszal és selymes akácmézzel lép harmóniába, melyet krétás, frissen nyíló fehérvirágos karakter foglal keretbe. Ízében érett banánnal, finom kókusszal és üde ananásszal gazdagodik az egzotikumok sora, míg kortyait lendületes citrusosság teszi finoman végtelenné. A Culture 2013 6 puttonyos tokaji aszú tételünk, Vertikális aszú kollekciónk részeként is megvásárolható.",
-    "en": "THE EMBODIMENT OF TOKAJ’S CULTURE. Holdvölgy Culture 6 Puttonyos Tokaji Aszú is more than just a selection of high-quality aszú berries. Each bottle embodies the excellence of Tokaj's historic classified first growths, showcasing the region's rich history and cultural heritage. It reflects the vibrant moments experienced at Holdvölgy, the values of each vintage, and the unforgettable memories that come alive with every sip. “As the soil, however rich it may be, cannot be productive without cultivation, so the mind without culture can never produce good fruit.” – Seneca TASTING NOTES VINTAGE STORAGE AND SERVING The harmony of coconut, pineapple and a hint of mint appears on the nose. The palate is also dominated by pineapple and coconut, but completed by a pinch of cinnamon and orange peel. A slowly and softly opening wine that opens up widely with time. Each sip is an everlasting experience. The Culture 2013 tokaji aszú wine can be purchased as part of our Vertical collection as well."
+    "hu": "MEGHATÁROZÓ, GAZDAG, ÉLETTEL TELI - A TOKAJI KULTÚRA MEGTESTESÜLÉSE A CULTURE 6 puttonyos tokaji aszú készítésekor nem csak a legkiválóbb aszúszemeket, hanem az első osztályú, klasszifikált dűlők kivételességét, Tokaj gazdag történelmi és kulturális örökségét, a Holdvölgy történetének élettel teli pillanatait, az évjáratok értékeit és az évek megismételhetetlen és meghatározó emlékeit is palackba zárjuk. Ettől válnak igazán különlegessé és maradandóvá ezek a tételek. “As the soil, however rich it may be, cannot be productive without cultivation, so the mind without culture can never produce good fruit.” – Seneca",
+    "en": "THE EMBODIMENT OF TOKAJ’S CULTURE. Holdvölgy Culture 6 Puttonyos Tokaji Aszú is more than just a selection of high-quality aszú berries. Each bottle embodies the excellence of Tokaj's historic classified first growths, showcasing the region's rich history and cultural heritage. It reflects the vibrant moments experienced at Holdvölgy, the values of each vintage, and the unforgettable memories that come alive with every sip. “As the soil, however rich it may be, cannot be productive without cultivation, so the mind without culture can never produce good fruit.” – Seneca"
    },
    "render": "bottle-culture-13",
-   "live_url": "https://holdvolgy.com/bor/tokaji-aszu-2013"
+   "live_url": "https://holdvolgy.com/bor/tokaji-aszu-2013",
+   "tasting": {
+    "hu": "Tiszta, világos aranysárga szín, platinába hajló reflexekkel. Illata olajosan lágy őszibarackkal, lédús ananásszal és selymes akácmézzel lép harmóniába, melyet krétás, frissen nyíló fehérvirágos karakter foglal keretbe. Ízében érett banánnal, finom kókusszal és üde ananásszal gazdagodik az egzotikumok sora, míg kortyait lendületes citrusosság teszi finoman végtelenné. A Culture 2013 6 puttonyos tokaji aszú tételünk, Vertikális aszú kollekciónk részeként is megvásárolható.",
+    "en": "The harmony of coconut, pineapple and a hint of mint appears on the nose. The palate is also dominated by pineapple and coconut, but completed by a pinch of cinnamon and orange peel. A slowly and softly opening wine that opens up widely with time. Each sip is an everlasting experience. The Culture 2013 tokaji aszú wine can be purchased as part of our Vertical collection as well."
+   },
+   "tech": {
+    "alkohol": "11",
+    "cukor": "191,3",
+    "sav": "7,4",
+    "illo": "1,15",
+    "so2": "32/183",
+    "extrakt": "36,1",
+    "fajta": "furmint, hárslevelű, zéta",
+    "alapbor": "100% furmint",
+    "palack": "4 576",
+    "besorolas": "Oltalom alatt álló, tokaji védett eredetű édes borkülönlegesség"
+   },
+   "vintage_note": {
+    "hu": "2013 az elmúlt évek egyik legszebb aszús évjárata.",
+    "en": "The whole year was characterized by rain-rich weather."
+   },
+   "storage": {
+    "hu": "",
+    "en": ""
+   },
+   "serve_temp": {
+    "hu": "",
+    "en": ""
+   }
   },
   {
    "id": "culture-2014",
@@ -221,11 +445,39 @@
     "en": "PROFOUND, RICH, POWERFUL."
    },
    "desc": {
-    "hu": "MEGHATÁROZÓ, GAZDAG, ÉLETTEL TELI - A TOKAJI KULTÚRA MEGTESTESÜLÉSE A CULTURE 6 puttonyos tokaji aszú készítésekor nem csak a legkiválóbb aszúszemeket, hanem az első osztályú, klasszifikált dűlők kivételességét, Tokaj gazdag történelmi és kulturális örökségét, a Holdvölgy történetének élettel teli pillanatait, az évjáratok értékeit és az évek megismételhetetlen és meghatározó emlékeit is palackba zárjuk. Ettől válnak igazán különlegessé és maradandóvá ezek a tételek. “As the soil, however rich it may be, cannot be productive without cultivation, so the mind without culture can never produce good fruit.” – Seneca borleírás évjárat tárolás és fogyasztás Komplex és koncentrált illatát citromfűvel, kandírozott citromhéjjal és ananásszal járhatjuk körbe. Ízében nektarin és sárgabarack mély tónusainak kombinációja érezhető, melyet fehér grapefruit citrusossága fűszerez meg. Vibráló savakkal, intenzív aromákkal és varázslatosan gömbölyded szerkezettel életre hívott hatputtonyos-karakter, mely az évjárat nehézségeit – minden egyes élménydús korttyal – egyértelműen és határozottan cáfolja meg.",
-    "en": "THE EMBODIMENT OF TOKAJ’S CULTURE. Holdvölgy Culture 6 Puttonyos Tokaji Aszú is more than just a selection of high-quality aszú berries. Each bottle embodies the excellence of Tokaj's historic classified first growths, showcasing the region's rich history and cultural heritage. It reflects the vibrant moments experienced at Holdvölgy, the values of each vintage, and the unforgettable memories that come alive with every sip. “As the soil, however rich it may be, cannot be productive without cultivation, so the mind without culture can never produce good fruit.” – Seneca TASTING NOTES VINTAGE STORAGE AND SERVING The scent is complex and concentrated with lemongrass, candied lemon peel and pineapple. On the palate the combination of nectarine and apricot appears, spiced up by the citrusy notes of white grapefruit. Vibrant acidity, intense aromas, a charming structure and a real character refute the difficulties of the vintage. The Culture 2014 tokaji aszú wine can be purchased as part of our Vertical collection as well."
+    "hu": "MEGHATÁROZÓ, GAZDAG, ÉLETTEL TELI - A TOKAJI KULTÚRA MEGTESTESÜLÉSE A CULTURE 6 puttonyos tokaji aszú készítésekor nem csak a legkiválóbb aszúszemeket, hanem az első osztályú, klasszifikált dűlők kivételességét, Tokaj gazdag történelmi és kulturális örökségét, a Holdvölgy történetének élettel teli pillanatait, az évjáratok értékeit és az évek megismételhetetlen és meghatározó emlékeit is palackba zárjuk. Ettől válnak igazán különlegessé és maradandóvá ezek a tételek. “As the soil, however rich it may be, cannot be productive without cultivation, so the mind without culture can never produce good fruit.” – Seneca",
+    "en": "THE EMBODIMENT OF TOKAJ’S CULTURE. Holdvölgy Culture 6 Puttonyos Tokaji Aszú is more than just a selection of high-quality aszú berries. Each bottle embodies the excellence of Tokaj's historic classified first growths, showcasing the region's rich history and cultural heritage. It reflects the vibrant moments experienced at Holdvölgy, the values of each vintage, and the unforgettable memories that come alive with every sip. “As the soil, however rich it may be, cannot be productive without cultivation, so the mind without culture can never produce good fruit.” – Seneca"
    },
    "render": "bottle-culture-14",
-   "live_url": "https://holdvolgy.com/bor/tokaji-aszu-2014"
+   "live_url": "https://holdvolgy.com/bor/tokaji-aszu-2014",
+   "tasting": {
+    "hu": "Komplex és koncentrált illatát citromfűvel, kandírozott citromhéjjal és ananásszal járhatjuk körbe. Ízében nektarin és sárgabarack mély tónusainak kombinációja érezhető, melyet fehér grapefruit citrusossága fűszerez meg. Vibráló savakkal, intenzív aromákkal és varázslatosan gömbölyded szerkezettel életre hívott hatputtonyos-karakter, mely az évjárat nehézségeit – minden egyes élménydús korttyal – egyértelműen és határozottan cáfolja meg. A Culture 2014 6 puttonyos tokaji aszú tételünk, Vertikális aszú kollekciónk részeként is megvásárolható.",
+    "en": "The scent is complex and concentrated with lemongrass, candied lemon peel and pineapple. On the palate the combination of nectarine and apricot appears, spiced up by the citrusy notes of white grapefruit. Vibrant acidity, intense aromas, a charming structure and a real character refute the difficulties of the vintage. The Culture 2014 tokaji aszú wine can be purchased as part of our Vertical collection as well."
+   },
+   "tech": {
+    "alkohol": "12",
+    "cukor": "190,6",
+    "sav": "9,5",
+    "illo": "1,31",
+    "so2": "30/222",
+    "extrakt": "58,6",
+    "fajta": "furmint, hárslevelű, zéta",
+    "alapbor": "100% furmint",
+    "palack": "2956",
+    "besorolas": "Oltalom alatt álló, tokaji védett eredetű édes borkülönlegesség"
+   },
+   "vintage_note": {
+    "hu": "6 puttonyos tokaji aszú tételünk 2014-es évjárata enyhe téllel, korai rügyfakadással indult. Tavasszal komolyabb kártevői- és kórokozói nyomás mellett, gyors virágzás és egy nehéz, csapadékos nyár következett. Többszöri újratervezéssel, türelemmel és a lehető legprecízebb gondossággal védtük meg ültetvényeinket a minőségi gyümölcs érdekében. Már szeptember végétől folyamatosan gyűjthettük be első-, másod-, és harmadkötésű aszúszemeinket. A gondos, szelekciós szüretet október 31-én fejeztük be. Boraink különleges minősége feledteti ezt a viharosan küzdelmes, kivételes kihívásokkal teletűzdelt rövid szezonú évjáratot.",
+    "en": ""
+   },
+   "storage": {
+    "hu": "",
+    "en": ""
+   },
+   "serve_temp": {
+    "hu": "",
+    "en": ""
+   }
   },
   {
    "id": "culture-2015",
@@ -246,11 +498,39 @@
     "en": "PROFOUND, RICH, POWERFUL."
    },
    "desc": {
-    "hu": "MEGHATÁROZÓ, GAZDAG, ÉLETTEL TELI - A TOKAJI KULTÚRA MEGTESTESÜLÉSE A CULTURE 6 puttonyos tokaji aszú készítésekor nem csak a legkiválóbb aszúszemeket, hanem az első osztályú, klasszifikált dűlők kivételességét, Tokaj gazdag történelmi és kulturális örökségét, a Holdvölgy történetének élettel teli pillanatait, az évjáratok értékeit és az évek megismételhetetlen és meghatározó emlékeit is palackba zárjuk. Ettől válnak igazán különlegessé és maradandóvá ezek a tételek. “As the soil, however rich it may be, cannot be productive without cultivation, so the mind without culture can never produce good fruit.” – Seneca borleírás évjárat tárolás és fogyasztás Egzotikus illatában propolisszal találkozhatunk, melyet mandarin és őszibarack ölel finoman körül. Sejtelmesen, apró és selymes lépésekben őszibarack és ringló szilva jegyei mutatkoznak fahéjjal keretezve, majd üde lime szeletek frissítő felbukkanása teszi a kortyot még ellenállhatatlanabbá. Intenzív és vibráló, hosszú lecsengésű, egyedi stílussal és tónusokkal jelentkező, páratlan aszúbor. A Culture 2015 6 puttonyos tokaji aszú tételünk, Vertikális aszú kollekciónk részeként is megvásárolható.",
-    "en": "THE EMBODIMENT OF TOKAJ’S CULTURE. Holdvölgy Culture 6 Puttonyos Tokaji Aszú is more than just a selection of high-quality aszú berries. Each bottle embodies the excellence of Tokaj's historic classified first growths, showcasing the region's rich history and cultural heritage. It reflects the vibrant moments experienced at Holdvölgy, the values of each vintage, and the unforgettable memories that come alive with every sip. “As the soil, however rich it may be, cannot be productive without cultivation, so the mind without culture can never produce good fruit.” – Seneca TASTING NOTES VINTAGE STORAGE AND SERVING Slight note of propolis on the nose, embraced gently by the scent of peach and the citrusiness of mandarin. Peach, greengage, cinnamon and fresh lime notes make the sip irresistible. Intense and vibrant wine with a long finish. The Culture 2015 tokaji aszú wine can be purchased as part of our Vertical collection as well."
+    "hu": "MEGHATÁROZÓ, GAZDAG, ÉLETTEL TELI - A TOKAJI KULTÚRA MEGTESTESÜLÉSE A CULTURE 6 puttonyos tokaji aszú készítésekor nem csak a legkiválóbb aszúszemeket, hanem az első osztályú, klasszifikált dűlők kivételességét, Tokaj gazdag történelmi és kulturális örökségét, a Holdvölgy történetének élettel teli pillanatait, az évjáratok értékeit és az évek megismételhetetlen és meghatározó emlékeit is palackba zárjuk. Ettől válnak igazán különlegessé és maradandóvá ezek a tételek. “As the soil, however rich it may be, cannot be productive without cultivation, so the mind without culture can never produce good fruit.” – Seneca",
+    "en": "THE EMBODIMENT OF TOKAJ’S CULTURE. Holdvölgy Culture 6 Puttonyos Tokaji Aszú is more than just a selection of high-quality aszú berries. Each bottle embodies the excellence of Tokaj's historic classified first growths, showcasing the region's rich history and cultural heritage. It reflects the vibrant moments experienced at Holdvölgy, the values of each vintage, and the unforgettable memories that come alive with every sip. “As the soil, however rich it may be, cannot be productive without cultivation, so the mind without culture can never produce good fruit.” – Seneca"
    },
    "render": "culture-2015",
-   "live_url": "https://holdvolgy.com/bor/tokaji-aszu-2015"
+   "live_url": "https://holdvolgy.com/bor/tokaji-aszu-2015",
+   "tasting": {
+    "hu": "Egzotikus illatában propolisszal találkozhatunk, melyet mandarin és őszibarack ölel finoman körül. Sejtelmesen, apró és selymes lépésekben őszibarack és ringló szilva jegyei mutatkoznak fahéjjal keretezve, majd üde lime szeletek frissítő felbukkanása teszi a kortyot még ellenállhatatlanabbá. Intenzív és vibráló, hosszú lecsengésű, egyedi stílussal és tónusokkal jelentkező, páratlan aszúbor. A Culture 2015 6 puttonyos tokaji aszú tételünk, Vertikális aszú kollekciónk részeként is megvásárolható.",
+    "en": "Slight note of propolis on the nose, embraced gently by the scent of peach and the citrusiness of mandarin. Peach, greengage, cinnamon and fresh lime notes make the sip irresistible. Intense and vibrant wine with a long finish. The Culture 2015 tokaji aszú wine can be purchased as part of our Vertical collection as well."
+   },
+   "tech": {
+    "alkohol": "11",
+    "cukor": "172,5",
+    "sav": "7,1",
+    "illo": "0,64",
+    "so2": "21/183",
+    "extrakt": "39,5",
+    "fajta": "furmint, hárslevelű, zéta",
+    "alapbor": "100% furmint",
+    "palack": "2 195",
+    "besorolas": "Oltalom alatt álló, tokaji védett eredetű édes borkülönlegesség"
+   },
+   "vintage_note": {
+    "hu": "A téltől nyárig tartó periódus időjárása a kevesebb eső ellenére is biztató volt. A vízhiány látható jelei ennek ellenére hamarosan a szőlő fejlődésében is megmutatkoztak, a növekedés a kora tavaszi időszakban lelassult. Birtokunk 30 éves átlagéletkorú szőlőtőkéinek toleranciája, valamint szőlészeti csapatunk magas minőségi munkája viszont lehetővé tette, hogy ez ne jelentsen veszélyforrást.",
+    "en": "The period from winter to summer was reassuring in spite of the rainless days. Later unfortunately the visible marks of the water shortage affected also the plant development which slowed down in the early spring period. Fortunately the resistance of the 30 years (average) old vines and the highly professional operation of our viticultural team defeated this challenge."
+   },
+   "storage": {
+    "hu": "hűvös helyen, fektetve",
+    "en": "in a cool place, lying down"
+   },
+   "serve_temp": {
+    "hu": "10-13°C",
+    "en": "10-13°C"
+   }
   },
   {
    "id": "culture-2016",
@@ -271,11 +551,39 @@
     "en": "PROFOUND, RICH, POWERFUL."
    },
    "desc": {
-    "hu": "MEGHATÁROZÓ, GAZDAG, ÉLETTEL TELI - A TOKAJI KULTÚRA MEGTESTESÜLÉSE A CULTURE 6 puttonyos tokaji aszú készítésekor nem csak a legkiválóbb aszúszemeket, hanem az első osztályú, klasszifikált dűlők kivételességét, Tokaj gazdag történelmi és kulturális örökségét, a Holdvölgy történetének élettel teli pillanatait, az évjáratok értékeit és az évek megismételhetetlen és meghatározó emlékeit is palackba zárjuk. Ettől válnak igazán különlegessé és maradandóvá ezek a tételek. “As the soil, however rich it may be, cannot be productive without cultivation, so the mind without culture can never produce good fruit.” – Seneca borleírás évjárat tárolás és fogyasztás Illatában az ánizs dominál, melyet izgalmasan egészít ki a sárgabarack, a csipkebogyó és egy kis narancshéj. Ízében elsőként a jól ismert grillázs jelenik meg pirított dióval, majd itt is visszaköszön a sárgabarack és a csipkebogyó lekvár, határozott citrusos jegyekkel a végén. Mindez krémes textúrában tárul elénk, egy precíz és feszes kortyban. A Culture 2016 6 puttonyos tokaji aszú tételünk, Vertikális aszú kollekciónk részeként is megvásárolható.",
-    "en": "THE EMBODIMENT OF TOKAJ’S CULTURE. Holdvölgy Culture 6 Puttonyos Tokaji Aszú is more than just a selection of high-quality aszú berries. Each bottle embodies the excellence of Tokaj's historic classified first growths, showcasing the region's rich history and cultural heritage. It reflects the vibrant moments experienced at Holdvölgy, the values of each vintage, and the unforgettable memories that come alive with every sip. “As the soil, however rich it may be, cannot be productive without cultivation, so the mind without culture can never produce good fruit.” – Seneca TASTING NOTES VINTAGE STORAGE AND SERVING On the nose, fennel dominates the scent with apricot, rose-hip, and a touch of orange peel. The palate is satiny with great tension and loads of spicy notes complementing the nutty flavors followed by apricot and rose-hip marmalade finishing with length and a zesty lift. A silky texture softens all these layers in a precise and tight sip. The Culture 2016 tokaji aszú wine can be purchased as part of our Vertical collection as well."
+    "hu": "MEGHATÁROZÓ, GAZDAG, ÉLETTEL TELI - A TOKAJI KULTÚRA MEGTESTESÜLÉSE A CULTURE 6 puttonyos tokaji aszú készítésekor nem csak a legkiválóbb aszúszemeket, hanem az első osztályú, klasszifikált dűlők kivételességét, Tokaj gazdag történelmi és kulturális örökségét, a Holdvölgy történetének élettel teli pillanatait, az évjáratok értékeit és az évek megismételhetetlen és meghatározó emlékeit is palackba zárjuk. Ettől válnak igazán különlegessé és maradandóvá ezek a tételek. “As the soil, however rich it may be, cannot be productive without cultivation, so the mind without culture can never produce good fruit.” – Seneca",
+    "en": "THE EMBODIMENT OF TOKAJ’S CULTURE. Holdvölgy Culture 6 Puttonyos Tokaji Aszú is more than just a selection of high-quality aszú berries. Each bottle embodies the excellence of Tokaj's historic classified first growths, showcasing the region's rich history and cultural heritage. It reflects the vibrant moments experienced at Holdvölgy, the values of each vintage, and the unforgettable memories that come alive with every sip. “As the soil, however rich it may be, cannot be productive without cultivation, so the mind without culture can never produce good fruit.” – Seneca"
    },
    "render": "bottle-culture-16",
-   "live_url": "https://holdvolgy.com/bor/tokaji-aszu-2016"
+   "live_url": "https://holdvolgy.com/bor/tokaji-aszu-2016",
+   "tasting": {
+    "hu": "Illatában az ánizs dominál, melyet izgalmasan egészít ki a sárgabarack, a csipkebogyó és egy kis narancshéj. Ízében elsőként a jól ismert grillázs jelenik meg pirított dióval, majd itt is visszaköszön a sárgabarack és a csipkebogyó lekvár, határozott citrusos jegyekkel a végén. Mindez krémes textúrában tárul elénk, egy precíz és feszes kortyban. A Culture 2016 6 puttonyos tokaji aszú tételünk, Vertikális aszú kollekciónk részeként is megvásárolható.",
+    "en": "On the nose, fennel dominates the scent with apricot, rose-hip, and a touch of orange peel. The palate is satiny with great tension and loads of spicy notes complementing the nutty flavors followed by apricot and rose-hip marmalade finishing with length and a zesty lift. A silky texture softens all these layers in a precise and tight sip. The Culture 2016 tokaji aszú wine can be purchased as part of our Vertical collection as well."
+   },
+   "tech": {
+    "alkohol": "10,5",
+    "cukor": "217,4",
+    "sav": "11",
+    "illo": "1,03",
+    "so2": "28/221",
+    "extrakt": "54,1",
+    "fajta": "furmint, hárslevelű, zéta",
+    "alapbor": "100% furmint",
+    "palack": "3800",
+    "besorolas": "Oltalom alatt álló, tokaji védett eredetű édes borkülönlegesség"
+   },
+   "vintage_note": {
+    "hu": "A zavartalan téli időszakot esőhiányos tavaszi hónapok követték. A 2016-os év szeszélyes időjárása az előzetes nyári időszakra vonatkozó számításainkat teljesen felülírta. A tartós melegre és a nyár közepén szakaszosan érkező nagy vízmennyiséget hozó esőzésekre senki sem számított. A HOLDVÖLGY törekvését, miszerint az adott évjáratban elérhető legmagasabb minőségű bort kell megalkotni, a hatputtonyos aszú esetében ez a legkiemeltebb elvárás.",
+    "en": "A calm winter was followed by a dry and warm spring and then some rainy days bringing a lot of water in the middle of the summer. That predicted a very challenging harvest period. The aszú harvest began in early September and lasted until the end of October."
+   },
+   "storage": {
+    "hu": "hűvös helyen, fektetve",
+    "en": "in a cool place, lying down"
+   },
+   "serve_temp": {
+    "hu": "10-13°C",
+    "en": "10-13°C"
+   }
   },
   {
    "id": "culture-2017",
@@ -296,11 +604,39 @@
     "en": "PROFOUND, RICH, POWERFUL."
    },
    "desc": {
-    "hu": "MEGHATÁROZÓ, GAZDAG, ÉLETTEL TELI - A TOKAJI KULTÚRA MEGTESTESÜLÉSE A CULTURE 6 puttonyos tokaji aszú készítésekor nem csak a legkiválóbb aszúszemeket, hanem az első osztályú, klasszifikált dűlők kivételességét, Tokaj gazdag történelmi és kulturális örökségét, a Holdvölgy történetének élettel teli pillanatait, az évjáratok értékeit és az évek megismételhetetlen és meghatározó emlékeit is palackba zárjuk. Ettől válnak igazán különlegessé és maradandóvá ezek a tételek. “As the soil, however rich it may be, cannot be productive without cultivation, so the mind without culture can never produce good fruit.” – Seneca borleírás évjárat tárolás és fogyasztás Az illat üde és gyümölcsös, melyet a friss sárgadinnye vezet, sárgabarack kompóttal, kandírozott citromhéjjal és szegfűszeggel. A kortyban a citrusok veszik át a főszerepet, de a sárgadinnye továbbra is kíséri. Az élményt az aszalt sárgabarack és a füge teszik még teljesebbé. Lecsengése szinte végtelen. A Culture 2017 6 puttonyos tokaji aszú tételünk, Vertikális aszú kollekciónk részeként is megvásárolható. ALKOHOL (% vol) 12 CUKOR (g/l) 200,4 SAV (g/l) 7,31 ILLÓ (g/l) 1,45 SO2 (mg/l) 27/220 CUKORM.",
-    "en": "THE EMBODIMENT OF TOKAJ’S CULTURE. Holdvölgy Culture 6 Puttonyos Tokaji Aszú is more than just a selection of high-quality aszú berries. Each bottle embodies the excellence of Tokaj's historic classified first growths, showcasing the region's rich history and cultural heritage. It reflects the vibrant moments experienced at Holdvölgy, the values of each vintage, and the unforgettable memories that come alive with every sip. “As the soil, however rich it may be, cannot be productive without cultivation, so the mind without culture can never produce good fruit.” – Seneca TASTING NOTES VINTAGE STORAGE AND SERVING The nose is clean and precise, dominated by fresh cantaloupe and supported by apricot compote, candied lemon peel and a hint of clove. A lively citrus flavor attack on the palate with the cantaloupe returning on the core. The finish is long led by apricot and fig with persistence and fine complexity. The Culture 2017 tokaji aszú wine can be purchased as part of our Vertical collection as well."
+    "hu": "MEGHATÁROZÓ, GAZDAG, ÉLETTEL TELI - A TOKAJI KULTÚRA MEGTESTESÜLÉSE A CULTURE 6 puttonyos tokaji aszú készítésekor nem csak a legkiválóbb aszúszemeket, hanem az első osztályú, klasszifikált dűlők kivételességét, Tokaj gazdag történelmi és kulturális örökségét, a Holdvölgy történetének élettel teli pillanatait, az évjáratok értékeit és az évek megismételhetetlen és meghatározó emlékeit is palackba zárjuk. Ettől válnak igazán különlegessé és maradandóvá ezek a tételek. “As the soil, however rich it may be, cannot be productive without cultivation, so the mind without culture can never produce good fruit.” – Seneca",
+    "en": "THE EMBODIMENT OF TOKAJ’S CULTURE. Holdvölgy Culture 6 Puttonyos Tokaji Aszú is more than just a selection of high-quality aszú berries. Each bottle embodies the excellence of Tokaj's historic classified first growths, showcasing the region's rich history and cultural heritage. It reflects the vibrant moments experienced at Holdvölgy, the values of each vintage, and the unforgettable memories that come alive with every sip. “As the soil, however rich it may be, cannot be productive without cultivation, so the mind without culture can never produce good fruit.” – Seneca"
    },
    "render": "bottle-culture-17",
-   "live_url": "https://holdvolgy.com/bor/tokaji-aszu-2017-culture"
+   "live_url": "https://holdvolgy.com/bor/tokaji-aszu-2017-culture",
+   "tasting": {
+    "hu": "Az illat üde és gyümölcsös, melyet a friss sárgadinnye vezet, sárgabarack kompóttal, kandírozott citromhéjjal és szegfűszeggel. A kortyban a citrusok veszik át a főszerepet, de a sárgadinnye továbbra is kíséri. Az élményt az aszalt sárgabarack és a füge teszik még teljesebbé. Lecsengése szinte végtelen. A Culture 2017 6 puttonyos tokaji aszú tételünk, Vertikális aszú kollekciónk részeként is megvásárolható.",
+    "en": "The nose is clean and precise, dominated by fresh cantaloupe and supported by apricot compote, candied lemon peel and a hint of clove. A lively citrus flavor attack on the palate with the cantaloupe returning on the core. The finish is long led by apricot and fig with persistence and fine complexity. The Culture 2017 tokaji aszú wine can be purchased as part of our Vertical collection as well."
+   },
+   "tech": {
+    "alkohol": "12",
+    "cukor": "200,4",
+    "sav": "7,31",
+    "illo": "1,45",
+    "so2": "27/220",
+    "extrakt": "50,9",
+    "fajta": "furmint, hárslevelű, zéta",
+    "alapbor": "100% furmint",
+    "palack": "6500",
+    "besorolas": "Oltalom alatt álló, tokaji védett eredetű édes borkülönlegesség"
+   },
+   "vintage_note": {
+    "hu": "A korai, tartós januári fagy vészjósló forgatókönyvet ígért, de a kiegyenlített tavaszi-nyári időjárás eredményeként a szőlő ideálisan fejlődhetett, így augusztusban indult a szüret. Szeptemberben az elmúlt ötven év átlag csapadékának a két és félszerese esett, de az egész éves, gondos növényvédelemnek köszönhetően az esőzés végül nem okozott gondot.",
+    "en": "After an early and prolonged frost in January, the growing season progressed under relatively stable spring and summer conditions. Bunch development occurred under ideal conditions."
+   },
+   "storage": {
+    "hu": "hűvös helyen, fektetve",
+    "en": "in a cool place, lying down"
+   },
+   "serve_temp": {
+    "hu": "10-13°C",
+    "en": "10-13°C"
+   }
   },
   {
    "id": "culture-2018",
@@ -321,11 +657,39 @@
     "en": "PROFOUND, RICH, POWERFUL."
    },
    "desc": {
-    "hu": "MEGHATÁROZÓ, GAZDAG, ÉLETTEL TELI - A TOKAJI KULTÚRA MEGTESTESÜLÉSE A CULTURE 6 puttonyos tokaji aszú készítésekor nem csak a legkiválóbb aszúszemeket, hanem az első osztályú, klasszifikált dűlők kivételességét, Tokaj gazdag történelmi és kulturális örökségét, a Holdvölgy történetének élettel teli pillanatait, az évjáratok értékeit és az évek megismételhetetlen és meghatározó emlékeit is palackba zárjuk. Ettől válnak igazán különlegessé és maradandóvá ezek a tételek. “As the soil, however rich it may be, cannot be productive without cultivation, so the mind without culture can never produce good fruit.” – Seneca borleírás évjárat tárolás és fogyasztás Illatában a szilvalekvár, a sárgabarack és a kandírozott narancshéj rétegzett aromái jelennek meg. Ízében az aszalt füge, a sárgabarack és a karamell gazdag tónusai bontakoznak ki, elegáns mélységet adva ennek a tokaji aszú tételnek. ALKOHOL (% vol) 11,5 CUKOR (g/l) 209,7 SAV (g/l) 7,15 ILLÓ (g/l) 0,84 SO2 (mg/l) 25/151 CUKORM.",
-    "en": "THE EMBODIMENT OF TOKAJ’S CULTURE. Holdvölgy Culture 6 Puttonyos Tokaji Aszú is more than just a selection of high-quality aszú berries. Each bottle embodies the excellence of Tokaj's historic classified first growths, showcasing the region's rich history and cultural heritage. It reflects the vibrant moments experienced at Holdvölgy, the values of each vintage, and the unforgettable memories that come alive with every sip. “As the soil, however rich it may be, cannot be productive without cultivation, so the mind without culture can never produce good fruit.” – Seneca TASTING NOTES VINTAGE STORAGE AND SERVING The nose reveals layered aromas of plum jam, apricot and candied orange peel. On the palate, rich notes of dried fig, apricot and caramel unfold, lending elegant depth to this Tokaji Aszú."
+    "hu": "MEGHATÁROZÓ, GAZDAG, ÉLETTEL TELI - A TOKAJI KULTÚRA MEGTESTESÜLÉSE A CULTURE 6 puttonyos tokaji aszú készítésekor nem csak a legkiválóbb aszúszemeket, hanem az első osztályú, klasszifikált dűlők kivételességét, Tokaj gazdag történelmi és kulturális örökségét, a Holdvölgy történetének élettel teli pillanatait, az évjáratok értékeit és az évek megismételhetetlen és meghatározó emlékeit is palackba zárjuk. Ettől válnak igazán különlegessé és maradandóvá ezek a tételek. “As the soil, however rich it may be, cannot be productive without cultivation, so the mind without culture can never produce good fruit.” – Seneca",
+    "en": "THE EMBODIMENT OF TOKAJ’S CULTURE. Holdvölgy Culture 6 Puttonyos Tokaji Aszú is more than just a selection of high-quality aszú berries. Each bottle embodies the excellence of Tokaj's historic classified first growths, showcasing the region's rich history and cultural heritage. It reflects the vibrant moments experienced at Holdvölgy, the values of each vintage, and the unforgettable memories that come alive with every sip. “As the soil, however rich it may be, cannot be productive without cultivation, so the mind without culture can never produce good fruit.” – Seneca"
    },
    "render": "bottle-culture-18",
-   "live_url": "https://holdvolgy.com/bor/culture-2018"
+   "live_url": "https://holdvolgy.com/bor/culture-2018",
+   "tasting": {
+    "hu": "Illatában a szilvalekvár, a sárgabarack és a kandírozott narancshéj rétegzett aromái jelennek meg. Ízében az aszalt füge, a sárgabarack és a karamell gazdag tónusai bontakoznak ki, elegáns mélységet adva ennek a tokaji aszú tételnek.",
+    "en": "The nose reveals layered aromas of plum jam, apricot and candied orange peel. On the palate, rich notes of dried fig, apricot and caramel unfold, lending elegant depth to this Tokaji Aszú."
+   },
+   "tech": {
+    "alkohol": "11,5",
+    "cukor": "209,7",
+    "sav": "7,15",
+    "illo": "0,84",
+    "so2": "25/151",
+    "extrakt": "38,9",
+    "fajta": "furmint, hárslevelű, zéta",
+    "alapbor": "100% furmint",
+    "palack": "4183",
+    "besorolas": "Oltalom alatt álló, tokaji védett eredetű édes borkülönlegesség"
+   },
+   "vintage_note": {
+    "hu": "Szőlészünk és csapata tudatos munkája, valamint szőlőültetvényeink káprázatos toleranciája együttesen segítették nem csak a korai fagyok, hanem a tavaszi szélsőséges időjárási anomáliák leküzdését. Az isteni növény azonban minden eddiginél türelmetlenebbnek mutatkozott: a korai érésű fajták augusztus közepi szedésével indítottuk szüretünket.",
+    "en": "The dedicated work of our viticultural team, together with the remarkable resilience of our vineyards, helped us overcome not only the early frosts but also the extreme weather anomalies of spring. The vines, however, showed an unprecedented eagerness to ripen. We began the harvest in mid-August, starting with the early-ripening varieties. The long, dry, Mediterranean-like weather, with little rainfall, did not favour the dynamic development of botrytised grapes."
+   },
+   "storage": {
+    "hu": "hűvös helyen, fektetve",
+    "en": "in a cool place, lying down"
+   },
+   "serve_temp": {
+    "hu": "10-13°C",
+    "en": "10-13°C"
+   }
   },
   {
    "id": "aszu-utkereses-2007",
@@ -346,11 +710,38 @@
     "en": "CONSCIOUS PURSUIT."
    },
    "desc": {
-    "hu": "Tudatos keresés. Lelkes kísérletezés. SZAKMAI ÚTKERESÉSÜNK EGY PALACKBAN. Ebben a tételben ugyanúgy benne van minden érték, melyet egyes aszú évjárataink képviselnek: első osztályú dűlők és aszúszemek, precíz szőlészeti munka, gondos figyelem és minden, amit az évjárat adhatott. Fontos különbség viszont, hogy amíg Culture tételeink átlagosan 24 hónapot pihennek magyar és francia tölgyből készült hordókban, és 72 hónapot palackban, addig ASZÚ ÚTKERESÉS borunk 36 hónapig volt kizárólag magyar hordóban és 156 hónapot palackban. borleírás évjárat tárolás és fogyasztás Illatában az aszalt sárgabarack adja a hangsúlyt, csipkebogyó lekvár és diós grillázs aromákkal. Textúrája igazán krémes a mézes sárgabarack lekvár határozott jegyeivel és vaníliás fűszerességgel, finom dohányos, mandulás rétegekkel. A korty végén elegáns citrusosság zárja az élményt. ALKOHOL (% vol) 12 CUKOR (g/l) 164,5 SAV (g/l) 7,8 ILLÓ (g/l) 1,29 SO2 (mg/l) 16/208 CUKORM. EXTRAKT (g/l) 59,8 FAJTA furmint, hárslevelű, zéta PALACKOZOTT MENNYISÉG 2480 BESOROLÁS tokaji védett eredetű édes borkülönlegesség adatlap Ősszel a szőlőtermesztésnek kedvező időjárás volt a jellemző.",
-    "en": "ENTHUSIASTIC EXPERIMENT. OUR WINE-MAKING IDENTITY ENDEAVOUR IN ONE SWEET BOTTLE. This bottle embodies all the values represented by our aszú vintages: high-quality aszú berries, precise viticulture, meticulous care, and the full potential of a vintage. The key distinction is that, unlike our Culture wines, this lot has been aged for 36 months in Hungarian oak barrels, followed by an additional 156 months in bottles. As a result, the entire aging process for this wine is significantly longer than our average 72 months. TASTING NOTES VINTAGE STORAGE AND SERVING Illatában az aszalt sárgabarack adja a hangsúlyt, csipkebogyó lekvár és diós grillázs aromákkal. Textúrája igazán krémes a mézes sárgabarack lekvár határozott jegyeivel és vaníliás fűszerességgel, finom dohányos, mandulás rétegekkel. A korty végén elegáns citrusosság zárja az élményt. ALCOHOL (% vol) 12 SUGAR (g/l) 164,5 ACIDITY (g/l) 7,8 VOLATILE (g/l) 1,29 SO2 (mg/l) 16/208 RESIDUAL EXTRACT (g/l) 59,8 VARIETY Furmint, Hárslevelű, Zéta BOTTLED QUANTITY 2480 CLASSIFICATION tokaji védett eredetű édes borkülönlegesség During Fall, the weather was favorable."
+    "hu": "Tudatos keresés. Lelkes kísérletezés. SZAKMAI ÚTKERESÉSÜNK EGY PALACKBAN. Ebben a tételben ugyanúgy benne van minden érték, melyet egyes aszú évjárataink képviselnek: első osztályú dűlők és aszúszemek, precíz szőlészeti munka, gondos figyelem és minden, amit az évjárat adhatott. Fontos különbség viszont, hogy amíg Culture tételeink átlagosan 24 hónapot pihennek magyar és francia tölgyből készült hordókban, és 72 hónapot palackban, addig ASZÚ ÚTKERESÉS borunk 36 hónapig volt kizárólag magyar hordóban és 156 hónapot palackban.",
+    "en": "ENTHUSIASTIC EXPERIMENT. OUR WINE-MAKING IDENTITY ENDEAVOUR IN ONE SWEET BOTTLE. This bottle embodies all the values represented by our aszú vintages: high-quality aszú berries, precise viticulture, meticulous care, and the full potential of a vintage. The key distinction is that, unlike our Culture wines, this lot has been aged for 36 months in Hungarian oak barrels, followed by an additional 156 months in bottles. As a result, the entire aging process for this wine is significantly longer than our average 72 months."
    },
    "render": null,
-   "live_url": "https://holdvolgy.com/bor/tokaji-aszu-utkereses-2007"
+   "live_url": "https://holdvolgy.com/bor/tokaji-aszu-utkereses-2007",
+   "tasting": {
+    "hu": "Illatában az aszalt sárgabarack adja a hangsúlyt, csipkebogyó lekvár és diós grillázs aromákkal. Textúrája igazán krémes a mézes sárgabarack lekvár határozott jegyeivel és vaníliás fűszerességgel, finom dohányos, mandulás rétegekkel. A korty végén elegáns citrusosság zárja az élményt.",
+    "en": "Illatában az aszalt sárgabarack adja a hangsúlyt, csipkebogyó lekvár és diós grillázs aromákkal. Textúrája igazán krémes a mézes sárgabarack lekvár határozott jegyeivel és vaníliás fűszerességgel, finom dohányos, mandulás rétegekkel. A korty végén elegáns citrusosság zárja az élményt."
+   },
+   "tech": {
+    "alkohol": "12",
+    "cukor": "164,5",
+    "sav": "7,8",
+    "illo": "1,29",
+    "so2": "16/208",
+    "extrakt": "59,8",
+    "fajta": "furmint, hárslevelű, zéta",
+    "palack": "2480",
+    "besorolas": "tokaji védett eredetű édes borkülönlegesség"
+   },
+   "vintage_note": {
+    "hu": "Ősszel a szőlőtermesztésnek kedvező időjárás volt a jellemző. Szeptember elején 80 mm csapadék esett, amely kiválóan beindította az aszúsodási folyamatot az érett szőlőfürtökben. Már szeptember 24-től elkezdhettük szedni az első osztályú alapanyagunkat, melyek között a Zéta és a Furmint szőlőbogyók bizonyultak a legszebbnek.",
+    "en": ""
+   },
+   "storage": {
+    "hu": "hűvös helyen, fektetve",
+    "en": "in a cool place, lying down"
+   },
+   "serve_temp": {
+    "hu": "10-13°C",
+    "en": "10-13°C"
+   }
   },
   {
    "id": "signature-2007",
@@ -371,11 +762,39 @@
     "en": "A unique combination of harmony, both sweet and fresh and distinctive as distinguished in taste."
    },
    "desc": {
-    "hu": "A Birtok édes folyékony aláírása. Számunkra ez a bor jelenti igazán a szabadon megélt, kreatív alkotást a borkészítésben. Szokatlan koncepcióval, aszú, szamorodni és eszencia házasításával alkotjuk újra a megszokott tradícionális határokat, melynek minden esetben egy igazán elegáns és ritka tétel az eredménye. Minden benne van, amit egy izgalmas édes borról gondolunk a kötelező körökön kívül, 5 puttonyos minőségben. Ez a kézjegyünk: “Great wines require the luxury of time, depth, rigour and imagination. Great wines require free minds and spirit exactly as great thoughts do. The best of mankind.” – Holdvölgy borleírás évjárat tárolás és fogyasztás Gazdag és friss botrytiszes illat, buja méz ízek hömpölyögnek benne, kitűnő sav-cukor egyensúly, fiatalos üdeség és felejthetetlen ízgazdagság. Magas cukortartalma csak ilyen savak kíséretében képes ennyi gyümölcsöt és utóízt kínálni. A harmóniának köszönhetően évtizedekig eltartható. ALKOHOL (% vol) 13 CUKOR (g/l) 125 SAV (g/l) 7,1 ILLÓ (g/l) 0,87 SO2 (mg/l) 39/213 CUKORM.",
-    "en": "Holdvölgy’s signature identity. For us, this wine truly embodies the creative and liberated spirit of winemaking. Through an innovative approach, we push the boundaries of tradition by blending Aszú, Szamorodni, and Essencia. The result is a unique and elegant wine that captures everything we envision in an exciting sweet wine. This our signature: “Great wines require the luxury of time, depth, rigour and imagination. Great wines require free minds and spirit exactly as great thoughts do. The best of mankind.” – Holdvölgy TASTING NOTES VINTAGE STORAGE AND SERVING Fresh and rich Botrytis aromas, lush flavors of honey flowing in it, an excellent sugar-acidity balance, youthful freshness and unforgettable richness of flavours. Its high sugar content accompanied by such acidity is only able to offer so many fruits and aftertaste. It has decades to live! ALCOHOL (% vol) 13 SUGAR (g/l) 125 ACIDITY (g/l) 7,1 VOLATILE (g/l) 0,87 SO2 (mg/l) 39/213 RESIDUAL EXTRACT (g/l) 42,2 VARIETY Furmint, Hárslevelű, Zéta CLASSIFIED CRUS Holdvölgy, Becsek, Király BOTTLED QUANTITY 8730 CLASSIFICATION Quality sweet white wine specialty fact sheet Early, warm and dry vintage with some heatwave."
+    "hu": "A Birtok édes folyékony aláírása. Számunkra ez a bor jelenti igazán a szabadon megélt, kreatív alkotást a borkészítésben. Szokatlan koncepcióval, aszú, szamorodni és eszencia házasításával alkotjuk újra a megszokott tradícionális határokat, melynek minden esetben egy igazán elegáns és ritka tétel az eredménye. Minden benne van, amit egy izgalmas édes borról gondolunk a kötelező körökön kívül, 5 puttonyos minőségben. Ez a kézjegyünk: “Great wines require the luxury of time, depth, rigour and imagination. Great wines require free minds and spirit exactly as great thoughts do. The best of mankind.” – Holdvölgy",
+    "en": "Holdvölgy’s signature identity. For us, this wine truly embodies the creative and liberated spirit of winemaking. Through an innovative approach, we push the boundaries of tradition by blending Aszú, Szamorodni, and Essencia. The result is a unique and elegant wine that captures everything we envision in an exciting sweet wine. This our signature: “Great wines require the luxury of time, depth, rigour and imagination. Great wines require free minds and spirit exactly as great thoughts do. The best of mankind.” – Holdvölgy"
    },
    "render": "bottle-signature-07",
-   "live_url": "https://holdvolgy.com/bor/edes-birtokvalogatas-signature-2007"
+   "live_url": "https://holdvolgy.com/bor/edes-birtokvalogatas-signature-2007",
+   "tasting": {
+    "hu": "Gazdag és friss botrytiszes illat, buja méz ízek hömpölyögnek benne, kitűnő sav-cukor egyensúly, fiatalos üdeség és felejthetetlen ízgazdagság. Magas cukortartalma csak ilyen savak kíséretében képes ennyi gyümölcsöt és utóízt kínálni. A harmóniának köszönhetően évtizedekig eltartható.",
+    "en": "Fresh and rich Botrytis aromas, lush flavors of honey flowing in it, an excellent sugar-acidity balance, youthful freshness and unforgettable richness of flavours. Its high sugar content accompanied by such acidity is only able to offer so many fruits and aftertaste. It has decades to live!"
+   },
+   "tech": {
+    "alkohol": "13",
+    "cukor": "125",
+    "sav": "7,1",
+    "illo": "0,87",
+    "so2": "39/213",
+    "extrakt": "42,2",
+    "fajta": "furmint, hárslevelű, zéta",
+    "dulok": "Holdvölgy, Becsek, Király",
+    "palack": "8730",
+    "besorolas": "Tokaji védett eredetű édes borkülönlegesség"
+   },
+   "vintage_note": {
+    "hu": "Tokaji édes birtokválogatásunk szüretének évében, a nyár forró és száraz elejének köszönhetően korai volt a szőlőérés. Szeptember elején sok csapadék esett, ami kiválóan beindította az aszúsodási folyamatot az érett szőlőfürtökben. Már szeptember 24-től nagy gazdagságú aszúszemeket lehetett szedni.",
+    "en": ""
+   },
+   "storage": {
+    "hu": "hűvös helyen, fektetve",
+    "en": "in a cool place, lying down"
+   },
+   "serve_temp": {
+    "hu": "10-13°C",
+    "en": "10-13°C"
+   }
   },
   {
    "id": "signature-2013",
@@ -396,11 +815,39 @@
     "en": "A unique combination of harmony, both sweet and fresh and distinctive as distinguished in taste."
    },
    "desc": {
-    "hu": "A Birtok édes folyékony aláírása. Számunkra ez a bor jelenti igazán a szabadon megélt, kreatív alkotást a borkészítésben. Szokatlan koncepcióval, aszú, szamorodni és eszencia házasításával alkotjuk újra a megszokott tradícionális határokat, melynek minden esetben egy igazán elegáns és ritka tétel az eredménye. Minden benne van, amit egy izgalmas édes borról gondolunk a kötelező körökön kívül, 5 puttonyos minőségben. Ez a kézjegyünk: “Great wines require the luxury of time, depth, rigour and imagination. Great wines require free minds and spirit exactly as great thoughts do. The best of mankind.” – Holdvölgy borleírás évjárat tárolás és fogyasztás Szamorodni, 6 puttonyos aszú, és eszencia különleges házassága, amely újraértelmezi a tokaji édesborok hagyományos határait. Illatában aszalt sárgabarack, maracuja és szilva jelenik meg, ízében a sárgabarackot vibráló citrusosság kíséri. ALKOHOL (% vol) 11 CUKOR (g/l) 161 SAV (g/l) 6.4 ILLÓ (g/l) 1,09 SO2 (mg/l) 22/210 CUKORM.",
-    "en": "Holdvölgy’s signature identity. For us, this wine truly embodies the creative and liberated spirit of winemaking. Through an innovative approach, we push the boundaries of tradition by blending Aszú, Szamorodni, and Essencia. The result is a unique and elegant wine that captures everything we envision in an exciting sweet wine. This our signature: “Great wines require the luxury of time, depth, rigour and imagination. Great wines require free minds and spirit exactly as great thoughts do. The best of mankind.” – Holdvölgy TASTING NOTES VINTAGE STORAGE AND SERVING A unique Tokaji sweet wine blend of Szamorodni 6 Puttonyos Aszú and Essencia, reinterpreting the traditional sweet wine styles of the region. The nose reveals dried apricot, passion fruit and plum, while the palate is defined by apricot at its core, supported by vibrant citrus freshness. ALCOHOL (% vol) 11 SUGAR (g/l) 161 ACIDITY (g/l) 6."
+    "hu": "A Birtok édes folyékony aláírása. Számunkra ez a bor jelenti igazán a szabadon megélt, kreatív alkotást a borkészítésben. Szokatlan koncepcióval, aszú, szamorodni és eszencia házasításával alkotjuk újra a megszokott tradícionális határokat, melynek minden esetben egy igazán elegáns és ritka tétel az eredménye. Minden benne van, amit egy izgalmas édes borról gondolunk a kötelező körökön kívül, 5 puttonyos minőségben. Ez a kézjegyünk: “Great wines require the luxury of time, depth, rigour and imagination. Great wines require free minds and spirit exactly as great thoughts do. The best of mankind.” – Holdvölgy",
+    "en": "Holdvölgy’s signature identity. For us, this wine truly embodies the creative and liberated spirit of winemaking. Through an innovative approach, we push the boundaries of tradition by blending Aszú, Szamorodni, and Essencia. The result is a unique and elegant wine that captures everything we envision in an exciting sweet wine. This our signature: “Great wines require the luxury of time, depth, rigour and imagination. Great wines require free minds and spirit exactly as great thoughts do. The best of mankind.” – Holdvölgy"
    },
    "render": "bottle-signature-13",
-   "live_url": "https://holdvolgy.com/bor/signature-2013"
+   "live_url": "https://holdvolgy.com/bor/signature-2013",
+   "tasting": {
+    "hu": "Szamorodni, 6 puttonyos aszú, és eszencia különleges házassága, amely újraértelmezi a tokaji édesborok hagyományos határait. Illatában aszalt sárgabarack, maracuja és szilva jelenik meg, ízében a sárgabarackot vibráló citrusosság kíséri.",
+    "en": "A unique Tokaji sweet wine blend of Szamorodni 6 Puttonyos Aszú and Essencia, reinterpreting the traditional sweet wine styles of the region. The nose reveals dried apricot, passion fruit and plum, while the palate is defined by apricot at its core, supported by vibrant citrus freshness."
+   },
+   "tech": {
+    "alkohol": "11",
+    "cukor": "161",
+    "sav": "6.4",
+    "illo": "1,09",
+    "so2": "22/210",
+    "extrakt": "34",
+    "fajta": "furmint, hárslevelű, zéta",
+    "dulok": "Holdvölgy, Becsek, Király, Dorgó",
+    "palack": "3575",
+    "besorolas": "Tokaji védett eredetű édes borkülönlegesség"
+   },
+   "vintage_note": {
+    "hu": "2013-ban minden pontosan úgy történt a történelmi dűlőkben, ahogy annak lennie kellett.",
+    "en": ""
+   },
+   "storage": {
+    "hu": "",
+    "en": ""
+   },
+   "serve_temp": {
+    "hu": "",
+    "en": ""
+   }
   },
   {
    "id": "eloquence-2014",
@@ -421,11 +868,38 @@
     "en": "As pure articulate and graceful, as great clarity of thought."
    },
    "desc": {
-    "hu": "Eloquence édes szamorodnink a Holdvölgy legkifejezőbb tétele és egyben Tokaj-Hegyalja legtermészetesebb bora. Egy vérbeli tokaji édes szónok, aki egyértelműen, tömören mond el mindent a borkészítési hagyományokról, a tétel mögött rejlő odaadó munkáról, az évjáratról, a dűlőkről és a szőlőfajtákról. Úgy fogadjuk szívünkbe, ahogy terem. Nem szól többről, nem akar több lenni, mint ami, mégis mindig elvarázsol minket eleganciájával és bájával: “True eloquence consists in saying all that should be said, and that only.” – François de La Rochefoucauld borleírás évjárat tárolás és fogyasztás Aranysárga színű édes szamorodni. Illatában az aszalt gyümölcsök, kifejezetten a füge és a sárgabarack dominálnak. Ízében gazdag és tartalmas: a szilvás süteményt idéző jegyeket mézes krémesség kíséri, amit egy csipetnyi citromfű tesz frissé. ALKOHOL (% vol) 12 CUKOR (g/l) 113,5 SAV (g/l) 7 ILLÓ (g/l) 0,91 SO2 (mg/l) 23/209 CUKORM. EXTRAKT (g/l) 38,8 FAJTA furmint, hárslevelű PALACKOZOTT MENNYISÉG 3800 BESOROLÁS Tokaji védett eredetű édes borkülönlegesség adatlap A 2014-es évjárata enyhe téllel, korai rügyfakadással indult.",
-    "en": "Eloquence sweet Szamorodni is the most expressive Holdvölgy creation and also the most natural wine of Tokaj-Hegyalja. A true sweet speaker from Tokaj who clearly and succinctly explains everything about the wine-making traditions, the dedicated work behind the wine, the vintage, the vineyards and the grape varieties. We embrace it as it evolves. It doesn’t strive to be anything more than what it is, yet it consistently captivates us with its elegance and charm. “True eloquence consists in saying all that should be said, and that only.” – François de La Rochefoucauld TASTING NOTES VINTAGE STORAGE AND SERVING A golden-yellow sweet Szamorodni. The nose is dominated by dried fruits, particularly fig and apricot. On the palate, it is rich and full-bodied: notes reminiscent of plum cake are accompanied by a honeyed creaminess, freshened by a hint of lemongrass. ALCOHOL (% vol) 12 SUGAR (g/l) 113,5 ACIDITY (g/l) 7 VOLATILE (g/l) 0,91 SO2 (mg/l) 23/209 RESIDUAL EXTRACT (g/l) 38,8 VARIETY furmint, hárslevelű BOTTLED QUANTITY 3800 CLASSIFICATION Quality sweet white wine specialty FACT SHEET The 2014 vintage began with a mild winter and early budburst."
+    "hu": "Eloquence édes szamorodnink a Holdvölgy legkifejezőbb tétele és egyben Tokaj-Hegyalja legtermészetesebb bora. Egy vérbeli tokaji édes szónok, aki egyértelműen, tömören mond el mindent a borkészítési hagyományokról, a tétel mögött rejlő odaadó munkáról, az évjáratról, a dűlőkről és a szőlőfajtákról. Úgy fogadjuk szívünkbe, ahogy terem. Nem szól többről, nem akar több lenni, mint ami, mégis mindig elvarázsol minket eleganciájával és bájával: “True eloquence consists in saying all that should be said, and that only.” – François de La Rochefoucauld",
+    "en": "Eloquence sweet Szamorodni is the most expressive Holdvölgy creation and also the most natural wine of Tokaj-Hegyalja. A true sweet speaker from Tokaj who clearly and succinctly explains everything about the wine-making traditions, the dedicated work behind the wine, the vintage, the vineyards and the grape varieties. We embrace it as it evolves. It doesn’t strive to be anything more than what it is, yet it consistently captivates us with its elegance and charm. “True eloquence consists in saying all that should be said, and that only.” – François de La Rochefoucauld"
    },
    "render": "bottle-eloquence-14",
-   "live_url": "https://holdvolgy.com/bor/eloquence-2014"
+   "live_url": "https://holdvolgy.com/bor/eloquence-2014",
+   "tasting": {
+    "hu": "Aranysárga színű édes szamorodni. Illatában az aszalt gyümölcsök, kifejezetten a füge és a sárgabarack dominálnak. Ízében gazdag és tartalmas: a szilvás süteményt idéző jegyeket mézes krémesség kíséri, amit egy csipetnyi citromfű tesz frissé.",
+    "en": "A golden-yellow sweet Szamorodni. The nose is dominated by dried fruits, particularly fig and apricot. On the palate, it is rich and full-bodied: notes reminiscent of plum cake are accompanied by a honeyed creaminess, freshened by a hint of lemongrass."
+   },
+   "tech": {
+    "alkohol": "12",
+    "cukor": "113,5",
+    "sav": "7",
+    "illo": "0,91",
+    "so2": "23/209",
+    "extrakt": "38,8",
+    "fajta": "furmint, hárslevelű",
+    "palack": "3800",
+    "besorolas": "Tokaji védett eredetű édes borkülönlegesség"
+   },
+   "vintage_note": {
+    "hu": "A 2014-es évjárata enyhe téllel, korai rügyfakadással indult. Tavasszal komolyabb kártevői- és kórokozói nyomás mellett, gyors virágzás és egy nehéz, csapadékos nyár következett. Többszöri újratervezéssel, türelemmel és a lehető legprecízebb gondossággal védtük meg ültetvényeinket a minőségi gyümölcs érdekében. Már szeptember végétől folyamatosan gyűjthettük be első-, másod-, és harmadkötésű aszúszemeinket.",
+    "en": "The 2014 vintage began with a mild winter and early budburst. Spring brought significant pressure from pests and pathogens, followed by rapid flowering and a difficult, rainy summer. Through constant adaptation, patience, and the most precise care possible, we successfully protected our vineyards to ensure high-quality fruit. From late September onwards, we were able to continuously harvest our first, second, and third-selection aszú berries."
+   },
+   "storage": {
+    "hu": "hűvös helyen, fektetve",
+    "en": "in a cool place, lying down"
+   },
+   "serve_temp": {
+    "hu": "10-13°C",
+    "en": "10-13°C"
+   }
   },
   {
    "id": "intuition-no1-2017",
@@ -446,11 +920,39 @@
     "en": "Wonderfully unexpected, beautifully unpredictable, as a free imagination of an author."
    },
    "desc": {
-    "hu": "Kivételes, már-már megismételhetetlennek tűnő, nem minden évben megalkotható fajta és dűlő lenyomatok képezik az Intuition borcsalád tételeit. Egyedi terroir tételek, melyek magukban hordozzák a dűlők sajátosságait, az évjárati körülményekre adott spontán válaszokat és a borász intuitív megoldásait, így kilépve a klasszikus tokaji borkategóriákból: “The only real valuable thing is intuition.” – Albert Einstein borleírás évjárat dűlő tárolás és fogyasztás Ihletett fajta- és parcellaszelekció a Holdvölgy-dűlőből, melyet negyedik alkalommal készíthettünk el. Illatában aszalt sárgabarack, csipkebogyólekvár és vajkaramella fogad. Ízében továbbra is az aszalt sárgabarack dominál, melyet mangós jegyek és a hordónak köszönhető, lágy vaníliafűszer egészít ki. Páratlan sav-cukor egyensúly, igazi eleganciával. ALKOHOL (% vol) 12 CUKOR (g/l) 136,6 SAV (g/l) 7,15 ILLÓ (g/l) 1,07 SO2 (mg/l) 22/108 CUKORM.",
-    "en": "Intuition wines are exceptional, almost unrepeatable imprints of grape varieties and vineyards, and can not be created in every vintage.These distinctive terroir wines reflect the specific qualities of their vineyards, respond spontaneously to the conditions of each vintage, and embody the intuitive and creative decisions of the winemaker. This approach allows us to move beyond the traditional categories of Tokaj wines. “The only real valuable thing is intuition.” – Albert Einstein TASTING NOTES VINTAGE VINEYARD STORAGE AND SERVING An inspired parcel selection from the Holdvölgy first growth vineyard. Illatában aszalt sárgabarack, csipkebogyólekvár és vajkaramella fogad. Ízében továbbra is az aszalt sárgabarack dominál, melyet mangós jegyek és a hordónak köszönhető, lágy vaníliafűszer egészít ki. Páratlan sav-cukor egyensúly, igazi eleganciával."
+    "hu": "Kivételes, már-már megismételhetetlennek tűnő, nem minden évben megalkotható fajta és dűlő lenyomatok képezik az Intuition borcsalád tételeit. Egyedi terroir tételek, melyek magukban hordozzák a dűlők sajátosságait, az évjárati körülményekre adott spontán válaszokat és a borász intuitív megoldásait, így kilépve a klasszikus tokaji borkategóriákból: “The only real valuable thing is intuition.” – Albert Einstein borleírás évjárat dűlő tárolás és fogyasztás Ihletett fajta- és parcellaszelekció a Holdvölgy-dűlőből, melyet negyedik alkalommal készíthettünk el. Illatában aszalt sárgabarack, csipkebogyólekvár és vajkaramella fogad. Ízében továbbra is az aszalt sárgabarack dominál, melyet mangós jegyek és a hordónak köszönhető, lágy vaníliafűszer egészít ki. Páratlan sav-cukor egyensúly, igazi eleganciával.",
+    "en": "Intuition wines are exceptional, almost unrepeatable imprints of grape varieties and vineyards, and can not be created in every vintage.These distinctive terroir wines reflect the specific qualities of their vineyards, respond spontaneously to the conditions of each vintage, and embody the intuitive and creative decisions of the winemaker. This approach allows us to move beyond the traditional categories of Tokaj wines. “The only real valuable thing is intuition.” – Albert Einstein TASTING NOTES VINTAGE VINEYARD."
    },
    "render": "bottle-intuition-no1-17",
-   "live_url": "https://holdvolgy.com/bor/intuition-no1-2017-tokaji-szamorodni"
+   "live_url": "https://holdvolgy.com/bor/intuition-no1-2017-tokaji-szamorodni",
+   "tasting": {
+    "hu": "",
+    "en": ""
+   },
+   "tech": {
+    "alkohol": "12",
+    "cukor": "136,6",
+    "sav": "7,15",
+    "illo": "1,07",
+    "so2": "22/108",
+    "extrakt": "31,7",
+    "fajta": "100% zéta",
+    "dulok": "Holdvölgy",
+    "palack": "3400",
+    "besorolas": "TOKAJI VÉDETT EREDETŰ ÉDES BORKÜLÖNLEGESSÉG"
+   },
+   "vintage_note": {
+    "hu": "A korai, tartós januári fagy vészjósló forgatókönyvet ígért, de a kiegyenlített tavaszi-nyári időjárás eredményeként a szőlő ideálisan fejlődhetett, így augusztusban indult a szüret. Szeptemberben az elmúlt ötven év átlag csapadékának a két és félszerese esett, de az egész éves, gondos növényvédelemnek köszönhetően az esőzés végül nem okozott gondot. Kiváló és minden eddiginél ígéretesebb évjárat volt ez, a feldolgozott szőlő alapanyag mennyisége és minősége szempontjából is.",
+    "en": "After an early and prolonged frost in January, the growing season progressed under relatively stable spring and summer conditions. Bunch development occurred under ideal conditions."
+   },
+   "storage": {
+    "hu": "",
+    "en": ""
+   },
+   "serve_temp": {
+    "hu": "",
+    "en": ""
+   }
   },
   {
    "id": "intuition-no8-2019",
@@ -471,11 +973,38 @@
     "en": "Wonderfully unexpected, beautifully unpredictable, as a free imagination of an author."
    },
    "desc": {
-    "hu": "Kivételes, már-már megismételhetetlennek tűnő, nem minden évben megalkotható fajta és dűlő lenyomatok képezik az Intuition borcsalád tételeit. Egyedi terroir tételek, melyek magukban hordozzák a dűlők sajátosságait, az évjárati körülményekre adott spontán válaszokat és a borász intuitív megoldásait, így kilépve a klasszikus tokaji borkategóriákból: “The only real valuable thing is intuition.” – Albert Einstein borleírás évjárat tárolás és fogyasztás Egy ma már ritkaságnak számító borkülönlegesség, a Fordítás – melyet 2019-es évjáratban szólaltattunk meg. Illatában az érett körte frissessége, az üde rebarbara és a csipkebogyó találkozik. Ízében az aszalt sárgabarack telt édessége nyit, melyet a füge mélysége és a pörkölt mogyoró fűszeres karaktere egészít ki. Letisztult, mégis komplex, a tokaji paletta kifinomult tétele. ALKOHOL (% vol) 12,5 CUKOR (g/l) 138,9 SAV (g/l) 6,5 ILLÓ (g/l) 1 SO2 (mg/l) 32/225 CUKORM. EXTRAKT (g/l) 35,6 FAJTA furmint, hárs, zéta PALACKOZOTT MENNYISÉG 1910 BESOROLÁS Tokaji védett eredetű édes borkülönlegesség adatlap A január faggyal, míg a február hirtelen olvadással köszöntött ránk.",
-    "en": "Intuition wines are exceptional, almost unrepeatable imprints of grape varieties and vineyards, and can not be created in every vintage.These distinctive terroir wines reflect the specific qualities of their vineyards, respond spontaneously to the conditions of each vintage, and embody the intuitive and creative decisions of the winemaker. This approach allows us to move beyond the traditional categories of Tokaj wines. “The only real valuable thing is intuition.” – Albert Einstein TASTING NOTES VINTAGE STORAGE AND SERVING A distinctive wine, Fordítás, from the 2019 vintage. The nose opens with the freshness of ripe pear, lifted by vibrant rhubarb and rosehip. On the palate, the generous sweetness of dried apricot unfolds first, followed by the depth of fig and the subtle spice of roasted hazelnut. Refined and layered, a poised expression of the Tokaj range. ALCOHOL (% vol) 12,5 SUGAR (g/l) 138,9 ACIDITY (g/l) 6,5 VOLATILE (g/l) 1 SO2 (mg/l) 32/225 RESIDUAL EXTRACT (g/l) 35,6 VARIETY furmint, hárs, zéta BOTTLED QUANTITY 1910 CLASSIFICATION Quality sweet white wine specialty FACT SHEET A január faggyal, míg a február hirtelen olvadással köszöntött ránk."
+    "hu": "Kivételes, már-már megismételhetetlennek tűnő, nem minden évben megalkotható fajta és dűlő lenyomatok képezik az Intuition borcsalád tételeit. Egyedi terroir tételek, melyek magukban hordozzák a dűlők sajátosságait, az évjárati körülményekre adott spontán válaszokat és a borász intuitív megoldásait, így kilépve a klasszikus tokaji borkategóriákból: “The only real valuable thing is intuition.” – Albert Einstein",
+    "en": "Intuition wines are exceptional, almost unrepeatable imprints of grape varieties and vineyards, and can not be created in every vintage.These distinctive terroir wines reflect the specific qualities of their vineyards, respond spontaneously to the conditions of each vintage, and embody the intuitive and creative decisions of the winemaker. This approach allows us to move beyond the traditional categories of Tokaj wines. “The only real valuable thing is intuition.” – Albert Einstein"
    },
    "render": "bottle-intuition-no8-19",
-   "live_url": "https://holdvolgy.com/bor/intuition-no8-2019"
+   "live_url": "https://holdvolgy.com/bor/intuition-no8-2019",
+   "tasting": {
+    "hu": "Egy ma már ritkaságnak számító borkülönlegesség, a Fordítás – melyet 2019-es évjáratban szólaltattunk meg. Illatában az érett körte frissessége, az üde rebarbara és a csipkebogyó találkozik. Ízében az aszalt sárgabarack telt édessége nyit, melyet a füge mélysége és a pörkölt mogyoró fűszeres karaktere egészít ki. Letisztult, mégis komplex, a tokaji paletta kifinomult tétele.",
+    "en": "A distinctive wine, Fordítás, from the 2019 vintage. The nose opens with the freshness of ripe pear, lifted by vibrant rhubarb and rosehip. On the palate, the generous sweetness of dried apricot unfolds first, followed by the depth of fig and the subtle spice of roasted hazelnut. Refined and layered, a poised expression of the Tokaj range."
+   },
+   "tech": {
+    "alkohol": "12,5",
+    "cukor": "138,9",
+    "sav": "6,5",
+    "illo": "1",
+    "so2": "32/225",
+    "extrakt": "35,6",
+    "fajta": "furmint, hárs, zéta",
+    "palack": "1910",
+    "besorolas": "Tokaji védett eredetű édes borkülönlegesség"
+   },
+   "vintage_note": {
+    "hu": "A január faggyal, míg a február hirtelen olvadással köszöntött ránk. Az aszályos márciust késő tavaszi esőzések mérsékelték, de a tartós szél és a rovarok “túlszaporulata” még nagyobb terhet helyezett ránk. A növényvédelemnek köszönhetően nyáron gyönyörűen fejlődhetett tovább a szőlő, a szüret pedig szeptemberben kezdődött.",
+    "en": "A január faggyal, míg a február hirtelen olvadással köszöntött ránk. Az aszályos márciust késő tavaszi esőzések mérsékelték, de a tartós szél és a rovarok “túlszaporulata” még nagyobb terhet helyezett ránk. A növényvédelemnek köszönhetően nyáron gyönyörűen fejlődhetett tovább a szőlő, a szüret pedig szeptemberben kezdődött."
+   },
+   "storage": {
+    "hu": "hűvös helyen, fektetve",
+    "en": "in a cool place, lying down"
+   },
+   "serve_temp": {
+    "hu": "10-13°C",
+    "en": "10-13°C"
+   }
   },
   {
    "id": "intuition-no3-2020",
@@ -496,11 +1025,39 @@
     "en": "Wonderfully unexpected, beautifully unpredictable, as a free imagination of an author."
    },
    "desc": {
-    "hu": "Kivételes, már-már megismételhetetlennek tűnő, nem minden évben megalkotható fajta és dűlő lenyomatok képezik az Intuition borcsalád tételeit. Egyedi terroir tételek, melyek magukban hordozzák a dűlők sajátosságait, az évjárati körülményekre adott spontán válaszokat és a borász intuitív megoldásait, így kilépve a klasszikus tokaji borkategóriákból: “The only real valuable thing is intuition.” – Albert Einstein borleírás évjárat dűlő tárolás és fogyasztás A Becsek-dűlő Furmintja 2006 óta aszúink állandó alapbora, ám a 2020-as évjáratból ez a dűlőszelektált tétel kivételesen önálló száraz borként mutatkozik be, felfedve a termőhely és a fajta különleges összhangját. Illatában friss körte és maracuja bontakozik ki, finom gesztenyés árnyalatokkal és fehér virágos jegyekkel. Ízében a dűlőre jellemző sós–ásványos karakter dominál, élénk citrusossággal, melyet elegáns fahordós jegyek tesznek teljessé. ALKOHOL (% vol) 12,5 CUKOR (g/l) 7,5 SAV (g/l) 7,1 ILLÓ (g/l) 0,45 SO2 (mg/l) 23/174 CUKORM.",
-    "en": "Intuition wines are exceptional, almost unrepeatable imprints of grape varieties and vineyards, and can not be created in every vintage.These distinctive terroir wines reflect the specific qualities of their vineyards, respond spontaneously to the conditions of each vintage, and embody the intuitive and creative decisions of the winemaker. This approach allows us to move beyond the traditional categories of Tokaj wines. “The only real valuable thing is intuition.” – Albert Einstein TASTING NOTES VINTAGE VINEYARD STORAGE AND SERVING The Furmint from 1st growth vineyard Becsek has been the permanent base for CULTURE our 6 puttonyos Aszú wines since 2006. The 2020 vintage allowed us to create tiny quantity of this parcel-selected dry wine, revealing the unique harmony between this unique terroir and the variety. The nose unfolds with fresh pear and passion fruit, accompanied by subtle hints of chestnut and white floral notes. On the palate, Becsek’s signature saline-mineral character dominates with vibrant citrus complemented by elegant oak notes."
+    "hu": "Kivételes, már-már megismételhetetlennek tűnő, nem minden évben megalkotható fajta és dűlő lenyomatok képezik az Intuition borcsalád tételeit. Egyedi terroir tételek, melyek magukban hordozzák a dűlők sajátosságait, az évjárati körülményekre adott spontán válaszokat és a borász intuitív megoldásait, így kilépve a klasszikus tokaji borkategóriákból: “The only real valuable thing is intuition.” – Albert Einstein borleírás évjárat dűlő tárolás és fogyasztás A Becsek-dűlő Furmintja 2006 óta aszúink állandó alapbora, ám a 2020-as évjáratból ez a dűlőszelektált tétel kivételesen önálló száraz borként mutatkozik be, felfedve a termőhely és a fajta különleges összhangját. Illatában friss körte és maracuja bontakozik ki, finom gesztenyés árnyalatokkal és fehér virágos jegyekkel. Ízében a dűlőre jellemző sós–ásványos karakter dominál, élénk citrusossággal, melyet elegáns fahordós jegyek tesznek teljessé.",
+    "en": "Intuition wines are exceptional, almost unrepeatable imprints of grape varieties and vineyards, and can not be created in every vintage.These distinctive terroir wines reflect the specific qualities of their vineyards, respond spontaneously to the conditions of each vintage, and embody the intuitive and creative decisions of the winemaker. This approach allows us to move beyond the traditional categories of Tokaj wines. “The only real valuable thing is intuition.” – Albert Einstein TASTING NOTES VINTAGE VINEYARD."
    },
    "render": "bottle-intuition-no3-20",
-   "live_url": "https://holdvolgy.com/bor/tokaji-furmint-intuition-no3-2020"
+   "live_url": "https://holdvolgy.com/bor/tokaji-furmint-intuition-no3-2020",
+   "tasting": {
+    "hu": "",
+    "en": ""
+   },
+   "tech": {
+    "alkohol": "12,5",
+    "cukor": "7,5",
+    "sav": "7,1",
+    "illo": "0,45",
+    "so2": "23/174",
+    "extrakt": "22,4",
+    "fajta": "100% furmint",
+    "dulok": "Becsek",
+    "palack": "1152",
+    "besorolas": "Tokaji védett eredetű száraz fehérbor"
+   },
+   "vintage_note": {
+    "hu": "Szinte csapadékmentesen kezdődött az év, és ez a szokatlanul száraz és hosszú időszak a növény fejlődését is lelassította. A kései, diverzifikált virágzás és Medárd csapadékos hetei komoly mennyiségi gondokat vetítettek előre, de az éber és precíz szőlészeti munkának köszönhetően ezt sikeresen ellensúlyoztuk. Ennek köszönhetően a növény legkiválóbb kondíciójában kezdhettük meg szeptember közepén a száraz szüretünket.",
+    "en": "Szinte csapadékmentesen kezdődött az év, és ez a szokatlanul száraz és hosszú időszak a növény fejlődését is lelassította. A kései, diverzifikált virágzás és Medárd csapadékos hetei komoly mennyiségi gondokat vetítettek előre, de az éber és precíz szőlészeti munkának köszönhetően ezt sikeresen ellensúlyoztuk."
+   },
+   "storage": {
+    "hu": "hűvös helyen, fektetve",
+    "en": "in a cool place, lying down"
+   },
+   "serve_temp": {
+    "hu": "10-13°C",
+    "en": "10-13°C"
+   }
   },
   {
    "id": "intuition-no2-2024",
@@ -521,11 +1078,39 @@
     "en": "Wonderfully unexpected, beautifully unpredictable, as a free imagination of an author."
    },
    "desc": {
-    "hu": "Kivételes, már-már megismételhetetlennek tűnő, nem minden évben megalkotható fajta és dűlő lenyomatok képezik az Intuition borcsalád tételeit. Egyedi terroir tételek, melyek magukban hordozzák a dűlők sajátosságait, az évjárati körülményekre adott spontán válaszokat és a borász intuitív megoldásait, így kilépve a klasszikus tokaji borkategóriákból: “The only real valuable thing is intuition.” – Albert Einstein borleírás évjárat dűlő tárolás és fogyasztás A mádi Nyulászó-dűlő sárgamuskotálya ebben az évjáratban száraz tételként mutatkozik meg. Illatában rózsaszirom, licsi és menta finom harmóniája jelenik meg, ízében pedig az őszibarack gyümölcsösségét a pomelo és a citrusok frissessége egészíti ki. ALKOHOL (% vol) 12,5 CUKOR (g/l) 8,3 SAV (g/l) 5,9 ILLÓ (g/l) 0,31 SO2 (mg/l) 24/143 CUKORM. EXTRAKT (g/l) 20,9 FAJTA 100% sárgamuskotály DŰLŐK Nyulászó PALACKOZOTT MENNYISÉG 1938 BESOROLÁS Tokaji védett eredetű száraz fehérbor adatlap A 2024-es esztendő a Tokaji borvidéken az alkalmazkodás éve volt.",
-    "en": "Intuition wines are exceptional, almost unrepeatable imprints of grape varieties and vineyards, and can not be created in every vintage.These distinctive terroir wines reflect the specific qualities of their vineyards, respond spontaneously to the conditions of each vintage, and embody the intuitive and creative decisions of the winemaker. This approach allows us to move beyond the traditional categories of Tokaj wines. “The only real valuable thing is intuition.” – Albert Einstein TASTING NOTES VINTAGE VINEYARD STORAGE AND SERVING In this vintage, the Tokaji Dry Muscat à Petits Grains, Nyulászó is presented as a dry expression of the variety. The nose reveals an elegant harmony of rose petals, lychee and mint, while the palate is defined by the ripe fruit of peach, complemented by the refreshing notes of pomelo and citrus. ALCOHOL (% vol) 12,5 SUGAR (g/l) 8,3 ACIDITY (g/l) 5,9 VOLATILE (g/l) 0,31 SO2 (mg/l) 24/143 RESIDUAL EXTRACT (g/l) 20,9 VARIETY 100% muscat à petits grains CLASSIFIED CRUS Nyulászó BOTTLED QUANTITY 1938 CLASSIFICATION Quality dry white whine FACT SHEET The 2024 vintage in the Tokaj wine region was a year of adaptation."
+    "hu": "Kivételes, már-már megismételhetetlennek tűnő, nem minden évben megalkotható fajta és dűlő lenyomatok képezik az Intuition borcsalád tételeit. Egyedi terroir tételek, melyek magukban hordozzák a dűlők sajátosságait, az évjárati körülményekre adott spontán válaszokat és a borász intuitív megoldásait, így kilépve a klasszikus tokaji borkategóriákból: “The only real valuable thing is intuition.” – Albert Einstein borleírás évjárat dűlő tárolás és fogyasztás A mádi Nyulászó-dűlő sárgamuskotálya ebben az évjáratban száraz tételként mutatkozik meg. Illatában rózsaszirom, licsi és menta finom harmóniája jelenik meg, ízében pedig az őszibarack gyümölcsösségét a pomelo és a citrusok frissessége egészíti ki.",
+    "en": "Intuition wines are exceptional, almost unrepeatable imprints of grape varieties and vineyards, and can not be created in every vintage.These distinctive terroir wines reflect the specific qualities of their vineyards, respond spontaneously to the conditions of each vintage, and embody the intuitive and creative decisions of the winemaker. This approach allows us to move beyond the traditional categories of Tokaj wines. “The only real valuable thing is intuition.” – Albert Einstein TASTING NOTES VINTAGE VINEYARD."
    },
    "render": "bottle-intuition-no2-24-dij",
-   "live_url": "https://holdvolgy.com/bor/intuition-no2-2024"
+   "live_url": "https://holdvolgy.com/bor/intuition-no2-2024",
+   "tasting": {
+    "hu": "",
+    "en": ""
+   },
+   "tech": {
+    "alkohol": "12,5",
+    "cukor": "8,3",
+    "sav": "5,9",
+    "illo": "0,31",
+    "so2": "24/143",
+    "extrakt": "20,9",
+    "fajta": "100% sárgamuskotály",
+    "dulok": "Nyulászó",
+    "palack": "1938",
+    "besorolas": "Tokaji védett eredetű száraz fehérbor"
+   },
+   "vintage_note": {
+    "hu": "A 2024-es esztendő a Tokaji borvidéken az alkalmazkodás éve volt. A szokatlanul enyhe tél és az azt követő gyors tavaszi vegetáció korai kezdést ígért, ám a szélsőséges nyári időjárás – a nagy meleg és a júliusi jégesők – teljes újratervezésre kényszerítette a csapatot. A száraz borok alapanyagának szüretelése a szokásosnál jóval hamarabb, augusztus 16-án vette kezdetét. A hőség miatt a megszokottól eltérő dűlőkből érkeztek a fürtök, ami technológiai váltást és a megszokottól eltérő területek házasítását igényelte a minőség fenntartása érdekében. A korai fajták (zéta, kabar, sárgamuskotály) augusztus végére, a furmint és hárslevelű alapanyagok pedig szeptember közepére biztonságban a pincébe kerültek. A végeredmény egy intenzív, jó illatú és gazdag beltartalmú szüreti alapanyag, amely a nehézségek ellenére is ígéretes száraz tételeket vetít előre.",
+    "en": "The 2024 vintage in the Tokaj wine region was a year of adaptation"
+   },
+   "storage": {
+    "hu": "hűvös helyen, fektetve",
+    "en": "in a cool place, lying down"
+   },
+   "serve_temp": {
+    "hu": "10-13°C",
+    "en": "10-13°C"
+   }
   },
   {
    "id": "exaltation-2017-reserve",
@@ -546,11 +1131,28 @@
     "en": "This wine is only available as a part of Frost on the mountain holiday wine collection during our winter campaign."
    },
    "desc": {
-    "hu": "LELKES GYÜMÖLCSÖSSÉG, CSÁBÍTÓ KÍSÉRTÉS. Exaltation borunk minden évjáratban tele van élettel, frissességgel, lelkesedéssel, gyümölcsösséggel. Ez a bor egyértelműen a sárgamuskotályról szól, zsenialitásában mégis nagyon fontos szerepet játszik a Nyulászó-dűlő, mely nélkül nem tudna igazán felszabadulni a tétel. Egy csábító tokaji, mely újra és újra lehengerel minket is: “Common sense is only a modification of talent. Genius is an exaltation of it. The difference is, therefore, in degree, not nature.” — Edward Bulwer-Lytton borleírás évjárat dűlő tárolás és fogyasztás Tiszta, feszes stílusú, késői szüretelésű fehérbor, mely a sárgamuskotály és az I. osztályú mádi Nyulászó-dűlő összefonódásának lenyomata. Magával ragadó illatvilágában trópusi gyümölcsök, méz és rózsaszirom bontakozik ki. Ízében is kirobbanó gyümölcsösséggel köszön be, melyben mangó, sárgabarack és zamatos füge jelenik meg. Precíz sav-cukor egyensúly és végtelen lecsengés jellemzi, melyben a mineralitás ezúttal is finom kiegészítő. adatlap A korai, tartós januári fagy vészjósló forgatókönyvet ígért, de a kiegyenlített tavaszi-nyári időjárás eredményeként a szőlő ideálisan fejlődhetett.",
-    "en": "FRUITY AND SPIRITED, SEDUCTIVE AND TEMPTING This wine consistently displays a vibrant character, with freshness, enthusiasm, and prominent fruit flavors in each vintage. While it is made only from muscat à petits grains, the influence of the first-growth vineyard, Nyulászó, is crucial to its unique personality. It's a captivating Tokaji that continues to impress us time after time. “Common sense is only a modification of talent. Genius is an exaltation of it. The difference is, therefore, in degree, not nature.” — Edward Bulwer-Lytton TASTING NOTES VINTAGE VINEYARD STORAGE AND SERVING Clear, tight late harvest white wine, a vibrant and unique imprint of the Muscat à petits grains and Nyulászó first growth vineyard. Notes of tropical fruits, honey and rose petal evolve from the fascinating palette of scents. The explosion of fruits continues on the palate with mango, apricot, savory fig escorted with delicate and elegant spices of the oak barrel. A precise acid-sugar balance reveals the irresistible character of the wine, complemented with minerality. FACT SHEET After an early and lasting frost in January we had a relatively constant spring-summer period."
+    "hu": "LELKES GYÜMÖLCSÖSSÉG, CSÁBÍTÓ KÍSÉRTÉS. Exaltation borunk minden évjáratban tele van élettel, frissességgel, lelkesedéssel, gyümölcsösséggel. Ez a bor egyértelműen a sárgamuskotályról szól, zsenialitásában mégis nagyon fontos szerepet játszik a Nyulászó-dűlő, mely nélkül nem tudna igazán felszabadulni a tétel. Egy csábító tokaji, mely újra és újra lehengerel minket is: “Common sense is only a modification of talent. Genius is an exaltation of it. The difference is, therefore, in degree, not nature.” — Edward Bulwer-Lytton borleírás évjárat dűlő tárolás és fogyasztás Tiszta, feszes stílusú, késői szüretelésű fehérbor, mely a sárgamuskotály és az I. osztályú mádi Nyulászó-dűlő összefonódásának lenyomata. Magával ragadó illatvilágában trópusi gyümölcsök, méz és rózsaszirom bontakozik ki. Ízében is kirobbanó gyümölcsösséggel köszön be, melyben mangó, sárgabarack és zamatos füge jelenik meg. Precíz sav-cukor egyensúly és végtelen lecsengés jellemzi, melyben a mineralitás ezúttal is finom kiegészítő. adatlap A korai, tartós januári fagy vészjósló forgatókönyvet ígért, de a kiegyenlített tavaszi-nyári időjárás eredményeként a szőlő ideálisan fejlődhetett. A szüretet augusztusban tudtuk megkezdeni. Szeptemberben az elmúlt ötven év átlag csapadékának a két és félszerese esett, de az egész éves, gondos növényvédelemnek köszönhetően az esőzés végül nem okozott gondot. Kiváló és minden eddiginél ígéretesebb évjárat volt ez, a feldolgozott szőlő alapanyag mennyisége és minősége szempontjából is. Ez lehetővé tette, hogy édes sárgamuskotály tételünket is elkészítsük. teljes évjáratjelentés A Nyulászó történelmileg a legfiatalabb, adottságaiban pedig az egyik legkiválóbb dűlő Mádon. A 200 m magas szőlőhegy a település délkeleti határában emelkedik, minden égtáj felé egyenletes esésben. Egyértelműen a sárgamuskotály területe. Kimagasló napfénytartam- és hőmennyiség jellemzi, a változatos és gazdag talaj pedig még értékesebbé teszi. Különböző kőzettani adottságú területek metszéspontjában helyezkedik el. Itt megtalálható a mádi vulkanikus hegyek összes kőzetanyaga, gazdag ásványianyag-tartalommal. Ezt mi sem bizonyítja jobban, mint hogy 2008 óta már 5 olyan, késői szüretelésű sárgamuskotály tételt adott ez a terület a Birtoknak, mely a Muscats du Monde világversenyen aranyérmet szerzett. A dűlő szőlőművelésre utaló feljegyzései már a XVI. századtól megtalálhatóak, a nemesség és a szerzetesrendek birtoklására utalva: Rákóczi-, Szirmay-, Orczy családok; jezsuita- és piarista rendek. A település részben a Nyulászó hegy nyugati oldalán épült, így közelsége miatt a főurak kedvenc szórakozásának, a nyúlvadászatnak is a színtere volt. Történelmi pincerendszerünk 109 ága is e szőlőhegy mélységeiben rejti borkincseit.",
+    "en": "FRUITY AND SPIRITED, SEDUCTIVE AND TEMPTING This wine consistently displays a vibrant character, with freshness, enthusiasm, and prominent fruit flavors in each vintage. While it is made only from muscat à petits grains, the influence of the first-growth vineyard, Nyulászó, is crucial to its unique personality. It's a captivating Tokaji that continues to impress us time after time. “Common sense is only a modification of talent. Genius is an exaltation of it. The difference is, therefore, in degree, not nature.” — Edward Bulwer-Lytton TASTING NOTES VINTAGE VINEYARD."
    },
    "render": "bottle-exaltation-17",
-   "live_url": "https://holdvolgy.com/bor/exaltation-2017-reserve"
+   "live_url": "https://holdvolgy.com/bor/exaltation-2017-reserve",
+   "tasting": {
+    "hu": "",
+    "en": ""
+   },
+   "tech": {},
+   "vintage_note": {
+    "hu": "A korai, tartós januári fagy vészjósló forgatókönyvet ígért, de a kiegyenlített tavaszi-nyári időjárás eredményeként a szőlő ideálisan fejlődhetett. A szüretet augusztusban tudtuk megkezdeni. Szeptemberben az elmúlt ötven év átlag csapadékának a két és félszerese esett, de az egész éves, gondos növényvédelemnek köszönhetően az esőzés végül nem okozott gondot. Kiváló és minden eddiginél ígéretesebb évjárat volt ez, a feldolgozott szőlő alapanyag mennyisége és minősége szempontjából is. Ez lehetővé tette, hogy édes sárgamuskotály tételünket is elkészítsük.",
+    "en": "After an early and lasting frost in January we had a relatively constant spring-summer period. The bunches developed in ideal conditions. The harvest started in August. In September, having more than two times of the average rainfall of the past 50 years, thanks to the careful, year-round, precise viticulture, the rain didn’t deteriorate the quality of this exceptional fruit."
+   },
+   "storage": {
+    "hu": "hűvös helyen, fektetve",
+    "en": "in a cool place, lying down"
+   },
+   "serve_temp": {
+    "hu": "10-13°C",
+    "en": "10-13°C"
+   }
   },
   {
    "id": "exaltation-2018",
@@ -571,11 +1173,38 @@
     "en": ""
    },
    "desc": {
-    "hu": "Exaltation borunk minden évjáratban tele van élettel, frissességgel, lelkesedéssel, gyümölcsösséggel. Ez a bor egyértelműen a sárgamuskotályról szól, zsenialitásában mégis nagyon fontos szerepet játszik a Nyulászó-dűlő, mely nélkül nem tudna igazán felszabadulni a tétel. Egy csábító tokaji, mely újra és újra lehengerel minket is: “Common sense is only a modification of talent. Genius is an exaltation of it. The difference is, therefore, in degree, not nature.” — Edward Bulwer-Lytton borleírás évjárat dűlő tárolás és fogyasztás Tiszta, feszes stílusú, késői szüretelésű bor, mely a sárgamuskotály és az I. osztályú mádi Nyulászó-dűlő összefonódásának lenyomata. Magával ragadó illatvilágában édeskömény , rózsa és barack kompót bontakozik ki. Ízében is kirobbanó gyümölcsösséggel köszön be, melyben sárgabarack, grillázs és friss citrusosság jelenik meg. Precíz sav-cukor egyensúly és végtelen lecsengés jellemzi, melyben a mineralitás ezúttal is finom kiegészítő. ALKOHOL (% vol) 12,5 CUKOR (g/l) 100,5 SAV (g/l) 6,2 ILLÓ (g/l) 0,69 SO2 (mg/l) 26/129 CUKORM.",
-    "en": "FRUITY AND SPIRITED, SEDUCTIVE AND TEMPTING This wine consistently displays a vibrant character, with freshness, enthusiasm, and prominent fruit flavors in each vintage. While it is made only from muscat à petits grains, the influence of the first-growth vineyard, Nyulászó, is crucial to its unique personality. It's a captivating Tokaji that continues to impress us time after time. “Common sense is only a modification of talent. Genius is an exaltation of it. The difference is, therefore, in degree, not nature.” — Edward Bulwer-Lytton TASTING NOTES VINTAGE VINEYARD STORAGE AND SERVING Clear, tight late harvest wine, a vibrant and unique imprint of the Muscat à petits grains and Nyulászó first growth vineyard. Notes of fennel, rose, and apricot compote evolve from the fascinating palette of scents. The explosion of fruits continues on the palate with apricot, brittle, and fresh citrus. A precise acid-sugar balance reveals the irresistible character of the wine, complemented by minerality."
+    "hu": "Exaltation borunk minden évjáratban tele van élettel, frissességgel, lelkesedéssel, gyümölcsösséggel. Ez a bor egyértelműen a sárgamuskotályról szól, zsenialitásában mégis nagyon fontos szerepet játszik a Nyulászó-dűlő, mely nélkül nem tudna igazán felszabadulni a tétel. Egy csábító tokaji, mely újra és újra lehengerel minket is: “Common sense is only a modification of talent. Genius is an exaltation of it. The difference is, therefore, in degree, not nature.” — Edward Bulwer-Lytton borleírás évjárat dűlő tárolás és fogyasztás Tiszta, feszes stílusú, késői szüretelésű bor, mely a sárgamuskotály és az I. osztályú mádi Nyulászó-dűlő összefonódásának lenyomata. Magával ragadó illatvilágában édeskömény , rózsa és barack kompót bontakozik ki. Ízében is kirobbanó gyümölcsösséggel köszön be, melyben sárgabarack, grillázs és friss citrusosság jelenik meg. Precíz sav-cukor egyensúly és végtelen lecsengés jellemzi, melyben a mineralitás ezúttal is finom kiegészítő.",
+    "en": "FRUITY AND SPIRITED, SEDUCTIVE AND TEMPTING This wine consistently displays a vibrant character, with freshness, enthusiasm, and prominent fruit flavors in each vintage. While it is made only from muscat à petits grains, the influence of the first-growth vineyard, Nyulászó, is crucial to its unique personality. It's a captivating Tokaji that continues to impress us time after time. “Common sense is only a modification of talent. Genius is an exaltation of it. The difference is, therefore, in degree, not nature.” — Edward Bulwer-Lytton TASTING NOTES VINTAGE VINEYARD."
    },
    "render": "bottle-exaltation-18",
-   "live_url": "https://holdvolgy.com/bor/tokaji-sargamuskotaly-exaltation-2018"
+   "live_url": "https://holdvolgy.com/bor/tokaji-sargamuskotaly-exaltation-2018",
+   "tasting": {
+    "hu": "",
+    "en": ""
+   },
+   "tech": {
+    "alkohol": "12,5",
+    "cukor": "100,5",
+    "sav": "6,2",
+    "illo": "0,69",
+    "so2": "26/129",
+    "extrakt": "26,4",
+    "fajta": "100% sárgamuskotály DŰLŐ Nyulászó",
+    "palack": "9280",
+    "besorolas": "Tokaji védett eredetű édes borkülönlegesség"
+   },
+   "vintage_note": {
+    "hu": "Szőlészünk és csapata tudatos munkája, valamint szőlőültetvényeink káprázatos toleranciája együttesen segítették nemcsak a korai fagyok, hanem a tavaszi szélsőséges időjárási anomáliák leküzdését is. Az isteni növény azonban minden eddiginél türelmetlenebbnek mutatkozott: a korai érésű fajták augusztus közepi szedésével indítottuk rekord idejű szüretünket.",
+    "en": "The diligent efforts of our team, combined with the remarkable resilience of our vineyards, helped us overcome the challenges caused by early frost and extreme spring weather conditions."
+   },
+   "storage": {
+    "hu": "hűvös helyen, fektetve",
+    "en": "in a cool place, lying down"
+   },
+   "serve_temp": {
+    "hu": "10-13°C",
+    "en": "10-13°C"
+   }
   },
   {
    "id": "vision-2018-magnum",
@@ -596,11 +1225,39 @@
     "en": "A DEDICATED CERTITUDE, THAT TRUE BALANCE CAN BE REACHED."
    },
    "desc": {
-    "hu": "VISION borunk azt mutatja meg, hogy szerintünk úgy lesz minden évben elkészíthető és izgalmas a száraz furmint, ha azt az évjárati adottságok szerint tudatosan, finoman változó arányban ötvözzük a hárslevelű kedvességével és a kabar fűszerességével.",
-    "en": "This wine reflects our vision of how a dry furmint can be crafted in every vintage and yet remain exciting. We achieve this by skillfully blending it with varying proportions of the charming Hárslevelű and the spicy Kabar, tailored to the specific characteristics of each vintage. It symbolizes consistency and reliability, while the inclusion of Kabar brings an element of innovation. This is the first step into the Holdvölgy universe. …you don’t have to be pushed, the vision pulls you” – Steve Jobs TASTING NOTES VINTAGE STORAGE AND SERVING Our first magnum release of our white dry blend and in Holdvölgy history as well, from a unique and vibrant vintage. On the nose pear, quince and cedar appear. The palate is a cocktail of pink grapefruit, pineapple with subtle notes of citruses. Beautifully weighted, elegant and complex, with a long finish. These limited edition Vision magnum bottles are numbered. Numbers cannot be reserved and are assigned based on the order time."
+    "hu": "VISION borunk azt mutatja meg, hogy szerintünk úgy lesz minden évben elkészíthető és izgalmas a száraz furmint, ha azt az évjárati adottságok szerint tudatosan, finoman változó arányban ötvözzük a hárslevelű kedvességével és a kabar fűszerességével. Ez a bor jelképezi az állandóságot, a bizonyosságot életünkben, a kabar és most már a magnum palack révén pedig az innovációt, utat mutatva a Holdvölgy világába : …you don’t have to be pushed, the vision pulls you” – Steve Jobs",
+    "en": "This wine reflects our vision of how a dry furmint can be crafted in every vintage and yet remain exciting. We achieve this by skillfully blending it with varying proportions of the charming Hárslevelű and the spicy Kabar, tailored to the specific characteristics of each vintage. It symbolizes consistency and reliability, while the inclusion of Kabar brings an element of innovation. This is the first step into the Holdvölgy universe. …you don’t have to be pushed, the vision pulls you” – Steve Jobs"
    },
    "render": "bottle-vision-18",
-   "live_url": "https://holdvolgy.com/bor/szaraz-valogatas-vision-2018-magnum"
+   "live_url": "https://holdvolgy.com/bor/szaraz-valogatas-vision-2018-magnum",
+   "tasting": {
+    "hu": "Fehér birtokszelekciónk vibrálóan egyedi évjárata és az első Holdvölgy magnum palack elkészítésének éve. Illatában a körte, birsalma és cédrus dominál, ízében pedig a pink grépfrút és az ananász jegyei kísérik a kortyot, citrusokkal kiegészülve. Kerek, elegáns, komplex élmény, hosszú lecsengéssel. A Vision magnum palackok számmal ellátott, limitált tételek. Számok külön nem foglalhatók, a rendelési sorrend határozza meg a megrendelt palack(ok) nyakán szereplő számozást.",
+    "en": "Our first magnum release of our white dry blend and in Holdvölgy history as well, from a unique and vibrant vintage. On the nose pear, quince and cedar appear. The palate is a cocktail of pink grapefruit, pineapple with subtle notes of citruses. Beautifully weighted, elegant and complex, with a long finish. These limited edition Vision magnum bottles are numbered. Numbers cannot be reserved and are assigned based on the order time."
+   },
+   "tech": {
+    "alkohol": "13",
+    "cukor": "6,9",
+    "sav": "7,7",
+    "illo": "0,39",
+    "so2": "16/94",
+    "extrakt": "21,2",
+    "fajta": "furmint, hárslevelű, kabar",
+    "dulok": "Holdvölgy, Nyulászó",
+    "palack": "1163",
+    "besorolas": "Tokaji védett eredetű száraz fehérbor"
+   },
+   "vintage_note": {
+    "hu": "Szőlészünk és csapata tudatos munkája, valamint szőlőültetvényeink káprázatos toleranciája együttesen segítették nem csak a korai fagyok, hanem a tavaszi szélsőséges időjárási anomáliák leküzdését is.",
+    "en": "The conscientious viticultural work and the tolerance of the 1st class vineyards have overcome not only the early frosts but also the extreme spring weather. The divine plant reacted „impatiently” during its development with early flowering and cluster closure that made possible to begin the harvest in mid-August."
+   },
+   "storage": {
+    "hu": "hűvös helyen, fektetve",
+    "en": "in a cool place, lying down"
+   },
+   "serve_temp": {
+    "hu": "10-13°C",
+    "en": "10-13°C"
+   }
   },
   {
    "id": "vision-2018",
@@ -621,11 +1278,38 @@
     "en": "A DEDICATED CERTITUDE, THAT TRUE BALANCE CAN BE REACHED."
    },
    "desc": {
-    "hu": "VISION borunk azt mutatja meg, hogy szerintünk úgy lesz minden évben elkészíthető és izgalmas a száraz furmint, ha azt az évjárati adottságok szerint tudatosan, finoman változó arányban ötvözzük a hárslevelű kedvességével és a kabar fűszerességével.",
-    "en": "This wine reflects our vision of how a dry furmint can be crafted in every vintage and yet remain exciting. We achieve this by skillfully blending it with varying proportions of the charming Hárslevelű and the spicy Kabar, tailored to the specific characteristics of each vintage. It symbolizes consistency and reliability, while the inclusion of Kabar brings an element of innovation. This is the first step into the Holdvölgy universe. …you don’t have to be pushed, the vision pulls you” – Steve Jobs TASTING NOTES VINTAGE STORAGE AND SERVING The vibrant, reserve white wine vintage of our estate selection that only got bolder and richer in the past four years since its original release in 2020. The scent opens up with exotic fruits and fresh green apple. Pineapple dominates the palate, with a dynamic play of pomelo, melon and marmalade. A savoury dry wine with elegant minerality and endless finish."
+    "hu": "VISION borunk azt mutatja meg, hogy szerintünk úgy lesz minden évben elkészíthető és izgalmas a száraz furmint, ha azt az évjárati adottságok szerint tudatosan, finoman változó arányban ötvözzük a hárslevelű kedvességével és a kabar fűszerességével. Ez a bor jelképezi az állandóságot, a bizonyosságot és a kabar révén főként az innovációt életünkben, utat mutatva a Holdvölgy világába : …you don’t have to be pushed, the vision pulls you” – Steve Jobs",
+    "en": "This wine reflects our vision of how a dry furmint can be crafted in every vintage and yet remain exciting. We achieve this by skillfully blending it with varying proportions of the charming Hárslevelű and the spicy Kabar, tailored to the specific characteristics of each vintage. It symbolizes consistency and reliability, while the inclusion of Kabar brings an element of innovation. This is the first step into the Holdvölgy universe. …you don’t have to be pushed, the vision pulls you” – Steve Jobs"
    },
    "render": "bottle-vision-18",
-   "live_url": "https://holdvolgy.com/bor/szaraz-valogatas-vision-2018-reserve"
+   "live_url": "https://holdvolgy.com/bor/szaraz-valogatas-vision-2018-reserve",
+   "tasting": {
+    "hu": "Fehér birtokszelekciónk hatodik, vibráló reserve évjárata, mely a 2020-as első bevezetése óta csak még tovább gazdagodott. Egzotikus gyümölcsökkel és a zöld alma friss jegyeivel nyílik meg előttünk az illat. Ízében az ananász adja a fő vonalat, melyet dinamikusan egészít ki a pomelo és a görögdinnye. Zamatos és finoman ásványos száraz bor, végtelen lecsengéssel.",
+    "en": "The vibrant, reserve white wine vintage of our estate selection that only got bolder and richer in the past four years since its original release in 2020. The scent opens up with exotic fruits and fresh green apple. Pineapple dominates the palate, with a dynamic play of pomelo, melon and marmalade. A savoury dry wine with elegant minerality and endless finish."
+   },
+   "tech": {
+    "alkohol": "13",
+    "cukor": "6,9",
+    "sav": "7,7",
+    "illo": "0,39",
+    "so2": "16/94",
+    "extrakt": "21,2",
+    "fajta": "furmint, hárslevelű, kabar",
+    "dulok": "Holdvölgy, Nyulászó",
+    "besorolas": "tokaji védett eredetű száraz fehérbor"
+   },
+   "vintage_note": {
+    "hu": "Szőlészünk és csapata tudatos munkája, valamint szőlőültetvényeink káprázatos toleranciája együttesen segítették nem csak a korai fagyok, hanem a tavaszi szélsőséges időjárási anomáliák leküzdését is.",
+    "en": "The conscientious viticultural work and the tolerance of the 1st class vineyards have overcome not only the early frosts but also the extreme spring weather. The divine plant reacted „impatiently” during its development with early flowering and cluster closure that made possible to begin the harvest in mid-August."
+   },
+   "storage": {
+    "hu": "hűvös helyen, fektetve",
+    "en": "in a cool place, lying down"
+   },
+   "serve_temp": {
+    "hu": "10-13°C",
+    "en": "10-13°C"
+   }
   },
   {
    "id": "vision-2021",
@@ -646,11 +1330,38 @@
     "en": "A DEDICATED CERTITUDE, THAT TRUE BALANCE CAN BE REACHED."
    },
    "desc": {
-    "hu": "Vision borunk azt mutatja meg, hogy szerintünk úgy lesz minden évben elkészíthető és izgalmas a száraz furmint, ha azt az évjárati adottságok szerint tudatosan, finoman változó arányban ötvözzük a hárslevelű kedvességével és a kabar fűszerességével.",
-    "en": "This wine reflects our vision of how a dry furmint can be crafted in every vintage and yet remain exciting. We achieve this by skillfully blending it with varying proportions of the charming Hárslevelű and the spicy Kabar, tailored to the specific characteristics of each vintage. It symbolizes consistency and reliability, while the inclusion of Kabar brings an element of innovation. This is the first step into the Holdvölgy universe. …you don’t have to be pushed, the vision pulls you” – Steve Jobs TASTING NOTES VINTAGE STORAGE AND SERVING The vibrant, reserve white wine vintage of our estate selection that only got bolder and richer in the past four years since its original release in 2020. The scent opens up with exotic fruits and fresh green apple. Pineapple dominates the palate, with a dynamic play of pomelo, melon and marmalade. A savoury dry wine with elegant minerality and endless finish."
+    "hu": "Vision borunk azt mutatja meg, hogy szerintünk úgy lesz minden évben elkészíthető és izgalmas a száraz furmint, ha azt az évjárati adottságok szerint tudatosan, finoman változó arányban ötvözzük a hárslevelű kedvességével és a kabar fűszerességével. Ez a bor jelképezi az állandóságot, a bizonyosságot és a kabar révén főként az innovációt életünkben, utat mutatva a Holdvölgy világába : …you don’t have to be pushed, the vision pulls you” – Steve Jobs",
+    "en": "This wine reflects our vision of how a dry furmint can be crafted in every vintage and yet remain exciting. We achieve this by skillfully blending it with varying proportions of the charming Hárslevelű and the spicy Kabar, tailored to the specific characteristics of each vintage. It symbolizes consistency and reliability, while the inclusion of Kabar brings an element of innovation. This is the first step into the Holdvölgy universe. …you don’t have to be pushed, the vision pulls you” – Steve Jobs"
    },
    "render": "bottle-vision-21",
-   "live_url": "https://holdvolgy.com/bor/szaraz-birtokszelekcio-vision-2021"
+   "live_url": "https://holdvolgy.com/bor/szaraz-birtokszelekcio-vision-2021",
+   "tasting": {
+    "hu": "Egy feszes és sokszínű tokaji száraz fehérbor a furmint izgalmával, a hárslevelű kedvességével és a kabar fűszereségével. Illatában egzotikus gyümölcsök, pomelo, ananász fogad, leheletnyi fás jeggyel kísérve, mely finom hordóhasználatból fakad. Ízében fehér húsú gyümölcsök és mokka vanília kerül hangsúlyba, a korty végén ásványos lecsengéssel.",
+    "en": "The vibrant, reserve white wine vintage of our estate selection that only got bolder and richer in the past four years since its original release in 2020. The scent opens up with exotic fruits and fresh green apple. Pineapple dominates the palate, with a dynamic play of pomelo, melon and marmalade. A savoury dry wine with elegant minerality and endless finish."
+   },
+   "tech": {
+    "alkohol": "13,5",
+    "cukor": "7,7",
+    "sav": "7,2",
+    "illo": "0,55",
+    "so2": "25/128",
+    "extrakt": "20,9",
+    "fajta": "furmint, hárslevelű, kabar",
+    "dulok": "Holdvölgy, Nyulászó, Becsek",
+    "besorolas": "Tokaji védett eredetű száraz fehérbor"
+   },
+   "vintage_note": {
+    "hu": "A február csapadékosabb, a tavasz pedig hűvösebb volt az átlagosnál, így a virágzás csak 2-3 hét késéssel érkezett. Emiatt a száraz szüretet is csak szeptember közepén kezdtük meg a zéta szedésével. A meleg, száraz idő, a szemek korai vízvesztése, a korai botrytiszesedés, mind kihívást jelentettek a szüreti napok kijelölésében.",
+    "en": "The conscientious viticultural work and the tolerance of the 1st class vineyards have overcome not only the early frosts but also the extreme spring weather. The divine plant reacted „impatiently” during its development with early flowering and cluster closure that made possible to begin the harvest in mid-August."
+   },
+   "storage": {
+    "hu": "hűvös helyen, fektetve",
+    "en": "in a cool place, lying down"
+   },
+   "serve_temp": {
+    "hu": "10-13°C",
+    "en": "10-13°C"
+   }
   },
   {
    "id": "meditation-2023",
@@ -671,11 +1382,39 @@
     "en": "Mineral touch that transports you to a peaceful, contemplative state of mind."
    },
    "desc": {
-    "hu": "A Holdvölgy birtok kezdeti éveiben a száraz furmint kódját kerestük, mely nem volt egyszerű. Rengeteg gondolat és kísérletezés révén 2007-ben végül sikerült maradandót alkotnunk. Ekkor készült el az első fajtaszelektált, száraz furmint tételünk, mely találóan a Meditation nevet kapta, hűen tükrözve erőfeszítéseinket. A folyamat közben felhalmozott tudás pedig egyértelműen segítette a további Holdvölgy tételek megszületését is: “The more man meditates upon good thoughts, the better will be his world and the world at large” — Confucius. borleírás évjárat tárolás és fogyasztás Dűlőválogatott száraz Furmint a Király-dűlő történelmi első osztályú területének egy apró parcellájáról. Illatában a vilmoskörte és a maracuja tiszta gyümölcsössége bontakozik ki, amelyet a rumos dió finom árnyalatai kísérnek. Ízében elegáns savszerkezet vezeti végig a bort, miközben gazdag trópusi karakter tárul fel mangóval és papajával, hosszan elnyúló, kifinomultan vaníliás lecsengéssel. ALKOHOL (% vol) 13 CUKOR (g/l) 5,9 SAV (g/l) 6,1 ILLÓ (g/l) 0,48 SO2 (mg/l) 18/127 CUKORM.",
-    "en": "In the early years of Holdvölgy, we set out to discover the code for dry Furmint, a challenging endeavor. After much reflection and experimentation, we successfully created our first varietal dry Furmint in 2007. We named it MEDITATION, as it truly reflects the dedication and effort that went into its development. The knowledge we gained during this process also contributed to the creation of other Holdvölgy wines: “The more man meditates upon good thoughts, the better will be his world and the world at large” — Confucius. TASTING NOTES VINTAGE STORAGE AND SERVING Parcel selected dry Furmint from a tiny parcel of the Király 1st growth vineyard. The nose reveals pure expressions of Williams pear and passion fruit, complemented by subtle notes of rum-soaked walnut. On the palate all along accompanied by an elegant acidity a rich tropical character unfolds with mango and papaya, leading to a long, elegantly vanilla-tinged finish."
+    "hu": "A Holdvölgy birtok kezdeti éveiben a száraz furmint kódját kerestük, mely nem volt egyszerű. Rengeteg gondolat és kísérletezés révén 2007-ben végül sikerült maradandót alkotnunk. Ekkor készült el az első fajtaszelektált, száraz furmint tételünk, mely találóan a Meditation nevet kapta, hűen tükrözve erőfeszítéseinket. A folyamat közben felhalmozott tudás pedig egyértelműen segítette a további Holdvölgy tételek megszületését is: “The more man meditates upon good thoughts, the better will be his world and the world at large” — Confucius.",
+    "en": "In the early years of Holdvölgy, we set out to discover the code for dry Furmint, a challenging endeavor. After much reflection and experimentation, we successfully created our first varietal dry Furmint in 2007. We named it MEDITATION, as it truly reflects the dedication and effort that went into its development. The knowledge we gained during this process also contributed to the creation of other Holdvölgy wines: “The more man meditates upon good thoughts, the better will be his world and the world at large” — Confucius."
    },
    "render": "bottle-meditation-23",
-   "live_url": "https://holdvolgy.com/bor/mediation-2023"
+   "live_url": "https://holdvolgy.com/bor/mediation-2023",
+   "tasting": {
+    "hu": "Dűlőválogatott száraz Furmint a Király-dűlő történelmi első osztályú területének egy apró parcellájáról. Illatában a vilmoskörte és a maracuja tiszta gyümölcsössége bontakozik ki, amelyet a rumos dió finom árnyalatai kísérnek. Ízében elegáns savszerkezet vezeti végig a bort, miközben gazdag trópusi karakter tárul fel mangóval és papajával, hosszan elnyúló, kifinomultan vaníliás lecsengéssel.",
+    "en": "Parcel selected dry Furmint from a tiny parcel of the Király 1st growth vineyard. The nose reveals pure expressions of Williams pear and passion fruit, complemented by subtle notes of rum-soaked walnut. On the palate all along accompanied by an elegant acidity a rich tropical character unfolds with mango and papaya, leading to a long, elegantly vanilla-tinged finish."
+   },
+   "tech": {
+    "alkohol": "13",
+    "cukor": "5,9",
+    "sav": "6,1",
+    "illo": "0,48",
+    "so2": "18/127",
+    "extrakt": "18,5",
+    "fajta": "100% furmint",
+    "dulok": "Király",
+    "palack": "2446",
+    "besorolas": "Tokaji védett eredetű száraz fehérbor"
+   },
+   "vintage_note": {
+    "hu": "Az elmúlt 100 év legszárazabb és legmelegebb nyarát éltük át, mely minden szőlőfajtára negatívan hatott: lassú növekedés, a cukortartalom gyors emelkedése, vízhiányos és kocsonyás bogyók. Ez mind a száraz alapanyagaink átlagosnál korábbi szedését sürgette, melyet augusztus 24-én kezdtünk a zéta gyűjtésével és szeptember 8-án zártunk furmint szürettel.",
+    "en": "We experienced the driest and hottest summer of the last century, which had an adverse effect on all types of grapes: slow plant growth, rapid increase in sugar, water stressed and pulpy berries. These conditions urged an early harvest of our dry wines, starting off with collecting the Zéta grape on the 24th of August and finishing the process on the 8th of September with our dry furmint."
+   },
+   "storage": {
+    "hu": "hűvös helyen, fektetve",
+    "en": "in a cool place, lying down"
+   },
+   "serve_temp": {
+    "hu": "10-13°C",
+    "en": "10-13°C"
+   }
   },
   {
    "id": "expression-2021-reserve",
@@ -696,11 +1435,39 @@
     "en": "FLORAL AND CONFIDENT WITH A VIVID PERSONALITY."
    },
    "desc": {
-    "hu": "Az első osztályú, történelmi Becsek-dűlő és a hárslevelű magával ragadó találkozása, a szőlőfajta otthonra találásának kérdések nélküli története ez a bor. Egy igazi élénk, magabiztos dűlőlenyomat, melyben egyértelműen kifejeződik a szőlőterület minden értéke, eleganciája, szépsége, és amelynek karaktere a francia Seguin Moreau hordó révén még inkább életre kel a borban: “Beauty without expression is boring” – Ralph Waldo Emerson borleírás évjárat dűlő tárolás és fogyasztás A történelmi, I. osztályú Becsek-dűlő 45 éves átlagéletkorú szőlőtőkéi, 11. alkalommal ajándékoztak meg bennünket ezzel a magabiztos fehérborral. Illatában a zöld alma dominál, sárga húsú görögdinnyével és gesztenyével. Ízében a szilva és az egres meghatározó, de a gesztenye itt is visszaköszön. Élénk és expresszív terroir-bor. ALKOHOL (% vol) 14 CUKOR (g/l) 6,3 SAV (g/l) 7,6 ILLÓ (g/l) 0,51 SO2 (mg/l) 25/154 CUKORM. EXTRAKT (g/l) 22,3 FAJTA 100% hárslevelű DŰLŐK Becsek PALACKOZOTT MENNYISÉG 2400 BESOROLÁS Tokaji védett eredetű száraz fehérbor adatlap A február csapadékosabb, a tavasz pedig hűvösebb volt az átlagosnál, így a virágzás is 2-3 hét késéssel érkezett.",
-    "en": "This wine represents a remarkable fusion of the historic 1st Growth Becsek and the Hárslevelű grape variety. It beautifully showcases the terroir, capturing the elegance and charm of this specific vineyard, which is enhanced even further by the subtlety of the Seguin Moreau oak barrels. “Beauty without expression is boring” – Ralph Waldo Emerson TASTING NOTES VINTAGE VINEYARD STORAGE AND SERVING Our single varietal Hárslevelű white wine is the 11th release from our parcels of first-growth Becsek, where the average age of the vines is 45 years. On the nose, green apple dominates, complemented by notes of yellow watermelon and chestnut. The palate reveals a rich character of plum and gooseberry, again accompanied by chestnut. It is a vivid and multi-layered terroir wine. ALCOHOL (% vol) 14 SUGAR (g/l) 6,3 ACIDITY (g/l) 7,6 VOLATILE (g/l) 0,51 SO2 (mg/l) 25/154 RESIDUAL EXTRACT (g/l) 22,3 VARIETY 100% hárslevelű CLASSIFIED CRUS Becsek BOTTLED QUANTITY 2400 CLASSIFICATION Quality dry white whine FACT SHEET In 2021, we finished pruning very early thanks to the weather conditions."
+    "hu": "Az első osztályú, történelmi Becsek-dűlő és a hárslevelű magával ragadó találkozása, a szőlőfajta otthonra találásának kérdések nélküli története ez a bor. Egy igazi élénk, magabiztos dűlőlenyomat, melyben egyértelműen kifejeződik a szőlőterület minden értéke, eleganciája, szépsége, és amelynek karaktere a francia Seguin Moreau hordó révén még inkább életre kel a borban: “Beauty without expression is boring” – Ralph Waldo Emerson borleírás évjárat dűlő tárolás és fogyasztás A történelmi, I. osztályú Becsek-dűlő 45 éves átlagéletkorú szőlőtőkéi, 11. alkalommal ajándékoztak meg bennünket ezzel a magabiztos fehérborral. Illatában a zöld alma dominál, sárga húsú görögdinnyével és gesztenyével. Ízében a szilva és az egres meghatározó, de a gesztenye itt is visszaköszön. Élénk és expresszív terroir-bor.",
+    "en": "This wine represents a remarkable fusion of the historic 1st Growth Becsek and the Hárslevelű grape variety. It beautifully showcases the terroir, capturing the elegance and charm of this specific vineyard, which is enhanced even further by the subtlety of the Seguin Moreau oak barrels. “Beauty without expression is boring” – Ralph Waldo Emerson TASTING NOTES VINTAGE VINEYARD."
    },
    "render": "bottle-expression-21",
-   "live_url": "https://holdvolgy.com/bor/szaraz-harslevelu-expression-2020"
+   "live_url": "https://holdvolgy.com/bor/szaraz-harslevelu-expression-2020",
+   "tasting": {
+    "hu": "",
+    "en": ""
+   },
+   "tech": {
+    "alkohol": "14",
+    "cukor": "6,3",
+    "sav": "7,6",
+    "illo": "0,51",
+    "so2": "25/154",
+    "extrakt": "22,3",
+    "fajta": "100% hárslevelű",
+    "dulok": "Becsek",
+    "palack": "2400",
+    "besorolas": "Tokaji védett eredetű száraz fehérbor"
+   },
+   "vintage_note": {
+    "hu": "A február csapadékosabb, a tavasz pedig hűvösebb volt az átlagosnál, így a virágzás is 2-3 hét késéssel érkezett. Emiatt a száraz szüretet is csak szeptember közepén kezdtük meg a zéta szedésével. A meleg, száraz idő, a szemek korai vízvesztése, a korai botrytiszesedés, mind kihívást jelentettek a szüreti napok kijelölésében. Ugyan kisebb hozamok, de kiváló gyümölcs született, a magas savaknak köszönhetően pedig kimagasló érlelési potenciál jellemzi a borokat.",
+    "en": "In 2021, we finished pruning very early thanks to the weather conditions. There was more rain and snow in February than usual, and the spring was also cooler, which delayed the growing season and the blooming by 2-3 weeks. We started the dry harvest only on the 14th of September. The warm and dry autumn weather caused rapid water loss and slow concentration in the berries, and increased the pressure of botrytis."
+   },
+   "storage": {
+    "hu": "hűvös helyen, fektetve",
+    "en": "in a cool place, lying down"
+   },
+   "serve_temp": {
+    "hu": "10-13°C",
+    "en": "10-13°C"
+   }
   },
   {
    "id": "expression-2022",
@@ -721,11 +1488,39 @@
     "en": "FLORAL AND CONFIDENT WITH A VIVID PERSONALITY."
    },
    "desc": {
-    "hu": "Az első osztályú, történelmi Becsek-dűlő és a hárslevelű magával ragadó találkozása, a szőlőfajta otthonra találásának kérdések nélküli története ez a bor. Egy igazi élénk, magabiztos dűlőlenyomat, melyben egyértelműen kifejeződik a szőlőterület minden értéke, eleganciája, szépsége, és amelynek karaktere a francia Seguin Moreau hordó révén még inkább életre kel a borban: “Beauty without expression is boring” – Ralph Waldo Emerson borleírás évjárat dűlő tárolás és fogyasztás A történelmi, I. osztályú Becsek-dűlő kivételes adottságai egy újabb magabiztos, száraz hárslevelűben öltenek testet. A finom tölgyfahordós érlelés elegánsan egészíti ki a bor természetes karakterét, így illatában az intenzív fehér virágok, a friss citrusosság és egy leheletnyi mandula köszönt minket. Ízében a pomeló és a grapefruit élénk frissessége dominál, amely lendületesen kitölti a feszes, testes kortyot. ALKOHOL (% vol) 13,5 CUKOR (g/l) 8,1 SAV (g/l) 6,4 ILLÓ (g/l) 0,37 SO2 (mg/l) 17/106 CUKORM.",
-    "en": "This wine represents a remarkable fusion of the historic 1st Growth Becsek and the Hárslevelű grape variety. It beautifully showcases the terroir, capturing the elegance and charm of this specific vineyard, which is enhanced even further by the subtlety of the Seguin Moreau oak barrels. “Beauty without expression is boring” – Ralph Waldo Emerson TASTING NOTES VINTAGE VINEYARD STORAGE AND SERVING The distinguished character of the historic 1st growth Becsek finds a compelling expression in this poised, dry Hárslevelű. Judicious oak ageing lends refinement without overshadowing the varietal’s innate purity, unfolding a bouquet of white blossoms, bright citrus, and a subtle almond nuance. ALCOHOL (% vol) 13,5 SUGAR (g/l) 8,1 ACIDITY (g/l) 6,4 VOLATILE (g/l) 0,37 SO2 (mg/l) 17/106 RESIDUAL EXTRACT (g/l) 21,1 VARIETY 100% hárslevelű CLASSIFIED CRUS Becsek BOTTLED QUANTITY 1132 CLASSIFICATION Quality dry white whine FACT SHEET We experienced the driest and hottest summer of the last century, which had an adverse effect on all types of grapes: slow plant growth, rapid increase in sugar, water stressed and pulpy berries."
+    "hu": "Az első osztályú, történelmi Becsek-dűlő és a hárslevelű magával ragadó találkozása, a szőlőfajta otthonra találásának kérdések nélküli története ez a bor. Egy igazi élénk, magabiztos dűlőlenyomat, melyben egyértelműen kifejeződik a szőlőterület minden értéke, eleganciája, szépsége, és amelynek karaktere a francia Seguin Moreau hordó révén még inkább életre kel a borban: “Beauty without expression is boring” – Ralph Waldo Emerson borleírás évjárat dűlő tárolás és fogyasztás A történelmi, I. osztályú Becsek-dűlő kivételes adottságai egy újabb magabiztos, száraz hárslevelűben öltenek testet. A finom tölgyfahordós érlelés elegánsan egészíti ki a bor természetes karakterét, így illatában az intenzív fehér virágok, a friss citrusosság és egy leheletnyi mandula köszönt minket. Ízében a pomeló és a grapefruit élénk frissessége dominál, amely lendületesen kitölti a feszes, testes kortyot.",
+    "en": "This wine represents a remarkable fusion of the historic 1st Growth Becsek and the Hárslevelű grape variety. It beautifully showcases the terroir, capturing the elegance and charm of this specific vineyard, which is enhanced even further by the subtlety of the Seguin Moreau oak barrels. “Beauty without expression is boring” – Ralph Waldo Emerson TASTING NOTES VINTAGE VINEYARD."
    },
    "render": "bottle-expression-22",
-   "live_url": "https://holdvolgy.com/bor/expression-2022"
+   "live_url": "https://holdvolgy.com/bor/expression-2022",
+   "tasting": {
+    "hu": "",
+    "en": ""
+   },
+   "tech": {
+    "alkohol": "13,5",
+    "cukor": "8,1",
+    "sav": "6,4",
+    "illo": "0,37",
+    "so2": "17/106",
+    "extrakt": "21,1",
+    "fajta": "100% hárslevelű",
+    "dulok": "Becsek",
+    "palack": "1132",
+    "besorolas": "Tokaji védett eredetű száraz fehérbor"
+   },
+   "vintage_note": {
+    "hu": "Az elmúlt 100 év legszárazabb és legmelegebb nyarát éltük át, mely minden szőlőfajtára negatívan hatott: lassú növekedés, a cukortartalom gyors emelkedése, vízhiányos és kocsonyás bogyók. Ez mind a száraz alapanyagaink átlagosnál korábbi szedését sürgette, melyet augusztus 24-én kezdtünk a zéta gyűjtésével és szeptember 8-án zártunk furmint szürettel. A körülmények ellenére a vártnál jobb termés született, tiszta, zamatos ízű gyümölccsel, így alapvető száraz tételeink 2022-ben is elkészülhetnek.",
+    "en": "We experienced the driest and hottest summer of the last century, which had an adverse effect on all types of grapes: slow plant growth, rapid increase in sugar, water stressed and pulpy berries. These conditions urged an early harvest of our dry wines, starting off with collecting the Zéta grape on the 24th of August and finishing the process on the 8th of September with our dry furmint."
+   },
+   "storage": {
+    "hu": "hűvös helyen, fektetve",
+    "en": "in a cool place, lying down"
+   },
+   "serve_temp": {
+    "hu": "10-13°C",
+    "en": "10-13°C"
+   }
   },
   {
    "id": "hold-and-hollo-sweet-2019",
@@ -746,11 +1541,35 @@
     "en": "IF YOU CAN’T FIND THE RIGHT WORDS… We created the perfect wine for expressing love and affection."
    },
    "desc": {
-    "hu": "Édes válogatásunk szavak helyett kifinomultságával, üdeségével és vibráló pink címkéjével üzeni, hogy szeretlek, legyen szó a társadról, a családodról, vagy a barátokról. HA NEM TUDOD SZAVAKKAL ELMONDANI… Megtaláltuk számodra a legjobb bort a szeretet és a szerelem kifejezésére. Édes válogatásunk szavak helyett kifinomultságával, üdeségével és vibráló pink címkéjével üzeni, hogy szeretlek, legyen szó a társadról, a családodról, vagy a barátokról. borleírás tárolás és fogyasztás Hetedik Sweet édes fehérbor évjáratunk illatában az egzotikus gyümölcsök kapnak hangsúlyt, ananásszal és passió gyümölccsel kiegészülve. Ízében is a passió gyümölcs érvényesül igazán fehér húsú barackkal és körtével. A telt, gyümölcsös jegyek, feszes savszerkezet mellett igazán friss élményt nyújtanak. ALKOHOL (% vol) 12,5 CUKOR (g/l) 66,8 SAV (g/l) 5,29 FAJTA furmint, hárslevelű DŰLŐK Becsek, Holdvölgy, Nyulászó BESOROLÁS Tokaji védett eredetű édes fehérbor adatlap TÁROLÁS hűvös helyen FOGYASZTÁS 8-10°C Szüret 2012. Október Szüret 2012. Október Szüret 2012. Október Szüret 2012.",
-    "en": "Our elegant, fresh, and vibrant sweet blend, with its pink label, spreads love towards family, friends, and partners. IF YOU CAN’T FIND THE RIGHT WORDS… We created the perfect wine for expressing love and affection. Our elegant, fresh, and vibrant sweet blend, with its pink label, spreads love towards family, friends, and partners. TASTING NOTES STORAGE AND SERVING The 7th vintage of our Sweet late harvest white wine. The nose, just like the palate, is full of exotic fruits surrounded by pineapple and passion fruit. A true refreshment, with mellow fruity notes and elegant acidity. ALCOHOL (% vol) 12,5 SUGAR (g/l) 66,8 ACIDITY (g/l) 5,29 VARIETY furmint, hárslevelű CLASSIFIED CRUS Becsek, Holdvölgy, Nyulászó CLASSIFICATION Tokaji védett eredetű édes fehérbor FACT SHEET STORAGE hűvös helyen CONSUMPTION 8-10°C Szüret 2012. Október Szüret 2012. Október Szüret 2012. Október Szüret 2012. Október AWARDS BERLINER WINE TROPHY 2024 GOLD ASIA WINE TROPHY 2024 GOLD AGING POTENTIAL MORE THAN 10 YEARS Our late harvest sweet Tokaji wines can preserve their quality for over 10 years when stored under ideal conditions."
+    "hu": "Édes válogatásunk szavak helyett kifinomultságával, üdeségével és vibráló pink címkéjével üzeni, hogy szeretlek, legyen szó a társadról, a családodról, vagy a barátokról. HA NEM TUDOD SZAVAKKAL ELMONDANI… Megtaláltuk számodra a legjobb bort a szeretet és a szerelem kifejezésére. Édes válogatásunk szavak helyett kifinomultságával, üdeségével és vibráló pink címkéjével üzeni, hogy szeretlek, legyen szó a társadról, a családodról, vagy a barátokról. borleírás tárolás és fogyasztás Hetedik Sweet édes fehérbor évjáratunk illatában az egzotikus gyümölcsök kapnak hangsúlyt, ananásszal és passió gyümölccsel kiegészülve. Ízében is a passió gyümölcs érvényesül igazán fehér húsú barackkal és körtével. A telt, gyümölcsös jegyek, feszes savszerkezet mellett igazán friss élményt nyújtanak.",
+    "en": "Our elegant, fresh, and vibrant sweet blend, with its pink label, spreads love towards family, friends, and partners. IF YOU CAN’T FIND THE RIGHT WORDS… We created the perfect wine for expressing love and affection. Our elegant, fresh, and vibrant sweet blend, with its pink label, spreads love towards family, friends, and partners. TASTING NOTES."
    },
    "render": "bottle-hh-sweet",
-   "live_url": "https://holdvolgy.com/bor/edes-valogatas-hold-and-hollo-sweet-2019"
+   "live_url": "https://holdvolgy.com/bor/edes-valogatas-hold-and-hollo-sweet-2019",
+   "tasting": {
+    "hu": "",
+    "en": ""
+   },
+   "tech": {
+    "alkohol": "12,5",
+    "cukor": "66,8",
+    "sav": "5,29",
+    "fajta": "furmint, hárslevelű",
+    "dulok": "Becsek, Holdvölgy, Nyulászó",
+    "besorolas": "Tokaji védett eredetű édes fehérbor"
+   },
+   "vintage_note": {
+    "hu": "TÁROLÁS hűvös helyen FOGYASZTÁS 8-10°C Szüret 2012. Október Szüret 2012. Október Szüret 2012. Október Szüret 2012. Október díjak Berliner wine trophy 2024 arany ASIA WINE TROPHY 2024 arany érlelési potenciál TÖBB MINT 10 ÉV Késői szüretelésű tételünk megfelelő tárolási- és hőmérsékleti körülmények mellett, akár több mint 10 évig is megőrizhetik minőségüket és élvezeti értéküket. ÜZENŐKÁRTYÁK.",
+    "en": "STORAGE hűvös helyen CONSUMPTION 8-10°C Szüret 2012. Október Szüret 2012. Október Szüret 2012. Október Szüret 2012. Október."
+   },
+   "storage": {
+    "hu": "hűvös helyen",
+    "en": ""
+   },
+   "serve_temp": {
+    "hu": "8-10°C",
+    "en": "8-10°C"
+   }
   },
   {
    "id": "hold-and-hollo-dry-2024",
@@ -772,10 +1591,34 @@
    },
    "desc": {
     "hu": "Nem a rejtélyekről szól, hanem az egyértelmű élvezetekről, így újraértelmezve a klasszikus tokaji hagyományokat. Stílusos társ bármely kalandodhoz és a legjobb, hogy mindig útra készen vár. Feltéve ha van belőle otthon elegendő palack. GYÜMÖLCSÖS KALANDVÁGY, EGYÉRTELMŰ ÉLVEZET Fiatalos és merész, egy igazi gyümölcskoktél. Nem a rejtélyekről szól, hanem az egyértelmű élvezetekről, így újraértelmezve a klasszikus tokaji hagyományokat. Stílusos társ bármely kalandodhoz és a legjobb, hogy mindig útra készen vár. Feltéve ha van belőle otthon elegendő palack. borleírás tárolás és fogyasztás A Hold and Hollo Dry fehérbor mindig a frissességről szól. Illatban komplex, ropogós, olyan egzotikus gyümölcsök hangsúlyozásával, mint a mangó, kókusz és pink grapefruit. Kortyban igazán élénk maracujával, papajával, lime és citrusok frissítő jegyeivel. Fiatalos és gyümölcsös tokaji, mely nem a rejtélyekről, hanem az egyértelmű élvezetekről szól. Útra készen várja az újabb kalandokat veled.",
-    "en": "It’s all about pleasure—no mysteries! This stylish partner is ready for all your adventures, but only if you have enough bottles… NO SECRETS, SIMPLY PLEASURE A cool and bold Tokaji that offers a fresh interpretation of the Tokaj tradition. It’s all about pleasure—no mysteries! This stylish partner is ready for all your adventures, but only if you have enough bottles… TASTING NOTES STORAGE AND SERVING Hold and Hollo Dry white wine is all about freshness. The nose is full of exotic fruits like mango, coconut, and pink grapefruit. The sip is quite vibrant with a blend of maracuja, papaya, lime, and citrus. A cool and charming tokaji with no mystery, just pleasure. ALCOHOL (% vol) 12,5 SUGAR (g/l) 7,9 ACIDITY (g/l) 5,8 VARIETY Furmint, Hárslevelű, Zéta, Muscat à petits grains BOTTLED QUANTITY 14344 CLASSIFICATION Quality dry white whine FACT SHEET STORAGE hűvös helyen CONSUMPTION 10-12°C Szüret 2012. Október Szüret 2012. Október Szüret 2012. Október Szüret 2012. Október AWARDS BERLINER WINE TROPHY 2025 SUMMER TASTING GOLD AGING POTENTIAL MORE THAN 5 YEARS Our reductive Tokaji white wines can preserve their quality for over 5 years when stored under ideal conditions."
+    "en": "It’s all about pleasure—no mysteries! This stylish partner is ready for all your adventures, but only if you have enough bottles… NO SECRETS, SIMPLY PLEASURE A cool and bold Tokaji that offers a fresh interpretation of the Tokaj tradition. It’s all about pleasure—no mysteries! This stylish partner is ready for all your adventures, but only if you have enough bottles… TASTING NOTES."
    },
    "render": "bottle-hh-dry",
-   "live_url": "https://holdvolgy.com/bor/szaraz-valogatas-hold-and-hollo-dry-2024"
+   "live_url": "https://holdvolgy.com/bor/szaraz-valogatas-hold-and-hollo-dry-2024",
+   "tasting": {
+    "hu": "",
+    "en": ""
+   },
+   "tech": {
+    "alkohol": "12,5",
+    "cukor": "7,9",
+    "sav": "5,8",
+    "fajta": "furmint, hárslevelű, zéta, sárgamuskotály",
+    "palack": "14344",
+    "besorolas": "Tokaji védett eredetű száraz fehérbor"
+   },
+   "vintage_note": {
+    "hu": "TÁROLÁS hűvös helyen FOGYASZTÁS 10-12°C Szüret 2012. Október Szüret 2012. Október Szüret 2012. Október Szüret 2012. Október díjak BERLINER WINE TROPHY 2025 SUMMER TASTING ARANY érlelési potenciál TÖBB MINT 5 ÉV Reduktív, acéltartályos tételeink megfelelő tárolási- és hőmérsékleti körülmények mellett, akár több mint 5 évig is megőrizhetik minőségüket és élvezeti értéküket.",
+    "en": "STORAGE hűvös helyen CONSUMPTION 10-12°C Szüret 2012. Október Szüret 2012. Október Szüret 2012. Október Szüret 2012. Október."
+   },
+   "storage": {
+    "hu": "hűvös helyen",
+    "en": ""
+   },
+   "serve_temp": {
+    "hu": "10-12°C",
+    "en": "10-12°C"
+   }
   },
   {
    "id": "hold-and-hollo-uppp-2025",
@@ -796,11 +1639,36 @@
     "en": "ELEGANT BUBBLES, VIBRANT FRUITS."
    },
    "desc": {
-    "hu": "Pont olyan lendületes és friss, mint amilyennek egy bulinak is lennie kell! 1 üveg biztosan nem lesz elég. DINAMIKUS BUBORÉKOK, PEZSDÍTŐ GYÜMÖLCSösség Félszáraz gyöngyözőborunk minden mozzanatában felpezsdít, maradandó élmény. Pont olyan lendületes és friss, mint amilyennek egy bulinak is lennie kell! 1 üveg biztosan nem lesz elég. borleírás tárolás és fogyasztás Az UPPP legújabb évjárata a frissesség és a lüktetés jegyében érkezik. Illatát az ánizs és az édeskömény tiszta, fűszeres kettőse vezeti fel, amit a citrus élénksége tesz teljessé. A korty egy könnyed gyümölcsös dallam: a maracuja és a zöld alma frissítő ritmusa találkozik a grapefruit tiszta energiájával. Pezsdítő Hold and Hollo élmény, ami minden pillanatban megadja az alaphangot. ALKOHOL (% vol) 13 CUKOR (g/l) 8,6 SAV (g/l) 6,8 FAJTA zéta, hárslevelű DŰLŐK Dorgó, Holdvölgy, Nyulászó PALACKOZOTT MENNYISÉG 5900 BESOROLÁS Felső-magyarországi oltalom alatt álló, földrajzi jelzésű fehér félszáraz gyöngyözőbor adatlap TÁROLÁS hűvös helyen FOGYASZTÁS 6-8°C Szüret 2012. Október Szüret 2012. Október Szüret 2012. Október Szüret 2012.",
-    "en": "Off-dry sparkling wine offers a bubbly and lasting experience in every detail. It's as lively and fresh as a party should be. One bottle definitely won't be enough! ELEGANT BUBBLES, VIBRANT FRUITS. Off-dry sparkling wine offers a bubbly and lasting experience in every detail. It's as lively and fresh as a party should be. One bottle definitely won't be enough! TASTING NOTES STORAGE AND SERVING UPPP’s new release arrives with the spirit of freshness and lively precision. The nose opens with a pure, aromatic interplay of anise and fennel, lifted up by bright citrus nunaces. On the palate the wine unfolds with a light, expressive rhythm: vibrant notes of passion fruit and crisp green apple are carried by the zesty energy of grapefruit. The texture remains clean and refreshing, leading to a bright, mouthwatering finish. A sparkling Hold and Hollo experience — perfect for setting the tone of any moment. ALCOHOL (% vol) 13 SUGAR (g/l) 8,6 ACIDITY (g/l) 6,8 VARIETY Zéta, Hárslevelű CLASSIFIED CRUS Dorgó, Holdvölgy, Nyulászó BOTTLED QUANTITY 5900 CLASSIFICATION Upper-Hungarian quality off-dry white wine (OFJ) FACT SHEET STORAGE hűvös helyen CONSUMPTION 6-8°C Szüret 2012."
+    "hu": "Pont olyan lendületes és friss, mint amilyennek egy bulinak is lennie kell! 1 üveg biztosan nem lesz elég. DINAMIKUS BUBORÉKOK, PEZSDÍTŐ GYÜMÖLCSösség Félszáraz gyöngyözőborunk minden mozzanatában felpezsdít, maradandó élmény. Pont olyan lendületes és friss, mint amilyennek egy bulinak is lennie kell! 1 üveg biztosan nem lesz elég. borleírás tárolás és fogyasztás Az UPPP legújabb évjárata a frissesség és a lüktetés jegyében érkezik. Illatát az ánizs és az édeskömény tiszta, fűszeres kettőse vezeti fel, amit a citrus élénksége tesz teljessé. A korty egy könnyed gyümölcsös dallam: a maracuja és a zöld alma frissítő ritmusa találkozik a grapefruit tiszta energiájával. Pezsdítő Hold and Hollo élmény, ami minden pillanatban megadja az alaphangot.",
+    "en": "Off-dry sparkling wine offers a bubbly and lasting experience in every detail. It's as lively and fresh as a party should be. One bottle definitely won't be enough! ELEGANT BUBBLES, VIBRANT FRUITS. Off-dry sparkling wine offers a bubbly and lasting experience in every detail. It's as lively and fresh as a party should be. One bottle definitely won't be enough! TASTING NOTES."
    },
    "render": "bottle-hh-upp",
-   "live_url": "https://holdvolgy.com/bor/hold-and-hollo-uppp-2025"
+   "live_url": "https://holdvolgy.com/bor/hold-and-hollo-uppp-2025",
+   "tasting": {
+    "hu": "",
+    "en": ""
+   },
+   "tech": {
+    "alkohol": "13",
+    "cukor": "8,6",
+    "sav": "6,8",
+    "fajta": "zéta, hárslevelű",
+    "dulok": "Dorgó, Holdvölgy, Nyulászó",
+    "palack": "5900",
+    "besorolas": "Felső-magyarországi oltalom alatt álló, földrajzi jelzésű fehér félszáraz gyöngyözőbor"
+   },
+   "vintage_note": {
+    "hu": "TÁROLÁS hűvös helyen FOGYASZTÁS 6-8°C Szüret 2012. Október Szüret 2012. Október Szüret 2012. Október Szüret 2012. Október érlelési potenciál TÖBB MINT 5 ÉV Reduktív, acéltartályos tételeink megfelelő tárolási- és hőmérsékleti körülmények mellett, akár több mint 5 évig is megőrizhetik minőségüket és élvezeti értéküket.",
+    "en": "STORAGE hűvös helyen CONSUMPTION 6-8°C Szüret 2012. Október Szüret 2012. Október Szüret 2012. Október Szüret 2012. Október."
+   },
+   "storage": {
+    "hu": "hűvös helyen",
+    "en": ""
+   },
+   "serve_temp": {
+    "hu": "6-8°C",
+    "en": "6-8°C"
+   }
   }
  ]
 }

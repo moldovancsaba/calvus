@@ -126,6 +126,11 @@ A percentage height inside an <code>aspect-ratio</code> grid cell resolves to <c
 image falls back to its attribute height and overflows. Figure boxes are
 <code>position: relative</code> and the image is absolutely centred with <code>max-height</code> and
 <code>max-width</code> bounds. Found in the Phase 3 gate by looking, not by the numbers.</p>
+<p><strong>D18 — Component class names are namespaced; the gate checks for collisions.</strong>
+Standing, 2026-09-16. A fact-sheet section named <code>.sheet</code> collided with the menu
+dialog's <code>.sheet</code> (fixed-position) and floated over the page. Section classes that
+could read as generic (<code>sheet</code>, <code>bar</code>, <code>card</code>, <code>grid</code>) are either namespaced
+(<code>factsheet</code>) or checked for a second definition before use.</p>
 <script>(function(){function f(){document.querySelectorAll('.scale-d').forEach(function(e){e.style.setProperty('--w',e.clientWidth)});document.querySelectorAll('.scale-p').forEach(function(e){e.style.setProperty('--pw',e.clientWidth)})}f();addEventListener('resize',f)})();</script>
 <footer>Source: <code>holdvolgy/docs/04-decisions.md</code> · rendered by <code>docs/build.py</code>. Set in Bodoni Moda and Archivo (Google Fonts, SIL OFL) on Holdvölgy's measured palette — decision D3.</footer>
 </div>
