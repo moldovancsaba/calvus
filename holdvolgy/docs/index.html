@@ -43,7 +43,7 @@ footer{margin-top:56px;padding-top:18px;border-top:1px solid var(--line);font-si
 </head>
 <body>
 <div class="wrap">
-<nav class="docnav" aria-label="Project documentation"><span class="docnav-brand">Holdvölgy 2026 · docs</span><a href="index.html" aria-current=page>Overview</a><a href="plan.html">Plan</a><a href="benchmarks.html">Benchmarks</a><a href="audit.html">Brand & site audit</a><a href="assets.html">Assets</a><a href="decisions.html">Decisions</a><a href="design-system.html">Design system</a><a href="layouts.html">Layouts</a><a href="home-build.html">Home build</a><a href="birtok-build.html">Birtok build</a><a href="aszu-build.html">Aszú build</a><a href="latogatas-build.html">Látogatás build</a><a href="shop-build.html">Shop build</a><a class="docnav-hub" href="../../index.html">Calvus Hub</a></nav>
+<nav class="docnav" aria-label="Project documentation"><span class="docnav-brand">Holdvölgy 2026 · docs</span><a href="index.html" aria-current=page>Overview</a><a href="plan.html">Plan</a><a href="benchmarks.html">Benchmarks</a><a href="audit.html">Brand & site audit</a><a href="assets.html">Assets</a><a href="decisions.html">Decisions</a><a href="design-system.html">Design system</a><a href="layouts.html">Layouts</a><a href="home-build.html">Home build</a><a href="birtok-build.html">Birtok build</a><a href="aszu-build.html">Aszú build</a><a href="latogatas-build.html">Látogatás build</a><a href="shop-build.html">Shop build</a><a href="gate-sweep.html">Gate sweep</a><a class="docnav-hub" href="../../index.html">Calvus Hub</a></nav>
 <header><p class="eyebrow">Calvus · Holdvölgy · project documentation</p><h1>Holdvölgy 2026 — project documentation</h1></header>
 <p>Owner directive 2026-09-16: the whole process is documented next to the project —
 research, findings, decisions, assets, and every build round. This folder is that
@@ -87,6 +87,10 @@ record. Each file is dated inside; this index is the process log.</p>
 <tr>
 <td><code>assets-used.md</code></td>
 <td>Every asset fetched for the build, its source URL, original and derivative sizes</td>
+</tr>
+<tr>
+<td><a href="gate-sweep.html"><code>11-gate-sweep.md</code></a></td>
+<td>Phase 5: the whole-site sweep — method, 152 measurements over 76 pages, hand-off state</td>
 </tr>
 <tr>
 <td><a href="shop-build.html"><code>10-shop-build.md</code></a></td>
@@ -183,8 +187,11 @@ defects, fixed at the root (D16).</p>
 holds 32 products with the client's HU and EN copy from the live shop; the grid,
 32 + 32 product pages and the club page are generated from it (<a href="shop-build.html"><code>10-shop-build.md</code></a>).
 The wine links across the site now land on real product pages.</p>
-<p><strong>Next.</strong> Phase 4 is folded in (EN generated throughout); Phase 5: per-page gate
-sweep of all 130 files, JSON-LD on product pages (done), SOURCES note, hand-off.</p>
+<p><strong>2026-09-16 — Phase 5: whole-site sweep, zero defects.</strong> Every one of the 76 site
+pages measured at 390 and 1440 (152 measurements) with no defect on any criterion
+(<a href="gate-sweep.html"><code>11-gate-sweep.md</code></a>). The plan's five phases are complete; the open items are the
+client's (portraits, two rock photographs, portrait hero frames, technical data).</p>
+<p><strong>Next.</strong> Client review of the whole; then the items in §6 of the plan as they arrive.</p>
 <script>(function(){function f(){document.querySelectorAll('.scale-d').forEach(function(e){e.style.setProperty('--w',e.clientWidth)});document.querySelectorAll('.scale-p').forEach(function(e){e.style.setProperty('--pw',e.clientWidth)})}f();addEventListener('resize',f)})();</script>
 <footer>Source: <code>holdvolgy/docs/README.md</code> · rendered by <code>docs/build.py</code>. Set in Bodoni Moda and Archivo (Google Fonts, SIL OFL) on Holdvölgy's measured palette — decision D3.</footer>
 </div>

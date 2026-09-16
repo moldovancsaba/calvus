@@ -273,12 +273,11 @@ Owner confirms the direction in §4 and the page list below. Nothing is built be
 - `holdvolgy/en/` is generated alongside every page from the same source, with
   `hreflang` pairs and `x-default`; product EN copy is from the live `/en/` shop.
 
-### Phase 5 — gate and hand-off
-- Per-page measurement run **twice, as two checklists**: desktop at 1440 (weight,
-  requests, `h1` count, alt coverage, hover/focus states, console) and phone at 390
-  (weight with the phone-cropped images, tap targets, overflow, two-tap reach of
-  Foglalás / Borok / Kosár, console); Product/Offer JSON-LD on product pages.
-- SOURCES note listing every asset URL used and every gap still open.
+### Phase 5 — gate and hand-off — done 2026-09-16 (`11-gate-sweep.md`)
+- Every site page measured at 1440 and 390: `h1`, alt coverage, `hreflang`,
+  overflow, tap targets, tokens, fonts, navigation system; 152 measurements, 0
+  defects. Product/Offer JSON-LD on every product page. Console checked per page type.
+- `assets-used.md` lists every asset URL used; `11-gate-sweep.md` the open gaps.
 
 Each phase ends with the Rule-2 gate and a live verification, as with the other
 projects in this repo.

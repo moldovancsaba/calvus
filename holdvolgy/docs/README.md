@@ -14,6 +14,7 @@ record. Each file is dated inside; this index is the process log.
 | `04-decisions.md` | Decision log — what was decided, by whom, why, and what it replaced |
 | `design-system.html` | Phase 1 gate 1: the design system rendered live from the tokens — colour, type, spacing, buttons, cards, bottles, dűlő rows, both navigations |
 | `assets-used.md` | Every asset fetched for the build, its source URL, original and derivative sizes |
+| `11-gate-sweep.md` | Phase 5: the whole-site sweep — method, 152 measurements over 76 pages, hand-off state |
 | `10-shop-build.md` | Phase 3: the shop — catalogue, grid, product template, Borklub, measurements |
 | `09-latogatas-build.md` | Phase 2: the Látogatás page — sources, booking form, measurements, and the map fix |
 | `08-aszu-build.md` | Phase 2: the Tokaji aszú page — sources, the Culture wall, measurements |
@@ -105,5 +106,9 @@ holds 32 products with the client's HU and EN copy from the live shop; the grid,
 32 + 32 product pages and the club page are generated from it (`10-shop-build.md`).
 The wine links across the site now land on real product pages.
 
-**Next.** Phase 4 is folded in (EN generated throughout); Phase 5: per-page gate
-sweep of all 130 files, JSON-LD on product pages (done), SOURCES note, hand-off.
+**2026-09-16 — Phase 5: whole-site sweep, zero defects.** Every one of the 76 site
+pages measured at 390 and 1440 (152 measurements) with no defect on any criterion
+(`11-gate-sweep.md`). The plan's five phases are complete; the open items are the
+client's (portraits, two rock photographs, portrait hero frames, technical data).
+
+**Next.** Client review of the whole; then the items in §6 of the plan as they arrive.

@@ -43,7 +43,7 @@ footer{margin-top:56px;padding-top:18px;border-top:1px solid var(--line);font-si
 </head>
 <body>
 <div class="wrap">
-<nav class="docnav" aria-label="Project documentation"><span class="docnav-brand">Holdvölgy 2026 · docs</span><a href="index.html">Overview</a><a href="plan.html" aria-current=page>Plan</a><a href="benchmarks.html">Benchmarks</a><a href="audit.html">Brand & site audit</a><a href="assets.html">Assets</a><a href="decisions.html">Decisions</a><a href="design-system.html">Design system</a><a href="layouts.html">Layouts</a><a href="home-build.html">Home build</a><a href="birtok-build.html">Birtok build</a><a href="aszu-build.html">Aszú build</a><a href="latogatas-build.html">Látogatás build</a><a href="shop-build.html">Shop build</a><a class="docnav-hub" href="../../index.html">Calvus Hub</a></nav>
+<nav class="docnav" aria-label="Project documentation"><span class="docnav-brand">Holdvölgy 2026 · docs</span><a href="index.html">Overview</a><a href="plan.html" aria-current=page>Plan</a><a href="benchmarks.html">Benchmarks</a><a href="audit.html">Brand & site audit</a><a href="assets.html">Assets</a><a href="decisions.html">Decisions</a><a href="design-system.html">Design system</a><a href="layouts.html">Layouts</a><a href="home-build.html">Home build</a><a href="birtok-build.html">Birtok build</a><a href="aszu-build.html">Aszú build</a><a href="latogatas-build.html">Látogatás build</a><a href="shop-build.html">Shop build</a><a href="gate-sweep.html">Gate sweep</a><a class="docnav-hub" href="../../index.html">Calvus Hub</a></nav>
 <header><p class="eyebrow">Calvus · Holdvölgy · project documentation</p><h1>Holdvölgy 2026 — research findings and implementation plan</h1></header>
 <p>Written 2026-09-16, before any second build. Part of the documentation set in <code>holdvolgy/docs/</code> — see <a href="index.html"><code>README.md</code></a> there for the index and process log. The first prototype (commit <code>8342956</code>) is
 withdrawn as a design direction: it used a dark ground, a saturated gold accent and a
@@ -360,13 +360,12 @@ in this repo.</p>
 <li><code>holdvolgy/en/</code> is generated alongside every page from the same source, with
   <code>hreflang</code> pairs and <code>x-default</code>; product EN copy is from the live <code>/en/</code> shop.</li>
 </ul>
-<h3>Phase 5 — gate and hand-off</h3>
+<h3>Phase 5 — gate and hand-off — done 2026-09-16 (<a href="gate-sweep.html"><code>11-gate-sweep.md</code></a>)</h3>
 <ul>
-<li>Per-page measurement run <strong>twice, as two checklists</strong>: desktop at 1440 (weight,
-  requests, <code>h1</code> count, alt coverage, hover/focus states, console) and phone at 390
-  (weight with the phone-cropped images, tap targets, overflow, two-tap reach of
-  Foglalás / Borok / Kosár, console); Product/Offer JSON-LD on product pages.</li>
-<li>SOURCES note listing every asset URL used and every gap still open.</li>
+<li>Every site page measured at 1440 and 390: <code>h1</code>, alt coverage, <code>hreflang</code>,
+  overflow, tap targets, tokens, fonts, navigation system; 152 measurements, 0
+  defects. Product/Offer JSON-LD on every product page. Console checked per page type.</li>
+<li><code>assets-used.md</code> lists every asset URL used; <a href="gate-sweep.html"><code>11-gate-sweep.md</code></a> the open gaps.</li>
 </ul>
 <p>Each phase ends with the Rule-2 gate and a live verification, as with the other
 projects in this repo.</p>
