@@ -30,7 +30,7 @@ def render(src, out, label):
     for s, o, _ in PAGES:
         body = body.replace(f"<code>{s}</code>", f'<a href="{o}"><code>{s}</code></a>')
     nav = "".join(f'<a href="{o}"{" aria-current=page" if o == out else ""}>{l}</a>' for _, o, l in PAGES)
-    nav = nav.replace('<a href="layouts.html">', '<a href="design-system.html">Design system</a><a href="layouts.html">')
+    nav = nav.replace('<a href="layouts.html"', '<a href="design-system.html">Design system</a><a href="layouts.html"', 1)
     html = f"""<!DOCTYPE html>
 <html lang="en">
 <head>

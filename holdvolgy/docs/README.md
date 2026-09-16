@@ -53,6 +53,12 @@ inventoried without downloading any. Findings in `01`–`03`, plan in `00`.
 navigation is approved (D4); item data will be supplied by the client; full
 documentation next to the project (this folder). Plan updated accordingly.
 
+**2026-09-16 — "Go" (D10).** Owner approved the §4 direction. Phase 1 opened with
+`assets/tokens.css` and the two layout specifications in `05-layout-specs.md`
+(desktop 1440 as the editorial estate, phone 390 as the hospitality-and-buying tool
+with a bottom action bar, tablet resolved explicitly, home weight budget per size).
+This entry was missing from commit `96dee68` and is restored here.
+
 **2026-09-16 — sequencing corrected (D11).** Owner asked whether the design system
 had been approved; it had not. A live design-system page (`design-system.html`) is
 now gate 1 of Phase 1, before the layouts. Assets for the home page were fetched
