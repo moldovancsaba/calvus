@@ -62,3 +62,11 @@ Cellar-history cards `ch-*` (413×462), tasting tickets `ticket-*` and icons `ic
 Files: `ch-1.webp` 36 KB, `ch-2.webp` 43 KB, `ch-oltar.webp` 68 KB, `ch-4.webp` 39 KB, `ch-felujitas.webp` 37 KB, `ch-6.webp` 15 KB, `ch-7.webp` 54 KB, `ch-9.webp` 34 KB, `ticket-aszu.webp` 30 KB, `ticket-8bor.webp` 36 KB, `ticket-6edes.webp` 42 KB, `ticket-6bor.webp` 43 KB, `icon-tasting-1.webp` 10 KB, `icon-tasting-2.webp` 10 KB, `icon-tasting-3.webp` 8 KB, `icon-tasting-4.webp` 13 KB, `icon-tasting-5.webp` 5 KB, `cellar-4677.webp` 10 KB, `cellar-4316.webp` 10 KB, `cellar-r5.webp` 10 KB, `cellar-r7.webp` 13 KB, `cellar-m2.webp` 9 KB, `trezor-glass.webp` 5 KB, `trezor-1.webp` 11 KB, `trezor-2.webp` 27 KB, `trezor-3.webp` 11 KB
 
 Committed derivatives now total **3820 KB** across 105 files.
+
+## Fetched 2026-09-16 for Phase 3 — shop
+
+Remaining bottle renders (`HV_*`/`HH_*` 1347×1347 PNGs), trimmed to content and encoded 720 px tall with alpha:
+
+`bottle-hh-sweet.webp` 28 KB, `bottle-expression-21.webp` 24 KB, `bottle-expression-22.webp` 18 KB, `bottle-vision-18.webp` 13 KB, `bottle-exaltation-18.webp` 20 KB, `bottle-intuition-no1-17.webp` 25 KB, `bottle-culture-06.webp` 27 KB, `bottle-culture-07.webp` 27 KB, `bottle-culture-08.webp` 31 KB, `bottle-culture-09.webp` 28 KB, `bottle-culture-10.webp` 29 KB, `bottle-culture-12.webp` 25 KB, `bottle-culture-13.webp` 32 KB, `bottle-culture-14.webp` 30 KB, `bottle-culture-16.webp` 33 KB, `bottle-culture-17.webp` 27 KB, `bottle-signature-07.webp` 39 KB, `bottle-culture-3d-palack.webp` 20 KB, `bottle-exaltation-17.webp` 15 KB, `bottle-culture-11.webp` 33 KB, `bottle-intuition-no3-20.webp` 13 KB, `bottle-hh-upp.webp` 15 KB, `bottle-intuition-no8-19.webp` 21 KB, `bottle-intuition-no2-24-dij.webp` 22 KB, `bottle-culture-18.webp` 33 KB
+
+Committed derivatives now total **4517 KB** across 130 files.

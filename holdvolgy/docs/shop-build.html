@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Phase 3 — the shop: Borok grid, product pages, Borklub — Holdvölgy 2026 docs</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:opsz,wght@6..96,400;6..96,500&family=Archivo:wdth,wght@112.5,400;112.5,500;112.5,600&display=swap">
+<style>:root{--ground:#FAFAFA;--card:#FFFFFF;--ink:#1D1D1B;--text:#4A4744;--muted:#7A7672;--accent:#B8A689;--accent-deep:#8B705B;--line:#E4E0D9;--line-soft:#EFECE6;--note:#F4F1EB}
+@media (prefers-color-scheme:dark){:root{--ground:#1D1D1B;--card:#252321;--ink:#F3EFE8;--text:#CFC9C0;--muted:#9B9796;--accent:#BAA793;--accent-deep:#D2BFA6;--line:#3A3733;--line-soft:#2E2B28;--note:#2A2724}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--ground);color:var(--text);font-family:"Archivo","Helvetica Neue",Arial,sans-serif;font-stretch:112.5%;font-size:15.5px;line-height:1.6;padding-block:0 64px;padding-inline:clamp(16px,4vw,40px)}
+.wrap{max-width:72ch;margin-inline:auto}
+.docnav{display:flex;flex-wrap:wrap;gap:4px 18px;align-items:center;padding:16px 0;border-bottom:1px solid var(--line);font-size:12px;letter-spacing:.06em;text-transform:uppercase}
+.docnav a{color:var(--muted);text-decoration:none;min-height:44px;display:inline-flex;align-items:center;border-bottom:2px solid transparent}
+.docnav a:hover,.docnav a[aria-current]{color:var(--ink);border-color:var(--accent)}
+.docnav-brand{color:var(--accent-deep);font-weight:600;margin-right:6px}
+.docnav-hub{margin-left:auto}
+header{padding-block:40px 24px;border-bottom:1px solid var(--line);margin-bottom:28px}
+.eyebrow{font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--accent-deep);margin:0 0 12px}
+h1,h2,h3{font-family:"Bodoni Moda",Didot,"Bodoni 72",serif;font-weight:400;color:var(--ink);line-height:1.1;text-wrap:balance;margin:0}
+h1{font-size:clamp(32px,6.5vw,50px);font-optical-sizing:auto}
+h2{font-size:clamp(25px,4.5vw,32px);margin:48px 0 14px;padding-top:20px;border-top:1px solid var(--line)}
+h3{font-size:19px;margin:30px 0 8px;font-weight:500}
+p{margin:0 0 14px} strong{color:var(--ink);font-weight:600}
+ul,ol{padding-left:22px;margin:0 0 16px} li{margin:5px 0} li>ul{margin:6px 0 0}
+code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.86em;background:var(--note);padding:1px 5px;border-radius:2px;color:var(--ink)}
+a{color:var(--accent-deep)} :focus-visible{outline:2px solid var(--accent-deep);outline-offset:2px}
+.tbl{overflow-x:auto;margin:14px 0 22px;border:1px solid var(--line)}
+table{border-collapse:collapse;width:100%;font-size:13.5px;min-width:560px}
+th{text-align:left;font-weight:600;color:var(--ink);background:var(--note);padding:10px 12px;border-bottom:1px solid var(--line);font-size:11.5px;letter-spacing:.06em;text-transform:uppercase}
+td{padding:10px 12px;border-top:1px solid var(--line-soft);vertical-align:top;background:var(--card)} td:first-child{color:var(--ink)}
+footer{margin-top:56px;padding-top:18px;border-top:1px solid var(--line);font-size:12px;color:var(--muted)}
+
+/* embedded gate-2 frames */
+.frames{display:grid;gap:28px;margin:18px 0 30px}
+.frames figure{margin:0} .frames figcaption{font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);margin-bottom:8px}
+.scale-d{width:100%;aspect-ratio:1440/2900;position:relative;overflow:hidden;border:1px solid var(--line);background:#FAFAFA}
+.scale-d iframe{position:absolute;top:0;left:0;width:1440px;height:2900px;border:0;transform-origin:0 0;transform:scale(calc(var(--w,720) / 1440))}
+.scale-p{width:390px;max-width:100%;aspect-ratio:390/2100;position:relative;overflow:hidden;border:1px solid var(--line);background:#FAFAFA}
+.scale-p iframe{position:absolute;top:0;left:0;width:390px;height:2100px;border:0;transform-origin:0 0;transform:scale(calc(var(--pw,390) / 390))}
+</style>
+</head>
+<body>
+<div class="wrap">
+<nav class="docnav" aria-label="Project documentation"><span class="docnav-brand">Holdvölgy 2026 · docs</span><a href="index.html">Overview</a><a href="plan.html">Plan</a><a href="benchmarks.html">Benchmarks</a><a href="audit.html">Brand & site audit</a><a href="assets.html">Assets</a><a href="decisions.html">Decisions</a><a href="design-system.html">Design system</a><a href="layouts.html">Layouts</a><a href="home-build.html">Home build</a><a href="birtok-build.html">Birtok build</a><a href="aszu-build.html">Aszú build</a><a href="latogatas-build.html">Látogatás build</a><a href="shop-build.html" aria-current=page>Shop build</a><a class="docnav-hub" href="../../index.html">Calvus Hub</a></nav>
+<header><p class="eyebrow">Calvus · Holdvölgy · project documentation</p><h1>Phase 3 — the shop: Borok grid, product pages, Borklub</h1></header>
+<p>Built 2026-09-16 from <code>holdvolgy/data/catalogue.json</code>, generated from the live shop
+and every product page (D8 applied: one catalogue drives HU and EN). 32 products:
+Culture 2006–2018 (13), Aszú Útkeresés 2007, Signature 2007/2013, Eloquence 2014,
+Intuition No1/No2/No3/No8, Exaltation 2017 Reserve/2018, Vision 2018/2018 Magnum/2021,
+Meditation 2023, Expression 2021 Reserve/2022, Hold and Hollo Dry/Sweet/Uppp. Each
+carries the client's own name, category, size, price, tagline and description in
+<strong>both languages</strong> — the English taken from the live <code>/en/wine/</code> pages, not
+translated — plus variety and dűlő parsed from the category, and the estate's render.</p>
+<p>Pages generated: <code>borok.html</code> + <code>en/borok.html</code> (grid), 32 + 32 product pages under
+<code>bor/</code> and <code>en/bor/</code>, <code>borklub.html</code> + <code>en/borklub.html</code>. 130 HTML files in the
+project now; every link and cross-page anchor audited.</p>
+<h2>The grid</h2>
+<p>Filters Mind · Száraz · Édes · Aszú · Hold and Hollo (chips, <code>aria-pressed</code>), sort by
+collection (with collection headings, linkable as <code>#line-culture</code> etc. from the
+mega-panel) or by price either way, items without a price always last. Two columns on
+the phone, three on tablet, four on desktop. Bottles as transparent objects on the
+band colour, bounded inside a 4:5 figure.</p>
+<h2>The product page</h2>
+<p>Render, collection, name, category and size, the tagline in Bodoni, the description,
+a facts list (category, vintage, size, variety, dűlő), the price with size beneath,
+<em>Kosárba</em> (inert) and <em>Kóstold a birtokon</em> → the tickets; four related wines from the
+same collection; delivery line; a link to the live product page; Product/Offer JSON-LD
+(validates, carries HUF price and the live URL). Exaltation 2017 Reserve shows
+"Ár egyeztetés alatt" with <em>Érdeklődöm</em> — the live page shows 0 Ft.</p>
+<h2>Borklub</h2>
+<p>The real programme: 5 / 10 / 15 / 20 % at 50 000 / 150 000 / 300 000 / 600 000 Ft
+within 12 months, the two tier gifts, the three-step mechanism, the rules, and
+how to join.</p>
+<h2>Measured</h2>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>Check</th>
+<th>Phone 390</th>
+<th>Desktop 1440</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Grid</td>
+<td>32 cards, 2 columns, 10 collection headings; Aszú filter → 14; price sort 4 000 → 133 000, no-price last</td>
+<td>4 columns; mega-panel links to 6 collection anchors</td>
+</tr>
+<tr>
+<td>Product (Culture 2012)</td>
+<td><code>h1</code>, price 133 000 Ft · 37,5 CL, 4 facts, 4 related, JSON-LD Product with price; image 134×400 inside a 358×448 figure</td>
+<td>two columns</td>
+</tr>
+<tr>
+<td>Borklub</td>
+<td>4 tiers, 3 steps, 4 benefits</td>
+<td>—</td>
+</tr>
+<tr>
+<td>Overflow / small taps</td>
+<td>0 / 0 (after bounding figures and two link fixes)</td>
+<td>0 / 0 (after the "Visit" nav item, 42 → 44)</td>
+</tr>
+<tr>
+<td>Console errors</td>
+<td>0</td>
+<td>0</td>
+</tr>
+</tbody>
+</table></div>
+<h2>Weight, cold</h2>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th></th>
+<th>KB</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Grid, all 32 renders (lazy)</td>
+<td><strong>965</strong></td>
+</tr>
+<tr>
+<td>Product page with 4 related</td>
+<td><strong>334</strong></td>
+</tr>
+<tr>
+<td>Borklub</td>
+<td><strong>191</strong></td>
+</tr>
+</tbody>
+</table></div>
+<h2>Found and fixed in the gate</h2>
+<ul>
+<li>Bottle images overflowed their figures on the phone: a percentage height inside an
+  <code>aspect-ratio</code> grid cell resolves to auto, so the image fell back to its 720 px
+  attribute. Figures are now positioned boxes and the image is absolutely centred with
+  <code>max-height</code>/<code>max-width</code> bounds (D17).</li>
+<li>The live EN page for Vision 2021 carries Hungarian copy; the 2021 page here uses the
+  same line's English from the 2018 page (noted for the client).</li>
+<li>Two live product URLs 404 on holdvolgy.com (Exaltation 2017 sweet, Eloquence 2013) —
+  for the W22 broken-link list.</li>
+</ul>
+<script>(function(){function f(){document.querySelectorAll('.scale-d').forEach(function(e){e.style.setProperty('--w',e.clientWidth)});document.querySelectorAll('.scale-p').forEach(function(e){e.style.setProperty('--pw',e.clientWidth)})}f();addEventListener('resize',f)})();</script>
+<footer>Source: <code>holdvolgy/docs/10-shop-build.md</code> · rendered by <code>docs/build.py</code>. Set in Bodoni Moda and Archivo (Google Fonts, SIL OFL) on Holdvölgy's measured palette — decision D3.</footer>
+</div>
+</body>
+</html>

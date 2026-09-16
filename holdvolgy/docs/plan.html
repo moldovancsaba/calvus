@@ -43,7 +43,7 @@ footer{margin-top:56px;padding-top:18px;border-top:1px solid var(--line);font-si
 </head>
 <body>
 <div class="wrap">
-<nav class="docnav" aria-label="Project documentation"><span class="docnav-brand">Holdvölgy 2026 · docs</span><a href="index.html">Overview</a><a href="plan.html" aria-current=page>Plan</a><a href="benchmarks.html">Benchmarks</a><a href="audit.html">Brand & site audit</a><a href="assets.html">Assets</a><a href="decisions.html">Decisions</a><a href="design-system.html">Design system</a><a href="layouts.html">Layouts</a><a href="home-build.html">Home build</a><a href="birtok-build.html">Birtok build</a><a href="aszu-build.html">Aszú build</a><a href="latogatas-build.html">Látogatás build</a><a class="docnav-hub" href="../../index.html">Calvus Hub</a></nav>
+<nav class="docnav" aria-label="Project documentation"><span class="docnav-brand">Holdvölgy 2026 · docs</span><a href="index.html">Overview</a><a href="plan.html" aria-current=page>Plan</a><a href="benchmarks.html">Benchmarks</a><a href="audit.html">Brand & site audit</a><a href="assets.html">Assets</a><a href="decisions.html">Decisions</a><a href="design-system.html">Design system</a><a href="layouts.html">Layouts</a><a href="home-build.html">Home build</a><a href="birtok-build.html">Birtok build</a><a href="aszu-build.html">Aszú build</a><a href="latogatas-build.html">Látogatás build</a><a href="shop-build.html">Shop build</a><a class="docnav-hub" href="../../index.html">Calvus Hub</a></nav>
 <header><p class="eyebrow">Calvus · Holdvölgy · project documentation</p><h1>Holdvölgy 2026 — research findings and implementation plan</h1></header>
 <p>Written 2026-09-16, before any second build. Part of the documentation set in <code>holdvolgy/docs/</code> — see <a href="index.html"><code>README.md</code></a> there for the index and process log. The first prototype (commit <code>8342956</code>) is
 withdrawn as a design direction: it used a dark ground, a saturated gold accent and a
@@ -347,18 +347,18 @@ in this repo.</p>
   geology, practical info, booking form with the current fields (a request form —
   no fake availability). Phase 2 complete.</li>
 </ul>
-<h3>Phase 3 — commerce</h3>
+<h3>Phase 3 — commerce — built 2026-09-16 (<a href="shop-build.html"><code>10-shop-build.md</code></a>)</h3>
 <ul>
-<li><strong>Borok</strong> grid with the 40 renders, filters Száraz / Édes / Aszú / Hold and Hollo /
-  Válogatások, sort by price, two-up on phones.</li>
-<li><strong>Product page template</strong> per §4.10, driven from one JSON catalogue file so HU
-  and EN share data.</li>
+<li><strong>Borok</strong> grid with the estate's renders, filters Mind / Száraz / Édes / Aszú /
+  Hold and Hollo, sort by collection or price, two-up on phones.</li>
+<li><strong>Product page template</strong> per §4.10, driven from <code>data/catalogue.json</code> so HU and
+  EN share data; the EN copy is the client's own from the live EN shop.</li>
 <li><strong>Borklub</strong> page with the real tiers and rules.</li>
 </ul>
-<h3>Phase 4 — English</h3>
+<h3>Phase 4 — English — folded into every phase</h3>
 <ul>
-<li><code>holdvolgy/en/</code> mirror of every page from the same JSON, <code>hreflang</code> pairs with
-  <code>x-default</code>, EN copy taken from the live <code>/en/</code> pages where it exists.</li>
+<li><code>holdvolgy/en/</code> is generated alongside every page from the same source, with
+  <code>hreflang</code> pairs and <code>x-default</code>; product EN copy is from the live <code>/en/</code> shop.</li>
 </ul>
 <h3>Phase 5 — gate and hand-off</h3>
 <ul>

@@ -43,7 +43,7 @@ footer{margin-top:56px;padding-top:18px;border-top:1px solid var(--line);font-si
 </head>
 <body>
 <div class="wrap">
-<nav class="docnav" aria-label="Project documentation"><span class="docnav-brand">Holdvölgy 2026 · docs</span><a href="index.html">Overview</a><a href="plan.html">Plan</a><a href="benchmarks.html">Benchmarks</a><a href="audit.html">Brand & site audit</a><a href="assets.html">Assets</a><a href="decisions.html" aria-current=page>Decisions</a><a href="design-system.html">Design system</a><a href="layouts.html">Layouts</a><a href="home-build.html">Home build</a><a href="birtok-build.html">Birtok build</a><a href="aszu-build.html">Aszú build</a><a href="latogatas-build.html">Látogatás build</a><a class="docnav-hub" href="../../index.html">Calvus Hub</a></nav>
+<nav class="docnav" aria-label="Project documentation"><span class="docnav-brand">Holdvölgy 2026 · docs</span><a href="index.html">Overview</a><a href="plan.html">Plan</a><a href="benchmarks.html">Benchmarks</a><a href="audit.html">Brand & site audit</a><a href="assets.html">Assets</a><a href="decisions.html" aria-current=page>Decisions</a><a href="design-system.html">Design system</a><a href="layouts.html">Layouts</a><a href="home-build.html">Home build</a><a href="birtok-build.html">Birtok build</a><a href="aszu-build.html">Aszú build</a><a href="latogatas-build.html">Látogatás build</a><a href="shop-build.html">Shop build</a><a class="docnav-hub" href="../../index.html">Calvus Hub</a></nav>
 <header><p class="eyebrow">Calvus · Holdvölgy · project documentation</p><h1>Decision log</h1></header>
 <p>Format: what was decided · who · when · why · what it replaces.</p>
 <p><strong>D1 — The first prototype's visual direction is withdrawn.</strong> Owner, 2026-09-16.
@@ -121,6 +121,11 @@ to WebP/AVIF with alpha, never flattened; every page's base rule is
 <code>img { max-width: 100%; height: auto; display: block }</code> so width/height attributes
 (kept for layout stability) never distort. The gate now includes a rendered look at
 every image-led section, not only measurements.</p>
+<p><strong>D17 — Images in aspect-ratio boxes are absolutely bounded.</strong> Standing, 2026-09-16.
+A percentage height inside an <code>aspect-ratio</code> grid cell resolves to <code>auto</code>, so the
+image falls back to its attribute height and overflows. Figure boxes are
+<code>position: relative</code> and the image is absolutely centred with <code>max-height</code> and
+<code>max-width</code> bounds. Found in the Phase 3 gate by looking, not by the numbers.</p>
 <script>(function(){function f(){document.querySelectorAll('.scale-d').forEach(function(e){e.style.setProperty('--w',e.clientWidth)});document.querySelectorAll('.scale-p').forEach(function(e){e.style.setProperty('--pw',e.clientWidth)})}f();addEventListener('resize',f)})();</script>
 <footer>Source: <code>holdvolgy/docs/04-decisions.md</code> · rendered by <code>docs/build.py</code>. Set in Bodoni Moda and Archivo (Google Fonts, SIL OFL) on Holdvölgy's measured palette — decision D3.</footer>
 </div>

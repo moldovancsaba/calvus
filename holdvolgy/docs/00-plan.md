@@ -262,16 +262,16 @@ Owner confirms the direction in §4 and the page list below. Nothing is built be
   geology, practical info, booking form with the current fields (a request form —
   no fake availability). Phase 2 complete.
 
-### Phase 3 — commerce
-- **Borok** grid with the 40 renders, filters Száraz / Édes / Aszú / Hold and Hollo /
-  Válogatások, sort by price, two-up on phones.
-- **Product page template** per §4.10, driven from one JSON catalogue file so HU
-  and EN share data.
+### Phase 3 — commerce — built 2026-09-16 (`10-shop-build.md`)
+- **Borok** grid with the estate's renders, filters Mind / Száraz / Édes / Aszú /
+  Hold and Hollo, sort by collection or price, two-up on phones.
+- **Product page template** per §4.10, driven from `data/catalogue.json` so HU and
+  EN share data; the EN copy is the client's own from the live EN shop.
 - **Borklub** page with the real tiers and rules.
 
-### Phase 4 — English
-- `holdvolgy/en/` mirror of every page from the same JSON, `hreflang` pairs with
-  `x-default`, EN copy taken from the live `/en/` pages where it exists.
+### Phase 4 — English — folded into every phase
+- `holdvolgy/en/` is generated alongside every page from the same source, with
+  `hreflang` pairs and `x-default`; product EN copy is from the live `/en/` shop.
 
 ### Phase 5 — gate and hand-off
 - Per-page measurement run **twice, as two checklists**: desktop at 1440 (weight,

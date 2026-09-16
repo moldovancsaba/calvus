@@ -1,8 +1,9 @@
 #!/usr/bin/env python3
 """Generate the Holdvölgy 2026 home page in HU and EN from one content source (D8).
 Run: python3 holdvolgy/build.py  → writes index.html and en/index.html. No dependencies."""
-import pathlib, html
+import pathlib, html, json, re
 HERE = pathlib.Path(__file__).parent
+CAT = json.load(open(HERE / "data" / "catalogue.json", encoding="utf-8"))["products"]
 
 C = {
  "hu": dict(lang="hu", title="Holdvölgy — tokaji borok Mádról · Év pincészete 2026",
@@ -141,6 +142,19 @@ C = {
     form_h="Bejelentkezés pincelátogatásra", f_name="Név", f_email="E-mail cím", f_phone="Telefonszám", f_prog="Borkóstoló", f_date="Dátum", f_guests="Vendégek száma", f_msg="Üzenet", f_gdpr="Elolvastam és elfogadom az adatkezelési tájékoztatót.", f_send="Elküld", f_note="Prototípus: az űrlap nem küld — a foglalás e-mailben vagy telefonon él.",
     gb_h="Vendégkönyv", gb="Voltál már nálunk? Oszd meg az élményt.", gb_links=[("Google","https://www.google.com/maps/search/Holdvölgy+Mád"),("Tripadvisor","https://www.tripadvisor.com/Search?q=Holdvölgy")],
    ),
+   shop=dict(title="Borok — Holdvölgy webshop", desc="Száraz és édes tokaji borok, 6 puttonyos Culture aszúk 2006-tól, Hold and Hollo — a Holdvölgy teljes választéka.", eyebrow="Borok", h1="Tokaji borok",
+     lede="Száraz és édes tokaji borok Mádról, a Hold and Hollo vonaltól a 6 puttonyos Culture aszúkig. Minden tétel a birtok saját dűlőiről; az árak a webshop 2026. szeptemberi árai.",
+     filters=[("mind","Mind"),("szaraz","Száraz"),("edes","Édes"),("aszu","Aszú"),("hh","Hold and Hollo")], sort=[("line","Kollekció"),("asc","Ár szerint növekvő"),("desc","Ár szerint csökkenő")], sort_label="Rendezés", count="tétel",
+     cta_cart="Kosárba", cta_ask="Érdekel", no_price="Ár egyeztetés alatt", no_image="Fotó érkezik", from_="-tól"),
+   product=dict(back="← Borok", cat_label="Kategória", vintage="Évjárat", size="Kiszerelés", variety="Fajta", dulo="Dűlő", price="Ár", cart="Kosárba teszem", ask="Érdeklődöm", taste="Kóstold a birtokon", taste_href="latogatas.html#jegyek",
+     delivery="Házhozszállítás Magyarországon futárral; a rendelés utánvéttel is leadható. Külföldre egyedi ajánlat 2 munkanapon belül.", related="Ugyanebből a kollekcióból", tech_note="Analitikai adatok (alkohol, cukor, sav) a birtoktól érkeznek.", live="Élő termékoldal a holdvolgy.com-on", proto="Prototípus — a kosár nem működik; a vásárlás a holdvolgy.com-on él."),
+   club=dict(title="Holdvölgy Borklub — hűségprogram", desc="Törzsvásárlói kedvezmény 5–20 %, negyedéves egyedi ajánlatok, limitált reserve tételek, ajándék kóstolók.", eyebrow="Borklub", h1="Kedvezmények, ajándékok és egyedi ajánlatok",
+     lede="Új hűségprogramunk törzsvásárlói kedvezményt ad már egy palackra is, negyedévente frissülő ajánlatokkal, limitált reserve tételekkel és bevezetés előtt álló borokkal.",
+     benefits=["Törzsvásárlói kedvezmény (5–20 %) már egy palackra is.","Negyedévente frissülő egyedi ajánlatok, borválogatások.","Limitált reserve tételek és bevezetés előtt álló borok megvásárlása.","Hírlevél újdonságokkal, sztorikkal, eseményekkel, tippekkel és receptekkel."],
+     tiers_h="Törzsvásárlói kedvezmények", tiers=[("50 000 Ft","5 %",""),("150 000 Ft","10 %",""),("300 000 Ft","15 %","+ a szint első teljesítésekor ajándék 2 személyes Kincskereső borkóstoló 8 borral"),("600 000 Ft","20 %","+ a szint első teljesítésekor 2 személyes Tokaji aszú borkóstoló élmény")], tier_note="12 hónap alatt, több vásárlásból összeadva",
+     how_h="Hogyan működik?", how=[("Vásárolj legalább 50 000 Ft értékben","Az első, 5 %-os szint automatikusan aktiválódik; nagyobb összeggel azonnal magasabb szintre lépsz."),("12 hónapod van bebiztosítani","Az első aktiválás után egy éven belül a szintnek megfelelő összegű vásárlással megtartod a kedvezményt."),("Lépj feljebb","Nagyobb vásárlásokkal a tagsági időn belül magasabb kedvezményt érsz el, ami újra 12 hónapig él.")],
+     rules_h="Legfontosabb szabályok", rules="A klubtagsági szint érvényessége egy évre szól — ennyi idő áll rendelkezésre a szinthez szükséges újbóli vásárlásokra. Ha egy éven belül magasabb összegben vásárolsz és új szintet érsz el, azt már a fordulód előtt élvezheted. A részletes feltételeket az ÁSZF tartalmazza.",
+     join_h="A csatlakozás módja", join="Regisztrálj online vagy a birtokon a látogatásod során, és már indulhat is a vásárlás. A szintek elérésekor minden esetben üzenetet küldünk a pontos kedvezménnyel.", join_btn="Borklubtag leszek"),
    age_q="Betöltötted már a 18. életéved?", age_note="Weboldalunkat csak 18 éven felüliek látogathatják.", yes="Igen", no="Nem", hub="Calvus Hub", hub_href="../index.html"),
  "en": dict(lang="en", title="Holdvölgy — Tokaji wines from Mád · Winery of the Year 2026",
    desc="Holdvölgy winery, Mád: sweet and dry Tokaji wines, a 1.8 km three-level cellar labyrinth, tasting experiences. Winery of the Year 2026.",
@@ -278,9 +292,23 @@ C = {
     form_h="Book a cellar visit", f_name="Name", f_email="E-mail", f_phone="Phone", f_prog="Programme", f_date="Date", f_guests="Guests", f_msg="Message", f_gdpr="I have read and accept the privacy notice.", f_send="Send", f_note="Prototype: the form does not send — booking works by e-mail or phone.",
     gb_h="Guest book", gb="Been to see us? Share the experience.", gb_links=[("Google","https://www.google.com/maps/search/Holdvölgy+Mád"),("Tripadvisor","https://www.tripadvisor.com/Search?q=Holdvölgy")],
    ),
+   shop=dict(title="Wines — Holdvölgy shop", desc="Dry and sweet Tokaji wines, 6 puttonyos Culture Aszús since 2006, Hold and Hollo — the complete Holdvölgy range.", eyebrow="Wines", h1="Tokaji wines",
+     lede="Dry and sweet Tokaji wines from Mád, from the Hold and Hollo line to the 6 puttonyos Culture Aszús. Every wine from the estate's own vineyards; prices are the webshop's September 2026 prices in HUF.",
+     filters=[("mind","All"),("szaraz","Dry"),("edes","Sweet"),("aszu","Aszú"),("hh","Hold and Hollo")], sort=[("line","Collection"),("asc","Price, low to high"),("desc","Price, high to low")], sort_label="Sort", count="wines",
+     cta_cart="Add to cart", cta_ask="Enquire", no_price="Price on request", no_image="Photo to come", from_="from "),
+   product=dict(back="← Wines", cat_label="Category", vintage="Vintage", size="Size", variety="Variety", dulo="Vineyard", price="Price", cart="Add to cart", ask="Enquire", taste="Taste it at the estate", taste_href="latogatas.html#jegyek",
+     delivery="Courier delivery in Hungary, cash on delivery available. Abroad: an individual quote within two working days.", related="From the same collection", tech_note="Analytical data (alcohol, sugar, acidity) to come from the estate.", live="Live product page on holdvolgy.com", proto="Prototype — the cart is inert; purchases run on holdvolgy.com."),
+   club=dict(title="Holdvölgy Wine Club — loyalty programme", desc="Loyalty discount of 5–20 %, quarterly offers, limited reserve lots, tasting gifts.", eyebrow="Wine Club", h1="Discounts, gifts and personal offers",
+     lede="Our loyalty programme gives a returning-customer discount from the very first bottle, with quarterly offers, limited reserve lots and wines before release.",
+     benefits=["A returning-customer discount (5–20 %) from a single bottle.","Personal offers and selections refreshed every quarter.","Access to limited reserve lots and wines before release.","A newsletter with news, stories, events, tips and recipes."],
+     tiers_h="Loyalty discounts", tiers=[("50 000 Ft","5 %",""),("150 000 Ft","10 %",""),("300 000 Ft","15 %","+ on first reaching the tier, a treasure-hunt tasting with 8 wines for two"),("600 000 Ft","20 %","+ on first reaching the tier, a Tokaji Aszú tasting experience for two")], tier_note="within 12 months, across purchases",
+     how_h="How it works", how=[("Buy at least 50 000 Ft","The first, 5 % tier activates automatically; a larger purchase takes you straight to a higher tier."),("Twelve months to secure it","After first activation you keep the discount by purchasing the tier's amount within a year."),("Move up","Larger purchases within the membership year reach a higher discount, which then runs for another 12 months.")],
+     rules_h="The essential rules", rules="A membership tier is valid for one year — the time available to make the purchases the tier requires. If you reach a new tier within the year, you enjoy it before your anniversary. The full terms are in the general terms and conditions.",
+     join_h="How to join", join="Register online or at the estate during a visit, and start buying. Each time you reach a tier we send a message with the exact discount.", join_btn="Join the Wine Club"),
    age_q="Are you 18 or older?", age_note="This website may only be visited by adults.", yes="Yes", no="No", hub="Calvus Hub", hub_href="../../index.html"),
 }
-ANCHORS = ["birtok.html","#borok","latogatas.html","#borklub","#kapcsolat"]
+BOTTLE_HREF = {"Culture":"bor/culture-2018.html","Signature 2013":"bor/signature-2013.html","Eloquence 2014":"bor/eloquence-2014.html","Vision 2021":"bor/vision-2021.html","Meditation 2023":"bor/meditation-2023.html","Hold and Hollo Dry":"bor/hold-and-hollo-dry-2024.html"}
+ANCHORS = ["birtok.html","borok.html","latogatas.html","borklub.html","#kapcsolat"]
 
 CSS = r"""
 *{box-sizing:border-box} html{scroll-behavior:smooth} @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto} *{transition:none!important}}
@@ -309,7 +337,7 @@ h1,h2,h3{font-family:var(--hv-display);font-weight:400;color:var(--hv-ink);line-
 @media(min-width:1024px){
  .hd .wrap{min-height:88px;gap:28px} .wordmark{font-size:22px}
  .hd nav{display:flex;gap:26px;margin:0 auto} .hd nav>div{position:relative}
- .hd nav a.top{color:var(--hv-text);text-decoration:none;display:inline-flex;min-height:44px;align-items:center;border-bottom:2px solid transparent} .hd nav a.top:hover,.hd nav>div:focus-within a.top{color:var(--hv-ink);border-color:var(--hv-accent)}
+ .hd nav a.top{color:var(--hv-text);text-decoration:none;display:inline-flex;min-height:44px;min-width:44px;justify-content:center;align-items:center;border-bottom:2px solid transparent} .hd nav a.top:hover,.hd nav>div:focus-within a.top{color:var(--hv-ink);border-color:var(--hv-accent)}
  .panel{display:none;position:absolute;top:100%;left:-24px;min-width:340px;background:var(--hv-card);border:1px solid var(--hv-line);padding:18px 24px 20px;box-shadow:0 18px 30px rgba(29,29,27,.08)}
  .hd nav>div:hover .panel,.hd nav>div:focus-within .panel{display:block}
  .panel a{display:flex;justify-content:space-between;gap:20px;align-items:center;min-height:44px;text-decoration:none;color:var(--hv-ink);border-top:1px solid var(--hv-line-soft)} .panel a:first-child{border-top:0} .panel a:hover b{color:var(--hv-accent-deep)}
@@ -404,6 +432,32 @@ footer{padding:24px 0 96px;font-size:13px;color:var(--hv-muted);display:grid;gap
 .bform{display:grid;gap:14px;max-width:640px} .bform label{display:grid;gap:6px;font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--hv-muted)} .bform input,.bform select,.bform textarea{font:inherit;font-stretch:inherit;min-height:44px;padding:10px 12px;border:1px solid var(--hv-line);border-radius:var(--hv-radius);background:var(--hv-card);color:var(--hv-ink);text-transform:none;letter-spacing:0} .bform textarea{min-height:96px} .bform .two{display:grid;gap:14px} .bform .chk{display:flex;align-items:center;gap:12px;min-height:44px;cursor:pointer;text-transform:none;letter-spacing:0;font-size:13px;color:var(--hv-text)} .bform .chk input{width:44px;height:44px;min-height:0;margin:0;flex:none;accent-color:var(--hv-accent-deep)} .bform .note{font-size:12px;color:var(--hv-grey);margin:0} .bform .note a{display:inline-flex;align-items:center;min-height:44px;color:var(--hv-accent-deep)}
 @media(min-width:768px){.bform .two{grid-template-columns:1fr 1fr}}
 .gb{display:flex;flex-wrap:wrap;gap:12px;align-items:center}
+/* ---- shop ---- */
+.toolbar{display:flex;flex-wrap:wrap;gap:10px;align-items:center;padding:4px 0 18px;border-bottom:1px solid var(--hv-line-soft)} .chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{min-height:44px;padding:10px 16px;border:1px solid var(--hv-line);border-radius:999px;background:transparent;color:var(--hv-ink);font:inherit;font-size:12px;letter-spacing:.1em;text-transform:uppercase;cursor:pointer} .chip[aria-pressed="true"]{background:var(--hv-ink);color:var(--hv-ground);border-color:var(--hv-ink)}
+.sortbox{margin-left:auto;display:flex;align-items:center;gap:8px;font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--hv-muted)} .sortbox select{font:inherit;font-stretch:inherit;min-height:44px;padding:10px 12px;border:1px solid var(--hv-line);border-radius:var(--hv-radius);background:var(--hv-card);color:var(--hv-ink);text-transform:none;letter-spacing:0}
+@media(max-width:640px){.sortbox{margin-left:0;width:100%} .sortbox select{flex:1}}
+.count{padding:14px 0;font-size:13px;color:var(--hv-muted)}
+.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px} .pc{background:var(--hv-card);border:1px solid var(--hv-line-soft);display:flex;flex-direction:column;text-decoration:none;color:inherit} .pc .fig{aspect-ratio:4/5;position:relative;background:var(--hv-band)} .pc .fig img{position:absolute;inset:0;margin:auto;width:auto;height:auto;max-height:calc(100% - 28px);max-width:calc(100% - 28px);filter:drop-shadow(0 12px 12px rgba(29,29,27,.14));transition:transform .2s} .pc:hover .fig img{transform:translateY(-6px)} .pc .fig i{position:absolute;inset:0;display:grid;place-items:center;font-style:normal;font-size:11px;color:var(--hv-grey);text-align:center}
+.pc div.b{padding:12px 12px 14px;display:flex;flex-direction:column;gap:3px;flex:1} .pc .l{font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--hv-accent-deep)} .pc h3{font-size:17px} .pc p{margin:0;font-size:12px;color:var(--hv-muted)} .pc .pr{margin-top:auto;padding-top:10px;font-weight:500;color:var(--hv-ink);font-variant-numeric:tabular-nums;font-size:15px}
+@media(min-width:768px){.grid{grid-template-columns:repeat(3,1fr);gap:20px} .pc div.b{padding:16px 18px 20px;gap:5px} .pc .l{font-size:11px} .pc h3{font-size:21px} .pc p{font-size:13px} .pc .pr{font-size:18px}}
+@media(min-width:1024px){.grid{grid-template-columns:repeat(4,1fr);gap:24px}}
+.line-h{grid-column:1/-1;font-family:var(--hv-display);font-weight:400;font-size:24px;color:var(--hv-ink);margin:16px 0 0;padding-top:12px;border-top:1px solid var(--hv-line-soft)} @media(min-width:768px){.line-h{font-size:30px;margin-top:24px}}
+.empty{grid-column:1/-1;padding:40px 16px;text-align:center;color:var(--hv-muted)}
+/* ---- product ---- */
+.prod{display:grid;gap:24px;padding:16px 0 40px} .prod .fig{aspect-ratio:4/5;position:relative;background:var(--hv-band)} .prod .fig img{position:absolute;inset:0;margin:auto;width:auto;height:auto;max-height:calc(100% - 48px);max-width:calc(100% - 48px);filter:drop-shadow(0 20px 24px rgba(29,29,27,.16))} .prod .fig i{position:absolute;inset:0;display:grid;place-items:center;font-style:normal;color:var(--hv-grey)}
+.prod .l{font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--hv-accent-deep);margin:0 0 8px} .prod h1{font-size:34px} .prod .cat{margin:8px 0 14px;color:var(--hv-muted)} .prod .tag{font-family:var(--hv-display);font-size:20px;line-height:1.3;color:var(--hv-ink);margin:0 0 14px} .prod .desc{margin:0 0 18px;max-width:62ch;color:var(--hv-text)}
+.facts{display:grid;grid-template-columns:auto 1fr;gap:6px 16px;margin:0 0 18px;font-size:13px} .facts dt{color:var(--hv-grey);letter-spacing:.06em;text-transform:uppercase;font-size:10.5px;padding-top:3px} .facts dd{margin:0;color:var(--hv-ink)}
+.buy{display:flex;flex-wrap:wrap;gap:12px;align-items:center;padding:16px 0;border-top:1px solid var(--hv-line-soft);border-bottom:1px solid var(--hv-line-soft)} .buy .pr{font-family:var(--hv-display);font-size:30px;color:var(--hv-ink);font-variant-numeric:tabular-nums;margin-right:auto} .buy .pr small{display:block;font-family:var(--hv-sans);font-size:11px;color:var(--hv-muted);letter-spacing:.06em}
+.prod .note{font-size:12px;color:var(--hv-grey);margin:12px 0 0} .prod .note a{color:var(--hv-accent-deep);display:inline-flex;align-items:center;min-height:44px}
+@media(min-width:768px){.prod{grid-template-columns:1fr 1fr;gap:40px;padding:32px 0 56px;align-items:start} .prod h1{font-size:44px}}
+@media(min-width:1024px){.prod{grid-template-columns:5fr 6fr;gap:64px} .prod h1{font-size:52px}}
+.rel{padding:0 0 56px} .rel h2{font-size:26px;margin-bottom:14px} .rel .grid{grid-template-columns:repeat(2,minmax(0,1fr))} @media(min-width:768px){.rel .grid{grid-template-columns:repeat(4,1fr)}}
+/* ---- club ---- */
+.ben{display:grid;gap:10px;padding:0;margin:0;list-style:none} .ben li{background:var(--hv-card);border:1px solid var(--hv-line-soft);padding:14px 16px;font-size:14px;color:var(--hv-text)} @media(min-width:768px){.ben{grid-template-columns:1fr 1fr;gap:16px}}
+.tiers{display:grid;gap:12px} .tier{background:var(--hv-card);border:1px solid var(--hv-line-soft);padding:16px;display:grid;grid-template-columns:auto 1fr;gap:4px 16px;align-items:baseline} .tier b{font-family:var(--hv-display);font-weight:400;font-size:40px;color:var(--hv-accent-deep);line-height:1;grid-row:span 2} .tier span{font-size:13px;color:var(--hv-muted)} .tier strong{font-weight:500;color:var(--hv-ink)} .tier em{font-style:normal;display:block;font-size:12.5px;color:var(--hv-text);grid-column:2}
+@media(min-width:768px){.tiers{grid-template-columns:repeat(2,1fr);gap:20px}} @media(min-width:1024px){.tiers{grid-template-columns:repeat(4,1fr)} .tier{display:block} .tier b{display:block;font-size:48px;margin-bottom:8px}}
+.how{display:grid;gap:12px;counter-reset:hw} .how article{background:var(--hv-card);border:1px solid var(--hv-line-soft);padding:16px;counter-increment:hw} .how article::before{content:counter(hw);display:block;font-family:var(--hv-display);font-size:26px;color:var(--hv-accent-deep);line-height:1;margin-bottom:8px} .how h3{font-size:19px;margin-bottom:6px} .how p{margin:0;font-size:13.5px;color:var(--hv-muted)} @media(min-width:768px){.how{grid-template-columns:repeat(3,1fr);gap:20px}}
 /* bottom bar + sheet (phone/tablet) */
 .bar{position:fixed;left:0;right:0;bottom:0;z-index:40;display:grid;grid-template-columns:repeat(4,1fr);background:var(--hv-ink);padding-bottom:env(safe-area-inset-bottom)}
 .bar a,.bar button{color:#F3EFE8;background:none;border:0;font:inherit;font-size:11px;letter-spacing:.1em;text-transform:uppercase;text-decoration:none;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;min-height:64px;cursor:pointer} .bar .on{color:var(--hv-accent)} .bar i{font-style:normal;font-size:16px}
@@ -419,11 +473,11 @@ def _common(c):
     e = html.escape
     nav = "".join(
         f'<div><a class="top label" href="{a}">{e(n)}</a>' +
-        (('<div class="panel">' + "".join(f'<a href="{"aszu.html" if b=="Culture" else "#borok"}"><b>{e(b)}</b><span>{e(s)}</span></a>' for b,s in c["panel_wines"]) + f'<a class="all" href="#borok">{e(c["panel_all"])}</a></div>') if i==1 else
+        (('<div class="panel">' + "".join(f'<a href="borok.html#line-{b.lower().replace(" ","-")}"><b>{e(b)}</b><span>{e(s)}</span></a>' for b,s in c["panel_wines"]) + f'<a class="all" href="borok.html">{e(c["panel_all"])}</a></div>') if i==1 else
          ('<div class="panel">' + "".join(f'<a href="latogatas.html#jegyek"><b>{e(b)}</b><span>{e(s)}</span></a>' for b,s in c["panel_visits"]) + f'<a class="all" href="latogatas.html#foglalas">{e(c["book"])}</a></div>') if i==2 else '') + '</div>'
         for i,(n,a) in enumerate(zip(c["nav"],ANCHORS)))
     cards = "".join(f'<a class="card{" fit" if img.startswith("preculture") else ""}" href="{href}"><img src="{IMG}{img}" alt="{e(alt)}" width="413" height="462" loading="lazy"><div><h3>{e(t)}</h3><p class="short">{e(t2.split("—")[0].split(".")[0])}</p><p class="long">{e(t2)}</p><span class="btn btn-3">{e(cta)} →</span></div></a>' for t,t2,cta,href,img,alt in c["cards"])
-    bottles = "".join(f'<a class="bottle" href="{"aszu.html" if n=="Culture" else "#borok"}"><img src="{IMG}{img}" alt="{e(n)}" height="720" loading="lazy"><b>{e(n)}</b><span>{e(s)}</span><em class="price">{e(p)}</em></a>' for n,s,p,img in c["bottles"])
+    bottles = "".join(f'<a class="bottle" href="{BOTTLE_HREF.get(n,"borok.html")}"><img src="{IMG}{img}" alt="{e(n)}" height="720" loading="lazy"><b>{e(n)}</b><span>{e(s)}</span><em class="price">{e(p)}</em></a>' for n,s,p,img in c["bottles"])
     rocks = "".join(f'<a class="rock{" more" if i>=3 else ""}" href="birtok.html#dulok">' + (f'<img src="{IMG}{img}" alt="" width="256" height="256" loading="lazy">' if img else f'<i>{e(c["rock_missing"])}</i>') + f'<div><b>{e(n)}</b><span>{e(s)}</span></div></a>' for i,(n,s,img) in enumerate(c["dulok"]))
     nums = "".join(f'<div><b>{e(v)}</b><span>{e(l)}</span></div>' for v,l in c["nums"])
     foot = "".join(f'<div class="cols"><b>{e(h)}</b>' + "".join(f'<a href="#">{e(x)}</a>' for x in xs) + '</div>' for h,xs in c["foot"])
@@ -453,7 +507,7 @@ def _common(c):
   <a class="wordmark" href="#top">HOLDVÖLGY</a>
   <nav aria-label="{'Fő navigáció' if c['lang']=='hu' else 'Main navigation'}">{nav}</nav>
   <a class="btn btn-2 book" href="latogatas.html#foglalas">{e(c['book'])}</a>
-  <div class="right"><a class="lang label" href="{alt_href}" lang="{alt_lang}" hreflang="{alt_lang}">{e(c['lang_other'][0])}</a><a class="cart" href="#borok" aria-label="{e(c['cart'])}">◯</a></div>
+  <div class="right"><a class="lang label" href="{alt_href}" lang="{alt_lang}" hreflang="{alt_lang}">{e(c['lang_other'][0])}</a><a class="cart" href="borok.html" aria-label="{e(c['cart'])}">◯</a></div>
 </div></header>
 <main id="top">
 <section class="hero" id="birtok">
@@ -463,16 +517,16 @@ def _common(c):
     <source type="image/avif" srcset="{IMG}hero-cellar-1440.avif">
     <img src="{IMG}hero-cellar-1440.webp" alt="{e(c['hero_alt'])}" width="1440" height="659" fetchpriority="high">
   </picture>
-  <div class="wrap"><span class="label badge">{e(c['badge'])}</span><h1>{e(c['h1'])}</h1><div class="row"><a class="btn" href="latogatas.html#foglalas">{e(c['book'])}</a><a class="btn btn-w" href="#borok">{e(c['nav'][1])}</a></div></div>
+  <div class="wrap"><span class="label badge">{e(c['badge'])}</span><h1>{e(c['h1'])}</h1><div class="row"><a class="btn" href="latogatas.html#foglalas">{e(c['book'])}</a><a class="btn btn-w" href="borok.html">{e(c['nav'][1])}</a></div></div>
 </section>
 <section class="wrap cards">{cards}</section>
-<section class="band" id="borok"><div class="wrap"><div class="head"><h2>{e(c['band_h'])}</h2><a class="btn btn-3 short" href="#borok">{e(c['band_all_short'])} →</a><a class="btn btn-3 long" href="#borok">{e(c['band_all'])} →</a></div><div class="rail">{bottles}</div></div></section>
+<section class="band" id="borok"><div class="wrap"><div class="head"><h2>{e(c['band_h'])}</h2><a class="btn btn-3 short" href="borok.html">{e(c['band_all_short'])} →</a><a class="btn btn-3 long" href="borok.html">{e(c['band_all'])} →</a></div><div class="rail">{bottles}</div></div></section>
 <section class="wrap dulok"><img class="map" src="{IMG}dulok-map-1000.webp" alt="{e(c['map_alt'])}" width="1000" height="590" loading="lazy"><div><h2>{e(c['dulok_h'])}</h2><p class="lede">{e(c['dulok_lede'])}</p>{rocks}<p class="all"><a class="btn btn-3" href="birtok.html#dulok">{e(c['dulok_all'])} →</a></p></div></section>
 <section class="wrap visit" id="latogatas"><img class="photo" src="{IMG}visit-tunnel-1120.webp" alt="{e(c['tunnel_alt'])}" width="1120" height="1484" loading="lazy"><div><div class="nums">{nums}</div><h2>{e(c['visit_h'])}</h2><p class="short">{e(c['hours_short'])}</p><p class="long">{e(c['hours'])}</p><p>3909 Mád, Árpád u. 13.</p><p><a class="tel" href="tel:+36703914643">+36 70 391 4643</a> · <a class="tel" href="mailto:visit@holdvolgy.com">visit@holdvolgy.com</a></p><a class="btn" href="latogatas.html#foglalas">{e(c['book'])}</a></div></section>
 <section class="wrap news" id="borklub"><h3>{e(c['news_h'])}</h3><form onsubmit="return false"><input type="email" id="news-email" placeholder="{e(c['news_ph'])}" aria-label="{e(c['news_ph'])}"><button class="btn btn-2" type="submit">{e(c['news_btn'])}</button></form></section>
 </main>
 <footer class="wrap" id="kapcsolat"><div><span class="wordmark" style="font-size:16px">HOLDVÖLGY</span><p style="margin:8px 0 0">3909 Mád, Árpád u. 13. · Tokaj-Hegyalja</p><p style="margin:4px 0 0"><a href="mailto:visit@holdvolgy.com">visit@holdvolgy.com</a><a href="tel:+36703914643">+36 70 391 4643</a></p><small>{e(c['responsible'])}</small><p style="margin:10px 0 0"><a href="{c['hub_href']}">← {e(c['hub'])}</a></p></div>{foot}</footer>
-<nav class="bar" aria-label="{'Alsó navigáció' if c['lang']=='hu' else 'Bottom navigation'}"><a class="on" href="latogatas.html#foglalas"><i>◷</i>{e(c['book'].split(' ')[0])}</a><a href="#borok"><i>▯</i>{e(c['nav'][1])}</a><a href="#borok"><i>◯</i>{e(c['cart'])}</a><button type="button" id="menuBtn"><i>≡</i>{e(c['menu'])}</button></nav>
+<nav class="bar" aria-label="{'Alsó navigáció' if c['lang']=='hu' else 'Bottom navigation'}"><a class="on" href="latogatas.html#foglalas"><i>◷</i>{e(c['book'].split(' ')[0])}</a><a href="borok.html"><i>▯</i>{e(c['nav'][1])}</a><a href="borok.html"><i>◯</i>{e(c['cart'])}</a><button type="button" id="menuBtn"><i>≡</i>{e(c['menu'])}</button></nav>
 <dialog class="sheet" id="menu" aria-label="{e(c['menu'])}"><div class="top"><span class="wordmark">HOLDVÖLGY</span><button class="x" type="button" id="menuClose" aria-label="{e(c['close'])}">✕</button></div><ul>{sheet_main}</ul><ul class="sub">{sheet_sub}</ul></dialog>
 <dialog class="age" id="age" aria-labelledby="ageQ"><svg width="40" height="40" viewBox="0 0 40 40" aria-hidden="true" style="margin:0 auto"><circle cx="20" cy="20" r="13" fill="none" stroke="#B8A689" stroke-width="1.2"/><circle cx="25" cy="16" r="10" fill="#FAFAFA"/></svg><h2 id="ageQ">{e(c['age_q'])}</h2><p>{e(c['age_note'])}</p><div class="row"><button class="btn" type="button" id="ageYes">{e(c['yes'])}</button><a class="btn btn-2" href="https://www.google.com">{e(c['no'])}</a></div></dialog>
 <script>
@@ -521,7 +575,7 @@ def birtok_main(c):
 def aszu_main(c):
     e = html.escape; a = c["aszu"]
     steps = lambda xs: "".join(f'<article><h3>{e(t)}</h3><p>{e(p)}</p></article>' for t,p in xs)
-    wall = "".join(f'<a class="w" href="#preculture"><img src="{IMG}culture-{y}.webp" alt="Culture {y}" height="560" loading="lazy"><b>{e(y)}</b><em>{e(pr)} Ft</em></a>' for y,pr in a["wall"])
+    wall = "".join(f'<a class="w" href="bor/culture-{y}.html"><img src="{IMG}culture-{y}.webp" alt="Culture {y}" height="560" loading="lazy"><b>{e(y)}</b><em>{e(pr)} Ft</em></a>' for y,pr in a["wall"])
     moments = "".join(f'<li>{e(m)}</li>' for m in a["moments"])
     pre = "".join(f'<a href="index.html#kapcsolat"><img src="{IMG}{"preculture-barrel-2025.webp" if y=="2025" else f"preculture-{y}.webp"}" alt="" loading="lazy"><b>{e(y)}</b></a>' for y in a["pre_years"])
     her = "".join(f'<article><b>{e(y)}</b><div><h3>{e(t)}</h3><p>{e(p)}</p></div></article>' for y,t,p in a["heritage"])
@@ -588,7 +642,78 @@ def latogatas_main(c):
 <section class="wrap sec" id="vendegkonyv"><h2>{e(v['gb_h'])}</h2><p class="lede">{e(v['gb'])}</p><div class="gb">{gb}</div></section>
 """
 
-def render(c, rel, main_override=None, title=None, desc=None, slug=None):
+def _fmt(p, lang):
+    return None if p is None else (f"{p:,}".replace(",", " ") + " Ft")
+def _card(p, c):
+    e = html.escape; L = c["lang"]; sh = c["shop"]
+    img = f'<img src="{IMG}{p["render"]}.webp" alt="{e(p["name"])}" height="720" loading="lazy">' if p["render"] else f'<i>{e(sh["no_image"])}</i>'
+    price = _fmt(p["price"], L); pr = e(price) if price else e(sh["no_price"])
+    return f'<a class="pc" href="bor/{p["id"]}.html" data-type="{p["type"]}" data-line="{e(p["line"])}" data-price="{p["price"] or 0}"><div class="fig">{img}</div><div class="b"><span class="l">{e(p["line"])}</span><h3>{e(p["name"])}</h3><p>{e(p["cat"][L])}</p><span class="pr">{pr}</span></div></a>'
+def shop_main(c):
+    e = html.escape; L = c["lang"]; sh = c["shop"]
+    chips = "".join(f'<button class="chip" type="button" data-filter="{k}" aria-pressed="{"true" if k=="mind" else "false"}">{e(v)}</button>' for k,v in sh["filters"])
+    opts = "".join(f'<option value="{k}">{e(v)}</option>' for k,v in sh["sort"])
+    cards = "".join(_card(p, c) for p in CAT)
+    return f"""
+<section class="wrap sec" style="padding-bottom:0"><p class="eyebrow">{e(sh['eyebrow'])}</p><h1 style="font-size:clamp(34px,6vw,56px)">{e(sh['h1'])}</h1><p class="lede" style="margin:14px 0 22px">{e(sh['lede'])}</p>
+<div class="toolbar"><div class="chips" id="filters" role="group" aria-label="{e(sh['eyebrow'])}">{chips}</div><label class="sortbox">{e(sh['sort_label'])}<select id="sort">{opts}</select></label></div>
+<p class="count" id="count"></p></section>
+<section class="wrap" style="padding-bottom:64px"><div class="grid" id="grid">{cards}</div></section>
+<script>
+(function(){{
+  var grid=document.getElementById('grid'),cards=[].slice.call(grid.children),count=document.getElementById('count'),filters=document.getElementById('filters'),sort=document.getElementById('sort');
+  var order={json.dumps(list(dict.fromkeys(p["line"] for p in CAT)))};var lineHeads=[];
+  function render(){{
+    var f=filters.querySelector('[aria-pressed="true"]').dataset.filter,mode=sort.value;
+    var vis=cards.filter(function(x){{return f==='mind'||x.dataset.type===f||(f==='hh'&&x.dataset.line==='Hold and Hollo')||(f==='szaraz'&&x.dataset.type==='pezsgo');}});
+    if(mode==='asc'||mode==='desc'){{vis.sort(function(a,b){{var pa=+a.dataset.price||Infinity,pb=+b.dataset.price||Infinity;return mode==='asc'?pa-pb:(pb===Infinity?-1:pa===Infinity?1:pb-pa);}});}}
+    else{{vis.sort(function(a,b){{return order.indexOf(a.dataset.line)-order.indexOf(b.dataset.line)||(+a.dataset.price)-(+b.dataset.price);}});}}
+    grid.innerHTML='';var last=null;
+    vis.forEach(function(x){{if(mode==='line'&&x.dataset.line!==last){{var h=document.createElement('h2');h.className='line-h';h.id='line-'+x.dataset.line.toLowerCase().replace(/ /g,'-');h.textContent=x.dataset.line;grid.appendChild(h);last=x.dataset.line;}}grid.appendChild(x);}});
+    if(!vis.length){{var p=document.createElement('p');p.className='empty';p.textContent='—';grid.appendChild(p);}}
+    count.textContent=vis.length+' {e(sh['count'])}';
+  }}
+  filters.addEventListener('click',function(ev){{var b=ev.target.closest('.chip');if(!b)return;filters.querySelectorAll('.chip').forEach(function(x){{x.setAttribute('aria-pressed',String(x===b));}});render();}});
+  sort.addEventListener('change',render);render();
+  if(location.hash&&document.getElementById(location.hash.slice(1)))document.getElementById(location.hash.slice(1)).scrollIntoView();
+}})();
+</script>
+"""
+def product_main(c, p):
+    e = html.escape; L = c["lang"]; pr = c["product"]; sh = c["shop"]
+    img = f'<img src="{IMG}{p["render"]}.webp" alt="{e(p["name"])}, {e(p["cat"][L])}" height="720" fetchpriority="high">' if p["render"] else f'<i>{e(sh["no_image"])}</i>'
+    price = _fmt(p["price"], L)
+    facts = "".join(f'<dt>{e(k)}</dt><dd>{e(v)}</dd>' for k,v in [(pr["cat_label"],p["cat"][L]),(pr["vintage"],p["vintage"]),(pr["size"],p["size"]),(pr["variety"],p["variety"]),(pr["dulo"],p["dulo"])] if v)
+    tag = p["tagline"][L] or p["tagline"]["hu"]; desc = p["desc"][L] or p["desc"]["hu"]
+    rel = [q for q in CAT if q["line"]==p["line"] and q["id"]!=p["id"]][:4]
+    relh = f'<section class="wrap rel"><h2>{e(pr["related"])}</h2><div class="grid">{"".join(_card(q, c) for q in rel)}</div></section>' if rel else ""
+    ld = json.dumps({"@context":"https://schema.org","@type":"Product","name":p["name"],"brand":{"@type":"Brand","name":"Holdvölgy"},"category":p["cat"][L],"image":(f'https://moldovancsaba.github.io/calvus/holdvolgy/assets/img/{p["render"]}.webp' if p["render"] else None),"description":desc[:300],"offers":({"@type":"Offer","priceCurrency":"HUF","price":p["price"],"availability":"https://schema.org/InStock","url":p["live_url"]} if p["price"] else None)},ensure_ascii=False)
+    buy = (f'<div class="buy"><span class="pr">{e(price)}<small>{e(p["size"])}</small></span><button class="btn" type="button">{e(pr["cart"])}</button><a class="btn btn-2" href="{pr["taste_href"]}">{e(pr["taste"])}</a></div>' if price else
+           f'<div class="buy"><span class="pr">{e(sh["no_price"])}<small>{e(p["size"])}</small></span><a class="btn" href="mailto:visit@holdvolgy.com">{e(pr["ask"])}</a><a class="btn btn-2" href="{pr["taste_href"]}">{e(pr["taste"])}</a></div>')
+    return f"""
+<section class="wrap prod"><div class="fig">{img}</div><div>
+<p><a class="btn btn-3" href="borok.html">{e(pr['back'])}</a></p>
+<p class="l">{e(p['line'])}</p><h1>{e(p['name'])}</h1><p class="cat">{e(p['cat'][L])} · {e(p['size'])}</p>
+{f'<p class="tag">{e(tag)}</p>' if tag else ''}<p class="desc">{e(desc)}</p>
+<dl class="facts">{facts}</dl>{buy}
+<p class="note">{e(pr['delivery'])}</p><p class="note">{e(pr['tech_note'])} · <a href="{p['live_url']}" rel="noopener">{e(pr['live'])}</a></p>
+</div></section>{relh}
+<script type="application/ld+json">{ld}</script>
+"""
+def club_main(c):
+    e = html.escape; k = c["club"]
+    ben = "".join(f'<li>{e(b)}</li>' for b in k["benefits"])
+    tiers = "".join(f'<div class="tier"><b>{e(pct)}</b><span>{e(k["tier_note"])}</span><strong>{e(amt)}</strong>' + (f'<em>{e(x)}</em>' if x else '') + '</div>' for amt,pct,x in k["tiers"])
+    how = "".join(f'<article><h3>{e(t)}</h3><p>{e(p)}</p></article>' for t,p in k["how"])
+    return f"""
+<section class="wrap sec" style="padding-bottom:8px"><p class="eyebrow">{e(k['eyebrow'])}</p><h1 style="font-size:clamp(32px,5.5vw,52px)">{e(k['h1'])}</h1><p class="lede" style="margin-top:14px">{e(k['lede'])}</p><ul class="ben">{ben}</ul></section>
+<section class="wrap sec"><h2>{e(k['tiers_h'])}</h2><div class="tiers">{tiers}</div></section>
+<section class="wrap sec"><h2>{e(k['how_h'])}</h2><div class="how">{how}</div></section>
+<section class="wrap sec"><h2>{e(k['rules_h'])}</h2><p class="lede" style="color:var(--hv-text)">{e(k['rules'])}</p></section>
+<section class="cta"><div class="wrap"><h2>{e(k['join_h'])}</h2><p>{e(k['join'])}</p><a class="btn" href="mailto:visit@holdvolgy.com">{e(k['join_btn'])}</a></div></section>
+"""
+
+def render(c, rel, main_override=None, title=None, desc=None, slug=None, depth=""):
     doc = _common(c)
     if main_override is not None:
         start = doc.index('<main id="top">') + len('<main id="top">'); end = doc.index('</main>')
@@ -600,8 +725,18 @@ def render(c, rel, main_override=None, title=None, desc=None, slug=None):
         doc = doc.replace('href="en/index.html" lang="en"',f'href="en/{slug}.html" lang="en"').replace('href="../index.html" lang="hu"',f'href="../{slug}.html" lang="hu"')
         # in-page anchors that live on the home page must point back to it
         doc = doc.replace('href="#borok"','href="index.html#borok"').replace('href="#latogatas"','href="index.html#latogatas"').replace('href="#borklub"','href="index.html#borklub"').replace('href="#kapcsolat"','href="index.html#kapcsolat"')
-    out = HERE / rel; out.parent.mkdir(exist_ok=True); out.write_text(doc, encoding="utf-8")
-    print(f"{rel:16s} {out.stat().st_size:6d} bytes")
+    if depth:
+        # one generic pass: every page-relative URL gets the extra directory level
+        def pre(m):
+            attr, val = m.group(1), m.group(2)
+            if attr == "srcset":
+                val = ", ".join((depth + part.strip()) if not re.match(r"(https?:|data:)", part.strip()) else part.strip() for part in val.split(","))
+            else:
+                val = depth + val
+            return f'{attr}="{val}"'
+        doc = re.sub(r'\b(href|src|srcset)="(?!(?:https?:|mailto:|tel:|#|data:|javascript:))([^"]+)"', pre, doc)
+    out = HERE / rel; out.parent.mkdir(parents=True, exist_ok=True); out.write_text(doc, encoding="utf-8")
+    if not depth: print(f"{rel:16s} {out.stat().st_size:6d} bytes")
 
 if __name__ == "__main__":
     for lang, rel, tok, img in (("hu", "index.html", "assets/tokens.css", "assets/img/"), ("en", "en/index.html", "../assets/tokens.css", "../assets/img/")):
@@ -613,3 +748,9 @@ if __name__ == "__main__":
         render(C[lang], rel.replace("index.html","aszu.html"), main_override=aszu_main(C[lang]), title=a["title"], desc=a["desc"], slug="aszu")
         v = C[lang]["latogatas"]
         render(C[lang], rel.replace("index.html","latogatas.html"), main_override=latogatas_main(C[lang]), title=v["title"], desc=v["desc"], slug="latogatas")
+        sh = C[lang]["shop"]; k = C[lang]["club"]
+        render(C[lang], rel.replace("index.html","borok.html"), main_override=shop_main(C[lang]), title=sh["title"], desc=sh["desc"], slug="borok")
+        render(C[lang], rel.replace("index.html","borklub.html"), main_override=club_main(C[lang]), title=k["title"], desc=k["desc"], slug="borklub")
+        for p in CAT:
+            t = f'{p["name"]} — {p["cat"][lang]} · Holdvölgy'
+            render(C[lang], rel.replace("index.html", f"bor/{p['id']}.html"), main_override=product_main(C[lang], p), title=t, desc=(p["tagline"][lang] or p["desc"][lang] or p["desc"]["hu"])[:160], slug=f"bor/{p['id']}", depth="../")

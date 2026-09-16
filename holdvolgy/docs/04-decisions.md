@@ -92,3 +92,9 @@ to WebP/AVIF with alpha, never flattened; every page's base rule is
 `img { max-width: 100%; height: auto; display: block }` so width/height attributes
 (kept for layout stability) never distort. The gate now includes a rendered look at
 every image-led section, not only measurements.
+
+**D17 — Images in aspect-ratio boxes are absolutely bounded.** Standing, 2026-09-16.
+A percentage height inside an `aspect-ratio` grid cell resolves to `auto`, so the
+image falls back to its attribute height and overflows. Figure boxes are
+`position: relative` and the image is absolutely centred with `max-height` and
+`max-width` bounds. Found in the Phase 3 gate by looking, not by the numbers.

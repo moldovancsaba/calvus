@@ -14,6 +14,7 @@ record. Each file is dated inside; this index is the process log.
 | `04-decisions.md` | Decision log — what was decided, by whom, why, and what it replaced |
 | `design-system.html` | Phase 1 gate 1: the design system rendered live from the tokens — colour, type, spacing, buttons, cards, bottles, dűlő rows, both navigations |
 | `assets-used.md` | Every asset fetched for the build, its source URL, original and derivative sizes |
+| `10-shop-build.md` | Phase 3: the shop — catalogue, grid, product template, Borklub, measurements |
 | `09-latogatas-build.md` | Phase 2: the Látogatás page — sources, booking form, measurements, and the map fix |
 | `08-aszu-build.md` | Phase 2: the Tokaji aszú page — sources, the Culture wall, measurements |
 | `07-birtok-build.md` | Phase 2: the Birtok page — content sources, sections, measurements at 390/768/1440, and the navigation fixes made in the same round |
@@ -99,5 +100,10 @@ information and the booking form (`09-latogatas-build.md`). The owner found the
 vineyard map black and stretched on the live Birtok page — two converter/CSS
 defects, fixed at the root (D16).
 
-**Next.** Phase 3: the shop — Borok grid from the 40 renders, product-page template
-from a JSON catalogue, Borklub page.
+**2026-09-16 — Phase 3 built: shop, product pages, Borklub.** `data/catalogue.json`
+holds 32 products with the client's HU and EN copy from the live shop; the grid,
+32 + 32 product pages and the club page are generated from it (`10-shop-build.md`).
+The wine links across the site now land on real product pages.
+
+**Next.** Phase 4 is folded in (EN generated throughout); Phase 5: per-page gate
+sweep of all 130 files, JSON-LD on product pages (done), SOURCES note, hand-off.
