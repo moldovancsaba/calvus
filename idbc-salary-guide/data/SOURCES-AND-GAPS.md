@@ -154,13 +154,16 @@ Three changes after the client's workshop:
 - **SAP's mobile cards collapse like Bérsávok'.** Each SAP row is now a card whose header holds
   the position and its range, with the juttatási megjegyzés behind the toggle. Bérsávok groups
   three experience levels per card; SAP is a flat table, so one row is one card.
-- **Cards show the page background instead of white.** The card surfaces, the tables and both
-  scroll wrappers go transparent below the breakpoint, so the site's green ground reads through
-  and the card borders do the separating. Desktop keeps its white table surface.
+- **The panel behind the mobile cards is gone; the cards stay white.** First read as "make the
+  cards transparent", corrected by the client on 2026-09-16: the salary blocks themselves stay
+  filled white, and it is the extra full-width surface *under* them — the scroll wrapper's own
+  background, border and shadow — that is dropped below the breakpoint, so the cards sit directly
+  on the page. Desktop keeps the wrapper panel.
 - **The TOP3 chart has a narrow layout.** Instead of one 900px-wide chart with the role names in
   a left gutter (34% of it visible on a phone, sideways-scrolled), each position now renders as
   its own block — name and sub-label above, a short band chart below — sharing one domain so the
-  bands stay comparable, with a single axis underneath. Values are abbreviated to millions in
+  bands stay comparable. Every chart carries its own value scale underneath (client request,
+  2026-09-16 — it started as one shared axis under the group). Values are abbreviated to millions in
   Hungarian notation (`1,25M`, `1,3M`, `2M`). The wide layout is unchanged above 700px; the
   component picks a layout from `matchMedia` and both pages re-render when that line is crossed.
 

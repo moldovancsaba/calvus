@@ -6,7 +6,7 @@
   <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
   <meta http-equiv="Pragma" content="no-cache" />
   <title>IDBC – SAP piaci trendek és bérsávok</title>
-  <link rel="stylesheet" href="../assets/chart.css?v=4" />
+  <link rel="stylesheet" href="../assets/chart.css?v=5" />
   <style>
     :root {
       --dark: #132323;
@@ -185,8 +185,9 @@
       thead { display: none; }
       table, tbody, tr, td { display: block; }
       tbody { padding: 0; }
-      /* Client asked for the page's own background to show through rather than white cards. */
-      tr { background: transparent; border: 1px solid rgba(19,35,35,.22); border-radius: 14px; margin-bottom: 10px; padding: 0; overflow: hidden; }
+      /* The cards stay filled white; it is the panel *behind* them that the client did not
+         want (handled by the media query on .salary-table-wrap above). */
+      tr { background: #fff; border: 1px solid rgba(19,35,35,.12); border-radius: 14px; margin-bottom: 10px; padding: 0; overflow: hidden; }
       tr:last-child { margin-bottom: 0; }
       tr:last-child td { border-bottom: 0; }
       td { border: 0; padding: 6px 14px; font-size: 13px; }
@@ -326,7 +327,7 @@
 
   <main>
     <section class="hero" aria-labelledby="hero-title">
-      <img src="https://idbc.hu/includes/images/GO_Hero2.webp?v=4" alt="IDBC SAP piaci trendek fejléckép nagyvállalati környezetben" />
+      <img src="https://idbc.hu/includes/images/GO_Hero2.webp?v=5" alt="IDBC SAP piaci trendek fejléckép nagyvállalati környezetben" />
       <div class="hero-card">
         <p class="eyebrow">IDBC Salary Guide</p>
         <h1 id="hero-title">SAP piaci trendek</h1>
@@ -450,7 +451,7 @@
     </div>
   </footer>
 
-  <script src="../assets/top3-chart.js?v=4"></script>
+  <script src="../assets/top3-chart.js?v=5"></script>
   <script>
     (async () => {
     const DATA = await fetch('../data/guide-data.json', { cache: 'no-cache' }).then(r => r.json());

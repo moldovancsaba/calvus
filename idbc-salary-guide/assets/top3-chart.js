@@ -70,7 +70,7 @@
   // chart below — so nothing needs sideways scrolling. All blocks share one domain so the
   // bands stay comparable, and values are abbreviated to millions.
   function renderCompactChart(rows, opts) {
-    const W = 340, PLOT_MIN = 10, PLOT_MAX = 330, MID = 46, H = 64;
+    const W = 340, PLOT_MIN = 10, PLOT_MAX = 330, MID = 46, AXIS_Y = 76, H = 84;
     const values = rows.flatMap(r => [r.min, r.max, r.idbc].filter(v => v != null));
     const domain = niceDomain(values);
     const xPos = v => PLOT_MIN + ((v - domain.min) / (domain.max - domain.min)) * (PLOT_MAX - PLOT_MIN);
@@ -90,6 +90,8 @@
 
       let defs = '', body = '';
       body += ticks.map(t => `<line class="grid-line" x1="${xPos(t).toFixed(1)}" y1="14" x2="${xPos(t).toFixed(1)}" y2="${MID + 12}" />`).join('');
+      // Every chart carries its own value scale (client request, 2026-09-16).
+      body += ticks.map(t => `<text class="axis-label" x="${xPos(t).toFixed(1)}" y="${AXIS_Y}" text-anchor="middle">${escapeHtml(fmtMillions(t))}</text>`).join('');
       body += `<line class="row-line" x1="${PLOT_MIN}" y1="${MID}" x2="${PLOT_MAX}" y2="${MID}" />`;
       const first = points[0], last = points[points.length - 1];
       if (last.x - first.x > 0.5) {
@@ -117,18 +119,13 @@
         </div>`;
     }).join('');
 
-    const axisLabels = ticks.map(t =>
-      `<text class="axis-label" x="${xPos(t).toFixed(1)}" y="14" text-anchor="middle">${escapeHtml(fmtMillions(t))}</text>`).join('');
-
     return `
       <ul class="top3-chart-legend" aria-label="Jelmagyarázat">
         <li><span style="background:${COLOR_MIN}"></span>${LABEL.min}</li>
         <li><span style="background:${COLOR_IDBC}"></span>${LABEL.idbc}</li>
         <li><span style="background:${COLOR_MAX}"></span>${LABEL.max}</li>
       </ul>
-      <div class="top3-compact">${blocks}
-        <svg class="top3-chart top3-compact-axis" viewBox="0 0 ${W} 20" aria-hidden="true">${axisLabels}</svg>
-      </div>`;
+      <div class="top3-compact">${blocks}</div>`;
   }
 
   function renderTop3Chart(rows, options) {

@@ -6,7 +6,7 @@
   <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
   <meta http-equiv="Pragma" content="no-cache" />
   <title>IDBC Salary Guide – Bérsávok területenként</title>
-  <link rel="stylesheet" href="../assets/chart.css?v=4" />
+  <link rel="stylesheet" href="../assets/chart.css?v=5" />
 
   <style>
     :root {
@@ -281,9 +281,10 @@
       thead { display: none; }
       table, tbody, tr, td { display: block; }
 
-      /* Client asked for the page's own background to show through rather than white cards. */
-      .table-wrap, table { background: transparent; }
-      tbody { margin: 0 0 12px; border: 1px solid rgba(19,35,35,.22); border-radius: 14px; overflow: hidden; background: transparent; }
+      /* The cards stay filled white; it is the panel *behind* them that the client did not
+         want (handled by the media query on .table-wrap above). */
+      table { background: transparent; }
+      tbody { margin: 0 0 12px; border: 1px solid var(--line); border-radius: 14px; overflow: hidden; background: #fff; }
       tbody:last-child { margin-bottom: 0; }
 
       tr { display: grid; grid-template-columns: 1fr 1fr; padding: 0; border: 0; }
@@ -301,7 +302,7 @@
         color: var(--muted); margin-bottom: 1px;
       }
 
-      td.pos-cell { grid-column: 1 / -1; padding: 0; background: rgba(19,35,35,.05); border-bottom: 1px solid rgba(19,35,35,.14); }
+      td.pos-cell { grid-column: 1 / -1; padding: 0; background: rgba(19,35,35,.05); border-bottom: 1px solid var(--line); }
       tbody.is-collapsed td.pos-cell { border-bottom: 0; }
       .pos-name-plain { display: none; }
       .pos-toggle {
@@ -545,7 +546,7 @@
     </div>
   </footer>
 
-  <script src="../assets/top3-chart.js?v=4"></script>
+  <script src="../assets/top3-chart.js?v=5"></script>
   <script>
     (async () => {
     const DATA = await fetch('../data/guide-data.json', { cache: 'no-cache' }).then(r => r.json());
