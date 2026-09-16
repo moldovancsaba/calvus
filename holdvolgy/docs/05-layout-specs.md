@@ -1,14 +1,14 @@
 # Layout specifications — desktop 1440 and phone 390
 
-Phase 1 of `00-plan.md`, started on the owner's "Go" 2026-09-16 (D10). Per D5 these
-are two designed experiences, not one layout reflowed. Each is specified at its
-reference size; tablet is resolved as its own state at the end. Nothing here is
-coded yet — this document is the thing to approve before the home page is built.
+**Status: approved 2026-09-16 (D13); the home page and every later page were built to
+these frames.** Phase 1 of `00-plan.md`, started on the owner's "Go" (D10). Per D5
+these are two designed experiences, not one layout reflowed. Each is specified at its
+reference size; tablet is resolved as its own state at the end.
 
 Gate 1 (the design system) was approved 2026-09-16 (D12). The two frames below are
 composed from those approved components and the real assets at the exact reference
-sizes; the box schematics further down fix the same thing in diagram form. Approve
-the frames, and the home page is built from them and measured.
+sizes; the box schematics further down fix the same thing in diagram form. The frames were approved and the home page built from them and measured
+(`06-home-build.md`).
 
 <div class="frames">
 <figure><figcaption>Desktop · 1440 — <a href="frames/home-desktop-1440.html">open at full size</a></figcaption><div class="scale-d"><iframe src="frames/home-desktop-1440.html" title="Desktop frame, 1440 wide" loading="lazy"></iframe></div></figure>

@@ -7,7 +7,11 @@ the rules win; say so explicitly rather than silently overriding them.
 ## What this repo actually is
 
 Static HTML/CSS/JS wireframe and prototype pages (Lexodont dental site,
-IDBC Salary Guide), no build step, no package manager, no test runner.
+IDBC Salary Guide, Holdvölgy), no package manager, no test runner. Two manual
+generators exist and must be re-run after editing their sources:
+`python3 holdvolgy/build.py` (site pages, HU + EN, from `build.py` content and
+`data/catalogue.json`) and `python3 holdvolgy/docs/build.py` (docs pages from the
+markdown); `python3 holdvolgy/check.py` is the gate.
 Deployed to GitHub Pages straight from the `main` branch — there is no CI
 pipeline, no bundler, no linter. Don't assume npm scripts, a `package.json`,
 or a design-system engine exist here; they don't. Treat any instruction that
@@ -126,9 +130,11 @@ must actually happen before every push, not just be claimed:
   the change (a background curl-poll loop for a unique marker in the new
   content, per the established pattern) before reporting success.
 
-- Run a whole-project link audit (every relative `href`/`src`/`srcset` in every
-  HTML file must resolve on disk) and, for `holdvolgy/docs/`, the every-doc-links-
-  every-other check that `docs/build.py` performs.
+- Run `python3 holdvolgy/check.py` — the one-command gate: link audit, cross-page
+  anchors, docs cross-links, a **stale-state phrase scan** (anything that was true
+  once — "in Phase N", "for approval", "coming soon", placeholders) and the single
+  current prototype banner on every page. It must print `GATE: CLEAN`. Added after
+  the owner had to catch stale text four times (2026-09-16).
 - Image conversions keep the alpha channel of any RGBA source (never
   `.convert('RGB')` on a PNG with transparency), and every page's base CSS has
   `img { height: auto }` so width/height attributes never distort (owner found a

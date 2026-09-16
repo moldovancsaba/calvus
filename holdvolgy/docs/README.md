@@ -115,4 +115,11 @@ client's (portraits, two rock photographs, portrait hero frames, technical data)
 shop pages were to come in Phase 3. It now states only what is inert in the
 prototype (cart, forms) on every page in both languages.
 
+**2026-09-16 — the gate becomes one command (`holdvolgy/check.py`).** After the owner
+had to catch stale text four times, staleness is now something the gate scans for:
+phrases that were true once, the prototype banner on every page, plus the link,
+anchor and docs-nav audits. Its first run found the shop's collection anchors
+existing only after JavaScript (now rendered statically) and the design-system page
+still carrying its pre-approval eyebrow. CLAUDE.md rule 2 names the command.
+
 **Next.** Client review of the whole; then the items in §6 of the plan as they arrive.

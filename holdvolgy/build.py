@@ -653,7 +653,12 @@ def shop_main(c):
     e = html.escape; L = c["lang"]; sh = c["shop"]
     chips = "".join(f'<button class="chip" type="button" data-filter="{k}" aria-pressed="{"true" if k=="mind" else "false"}">{e(v)}</button>' for k,v in sh["filters"])
     opts = "".join(f'<option value="{k}">{e(v)}</option>' for k,v in sh["sort"])
-    cards = "".join(_card(p, c) for p in CAT)
+    cards, last = [], None
+    for p in CAT:  # headings are in the HTML so #line-… anchors exist before any script runs; the sort script rebuilds them in place
+        if p["line"] != last:
+            cards.append(f'<h2 class="line-h" id="line-{p["line"].lower().replace(" ","-")}">{e(p["line"])}</h2>'); last = p["line"]
+        cards.append(_card(p, c))
+    cards = "".join(cards)
     return f"""
 <section class="wrap sec" style="padding-bottom:0"><p class="eyebrow">{e(sh['eyebrow'])}</p><h1 style="font-size:clamp(34px,6vw,56px)">{e(sh['h1'])}</h1><p class="lede" style="margin:14px 0 22px">{e(sh['lede'])}</p>
 <div class="toolbar"><div class="chips" id="filters" role="group" aria-label="{e(sh['eyebrow'])}">{chips}</div><label class="sortbox">{e(sh['sort_label'])}<select id="sort">{opts}</select></label></div>
@@ -661,7 +666,7 @@ def shop_main(c):
 <section class="wrap" style="padding-bottom:64px"><div class="grid" id="grid">{cards}</div></section>
 <script>
 (function(){{
-  var grid=document.getElementById('grid'),cards=[].slice.call(grid.children),count=document.getElementById('count'),filters=document.getElementById('filters'),sort=document.getElementById('sort');
+  var grid=document.getElementById('grid'),cards=[].slice.call(grid.querySelectorAll('.pc')),count=document.getElementById('count'),filters=document.getElementById('filters'),sort=document.getElementById('sort');
   var order={json.dumps(list(dict.fromkeys(p["line"] for p in CAT)))};var lineHeads=[];
   function render(){{
     var f=filters.querySelector('[aria-pressed="true"]').dataset.filter,mode=sort.value;
