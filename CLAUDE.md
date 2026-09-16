@@ -126,6 +126,12 @@ must actually happen before every push, not just be claimed:
   the change (a background curl-poll loop for a unique marker in the new
   content, per the established pattern) before reporting success.
 
+- Run a whole-project link audit (every relative `href`/`src`/`srcset` in every
+  HTML file must resolve on disk) and, for `holdvolgy/docs/`, the every-doc-links-
+  every-other check that `docs/build.py` performs.
+- **Never delete a URL that has been live.** When content moves, leave a redirect
+  page at the old path (owner incident 2026-09-16: a cached hub card led to a 404).
+
 If a clean check isn't achievable, stop and say so — don't push and note it
 as a "known issue."
 

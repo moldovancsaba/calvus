@@ -251,8 +251,9 @@ Owner confirms the direction in §4 and the page list below. Nothing is built be
   newsletter. Home weight measured against 1,5 MB with the real renders in place.
 
 ### Phase 2 — the pages that carry the estate (one commit each)
-- **Birtok**: story, ten-step timeline with the illustrated cards, seven dűlők with
-  rocks and map, varieties, team (placeholders until portraits arrive).
+- **Birtok** — built 2026-09-16 (`07-birtok-build.md`): story, ten-step timeline
+  with the illustrated cards, seven dűlők with rocks and map, varieties, vintages,
+  team (portraits still to come).
 - **Tokaji aszú**: Culture vertical wall, aszú making/ageing, Time Capsule, PreCulture
   en-primeur row.
 - **Látogatás**: 1,8 km / 3 szint / 500 év, cellar history, three tickets with the

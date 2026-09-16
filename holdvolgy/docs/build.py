@@ -18,6 +18,7 @@ PAGES = [  # (source, output, nav label)
     ("04-decisions.md", "decisions.html", "Decisions"),
     ("05-layout-specs.md", "layouts.html", "Layouts"),
     ("06-home-build.md", "home-build.html", "Home build"),
+    ("07-birtok-build.md", "birtok-build.html", "Birtok build"),
 ]
 CSS = (HERE / "docs.css").read_text(encoding="utf-8")
 
@@ -30,8 +31,7 @@ def render(src, out, label):
     # links between the markdown files must point at the rendered names
     for s, o, _ in PAGES:
         body = body.replace(f"<code>{s}</code>", f'<a href="{o}"><code>{s}</code></a>')
-    nav = "".join(f'<a href="{o}"{" aria-current=page" if o == out else ""}>{l}</a>' for _, o, l in PAGES)
-    nav = nav.replace('<a href="layouts.html"', '<a href="design-system.html">Design system</a><a href="layouts.html"', 1)
+    nav = nav_html(out)
     html = f"""<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -56,6 +56,20 @@ def render(src, out, label):
     (HERE / out).write_text(html, encoding="utf-8")
     return out, len(html)
 
+def nav_html(current):
+    nav = "".join(f'<a href="{o}"{" aria-current=page" if o == current else ""}>{l}</a>' for _, o, l in PAGES)
+    return nav.replace('<a href="layouts.html"', f'<a href="design-system.html"{" aria-current=page" if current == "design-system.html" else ""}>Design system</a><a href="layouts.html"', 1)
+
+def sync_static_nav():
+    """Hand-written doc pages (design-system.html) get the same navigation as the generated ones, on every build."""
+    for name in ("design-system.html",):
+        f = HERE / name; t = f.read_text(encoding="utf-8")
+        new = f'<nav class="docnav" aria-label="Project documentation"><span class="docnav-brand">Holdvölgy 2026 · docs</span>{nav_html(name)}<a href="../../index.html" style="margin-left:auto">Calvus Hub</a></nav>'
+        t2 = re.sub(r'<nav class="docnav".*?</nav>', new, t, count=1, flags=re.S)
+        assert t2 != t or nav_html(name) in t, name
+        f.write_text(t2, encoding="utf-8"); print("%-16s nav synced" % name)
+
 if __name__ == "__main__":
     for src, out, label in PAGES:
         print("%-16s %6d bytes" % render(src, out, label))
+    sync_static_nav()

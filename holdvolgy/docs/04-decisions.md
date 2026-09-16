@@ -73,3 +73,14 @@ separate breakpoint designs per D5, mega-panels on hover and focus, a native
 `<dialog>` sheet and age gate, and an art-directed hero via `<picture>`. The
 withdrawn first-prototype shop page (`holdvolgy/borok/`) is removed; wine links
 point to the wine band until Phase 3 builds the shop.
+
+**D14 — A published URL is never deleted; it redirects.** Standing, 2026-09-16.
+Removing `holdvolgy/borok/` left a cached hub card on the owner's phone pointing at a
+404. Any URL that has been live gets a redirect page when its content moves.
+Recorded in CLAUDE.md rule 2 so it applies to every project here.
+
+**D15 — Navigation and document indexes are single-sourced.** Standing,
+2026-09-16. The docs navigation lives once in `docs/build.py` and is written into
+hand-authored pages on every build; the project pages' navigation lives once in
+`holdvolgy/build.py`. A build-time check verifies every doc page links every other,
+and a whole-project link audit runs in the gate before every push.

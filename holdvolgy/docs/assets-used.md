@@ -28,3 +28,16 @@ Source: holdvolgy.com. Originals were downloaded to the session scratchpad only 
 | `hv-megamenu-logo.svg` | https://holdvolgy.com/wp-content/uploads/2023/11/hv-megamenu-logo.svg | 398 | `logo.svg` | 398 | — | svg |
 
 Total committed derivatives: **1225 KB** across 27 files. Originals summed to 14726 KB.
+
+## Fetched 2026-09-16 for Phase 2 — Birtok
+
+| Derivative | Source | Note |
+|---|---|---|
+| `hero-vineyard-1440 / -1024 / -portrait-780 (.webp + .avif)` | https://holdvolgy.com/wp-content/uploads/2024/03/hv_ke_hangulat_bebujik_a_nap_2017_06_10.jpg | 5760×3840 original, 11 851 KB → hero set; portrait is a provisional centre crop |
+| `tl-1998 … tl-2019 (10 timeline cards, .webp)` | https://holdvolgy.com/wp-content/uploads/2024/05/*_birtok-413.png | 413×462 each |
+| `rock-*-640.webp (7)` | https://holdvolgy.com/wp-content/uploads/2024/0[46]/MVW_HV_kozet_*.png | 1400² originals → 640² gallery size |
+| `founder-pascal.webp` | https://holdvolgy.com/wp-content/uploads/2024/04/pascal_founder_2.jpg | 305×200 original |
+
+Files: `hero-vineyard-1024.avif` 31 KB, `hero-vineyard-1024.webp` 33 KB, `hero-vineyard-1440.avif` 44 KB, `hero-vineyard-1440.webp` 52 KB, `hero-vineyard-portrait-780.avif` 32 KB, `hero-vineyard-portrait-780.webp` 35 KB, `tl-1998-ajandek.webp` 26 KB, `tl-2004-megalakulas.webp` 28 KB, `tl-2005-nevado.webp` 34 KB, `tl-2006-aszuszuret.webp` 71 KB, `tl-2007-portfolio.webp` 10 KB, `tl-2011-epulet.webp` 18 KB, `tl-2014-showroom.webp` 16 KB, `tl-2016-trezor.webp` 24 KB, `tl-2018-dij.webp` 43 KB, `tl-2019-preculture.webp` 10 KB, `rock-becsek-640.webp` 92 KB, `rock-becsek-andezit-640.webp` 85 KB, `rock-dorgo-640.webp` 95 KB, `rock-holdvolgy-640.webp` 56 KB, `rock-holdvolgy-riolit-640.webp` 79 KB, `rock-kiraly-640.webp` 79 KB, `rock-nyulaszo-640.webp` 72 KB, `founder-pascal.webp` 4 KB
+
+Committed derivatives now total **2308 KB** across 51 files.

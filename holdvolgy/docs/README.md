@@ -14,6 +14,7 @@ record. Each file is dated inside; this index is the process log.
 | `04-decisions.md` | Decision log — what was decided, by whom, why, and what it replaced |
 | `design-system.html` | Phase 1 gate 1: the design system rendered live from the tokens — colour, type, spacing, buttons, cards, bottles, dűlő rows, both navigations |
 | `assets-used.md` | Every asset fetched for the build, its source URL, original and derivative sizes |
+| `07-birtok-build.md` | Phase 2: the Birtok page — content sources, sections, measurements at 390/768/1440, and the navigation fixes made in the same round |
 | `06-home-build.md` | Gate 3: the built home page — what was built, and the measured results at 390, 768 and 1440 |
 | `05-layout-specs.md` | Phase 1: the desktop-1440 and phone-390 layout specifications with schematics, tablet resolution and the home weight budget |
 
@@ -78,5 +79,11 @@ responsive document generated in HU (`index.html`) and EN (`en/index.html`) by
 designed per the frames. Measurements are in `06-home-build.md`. The withdrawn
 first-prototype shop page was removed.
 
-**Next.** Gate 3 review of the built home page; then Phase 2 (Birtok, Tokaji aszú,
-Látogatás pages).
+**2026-09-16 — home approved; Phase 2 Birtok built.** Owner: "Perfect, continue".
+The Birtok page exists in HU and EN with the estate's own content end to end
+(`07-birtok-build.md`). In the same round the owner found a dead link from a cached
+hub card to the deleted shop URL, and the design-system page's navigation had
+drifted — both fixed structurally (D14, D15): a redirect at the old URL, a
+single-sourced navigation, a whole-project link audit in the gate.
+
+**Next.** Phase 2 continues: Tokaji aszú page, then Látogatás.
