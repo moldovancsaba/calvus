@@ -22,7 +22,7 @@ C = {
    nums=[("1,8 km","pincelabirintus"),("3 szint","a föld alatt"),("500 év","pincetörténet")], visit_h="Látogass el Mádra", hours="Vasárnap–csütörtök 10:00–15:00 · péntek–szombat 10:00–17:00", hours_short="Vas–csüt 10–15 · pén–szo 10–17", tunnel_alt="Pincealagút lépcsővel a Holdvölgy pincéjében",
    news_h="Iratkozz fel hírlevelünkre", news_ph="E-mail cím", news_btn="Feliratkozom",
    foot=[("Birtok",["Történet","Dűlők és terroir","Csapat"]),("Borok",["Tokaji aszú","Édes borok","Száraz borok","Hold and Hollo"]),("Látogatás",["Borkóstoló","Experience","Bortrezor","Ajándék"]),("Kapcsolat",["visit@holdvolgy.com","+36 70 391 4643","Instagram · Facebook"])],
-   responsible="Fogyaszd felelősséggel a Holdvölgy borokat", proto="Prototípus — Holdvölgy 2026. A boltoldalak a 3. fázisban készülnek; a boros linkek ideiglenesen a kezdőlap borsávjára mutatnak.",
+   responsible="Fogyaszd felelősséggel a Holdvölgy borokat", proto="Prototípus — Holdvölgy 2026. A kosár és az űrlapok nem küldenek; a vásárlás és a foglalás a holdvolgy.com-on él.",
    birtok=dict(
     title="Birtok — Holdvölgy, Mád", desc="A Holdvölgy birtok története 1998-tól, hét első osztályú mádi dűlő a saját kőzetével, szőlőfajták, évjáratok és a csapat.",
     h1="A gondolatok bora", hero_alt="Napfény bújik be a Holdvölgy szőlősorai közé", eyebrow="Birtok",
@@ -172,7 +172,7 @@ C = {
    nums=[("1.8 km","cellar labyrinth"),("3 levels","underground"),("500 years","of cellar history")], visit_h="Visit us in Mád", hours="Sunday–Thursday 10:00–15:00 · Friday–Saturday 10:00–17:00", hours_short="Sun–Thu 10–15 · Fri–Sat 10–17", tunnel_alt="Cellar tunnel with stairs in the Holdvölgy cellar",
    news_h="Subscribe to our newsletter", news_ph="E-mail address", news_btn="Subscribe",
    foot=[("Estate",["History","Vineyards and terroir","Team"]),("Wines",["Tokaji Aszú","Sweet wines","Dry wines","Hold and Hollo"]),("Visit",["Tasting","Experience","Wine vault","Gifts"]),("Contact",["visit@holdvolgy.com","+36 70 391 4643","Instagram · Facebook"])],
-   responsible="Please enjoy Holdvölgy wines responsibly", proto="Prototype — Holdvölgy 2026. Shop pages follow in phase 3; wine links point to the home page's wine band for now.",
+   responsible="Please enjoy Holdvölgy wines responsibly", proto="Prototype — Holdvölgy 2026. The cart and forms do not send; purchases and bookings run on holdvolgy.com.",
    birtok=dict(
     title="Estate — Holdvölgy, Mád", desc="The Holdvölgy estate since 1998: seven first-growth Mád vineyards each with its own rock, the grape varieties, the vintages and the team.",
     h1="The wine of thoughts", hero_alt="Sunlight breaking through the Holdvölgy vine rows", eyebrow="Estate",

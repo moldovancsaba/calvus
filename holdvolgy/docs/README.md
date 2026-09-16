@@ -111,4 +111,8 @@ pages measured at 390 and 1440 (152 measurements) with no defect on any criterio
 (`11-gate-sweep.md`). The plan's five phases are complete; the open items are the
 client's (portraits, two rock photographs, portrait hero frames, technical data).
 
+**2026-09-16 — stale prototype banner.** The owner quoted the banner still saying the
+shop pages were to come in Phase 3. It now states only what is inert in the
+prototype (cart, forms) on every page in both languages.
+
 **Next.** Client review of the whole; then the items in §6 of the plan as they arrive.
