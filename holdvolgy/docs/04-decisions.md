@@ -65,3 +65,11 @@ two-step Phase 1 in the plan's first draft.
 `docs/design-system.html` is the fixed system; layouts arrange it, pages are built
 from it, anything new is brought to that page first. Gate 2 opened the same day
 with composed frames at 1440 and 390 in `docs/frames/`.
+
+**D13 — Layout frames approved (gate 2); gate 3 built.** Owner "Approved",
+2026-09-16. The home page is generated for HU and EN by `holdvolgy/build.py` from
+one content dictionary (D8 applied), with the phone and desktop experiences as
+separate breakpoint designs per D5, mega-panels on hover and focus, a native
+`<dialog>` sheet and age gate, and an art-directed hero via `<picture>`. The
+withdrawn first-prototype shop page (`holdvolgy/borok/`) is removed; wine links
+point to the wine band until Phase 3 builds the shop.

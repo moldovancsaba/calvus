@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Gate 3 — the built home page, measured — Holdvölgy 2026 docs</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:opsz,wght@6..96,400;6..96,500&family=Archivo:wdth,wght@112.5,400;112.5,500;112.5,600&display=swap">
+<style>:root{--ground:#FAFAFA;--card:#FFFFFF;--ink:#1D1D1B;--text:#4A4744;--muted:#7A7672;--accent:#B8A689;--accent-deep:#8B705B;--line:#E4E0D9;--line-soft:#EFECE6;--note:#F4F1EB}
+@media (prefers-color-scheme:dark){:root{--ground:#1D1D1B;--card:#252321;--ink:#F3EFE8;--text:#CFC9C0;--muted:#9B9796;--accent:#BAA793;--accent-deep:#D2BFA6;--line:#3A3733;--line-soft:#2E2B28;--note:#2A2724}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--ground);color:var(--text);font-family:"Archivo","Helvetica Neue",Arial,sans-serif;font-stretch:112.5%;font-size:15.5px;line-height:1.6;padding-block:0 64px;padding-inline:clamp(16px,4vw,40px)}
+.wrap{max-width:72ch;margin-inline:auto}
+.docnav{display:flex;flex-wrap:wrap;gap:4px 18px;align-items:center;padding:16px 0;border-bottom:1px solid var(--line);font-size:12px;letter-spacing:.06em;text-transform:uppercase}
+.docnav a{color:var(--muted);text-decoration:none;min-height:44px;display:inline-flex;align-items:center;border-bottom:2px solid transparent}
+.docnav a:hover,.docnav a[aria-current]{color:var(--ink);border-color:var(--accent)}
+.docnav-brand{color:var(--accent-deep);font-weight:600;margin-right:6px}
+.docnav-hub{margin-left:auto}
+header{padding-block:40px 24px;border-bottom:1px solid var(--line);margin-bottom:28px}
+.eyebrow{font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--accent-deep);margin:0 0 12px}
+h1,h2,h3{font-family:"Bodoni Moda",Didot,"Bodoni 72",serif;font-weight:400;color:var(--ink);line-height:1.1;text-wrap:balance;margin:0}
+h1{font-size:clamp(32px,6.5vw,50px);font-optical-sizing:auto}
+h2{font-size:clamp(25px,4.5vw,32px);margin:48px 0 14px;padding-top:20px;border-top:1px solid var(--line)}
+h3{font-size:19px;margin:30px 0 8px;font-weight:500}
+p{margin:0 0 14px} strong{color:var(--ink);font-weight:600}
+ul,ol{padding-left:22px;margin:0 0 16px} li{margin:5px 0} li>ul{margin:6px 0 0}
+code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.86em;background:var(--note);padding:1px 5px;border-radius:2px;color:var(--ink)}
+a{color:var(--accent-deep)} :focus-visible{outline:2px solid var(--accent-deep);outline-offset:2px}
+.tbl{overflow-x:auto;margin:14px 0 22px;border:1px solid var(--line)}
+table{border-collapse:collapse;width:100%;font-size:13.5px;min-width:560px}
+th{text-align:left;font-weight:600;color:var(--ink);background:var(--note);padding:10px 12px;border-bottom:1px solid var(--line);font-size:11.5px;letter-spacing:.06em;text-transform:uppercase}
+td{padding:10px 12px;border-top:1px solid var(--line-soft);vertical-align:top;background:var(--card)} td:first-child{color:var(--ink)}
+footer{margin-top:56px;padding-top:18px;border-top:1px solid var(--line);font-size:12px;color:var(--muted)}
+
+/* embedded gate-2 frames */
+.frames{display:grid;gap:28px;margin:18px 0 30px}
+.frames figure{margin:0} .frames figcaption{font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);margin-bottom:8px}
+.scale-d{width:100%;aspect-ratio:1440/2900;position:relative;overflow:hidden;border:1px solid var(--line);background:#FAFAFA}
+.scale-d iframe{position:absolute;top:0;left:0;width:1440px;height:2900px;border:0;transform-origin:0 0;transform:scale(calc(var(--w,720) / 1440))}
+.scale-p{width:390px;max-width:100%;aspect-ratio:390/2100;position:relative;overflow:hidden;border:1px solid var(--line);background:#FAFAFA}
+.scale-p iframe{position:absolute;top:0;left:0;width:390px;height:2100px;border:0;transform-origin:0 0;transform:scale(calc(var(--pw,390) / 390))}
+</style>
+</head>
+<body>
+<div class="wrap">
+<nav class="docnav" aria-label="Project documentation"><span class="docnav-brand">Holdvölgy 2026 · docs</span><a href="index.html">Overview</a><a href="plan.html">Plan</a><a href="benchmarks.html">Benchmarks</a><a href="audit.html">Brand & site audit</a><a href="assets.html">Assets</a><a href="decisions.html">Decisions</a><a href="design-system.html">Design system</a><a href="layouts.html">Layouts</a><a href="home-build.html" aria-current=page>Home build</a><a class="docnav-hub" href="../../index.html">Calvus Hub</a></nav>
+<header><p class="eyebrow">Calvus · Holdvölgy · project documentation</p><h1>Gate 3 — the built home page, measured</h1></header>
+<p>Built 2026-09-16 from the approved design system (D12) and frames (D13).
+<code>holdvolgy/build.py</code> generates <code>index.html</code> (HU) and <code>en/index.html</code> (EN) from one
+content dictionary; the page is one responsive document with three designed states:
+phone ≤ 767, tablet 768–1023, desktop ≥ 1024.</p>
+<h2>What was built</h2>
+<ul>
+<li><strong>Navigation, two systems.</strong> Desktop: sticky 88 px header, wordmark, the five
+  items, HU/EN, <em>Foglalás</em>, cart; <em>Borok</em> and <em>Látogatás</em> open mega-panels on hover
+  <strong>and on keyboard focus</strong> (<code>:focus-within</code>, no JS). Phone and tablet: 60 px header
+  with wordmark, language and cart only; a fixed 64 px bottom bar (Foglalás · Borok ·
+  Kosár · Menü) and a native <code>&lt;dialog&gt;</code> sheet with the five items plus four secondary.</li>
+<li><strong>Hero, art-directed.</strong> <code>&lt;picture&gt;</code> serves a 780 × 1040 portrait crop under 768,
+  1024 w to 1279, 1440 w above — AVIF with WebP fallback. The sentence in Bodoni
+  Moda at 34 / 48 / 64.</li>
+<li><strong>Age gate</strong> as a <code>&lt;dialog&gt;</code>, on the light ground, remembered per session.</li>
+<li>Sections per the frames: three cards (compact rows on phone, 2 + 1 on tablet, 3 on
+  desktop); the wine band (snap rail on phone, 3-column on tablet, 6 on desktop);
+  seven dűlők (3 rows + link on phone; map + 7 rows above); visit; newsletter; footer.</li>
+<li>Every string, alt text and label lives once in <code>build.py</code> for both languages.
+  <code>hreflang</code> hu / en / x-default on both pages.</li>
+<li>The withdrawn first-prototype shop page (<code>borok/</code>) was removed; wine links go to
+  the band until Phase 3.</li>
+</ul>
+<h2>Measured (local, browser at each reference size)</h2>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>Check</th>
+<th>Phone 390</th>
+<th>Tablet 768</th>
+<th>Desktop 1440</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Horizontal overflow</td>
+<td>0 px</td>
+<td>0 px</td>
+<td>0 px</td>
+</tr>
+<tr>
+<td>Tap targets under 44 px</td>
+<td>0 (after fixing the EN link, 35 → 44)</td>
+<td>0 (after fixing footer links, 30 → 44)</td>
+<td>0 (same fix)</td>
+</tr>
+<tr>
+<td><code>h1</code> count</td>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+</tr>
+<tr>
+<td>Images without <code>alt</code></td>
+<td>0 of 17</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr>
+<td>Broken images</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr>
+<td>Hero source chosen</td>
+<td><code>hero-cellar-portrait-780.avif</code></td>
+<td><code>hero-cellar-1024.avif</code></td>
+<td><code>hero-cellar-1440.avif</code></td>
+</tr>
+<tr>
+<td>Hero / header height</td>
+<td>520 / 60</td>
+<td>560 / 60</td>
+<td>720 / 88</td>
+</tr>
+<tr>
+<td>Grid columns cards / bottles / dűlők / visit / footer</td>
+<td>rows / rail / 3 rows</td>
+<td>2 (+1 spanning) / 3 / map above / stacked</td>
+<td>3 / 6 / 2 / 2 / 5</td>
+</tr>
+<tr>
+<td>Bottom bar</td>
+<td>fixed, 64 px</td>
+<td>fixed</td>
+<td>hidden</td>
+</tr>
+<tr>
+<td>Desktop nav</td>
+<td>hidden</td>
+<td>hidden</td>
+<td>visible; mega-panel opens on focus with 7 links</td>
+</tr>
+<tr>
+<td>Age gate</td>
+<td>opens on fresh load, closes on Igen, remembered</td>
+<td>—</td>
+<td>same</td>
+</tr>
+<tr>
+<td>Sheet</td>
+<td>opens, lists 9 items, closes on ✕ / backdrop / link</td>
+<td>same</td>
+<td>n/a</td>
+</tr>
+<tr>
+<td>Fonts loaded</td>
+<td>Archivo, Bodoni Moda</td>
+<td>same</td>
+<td>same</td>
+</tr>
+<tr>
+<td>Console errors</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr>
+<td>Page height</td>
+<td>3,0 screens</td>
+<td>—</td>
+<td>—</td>
+</tr>
+</tbody>
+</table></div>
+<h2>Weight, cold (bytes on disk plus the Google Fonts files a Chrome UA receives)</h2>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th></th>
+<th>KB</th>
+<th>vs 1,5 MB target</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Phone 390</td>
+<td><strong>600</strong></td>
+<td>under, 61 % headroom</td>
+</tr>
+<tr>
+<td>Tablet 768</td>
+<td><strong>724</strong></td>
+<td>under</td>
+</tr>
+<tr>
+<td>Desktop 1440</td>
+<td><strong>734</strong></td>
+<td>under, 52 % headroom</td>
+</tr>
+<tr>
+<td>of which fonts</td>
+<td>149</td>
+<td>four woff2 files, latin + latin-ext</td>
+</tr>
+</tbody>
+</table></div>
+<p>For comparison the live holdvolgy.com home page measures 8,8 MB and 226 requests
+(technical brief, 2026-09-08). This page makes 4 requests before fonts and images.</p>
+<h2>Known limits, carried forward</h2>
+<ul>
+<li>Wine, card and dűlő links point to in-page anchors until Phase 2–3 build their
+  pages.</li>
+<li>The phone hero is a centre crop of the landscape photograph (§6 gap).</li>
+<li>Úrágya and Kakasok show a marked gap instead of a rock photograph (§6 gap).</li>
+<li>Hidden dűlő rows on the phone still download their thumbnails (4 × ~17 KB); the
+  phone figure above includes them.</li>
+<li>The newsletter form is inert (prototype).</li>
+</ul>
+<script>(function(){function f(){document.querySelectorAll('.scale-d').forEach(function(e){e.style.setProperty('--w',e.clientWidth)});document.querySelectorAll('.scale-p').forEach(function(e){e.style.setProperty('--pw',e.clientWidth)})}f();addEventListener('resize',f)})();</script>
+<footer>Source: <code>holdvolgy/docs/06-home-build.md</code> · rendered by <code>docs/build.py</code>. Set in Bodoni Moda and Archivo (Google Fonts, SIL OFL) on Holdvölgy's measured palette — decision D3.</footer>
+</div>
+</body>
+</html>

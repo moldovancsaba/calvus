@@ -43,7 +43,7 @@ footer{margin-top:56px;padding-top:18px;border-top:1px solid var(--line);font-si
 </head>
 <body>
 <div class="wrap">
-<nav class="docnav" aria-label="Project documentation"><span class="docnav-brand">Holdvölgy 2026 · docs</span><a href="index.html" aria-current=page>Overview</a><a href="plan.html">Plan</a><a href="benchmarks.html">Benchmarks</a><a href="audit.html">Brand & site audit</a><a href="assets.html">Assets</a><a href="decisions.html">Decisions</a><a href="design-system.html">Design system</a><a href="layouts.html">Layouts</a><a class="docnav-hub" href="../../index.html">Calvus Hub</a></nav>
+<nav class="docnav" aria-label="Project documentation"><span class="docnav-brand">Holdvölgy 2026 · docs</span><a href="index.html" aria-current=page>Overview</a><a href="plan.html">Plan</a><a href="benchmarks.html">Benchmarks</a><a href="audit.html">Brand & site audit</a><a href="assets.html">Assets</a><a href="decisions.html">Decisions</a><a href="design-system.html">Design system</a><a href="layouts.html">Layouts</a><a href="home-build.html">Home build</a><a class="docnav-hub" href="../../index.html">Calvus Hub</a></nav>
 <header><p class="eyebrow">Calvus · Holdvölgy · project documentation</p><h1>Holdvölgy 2026 — project documentation</h1></header>
 <p>Owner directive 2026-09-16: the whole process is documented next to the project —
 research, findings, decisions, assets, and every build round. This folder is that
@@ -87,6 +87,10 @@ record. Each file is dated inside; this index is the process log.</p>
 <tr>
 <td><code>assets-used.md</code></td>
 <td>Every asset fetched for the build, its source URL, original and derivative sizes</td>
+</tr>
+<tr>
+<td><a href="home-build.html"><code>06-home-build.md</code></a></td>
+<td>Gate 3: the built home page — what was built, and the measured results at 390, 768 and 1440</td>
 </tr>
 <tr>
 <td><a href="layouts.html"><code>05-layout-specs.md</code></a></td>
@@ -139,8 +143,13 @@ opened as two composed frames at the reference sizes (<code>frames/home-desktop-
 <code>frames/home-phone-390.html</code>) built from the approved components and real assets,
 embedded in <code>layouts.html</code>. Composing them surfaced two missing rock photographs
 (Úrágya, Kakasok) — added to the plan's client-gap list.</p>
-<p><strong>Next.</strong> Gate 2: approval of the frames. Then gate 3, the home page, measured at
-both sizes.</p>
+<p><strong>2026-09-16 — gate 2 approved (D13); gate 3 built.</strong> The home page exists as one
+responsive document generated in HU (<code>index.html</code>) and EN (<code>en/index.html</code>) by
+<code>build.py</code>, with phone (≤ 767), tablet (768–1023) and desktop (≥ 1024) each
+designed per the frames. Measurements are in <a href="home-build.html"><code>06-home-build.md</code></a>. The withdrawn
+first-prototype shop page was removed.</p>
+<p><strong>Next.</strong> Gate 3 review of the built home page; then Phase 2 (Birtok, Tokaji aszú,
+Látogatás pages).</p>
 <script>(function(){function f(){document.querySelectorAll('.scale-d').forEach(function(e){e.style.setProperty('--w',e.clientWidth)});document.querySelectorAll('.scale-p').forEach(function(e){e.style.setProperty('--pw',e.clientWidth)})}f();addEventListener('resize',f)})();</script>
 <footer>Source: <code>holdvolgy/docs/README.md</code> · rendered by <code>docs/build.py</code>. Set in Bodoni Moda and Archivo (Google Fonts, SIL OFL) on Holdvölgy's measured palette — decision D3.</footer>
 </div>

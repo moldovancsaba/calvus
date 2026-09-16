@@ -14,6 +14,7 @@ record. Each file is dated inside; this index is the process log.
 | `04-decisions.md` | Decision log — what was decided, by whom, why, and what it replaced |
 | `design-system.html` | Phase 1 gate 1: the design system rendered live from the tokens — colour, type, spacing, buttons, cards, bottles, dűlő rows, both navigations |
 | `assets-used.md` | Every asset fetched for the build, its source URL, original and derivative sizes |
+| `06-home-build.md` | Gate 3: the built home page — what was built, and the measured results at 390, 768 and 1440 |
 | `05-layout-specs.md` | Phase 1: the desktop-1440 and phone-390 layout specifications with schematics, tablet resolution and the home weight budget |
 
 ## Reading these on the web
@@ -71,5 +72,11 @@ opened as two composed frames at the reference sizes (`frames/home-desktop-1440.
 embedded in `layouts.html`. Composing them surfaced two missing rock photographs
 (Úrágya, Kakasok) — added to the plan's client-gap list.
 
-**Next.** Gate 2: approval of the frames. Then gate 3, the home page, measured at
-both sizes.
+**2026-09-16 — gate 2 approved (D13); gate 3 built.** The home page exists as one
+responsive document generated in HU (`index.html`) and EN (`en/index.html`) by
+`build.py`, with phone (≤ 767), tablet (768–1023) and desktop (≥ 1024) each
+designed per the frames. Measurements are in `06-home-build.md`. The withdrawn
+first-prototype shop page was removed.
+
+**Next.** Gate 3 review of the built home page; then Phase 2 (Birtok, Tokaji aszú,
+Látogatás pages).

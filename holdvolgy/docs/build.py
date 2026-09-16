@@ -17,6 +17,7 @@ PAGES = [  # (source, output, nav label)
     ("03-asset-inventory.md", "assets.html", "Assets"),
     ("04-decisions.md", "decisions.html", "Decisions"),
     ("05-layout-specs.md", "layouts.html", "Layouts"),
+    ("06-home-build.md", "home-build.html", "Home build"),
 ]
 CSS = (HERE / "docs.css").read_text(encoding="utf-8")
 
