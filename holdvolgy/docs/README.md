@@ -14,6 +14,7 @@ record. Each file is dated inside; this index is the process log.
 | `04-decisions.md` | Decision log — what was decided, by whom, why, and what it replaced |
 | `design-system.html` | Phase 1 gate 1: the design system rendered live from the tokens — colour, type, spacing, buttons, cards, bottles, dűlő rows, both navigations |
 | `assets-used.md` | Every asset fetched for the build, its source URL, original and derivative sizes |
+| `08-aszu-build.md` | Phase 2: the Tokaji aszú page — sources, the Culture wall, measurements |
 | `07-birtok-build.md` | Phase 2: the Birtok page — content sources, sections, measurements at 390/768/1440, and the navigation fixes made in the same round |
 | `06-home-build.md` | Gate 3: the built home page — what was built, and the measured results at 390, 768 and 1440 |
 | `05-layout-specs.md` | Phase 1: the desktop-1440 and phone-390 layout specifications with schematics, tablet resolution and the home weight budget |
@@ -86,4 +87,9 @@ hub card to the deleted shop URL, and the design-system page's navigation had
 drifted — both fixed structurally (D14, D15): a redirect at the old URL, a
 single-sourced navigation, a whole-project link audit in the gate.
 
-**Next.** Phase 2 continues: Tokaji aszú page, then Látogatás.
+**2026-09-16 — Phase 2: Tokaji aszú built.** HU and EN, with the Culture wall of
+thirteen vintages and prices, making and ageing, Time Capsule, PreCulture and the
+Tokaj heritage milestones (`08-aszu-build.md`). The pre-push link audit caught a
+wrong render filename; fixed before the push.
+
+**Next.** Phase 2 closes with Látogatás (tasting, Experience, Trezor, booking).

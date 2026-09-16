@@ -41,3 +41,16 @@ Total committed derivatives: **1225 KB** across 27 files. Originals summed to 14
 Files: `hero-vineyard-1024.avif` 31 KB, `hero-vineyard-1024.webp` 33 KB, `hero-vineyard-1440.avif` 44 KB, `hero-vineyard-1440.webp` 52 KB, `hero-vineyard-portrait-780.avif` 32 KB, `hero-vineyard-portrait-780.webp` 35 KB, `tl-1998-ajandek.webp` 26 KB, `tl-2004-megalakulas.webp` 28 KB, `tl-2005-nevado.webp` 34 KB, `tl-2006-aszuszuret.webp` 71 KB, `tl-2007-portfolio.webp` 10 KB, `tl-2011-epulet.webp` 18 KB, `tl-2014-showroom.webp` 16 KB, `tl-2016-trezor.webp` 24 KB, `tl-2018-dij.webp` 43 KB, `tl-2019-preculture.webp` 10 KB, `rock-becsek-640.webp` 92 KB, `rock-becsek-andezit-640.webp` 85 KB, `rock-dorgo-640.webp` 95 KB, `rock-holdvolgy-640.webp` 56 KB, `rock-holdvolgy-riolit-640.webp` 79 KB, `rock-kiraly-640.webp` 79 KB, `rock-nyulaszo-640.webp` 72 KB, `founder-pascal.webp` 4 KB
 
 Committed derivatives now total **2308 KB** across 51 files.
+
+## Fetched 2026-09-16 for Phase 2 — Tokaji aszú
+
+| Derivative | Source | Note |
+|---|---|---|
+| `culture-2006 … culture-2018.webp` | holdvolgy.com …/HV_Culture_<yy>-NEW-1347x1347*.png | 13 vintages, trimmed, 560 px tall |
+| `preculture-2018 … -2024.webp` | …/HV_preculture_* | bottle 2019–21, barrel 2022–24, 420 px tall |
+| `hero-aszu-1440 / -1024 / -portrait-780` | …/2025/06/Aszu_Landing_11-1.jpg | portrait is a provisional centre crop |
+| `ring-timecapsule.webp`, `heritage-1.webp` | …/2024/12/Gyuru_4.png, …/2024/06/orokseg1_honlap-1.png | |
+
+Files: `culture-2006.webp` 18 KB, `culture-2007.webp` 18 KB, `culture-2008.webp` 21 KB, `culture-2009.webp` 20 KB, `culture-2010.webp` 20 KB, `culture-2012.webp` 17 KB, `culture-2013.webp` 22 KB, `culture-2014.webp` 21 KB, `culture-2016.webp` 23 KB, `culture-2017.webp` 19 KB, `culture-2011.webp` 22 KB, `culture-2018.webp` 23 KB, `culture-2015.webp` 13 KB, `preculture-2019.webp` 24 KB, `preculture-2020.webp` 21 KB, `preculture-2021.webp` 20 KB, `preculture-2022.webp` 21 KB, `preculture-2023.webp` 25 KB, `preculture-2024.webp` 25 KB, `preculture-2018.webp` 20 KB, `ring-timecapsule.webp` 14 KB, `heritage-1.webp` 8 KB, `hero-aszu-1440.webp` 95 KB, `hero-aszu-1440.avif` 95 KB, `hero-aszu-1024.webp` 59 KB, `hero-aszu-1024.avif` 62 KB, `hero-aszu-portrait-780.webp` 56 KB, `hero-aszu-portrait-780.avif` 55 KB
+
+Committed derivatives now total **3179 KB** across 79 files.

@@ -13,7 +13,7 @@ C = {
    badge="Év pincészete 2026", h1="A tokaji álmot töltjük pohárba az élet nagy pillanataihoz", hero_alt="A Holdvölgy pincelabirintusa, hordósorok a föld alatt",
    cards=[("Év pincészete 2026","A Holdvölgy elnyerte az Év pincészete elismerést — hagyománytisztelő, de mégis kreatív kísérletezés Mádon.","A birtokról","birtok.html","card-ev-pinceszete.webp","Drónfelvétel a mádi birtokról"),
           ("Borkóstoló a föld alatt","Térképes kincskeresés a háromszintes labirintusban, vagy ültetett aszúkóstoló hat évjárattal.","Foglalás","#latogatas","card-pince.webp","A pince oltára, gyertyafényben"),
-          ("PreCulture 2025","Szüret előtti előjegyzés 6 puttonyos tokaji aszúra, nyolcéves érleléssel.","Előjegyzés","#borok","preculture-barrel-2025.webp","PreCulture 2025 hordó")],
+          ("PreCulture 2025","Szüret előtti előjegyzés 6 puttonyos tokaji aszúra, nyolcéves érleléssel.","Előjegyzés","aszu.html#preculture","preculture-barrel-2025.webp","PreCulture 2025 hordó")],
    band_h="Tokaji borok", band_all="Teljes választék", band_all_short="Mind",
    bottles=[("Culture","6 puttonyos tokaji aszú","27 500 Ft-tól","bottle-culture.webp"),("Signature 2013","édes birtokválogatás","10 000 Ft","bottle-signature-13.webp"),("Eloquence 2014","édes szamorodni","7 000 Ft","bottle-eloquence-14.webp"),("Vision 2021","száraz birtokválogatás","5 500 Ft","bottle-vision-21.webp"),("Meditation 2023","Furmint · Király-dűlő","15 500 Ft","bottle-meditation-23.webp"),("Hold and Hollo Dry","száraz válogatás 2024","4 000 Ft","bottle-hh-dry.webp")],
    dulok_h="Hét dűlő, harminc parcella", dulok_lede="Riolittufa, agyag, zeolit és barna erdőtalaj — minden dűlő más karaktert ad. Minden dűlőhöz a saját kőzete.", dulok_all="Mind a hét dűlő", map_alt="A birtok dűlőinek térképe", rock_missing="kőzetfotó hiányzik",
@@ -68,6 +68,39 @@ C = {
           ("Gellén Fruzsina","belföldi értékesítő","Bizalom, állandóság, értékteremtés. Ezek a legfontosabbak számomra, és egyben a Holdvölgy működésének és szellemiségének alapvető mozgatói.")],
     cta_h="Gyere, nézd meg", cta_p="Térképes pincelátogatás a háromszintes labirintusban, a hét minden napján.", cta_btn="Foglalás",
    ),
+   aszu=dict(
+    title="Tokaji aszú — Culture és PreCulture · Holdvölgy", desc="A Culture 6 puttonyos tokaji aszú: készítés, érlelés, tizenhárom évjárat 2006-tól, a PreCulture előjegyzés és a tokaji örökség.",
+    eyebrow="Tokaji aszú", h1="Meghatározó, gazdag, élettel teli", hero_alt="Culture tokaji aszú a pince mélyén",
+    intro="A Culture 6 puttonyos tokaji aszú készítésekor nem csak a legkiválóbb aszúszemeket, hanem az első osztályú, klasszifikált dűlők kivételességét, Tokaj gazdag történelmi és kulturális örökségét, a Holdvölgy történetének élettel teli pillanatait és az évjáratok értékeit is palackba zárjuk.",
+    make_h="Tokaji aszú készítés", steps=[
+      ("Az aszúszem keletkezése","A bogyók héjszövete a szürkepenész hatására megbarnul, és penészbevonat alakul ki, amely száraz, meleg időben vizet szív el a szemekből. Azok ráncolódnak, töppednek: így keletkezik a magas cukortartalmú, kiváló ízű aszúszem."),
+      ("Kézi szüret és válogatás","Mindig kézzel, precíz válogatással szüreteljük a botritiszes furmint, hárslevelű és zéta bogyókat. A szelekció már a dűlőkben kezdődik, egy parcellát háromszor-négyszer bejárva. Kizárólag az évjárat legjobb aszúszemei kerülnek a Culture-be."),
+      ("Az aszúszemek áztatása","Az aszúszemeket 24–48 órára makulátlan furmintból készült, erjedő alapborba áztatjuk. Dinamikus folyamat: a bogyókból további cukor, sav, színanyag, aroma és íz kerül a borba. Minden évjáratban a 6 puttonyos aszú a cél.")],
+    age_h="Tokaji aszú érlelés", ages=[
+      ("Hordós érlelés","Aszúink átlagosan 24 hónapot töltenek magyar és francia Seguin Moreau tölgyfahordókban — lényegesen többet a borvidéki 18 hónapos minimumnál. Minden év december 10-én, az Aszú Világnapján a tételek előjegyezhetővé válnak."),
+      ("Palackos érlelés","Szűrés után az aszút saját, légfertőtlenített palackozónkban töltjük. Ezután átlagosan 72 hónapot pihen palackban a közel 2 km hosszú, történelmi pincerendszerben."),
+      ("Az aszú bevezetése","A Culture tételek a szüret első napjától számítva átlagosan nyolc év múlva érik el azt a beltartalmi minőséget, amellyel egy meghatározó, gazdag és limitált hungarikum kerülhet a pohárba.")],
+    wall_h="Culture — 6 puttonyos tokaji aszú", wall_lede="Tizenhárom évjárat 2006-tól. Minden évjáratból korlátozott mennyiség; az árak a birtok webshopjának 2026. szeptemberi árai.",
+    wall=[("2006","67 000"),("2007","67 000"),("2008","40 500"),("2009","36 500"),("2010","60 500"),("2011","48 000"),("2012","133 000"),("2013","36 500"),("2014","30 500"),("2015","33 000"),("2016","30 500"),("2017","33 000"),("2018","27 500")],
+    cap_h="Időkapszula", cap_lede="Kóstold vissza életed nagy pillanatait!",
+    cap="Egy minőségi tokaji aszú véges mennyiségű és megismételhetetlen — mint életünk becsben őrzött pillanatai. Egy aszú akár egy évszázadon át tartja értékét, így legértékesebb emlékeink később is visszaidézhetők egy-egy kortyban, az esemény évében szüretelt gyümölcsből készült palackból.",
+    moments=["születés","testvérek","család","diploma","eljegyzés","házasság","siker","generációk"], ring_alt="Gyűrű és aszúpalack — időkapszula",
+    gift_h="Ajándék és emlék egy palackban", gift="Nászajándékot keresel? Fontos évfordulónak állítanál emléket? Ajándékozd a közös pillanatok arany albumát egy Culture tokaji aszú formájában — egy palackot, egy előjegyzést, vagy a legfontosabb évek kollekcióját.",
+    pre_h="PreCulture — előjegyzés", pre_lede="A Culture aszúk általában a szüretet követő nyolcadik évben kerülnek forgalomba. Hogy a fontos évjáratokat előre biztosíthasd magadnak vagy ajándékba, a tételek már korábban előjegyezhetők. A program minden év december 10-én, az Aszú Világnapján nyílik.",
+    pre_years=["2018","2019","2020","2021","2022","2023","2024","2025"], pre_6="6 palack", pre_3="3 palack", pre_btn="Előjegyzés",
+    guar_h="Holdvölgy garancia", guar="Történelem, odaadó szakmaiság, kötelesség. A mindenkori aszúévjárat elkészültére a mádi első osztályú, történelmileg klasszifikált dűlők és a Holdvölgy szakmaisága a garancia. Borkészítésünkben nincs véletlen tényező.",
+    her_h="Tokaj örökség", her_lede="Tokaj lenyűgöző öröksége és dűlőinek páratlansága.", heritage_alt="Tokaj öröksége",
+    heritage=[("miocén","Vitis tokaiensis","A miocén kori ősszőlő levelének lenyomatát Erdőbényén találják meg az 1950-es években."),
+      ("III–IV. sz.","A borászat kezdete","A tokaji borászkodás a római korban, a III–IV. században alakul ki; az aszú (azwu) mint borászati fogalom Balassa István kutatásai szerint már korán megjelenik."),
+      ("1680","A legősibb bontatlan aszú","A legrégebbi ismert bontatlan tokaji aszú évjárata, a szász királyi pincészetből — páratlan érték."),
+      ("1700-as évek","Vinum Regnum, Rex Vinorum","A tokaji híre az arisztokrácia és a királyi udvarok köreiben terjed. „Ez a királyok bora, a borok királya” — XIV. Lajos."),
+      ("1737","Az első zárt borvidék","III. Károly rendelete a világon elsőként zárt borvidékké nyilvánítja a térséget; elindul az eredetvédelem."),
+      ("1772","Az első dűlőklasszifikáció","A világon először Tokaj-Hegyalján klasszifikálják a dűlőket."),
+      ("1867","A második dűlőminősítés","Megerősíti a Mádi-medence minőségi dominanciáját a régióban."),
+      ("1972","A század évjárata","A XX. század legkiemelkedőbb évjárata: 1995-ben Nagy Aranyérem Bordeaux-ban, 1996-ban az évszázad bora az Egyesült Államokban."),
+      ("2002","Világörökségi helyszín","Az UNESCO felveszi a Tokaji borvidéket a világörökségi listára."),
+      ("2006","Az első Holdvölgy évjárat","Elkészül az első Culture 6 puttonyos tokaji aszú; azóta minden évjáratban.")],
+   ),
    age_q="Betöltötted már a 18. életéved?", age_note="Weboldalunkat csak 18 éven felüliek látogathatják.", yes="Igen", no="Nem", hub="Calvus Hub", hub_href="../index.html"),
  "en": dict(lang="en", title="Holdvölgy — Tokaji wines from Mád · Winery of the Year 2026",
    desc="Holdvölgy winery, Mád: sweet and dry Tokaji wines, a 1.8 km three-level cellar labyrinth, tasting experiences. Winery of the Year 2026.",
@@ -77,7 +110,7 @@ C = {
    badge="Winery of the Year 2026", h1="We pour the Tokaji dream into the glass for life's great moments", hero_alt="The Holdvölgy cellar labyrinth, rows of barrels underground",
    cards=[("Winery of the Year 2026","Holdvölgy has been named Winery of the Year — tradition-respecting yet creative experimentation in Mád.","About the estate","birtok.html","card-ev-pinceszete.webp","Aerial view of the Mád estate"),
           ("Tasting underground","A map-guided treasure hunt through the three-level labyrinth, or a seated Aszú tasting of six vintages.","Book","#latogatas","card-pince.webp","The cellar altar by candlelight"),
-          ("PreCulture 2025","Pre-harvest reservation of 6 puttonyos Tokaji Aszú, aged eight years.","Reserve","#borok","preculture-barrel-2025.webp","PreCulture 2025 barrel")],
+          ("PreCulture 2025","Pre-harvest reservation of 6 puttonyos Tokaji Aszú, aged eight years.","Reserve","aszu.html#preculture","preculture-barrel-2025.webp","PreCulture 2025 barrel")],
    band_h="Tokaji wines", band_all="All wines", band_all_short="All",
    bottles=[("Culture","6 puttonyos Tokaji Aszú","from 27 500 Ft","bottle-culture.webp"),("Signature 2013","sweet estate selection","10 000 Ft","bottle-signature-13.webp"),("Eloquence 2014","sweet Szamorodni","7 000 Ft","bottle-eloquence-14.webp"),("Vision 2021","dry estate selection","5 500 Ft","bottle-vision-21.webp"),("Meditation 2023","Furmint · Király vineyard","15 500 Ft","bottle-meditation-23.webp"),("Hold and Hollo Dry","dry selection 2024","4 000 Ft","bottle-hh-dry.webp")],
    dulok_h="Seven vineyards, thirty parcels", dulok_lede="Rhyolite tuff, clay, zeolite and brown forest soil — every vineyard gives a different character. Each vineyard with its own rock.", dulok_all="All seven vineyards", map_alt="Map of the estate's vineyards", rock_missing="rock photo missing",
@@ -131,6 +164,39 @@ C = {
           ("Kornél Körtvélyesi","cellar experience manager","Wines of outstanding quality are a given; I am here so that the visitor has an unforgettable experience worthy of a professional setting."),
           ("Fruzsina Gellén","domestic sales","Trust, constancy, creating value. These matter most to me, and they are also the fundamental drivers of how Holdvölgy works and thinks.")],
     cta_h="Come and see it", cta_p="A map-guided visit through the three-level labyrinth, every day of the week.", cta_btn="Book a visit",
+   ),
+   aszu=dict(
+    title="Tokaji Aszú — Culture and PreCulture · Holdvölgy", desc="Culture 6 puttonyos Tokaji Aszú: how it is made and aged, thirteen vintages since 2006, the PreCulture en-primeur programme and Tokaj's heritage.",
+    eyebrow="Tokaji Aszú", h1="Defining, rich, full of life", hero_alt="Culture Tokaji Aszú deep in the cellar",
+    intro="When we make Culture 6 puttonyos Tokaji Aszú we bottle not only the finest Aszú berries but the exceptional character of first-growth classified vineyards, Tokaj's rich historical and cultural heritage, the living moments of Holdvölgy's story and the value of each vintage.",
+    make_h="Making Tokaji Aszú", steps=[
+      ("How the Aszú berry forms","Under noble rot the berry's skin browns and a coating of mould forms which, in dry warm weather, draws water from the grape. The berries wrinkle and shrivel: the Aszú berry, high in sugar and superb in flavour, is born."),
+      ("Hand harvest and selection","Botrytised Furmint, Hárslevelű and Zéta are always picked by hand with precise selection. It begins in the vineyard, walking a parcel three or four times. Only the vintage's finest Aszú berries go into Culture."),
+      ("Soaking the Aszú berries","The berries soak for 24–48 hours in a fermenting base wine made from flawless Furmint. It is a dynamic process: further sugar, acid, colour, aroma and flavour pass into the wine. In every vintage the aim is 6 puttonyos.")],
+    age_h="Ageing Tokaji Aszú", ages=[
+      ("In barrel","Our Aszús spend an average of 24 months in Hungarian and French Seguin Moreau oak — well beyond the region's 18-month minimum. Every year on 10 December, World Aszú Day, the lots open for reservation."),
+      ("In bottle","After filtration the Aszú is bottled in our own air-sterilised bottling hall, then rests a further 72 months on average in the nearly 2 km historic cellar system."),
+      ("Release","Culture lots reach the quality at which a defining, rich and limited Hungaricum can be poured about eight years from the first day of the Aszú harvest.")],
+    wall_h="Culture — 6 puttonyos Tokaji Aszú", wall_lede="Thirteen vintages since 2006. Limited quantities of each; prices are the estate webshop's September 2026 prices.",
+    wall=[("2006","67 000"),("2007","67 000"),("2008","40 500"),("2009","36 500"),("2010","60 500"),("2011","48 000"),("2012","133 000"),("2013","36 500"),("2014","30 500"),("2015","33 000"),("2016","30 500"),("2017","33 000"),("2018","27 500")],
+    cap_h="Time capsule", cap_lede="Taste your life's great moments again.",
+    cap="A fine Tokaji Aszú is finite and unrepeatable — like the treasured moments of our lives. An Aszú holds its value for up to a century, so our most precious memories can be recalled later in a sip, from a bottle made of fruit harvested in the year of the event.",
+    moments=["birth","siblings","family","graduation","engagement","wedding","success","generations"], ring_alt="Ring and Aszú bottle — time capsule",
+    gift_h="A gift and a memory in one bottle", gift="Looking for a wedding present? Marking an important anniversary? Give the golden album of shared moments in the form of a Culture Tokaji Aszú — one bottle, one reservation, or a collection of the years that matter most.",
+    pre_h="PreCulture — en primeur", pre_lede="Culture Aszús are usually released in the eighth year after harvest. So that important vintages can be secured in advance, for yourself or as a gift, lots can be reserved years before release. The programme opens every year on 10 December, World Aszú Day.",
+    pre_years=["2018","2019","2020","2021","2022","2023","2024","2025"], pre_6="6 bottles", pre_3="3 bottles", pre_btn="Reserve",
+    guar_h="The Holdvölgy guarantee", guar="History, devoted professionalism, duty. The guarantee that each Aszú vintage will be made lies in Mád's first-growth, historically classified vineyards and in Holdvölgy's expertise. There is no element of chance in our winemaking.",
+    her_h="Tokaj heritage", her_lede="The astonishing heritage of Tokaj and the singularity of its vineyards.", heritage_alt="Tokaj heritage",
+    heritage=[("Miocene","Vitis tokaiensis","The leaf imprint of the Miocene ancestral vine is found at Erdőbénye in the 1950s."),
+      ("3rd–4th c.","Winemaking begins","Tokaj winemaking takes shape in the Roman era; the Aszú (azwu) as a winemaking term appears early, per István Balassa's research."),
+      ("1680","The oldest unopened Aszú","The oldest known unopened Tokaji Aszú vintage, from the Saxon royal cellar — of unparalleled value."),
+      ("1700s","Vinum Regnum, Rex Vinorum","Tokaji's fame spreads through the aristocracy and royal courts. “The wine of kings, the king of wines” — Louis XIV."),
+      ("1737","The first closed wine region","A decree of Charles III makes the region the world's first delimited wine region; protection of origin begins."),
+      ("1772","The world's first vineyard classification","Tokaj-Hegyalja classifies its vineyards — the first in the world."),
+      ("1867","The second classification","Confirms the Mád basin's dominance in quality within the region."),
+      ("1972","The vintage of the century","The 20th century's greatest vintage: Grand Gold at Bordeaux in 1995, wine of the century in the United States in 1996."),
+      ("2002","World Heritage site","UNESCO inscribes the Tokaj wine region on the World Heritage list."),
+      ("2006","The first Holdvölgy vintage","The first Culture 6 puttonyos Tokaji Aszú is made — and in every vintage since.")],
    ),
    age_q="Are you 18 or older?", age_note="This website may only be visited by adults.", yes="Yes", no="No", hub="Calvus Hub", hub_href="../../index.html"),
 }
@@ -227,6 +293,20 @@ footer{padding:24px 0 96px;font-size:13px;color:var(--hv-muted);display:grid;gap
 .team{display:grid;gap:12px} .team article{background:var(--hv-card);border:1px solid var(--hv-line-soft);padding:14px 16px} .team b{display:block;font-family:var(--hv-display);font-weight:400;font-size:20px;color:var(--hv-ink)} .team span{display:block;font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--hv-accent-deep);margin:2px 0 8px} .team p{margin:0;font-size:13px;color:var(--hv-muted)} .team-note{font-size:12px;color:var(--hv-grey);margin:12px 0 0}
 @media(min-width:768px){.team{grid-template-columns:1fr 1fr;gap:20px}} @media(min-width:1024px){.team{grid-template-columns:repeat(4,1fr)} .team article{padding:18px 20px}}
 .cta{background:var(--hv-band);padding:32px 0} .cta h2{font-size:26px;margin-bottom:8px} .cta p{margin:0 0 16px;color:var(--hv-muted)} @media(min-width:768px){.cta{padding:56px 0} .cta h2{font-size:34px}}
+/* ---- aszú page ---- */
+.steps{display:grid;gap:12px;counter-reset:st} .steps article{background:var(--hv-card);border:1px solid var(--hv-line-soft);padding:16px;counter-increment:st} .steps article::before{content:counter(st,decimal-leading-zero);display:block;font-family:var(--hv-display);font-size:26px;color:var(--hv-accent-deep);line-height:1;margin-bottom:8px} .steps h3{font-size:19px;margin-bottom:6px} .steps p{margin:0;font-size:13.5px;color:var(--hv-muted)}
+@media(min-width:768px){.steps{grid-template-columns:repeat(3,1fr);gap:20px} .steps article{padding:20px} .steps h3{font-size:22px} .steps p{font-size:14px}}
+.wall{background:var(--hv-band);padding:28px 0 24px} .wall .rail{display:flex;gap:14px;overflow-x:auto;scroll-snap-type:x mandatory;padding:8px 0 4px;scrollbar-width:none} .wall .rail::-webkit-scrollbar{display:none}
+.w{flex:0 0 96px;scroll-snap-align:start;text-align:center;text-decoration:none} .w img{height:150px;width:auto;margin-inline:auto;filter:drop-shadow(0 10px 10px rgba(29,29,27,.14));transition:transform .2s} .w:hover img{transform:translateY(-6px)} .w b{display:block;margin-top:10px;font-family:var(--hv-display);font-weight:400;font-size:18px;color:var(--hv-ink)} .w em{font-style:normal;display:block;font-size:12px;color:var(--hv-ink);font-variant-numeric:tabular-nums}
+@media(min-width:768px){.wall{padding:48px 0 40px} .wall .rail{display:grid;grid-template-columns:repeat(7,1fr);gap:16px;overflow:visible;align-items:end} .w{flex:none} .w img{height:170px}}
+@media(min-width:1024px){.wall .rail{grid-template-columns:repeat(13,1fr);gap:8px} .w img{height:160px} .w b{font-size:16px} .w em{font-size:11px}}
+.cap{display:grid;gap:20px;align-items:center} .cap img{width:160px;margin:0 auto} .cap h3{font-family:var(--hv-display);font-weight:400;font-size:22px;color:var(--hv-ink);margin:0 0 10px} .moments{display:flex;flex-wrap:wrap;gap:8px;padding:0;margin:14px 0 0;list-style:none} .moments li{font-family:var(--hv-display);font-size:17px;color:var(--hv-ink);border:1px solid var(--hv-line);padding:8px 14px;background:var(--hv-card)}
+@media(min-width:1024px){.cap{grid-template-columns:260px 1fr;gap:56px} .cap img{width:260px} .cap h3{font-size:28px}}
+.pre{display:grid;gap:12px} .pre-row{display:grid;grid-template-columns:1fr 1fr;gap:12px} .pre-y{display:grid;grid-template-columns:repeat(4,1fr);gap:8px} .pre-y a{display:flex;flex-direction:column;align-items:center;justify-content:flex-end;gap:6px;min-height:44px;padding:10px 4px;background:var(--hv-card);border:1px solid var(--hv-line-soft);text-decoration:none;color:var(--hv-ink)} .pre-y img{height:64px;width:auto} .pre-y b{font-family:var(--hv-display);font-weight:400;font-size:17px} .pre-opts{display:flex;gap:10px;flex-wrap:wrap;align-items:center} .pre-opts span{font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--hv-muted)}
+@media(min-width:768px){.pre-y{grid-template-columns:repeat(8,1fr)} .pre-y img{height:90px}}
+.her{display:grid;gap:0;border-top:1px solid var(--hv-line-soft)} .her article{display:grid;grid-template-columns:96px 1fr;gap:12px;padding:12px 0;border-bottom:1px solid var(--hv-line-soft)} .her b{font-family:var(--hv-display);font-weight:400;font-size:18px;color:var(--hv-accent-deep);line-height:1.2} .her h3{font-size:17px;margin-bottom:4px} .her p{margin:0;font-size:13px;color:var(--hv-muted)}
+@media(min-width:768px){.her{grid-template-columns:1fr 1fr;gap:0 40px} .her article{grid-template-columns:120px 1fr;padding:16px 0} .her b{font-size:22px} .her h3{font-size:19px} .her p{font-size:14px}}
+.guar{background:var(--hv-band);padding:32px 0} .guar h2{font-size:26px;margin-bottom:10px} .guar p{margin:0;max-width:62ch;color:var(--hv-text)} @media(min-width:768px){.guar{padding:56px 0} .guar h2{font-size:34px}}
 /* bottom bar + sheet (phone/tablet) */
 .bar{position:fixed;left:0;right:0;bottom:0;z-index:40;display:grid;grid-template-columns:repeat(4,1fr);background:var(--hv-ink);padding-bottom:env(safe-area-inset-bottom)}
 .bar a,.bar button{color:#F3EFE8;background:none;border:0;font:inherit;font-size:11px;letter-spacing:.1em;text-transform:uppercase;text-decoration:none;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;min-height:64px;cursor:pointer} .bar .on{color:var(--hv-accent)} .bar i{font-style:normal;font-size:16px}
@@ -242,17 +322,17 @@ def _common(c):
     e = html.escape
     nav = "".join(
         f'<div><a class="top label" href="{a}">{e(n)}</a>' +
-        (('<div class="panel">' + "".join(f'<a href="#borok"><b>{e(b)}</b><span>{e(s)}</span></a>' for b,s in c["panel_wines"]) + f'<a class="all" href="#borok">{e(c["panel_all"])}</a></div>') if i==1 else
+        (('<div class="panel">' + "".join(f'<a href="{"aszu.html" if b=="Culture" else "#borok"}"><b>{e(b)}</b><span>{e(s)}</span></a>' for b,s in c["panel_wines"]) + f'<a class="all" href="#borok">{e(c["panel_all"])}</a></div>') if i==1 else
          ('<div class="panel">' + "".join(f'<a href="#latogatas"><b>{e(b)}</b><span>{e(s)}</span></a>' for b,s in c["panel_visits"]) + f'<a class="all" href="#latogatas">{e(c["book"])}</a></div>') if i==2 else '') + '</div>'
         for i,(n,a) in enumerate(zip(c["nav"],ANCHORS)))
     cards = "".join(f'<a class="card{" fit" if img.startswith("preculture") else ""}" href="{href}"><img src="{IMG}{img}" alt="{e(alt)}" width="413" height="462" loading="lazy"><div><h3>{e(t)}</h3><p class="short">{e(t2.split("—")[0].split(".")[0])}</p><p class="long">{e(t2)}</p><span class="btn btn-3">{e(cta)} →</span></div></a>' for t,t2,cta,href,img,alt in c["cards"])
-    bottles = "".join(f'<a class="bottle" href="#borok"><img src="{IMG}{img}" alt="{e(n)}" height="720" loading="lazy"><b>{e(n)}</b><span>{e(s)}</span><em class="price">{e(p)}</em></a>' for n,s,p,img in c["bottles"])
+    bottles = "".join(f'<a class="bottle" href="{"aszu.html" if n=="Culture" else "#borok"}"><img src="{IMG}{img}" alt="{e(n)}" height="720" loading="lazy"><b>{e(n)}</b><span>{e(s)}</span><em class="price">{e(p)}</em></a>' for n,s,p,img in c["bottles"])
     rocks = "".join(f'<a class="rock{" more" if i>=3 else ""}" href="birtok.html#dulok">' + (f'<img src="{IMG}{img}" alt="" width="256" height="256" loading="lazy">' if img else f'<i>{e(c["rock_missing"])}</i>') + f'<div><b>{e(n)}</b><span>{e(s)}</span></div></a>' for i,(n,s,img) in enumerate(c["dulok"]))
     nums = "".join(f'<div><b>{e(v)}</b><span>{e(l)}</span></div>' for v,l in c["nums"])
     foot = "".join(f'<div class="cols"><b>{e(h)}</b>' + "".join(f'<a href="#">{e(x)}</a>' for x in xs) + '</div>' for h,xs in c["foot"])
     sheet_main = "".join(f'<li><a href="{a}">{e(n)}</a></li>' for n,a in zip(c["nav"],ANCHORS))
-    sub = ["Tokaji aszú","Bortrezor","Ajándék","Experience"] if c["lang"]=="hu" else ["Tokaji Aszú","Wine vault","Gifts","Experience"]
-    sheet_sub = "".join(f'<li><a href="#">{e(x)}</a></li>' for x in sub)
+    sub = [("Tokaji aszú","aszu.html"),("Bortrezor","#"),("Ajándék","aszu.html#ajandek"),("Experience","#")] if c["lang"]=="hu" else [("Tokaji Aszú","aszu.html"),("Wine vault","#"),("Gifts","aszu.html#ajandek"),("Experience","#")]
+    sheet_sub = "".join(f'<li><a href="{h}">{e(x)}</a></li>' for x,h in sub)
     alt_lang = "en" if c["lang"]=="hu" else "hu"
     alt_href = "en/index.html" if c["lang"]=="hu" else "../index.html"
     return f"""<!DOCTYPE html>
@@ -341,7 +421,35 @@ def birtok_main(c):
 <section class="cta"><div class="wrap"><h2>{e(b['cta_h'])}</h2><p>{e(b['cta_p'])}</p><a class="btn" href="index.html#latogatas">{e(b['cta_btn'])}</a></div></section>
 """
 
-def render(c, rel, main_override=None, title=None, desc=None):
+def aszu_main(c):
+    e = html.escape; a = c["aszu"]
+    steps = lambda xs: "".join(f'<article><h3>{e(t)}</h3><p>{e(p)}</p></article>' for t,p in xs)
+    wall = "".join(f'<a class="w" href="#preculture"><img src="{IMG}culture-{y}.webp" alt="Culture {y}" height="560" loading="lazy"><b>{e(y)}</b><em>{e(pr)} Ft</em></a>' for y,pr in a["wall"])
+    moments = "".join(f'<li>{e(m)}</li>' for m in a["moments"])
+    pre = "".join(f'<a href="index.html#kapcsolat"><img src="{IMG}{"preculture-barrel-2025.webp" if y=="2025" else f"preculture-{y}.webp"}" alt="" loading="lazy"><b>{e(y)}</b></a>' for y in a["pre_years"])
+    her = "".join(f'<article><b>{e(y)}</b><div><h3>{e(t)}</h3><p>{e(p)}</p></div></article>' for y,t,p in a["heritage"])
+    return f"""
+<section class="hero">
+  <picture>
+    <source media="(max-width: 767px)" type="image/avif" srcset="{IMG}hero-aszu-portrait-780.avif"><source media="(max-width: 767px)" type="image/webp" srcset="{IMG}hero-aszu-portrait-780.webp">
+    <source media="(max-width: 1279px)" type="image/avif" srcset="{IMG}hero-aszu-1024.avif"><source media="(max-width: 1279px)" type="image/webp" srcset="{IMG}hero-aszu-1024.webp">
+    <source type="image/avif" srcset="{IMG}hero-aszu-1440.avif">
+    <img src="{IMG}hero-aszu-1440.webp" alt="{e(a['hero_alt'])}" width="1440" height="760" fetchpriority="high">
+  </picture>
+  <div class="wrap"><span class="label badge">{e(a['eyebrow'])}</span><h1>{e(a['h1'])}</h1></div>
+</section>
+<section class="wrap sec"><p class="lede" style="max-width:66ch;font-size:17px;color:var(--hv-text)">{e(a['intro'])}</p></section>
+<section class="wrap sec" id="keszites"><h2>{e(a['make_h'])}</h2><div class="steps">{steps(a['steps'])}</div></section>
+<section class="wrap sec" id="erleles"><h2>{e(a['age_h'])}</h2><div class="steps">{steps(a['ages'])}</div></section>
+<section class="wall" id="culture"><div class="wrap"><h2>{e(a['wall_h'])}</h2><p class="lede">{e(a['wall_lede'])}</p><div class="rail">{wall}</div></div></section>
+<section class="wrap sec cap" id="idokapszula"><img src="{IMG}ring-timecapsule.webp" alt="{e(a['ring_alt'])}" width="400" height="400" loading="lazy"><div><h2>{e(a['cap_h'])}</h2><h3>{e(a['cap_lede'])}</h3><p class="lede" style="color:var(--hv-text)">{e(a['cap'])}</p><ul class="moments">{moments}</ul></div></section>
+<section class="wrap sec" id="ajandek"><h2>{e(a['gift_h'])}</h2><p class="lede" style="color:var(--hv-text)">{e(a['gift'])}</p></section>
+<section class="wrap sec pre" id="preculture"><h2>{e(a['pre_h'])}</h2><p class="lede">{e(a['pre_lede'])}</p><div class="pre-y">{pre}</div><div class="pre-opts"><span>{e(a['pre_6'])} · {e(a['pre_3'])}</span><a class="btn" href="index.html#kapcsolat">{e(a['pre_btn'])}</a></div></section>
+<section class="guar"><div class="wrap"><h2>{e(a['guar_h'])}</h2><p>{e(a['guar'])}</p></div></section>
+<section class="wrap sec" id="orokseg"><h2>{e(a['her_h'])}</h2><p class="lede">{e(a['her_lede'])}</p><div class="her">{her}</div></section>
+"""
+
+def render(c, rel, main_override=None, title=None, desc=None, slug=None):
     doc = _common(c)
     if main_override is not None:
         start = doc.index('<main id="top">') + len('<main id="top">'); end = doc.index('</main>')
@@ -349,8 +457,8 @@ def render(c, rel, main_override=None, title=None, desc=None):
         doc = doc.replace(f"<title>{html.escape(c['title'])}</title>", f"<title>{html.escape(title)}</title>",1)
         doc = doc.replace(f'<meta name="description" content="{html.escape(c["desc"])}">', f'<meta name="description" content="{html.escape(desc)}">',1)
         # hreflang + language switch for this page
-        doc = doc.replace('holdvolgy/index.html">','holdvolgy/birtok.html">').replace('holdvolgy/en/index.html">','holdvolgy/en/birtok.html">')
-        doc = doc.replace('href="en/index.html" lang="en"','href="en/birtok.html" lang="en"').replace('href="../index.html" lang="hu"','href="../birtok.html" lang="hu"')
+        doc = doc.replace('holdvolgy/index.html">',f'holdvolgy/{slug}.html">').replace('holdvolgy/en/index.html">',f'holdvolgy/en/{slug}.html">')
+        doc = doc.replace('href="en/index.html" lang="en"',f'href="en/{slug}.html" lang="en"').replace('href="../index.html" lang="hu"',f'href="../{slug}.html" lang="hu"')
         # in-page anchors that live on the home page must point back to it
         doc = doc.replace('href="#borok"','href="index.html#borok"').replace('href="#latogatas"','href="index.html#latogatas"').replace('href="#borklub"','href="index.html#borklub"').replace('href="#kapcsolat"','href="index.html#kapcsolat"')
     out = HERE / rel; out.parent.mkdir(exist_ok=True); out.write_text(doc, encoding="utf-8")
@@ -361,4 +469,6 @@ if __name__ == "__main__":
         TOK, IMG = tok, img
         render(C[lang], rel)
         b = C[lang]["birtok"]
-        render(C[lang], rel.replace("index.html","birtok.html"), main_override=birtok_main(C[lang]), title=b["title"], desc=b["desc"])
+        render(C[lang], rel.replace("index.html","birtok.html"), main_override=birtok_main(C[lang]), title=b["title"], desc=b["desc"], slug="birtok")
+        a = C[lang]["aszu"]
+        render(C[lang], rel.replace("index.html","aszu.html"), main_override=aszu_main(C[lang]), title=a["title"], desc=a["desc"], slug="aszu")

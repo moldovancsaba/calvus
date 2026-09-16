@@ -254,8 +254,9 @@ Owner confirms the direction in §4 and the page list below. Nothing is built be
 - **Birtok** — built 2026-09-16 (`07-birtok-build.md`): story, ten-step timeline
   with the illustrated cards, seven dűlők with rocks and map, varieties, vintages,
   team (portraits still to come).
-- **Tokaji aszú**: Culture vertical wall, aszú making/ageing, Time Capsule, PreCulture
-  en-primeur row.
+- **Tokaji aszú** — built 2026-09-16 (`08-aszu-build.md`): Culture vertical wall of
+  thirteen vintages with prices, making and ageing, Time Capsule, PreCulture row,
+  Tokaj heritage.
 - **Látogatás**: 1,8 km / 3 szint / 500 év, cellar history, three tickets with the
   mockups, Experience, Trezor, geology, practical info, booking form modelled on the
   current fields (it stays a request form — no fake availability).
