@@ -14,6 +14,7 @@ record. Each file is dated inside; this index is the process log.
 | `04-decisions.md` | Decision log — what was decided, by whom, why, and what it replaced |
 | `design-system.html` | Phase 1 gate 1: the design system rendered live from the tokens — colour, type, spacing, buttons, cards, bottles, dűlő rows, both navigations |
 | `assets-used.md` | Every asset fetched for the build, its source URL, original and derivative sizes |
+| `09-latogatas-build.md` | Phase 2: the Látogatás page — sources, booking form, measurements, and the map fix |
 | `08-aszu-build.md` | Phase 2: the Tokaji aszú page — sources, the Culture wall, measurements |
 | `07-birtok-build.md` | Phase 2: the Birtok page — content sources, sections, measurements at 390/768/1440, and the navigation fixes made in the same round |
 | `06-home-build.md` | Gate 3: the built home page — what was built, and the measured results at 390, 768 and 1440 |
@@ -92,4 +93,11 @@ thirteen vintages and prices, making and ageing, Time Capsule, PreCulture and th
 Tokaj heritage milestones (`08-aszu-build.md`). The pre-push link audit caught a
 wrong render filename; fixed before the push.
 
-**Next.** Phase 2 closes with Látogatás (tasting, Experience, Trezor, booking).
+**2026-09-16 — Phase 2 complete: Látogatás built; map defect fixed.** The visit
+page in HU and EN with tickets, Experience, Bortrezor, geology, practical
+information and the booking form (`09-latogatas-build.md`). The owner found the
+vineyard map black and stretched on the live Birtok page — two converter/CSS
+defects, fixed at the root (D16).
+
+**Next.** Phase 3: the shop — Borok grid from the 40 renders, product-page template
+from a JSON catalogue, Borklub page.

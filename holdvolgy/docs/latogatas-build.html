@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Phase 2 — the Tokaji aszú page, measured — Holdvölgy 2026 docs</title>
+<title>Phase 2 — the Látogatás (Visit) page, measured — Holdvölgy 2026 docs</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:opsz,wght@6..96,400;6..96,500&family=Archivo:wdth,wght@112.5,400;112.5,500;112.5,600&display=swap">
 <style>:root{--ground:#FAFAFA;--card:#FFFFFF;--ink:#1D1D1B;--text:#4A4744;--muted:#7A7672;--accent:#B8A689;--accent-deep:#8B705B;--line:#E4E0D9;--line-soft:#EFECE6;--note:#F4F1EB}
@@ -43,20 +43,25 @@ footer{margin-top:56px;padding-top:18px;border-top:1px solid var(--line);font-si
 </head>
 <body>
 <div class="wrap">
-<nav class="docnav" aria-label="Project documentation"><span class="docnav-brand">Holdvölgy 2026 · docs</span><a href="index.html">Overview</a><a href="plan.html">Plan</a><a href="benchmarks.html">Benchmarks</a><a href="audit.html">Brand & site audit</a><a href="assets.html">Assets</a><a href="decisions.html">Decisions</a><a href="design-system.html">Design system</a><a href="layouts.html">Layouts</a><a href="home-build.html">Home build</a><a href="birtok-build.html">Birtok build</a><a href="aszu-build.html" aria-current=page>Aszú build</a><a href="latogatas-build.html">Látogatás build</a><a class="docnav-hub" href="../../index.html">Calvus Hub</a></nav>
-<header><p class="eyebrow">Calvus · Holdvölgy · project documentation</p><h1>Phase 2 — the Tokaji aszú page, measured</h1></header>
-<p>Built 2026-09-16, HU <code>aszu.html</code> and EN <code>en/aszu.html</code>, from the same content
-source as the other pages. Content taken from the live <code>/tokaji-aszu</code> and
-<code>/bor/culture-aszu</code> pages: the Culture statement, the three making steps and three
-ageing steps (24 months in Seguin Moreau oak, 72 months in bottle, release at about
-eight years), the Time Capsule and its eight life moments, the gift text, the
-Holdvölgy guarantee, the PreCulture programme (opens every 10 December, World Aszú
-Day; 6- and 3-bottle reservations 2018–2025) and the ten Tokaj heritage milestones
-from the Miocene <em>Vitis tokaiensis</em> to the first Holdvölgy vintage in 2006.</p>
-<p>The <strong>Culture wall</strong> carries all thirteen vintages 2006–2018 with the estate's own
-renders and the webshop's September 2026 prices (27 500 → 133 000 Ft, the 2012 being
-the 133 000 Ft item the plan had flagged as unconfirmed — it is the vintage, not a
-format). Nobody else in Tokaj presents a vertical.</p>
+<nav class="docnav" aria-label="Project documentation"><span class="docnav-brand">Holdvölgy 2026 · docs</span><a href="index.html">Overview</a><a href="plan.html">Plan</a><a href="benchmarks.html">Benchmarks</a><a href="audit.html">Brand & site audit</a><a href="assets.html">Assets</a><a href="decisions.html">Decisions</a><a href="design-system.html">Design system</a><a href="layouts.html">Layouts</a><a href="home-build.html">Home build</a><a href="birtok-build.html">Birtok build</a><a href="aszu-build.html">Aszú build</a><a href="latogatas-build.html" aria-current=page>Látogatás build</a><a class="docnav-hub" href="../../index.html">Calvus Hub</a></nav>
+<header><p class="eyebrow">Calvus · Holdvölgy · project documentation</p><h1>Phase 2 — the Látogatás (Visit) page, measured</h1></header>
+<p>Built 2026-09-16, HU <code>latogatas.html</code> and EN <code>en/latogatas.html</code>. Content from the
+live <code>/borkostolo</code>, <code>/bortrezor</code>, <code>/holdvolgy-experience</code>, <code>/borkostolo-idopontfoglalas</code>
+and <code>/borkostolo-ajandekkartyak</code> pages: the five pillars (UNESCO site, 1,8 km,
+500 years, treasure hunt, vertical Aszú tasting), eight cellar-history milestones
+from the late Middle Ages to the 2018 architecture award with their illustrated
+cards, the four tasting programmes with durations and the one published price
+(6 500 Ft/fő from), the Holdvölgy Experience day from Budapest, the Millennium
+Bortrezor with its real terms (5-year lease, 30 bottles a year, 150 in all,
+2 500 000 Ft estimated value) and three experiences, the geology (Cladosporium
+cellare), the practical information (hours, closed days, one-working-day reply,
+durations, under-18 and non-drinker rules) and the booking form with exactly the
+live form's fields — Név, E-mail, Telefon, Borkóstoló (four options), Dátum,
+Vendégek száma, Üzenet, GDPR — inert in the prototype with e-mail and phone beside it.</p>
+<p>Every visit and booking link on the other pages now lands here: the desktop
+<em>Foglalás</em> button and the phone bar's <em>Foglalás</em> → <code>#foglalas</code>; the Látogatás
+mega-panel's three programmes → <code>#jegyek</code>; the sheet's Bortrezor and Experience →
+<code>#trezor</code>, <code>#experience</code>; the home visit card and the Birtok call-to-action.</p>
 <h2>Measured</h2>
 <div class="tbl"><table>
 <thead>
@@ -69,70 +74,58 @@ format). Nobody else in Tokaj presents a vertical.</p>
 </thead>
 <tbody>
 <tr>
-<td>Horizontal overflow / small taps</td>
-<td>0 / 0</td>
+<td>Overflow / small taps</td>
+<td>0 / 0 (after fixing the consent checkbox and two inline links)</td>
 <td>0 / 0</td>
 <td>0 / 0</td>
 </tr>
 <tr>
 <td><code>h1</code></td>
-<td>"Meghatározó, gazdag, élettel teli"</td>
-<td>"Defining, rich, full of life"</td>
+<td>"Borkóstoló a föld alatt"</td>
+<td>"Tasting underground"</td>
 <td>1</td>
 </tr>
 <tr>
 <td>Images / no alt / broken</td>
-<td>23 / 0 / 0</td>
+<td>21 / 0 / 0</td>
 <td>— / — / 0</td>
 <td>—</td>
 </tr>
 <tr>
-<td>Hero source, height</td>
-<td>portrait-780.avif</td>
-<td>1024.avif</td>
-<td>1440.avif, 720 px</td>
+<td>Hero source</td>
+<td>cellar portrait-780.avif</td>
+<td>cellar 1024.avif</td>
+<td>cellar 1440.avif</td>
 </tr>
 <tr>
-<td>Culture wall</td>
-<td>13 bottles, snap rail</td>
-<td>7 columns</td>
-<td>13 columns, bottles 160 px</td>
+<td>Pillars / history / tickets / Experience / Trezor / info</td>
+<td>5 / 8 / 4 / 4 / 3 / 4</td>
+<td>tickets 2 col, info 2 col</td>
+<td>5 / 5 / 4 / 4 / 3 / 4 columns</td>
 </tr>
 <tr>
-<td>Making + ageing steps</td>
-<td>6, stacked</td>
-<td>3 columns</td>
-<td>3 columns</td>
+<td>Booking form</td>
+<td>all 8 fields present, 4 programme options, two-column rows on ≥ 768</td>
+<td></td>
+<td></td>
 </tr>
 <tr>
-<td>PreCulture years</td>
-<td>8, 4 columns</td>
-<td>8 columns</td>
-<td>8 columns</td>
+<td>In-page anchors</td>
+<td>all resolve</td>
+<td></td>
+<td>mega-panel: 4 links into this page</td>
 </tr>
 <tr>
-<td>Heritage milestones</td>
-<td>10, stacked</td>
-<td>2 columns</td>
-<td>2 columns</td>
-</tr>
-<tr>
-<td>Language switch / reserve button</td>
-<td><code>en/aszu.html</code> / —</td>
-<td><code>../aszu.html</code> / <code>index.html#kapcsolat</code></td>
-<td>—</td>
-</tr>
-<tr>
-<td>Fonts / console errors</td>
-<td>Archivo, Bodoni Moda / 0</td>
+<td>Console errors</td>
+<td>0</td>
 <td>0</td>
 <td>0</td>
 </tr>
 <tr>
 <td>Page height</td>
-<td>7,7 screens</td>
-<td>—</td>
-<td>—</td>
+<td>9,7 screens</td>
+<td></td>
+<td></td>
 </tr>
 </tbody>
 </table></div>
@@ -147,31 +140,32 @@ format). Nobody else in Tokaj presents a vertical.</p>
 <tbody>
 <tr>
 <td>Phone 390</td>
-<td><strong>738</strong></td>
+<td><strong>800</strong></td>
 </tr>
 <tr>
 <td>Tablet 768</td>
-<td><strong>746</strong></td>
+<td><strong>797</strong></td>
 </tr>
 <tr>
 <td>Desktop 1440</td>
-<td><strong>779</strong></td>
+<td><strong>807</strong></td>
 </tr>
 </tbody>
 </table></div>
-<p>All under 1,5 MB; the wall (13 renders, 264 KB) and the PreCulture row (216 KB)
-are lazy-loaded.</p>
-<h2>Notes</h2>
+<p>Under 1,5 MB; the cellar-history cards (330 KB) are the largest cost, lazy-loaded.</p>
+<h2>Fixed in the same round, found by the owner on the live Birtok page</h2>
 <ul>
-<li>The hero is the site's own Aszú landing photograph (1512 × 798) — the phone
-  portrait crop is upscaled and provisional; a portrait frame is in the client-gap
-  list.</li>
-<li>Reservation buttons go to the contact block until Phase 3 builds the shop.</li>
-<li>The link audit caught a wrong filename for the 2025 PreCulture render before the
-  push; fixed in the renderer.</li>
+<li>The vineyard map's transparent areas rendered <strong>black</strong>: the converter had
+  flattened the RGBA PNG to RGB. Re-encoded with alpha (WebP and AVIF), 58 KB; the
+  map is designed for a near-white ground and now sits on the page's <code>#FAFAFA</code>.</li>
+<li>The map was <strong>stretched tall</strong> on the phone: the <code>&lt;img&gt;</code> carried a <code>height</code>
+  attribute and the base stylesheet set only <code>max-width</code>. <code>img { height: auto }</code>
+  is now in the base rule for every page. Birtok re-measured: 655 KB phone,
+  975 KB desktop.</li>
+<li>Recorded as D16 so the converter and the base rule can't regress.</li>
 </ul>
 <script>(function(){function f(){document.querySelectorAll('.scale-d').forEach(function(e){e.style.setProperty('--w',e.clientWidth)});document.querySelectorAll('.scale-p').forEach(function(e){e.style.setProperty('--pw',e.clientWidth)})}f();addEventListener('resize',f)})();</script>
-<footer>Source: <code>holdvolgy/docs/08-aszu-build.md</code> · rendered by <code>docs/build.py</code>. Set in Bodoni Moda and Archivo (Google Fonts, SIL OFL) on Holdvölgy's measured palette — decision D3.</footer>
+<footer>Source: <code>holdvolgy/docs/09-latogatas-build.md</code> · rendered by <code>docs/build.py</code>. Set in Bodoni Moda and Archivo (Google Fonts, SIL OFL) on Holdvölgy's measured palette — decision D3.</footer>
 </div>
 </body>
 </html>

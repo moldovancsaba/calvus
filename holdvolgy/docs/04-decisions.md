@@ -84,3 +84,11 @@ Recorded in CLAUDE.md rule 2 so it applies to every project here.
 hand-authored pages on every build; the project pages' navigation lives once in
 `holdvolgy/build.py`. A build-time check verifies every doc page links every other,
 and a whole-project link audit runs in the gate before every push.
+
+**D16 — Image conversions keep alpha; the base stylesheet releases attribute
+heights.** Standing, 2026-09-16, after the owner found the vineyard map black and
+stretched on the live Birtok page. Any source PNG with an alpha channel is encoded
+to WebP/AVIF with alpha, never flattened; every page's base rule is
+`img { max-width: 100%; height: auto; display: block }` so width/height attributes
+(kept for layout stability) never distort. The gate now includes a rendered look at
+every image-led section, not only measurements.

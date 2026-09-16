@@ -129,6 +129,11 @@ must actually happen before every push, not just be claimed:
 - Run a whole-project link audit (every relative `href`/`src`/`srcset` in every
   HTML file must resolve on disk) and, for `holdvolgy/docs/`, the every-doc-links-
   every-other check that `docs/build.py` performs.
+- Image conversions keep the alpha channel of any RGBA source (never
+  `.convert('RGB')` on a PNG with transparency), and every page's base CSS has
+  `img { height: auto }` so width/height attributes never distort (owner found a
+  black, stretched map on the live site, 2026-09-16). The gate includes a
+  rendered look at every image-led section, not only measured numbers.
 - **Never delete a URL that has been live.** When content moves, leave a redirect
   page at the old path (owner incident 2026-09-16: a cached hub card led to a 404).
 

@@ -12,7 +12,7 @@ C = {
    panel_all="Teljes választék", panel_visits=[("Tokaji aszú kóstoló","6 aszúévjárat · kb. 2 óra"),("Kincskereső — 8 bor","térképes pincelátogatás aszúval · 1,5–2 óra"),("Kincskereső — 6 bor","térképes pincelátogatás · 1,5–2 óra")],
    badge="Év pincészete 2026", h1="A tokaji álmot töltjük pohárba az élet nagy pillanataihoz", hero_alt="A Holdvölgy pincelabirintusa, hordósorok a föld alatt",
    cards=[("Év pincészete 2026","A Holdvölgy elnyerte az Év pincészete elismerést — hagyománytisztelő, de mégis kreatív kísérletezés Mádon.","A birtokról","birtok.html","card-ev-pinceszete.webp","Drónfelvétel a mádi birtokról"),
-          ("Borkóstoló a föld alatt","Térképes kincskeresés a háromszintes labirintusban, vagy ültetett aszúkóstoló hat évjárattal.","Foglalás","#latogatas","card-pince.webp","A pince oltára, gyertyafényben"),
+          ("Borkóstoló a föld alatt","Térképes kincskeresés a háromszintes labirintusban, vagy ültetett aszúkóstoló hat évjárattal.","Foglalás","latogatas.html#jegyek","card-pince.webp","A pince oltára, gyertyafényben"),
           ("PreCulture 2025","Szüret előtti előjegyzés 6 puttonyos tokaji aszúra, nyolcéves érleléssel.","Előjegyzés","aszu.html#preculture","preculture-barrel-2025.webp","PreCulture 2025 hordó")],
    band_h="Tokaji borok", band_all="Teljes választék", band_all_short="Mind",
    bottles=[("Culture","6 puttonyos tokaji aszú","27 500 Ft-tól","bottle-culture.webp"),("Signature 2013","édes birtokválogatás","10 000 Ft","bottle-signature-13.webp"),("Eloquence 2014","édes szamorodni","7 000 Ft","bottle-eloquence-14.webp"),("Vision 2021","száraz birtokválogatás","5 500 Ft","bottle-vision-21.webp"),("Meditation 2023","Furmint · Király-dűlő","15 500 Ft","bottle-meditation-23.webp"),("Hold and Hollo Dry","száraz válogatás 2024","4 000 Ft","bottle-hh-dry.webp")],
@@ -101,6 +101,46 @@ C = {
       ("2002","Világörökségi helyszín","Az UNESCO felveszi a Tokaji borvidéket a világörökségi listára."),
       ("2006","Az első Holdvölgy évjárat","Elkészül az első Culture 6 puttonyos tokaji aszú; azóta minden évjáratban.")],
    ),
+   latogatas=dict(
+    title="Látogatás — borkóstoló a föld alatt · Holdvölgy, Mád", desc="Térképes kincskereső pincelátogatás és vertikális aszúkóstoló az 1,8 km-es, 500 éves mádi pincelabirintusban. Jegyek, Experience, Bortrezor, nyitvatartás, foglalás.",
+    eyebrow="Látogatás", h1="Borkóstoló a föld alatt", sub="Térképes kincskeresés és vertikális aszú kóstoló", hero_alt="A Holdvölgy pincelabirintusa",
+    intro="Egyedülálló földalatti borkóstoló UNESCO világörökségi helyszínen. Közel 2 km hosszú, 500 éves történelmi pince.",
+    pillars=[("UNESCO helyszín szívében","icon-tasting-1"),("1,8 km hosszú pincelabirintus","icon-tasting-2"),("500 éves történelem","icon-tasting-3"),("Térképes kincskeresés","icon-tasting-4"),("Vertikális aszú kóstoló","icon-tasting-5")],
+    nums=[("1,8 km","pincelabirintus"),("3 szint","a föld alatt"),("500 év","pincetörténet")],
+    hist_h="Pincetörténet", hist=[
+      ("Késő középkor","Legrégebbi pinceágak","Ekkor épülnek a mai pincerendszer legrégebbi ágai, amelyek nagy része a pincetúra során is bejárható.","ch-1"),
+      ("19–20. század","Úribor","A járatok egy része a Mádon megalakult „Úribor” Tokaj-hegyaljai Bornagytermelők Szövetkezetének birtokába kerül — 19 alapító tagjából 12 arisztokrata, hercegekkel, bárókkal, grófokkal.","ch-2"),
+      ("II. világháború","Rejtekhely","A háború idején rejtekhely: kialakulnak a falakba vájt kis oltárok és Magyarország második legnagyobb ismert kürtője, amely a pincét óvóhelyként használó mádiak konyhai füstjét vezette el.","ch-oltar"),
+      ("Államosítás után","Mád legkiterjedtebb pincerendszere","Kilenc, korábban különálló pincejárat egybenyitásával jön létre a pince mai formája; magyar és szovjet delegációk hivatalos találkozói zajlanak itt.","ch-4"),
+      ("2011–2013","Pincefelújítás","A felújítás 23 hónapig tart; közben hat hónap alatt felépül a borászat és a borszaküzlet üvegépülete.","ch-felujitas"),
+      ("2014","Az első látogatók","A birtok teljes területe megnyílik a nagyközönség előtt, elindulnak a borkóstoló programok.","ch-6"),
+      ("2016–2017","VinCE díj","A program két egymást követő évben elnyeri Magyarország „Legjobb pincelátogatás” VinCE Awards díját.","ch-7"),
+      ("2018","Építészeti díj","A BORD Építész Stúdió által tervezett együttes — a felújított pincelabirintussal — bronzérmet szerez az A'Awards nemzetközi versenyen.","ch-9")],
+    tix_h="Borkóstoló jegyek", tix_lede="Négy program, 1–2 főtől, minimális létszám nélkül. Az utalványok 12 hónapig, a hét bármely napján felhasználhatók.",
+    tickets=[("Tokaji aszú borkóstoló élmény","6 tokaji aszú évjárattal, ültetett kóstolóval és pincebejárással","2 óra",None,"ticket-aszu"),
+             ("Kincskereső borkóstoló 8 borral","térképes pincelátogatás aszúval","1,5–2 óra",None,"ticket-8bor"),
+             ("Kincskereső borkóstoló 6 édes borral","térképes pincelátogatás","1,5–2 óra",None,"ticket-6edes"),
+             ("Kincskereső borkóstoló 6 borral","térképes pincelátogatás","1,5–2 óra","6 500 Ft/fő-től","ticket-6bor")],
+    per_person="1 fő részére", book="Foglalás", gift_line="Ajándékkártya minden programhoz — online vagy nyomtatva, postázással is.",
+    exp_h="Holdvölgy Experience", exp_sub="Egynapos élményutazás Budapestről Mádra",
+    exp="A Holdvölgy Experience-t úgy alkottuk meg, hogy a Budapestről induló utazástól a mádi borkóstolóig minden részlet összehangoltan szolgálja a kényelmet. Levesszük a szervezést a válláról, hogy a nap során figyelme osztatlanul a birtok boraira és történelmi dűlőire irányulhasson.",
+    exp_items=[("Diszkrét transzfer","Környezettudatos prémium autóval Budapestről Mádra és vissza."),("A régió ízei","Ebéd egy választott prémium partneréttermünkben."),("Privát borkóstoló","Tíz gondosan válogatott tétel, több évtized évjáratai — a száraz fajtaboroktól a hatputtonyos aszúkig."),("08:30 → 11:30","Indulás Budapestről, kurált kóstoló és birtokfelfedezés Mádon.")],
+    trez_h="Millennium Bortrezor", trez_sub="Élmény és befektetés",
+    trez="A limitált számú, névre szóló Millennium Bortrezorokban nem csak a Holdvölgy legkiemelkedőbb évjáratainak legszebb tételeit biztosítjuk, hanem egyedi élményeket is. A trezorban őrzött borok értéke az idő múlásával nő; közben a szőlőhöz és borhoz kapcsolódó eseményeken mindez megosztható családdal, barátokkal, üzleti partnerekkel — a tételek születési helyén.",
+    trez_nums=[("5 év","bérlési lehetőség"),("30 palack","minden évben"),("150 palack","a teljes időszak alatt"),("2 500 000 Ft","becsült érték a periódus végén")],
+    trez_exp=[("Blending Experience","Házasítási élmény: a tulajdonosok egy vendégükkel évente más-más tétel házasításában vesznek részt a főborász vezetésével; a végső blend kerül palackba, oklevéllel.","trezor-1"),
+              ("CRU tour","Exkluzív dűlő- és pincetúra öt vendéggel, a főborász vezetésével, a birtok nem látogatható részein is.","trezor-2"),
+              ("Találkozók","Évente visszatérő találkozók a birtokon a trezortulajdonosok körének.","trezor-3")],
+    geo_h="Geológia", geo_sub="10 millió éves vulkáni nyomok",
+    geo="A pincerendszer kőzetanyaga több nagyobb vulkánkitörés eredményeként halmozódott fel; a legalsó szint vágataiban szinte végig nyers kőzetfelszín látható. A riolittufába vájt pince falait vastagon borítja a Cladosporium cellare nemespenész, amely a világon csak ezen a borvidéken és a rajnai pincékben fordul elő.",
+    info_h="Hasznos információk", info=[
+      ("Nyitvatartás","Vasárnaptól csütörtökig 10–15, pénteken és szombaton 10–17 óráig. Mindig zárva: január 1., húsvét vasárnap és hétfő, november 1., december 25–26."),
+      ("Időpontfoglalás","E-mailben, telefonon vagy az alábbi űrlapon. Vendéglátó kollégáink 1 munkanapon belül visszajeleznek."),
+      ("Időtartam","A túra kb. 1,5–2 óra; az aszúkóstoló minden esetben 2 óra az ültetett kóstoló miatt."),
+      ("Gyerekek, nem kóstolók","18 év alatt a látogatás díjmentes, alkoholfogyasztás nélkül. Nem kóstoló felnőtt: 2 500 Ft, a birtok boltjában levásárolható.")],
+    form_h="Bejelentkezés pincelátogatásra", f_name="Név", f_email="E-mail cím", f_phone="Telefonszám", f_prog="Borkóstoló", f_date="Dátum", f_guests="Vendégek száma", f_msg="Üzenet", f_gdpr="Elolvastam és elfogadom az adatkezelési tájékoztatót.", f_send="Elküld", f_note="Prototípus: az űrlap nem küld — a foglalás e-mailben vagy telefonon él.",
+    gb_h="Vendégkönyv", gb="Voltál már nálunk? Oszd meg az élményt.", gb_links=[("Google","https://www.google.com/maps/search/Holdvölgy+Mád"),("Tripadvisor","https://www.tripadvisor.com/Search?q=Holdvölgy")],
+   ),
    age_q="Betöltötted már a 18. életéved?", age_note="Weboldalunkat csak 18 éven felüliek látogathatják.", yes="Igen", no="Nem", hub="Calvus Hub", hub_href="../index.html"),
  "en": dict(lang="en", title="Holdvölgy — Tokaji wines from Mád · Winery of the Year 2026",
    desc="Holdvölgy winery, Mád: sweet and dry Tokaji wines, a 1.8 km three-level cellar labyrinth, tasting experiences. Winery of the Year 2026.",
@@ -109,7 +149,7 @@ C = {
    panel_all="All wines", panel_visits=[("Tokaji Aszú tasting","6 Aszú vintages · about 2 hours"),("Treasure hunt — 8 wines","map-guided cellar visit with Aszú · 1.5–2 hours"),("Treasure hunt — 6 wines","map-guided cellar visit · 1.5–2 hours")],
    badge="Winery of the Year 2026", h1="We pour the Tokaji dream into the glass for life's great moments", hero_alt="The Holdvölgy cellar labyrinth, rows of barrels underground",
    cards=[("Winery of the Year 2026","Holdvölgy has been named Winery of the Year — tradition-respecting yet creative experimentation in Mád.","About the estate","birtok.html","card-ev-pinceszete.webp","Aerial view of the Mád estate"),
-          ("Tasting underground","A map-guided treasure hunt through the three-level labyrinth, or a seated Aszú tasting of six vintages.","Book","#latogatas","card-pince.webp","The cellar altar by candlelight"),
+          ("Tasting underground","A map-guided treasure hunt through the three-level labyrinth, or a seated Aszú tasting of six vintages.","Book","latogatas.html#jegyek","card-pince.webp","The cellar altar by candlelight"),
           ("PreCulture 2025","Pre-harvest reservation of 6 puttonyos Tokaji Aszú, aged eight years.","Reserve","aszu.html#preculture","preculture-barrel-2025.webp","PreCulture 2025 barrel")],
    band_h="Tokaji wines", band_all="All wines", band_all_short="All",
    bottles=[("Culture","6 puttonyos Tokaji Aszú","from 27 500 Ft","bottle-culture.webp"),("Signature 2013","sweet estate selection","10 000 Ft","bottle-signature-13.webp"),("Eloquence 2014","sweet Szamorodni","7 000 Ft","bottle-eloquence-14.webp"),("Vision 2021","dry estate selection","5 500 Ft","bottle-vision-21.webp"),("Meditation 2023","Furmint · Király vineyard","15 500 Ft","bottle-meditation-23.webp"),("Hold and Hollo Dry","dry selection 2024","4 000 Ft","bottle-hh-dry.webp")],
@@ -198,14 +238,54 @@ C = {
       ("2002","World Heritage site","UNESCO inscribes the Tokaj wine region on the World Heritage list."),
       ("2006","The first Holdvölgy vintage","The first Culture 6 puttonyos Tokaji Aszú is made — and in every vintage since.")],
    ),
+   latogatas=dict(
+    title="Visit — tasting underground · Holdvölgy, Mád", desc="Map-guided treasure-hunt cellar visits and vertical Aszú tastings in the 1.8 km, 500-year-old Mád cellar labyrinth. Tickets, Experience, Wine Vault, opening hours, booking.",
+    eyebrow="Visit", h1="Tasting underground", sub="A map-guided treasure hunt and a vertical Aszú tasting", hero_alt="The Holdvölgy cellar labyrinth",
+    intro="A unique underground wine tasting at a UNESCO World Heritage site. A nearly 2 km, 500-year-old historic cellar.",
+    pillars=[("In the heart of a UNESCO site","icon-tasting-1"),("1.8 km cellar labyrinth","icon-tasting-2"),("500 years of history","icon-tasting-3"),("Map-guided treasure hunt","icon-tasting-4"),("Vertical Aszú tasting","icon-tasting-5")],
+    nums=[("1.8 km","cellar labyrinth"),("3 levels","underground"),("500 years","of cellar history")],
+    hist_h="Cellar history", hist=[
+      ("Late Middle Ages","The oldest branches","The oldest branches of today's cellar system are cut; most can be walked on the tour.","ch-1"),
+      ("19th–20th c.","Úribor","Part of the passages passes to the “Úribor” Tokaj-Hegyalja Growers' Cooperative founded in Mád — twelve of its nineteen founders aristocrats: princes, barons, counts.","ch-2"),
+      ("World War II","A hiding place","The cellar shelters people in wartime: small altars are carved into the walls, and Hungary's second-largest known chimney vents the kitchen smoke of the families of Mád sheltering below.","ch-oltar"),
+      ("After nationalisation","Mád's largest cellar system","Nine formerly separate cellars are joined into today's form under the state wine companies; Hungarian and Soviet delegations meet here officially.","ch-4"),
+      ("2011–2013","Restoration","The restoration lasts 23 months; in six of them the glass building of the winery and wine shop rises.","ch-felujitas"),
+      ("2014","The first visitors","The whole estate opens to the public and the tasting programmes begin.","ch-6"),
+      ("2016–2017","VinCE award","Two years running the programme wins Hungary's “Best Cellar Visit” VinCE Award.","ch-7"),
+      ("2018","Architecture award","The complex by BORD Architectural Studio — restored labyrinth included — wins bronze at the international A'Awards.","ch-9")],
+    tix_h="Tasting tickets", tix_lede="Four programmes, from one or two guests, no minimum group. Vouchers are valid for 12 months, any day of the week.",
+    tickets=[("Tokaji Aszú tasting experience","six Aszú vintages, seated tasting and cellar walk","2 hours",None,"ticket-aszu"),
+             ("Treasure hunt with 8 wines","map-guided cellar visit with Aszú","1.5–2 hours",None,"ticket-8bor"),
+             ("Treasure hunt with 6 sweet wines","map-guided cellar visit","1.5–2 hours",None,"ticket-6edes"),
+             ("Treasure hunt with 6 wines","map-guided cellar visit","1.5–2 hours","from 6 500 Ft per person","ticket-6bor")],
+    per_person="per person", book="Book", gift_line="Gift vouchers for every programme — online or printed, by post too.",
+    exp_h="Holdvölgy Experience", exp_sub="A one-day journey from Budapest to Mád",
+    exp="The Holdvölgy Experience is designed so that every detail, from the departure in Budapest to the tasting in Mád, serves your comfort. We take the organising off your shoulders so your attention can rest, undivided, on the estate's wines and historic vineyards.",
+    exp_items=[("Discreet transfer","In an environmentally conscious premium car from Budapest to Mád and back."),("The region's flavours","Lunch at a chosen premium partner restaurant."),("Private tasting","Ten carefully selected wines across decades of vintages — from dry varietals to six-puttonyos Aszús."),("08:30 → 11:30","Departure from Budapest; curated tasting and estate discovery in Mád.")],
+    trez_h="Millennium Wine Vault", trez_sub="Experience and investment",
+    trez="In the limited number of named Millennium vaults we secure not only the finest lots of Holdvölgy's outstanding vintages but unique experiences too. The wines held in the vault grow in value with time; meanwhile all of it can be shared with family, friends and business partners at events tied to the vine and the wine — where the lots were born.",
+    trez_nums=[("5 years","lease"),("30 bottles","every year"),("150 bottles","over the term"),("2 500 000 Ft","estimated value at term end")],
+    trez_exp=[("Blending Experience","Owners and a guest take part each year in blending a different lot with the head winemaker; the final blend goes to bottle, with a certificate.","trezor-1"),
+              ("CRU tour","An exclusive vineyard and cellar tour for the owner and five guests, led by the head winemaker, including parts of the estate not open to visitors.","trezor-2"),
+              ("Gatherings","Yearly gatherings of the vault owners' circle at the estate.","trezor-3")],
+    geo_h="Geology", geo_sub="Traces of volcanoes ten million years old",
+    geo="The rock of the cellar system was laid down by several major eruptions; on the lowest level the raw rock is visible almost throughout. The walls of the cellar cut into rhyolite tuff are thickly coated with the noble mould Cladosporium cellare, found only in this region and in the cellars of the Rhine.",
+    info_h="Useful information", info=[
+      ("Opening hours","Sunday to Thursday 10–15, Friday and Saturday 10–17. Always closed: 1 January, Easter Sunday and Monday, 1 November, 25–26 December."),
+      ("Booking","By e-mail, by phone or with the form below. Our hospitality team replies within one working day."),
+      ("Duration","The tour takes about 1.5–2 hours; the Aszú tasting is always 2 hours because of the seated tasting."),
+      ("Children and non-drinkers","Under 18 the visit is free, without alcohol. A non-tasting adult pays 2 500 Ft, redeemable in the estate shop.")],
+    form_h="Book a cellar visit", f_name="Name", f_email="E-mail", f_phone="Phone", f_prog="Programme", f_date="Date", f_guests="Guests", f_msg="Message", f_gdpr="I have read and accept the privacy notice.", f_send="Send", f_note="Prototype: the form does not send — booking works by e-mail or phone.",
+    gb_h="Guest book", gb="Been to see us? Share the experience.", gb_links=[("Google","https://www.google.com/maps/search/Holdvölgy+Mád"),("Tripadvisor","https://www.tripadvisor.com/Search?q=Holdvölgy")],
+   ),
    age_q="Are you 18 or older?", age_note="This website may only be visited by adults.", yes="Yes", no="No", hub="Calvus Hub", hub_href="../../index.html"),
 }
-ANCHORS = ["birtok.html","#borok","#latogatas","#borklub","#kapcsolat"]
+ANCHORS = ["birtok.html","#borok","latogatas.html","#borklub","#kapcsolat"]
 
 CSS = r"""
 *{box-sizing:border-box} html{scroll-behavior:smooth} @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto} *{transition:none!important}}
 body{margin:0;background:var(--hv-ground);color:var(--hv-text);font-family:var(--hv-sans);font-stretch:var(--hv-sans-width);font-size:15px;line-height:1.55;-webkit-font-smoothing:antialiased}
-img{max-width:100%;display:block} a{color:inherit}
+img{max-width:100%;height:auto;display:block} a{color:inherit}
 h1,h2,h3{font-family:var(--hv-display);font-weight:400;color:var(--hv-ink);line-height:1.06;margin:0;font-optical-sizing:auto;text-wrap:balance}
 .label{font-size:12px;letter-spacing:.14em;text-transform:uppercase}
 .wrap{width:min(100% - 32px,1280px);margin-inline:auto} @media(min-width:768px){.wrap{width:min(100% - 80px,1280px)}} @media(min-width:1024px){.wrap{width:min(100% - 160px,1280px)}}
@@ -307,6 +387,23 @@ footer{padding:24px 0 96px;font-size:13px;color:var(--hv-muted);display:grid;gap
 .her{display:grid;gap:0;border-top:1px solid var(--hv-line-soft)} .her article{display:grid;grid-template-columns:96px 1fr;gap:12px;padding:12px 0;border-bottom:1px solid var(--hv-line-soft)} .her b{font-family:var(--hv-display);font-weight:400;font-size:18px;color:var(--hv-accent-deep);line-height:1.2} .her h3{font-size:17px;margin-bottom:4px} .her p{margin:0;font-size:13px;color:var(--hv-muted)}
 @media(min-width:768px){.her{grid-template-columns:1fr 1fr;gap:0 40px} .her article{grid-template-columns:120px 1fr;padding:16px 0} .her b{font-size:22px} .her h3{font-size:19px} .her p{font-size:14px}}
 .guar{background:var(--hv-band);padding:32px 0} .guar h2{font-size:26px;margin-bottom:10px} .guar p{margin:0;max-width:62ch;color:var(--hv-text)} @media(min-width:768px){.guar{padding:56px 0} .guar h2{font-size:34px}}
+/* ---- látogatás page ---- */
+.pillars{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;list-style:none;padding:0;margin:18px 0 0} .pillars li{display:flex;align-items:center;gap:10px;background:var(--hv-card);border:1px solid var(--hv-line-soft);padding:10px 12px;font-size:12.5px;color:var(--hv-ink)} .pillars img{width:34px;height:34px;object-fit:contain;flex:none}
+@media(min-width:768px){.pillars{grid-template-columns:repeat(5,1fr);gap:14px} .pillars li{flex-direction:column;text-align:center;padding:16px 12px;font-size:13px} .pillars img{width:44px;height:44px}}
+.tix{display:grid;gap:12px} .tk{background:var(--hv-card);border:1px solid var(--hv-line-soft);display:grid;grid-template-columns:110px 1fr;gap:12px;align-items:center} .tk img{width:110px;height:100%;object-fit:cover;min-height:96px} .tk div{padding:12px 12px 12px 0} .tk h3{font-size:18px;margin-bottom:4px} .tk p{margin:0;font-size:12.5px;color:var(--hv-muted)} .tk .meta{display:flex;flex-wrap:wrap;gap:6px 12px;margin-top:8px;font-size:12px;color:var(--hv-ink)} .tk .meta b{font-weight:500} .tk .btn{margin-top:10px}
+@media(min-width:768px){.tix{grid-template-columns:1fr 1fr;gap:20px} .tk{display:block} .tk img{width:100%;height:190px} .tk div{padding:16px 18px 20px} .tk h3{font-size:22px} .tk p{font-size:14px}}
+@media(min-width:1024px){.tix{grid-template-columns:repeat(4,1fr)} .tk img{height:160px} .tk h3{font-size:19px} .tk p{font-size:13px}}
+.exp{background:var(--hv-band);padding:32px 0} .exp h2{font-size:26px} .exp .sub{font-family:var(--hv-display);font-size:18px;color:var(--hv-accent-deep);margin:4px 0 12px} .exp p.lede{color:var(--hv-text)} .exp-items{display:grid;gap:10px;margin-top:16px} .exp-items div{background:var(--hv-card);border:1px solid var(--hv-line-soft);padding:12px 14px} .exp-items b{display:block;font-family:var(--hv-display);font-weight:400;font-size:18px;color:var(--hv-ink);margin-bottom:4px} .exp-items span{font-size:13px;color:var(--hv-muted)}
+@media(min-width:768px){.exp{padding:56px 0} .exp h2{font-size:34px} .exp .sub{font-size:22px} .exp-items{grid-template-columns:repeat(4,1fr);gap:16px}}
+.tnums{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:16px 0 20px} .tnums b{display:block;font-family:var(--hv-display);font-weight:400;font-size:26px;color:var(--hv-ink);line-height:1} .tnums span{display:block;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--hv-muted);margin-top:4px}
+@media(min-width:768px){.tnums{grid-template-columns:repeat(4,1fr);gap:24px} .tnums b{font-size:40px}}
+.texp{display:grid;gap:12px} .texp article{background:var(--hv-card);border:1px solid var(--hv-line-soft);display:grid;grid-template-columns:90px 1fr;gap:12px;align-items:center} .texp img{width:90px;height:120px;object-fit:cover} .texp div{padding:10px 12px 10px 0} .texp h3{font-size:18px;margin-bottom:4px} .texp p{margin:0;font-size:12.5px;color:var(--hv-muted)}
+@media(min-width:768px){.texp{grid-template-columns:repeat(3,1fr);gap:20px} .texp article{display:block} .texp img{width:100%;height:220px} .texp div{padding:14px 18px 18px} .texp p{font-size:13.5px}}
+.info{display:grid;gap:12px} .info div{background:var(--hv-card);border:1px solid var(--hv-line-soft);padding:14px 16px} .info b{display:block;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--hv-accent-deep);margin-bottom:6px} .info p{margin:0;font-size:13.5px;color:var(--hv-text)}
+@media(min-width:768px){.info{grid-template-columns:1fr 1fr;gap:20px}} @media(min-width:1024px){.info{grid-template-columns:repeat(4,1fr)}}
+.bform{display:grid;gap:14px;max-width:640px} .bform label{display:grid;gap:6px;font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--hv-muted)} .bform input,.bform select,.bform textarea{font:inherit;font-stretch:inherit;min-height:44px;padding:10px 12px;border:1px solid var(--hv-line);border-radius:var(--hv-radius);background:var(--hv-card);color:var(--hv-ink);text-transform:none;letter-spacing:0} .bform textarea{min-height:96px} .bform .two{display:grid;gap:14px} .bform .chk{display:flex;align-items:center;gap:12px;min-height:44px;cursor:pointer;text-transform:none;letter-spacing:0;font-size:13px;color:var(--hv-text)} .bform .chk input{width:44px;height:44px;min-height:0;margin:0;flex:none;accent-color:var(--hv-accent-deep)} .bform .note{font-size:12px;color:var(--hv-grey);margin:0} .bform .note a{display:inline-flex;align-items:center;min-height:44px;color:var(--hv-accent-deep)}
+@media(min-width:768px){.bform .two{grid-template-columns:1fr 1fr}}
+.gb{display:flex;flex-wrap:wrap;gap:12px;align-items:center}
 /* bottom bar + sheet (phone/tablet) */
 .bar{position:fixed;left:0;right:0;bottom:0;z-index:40;display:grid;grid-template-columns:repeat(4,1fr);background:var(--hv-ink);padding-bottom:env(safe-area-inset-bottom)}
 .bar a,.bar button{color:#F3EFE8;background:none;border:0;font:inherit;font-size:11px;letter-spacing:.1em;text-transform:uppercase;text-decoration:none;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;min-height:64px;cursor:pointer} .bar .on{color:var(--hv-accent)} .bar i{font-style:normal;font-size:16px}
@@ -323,7 +420,7 @@ def _common(c):
     nav = "".join(
         f'<div><a class="top label" href="{a}">{e(n)}</a>' +
         (('<div class="panel">' + "".join(f'<a href="{"aszu.html" if b=="Culture" else "#borok"}"><b>{e(b)}</b><span>{e(s)}</span></a>' for b,s in c["panel_wines"]) + f'<a class="all" href="#borok">{e(c["panel_all"])}</a></div>') if i==1 else
-         ('<div class="panel">' + "".join(f'<a href="#latogatas"><b>{e(b)}</b><span>{e(s)}</span></a>' for b,s in c["panel_visits"]) + f'<a class="all" href="#latogatas">{e(c["book"])}</a></div>') if i==2 else '') + '</div>'
+         ('<div class="panel">' + "".join(f'<a href="latogatas.html#jegyek"><b>{e(b)}</b><span>{e(s)}</span></a>' for b,s in c["panel_visits"]) + f'<a class="all" href="latogatas.html#foglalas">{e(c["book"])}</a></div>') if i==2 else '') + '</div>'
         for i,(n,a) in enumerate(zip(c["nav"],ANCHORS)))
     cards = "".join(f'<a class="card{" fit" if img.startswith("preculture") else ""}" href="{href}"><img src="{IMG}{img}" alt="{e(alt)}" width="413" height="462" loading="lazy"><div><h3>{e(t)}</h3><p class="short">{e(t2.split("—")[0].split(".")[0])}</p><p class="long">{e(t2)}</p><span class="btn btn-3">{e(cta)} →</span></div></a>' for t,t2,cta,href,img,alt in c["cards"])
     bottles = "".join(f'<a class="bottle" href="{"aszu.html" if n=="Culture" else "#borok"}"><img src="{IMG}{img}" alt="{e(n)}" height="720" loading="lazy"><b>{e(n)}</b><span>{e(s)}</span><em class="price">{e(p)}</em></a>' for n,s,p,img in c["bottles"])
@@ -331,7 +428,7 @@ def _common(c):
     nums = "".join(f'<div><b>{e(v)}</b><span>{e(l)}</span></div>' for v,l in c["nums"])
     foot = "".join(f'<div class="cols"><b>{e(h)}</b>' + "".join(f'<a href="#">{e(x)}</a>' for x in xs) + '</div>' for h,xs in c["foot"])
     sheet_main = "".join(f'<li><a href="{a}">{e(n)}</a></li>' for n,a in zip(c["nav"],ANCHORS))
-    sub = [("Tokaji aszú","aszu.html"),("Bortrezor","#"),("Ajándék","aszu.html#ajandek"),("Experience","#")] if c["lang"]=="hu" else [("Tokaji Aszú","aszu.html"),("Wine vault","#"),("Gifts","aszu.html#ajandek"),("Experience","#")]
+    sub = [("Tokaji aszú","aszu.html"),("Bortrezor","latogatas.html#trezor"),("Ajándék","aszu.html#ajandek"),("Experience","latogatas.html#experience")] if c["lang"]=="hu" else [("Tokaji Aszú","aszu.html"),("Wine vault","latogatas.html#trezor"),("Gifts","aszu.html#ajandek"),("Experience","latogatas.html#experience")]
     sheet_sub = "".join(f'<li><a href="{h}">{e(x)}</a></li>' for x,h in sub)
     alt_lang = "en" if c["lang"]=="hu" else "hu"
     alt_href = "en/index.html" if c["lang"]=="hu" else "../index.html"
@@ -355,7 +452,7 @@ def _common(c):
 <header class="hd"><div class="wrap">
   <a class="wordmark" href="#top">HOLDVÖLGY</a>
   <nav aria-label="{'Fő navigáció' if c['lang']=='hu' else 'Main navigation'}">{nav}</nav>
-  <a class="btn btn-2 book" href="#latogatas">{e(c['book'])}</a>
+  <a class="btn btn-2 book" href="latogatas.html#foglalas">{e(c['book'])}</a>
   <div class="right"><a class="lang label" href="{alt_href}" lang="{alt_lang}" hreflang="{alt_lang}">{e(c['lang_other'][0])}</a><a class="cart" href="#borok" aria-label="{e(c['cart'])}">◯</a></div>
 </div></header>
 <main id="top">
@@ -366,16 +463,16 @@ def _common(c):
     <source type="image/avif" srcset="{IMG}hero-cellar-1440.avif">
     <img src="{IMG}hero-cellar-1440.webp" alt="{e(c['hero_alt'])}" width="1440" height="659" fetchpriority="high">
   </picture>
-  <div class="wrap"><span class="label badge">{e(c['badge'])}</span><h1>{e(c['h1'])}</h1><div class="row"><a class="btn" href="#latogatas">{e(c['book'])}</a><a class="btn btn-w" href="#borok">{e(c['nav'][1])}</a></div></div>
+  <div class="wrap"><span class="label badge">{e(c['badge'])}</span><h1>{e(c['h1'])}</h1><div class="row"><a class="btn" href="latogatas.html#foglalas">{e(c['book'])}</a><a class="btn btn-w" href="#borok">{e(c['nav'][1])}</a></div></div>
 </section>
 <section class="wrap cards">{cards}</section>
 <section class="band" id="borok"><div class="wrap"><div class="head"><h2>{e(c['band_h'])}</h2><a class="btn btn-3 short" href="#borok">{e(c['band_all_short'])} →</a><a class="btn btn-3 long" href="#borok">{e(c['band_all'])} →</a></div><div class="rail">{bottles}</div></div></section>
 <section class="wrap dulok"><img class="map" src="{IMG}dulok-map-1000.webp" alt="{e(c['map_alt'])}" width="1000" height="590" loading="lazy"><div><h2>{e(c['dulok_h'])}</h2><p class="lede">{e(c['dulok_lede'])}</p>{rocks}<p class="all"><a class="btn btn-3" href="birtok.html#dulok">{e(c['dulok_all'])} →</a></p></div></section>
-<section class="wrap visit" id="latogatas"><img class="photo" src="{IMG}visit-tunnel-1120.webp" alt="{e(c['tunnel_alt'])}" width="1120" height="1484" loading="lazy"><div><div class="nums">{nums}</div><h2>{e(c['visit_h'])}</h2><p class="short">{e(c['hours_short'])}</p><p class="long">{e(c['hours'])}</p><p>3909 Mád, Árpád u. 13.</p><p><a class="tel" href="tel:+36703914643">+36 70 391 4643</a> · <a class="tel" href="mailto:visit@holdvolgy.com">visit@holdvolgy.com</a></p><a class="btn" href="mailto:visit@holdvolgy.com">{e(c['book'])}</a></div></section>
+<section class="wrap visit" id="latogatas"><img class="photo" src="{IMG}visit-tunnel-1120.webp" alt="{e(c['tunnel_alt'])}" width="1120" height="1484" loading="lazy"><div><div class="nums">{nums}</div><h2>{e(c['visit_h'])}</h2><p class="short">{e(c['hours_short'])}</p><p class="long">{e(c['hours'])}</p><p>3909 Mád, Árpád u. 13.</p><p><a class="tel" href="tel:+36703914643">+36 70 391 4643</a> · <a class="tel" href="mailto:visit@holdvolgy.com">visit@holdvolgy.com</a></p><a class="btn" href="latogatas.html#foglalas">{e(c['book'])}</a></div></section>
 <section class="wrap news" id="borklub"><h3>{e(c['news_h'])}</h3><form onsubmit="return false"><input type="email" id="news-email" placeholder="{e(c['news_ph'])}" aria-label="{e(c['news_ph'])}"><button class="btn btn-2" type="submit">{e(c['news_btn'])}</button></form></section>
 </main>
 <footer class="wrap" id="kapcsolat"><div><span class="wordmark" style="font-size:16px">HOLDVÖLGY</span><p style="margin:8px 0 0">3909 Mád, Árpád u. 13. · Tokaj-Hegyalja</p><p style="margin:4px 0 0"><a href="mailto:visit@holdvolgy.com">visit@holdvolgy.com</a><a href="tel:+36703914643">+36 70 391 4643</a></p><small>{e(c['responsible'])}</small><p style="margin:10px 0 0"><a href="{c['hub_href']}">← {e(c['hub'])}</a></p></div>{foot}</footer>
-<nav class="bar" aria-label="{'Alsó navigáció' if c['lang']=='hu' else 'Bottom navigation'}"><a class="on" href="#latogatas"><i>◷</i>{e(c['book'].split(' ')[0])}</a><a href="#borok"><i>▯</i>{e(c['nav'][1])}</a><a href="#borok"><i>◯</i>{e(c['cart'])}</a><button type="button" id="menuBtn"><i>≡</i>{e(c['menu'])}</button></nav>
+<nav class="bar" aria-label="{'Alsó navigáció' if c['lang']=='hu' else 'Bottom navigation'}"><a class="on" href="latogatas.html#foglalas"><i>◷</i>{e(c['book'].split(' ')[0])}</a><a href="#borok"><i>▯</i>{e(c['nav'][1])}</a><a href="#borok"><i>◯</i>{e(c['cart'])}</a><button type="button" id="menuBtn"><i>≡</i>{e(c['menu'])}</button></nav>
 <dialog class="sheet" id="menu" aria-label="{e(c['menu'])}"><div class="top"><span class="wordmark">HOLDVÖLGY</span><button class="x" type="button" id="menuClose" aria-label="{e(c['close'])}">✕</button></div><ul>{sheet_main}</ul><ul class="sub">{sheet_sub}</ul></dialog>
 <dialog class="age" id="age" aria-labelledby="ageQ"><svg width="40" height="40" viewBox="0 0 40 40" aria-hidden="true" style="margin:0 auto"><circle cx="20" cy="20" r="13" fill="none" stroke="#B8A689" stroke-width="1.2"/><circle cx="25" cy="16" r="10" fill="#FAFAFA"/></svg><h2 id="ageQ">{e(c['age_q'])}</h2><p>{e(c['age_note'])}</p><div class="row"><button class="btn" type="button" id="ageYes">{e(c['yes'])}</button><a class="btn btn-2" href="https://www.google.com">{e(c['no'])}</a></div></dialog>
 <script>
@@ -418,7 +515,7 @@ def birtok_main(c):
 <section class="wrap sec" id="fajtak"><h2>{e(b['grapes_h'])}</h2><ul class="grapes">{grapes}</ul></section>
 <section class="wrap sec" id="evjaratok"><h2>{e(b['vint_h'])}</h2><div class="vint">{vint}</div></section>
 <section class="wrap sec" id="csapat"><h2>{e(b['team_h'])}</h2><div class="team">{team}</div><p class="team-note">{e(b['team_note'])}</p></section>
-<section class="cta"><div class="wrap"><h2>{e(b['cta_h'])}</h2><p>{e(b['cta_p'])}</p><a class="btn" href="index.html#latogatas">{e(b['cta_btn'])}</a></div></section>
+<section class="cta"><div class="wrap"><h2>{e(b['cta_h'])}</h2><p>{e(b['cta_p'])}</p><a class="btn" href="latogatas.html#foglalas">{e(b['cta_btn'])}</a></div></section>
 """
 
 def aszu_main(c):
@@ -449,6 +546,48 @@ def aszu_main(c):
 <section class="wrap sec" id="orokseg"><h2>{e(a['her_h'])}</h2><p class="lede">{e(a['her_lede'])}</p><div class="her">{her}</div></section>
 """
 
+def latogatas_main(c):
+    e = html.escape; v = c["latogatas"]
+    pillars = "".join(f'<li><img src="{IMG}{ic}.webp" alt="" width="44" height="44" loading="lazy">{e(t)}</li>' for t,ic in v["pillars"])
+    nums = "".join(f'<div><b>{e(a)}</b><span>{e(b)}</span></div>' for a,b in v["nums"])
+    hist = "".join(f'<article><img src="{IMG}{img}.webp" alt="" width="413" height="462" loading="lazy"><div><b>{e(y)}</b><h3>{e(t)}</h3><p>{e(p)}</p></div></article>' for y,t,p,img in v["hist"])
+    tix = "".join(f'<article class="tk"><img src="{IMG}{img}.webp" alt="" width="700" height="379" loading="lazy"><div><h3>{e(t)}</h3><p>{e(sub)} · {e(v["per_person"])}</p><div class="meta"><b>{e(dur)}</b>' + (f'<b>{e(pr)}</b>' if pr else '') + f'</div><a class="btn btn-2" href="#foglalas">{e(v["book"])}</a></div></article>' for t,sub,dur,pr,img in v["tickets"])
+    expi = "".join(f'<div><b>{e(a)}</b><span>{e(b)}</span></div>' for a,b in v["exp_items"])
+    tnums = "".join(f'<div><b>{e(a)}</b><span>{e(b)}</span></div>' for a,b in v["trez_nums"])
+    texp = "".join(f'<article><img src="{IMG}{img}.webp" alt="" width="413" height="550" loading="lazy"><div><h3>{e(t)}</h3><p>{e(p)}</p></div></article>' for t,p,img in v["trez_exp"])
+    info = "".join(f'<div><b>{e(a)}</b><p>{e(b)}</p></div>' for a,b in v["info"])
+    opts = "".join(f'<option>{e(t)}</option>' for t,_,_,_,_ in v["tickets"])
+    gb = "".join(f'<a class="btn btn-2" href="{u}" rel="noopener">{e(n)}</a>' for n,u in v["gb_links"])
+    return f"""
+<section class="hero">
+  <picture>
+    <source media="(max-width: 767px)" type="image/avif" srcset="{IMG}hero-cellar-portrait-780.avif"><source media="(max-width: 767px)" type="image/webp" srcset="{IMG}hero-cellar-portrait-780.webp">
+    <source media="(max-width: 1279px)" type="image/avif" srcset="{IMG}hero-cellar-1024.avif"><source media="(max-width: 1279px)" type="image/webp" srcset="{IMG}hero-cellar-1024.webp">
+    <source type="image/avif" srcset="{IMG}hero-cellar-1440.avif">
+    <img src="{IMG}hero-cellar-1440.webp" alt="{e(v['hero_alt'])}" width="1440" height="659" fetchpriority="high">
+  </picture>
+  <div class="wrap"><span class="label badge">{e(v['eyebrow'])}</span><h1>{e(v['h1'])}</h1><p class="label" style="margin:10px 0 0;color:#F3EFE8">{e(v['sub'])}</p></div>
+</section>
+<section class="wrap sec"><p class="lede" style="font-size:17px;color:var(--hv-text);max-width:60ch">{e(v['intro'])}</p><div class="nums" style="margin-top:8px">{nums}</div><ul class="pillars">{pillars}</ul></section>
+<section class="wrap sec" id="pincetortenet"><h2>{e(v['hist_h'])}</h2><div class="tl">{hist}</div></section>
+<section class="wrap sec" id="jegyek"><h2>{e(v['tix_h'])}</h2><p class="lede">{e(v['tix_lede'])}</p><div class="tix">{tix}</div><p class="lede" style="margin:16px 0 0;font-size:13px">{e(v['gift_line'])}</p></section>
+<section class="exp" id="experience"><div class="wrap"><h2>{e(v['exp_h'])}</h2><p class="sub">{e(v['exp_sub'])}</p><p class="lede">{e(v['exp'])}</p><div class="exp-items">{expi}</div></div></section>
+<section class="wrap sec" id="trezor"><h2>{e(v['trez_h'])}</h2><p class="sub" style="font-family:var(--hv-display);font-size:20px;color:var(--hv-accent-deep);margin:4px 0 12px">{e(v['trez_sub'])}</p><p class="lede" style="color:var(--hv-text)">{e(v['trez'])}</p><div class="tnums">{tnums}</div><div class="texp">{texp}</div></section>
+<section class="wrap sec" id="geologia"><h2>{e(v['geo_h'])}</h2><p class="sub" style="font-family:var(--hv-display);font-size:20px;color:var(--hv-accent-deep);margin:4px 0 12px">{e(v['geo_sub'])}</p><p class="lede" style="color:var(--hv-text)">{e(v['geo'])}</p></section>
+<section class="wrap sec" id="informaciok"><h2>{e(v['info_h'])}</h2><div class="info">{info}</div></section>
+<section class="wrap sec" id="foglalas"><h2>{e(v['form_h'])}</h2>
+<form class="bform" onsubmit="return false">
+  <div class="two"><label>{e(v['f_name'])}<input id="bk-name" type="text" autocomplete="name" required></label><label>{e(v['f_email'])}<input id="bk-email" type="email" autocomplete="email" required></label></div>
+  <div class="two"><label>{e(v['f_phone'])}<input id="bk-phone" type="tel" autocomplete="tel"></label><label>{e(v['f_prog'])}<select id="bk-prog">{opts}</select></label></div>
+  <div class="two"><label>{e(v['f_date'])}<input id="bk-date" type="date" required></label><label>{e(v['f_guests'])}<input id="bk-guests" type="number" min="1" max="40" value="2"></label></div>
+  <label>{e(v['f_msg'])}<textarea id="bk-msg"></textarea></label>
+  <label class="chk"><input id="bk-gdpr" type="checkbox" required>{e(v['f_gdpr'])}</label>
+  <div><button class="btn" type="submit">{e(v['f_send'])}</button></div>
+  <p class="note">{e(v['f_note'])} <a href="mailto:visit@holdvolgy.com">visit@holdvolgy.com</a> · <a href="tel:+36703914643">+36 70 391 4643</a></p>
+</form></section>
+<section class="wrap sec" id="vendegkonyv"><h2>{e(v['gb_h'])}</h2><p class="lede">{e(v['gb'])}</p><div class="gb">{gb}</div></section>
+"""
+
 def render(c, rel, main_override=None, title=None, desc=None, slug=None):
     doc = _common(c)
     if main_override is not None:
@@ -472,3 +611,5 @@ if __name__ == "__main__":
         render(C[lang], rel.replace("index.html","birtok.html"), main_override=birtok_main(C[lang]), title=b["title"], desc=b["desc"], slug="birtok")
         a = C[lang]["aszu"]
         render(C[lang], rel.replace("index.html","aszu.html"), main_override=aszu_main(C[lang]), title=a["title"], desc=a["desc"], slug="aszu")
+        v = C[lang]["latogatas"]
+        render(C[lang], rel.replace("index.html","latogatas.html"), main_override=latogatas_main(C[lang]), title=v["title"], desc=v["desc"], slug="latogatas")

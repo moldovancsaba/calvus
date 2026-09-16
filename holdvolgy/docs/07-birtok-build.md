@@ -40,9 +40,9 @@ files and desktop the gallery size.
 
 | | KB | of which |
 |---|---|---|
-| Phone 390 | **626** | timeline cards 287, rocks 88 |
+| Phone 390 | **655** (map re-encoded with alpha, 2026-09-16) | timeline cards 287, rocks 88 |
 | Tablet 768 | **625** | |
-| Desktop 1440 | **946** | rocks at 640 px: 396 |
+| Desktop 1440 | **975** (map with alpha) | rocks at 640 px: 396 |
 
 All under the 1,5 MB target. The ten timeline illustrations are the largest single
 cost and are lazy-loaded.

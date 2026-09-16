@@ -257,9 +257,10 @@ Owner confirms the direction in §4 and the page list below. Nothing is built be
 - **Tokaji aszú** — built 2026-09-16 (`08-aszu-build.md`): Culture vertical wall of
   thirteen vintages with prices, making and ageing, Time Capsule, PreCulture row,
   Tokaj heritage.
-- **Látogatás**: 1,8 km / 3 szint / 500 év, cellar history, three tickets with the
-  mockups, Experience, Trezor, geology, practical info, booking form modelled on the
-  current fields (it stays a request form — no fake availability).
+- **Látogatás** — built 2026-09-16 (`09-latogatas-build.md`): 1,8 km / 3 szint /
+  500 év, cellar history, four tickets with the mockups, Experience, Trezor,
+  geology, practical info, booking form with the current fields (a request form —
+  no fake availability). Phase 2 complete.
 
 ### Phase 3 — commerce
 - **Borok** grid with the 40 renders, filters Száraz / Édes / Aszú / Hold and Hollo /

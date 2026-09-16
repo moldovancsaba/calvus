@@ -20,6 +20,7 @@ PAGES = [  # (source, output, nav label)
     ("06-home-build.md", "home-build.html", "Home build"),
     ("07-birtok-build.md", "birtok-build.html", "Birtok build"),
     ("08-aszu-build.md", "aszu-build.html", "Aszú build"),
+    ("09-latogatas-build.md", "latogatas-build.html", "Látogatás build"),
 ]
 CSS = (HERE / "docs.css").read_text(encoding="utf-8")
 

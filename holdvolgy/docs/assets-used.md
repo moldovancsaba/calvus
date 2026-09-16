@@ -54,3 +54,11 @@ Committed derivatives now total **2308 KB** across 51 files.
 Files: `culture-2006.webp` 18 KB, `culture-2007.webp` 18 KB, `culture-2008.webp` 21 KB, `culture-2009.webp` 20 KB, `culture-2010.webp` 20 KB, `culture-2012.webp` 17 KB, `culture-2013.webp` 22 KB, `culture-2014.webp` 21 KB, `culture-2016.webp` 23 KB, `culture-2017.webp` 19 KB, `culture-2011.webp` 22 KB, `culture-2018.webp` 23 KB, `culture-2015.webp` 13 KB, `preculture-2019.webp` 24 KB, `preculture-2020.webp` 21 KB, `preculture-2021.webp` 20 KB, `preculture-2022.webp` 21 KB, `preculture-2023.webp` 25 KB, `preculture-2024.webp` 25 KB, `preculture-2018.webp` 20 KB, `ring-timecapsule.webp` 14 KB, `heritage-1.webp` 8 KB, `hero-aszu-1440.webp` 95 KB, `hero-aszu-1440.avif` 95 KB, `hero-aszu-1024.webp` 59 KB, `hero-aszu-1024.avif` 62 KB, `hero-aszu-portrait-780.webp` 56 KB, `hero-aszu-portrait-780.avif` 55 KB
 
 Committed derivatives now total **3179 KB** across 79 files.
+
+## Fetched 2026-09-16 for Phase 2 — Látogatás
+
+Cellar-history cards `ch-*` (413×462), tasting tickets `ticket-*` and icons `icon-tasting-*`, cellar photographs `cellar-*`, Trezor glass wall and occasion cards `trezor-*` — all from holdvolgy.com/wp-content/uploads (see `asset-inventory.json` for exact URLs).
+
+Files: `ch-1.webp` 36 KB, `ch-2.webp` 43 KB, `ch-oltar.webp` 68 KB, `ch-4.webp` 39 KB, `ch-felujitas.webp` 37 KB, `ch-6.webp` 15 KB, `ch-7.webp` 54 KB, `ch-9.webp` 34 KB, `ticket-aszu.webp` 30 KB, `ticket-8bor.webp` 36 KB, `ticket-6edes.webp` 42 KB, `ticket-6bor.webp` 43 KB, `icon-tasting-1.webp` 10 KB, `icon-tasting-2.webp` 10 KB, `icon-tasting-3.webp` 8 KB, `icon-tasting-4.webp` 13 KB, `icon-tasting-5.webp` 5 KB, `cellar-4677.webp` 10 KB, `cellar-4316.webp` 10 KB, `cellar-r5.webp` 10 KB, `cellar-r7.webp` 13 KB, `cellar-m2.webp` 9 KB, `trezor-glass.webp` 5 KB, `trezor-1.webp` 11 KB, `trezor-2.webp` 27 KB, `trezor-3.webp` 11 KB
+
+Committed derivatives now total **3820 KB** across 105 files.
