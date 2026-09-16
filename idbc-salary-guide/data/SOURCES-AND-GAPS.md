@@ -147,6 +147,22 @@ folder is the single consolidated data source built from all of it.
 - `sapProducts` — **new**: the real 5-category, 20-item SAP product catalogue from the client's own SAP mockup/spec.
 - `siteMap` — **new**: the full intended 8-page site structure with a `status` (`built` / `partially built` / `not built`) and note per page.
 
+## Card header alignment (2026-09-16)
+
+The collapsed card headers sat 5px below their own centre, which the client spotted. Two causes,
+both in the card CSS rather than the content:
+
+- `tr > td:nth-child(1) { padding-top: 10px }` also matched the position header cell and, at
+  specificity (0,1,2), outranked that cell's own `td.pos-cell { padding: 0 }` (0,1,1) — so the
+  header carried 10px of top padding and none at the bottom. The level-block spacing is now
+  targeted by `td[data-label="Tapasztalati szint"]`, which cannot collide with the header cell.
+- The chevron's `transform: rotate(45deg) translate(-2px, -2px)` was applied *after* the
+  rotation, so the translate resolved to a pure 2.8px upward shift on screen. The translate is
+  gone; rotation alone centres it.
+
+Measured after: position name, amount and chevron all 0px from the card's vertical centre, on
+both Bérsávok and SAP, for one- and two-line position names.
+
 ## Workshop feedback round (2026-09-16)
 
 Three changes after the client's workshop:

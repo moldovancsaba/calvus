@@ -6,7 +6,7 @@
   <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
   <meta http-equiv="Pragma" content="no-cache" />
   <title>IDBC Salary Guide – Bérsávok területenként</title>
-  <link rel="stylesheet" href="../assets/chart.css?v=5" />
+  <link rel="stylesheet" href="../assets/chart.css?v=6" />
 
   <style>
     :root {
@@ -291,7 +291,10 @@
       tr + tr { border-top: 1px solid var(--line); }
 
       td { border: 0; padding: 4px 14px; }
-      td:first-child:not(.pos-cell), tr > td:nth-child(1) { padding-top: 10px; }
+      /* Space above each level block. Targeted by label rather than position: the
+         `tr > td:nth-child(1)` form also matched the position header cell and outranked
+         its own `padding: 0`, which pushed the collapsed header off-centre. */
+      td[data-label="Tapasztalati szint"] { padding-top: 10px; }
       td:last-child { padding-bottom: 12px; }
 
       /* value labels — visual only; the real <th> association is intact for screen readers */
@@ -313,8 +316,8 @@
       .pos-toggle:focus-visible { outline: 3px solid var(--dark); outline-offset: -3px; }
       .pos-name { font-size: 14px; font-weight: 900; line-height: 1.15; }
       .pos-band { margin-left: auto; font-size: 12px; font-weight: 800; color: var(--muted); font-variant-numeric: tabular-nums; white-space: nowrap; }
-      .pos-chevron { flex: none; width: 10px; height: 10px; border-right: 2.5px solid var(--dark); border-bottom: 2.5px solid var(--dark); transform: rotate(45deg) translate(-2px, -2px); transition: transform .15s ease; }
-      .pos-toggle[aria-expanded="true"] .pos-chevron { transform: rotate(-135deg) translate(-2px, -2px); }
+      .pos-chevron { flex: none; width: 10px; height: 10px; border-right: 2.5px solid var(--dark); border-bottom: 2.5px solid var(--dark); transform: rotate(45deg); transition: transform .15s ease; }
+      .pos-toggle[aria-expanded="true"] .pos-chevron { transform: rotate(-135deg); }
 
       td[data-label="Tapasztalati szint"] { grid-column: 1 / -1; }
       td[data-label="Egyéb juttatás"] { grid-column: 1 / -1; }
@@ -546,7 +549,7 @@
     </div>
   </footer>
 
-  <script src="../assets/top3-chart.js?v=5"></script>
+  <script src="../assets/top3-chart.js?v=6"></script>
   <script>
     (async () => {
     const DATA = await fetch('../data/guide-data.json', { cache: 'no-cache' }).then(r => r.json());

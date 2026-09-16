@@ -6,7 +6,7 @@
   <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
   <meta http-equiv="Pragma" content="no-cache" />
   <title>IDBC – SAP piaci trendek és bérsávok</title>
-  <link rel="stylesheet" href="../assets/chart.css?v=5" />
+  <link rel="stylesheet" href="../assets/chart.css?v=6" />
   <style>
     :root {
       --dark: #132323;
@@ -210,8 +210,8 @@
       .pos-toggle:focus-visible { outline: 3px solid var(--dark); outline-offset: -3px; }
       .pos-name { font-size: 14px; font-weight: 900; line-height: 1.15; }
       .pos-band { margin-left: auto; font-size: 12px; font-weight: 800; color: var(--muted); font-variant-numeric: tabular-nums; white-space: nowrap; }
-      .pos-chevron { flex: none; width: 10px; height: 10px; border-right: 2.5px solid var(--dark); border-bottom: 2.5px solid var(--dark); transform: rotate(45deg) translate(-2px,-2px); transition: transform .15s ease; }
-      .pos-toggle[aria-expanded="true"] .pos-chevron { transform: rotate(-135deg) translate(-2px,-2px); }
+      .pos-chevron { flex: none; width: 10px; height: 10px; border-right: 2.5px solid var(--dark); border-bottom: 2.5px solid var(--dark); transform: rotate(45deg); transition: transform .15s ease; }
+      .pos-toggle[aria-expanded="true"] .pos-chevron { transform: rotate(-135deg); }
 
       /* collapsed: header only. The range already sits in the header, so its own row hides too. */
       tr.is-collapsed > td:not(.pos-cell) { display: none; }
@@ -327,7 +327,7 @@
 
   <main>
     <section class="hero" aria-labelledby="hero-title">
-      <img src="https://idbc.hu/includes/images/GO_Hero2.webp?v=5" alt="IDBC SAP piaci trendek fejléckép nagyvállalati környezetben" />
+      <img src="https://idbc.hu/includes/images/GO_Hero2.webp?v=6" alt="IDBC SAP piaci trendek fejléckép nagyvállalati környezetben" />
       <div class="hero-card">
         <p class="eyebrow">IDBC Salary Guide</p>
         <h1 id="hero-title">SAP piaci trendek</h1>
@@ -451,7 +451,7 @@
     </div>
   </footer>
 
-  <script src="../assets/top3-chart.js?v=5"></script>
+  <script src="../assets/top3-chart.js?v=6"></script>
   <script>
     (async () => {
     const DATA = await fetch('../data/guide-data.json', { cache: 'no-cache' }).then(r => r.json());
