@@ -35,7 +35,7 @@ footer{margin-top:56px;padding-top:18px;border-top:1px solid var(--line);font-si
 </head>
 <body>
 <div class="wrap">
-<nav class="docnav" aria-label="Project documentation"><span class="docnav-brand">Holdvölgy 2026 · docs</span><a href="index.html" aria-current=page>Overview</a><a href="plan.html">Plan</a><a href="benchmarks.html">Benchmarks</a><a href="audit.html">Brand & site audit</a><a href="assets.html">Assets</a><a href="decisions.html">Decisions</a><a href="layouts.html">Layouts</a><a class="docnav-hub" href="../../index.html">Calvus Hub</a></nav>
+<nav class="docnav" aria-label="Project documentation"><span class="docnav-brand">Holdvölgy 2026 · docs</span><a href="index.html" aria-current=page>Overview</a><a href="plan.html">Plan</a><a href="benchmarks.html">Benchmarks</a><a href="audit.html">Brand & site audit</a><a href="assets.html">Assets</a><a href="decisions.html">Decisions</a><a href="design-system.html">Design system</a><a href="layouts.html">Layouts</a><a class="docnav-hub" href="../../index.html">Calvus Hub</a></nav>
 <header><p class="eyebrow">Calvus · Holdvölgy · project documentation</p><h1>Holdvölgy 2026 — project documentation</h1></header>
 <p>Owner directive 2026-09-16: the whole process is documented next to the project —
 research, findings, decisions, assets, and every build round. This folder is that
@@ -73,6 +73,14 @@ record. Each file is dated inside; this index is the process log.</p>
 <td>Decision log — what was decided, by whom, why, and what it replaced</td>
 </tr>
 <tr>
+<td><code>design-system.html</code></td>
+<td>Phase 1 gate 1: the design system rendered live from the tokens — colour, type, spacing, buttons, cards, bottles, dűlő rows, both navigations</td>
+</tr>
+<tr>
+<td><code>assets-used.md</code></td>
+<td>Every asset fetched for the build, its source URL, original and derivative sizes</td>
+</tr>
+<tr>
 <td><a href="layouts.html"><code>05-layout-specs.md</code></a></td>
 <td>Phase 1: the desktop-1440 and phone-390 layout specifications with schematics, tablet resolution and the home weight budget</td>
 </tr>
@@ -108,7 +116,13 @@ inventoried without downloading any. Findings in <code>01</code>–<code>03</cod
 (D5); commercially free web fonts, Google Fonts preferred (D3); the five-item
 navigation is approved (D4); item data will be supplied by the client; full
 documentation next to the project (this folder). Plan updated accordingly.</p>
-<p><strong>Next.</strong> Phase 1 of <a href="plan.html"><code>00-plan.md</code></a> on approval of the direction in its §4.</p>
+<p><strong>2026-09-16 — sequencing corrected (D11).</strong> Owner asked whether the design system
+had been approved; it had not. A live design-system page (<code>design-system.html</code>) is
+now gate 1 of Phase 1, before the layouts. Assets for the home page were fetched
+and converted (<code>assets-used.md</code>, 22 originals → 27 derivatives, 1,2 MB, originals
+not committed) so the system page shows the real bottles on the real ground.</p>
+<p><strong>Next.</strong> Gate 1: approval of the design system. Then gate 2, the layouts; then the
+home page.</p>
 <footer>Source: <code>holdvolgy/docs/README.md</code> · rendered by <code>docs/build.py</code>. Set in Bodoni Moda and Archivo (Google Fonts, SIL OFL) on Holdvölgy's measured palette — decision D3.</footer>
 </div>
 </body>

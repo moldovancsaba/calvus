@@ -35,7 +35,7 @@ footer{margin-top:56px;padding-top:18px;border-top:1px solid var(--line);font-si
 </head>
 <body>
 <div class="wrap">
-<nav class="docnav" aria-label="Project documentation"><span class="docnav-brand">Holdvölgy 2026 · docs</span><a href="index.html">Overview</a><a href="plan.html">Plan</a><a href="benchmarks.html">Benchmarks</a><a href="audit.html">Brand & site audit</a><a href="assets.html">Assets</a><a href="decisions.html" aria-current=page>Decisions</a><a href="layouts.html">Layouts</a><a class="docnav-hub" href="../../index.html">Calvus Hub</a></nav>
+<nav class="docnav" aria-label="Project documentation"><span class="docnav-brand">Holdvölgy 2026 · docs</span><a href="index.html">Overview</a><a href="plan.html">Plan</a><a href="benchmarks.html">Benchmarks</a><a href="audit.html">Brand & site audit</a><a href="assets.html">Assets</a><a href="decisions.html" aria-current=page>Decisions</a><a href="design-system.html">Design system</a><a href="layouts.html">Layouts</a><a class="docnav-hub" href="../../index.html">Calvus Hub</a></nav>
 <header><p class="eyebrow">Calvus · Holdvölgy · project documentation</p><h1>Decision log</h1></header>
 <p>Format: what was decided · who · when · why · what it replaces.</p>
 <p><strong>D1 — The first prototype's visual direction is withdrawn.</strong> Owner, 2026-09-16.
@@ -80,6 +80,12 @@ style allocation layer. Nobody else in Tokaj sells online. Design accordingly.</
 §4 direction of <a href="plan.html"><code>00-plan.md</code></a>. First deliverable is <a href="layouts.html"><code>05-layout-specs.md</code></a> (desktop
 1440, phone 390, tablet resolved), to be approved before the home page is coded.
 D7 is lifted for the assets that the specified pages actually use.</p>
+<p><strong>D11 — Design-system approval is a gate before layouts.</strong> Owner challenge
+2026-09-16 ("do we have the design system already approved?") — it was not; the
+plan had gone from direction straight to layout specs. Phase 1 now has three gates
+in order: design system → layouts → home page. <code>docs/design-system.html</code> is gate 1
+and renders the system live from the tokens and the converted assets. Replaces the
+two-step Phase 1 in the plan's first draft.</p>
 <footer>Source: <code>holdvolgy/docs/04-decisions.md</code> · rendered by <code>docs/build.py</code>. Set in Bodoni Moda and Archivo (Google Fonts, SIL OFL) on Holdvölgy's measured palette — decision D3.</footer>
 </div>
 </body>

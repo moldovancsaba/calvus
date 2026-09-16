@@ -12,6 +12,8 @@ record. Each file is dated inside; this index is the process log.
 | `03-asset-inventory.md` | The 180 real images on the live site, grouped by use, with formats and sizes read from headers |
 | `asset-inventory.json` | The same inventory, machine-readable: base image URL → pages it appears on |
 | `04-decisions.md` | Decision log — what was decided, by whom, why, and what it replaced |
+| `design-system.html` | Phase 1 gate 1: the design system rendered live from the tokens — colour, type, spacing, buttons, cards, bottles, dűlő rows, both navigations |
+| `assets-used.md` | Every asset fetched for the build, its source URL, original and derivative sizes |
 | `05-layout-specs.md` | Phase 1: the desktop-1440 and phone-390 layout specifications with schematics, tablet resolution and the home weight budget |
 
 ## Reading these on the web
@@ -51,4 +53,11 @@ inventoried without downloading any. Findings in `01`–`03`, plan in `00`.
 navigation is approved (D4); item data will be supplied by the client; full
 documentation next to the project (this folder). Plan updated accordingly.
 
-**Next.** Phase 1 of `00-plan.md` on approval of the direction in its §4.
+**2026-09-16 — sequencing corrected (D11).** Owner asked whether the design system
+had been approved; it had not. A live design-system page (`design-system.html`) is
+now gate 1 of Phase 1, before the layouts. Assets for the home page were fetched
+and converted (`assets-used.md`, 22 originals → 27 derivatives, 1,2 MB, originals
+not committed) so the system page shows the real bottles on the real ground.
+
+**Next.** Gate 1: approval of the design system. Then gate 2, the layouts; then the
+home page.

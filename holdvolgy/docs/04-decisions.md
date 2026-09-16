@@ -53,3 +53,10 @@ style allocation layer. Nobody else in Tokaj sells online. Design accordingly.
 §4 direction of `00-plan.md`. First deliverable is `05-layout-specs.md` (desktop
 1440, phone 390, tablet resolved), to be approved before the home page is coded.
 D7 is lifted for the assets that the specified pages actually use.
+
+**D11 — Design-system approval is a gate before layouts.** Owner challenge
+2026-09-16 ("do we have the design system already approved?") — it was not; the
+plan had gone from direction straight to layout specs. Phase 1 now has three gates
+in order: design system → layouts → home page. `docs/design-system.html` is gate 1
+and renders the system live from the tokens and the converted assets. Replaces the
+two-step Phase 1 in the plan's first draft.

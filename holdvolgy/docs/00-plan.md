@@ -233,11 +233,16 @@ in this repo.
 ### Phase 0 — approval (this document)
 Owner confirms the direction in §4 and the page list below. Nothing is built before.
 
-### Phase 1 — foundation (one commit)
-- `holdvolgy/assets/tokens.css` with the kit-16 palette and the two type families.
-- Two layout specs before any page: desktop at 1440 and phone at 390, each with its
-  own navigation system, hero framing and grid, per §4.11; tablet resolved
-  explicitly.
+### Phase 1 — foundation, three approval gates in order
+- **Gate 1 — design system** (`docs/design-system.html`, rendered live from
+  `assets/tokens.css`): colour, the two faces and their roles, type scale, spacing,
+  corners, buttons, card, bottle component, dűlő row, both navigation systems, form
+  field. Approved on its own before anything is arranged. (Inserted 2026-09-16 after
+  the owner asked whether the system had been approved — it had not; D11.)
+- **Gate 2 — layout specs** (`docs/05-layout-specs.md`): desktop at 1440 and phone
+  at 390, each with its own navigation, hero framing and grid per §4.11; tablet
+  resolved explicitly. Arranges gate-1 components only.
+- **Gate 3 — the home page**, built from gates 1 and 2 and measured at both sizes.
 - Shared header/footer markup — mega-nav for desktop, bottom action bar plus sheet
   for phone — and the age gate restyled on the light ground.
 - Home rebuilt: one hero (cellar photograph + tagline), three cards (Év pincészete,

@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Design system — Holdvölgy 2026 docs</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:opsz,wght@6..96,400;6..96,500&family=Archivo:wdth,wght@112.5,400;112.5,500;112.5,600&display=swap">
+<link rel="stylesheet" href="../assets/tokens.css">
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:var(--hv-ground);color:var(--hv-text);font-family:var(--hv-sans);font-stretch:var(--hv-sans-width);font-size:15px;line-height:1.55;padding-block:0 80px;padding-inline:clamp(16px,4vw,40px)}
+.wrap{max-width:1120px;margin-inline:auto}
+.docnav{display:flex;flex-wrap:wrap;gap:4px 18px;align-items:center;padding:16px 0;border-bottom:1px solid var(--hv-line);font-size:12px;letter-spacing:.06em;text-transform:uppercase}
+.docnav a{color:var(--hv-muted);text-decoration:none;min-height:44px;display:inline-flex;align-items:center;border-bottom:2px solid transparent}
+.docnav a:hover,.docnav a[aria-current]{color:var(--hv-ink);border-color:var(--hv-accent)}
+.docnav-brand{color:var(--hv-accent-deep);font-weight:600;margin-right:6px}
+header{padding-block:40px 24px;border-bottom:1px solid var(--hv-line);margin-bottom:8px}
+.eyebrow{font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--hv-accent-deep);margin:0 0 12px}
+h1,h2,h3,.display{font-family:var(--hv-display);font-weight:400;color:var(--hv-ink);line-height:1.08;text-wrap:balance;margin:0;font-optical-sizing:auto}
+h1{font-size:clamp(32px,6vw,50px)} h2{font-size:32px;margin:56px 0 6px;padding-top:24px;border-top:1px solid var(--hv-line)} h3{font-size:22px;margin:28px 0 10px}
+.note{max-width:62ch;color:var(--hv-muted);margin:0 0 18px}
+.q{font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--hv-grey);margin:0 0 6px}
+/* palette */
+.pal{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:12px}
+.pal div{border:1px solid var(--hv-line)} .pal i{display:block;height:72px} .pal p{margin:0;padding:8px 10px;font-size:12px;color:var(--hv-ink)} .pal p small{display:block;color:var(--hv-muted);letter-spacing:.04em}
+/* type */
+.spec{display:grid;grid-template-columns:150px 1fr;gap:12px 24px;align-items:baseline;border-top:1px solid var(--hv-line-soft);padding:14px 0}
+.spec .q{margin:0} .t-hero{font-size:64px;line-height:1.05} .t-h2{font-size:40px} .t-h3{font-size:28px} .t-body{font-size:15px;max-width:62ch} .t-label{font-size:12px;letter-spacing:.14em;text-transform:uppercase} .t-price{font-family:var(--hv-sans);font-size:18px;font-weight:500;color:var(--hv-ink);font-variant-numeric:tabular-nums} .t-num{font-size:56px}
+@media(max-width:640px){.spec{grid-template-columns:1fr} .t-hero{font-size:34px} .t-h2{font-size:26px} .t-num{font-size:30px}}
+/* buttons */
+.btn{display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:12px 24px;border:1px solid var(--hv-accent);border-radius:var(--hv-radius);background:var(--hv-accent);color:var(--hv-ink);font:inherit;font-size:12px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;text-decoration:none;cursor:pointer;transition:background .15s,border-color .15s,color .15s}
+.btn:hover{background:var(--hv-accent-deep);border-color:var(--hv-accent-deep);color:#fff}
+.btn-2{background:transparent;color:var(--hv-ink)} .btn-2:hover{background:var(--hv-ink);border-color:var(--hv-ink);color:#fff}
+.btn-3{background:transparent;border-color:transparent;color:var(--hv-accent-deep);padding-inline:6px} .btn-3:hover{color:var(--hv-ink);background:transparent;border-color:transparent}
+.btn-onphoto{background:transparent;border-color:#fff;color:#fff} .btn-onphoto:hover{background:#fff;color:var(--hv-ink)}
+:focus-visible{outline:2px solid var(--hv-accent-deep);outline-offset:3px}
+.row{display:flex;flex-wrap:wrap;gap:12px;align-items:center}
+.onphoto{background:#3a332b url(../assets/img/hero-cellar-1024.webp) center/cover;padding:24px;display:inline-flex;gap:12px;flex-wrap:wrap}
+a.tx{color:var(--hv-accent-deep);text-decoration:none;border-bottom:1px solid var(--hv-line)} a.tx:hover{color:var(--hv-ink);border-color:var(--hv-ink)}
+/* cards + bottles */
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:24px}
+.card{background:var(--hv-card);border:1px solid var(--hv-line-soft)} .card img{width:100%;display:block;aspect-ratio:413/462;object-fit:cover} .card div{padding:18px 20px 22px} .card h3{margin:0 0 6px} .card p{margin:0 0 12px;color:var(--hv-muted)}
+.band{background:var(--hv-band);padding:32px 24px;margin-top:12px}
+.bottles{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:20px;align-items:end}
+.bottle{text-align:center} .bottle img{height:220px;width:auto;max-width:100%;display:inline-block;filter:drop-shadow(0 18px 18px rgba(29,29,27,.14));transition:transform .2s} .bottle:hover img{transform:translateY(-6px)}
+.bottle b{display:block;margin-top:14px;font-weight:500;color:var(--hv-ink)} .bottle span{display:block;font-size:12px;letter-spacing:.06em;color:var(--hv-muted)} .bottle em{font-style:normal;display:block;margin-top:4px}
+.rocks{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:12px}
+.rock{display:flex;gap:14px;align-items:center;padding:10px;border:1px solid var(--hv-line-soft);background:var(--hv-card)} .rock img{width:64px;height:64px;object-fit:cover;flex:none} .rock b{display:block;font-family:var(--hv-display);font-weight:400;font-size:20px;color:var(--hv-ink)} .rock span{font-size:12px;color:var(--hv-muted);letter-spacing:.04em}
+/* nav specimens */
+.nav-d{display:flex;align-items:center;gap:28px;min-height:88px;padding:0 32px;background:var(--hv-card);border:1px solid var(--hv-line)}
+.wordmark{font-family:var(--hv-display);font-size:22px;letter-spacing:.18em;color:var(--hv-ink)}
+.nav-d ul{display:flex;gap:26px;list-style:none;margin:0 auto;padding:0} .nav-d li a{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--hv-text);text-decoration:none;display:inline-flex;min-height:44px;align-items:center;border-bottom:2px solid transparent} .nav-d li a:hover,.nav-d li a[aria-current]{color:var(--hv-ink);border-color:var(--hv-accent)}
+.nav-p{width:390px;max-width:100%;border:1px solid var(--hv-line);background:var(--hv-card)}
+.nav-p .top{display:flex;align-items:center;justify-content:space-between;min-height:60px;padding:0 16px;border-bottom:1px solid var(--hv-line-soft)}
+.nav-p .bar{display:grid;grid-template-columns:repeat(4,1fr);background:var(--hv-ink)} .nav-p .bar a{color:#F3EFE8;text-decoration:none;font-size:11px;letter-spacing:.1em;text-transform:uppercase;min-height:64px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px} .nav-p .bar a[aria-current]{color:var(--hv-accent)}
+.nav-p .body{height:120px;background:var(--hv-ground)}
+/* form + spacing */
+.field{display:grid;gap:6px;max-width:360px} .field label{font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--hv-muted)} .field input,.field select{font:inherit;font-stretch:inherit;min-height:44px;padding:10px 12px;border:1px solid var(--hv-line);border-radius:var(--hv-radius);background:var(--hv-card);color:var(--hv-ink)} .field input:focus{border-color:var(--hv-accent-deep)}
+.sp{display:flex;gap:8px;align-items:flex-end} .sp i{display:block;background:var(--hv-accent);width:24px} .sp span{font-size:11px;color:var(--hv-muted);text-align:center;display:block;margin-top:4px}
+.approve{margin-top:56px;padding:22px 24px;background:var(--hv-band);border-left:2px solid var(--hv-accent)} .approve h3{margin-top:0}
+footer{margin-top:56px;padding-top:18px;border-top:1px solid var(--hv-line);font-size:12px;color:var(--hv-muted)}
+</style>
+</head>
+<body>
+<div class="wrap">
+<nav class="docnav" aria-label="Project documentation"><span class="docnav-brand">Holdvölgy 2026 · docs</span><a href="index.html">Overview</a><a href="plan.html">Plan</a><a href="benchmarks.html">Benchmarks</a><a href="audit.html">Brand &amp; site audit</a><a href="assets.html">Assets</a><a href="decisions.html">Decisions</a><a href="design-system.html" aria-current="page">Design system</a><a href="layouts.html">Layouts</a><a href="../../index.html" style="margin-left:auto">Calvus Hub</a></nav>
+<header>
+  <p class="eyebrow">Phase 1 · gate 1 of 3 · for approval</p>
+  <h1>Design system</h1>
+  <p class="note">Everything on this page is the system itself, rendered live from <code>assets/tokens.css</code> and the two Google Fonts faces — not a mock-up of it. Approve or change this before the layouts are approved and before any page is built.</p>
+</header>
+
+<h2>1 · Colour</h2>
+<p class="note">Measured from the live site's Elementor kit. One accent. No gold, no dark sections. Semantic states (error, success) will be added only when a form needs them.</p>
+<div class="pal">
+  <div><i style="background:#FAFAFA"></i><p>#FAFAFA<small>ground · page</small></p></div>
+  <div><i style="background:#FFFFFF"></i><p>#FFFFFF<small>card</small></p></div>
+  <div><i style="background:#F4F4F4"></i><p>#F4F4F4<small>band · full-bleed section</small></p></div>
+  <div><i style="background:#D9D9D9"></i><p>#D9D9D9<small>line</small></p></div>
+  <div><i style="background:#B8A689"></i><p>#B8A689<small>accent · buttons, rules, active</small></p></div>
+  <div><i style="background:#8B705B"></i><p>#8B705B<small>accent deep · hover, links</small></p></div>
+  <div><i style="background:#9B9796"></i><p>#9B9796<small>grey · captions</small></p></div>
+  <div><i style="background:#666666"></i><p>#666666<small>muted text</small></p></div>
+  <div><i style="background:#1D1D1B"></i><p>#1D1D1B<small>ink · type, phone bar</small></p></div>
+</div>
+
+<h2>2 · Type</h2>
+<p class="note">Bodoni Moda (optical size) for the sentence, the headings, the numbers and the wordmark. Archivo at width 112.5 for everything else — nav, body, labels, prices. Nothing is set in a third face. Desktop sizes shown; phone sizes in brackets.</p>
+<div class="spec"><p class="q">Hero sentence · 64 (34)</p><p class="display t-hero">A tokaji álmot töltjük pohárba az élet nagy pillanataihoz</p></div>
+<div class="spec"><p class="q">Section heading · 40 (26)</p><p class="display t-h2">Hét dűlő, harminc parcella</p></div>
+<div class="spec"><p class="q">Card title · 28 (20)</p><p class="display t-h3">Borkóstoló a föld alatt</p></div>
+<div class="spec"><p class="q">Number · 56 (30)</p><p class="display t-num">1,8 km · 3 szint · 500 év</p></div>
+<div class="spec"><p class="q">Body · Archivo 15</p><p class="t-body">Évekig tartó tudatos keresés, hagyománytisztelő, de mégis kreatív kísérletezés — Mádon, a Tokaj-Hegyalja szívében, 1,8 kilométernyi pincelabirintus mélyén. A sor hossza legfeljebb 62 karakter.</p></div>
+<div class="spec"><p class="q">Label · 12 / 0.14em</p><p class="t-label">Tokaji száraz furmint · Király-dűlő</p></div>
+<div class="spec"><p class="q">Price · Archivo 18 medium</p><p class="t-price">15 500 Ft &nbsp;·&nbsp; 27 500 Ft-tól &nbsp;·&nbsp; 133 000 Ft</p></div>
+<div class="spec"><p class="q">Wordmark · 22 / 0.18em</p><p class="wordmark">HOLDVÖLGY</p></div>
+
+<h2>3 · Spacing, grid, corners</h2>
+<p class="note">Scale 4 · 8 · 12 · 16 · 24 · 32 · 48 · 64 · 96. Desktop: 12 columns, content 1280, gutter 24, margins 80. Phone: single column, margins 16. Corners are square (2 px only to soften aliasing) — the brand's own buttons and cards are square. Tap targets 44 px everywhere.</p>
+<div class="sp"><div><i style="height:4px"></i><span>4</span></div><div><i style="height:8px"></i><span>8</span></div><div><i style="height:12px"></i><span>12</span></div><div><i style="height:16px"></i><span>16</span></div><div><i style="height:24px"></i><span>24</span></div><div><i style="height:32px"></i><span>32</span></div><div><i style="height:48px"></i><span>48</span></div><div><i style="height:64px"></i><span>64</span></div><div><i style="height:96px"></i><span>96</span></div></div>
+
+<h2>4 · Buttons and links</h2>
+<p class="note">Primary is the greige; it darkens to the deep accent on hover. Secondary is outlined ink. Tertiary is a text button. On photographs both buttons are white. Focus is always a visible 2 px ring.</p>
+<div class="row"><button class="btn">Foglalás</button><button class="btn btn-2">Borok</button><button class="btn btn-3">Teljes választék →</button><a class="tx" href="#">Szöveges link a bekezdésben</a></div>
+<p class="q" style="margin-top:18px">On a photograph</p>
+<div class="onphoto"><button class="btn">Foglalás</button><button class="btn btn-onphoto">Borok</button></div>
+
+<h2>5 · Cards</h2>
+<p class="note">White on the ground, a soft line, square corners, image on top, Bodoni title, one or two lines, a text button. Same edges and baselines across a row.</p>
+<div class="cards">
+  <article class="card"><img src="../assets/img/card-ev-pinceszete.webp" alt="Drónfelvétel a birtokról, díjátadó"><div><h3>Év pincészete 2026</h3><p>A birtok elnyerte az Év pincészete elismerést.</p><a class="btn btn-3" href="#">Tovább →</a></div></article>
+  <article class="card"><img src="../assets/img/card-pince.webp" alt="Oltár a pincében"><div><h3>Borkóstoló a föld alatt</h3><p>Térképes kincskeresés a háromszintes labirintusban.</p><a class="btn btn-3" href="#">Foglalás →</a></div></article>
+  <article class="card"><img src="../assets/img/preculture-barrel-2025.webp" alt="PreCulture 2025 hordó" style="object-fit:contain;background:var(--hv-band)"><div><h3>PreCulture 2025</h3><p>Szüret előtti előjegyzés 6 puttonyos aszúra, nyolcéves érleléssel.</p><a class="btn btn-3" href="#">Előjegyzés →</a></div></article>
+</div>
+
+<h2>6 · Bottles</h2>
+<p class="note">The estate's own transparent renders on the band colour — objects, never panels. A soft drop shadow, a 6 px lift on hover. Name in Archivo medium, line as a label, from-price beneath. This is the component the shop is built from.</p>
+<div class="band"><div class="bottles">
+  <div class="bottle"><img src="../assets/img/bottle-culture.webp" alt="Culture tokaji aszú"><b>Culture</b><span>6 puttonyos tokaji aszú</span><em class="t-price">27 500 Ft-tól</em></div>
+  <div class="bottle"><img src="../assets/img/bottle-signature-13.webp" alt="Signature 2013"><b>Signature 2013</b><span>édes birtokválogatás</span><em class="t-price">10 000 Ft</em></div>
+  <div class="bottle"><img src="../assets/img/bottle-eloquence-14.webp" alt="Eloquence 2014"><b>Eloquence 2014</b><span>édes szamorodni</span><em class="t-price">7 000 Ft</em></div>
+  <div class="bottle"><img src="../assets/img/bottle-vision-21.webp" alt="Vision 2021"><b>Vision 2021</b><span>száraz birtokválogatás</span><em class="t-price">5 500 Ft</em></div>
+  <div class="bottle"><img src="../assets/img/bottle-meditation-23.webp" alt="Meditation 2023"><b>Meditation 2023</b><span>Furmint · Király</span><em class="t-price">15 500 Ft</em></div>
+  <div class="bottle"><img src="../assets/img/bottle-hh-dry.webp" alt="Hold and Hollo Dry 2024"><b>Hold and Hollo Dry</b><span>száraz válogatás</span><em class="t-price">4 000 Ft</em></div>
+</div></div>
+
+<h2>7 · Dűlő rows</h2>
+<p class="note">The rock photograph as the thumbnail — the asset nobody else has. Name in Bodoni, varieties as a caption.</p>
+<div class="rocks">
+  <div class="rock"><img src="../assets/img/rock-holdvolgy.webp" alt="Kvarcit, Holdvölgy"><div><b>Holdvölgy</b><span>kvarcit · száraz és édes</span></div></div>
+  <div class="rock"><img src="../assets/img/rock-nyulaszo.webp" alt="Perlit, Nyulászó"><div><b>Nyulászó</b><span>perlit · Sárgamuskotály</span></div></div>
+  <div class="rock"><img src="../assets/img/rock-dorgo.webp" alt="Perlit, Dorgó-tető"><div><b>Dorgó-tető</b><span>perlit · Furmint, Zéta</span></div></div>
+  <div class="rock"><img src="../assets/img/rock-kiraly.webp" alt="Vasas riolittufa, Király"><div><b>Király</b><span>vasas riolittufa · Furmint</span></div></div>
+  <div class="rock"><img src="../assets/img/rock-becsek.webp" alt="Zeolitos riolittufa, Becsek"><div><b>Becsek</b><span>zeolitos riolittufa · Hárslevelű</span></div></div>
+</div>
+
+<h2>8 · Navigation</h2>
+<p class="note">Two systems (D5). Desktop: sticky 88 px header, wordmark, five items, HU/EN, Foglalás, cart — mega-panels on Borok and Látogatás. Phone: 60 px header with wordmark and cart only; navigation is the fixed ink-coloured bottom bar, under the thumb.</p>
+<div class="nav-d"><span class="wordmark">HOLDVÖLGY</span><ul><li><a href="#" aria-current="page">Birtok</a></li><li><a href="#">Borok</a></li><li><a href="#">Látogatás</a></li><li><a href="#">Borklub</a></li><li><a href="#">Kapcsolat</a></li></ul><span class="t-label" style="color:var(--hv-muted)">HU · EN</span><button class="btn btn-2">Foglalás</button></div>
+<p class="q" style="margin-top:18px">Phone</p>
+<div class="nav-p"><div class="top"><span class="wordmark" style="font-size:18px">HOLDVÖLGY</span><span class="t-label" style="color:var(--hv-muted)">HU · EN &nbsp; ⛁</span></div><div class="body"></div><div class="bar"><a href="#" aria-current="page">Foglalás</a><a href="#">Borok</a><a href="#">Kosár</a><a href="#">Menü</a></div></div>
+
+<h2>9 · Form field</h2>
+<div class="field"><label for="ds-date">Dátum</label><input id="ds-date" type="date"></div>
+
+<div class="approve">
+  <h3>What approval of this page means</h3>
+  <p class="note" style="margin:0">The palette, the two faces and their roles, the type scale, spacing, corners, the button set, the card, the bottle component, the dűlő row and the two navigation systems are fixed. Layouts (next gate) arrange these; pages (third gate) are built from them. Anything not on this page is not in the system yet and will be brought here first.</p>
+</div>
+<footer>Renders live from <code>holdvolgy/assets/tokens.css</code> and <code>holdvolgy/assets/img/</code> (sources in <code>assets-used.md</code>). Bodoni Moda and Archivo — Google Fonts, SIL OFL (D3).</footer>
+</div>
+</body>
+</html>
