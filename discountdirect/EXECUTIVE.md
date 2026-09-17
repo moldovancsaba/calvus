@@ -38,7 +38,7 @@ lists that each customer receives only with the products relevant to them.
 
 ## Why not just discount
 
-The strongest B2C machines run on eight levers before price, and the research page
+The strongest B2C machines run on nine levers before price, and the research page
 carries the evidence for each:
 
 - **Laziness.** The easiest action wins: defaults moved plan participation from 50 %
@@ -46,15 +46,24 @@ carries the evidence for each:
   an account. One-tap reorder beats a coupon that needs a checkout.
 - **Habit.** Around 43 % of daily actions are habitual. A shop that owns the reorder
   rhythm does not compete on price; Starbucks members visit 5.6× more often.
-- **Membership.** Prime members spend twice what non-members do; Costco renews at
-  92 %; 84 % of Tesco's UK sales are Clubcard-linked. Hungarians already carry loyalty
-  cards — 93 % are in a programme.
-- **Progress.** A loyalty card issued with two of ten stamps already filled was
-  completed by 34 % of customers against 19 % for an empty eight-stamp card.
-- **Social proof.** The first five reviews carry the largest effect; "customers who
-  own this also bought" is proof as well as recommendation.
-- **Reciprocity.** A surprise coupon produced 11 % more spend than the same coupon
-  received in advance; a sample or a gift is remembered longer than 15 % off.
+- **Loyalty programmes.** Prime members spend twice what non-members do; Costco renews
+  at 92 %; 78 % of members who reach a higher tier say it makes them spend more; eMAG
+  Genius members order up to 5× more often. 93 % of Hungarians are already in a
+  programme.
+- **Gamification.** A loyalty card issued with two of ten stamps already filled was
+  completed by 34 % of customers against 19 % for an empty eight-stamp card; Tesco's
+  personalised Clubcard Challenges reach 10 million people; McDonald's Monopoly gave
+  it its best US quarter in two years.
+- **Pack mentality.** Best-seller badges lift conversion about 25 %; referred
+  customers are worth 16 % more and stay 37 % longer; Pinduoduo built 725 million
+  users on "invite friends, everyone pays less"; live selling converts up to ten
+  times a product page.
+- **Surprise.** A surprise coupon produced 11 % more spend than the same coupon
+  received in advance; Pop Mart's blind boxes passed $5 billion in 2025; a 1 %
+  lottery discount out-sold a 1 % sure discount by 54 %.
+- **Scarcity and exclusivity.** Back-in-stock alerts convert 14–25 %, the highest of
+  any automated message; Nike's member-only drops open the app 10 million times a
+  day. Only when the limit is true — fake urgency is illegal in the EU.
 - **Choice.** Six options sold ten times as often as twenty-four. One offer, one
   button, one default.
 - **Timing.** Personalised, well-timed messages open at up to four times the rate;
@@ -92,20 +101,23 @@ connectors); build the seller–customer thread, **one-tap reorder of the custom
 saved payment**, offers with reasons, flash campaigns with enforced limits, recurring
 lists, in-app and e-mail delivery; write reasons from rules (replenishment interval,
 accessory of an owned product, upgrade after N months); ship the first non-price
-message types — the run-out reminder and the progress card with a head start. Ship
+message types — the run-out reminder, the progress card with a head start, the
+back-in-stock message and the birthday message. Ship
 with a **randomised holdout** and incremental-margin reporting from day one.
 
 **Phase 2 — Decision engine.** Replace rules with a buyer × product relevance model and
 reason codes; add uplift-based targeting so only persuadables are treated; add
 event-driven timing (order confirmed, 24–48 h, 7–14 days, predicted run-out, 60–90 days);
 add rich messaging (RCS/WhatsApp) and the buyer's preference centre; launch the
-**named membership** with non-price perks (free delivery, early access, priority
-answers), proof counts in the reason line, and send-time learned per customer.
+**named membership with a tier** and non-price perks (free delivery, early access to
+flash campaigns, priority answers), proof counts and best-seller badges in the reason
+line, a two-sided bring-a-friend card, and send-time learned per customer.
 
 **Phase 3 — Learned discounts and scale.** Discount depth as a bandit decision under a
 margin floor and budget; subscription offers for consumables; bundles from co-purchase
-patterns; samples, gifts and small probabilistic rewards as offer kinds; personalised
-challenges in the Tesco Clubcard style; multi-seller buyer wallet; printed DM with
+patterns; samples, gifts, mystery items and small probabilistic rewards as offer
+kinds; group offers in the Pinduoduo shape; personalised challenges in the Tesco
+Clubcard style; multi-seller buyer wallet; printed DM with
 coupons for high-value durables.
 
 **Compliance track, all phases.** Legitimate-interest assessment and soft opt-in for
