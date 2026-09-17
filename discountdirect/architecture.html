@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>DiscountDirect — architecture</title>
+<style>
+:root{--gds-bg-canvas:#f8fafc;--gds-bg-surface:#ffffff;--gds-bg-inverse:#111827;--gds-text-body:#111827;--gds-text-meta:#64748b;--gds-border-card:#e2e8f0;--gds-brand-accent:#3b5bdb;--gds-brand-accent-tint:#e7ecfb;--gds-radius-card:14px}
+*{box-sizing:border-box}
+body{margin:0;background:var(--gds-bg-canvas);color:var(--gds-text-body);font:15.5px/1.6 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;padding-block:0 64px;padding-inline:clamp(16px,4vw,40px)}
+.wrap{max-width:76ch;margin-inline:auto}
+.top{display:flex;flex-wrap:wrap;gap:8px 18px;align-items:center;padding:16px 0;border-bottom:1px solid var(--gds-border-card);font-size:13px;color:var(--gds-text-meta)}
+.top b{color:var(--gds-text-body)} .top a{color:var(--gds-brand-accent);text-decoration:none;min-height:44px;display:inline-flex;align-items:center} .top a.on{color:var(--gds-text-body);font-weight:600}
+h1{font-size:clamp(26px,5vw,38px);line-height:1.15;margin:32px 0 10px;letter-spacing:-.01em}
+h2{font-size:22px;margin:44px 0 10px;padding-top:18px;border-top:1px solid var(--gds-border-card)}
+h3{font-size:17px;margin:26px 0 8px}
+p{margin:0 0 12px} li{margin:4px 0} strong{font-weight:600}
+code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.86em;background:var(--gds-brand-accent-tint);padding:1px 5px;border-radius:5px}
+pre{background:var(--gds-bg-inverse);color:#f8fafc;padding:16px;border-radius:var(--gds-radius-card);overflow-x:auto;font-size:13px;line-height:1.5} pre code{background:none;color:inherit;padding:0;font-size:inherit}
+.tbl{overflow-x:auto;margin:12px 0 20px;border:1px solid var(--gds-border-card);border-radius:var(--gds-radius-card);background:var(--gds-bg-surface)}
+table{border-collapse:collapse;width:100%;font-size:13.5px;min-width:560px}
+th{text-align:left;font-weight:600;background:var(--gds-bg-canvas);padding:10px 12px;border-bottom:1px solid var(--gds-border-card);font-size:12px;letter-spacing:.04em;text-transform:uppercase;color:var(--gds-text-meta)}
+td{padding:10px 12px;border-top:1px solid var(--gds-border-card);vertical-align:top}
+a{color:var(--gds-brand-accent)}
+footer{margin-top:48px;padding-top:16px;border-top:1px solid var(--gds-border-card);font-size:12px;color:var(--gds-text-meta)}
+</style>
+</head>
+<body><div class="wrap">
+<div class="top"><b>DiscountDirect</b><a href="executive.html">Executive summary</a><a href="research.html">Research</a><a href="business-logic.html">Business logic</a><a href="ssot.html">SSOT</a><a href="architecture.html" class=on>Architecture</a><a href="technical-design.html">Technical design</a><a href="implementation-plan.html">Implementation plan</a><a href="index.html">Open the prototype →</a><a href="../index.html">Calvus Hub</a></div>
+<h1>DiscountDirect — architecture</h1>
+<p>Version 1.0 · 2026-09-17. System context, containers, components, key flows, data and
+integration architecture, security, operations, the proposed stack and the architecture
+decision records. Definitions are in <code>ssot.html</code>; details in <code>technical-design.html</code>.</p>
+<h2>1. System context</h2>
+<pre><code>                 ┌──────────────────────────┐
+   Seller staff ─┤                          ├─ Buyer (web / PWA, e-mail, letter,
+   (console)     │      DiscountDirect      │   later RCS / WhatsApp)
+                 │        platform          │
+   Platform ops ─┤                          ├─ Print partner (PDF in, posted status out)
+                 └───┬────────┬────────┬────┘
+                     │        │        │
+              Shop platform  E-mail   Messaging providers
+              (orders,       provider (RCS / WhatsApp, milestone 2)
+               products,     (send, bounce, open, click webhooks)
+               checkout,
+               stock)
+</code></pre>
+<p>External systems: the seller's <strong>shop platform</strong> (Shopify, WooCommerce, UNAS, Shoprenter
+first; connector per platform), a transactional <strong>e-mail provider</strong>, a <strong>print partner</strong>
+(D9), <strong>messaging providers</strong> later, and an <strong>identity provider</strong> for seller SSO (optional).</p>
+<p><strong>Mission.</strong> The platform is a retention system: churn and customer lifetime value are
+the outcome metrics every container serves (D12).</p>
+<h2>2. Quality attributes</h2>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>Attribute</th>
+<th>Target</th>
+<th>Why</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Tenancy isolation</td>
+<td>no cross-seller data access, enforced in the database (row-level security) and in every query</td>
+<td>multi-tenant SaaS, GDPR</td>
+</tr>
+<tr>
+<td>Auditability</td>
+<td>every offer traceable to model version, template, override version, reason source, holdout flag, consent basis</td>
+<td>D4, D10, R15, DSA</td>
+</tr>
+<tr>
+<td>Correctness of limits</td>
+<td>flash quantity limits never oversold, coupons never double-redeemed</td>
+<td>D2, D6, DSA "true scarcity"</td>
+</tr>
+<tr>
+<td>Latency</td>
+<td>accept → checkout page under 2 s p95; seller console interactions under 300 ms p95</td>
+<td>conversion at the accept moment</td>
+</tr>
+<tr>
+<td>Scale (milestone 1 sizing)</td>
+<td>1 000 sellers, 50 000 buyers per seller max, 5 000 offers/s fan-out burst</td>
+<td>flash campaigns to a whole base</td>
+</tr>
+<tr>
+<td>Availability</td>
+<td>99.9 % for buyer-facing accept and checkout hand-off</td>
+<td>revenue path</td>
+</tr>
+<tr>
+<td>Privacy</td>
+<td>data minimisation, retention per market, right to object in one tap</td>
+<td>D8, GDPR Art. 21</td>
+</tr>
+<tr>
+<td>Portability</td>
+<td>connectors and channel adapters behind interfaces; no provider lock-in in core</td>
+<td>commodity providers</td>
+</tr>
+</tbody>
+</table></div>
+<h2>3. Containers</h2>
+<pre><code>┌───────────────┐   ┌───────────────┐   ┌──────────────────┐
+│ Seller console│   │ Buyer app     │   │ Public hand-off  │
+│ (SPA)         │   │ (PWA)         │   │ &amp; coupon pages   │
+└──────┬────────┘   └──────┬────────┘   └────────┬─────────┘
+       └──────────┬────────┴─────────────────────┘
+                  ▼
+        ┌──────────────────┐        ┌──────────────────┐
+        │ API (HTTP/JSON)  │◄──────►│ Decision engine  │
+        │ auth, tenancy,   │        │ relevance, reason│
+        │ core modules     │        │ codes, uplift,   │
+        └───────┬──────────┘        │ replenishment    │
+                │ outbox            └──────────────────┘
+                ▼
+        ┌──────────────────┐        ┌──────────────────┐
+        │ Workers (queue)  │───────►│ Channel adapters │──► e-mail / print / RCS
+        │ fan-out, sched-  │        └──────────────────┘
+        │ uler, deliveries,│        ┌──────────────────┐
+        │ write-backs      │◄──────►│ Shop connectors  │◄─► shop platforms
+        └───────┬──────────┘        └──────────────────┘
+                ▼
+   ┌────────────┴───────────┐   ┌──────────┐   ┌──────────────┐
+   │ PostgreSQL (OLTP, RLS) │   │ Redis    │   │ Object store │
+   │ + append-only events   │   │ queues,  │   │ PDFs, exports│
+   └────────────────────────┘   │ counters │   └──────────────┘
+                                └──────────┘
+</code></pre>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>Container</th>
+<th>Responsibility</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Seller console</td>
+<td>inbox, thread, recommendations, offer send, flash campaign, automations, templates and overrides, settings, metrics</td>
+</tr>
+<tr>
+<td>Buyer app</td>
+<td>thread per seller or marketplace inbox (D3), accept/decline, "my usuals", preferences and consent centre, history</td>
+</tr>
+<tr>
+<td>Public pages</td>
+<td>signed hand-off redirect (D1), coupon redemption page for store staff (D6), unsubscribe / object</td>
+</tr>
+<tr>
+<td>API</td>
+<td>authentication, tenancy, the core modules of §4, outbox writer</td>
+</tr>
+<tr>
+<td>Workers</td>
+<td>campaign fan-out, scheduler runs, delivery sends and status ingestion, order write-back, retention jobs, metrics rollups</td>
+</tr>
+<tr>
+<td>Decision engine</td>
+<td>relevance scores and reason codes, replenishment prediction, uplift targeting (milestone 2), discount depth (milestone 3); versioned models; batch and on-demand</td>
+</tr>
+<tr>
+<td>Channel adapters</td>
+<td>one per channel behind one interface: e-mail provider, print partner, RCS/WhatsApp</td>
+</tr>
+<tr>
+<td>Shop connectors</td>
+<td>one per platform behind one interface: products, orders, stock, checkout link or cart creation, order webhooks</td>
+</tr>
+<tr>
+<td>PostgreSQL</td>
+<td>system of record for platform-owned entities; append-only <code>offer_events</code>; RLS by <code>seller_id</code></td>
+</tr>
+<tr>
+<td>Redis</td>
+<td>queues (fan-out, deliveries), atomic counters for flash limits and frequency caps</td>
+</tr>
+<tr>
+<td>Object store</td>
+<td>letter PDFs, exports</td>
+</tr>
+</tbody>
+</table></div>
+<h2>4. Core modules (inside the API)</h2>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>Module</th>
+<th>Owns</th>
+<th>Depends on</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>identity</code></td>
+<td>sellers, staff, buyers, sessions, roles</td>
+<td>—</td>
+</tr>
+<tr>
+<td><code>relationships</code></td>
+<td>pair, segment, history view, thread</td>
+<td>connectors</td>
+</tr>
+<tr>
+<td><code>offers</code></td>
+<td>offer lifecycle, reasons, price rule, accept/decline</td>
+<td><code>pricing</code>, <code>consent</code>, <code>templates</code></td>
+</tr>
+<tr>
+<td><code>campaigns</code></td>
+<td>flash campaign, fan-out request, limits, sold-out, compensation</td>
+<td><code>offers</code>, <code>decision</code></td>
+</tr>
+<tr>
+<td><code>automations</code></td>
+<td>recurring lists, runs, per-buyer split</td>
+<td><code>offers</code>, <code>decision</code>, <code>scheduler</code></td>
+</tr>
+<tr>
+<td><code>templates</code></td>
+<td>predefined rule sets, advanced-mode values, resolution with legal floors (R1)</td>
+<td>—</td>
+</tr>
+<tr>
+<td><code>transparency</code></td>
+<td>rules block for every rendering (R21)</td>
+<td><code>offers</code>, <code>campaigns</code></td>
+</tr>
+<tr>
+<td><code>pricing</code></td>
+<td>discount modes and guardrails (R4), reference price (R18)</td>
+<td><code>templates</code></td>
+</tr>
+<tr>
+<td><code>consent</code></td>
+<td>legal basis per market (R15), consents, frequency caps (R16), objections</td>
+<td><code>templates</code></td>
+</tr>
+<tr>
+<td><code>delivery</code></td>
+<td>channel selection, deliveries, status ingestion, coupons (R13), print jobs (R14)</td>
+<td>adapters</td>
+</tr>
+<tr>
+<td><code>handoff</code></td>
+<td>signed checkout links, price lock, order write-back (R7)</td>
+<td>connectors</td>
+</tr>
+<tr>
+<td><code>decision</code> (client)</td>
+<td>calls the engine; caches relevance and recommendations</td>
+<td>engine</td>
+</tr>
+<tr>
+<td><code>measurement</code></td>
+<td>holdout (R19), events, metric rollups (§7 of SSOT)</td>
+<td>—</td>
+</tr>
+</tbody>
+</table></div>
+<h2>5. Key flows</h2>
+<p><strong>F1 Personalised offer.</strong> Seller opens a thread → console shows recommendations (engine
+output cached per relationship) → seller picks one, optionally edits the reason (D4),
+picks a channel → API validates pricing (R4), consent (R15) and cap (R16) → creates
+<code>Offer(pending)</code>, marks the recommendation <code>sent</code> (R2), writes an outbox event → worker
+sends through the adapter → <code>Delivery</code> status flows back through provider webhooks →
+the thread shows the offer and its delivery states.</p>
+<p><strong>F2 Flash campaign.</strong> Seller configures product, pct, limits (total and per buyer),
+channels → API previews targets from <code>Relevance</code> minus holdout (R19) and blocked buyers
+(R15/R16) → on send, creates <code>Campaign</code> and enqueues fan-out → worker creates one
+<code>Offer(flash, pending)</code> per target in batches, each with <code>expires_at</code> (R8), and sends →
+accept requests hit an atomic counter check (R10) → at the last unit the campaign is
+<code>sold_out</code>, remaining offers are marked, and <code>sold_out_notice</code> messages go out with the
+compensation (R11, D10).</p>
+<p><strong>F3 Accept → hand-off → order.</strong> Buyer taps accept → API re-checks status, expiry and
+limits atomically → offer <code>accepted</code>, a signed checkout URL is produced (R7) → buyer is
+redirected to the shop's checkout with the locked price (connector: discount code or
+pre-built cart) → shop order webhook arrives → connector matches <code>order_ref</code> → the offer
+records the order; the thread shows "order confirmed" → if no write-back before the lock
+expires, the offer stays <code>accepted</code> with a "not completed" flag for the seller.</p>
+<p><strong>F4 Recurring list run.</strong> Scheduler wakes the automation at <code>next_run_at</code> → worker
+freezes content, computes the per-buyer split (R17) and discount (R12), applies consent
+and caps, holdout → creates <code>Offer(list_item)</code> per item per buyer → sends the newsletter
+per buyer → advances <code>next_run_at</code>.</p>
+<p><strong>F5 Postal letter.</strong> A <code>mailing</code> delivery renders the letter PDF (template, locale,
+coupon R13) → <code>print_mode = platform_service</code>: a print job is sent to the partner and its
+status is ingested (<code>printed</code>, <code>posted</code>); <code>seller</code>: the PDF is downloadable in the console
+and the seller marks it posted (R14).</p>
+<p><strong>F6 Consent and objection.</strong> Buyer opens the preference centre (per seller or inbox per
+<code>consent_scope</code>, D11) → changes channels, frequency, muted categories, or objects → the
+change is effective for the next send; objection stops all marketing under legitimate
+interest for that scope (R15).</p>
+<p><strong>F7 Measurement.</strong> Every offer carries <code>holdout</code>, <code>model_version</code>, <code>template_id</code>,
+<code>override_version</code>, <code>reason_source</code>, <code>channel</code>, <code>trigger</code> → nightly rollups compute the
+SSOT §7 metrics → console dashboards read the rollups.</p>
+<h2>6. Data architecture</h2>
+<ul>
+<li><strong>System of record</strong> is PostgreSQL. Shop-owned entities (<code>Product</code>, <code>Order</code>) are
+  mirrored, read-only, with <code>external_id</code> and a sync watermark per seller.</li>
+<li><strong>Append-only</strong> <code>offer_events</code> for the audit trail; entity rows hold the current
+  state, events hold the history. Never update an event.</li>
+<li><strong>Outbox pattern</strong>: state changes and their side effects are committed together; a
+  worker relays outbox rows to queues. Consumers are idempotent by <code>event_id</code>.</li>
+<li><strong>Counters</strong> for flash limits and frequency caps live in Redis for speed, with the
+  database as the source of truth on reconciliation (§4 A5 of the technical design).</li>
+<li><strong>Retention</strong>: per market (<code>Market.retention_days</code>); a nightly job anonymises
+  relationships past retention with no consent and no order in the window.</li>
+<li><strong>Reporting</strong>: rollup tables in PostgreSQL for milestone 1; a warehouse export later.</li>
+</ul>
+<h2>7. Integration architecture</h2>
+<ul>
+<li><strong>Shop connector interface</strong>: <code>listProducts</code>, <code>listOrders(since)</code>, <code>getStock</code>,
+  <code>createCheckoutLink(offer)</code> or <code>createCart(offer)</code>, <code>registerWebhooks</code>, <code>verifyWebhook</code>.
+  Implementations per platform; one worker pulls on a schedule and consumes webhooks.</li>
+<li><strong>Channel adapter interface</strong>: <code>send(delivery)</code>, <code>parseStatusWebhook(request)</code>,
+  <code>capabilities()</code> (rich cards, buttons). E-mail first; print partner implements
+  <code>send</code> as job creation; RCS/WhatsApp in milestone 2.</li>
+<li><strong>Idempotency</strong>: every outbound call carries the <code>delivery_id</code>; every inbound webhook
+  is de-duplicated by provider event id.</li>
+<li><strong>Failure handling</strong>: retries with backoff on transient errors; poison messages to a
+  dead-letter queue with an ops alert; a delivery that fails is visible in the thread.</li>
+</ul>
+<h2>8. Security and privacy</h2>
+<ul>
+<li><strong>Authentication</strong>: seller staff by e-mail + one-time code or SSO; buyers by magic
+  link or one-time code; short-lived access tokens, rotating refresh tokens.</li>
+<li><strong>Authorisation</strong>: roles (<code>seller_admin</code>, <code>seller_agent</code>, <code>buyer</code>, <code>platform_ops</code>);
+  every request carries a tenant context; PostgreSQL row-level security policies on
+  <code>seller_id</code>; buyers see only their own relationships.</li>
+<li><strong>Signed links</strong>: hand-off URLs and coupon codes are HMAC-signed with an expiry; the
+  price is in the signed payload, never trusted from the client.</li>
+<li><strong>PII minimisation</strong>: postal address only when <code>mailing</code> is consented; phone only
+  when a messaging channel is consented; birthdays optional.</li>
+<li><strong>Legal</strong>: R15 and R18 enforced in code, not policy; DSA "true scarcity": limits are
+  enforced before the countdown is shown; the sold-out state is real.</li>
+<li><strong>Secrets</strong>: provider keys per seller encrypted at rest with a per-tenant key.</li>
+<li><strong>Logging</strong>: no PII in logs; events reference ids.</li>
+</ul>
+<h2>9. Deployment and operations</h2>
+<ul>
+<li>Environments: <code>dev</code>, <code>staging</code> (with sandbox shop and e-mail provider), <code>prod</code>.</li>
+<li>Continuous integration: lint, type-check, unit and contract tests on every change;
+  database migrations reviewed and applied forward-only.</li>
+<li>Observability: structured logs, metrics (queue depth, fan-out throughput, delivery
+  failure rate, accept latency), traces on the accept → hand-off path; alerts on
+  dead-letter growth and write-back lag.</li>
+<li>Service objectives: accept path availability 99.9 %; fan-out of 50 000 offers under
+  10 minutes; write-back lag under 5 minutes p95.</li>
+</ul>
+<h2>10. Proposed stack (assumption A1, open to objection)</h2>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>Layer</th>
+<th>Choice</th>
+<th>Rationale</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Language</td>
+<td>TypeScript end to end</td>
+<td>one language for console, buyer app, API, workers; strong typing on the domain model</td>
+</tr>
+<tr>
+<td>API</td>
+<td>Node 22 + Fastify</td>
+<td>fast, plain HTTP/JSON, schema validation built in</td>
+</tr>
+<tr>
+<td>Workers</td>
+<td>BullMQ on Redis</td>
+<td>queues, delayed jobs, retries, rate limiting in one library</td>
+</tr>
+<tr>
+<td>Database</td>
+<td>PostgreSQL 16</td>
+<td>RLS for tenancy, JSONB for template values, reliable counters</td>
+</tr>
+<tr>
+<td>Front ends</td>
+<td>React + Vite (console), React PWA (buyer)</td>
+<td>shares the design tokens already named after GDS 6.5.0</td>
+</tr>
+<tr>
+<td>Decision engine</td>
+<td>Python service (FastAPI) with scikit-learn/causalml for uplift; rules in milestone 1</td>
+<td>data-science tooling where it lives; versioned models</td>
+</tr>
+<tr>
+<td>E-mail</td>
+<td>Postmark or Amazon SES</td>
+<td>transactional deliverability, webhooks for status</td>
+</tr>
+<tr>
+<td>Object store</td>
+<td>S3-compatible</td>
+<td>PDFs, exports</td>
+</tr>
+<tr>
+<td>Hosting</td>
+<td>container platform (Kubernetes or a managed equivalent) in an EU region</td>
+<td>data residency</td>
+</tr>
+</tbody>
+</table></div>
+<p>Alternatives considered: a single Next.js app (simpler, weaker worker story); Go for
+the API (faster, second language); a managed BaaS (fast start, weak RLS and audit).</p>
+<h2>11. Architecture decision records</h2>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>ADR</th>
+<th>Decision</th>
+<th>Status</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ADR-1</td>
+<td>Seller is the tenant; buyers are global identities linked to many sellers</td>
+<td>accepted (D3)</td>
+</tr>
+<tr>
+<td>ADR-2</td>
+<td>Offer is the single unit of delivery; campaigns and lists fan out into offers</td>
+<td>accepted</td>
+</tr>
+<tr>
+<td>ADR-3</td>
+<td>Append-only offer events plus current-state rows; outbox relay</td>
+<td>accepted</td>
+</tr>
+<tr>
+<td>ADR-4</td>
+<td>Checkout stays in the shop; the platform hands off with a signed link</td>
+<td>accepted (D1)</td>
+</tr>
+<tr>
+<td>ADR-5</td>
+<td>Flash limits enforced with atomic counters, database as reconciliation truth</td>
+<td>accepted (D2)</td>
+</tr>
+<tr>
+<td>ADR-6</td>
+<td>Predefined rule sets with a per-area advanced mode and versioning; legal templates carry a floor that advanced mode cannot go below</td>
+<td>accepted (D10, D13)</td>
+</tr>
+<tr>
+<td>ADR-10</td>
+<td>One transparency renderer composes the rules block for every channel</td>
+<td>accepted (D14)</td>
+</tr>
+<tr>
+<td>ADR-7</td>
+<td>Consent scope is a seller setting (per seller or inbox)</td>
+<td>accepted (D11)</td>
+</tr>
+<tr>
+<td>ADR-8</td>
+<td>Rules-based decision engine in milestone 1; model-based from milestone 2 behind the same interface</td>
+<td>accepted</td>
+</tr>
+<tr>
+<td>ADR-9</td>
+<td>Stack per §10</td>
+<td>proposed (A1)</td>
+</tr>
+</tbody>
+</table></div>
+<footer>Source: <code>discountdirect/ARCHITECTURE.md</code>, rendered by <code>build-docs.py</code>. Token names follow GDS 6.5.0 roles (<code>GDS-TOKEN-MAP.md</code>).</footer>
+</div></body></html>

@@ -1,0 +1,827 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>DiscountDirect — single source of truth (SSOT)</title>
+<style>
+:root{--gds-bg-canvas:#f8fafc;--gds-bg-surface:#ffffff;--gds-bg-inverse:#111827;--gds-text-body:#111827;--gds-text-meta:#64748b;--gds-border-card:#e2e8f0;--gds-brand-accent:#3b5bdb;--gds-brand-accent-tint:#e7ecfb;--gds-radius-card:14px}
+*{box-sizing:border-box}
+body{margin:0;background:var(--gds-bg-canvas);color:var(--gds-text-body);font:15.5px/1.6 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;padding-block:0 64px;padding-inline:clamp(16px,4vw,40px)}
+.wrap{max-width:76ch;margin-inline:auto}
+.top{display:flex;flex-wrap:wrap;gap:8px 18px;align-items:center;padding:16px 0;border-bottom:1px solid var(--gds-border-card);font-size:13px;color:var(--gds-text-meta)}
+.top b{color:var(--gds-text-body)} .top a{color:var(--gds-brand-accent);text-decoration:none;min-height:44px;display:inline-flex;align-items:center} .top a.on{color:var(--gds-text-body);font-weight:600}
+h1{font-size:clamp(26px,5vw,38px);line-height:1.15;margin:32px 0 10px;letter-spacing:-.01em}
+h2{font-size:22px;margin:44px 0 10px;padding-top:18px;border-top:1px solid var(--gds-border-card)}
+h3{font-size:17px;margin:26px 0 8px}
+p{margin:0 0 12px} li{margin:4px 0} strong{font-weight:600}
+code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.86em;background:var(--gds-brand-accent-tint);padding:1px 5px;border-radius:5px}
+pre{background:var(--gds-bg-inverse);color:#f8fafc;padding:16px;border-radius:var(--gds-radius-card);overflow-x:auto;font-size:13px;line-height:1.5} pre code{background:none;color:inherit;padding:0;font-size:inherit}
+.tbl{overflow-x:auto;margin:12px 0 20px;border:1px solid var(--gds-border-card);border-radius:var(--gds-radius-card);background:var(--gds-bg-surface)}
+table{border-collapse:collapse;width:100%;font-size:13.5px;min-width:560px}
+th{text-align:left;font-weight:600;background:var(--gds-bg-canvas);padding:10px 12px;border-bottom:1px solid var(--gds-border-card);font-size:12px;letter-spacing:.04em;text-transform:uppercase;color:var(--gds-text-meta)}
+td{padding:10px 12px;border-top:1px solid var(--gds-border-card);vertical-align:top}
+a{color:var(--gds-brand-accent)}
+footer{margin-top:48px;padding-top:16px;border-top:1px solid var(--gds-border-card);font-size:12px;color:var(--gds-text-meta)}
+</style>
+</head>
+<body><div class="wrap">
+<div class="top"><b>DiscountDirect</b><a href="executive.html">Executive summary</a><a href="research.html">Research</a><a href="business-logic.html">Business logic</a><a href="ssot.html" class=on>SSOT</a><a href="architecture.html">Architecture</a><a href="technical-design.html">Technical design</a><a href="implementation-plan.html">Implementation plan</a><a href="index.html">Open the prototype →</a><a href="../index.html">Calvus Hub</a></div>
+<h1>DiscountDirect — single source of truth (SSOT)</h1>
+<p>Version 1.0 · 2026-09-17. This document is the canonical definition of every term,
+entity, enumeration, setting, rule, decision and metric in DiscountDirect. When two
+documents disagree, this one wins; a change to a definition lands here first, with a
+version bump, and the other documents follow.</p>
+<p><strong>Precedence:</strong> SSOT → <code>business-logic.html</code> (rules as implemented and decided) →
+<code>architecture.html</code> → <code>technical-design.html</code> → <code>implementation-plan.html</code> →
+<code>executive.html</code> / <code>research.html</code> (context). The prototype at <code>index.html</code> is an
+illustration of the rules, never their definition.</p>
+<h2>1. Glossary</h2>
+<p><strong>Mission (product owner, D12).</strong> DiscountDirect is a <strong>retention system</strong>: its purpose
+is to avoid churn and raise customer lifetime value for the seller, and to make offers
+worth receiving for the buyer. Discounts, campaigns, journeys and every other mechanism
+serve that purpose.</p>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>Term</th>
+<th>Definition</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Predefined rule set</strong></td>
+<td>The platform's built-in business logic for an area (offers, campaigns, compensation, incentives, timing, consent). The default operating mode.</td>
+</tr>
+<tr>
+<td><strong>Advanced mode</strong></td>
+<td>The seller's own business decisions replacing or extending a predefined rule set — percentages, vouchers, freebies, compensation, timing. Switched on per area; the seller owns the outcome. Never lowers a legal or consent floor (D13).</td>
+</tr>
+<tr>
+<td><strong>Transparency rule</strong></td>
+<td>Every communication states every rule that applies to it: limits, first-come-first-served, expiry, compensation if available, reference price. No hidden information (D14).</td>
+</tr>
+<tr>
+<td><strong>Seller</strong></td>
+<td>A web shop that uses the platform; the tenant. Owns products, orders, settings, templates overrides.</td>
+</tr>
+<tr>
+<td><strong>Buyer</strong></td>
+<td>A person who has bought from at least one seller and has an identity on the platform. One buyer, many sellers.</td>
+</tr>
+<tr>
+<td><strong>Relationship</strong></td>
+<td>The seller–buyer pair: history, segment, consents, thread. The unit of the system.</td>
+</tr>
+<tr>
+<td><strong>Thread</strong></td>
+<td>The single timeline of every touch between a seller and a buyer on every channel: messages, offers, deliveries, events.</td>
+</tr>
+<tr>
+<td><strong>Offer</strong></td>
+<td>A proposal from a seller to one buyer for one product with a price, a reason, one or more channels, and a lifecycle. Every campaign and list fans out into offers.</td>
+</tr>
+<tr>
+<td><strong>Reason</strong></td>
+<td>The human-readable justification attached to every offer. Written by the engine (<code>reason_engine</code>), optionally edited by the seller (<code>reason_seller</code>). The buyer sees the seller's edit when present.</td>
+</tr>
+<tr>
+<td><strong>Recommendation</strong></td>
+<td>An engine-scored product for one relationship, not yet sent. Sending converts it into an offer and removes it.</td>
+</tr>
+<tr>
+<td><strong>Relevance</strong></td>
+<td>The engine's per-product set of buyers for whom the product is relevant, with a reason each. Used by campaigns and lists.</td>
+</tr>
+<tr>
+<td><strong>Campaign</strong></td>
+<td>A one-product flash offer sent to every relevant buyer, with time and quantity limits (total and per buyer).</td>
+</tr>
+<tr>
+<td><strong>Automation</strong> (recurring list)</td>
+<td>A scheduled per-buyer offer list: many products, a frequency, channels; each buyer receives only the products relevant to them.</td>
+</tr>
+<tr>
+<td><strong>Template</strong></td>
+<td>A platform-provided predefined rule set for an area of business logic or a user journey, with a legal floor where applicable. A seller runs it as predefined or in advanced mode (D13).</td>
+</tr>
+<tr>
+<td><strong>Override</strong></td>
+<td>A seller's modification or replacement of a template, versioned.</td>
+</tr>
+<tr>
+<td><strong>Journey</strong></td>
+<td>A recommended sequence of messages over time (e.g. order confirmed → t+0 complementary → 24–48 h upgrade → run-out reminder). A template kind.</td>
+</tr>
+<tr>
+<td><strong>Hand-off</strong></td>
+<td>The act of taking an accepted offer to the seller's own checkout with the price locked (D1).</td>
+</tr>
+<tr>
+<td><strong>Delivery</strong></td>
+<td>One send of one message or offer on one channel, with a status.</td>
+</tr>
+<tr>
+<td><strong>Coupon</strong></td>
+<td>A single-use code mapped one-to-one to an offer; redeeming it on any channel closes the offer everywhere (D6).</td>
+</tr>
+<tr>
+<td><strong>Market</strong></td>
+<td>A country-level configuration: legal basis, retention, currency, locale (D8).</td>
+</tr>
+<tr>
+<td><strong>Consent scope</strong></td>
+<td>Whether a buyer's consent and frequency cap are counted per seller or across the whole inbox in marketplace mode (D11).</td>
+</tr>
+<tr>
+<td><strong>Holdout</strong></td>
+<td>A randomly assigned share of a campaign's or automation's audience that receives nothing, used to measure incremental effect.</td>
+</tr>
+<tr>
+<td><strong>Frequency cap</strong></td>
+<td>The maximum number of marketing messages a buyer receives per channel per window.</td>
+</tr>
+<tr>
+<td><strong>Segment</strong></td>
+<td>A coarse class of relationship: new, returning, loyal (derived from order count and tenure).</td>
+</tr>
+<tr>
+<td><strong>Print job</strong></td>
+<td>The generation and optional printing and posting of a postal letter for an offer (D9).</td>
+</tr>
+<tr>
+<td><strong>Compensation</strong></td>
+<td>A goodwill gesture attached to a sold-out notice: preset from a menu or freely chosen (D10).</td>
+</tr>
+</tbody>
+</table></div>
+<h2>2. Enumerations</h2>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>Enum</th>
+<th>Values</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>OfferKind</code></td>
+<td><code>standard</code>, <code>flash</code>, <code>list_item</code>, <code>reorder</code>, <code>reminder</code>, <code>progress</code>, <code>surprise</code>, <code>back_in_stock</code>, <code>price_drop</code>, <code>birthday</code>, <code>sold_out_notice</code></td>
+<td>The first three exist in the prototype; the rest are decided message types from the research.</td>
+</tr>
+<tr>
+<td><code>OfferStatus</code></td>
+<td><code>draft</code>, <code>pending</code>, <code>accepted</code>, <code>declined</code>, <code>expired</code>, <code>sold_out</code>, <code>redeemed</code>, <code>withdrawn</code></td>
+<td><code>accepted</code>, <code>declined</code>, <code>expired</code>, <code>sold_out</code>, <code>redeemed</code>, <code>withdrawn</code> are terminal.</td>
+</tr>
+<tr>
+<td><code>Channel</code></td>
+<td><code>chat</code>, <code>email</code>, <code>mailing</code>, <code>newsletter</code>, <code>rcs</code>, <code>whatsapp</code></td>
+<td><code>rcs</code>, <code>whatsapp</code> are milestone-2 channels.</td>
+</tr>
+<tr>
+<td><code>Frequency</code></td>
+<td><code>weekly</code>, <code>biweekly</code>, <code>monthly</code>, <code>event</code></td>
+<td><code>event</code> = trigger-driven journey step.</td>
+</tr>
+<tr>
+<td><code>DiscountMode</code></td>
+<td><code>steps</code>, <code>free</code></td>
+<td>D5. Seller setting.</td>
+</tr>
+<tr>
+<td><code>InboxMode</code></td>
+<td><code>marketplace</code>, <code>per_seller</code></td>
+<td>D3. Seller setting.</td>
+</tr>
+<tr>
+<td><code>ConsentScope</code></td>
+<td><code>per_seller</code>, <code>inbox</code></td>
+<td>D11. Seller setting, applies in marketplace mode.</td>
+</tr>
+<tr>
+<td><code>PrintMode</code></td>
+<td><code>platform_service</code>, <code>seller</code></td>
+<td>D9. Seller setting.</td>
+</tr>
+<tr>
+<td><code>CompensationMode</code></td>
+<td><code>preset</code>, <code>free</code></td>
+<td>D10. Seller setting.</td>
+</tr>
+<tr>
+<td><code>CompensationKind</code></td>
+<td><code>voucher</code>, <code>free_delivery</code>, <code>priority_next_campaign</code>, <code>custom</code></td>
+<td>D10.</td>
+</tr>
+<tr>
+<td><code>LegalBasis</code></td>
+<td><code>legitimate_interest</code>, <code>consent</code></td>
+<td>D8. Per market and channel.</td>
+</tr>
+<tr>
+<td><code>TemplateKind</code></td>
+<td><code>offer</code>, <code>campaign</code>, <code>list</code>, <code>journey</code>, <code>sold_out</code>, <code>compensation</code>, <code>timing</code>, <code>consent</code>, <code>discount</code></td>
+<td>D10.</td>
+</tr>
+<tr>
+<td><code>OperatingMode</code></td>
+<td><code>predefined</code>, <code>advanced</code></td>
+<td>D10, D13. <code>predefined</code> follows the platform rule set; <code>advanced</code> applies the seller's own values, above the legal floor.</td>
+</tr>
+<tr>
+<td><code>DeliveryStatus</code></td>
+<td><code>queued</code>, <code>sent</code>, <code>delivered</code>, <code>opened</code>, <code>clicked</code>, <code>failed</code>, <code>bounced</code>, <code>printed</code>, <code>posted</code></td>
+<td>The last two are for <code>mailing</code>.</td>
+</tr>
+<tr>
+<td><code>Segment</code></td>
+<td><code>new</code>, <code>returning</code>, <code>loyal</code></td>
+<td>new: 1 order; returning: 2–4; loyal: ≥5 or tenure ≥ 24 months with ≥3 orders.</td>
+</tr>
+<tr>
+<td><code>ReasonSource</code></td>
+<td><code>engine</code>, <code>seller</code></td>
+<td>D4.</td>
+</tr>
+<tr>
+<td><code>Role</code></td>
+<td><code>seller_admin</code>, <code>seller_agent</code>, <code>buyer</code>, <code>platform_ops</code></td>
+<td></td>
+</tr>
+</tbody>
+</table></div>
+<h2>3. Canonical entities and ownership</h2>
+<p>"Owner" is the system of record. The shop connector mirrors the seller's shop data; the
+platform never edits it.</p>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>Entity</th>
+<th>Key fields</th>
+<th>Owner</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>Seller</code></td>
+<td>id, name, tagline, market_code, settings (§4)</td>
+<td>Platform</td>
+</tr>
+<tr>
+<td><code>Buyer</code></td>
+<td>id, email, phone?, postal_address?, locale, birthday?</td>
+<td>Platform (identity), buyer (profile edits)</td>
+</tr>
+<tr>
+<td><code>Relationship</code></td>
+<td>seller_id, buyer_id, segment, order_count, first_order_at, last_order_at, consents[], frequency_pref, holdout_bucket</td>
+<td>Platform (derived from orders + buyer choices)</td>
+</tr>
+<tr>
+<td><code>Product</code></td>
+<td>id, seller_id, external_id, name, price, currency, category, consumable: bool, replenish_days?, stock?</td>
+<td>Shop (via connector)</td>
+</tr>
+<tr>
+<td><code>Order</code></td>
+<td>id, relationship_id, external_id, lines[{product_id, qty, price}], ordered_at, source: shop|handoff</td>
+<td>Shop (via connector)</td>
+</tr>
+<tr>
+<td><code>Relevance</code></td>
+<td>product_id, buyer_id, score, reason_code, reason_engine, computed_at, model_version</td>
+<td>Decision engine</td>
+</tr>
+<tr>
+<td><code>Recommendation</code></td>
+<td>id, relationship_id, product_id, pct_suggested, reason_code, reason_engine, state: available|sent</td>
+<td>Decision engine (state by platform)</td>
+</tr>
+<tr>
+<td><code>Offer</code></td>
+<td>id, relationship_id, product_id, kind, orig, pct, price, reason_engine, reason_seller?, reason_source, channels[], status, limit_hours?, limit_qty_per_buyer?, expires_at?, sent_at, responded_at?, campaign_id?, automation_run_id?, template_id?, override_version?, holdout: bool, checkout_url?, order_ref?</td>
+<td>Platform</td>
+</tr>
+<tr>
+<td><code>OfferEvent</code></td>
+<td>id, offer_id, type, at, actor, payload</td>
+<td>Platform (append-only)</td>
+</tr>
+<tr>
+<td><code>Campaign</code></td>
+<td>id, seller_id, product_id, pct, limit_hours, limit_qty_total, limit_qty_per_buyer, channels[], sent_at, sold_out_at?, compensation?</td>
+<td>Platform</td>
+</tr>
+<tr>
+<td><code>Automation</code></td>
+<td>id, seller_id, title, frequency, channels[], product_ids[], next_run_at, state, discount_rule_override?</td>
+<td>Platform</td>
+</tr>
+<tr>
+<td><code>AutomationRun</code></td>
+<td>id, automation_id, ran_at, content_freeze, per_buyer_counts</td>
+<td>Platform</td>
+</tr>
+<tr>
+<td><code>Template</code></td>
+<td>id, kind, version, defaults, legal: bool, floor (the minimum a seller in advanced mode must keep)</td>
+<td>Platform</td>
+</tr>
+<tr>
+<td><code>SellerOverride</code></td>
+<td>seller_id, template_id, mode: OperatingMode, values, version, changed_by, changed_at</td>
+<td>Seller</td>
+</tr>
+<tr>
+<td><code>Delivery</code></td>
+<td>id, offer_id|message_id, channel, status, provider_ref?, print_job_id?, at</td>
+<td>Platform</td>
+</tr>
+<tr>
+<td><code>Coupon</code></td>
+<td>code, offer_id, single_use: true, redeemed_at?, redeemed_channel?</td>
+<td>Platform</td>
+</tr>
+<tr>
+<td><code>Consent</code></td>
+<td>buyer_id, seller_id?, scope, channel, basis, granted_at, withdrawn_at?, source</td>
+<td>Platform (buyer's choice)</td>
+</tr>
+<tr>
+<td><code>Market</code></td>
+<td>code, legal_basis_by_channel, retention_days, soft_opt_in: bool, currency, locale, reference_price_days: 30</td>
+<td>Platform</td>
+</tr>
+<tr>
+<td><code>PrintJob</code></td>
+<td>id, offer_id, mode, pdf_ref, status, partner_ref?, posted_at?</td>
+<td>Platform / print partner</td>
+</tr>
+<tr>
+<td><code>Message</code></td>
+<td>id, relationship_id, from_role, kind: text|event|offer_ref, body, channel?, at</td>
+<td>Platform</td>
+</tr>
+</tbody>
+</table></div>
+<h2>4. Seller settings registry</h2>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>Key</th>
+<th>Type / values</th>
+<th>Default</th>
+<th>Decision</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>inbox_mode</code></td>
+<td><code>InboxMode</code></td>
+<td><code>per_seller</code></td>
+<td>D3</td>
+</tr>
+<tr>
+<td><code>discount_mode</code></td>
+<td><code>DiscountMode</code></td>
+<td><code>steps</code></td>
+<td>D5</td>
+</tr>
+<tr>
+<td><code>discount_steps</code></td>
+<td>int[]</td>
+<td><code>[10,15,20,25]</code></td>
+<td>D5</td>
+</tr>
+<tr>
+<td><code>discount_guardrails</code></td>
+<td>{floor_pct, max_pct, margin_floor_pct, per_segment_max{}}</td>
+<td>{0, 30, 10, {}}</td>
+<td>D5</td>
+</tr>
+<tr>
+<td><code>newsletter_discount_rule</code></td>
+<td>{mode: recommendation_pct|fixed, fixed_pct}</td>
+<td>recommendation_pct, 10</td>
+<td>D7</td>
+</tr>
+<tr>
+<td><code>print_mode</code></td>
+<td><code>PrintMode</code></td>
+<td><code>seller</code></td>
+<td>D9</td>
+</tr>
+<tr>
+<td><code>consent_scope</code></td>
+<td><code>ConsentScope</code></td>
+<td><code>per_seller</code></td>
+<td>D11</td>
+</tr>
+<tr>
+<td><code>compensation_mode</code></td>
+<td><code>CompensationMode</code></td>
+<td><code>preset</code></td>
+<td>D10</td>
+</tr>
+<tr>
+<td><code>compensation_presets</code></td>
+<td>CompensationKind[]</td>
+<td><code>[voucher, free_delivery, priority_next_campaign]</code></td>
+<td>D10</td>
+</tr>
+<tr>
+<td><code>frequency_cap</code></td>
+<td>{email_per_30d, chat_per_7d, mailing_per_90d, rcs_per_7d}</td>
+<td>{4, 3, 1, 1}</td>
+<td>research §6</td>
+</tr>
+<tr>
+<td><code>holdout_pct</code></td>
+<td>int 0–20</td>
+<td>10</td>
+<td>research §4</td>
+</tr>
+<tr>
+<td><code>flash_defaults</code></td>
+<td>{pct, limit_hours, limit_qty_total, limit_qty_per_buyer, channels[]}</td>
+<td>{15, 24, 20, 1, [chat,email]}</td>
+<td>prototype + D2</td>
+</tr>
+<tr>
+<td><code>list_defaults</code></td>
+<td>{frequency, channels[]}</td>
+<td>{biweekly, [email]}</td>
+<td>prototype</td>
+</tr>
+<tr>
+<td><code>reason_editable</code></td>
+<td>bool</td>
+<td>true</td>
+<td>D4</td>
+</tr>
+<tr>
+<td><code>advanced_mode</code></td>
+<td>{offers, campaigns, lists, compensation, incentives, timing, consent: bool}</td>
+<td>all false</td>
+<td>D13; per area; <code>consent</code> may only tighten</td>
+</tr>
+<tr>
+<td><code>checkout_handoff</code></td>
+<td>{mode: signed_link|cart_token, price_lock_minutes}</td>
+<td>{signed_link, 60}</td>
+<td>D1</td>
+</tr>
+</tbody>
+</table></div>
+<p>Buyer-level preferences: <code>frequency_pref</code> (per seller or inbox per <code>consent_scope</code>),
+<code>channels_allowed[]</code>, <code>muted_categories[]</code>, <code>locale</code>.</p>
+<h2>5. Decision register</h2>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>ID</th>
+<th>Decision (2026-09-17)</th>
+<th>Where applied</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>D1</td>
+<td>Accept hands off to the shop's checkout with the price locked</td>
+<td>rules R7, TD §4 A6</td>
+</tr>
+<tr>
+<td>D2</td>
+<td>Flash quantity limited both per campaign and per buyer; at sold-out inform buyers who received it, optional compensation</td>
+<td>R9–R11</td>
+</tr>
+<tr>
+<td>D3</td>
+<td>Marketplace inbox or per-seller app, seller setting</td>
+<td><code>inbox_mode</code></td>
+</tr>
+<tr>
+<td>D4</td>
+<td>Reason written by the engine, editable by the seller, both kept</td>
+<td>R3</td>
+</tr>
+<tr>
+<td>D5</td>
+<td>Discount authority: fixed steps or free entry, both under guardrails, seller setting</td>
+<td>R4</td>
+</tr>
+<tr>
+<td>D6</td>
+<td>Postal coupon single-use, mapped one-to-one to the online offer</td>
+<td>R13</td>
+</tr>
+<tr>
+<td>D7</td>
+<td>Newsletter discount: seller default rule, overridable per list</td>
+<td>R12</td>
+</tr>
+<tr>
+<td>D8</td>
+<td>Legal basis per market: legitimate interest with soft opt-in where allowed, consent elsewhere; retention per market</td>
+<td>R15</td>
+</tr>
+<tr>
+<td>D9</td>
+<td>Platform generates printable content; printing and posting by a DiscountDirect service or by the seller</td>
+<td>R14</td>
+</tr>
+<tr>
+<td>D10</td>
+<td>Compensation preset or free choice; in general the platform provides business-logic templates and journey recommendations that sellers follow, modify or overwrite (owner's words; terminology since D13: predefined rule set / advanced mode)</td>
+<td>R1, R11</td>
+</tr>
+<tr>
+<td>D11</td>
+<td>Consent and frequency cap per seller or across the inbox, a setting</td>
+<td>R16</td>
+</tr>
+<tr>
+<td>D12</td>
+<td>The platform is a retention system: avoid churn, raise customer lifetime value</td>
+<td>mission, metrics §7</td>
+</tr>
+<tr>
+<td>D13</td>
+<td>Legal and consent defaults belong to the platform; the seller keeps additional options within limits. Incentives (percentages, vouchers, freebies, compensation) come from predefined rule sets or from the seller in <strong>advanced mode</strong>; "advanced mode" is the system-wide term for the seller's own business decisions</td>
+<td>R1, <code>advanced_mode</code>, <code>OperatingMode</code></td>
+</tr>
+<tr>
+<td>D14</td>
+<td>Everything is clearly communicated to the buyer: compensation if available, first-come-first-served, limited quantity and every other rule appear on every communication</td>
+<td>R21</td>
+</tr>
+</tbody>
+</table></div>
+<h3>Open questions and the assumption in force until answered</h3>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>ID</th>
+<th>Question</th>
+<th>Assumption in force</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>O1</td>
+<td>answered → D13</td>
+<td>—</td>
+</tr>
+<tr>
+<td>O2</td>
+<td>Which print partner to integrate (the commercial rule set is settled by D13)</td>
+<td>Interface designed against a generic partner API; partner chosen before milestone 3.</td>
+</tr>
+<tr>
+<td>O3</td>
+<td>answered → D14</td>
+<td>—</td>
+</tr>
+<tr>
+<td>A1</td>
+<td>Technology stack</td>
+<td>The proposal in <code>architecture.html</code> §10 stands until objected to.</td>
+</tr>
+</tbody>
+</table></div>
+<h2>6. Rules register</h2>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>ID</th>
+<th>Rule</th>
+<th>Formula / condition</th>
+<th>Source</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>R1</td>
+<td>Every business rule below is a predefined rule set; in advanced mode the seller's values apply, never below a legal or consent floor</td>
+<td><code>effective = advanced ? max(values, template.floor) : template.defaults</code>; <code>template.legal ⇒ values ≥ floor</code></td>
+<td>D10, D13</td>
+</tr>
+<tr>
+<td>R2</td>
+<td>An offer is made once: sending removes the recommendation</td>
+<td><code>Recommendation.state := sent</code></td>
+<td>BL §3.1</td>
+</tr>
+<tr>
+<td>R3</td>
+<td>Buyer sees <code>reason_seller ?? reason_engine</code>; audit keeps both</td>
+<td></td>
+<td>D4</td>
+</tr>
+<tr>
+<td>R4</td>
+<td>Discount validity</td>
+<td><code>steps</code>: <code>pct ∈ discount_steps</code>; <code>free</code>: <code>floor ≤ pct ≤ max</code>; both: <code>price ≥ cost × (1 + margin_floor)</code> when cost known; <code>pct ≤ per_segment_max[segment]</code></td>
+<td>D5</td>
+</tr>
+<tr>
+<td>R5</td>
+<td>Price</td>
+<td><code>price = round(orig × (1 − pct/100))</code> in the market currency's minor unit</td>
+<td>BL §3.1</td>
+</tr>
+<tr>
+<td>R6</td>
+<td>Only the buyer, only on seller-sent offers, only while pending, may accept or decline</td>
+<td></td>
+<td>BL §3.3</td>
+</tr>
+<tr>
+<td>R7</td>
+<td>Accept → hand-off</td>
+<td><code>checkout_url = sign({offer_id, price, expires: now + price_lock_minutes})</code>; <code>order_ref</code> set by write-back; offer stays <code>accepted</code> until write-back or lock expiry</td>
+<td>D1</td>
+</tr>
+<tr>
+<td>R8</td>
+<td>Expiry</td>
+<td><code>flash</code>: <code>expires_at = sent_at + limit_hours</code>; a pending offer past <code>expires_at</code> becomes <code>expired</code></td>
+<td>BL §3.5</td>
+</tr>
+<tr>
+<td>R9</td>
+<td>Campaign fan-out</td>
+<td>one pending offer per buyer in <code>Relevance(product)</code>, minus holdout, minus buyers blocked by R15/R16</td>
+<td>BL §3.5</td>
+</tr>
+<tr>
+<td>R10</td>
+<td>Quantity enforcement</td>
+<td>accept succeeds only if <code>campaign.accepted_total &lt; limit_qty_total</code> and <code>buyer_accepted &lt; limit_qty_per_buyer</code>, checked atomically</td>
+<td>D2</td>
+</tr>
+<tr>
+<td>R11</td>
+<td>Sold-out</td>
+<td>when <code>accepted_total = limit_qty_total</code>: campaign <code>sold_out_at := now</code>; every other pending offer → <code>sold_out</code>; a <code>sold_out_notice</code> message is sent to those buyers with the campaign's compensation if any</td>
+<td>D2, D10</td>
+</tr>
+<tr>
+<td>R12</td>
+<td>List discount</td>
+<td><code>pct = automation.discount_rule_override ?? seller.newsletter_discount_rule</code> applied per item; <code>recommendation_pct</code> mode uses the buyer's matching recommendation else <code>fixed_pct</code></td>
+<td>D7</td>
+</tr>
+<tr>
+<td>R13</td>
+<td>Coupon</td>
+<td>one code per <code>mailing</code> offer; <code>redeem(code)</code> closes the offer on every channel; a second redeem is refused</td>
+<td>D6</td>
+</tr>
+<tr>
+<td>R14</td>
+<td>Print</td>
+<td>every <code>mailing</code> delivery produces a PDF; <code>print_mode = platform_service</code> creates a partner print job, <code>seller</code> exposes the PDF for download; either way <code>Delivery.status</code> advances to <code>printed</code>/<code>posted</code></td>
+<td>D9</td>
+</tr>
+<tr>
+<td>R15</td>
+<td>Legal basis</td>
+<td>a marketing send on channel <code>c</code> in market <code>m</code> is allowed iff <code>basis(m,c) = legitimate_interest ∧ soft_opt_in ∧ relationship.order_count ≥ 1 ∧ ¬objected</code> or <code>basis(m,c) = consent ∧ consent(buyer, seller\|inbox, c).granted</code></td>
+<td>D8</td>
+</tr>
+<tr>
+<td>R16</td>
+<td>Frequency cap</td>
+<td>counted per <code>(buyer, seller, channel)</code> if <code>consent_scope = per_seller</code>, else per <code>(buyer, channel)</code>; a send that would exceed the cap is deferred to the next window, never dropped silently, and logged</td>
+<td>D11, research §6</td>
+</tr>
+<tr>
+<td>R17</td>
+<td>Per-buyer list split</td>
+<td><code>items(buyer) = {p ∈ automation.product_ids : buyer ∈ Relevance(p)}</code>; buyers with <code>items = ∅</code> are skipped</td>
+<td>BL §3.6</td>
+</tr>
+<tr>
+<td>R18</td>
+<td>Reference price</td>
+<td>any struck-through price must be the lowest price of the previous <code>Market.reference_price_days</code> (30)</td>
+<td>research §5</td>
+</tr>
+<tr>
+<td>R19</td>
+<td>Holdout</td>
+<td><code>holdout = hash(buyer_id, campaign_id\|automation_id) mod 100 &lt; holdout_pct</code>; holdout buyers get no offer and are excluded from R16 counting</td>
+<td>research §4</td>
+</tr>
+<tr>
+<td>R21</td>
+<td>Transparency</td>
+<td>every rendering of an offer (chat card, e-mail, letter, newsletter, sold-out notice) includes a rules block listing: expiry, quantity limits (total and per buyer), first-come-first-served, compensation if configured, reference price basis, the reason</td>
+<td>D14</td>
+</tr>
+<tr>
+<td>R20</td>
+<td>Consumable replenishment</td>
+<td><code>next_runout = last_order_at + median(interval of last n orders of the product, n ≥ 2) ?? product.replenish_days</code>; reminder at <code>next_runout − 6 days</code></td>
+<td>research §2.2</td>
+</tr>
+</tbody>
+</table></div>
+<h2>7. Metric definitions</h2>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>Metric</th>
+<th>Definition</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Incremental contribution margin</td>
+<td><code>Σ margin(orders, treated) / |treated| − Σ margin(orders, holdout) / |holdout|</code>, per campaign or automation, over the attribution window (14 days)</td>
+</tr>
+<tr>
+<td>Take rate</td>
+<td><code>accepted / (pending + accepted + declined + expired + sold_out)</code> per kind, moment and channel</td>
+</tr>
+<tr>
+<td>No-discount repeat share</td>
+<td><code>orders from reorder/reminder offers with pct = 0 / all orders attributed to the platform</code></td>
+</tr>
+<tr>
+<td>Membership share</td>
+<td><code>revenue from buyers with an active membership / revenue from all platform buyers</code></td>
+</tr>
+<tr>
+<td>Unsubscribe rate</td>
+<td><code>withdrawn consents / deliveries</code> per channel per 30 days</td>
+</tr>
+<tr>
+<td>Frequency</td>
+<td><code>deliveries per buyer per channel per 30 days</code> (distribution, not mean)</td>
+</tr>
+<tr>
+<td>Sold-out disappointment</td>
+<td><code>sold_out offers / campaign offers</code>; target under 20 %</td>
+</tr>
+<tr>
+<td>Churn (retention mission, D12)</td>
+<td><code>relationships with no order in 2 × their median interval (or 180 days) / active relationships</code>, monthly</td>
+</tr>
+<tr>
+<td>Customer lifetime value</td>
+<td><code>Σ contribution margin per relationship over 24 months</code>, cohort by first order month; the platform's north-star delta is treated minus holdout</td>
+</tr>
+<tr>
+<td>Hand-off completion</td>
+<td><code>orders written back / accepted offers</code> within <code>price_lock_minutes</code></td>
+</tr>
+</tbody>
+</table></div>
+<h2>8. Document map</h2>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>Document</th>
+<th>Purpose</th>
+<th>Changes when</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>ssot.html</code></td>
+<td>definitions, enums, settings, decisions, rules, metrics</td>
+<td>any definition changes</td>
+</tr>
+<tr>
+<td><code>business-logic.html</code></td>
+<td>rules as implemented in the prototype and as decided</td>
+<td>a rule or decision changes</td>
+</tr>
+<tr>
+<td><code>architecture.html</code></td>
+<td>system context, containers, flows, NFRs, stack, ADRs</td>
+<td>an architectural decision changes</td>
+</tr>
+<tr>
+<td><code>technical-design.html</code></td>
+<td>schema, state machines, API, algorithms, integrations</td>
+<td>a design detail changes</td>
+</tr>
+<tr>
+<td><code>implementation-plan.html</code></td>
+<td>milestones, issues, DoD</td>
+<td>scope or sequencing changes</td>
+</tr>
+<tr>
+<td><code>executive.html</code>, <code>research.html</code></td>
+<td>why and what the evidence says</td>
+<td>new evidence</td>
+</tr>
+</tbody>
+</table></div>
+<footer>Source: <code>discountdirect/SSOT.md</code>, rendered by <code>build-docs.py</code>. Token names follow GDS 6.5.0 roles (<code>GDS-TOKEN-MAP.md</code>).</footer>
+</div></body></html>

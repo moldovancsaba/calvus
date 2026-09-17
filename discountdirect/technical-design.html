@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>DiscountDirect — low-level technical design</title>
+<style>
+:root{--gds-bg-canvas:#f8fafc;--gds-bg-surface:#ffffff;--gds-bg-inverse:#111827;--gds-text-body:#111827;--gds-text-meta:#64748b;--gds-border-card:#e2e8f0;--gds-brand-accent:#3b5bdb;--gds-brand-accent-tint:#e7ecfb;--gds-radius-card:14px}
+*{box-sizing:border-box}
+body{margin:0;background:var(--gds-bg-canvas);color:var(--gds-text-body);font:15.5px/1.6 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;padding-block:0 64px;padding-inline:clamp(16px,4vw,40px)}
+.wrap{max-width:76ch;margin-inline:auto}
+.top{display:flex;flex-wrap:wrap;gap:8px 18px;align-items:center;padding:16px 0;border-bottom:1px solid var(--gds-border-card);font-size:13px;color:var(--gds-text-meta)}
+.top b{color:var(--gds-text-body)} .top a{color:var(--gds-brand-accent);text-decoration:none;min-height:44px;display:inline-flex;align-items:center} .top a.on{color:var(--gds-text-body);font-weight:600}
+h1{font-size:clamp(26px,5vw,38px);line-height:1.15;margin:32px 0 10px;letter-spacing:-.01em}
+h2{font-size:22px;margin:44px 0 10px;padding-top:18px;border-top:1px solid var(--gds-border-card)}
+h3{font-size:17px;margin:26px 0 8px}
+p{margin:0 0 12px} li{margin:4px 0} strong{font-weight:600}
+code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.86em;background:var(--gds-brand-accent-tint);padding:1px 5px;border-radius:5px}
+pre{background:var(--gds-bg-inverse);color:#f8fafc;padding:16px;border-radius:var(--gds-radius-card);overflow-x:auto;font-size:13px;line-height:1.5} pre code{background:none;color:inherit;padding:0;font-size:inherit}
+.tbl{overflow-x:auto;margin:12px 0 20px;border:1px solid var(--gds-border-card);border-radius:var(--gds-radius-card);background:var(--gds-bg-surface)}
+table{border-collapse:collapse;width:100%;font-size:13.5px;min-width:560px}
+th{text-align:left;font-weight:600;background:var(--gds-bg-canvas);padding:10px 12px;border-bottom:1px solid var(--gds-border-card);font-size:12px;letter-spacing:.04em;text-transform:uppercase;color:var(--gds-text-meta)}
+td{padding:10px 12px;border-top:1px solid var(--gds-border-card);vertical-align:top}
+a{color:var(--gds-brand-accent)}
+footer{margin-top:48px;padding-top:16px;border-top:1px solid var(--gds-border-card);font-size:12px;color:var(--gds-text-meta)}
+</style>
+</head>
+<body><div class="wrap">
+<div class="top"><b>DiscountDirect</b><a href="executive.html">Executive summary</a><a href="research.html">Research</a><a href="business-logic.html">Business logic</a><a href="ssot.html">SSOT</a><a href="architecture.html">Architecture</a><a href="technical-design.html" class=on>Technical design</a><a href="implementation-plan.html">Implementation plan</a><a href="index.html">Open the prototype →</a><a href="../index.html">Calvus Hub</a></div>
+<h1>DiscountDirect — low-level technical design</h1>
+<p>Version 1.0 · 2026-09-17. Schema, state machines, API, algorithms with pseudo code,
+integration contracts, security details, observability and testing. Terms per
+<code>ssot.html</code>; structure per <code>architecture.html</code>.</p>
+<h2>1. Schema (PostgreSQL)</h2>
+<p>Conventions: <code>id uuid primary key default gen_random_uuid()</code>, <code>created_at timestamptz
+not null default now()</code>, money in integer minor units with a <code>currency</code> code, every
+tenant-scoped table has <code>seller_id</code> with a row-level-security policy.</p>
+<pre><code class="language-sql">create table sellers (
+  id uuid primary key, name text not null, tagline text,
+  market_code text not null references markets(code),
+  settings jsonb not null default '{}'::jsonb,           -- SSOT §4 keys
+  created_at timestamptz not null default now()
+);
+create table markets (
+  code text primary key, currency text not null, locale text not null,
+  legal_basis_by_channel jsonb not null,                  -- {&quot;email&quot;:&quot;legitimate_interest&quot;,...}
+  soft_opt_in boolean not null, retention_days int not null,
+  reference_price_days int not null default 30
+);
+create table buyers (
+  id uuid primary key, email citext unique, phone text, postal_address jsonb,
+  locale text not null default 'hu-HU', birthday date,
+  created_at timestamptz not null default now()
+);
+create table relationships (
+  id uuid primary key, seller_id uuid not null references sellers, buyer_id uuid not null references buyers,
+  segment text not null check (segment in ('new','returning','loyal')),
+  order_count int not null default 0, first_order_at timestamptz, last_order_at timestamptz,
+  frequency_pref text, holdout_seed int not null default floor(random()*1000000),
+  unique (seller_id, buyer_id)
+);
+create table products (
+  id uuid primary key, seller_id uuid not null, external_id text not null,
+  name text not null, price int not null, currency text not null, category text,
+  consumable boolean not null default false, replenish_days int, stock int,
+  synced_at timestamptz, unique (seller_id, external_id)
+);
+create table orders (
+  id uuid primary key, relationship_id uuid not null references relationships,
+  external_id text not null, ordered_at timestamptz not null,
+  source text not null check (source in ('shop','handoff')), total int not null,
+  unique (relationship_id, external_id)
+);
+create table order_lines (order_id uuid references orders, product_id uuid references products, qty int, price int, primary key (order_id, product_id));
+create table price_history (product_id uuid, price int, valid_from timestamptz, primary key (product_id, valid_from));  -- R18
+create table relevance (
+  product_id uuid references products, buyer_id uuid references buyers, score real not null,
+  reason_code text not null, reason_engine text not null, model_version text not null,
+  computed_at timestamptz not null, primary key (product_id, buyer_id)
+);
+create table recommendations (
+  id uuid primary key, relationship_id uuid references relationships, product_id uuid references products,
+  pct_suggested int, reason_code text, reason_engine text, model_version text,
+  state text not null default 'available' check (state in ('available','sent'))
+);
+create table templates (
+  id uuid primary key, kind text not null, version int not null, defaults jsonb not null,
+  legal boolean not null default false, floor jsonb not null default '{}'::jsonb, unique (kind, version)
+);
+create table seller_overrides (
+  seller_id uuid references sellers, template_id uuid references templates,
+  mode text not null check (mode in ('predefined','advanced')),   -- D13
+  values jsonb not null default '{}'::jsonb, version int not null default 1,
+  changed_by uuid, changed_at timestamptz not null default now(), primary key (seller_id, template_id)
+);
+create table campaigns (
+  id uuid primary key, seller_id uuid not null, product_id uuid not null, pct int not null,
+  limit_hours int not null, limit_qty_total int not null, limit_qty_per_buyer int not null,
+  channels text[] not null, sent_at timestamptz, sold_out_at timestamptz,
+  accepted_total int not null default 0,                   -- reconciliation truth for R10
+  compensation jsonb, template_id uuid, override_version int
+);
+create table automations (
+  id uuid primary key, seller_id uuid not null, title text not null,
+  frequency text not null, channels text[] not null, product_ids uuid[] not null,
+  next_run_at timestamptz, state text not null default 'active',
+  discount_rule_override jsonb
+);
+create table automation_runs (id uuid primary key, automation_id uuid references automations, ran_at timestamptz, content_freeze jsonb, per_buyer_counts jsonb);
+create table offers (
+  id uuid primary key, seller_id uuid not null, relationship_id uuid not null references relationships,
+  product_id uuid not null references products, kind text not null, orig int not null, pct int not null, price int not null,
+  reason_engine text not null, reason_seller text, reason_source text not null default 'engine',
+  channels text[] not null, status text not null default 'pending',
+  limit_hours int, limit_qty_per_buyer int, expires_at timestamptz,
+  sent_at timestamptz, responded_at timestamptz,
+  campaign_id uuid references campaigns, automation_run_id uuid references automation_runs,
+  template_id uuid, override_version int, model_version text, holdout boolean not null default false,
+  checkout_url text, price_lock_until timestamptz, order_ref text,
+  created_at timestamptz not null default now()
+);
+create index on offers (relationship_id, created_at desc);
+create index on offers (campaign_id) where status = 'pending';
+create table offer_events (
+  id bigserial primary key, offer_id uuid not null references offers, type text not null,
+  at timestamptz not null default now(), actor text not null, payload jsonb
+);  -- append-only: revoke update, delete
+create table messages (id uuid primary key, relationship_id uuid references relationships, from_role text, kind text, body text, channel text, offer_id uuid, at timestamptz default now());
+create table deliveries (
+  id uuid primary key, offer_id uuid references offers, message_id uuid references messages,
+  channel text not null, status text not null default 'queued', provider_ref text,
+  print_job_id uuid, at timestamptz not null default now()
+);
+create table coupons (code text primary key, offer_id uuid unique references offers, redeemed_at timestamptz, redeemed_channel text);
+create table consents (
+  id uuid primary key, buyer_id uuid references buyers, seller_id uuid,          -- null = inbox scope
+  channel text not null, basis text not null, granted_at timestamptz, withdrawn_at timestamptz, source text
+);
+create table objections (buyer_id uuid, seller_id uuid, at timestamptz, primary key (buyer_id, seller_id));
+create table print_jobs (id uuid primary key, offer_id uuid, mode text, pdf_ref text, status text, partner_ref text, posted_at timestamptz);
+create table outbox (id bigserial primary key, aggregate text, aggregate_id uuid, type text, payload jsonb, created_at timestamptz default now(), relayed_at timestamptz);
+create table metric_rollups (seller_id uuid, scope text, scope_id uuid, day date, metrics jsonb, primary key (seller_id, scope, scope_id, day));
+
+alter table offers enable row level security;
+create policy tenant_offers on offers using (seller_id = current_setting('app.seller_id')::uuid);
+-- the same policy shape on every seller-scoped table
+</code></pre>
+<h2>2. State machines</h2>
+<p><strong>Offer</strong></p>
+<pre><code>draft ──send──► pending ──accept──► accepted ──write-back──► (accepted, order_ref set)
+                  │  │                  │
+                  │  ├──decline───────► declined
+                  │  ├──expiry (R8)───► expired
+                  │  ├──sold-out (R11)► sold_out
+                  │  └──withdraw──────► withdrawn
+                  └── (mailing) coupon redeem (R13) ──► redeemed
+Terminal: accepted, declined, expired, sold_out, redeemed, withdrawn.
+Guards: accept requires status = pending ∧ now &lt; expires_at ∧ R10 counters ok.
+</code></pre>
+<p><strong>Campaign</strong>: <code>draft → sending → live → sold_out | expired → closed</code>.
+<strong>Automation</strong>: <code>active ⇄ paused → stopped</code>; each run: <code>scheduled → running → done | failed</code>.
+<strong>Delivery</strong>: <code>queued → sent → delivered → opened → clicked</code>; <code>failed</code>, <code>bounced</code>;
+<code>mailing</code>: <code>queued → printed → posted</code>.
+<strong>Coupon</strong>: <code>issued → redeemed</code>; a second redeem returns <code>already_redeemed</code>.
+<strong>PrintJob</strong>: <code>created → submitted → printed → posted | failed</code>.</p>
+<h2>3. API (HTTP/JSON, versioned under <code>/v1</code>)</h2>
+<p>Auth: bearer token; seller endpoints require a seller role and set <code>app.seller_id</code>;
+buyer endpoints require a buyer session. Errors: <code>{error: {code, message, details}}</code>;
+codes include <code>validation</code>, <code>not_pending</code>, <code>expired</code>, <code>sold_out</code>, <code>per_buyer_limit</code>,
+<code>consent_blocked</code>, <code>frequency_capped</code>, <code>guardrail</code>, <code>already_redeemed</code>.</p>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>Method and path</th>
+<th>Role</th>
+<th>Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>GET /relationships?query=</code></td>
+<td>seller</td>
+<td>inbox rows: buyer, last message, pending count</td>
+</tr>
+<tr>
+<td><code>GET /relationships/{id}</code></td>
+<td>seller, buyer</td>
+<td>thread, history, recommendations, segment</td>
+</tr>
+<tr>
+<td><code>POST /relationships/{id}/messages</code></td>
+<td>both</td>
+<td>chat message</td>
+</tr>
+<tr>
+<td><code>POST /relationships/{id}/offers</code></td>
+<td>seller</td>
+<td>body <code>{recommendation_id \| product_id, pct, channel, reason_seller?}</code> → offer</td>
+</tr>
+<tr>
+<td><code>POST /offers/{id}/accept</code></td>
+<td>buyer</td>
+<td>→ <code>{status, checkout_url}</code> (R7)</td>
+</tr>
+<tr>
+<td><code>POST /offers/{id}/decline</code></td>
+<td>buyer</td>
+<td></td>
+</tr>
+<tr>
+<td><code>POST /offers/{id}/reason</code></td>
+<td>seller</td>
+<td>edit <code>reason_seller</code> while pending (D4)</td>
+</tr>
+<tr>
+<td><code>POST /campaigns/preview</code></td>
+<td>seller</td>
+<td>targets, blocked buyers, holdout count</td>
+</tr>
+<tr>
+<td><code>POST /campaigns</code></td>
+<td>seller</td>
+<td>create and start fan-out</td>
+</tr>
+<tr>
+<td><code>GET /campaigns/{id}</code></td>
+<td>seller</td>
+<td>counters, sold-out, deliveries</td>
+</tr>
+<tr>
+<td><code>POST /automations</code> · <code>PATCH /automations/{id}</code> · <code>DELETE</code></td>
+<td>seller</td>
+<td>lists; <code>PATCH</code> for pause/resume/override</td>
+</tr>
+<tr>
+<td><code>POST /automations/preview</code></td>
+<td>seller</td>
+<td>per-buyer split</td>
+</tr>
+<tr>
+<td><code>GET /templates</code> · <code>GET /templates/{id}</code></td>
+<td>seller</td>
+<td>library with effective values</td>
+</tr>
+<tr>
+<td><code>PUT /templates/{id}/override</code></td>
+<td>seller admin</td>
+<td><code>{mode: predefined \| advanced, values}</code> (R1; legal templates enforce their floor)</td>
+</tr>
+<tr>
+<td><code>GET /settings</code> · <code>PATCH /settings</code></td>
+<td>seller admin</td>
+<td>SSOT §4 keys, validated</td>
+</tr>
+<tr>
+<td><code>GET /me/inbox</code></td>
+<td>buyer</td>
+<td>per-seller thread list or marketplace inbox (D3)</td>
+</tr>
+<tr>
+<td><code>GET /me/usuals</code></td>
+<td>buyer</td>
+<td>reorder list with predicted run-out (R20)</td>
+</tr>
+<tr>
+<td><code>GET /me/preferences</code> · <code>PUT /me/preferences</code></td>
+<td>buyer</td>
+<td>channels, frequency, muted categories, scope per D11</td>
+</tr>
+<tr>
+<td><code>POST /me/object</code></td>
+<td>buyer</td>
+<td>Art. 21 objection for a seller or the inbox</td>
+</tr>
+<tr>
+<td><code>POST /coupons/{code}/redeem</code></td>
+<td>seller agent, public page</td>
+<td>R13</td>
+</tr>
+<tr>
+<td><code>GET /handoff/{token}</code></td>
+<td>public</td>
+<td>verifies, marks, redirects to the shop checkout</td>
+</tr>
+<tr>
+<td><code>POST /webhooks/shop/{seller_id}/{platform}</code></td>
+<td>connector</td>
+<td>orders, stock, products</td>
+</tr>
+<tr>
+<td><code>POST /webhooks/channel/{channel}</code></td>
+<td>adapter</td>
+<td>delivery statuses</td>
+</tr>
+<tr>
+<td><code>GET /metrics?scope=&amp;id=&amp;from=&amp;to=</code></td>
+<td>seller</td>
+<td>rollups per SSOT §7</td>
+</tr>
+</tbody>
+</table></div>
+<h2>4. Algorithms</h2>
+<h3>A1 Rule-set resolution: predefined or advanced mode (R1, D13)</h3>
+<pre><code>function effective(seller, kind):
+  t = latest template of kind
+  o = seller_overrides[seller, t]
+  if o is null or o.mode == 'predefined': return t.defaults
+  v = deep_merge(t.defaults, o.values)                 # advanced mode: the seller's own values
+  if t.legal: v = clamp_to_floor(v, t.floor)           # never below the legal/consent floor
+  return v
+</code></pre>
+<p><code>PUT /templates/{id}/override</code> with <code>mode = advanced</code> on a legal template returns
+<code>validation</code> when a value is below <code>t.floor</code>; the console shows the floor next to the
+field.</p>
+<h3>A2 Relevance and reason codes, milestone-1 rules</h3>
+<pre><code>function relevance(relationship):
+  owned = products in orders(relationship)
+  out = []
+  for p in seller.products:
+    if p in owned and p.consumable:
+      days = days_until_runout(relationship, p)          # A3
+      if days &lt;= 14: out += (p, score=0.9 - days/100, code='REPLENISH', text=&quot;Utoljára {last} vásároltad; kb. {days} nap múlva fogy el&quot;)
+    for q in owned:
+      if accessory_of(p, q): out += (p, 0.7, 'ACCESSORY', &quot;Illik a {q.name} termékedhez&quot;)
+      if upgrade_of(p, q) and months_since(q) &gt;= 18: out += (p, 0.6, 'UPGRADE', &quot;A {q.name} után a következő generáció&quot;)
+    if co_purchase_rate(p, owned) &gt;= 0.2: out += (p, 0.5, 'CO_PURCHASE', &quot;{n} hasonló vásárló vette ezzel&quot;)
+  return top_k(dedupe_by_product(out), 5)
+</code></pre>
+<p>Reason texts are templated per locale; <code>reason_code</code> is the audit key.</p>
+<h3>A3 Replenishment prediction (R20)</h3>
+<pre><code>function days_until_runout(relationship, p):
+  dates = ordered_at of orders(relationship) containing p, ascending
+  if len(dates) &gt;= 2: interval = median(diff(dates)) else interval = p.replenish_days
+  if interval is null: return +inf
+  return (dates.last + interval) - today
+</code></pre>
+<h3>A4 Per-buyer list split (R17, R12)</h3>
+<pre><code>function split(automation):
+  rule = automation.discount_rule_override ?? seller.settings.newsletter_discount_rule
+  for buyer in buyers_of(seller):
+    items = [p for p in automation.product_ids if (p, buyer) in relevance]
+    if items == []: continue
+    yield buyer, [(p, pct_for(buyer, p, rule), relevance[p, buyer].reason) for p in items]
+</code></pre>
+<h3>A5 Flash fan-out, atomic accept, sold-out (R9–R11)</h3>
+<p>Fan-out (worker, batches of 500):</p>
+<pre><code>targets = relevance(product).buyers - holdout(campaign) - blocked_by_consent_or_cap
+for batch in chunks(targets, 500):
+  insert offers(kind='flash', status='pending', expires_at = now + limit_hours, ...)
+  enqueue deliveries
+redis.set(f&quot;camp:{id}:left&quot;, limit_qty_total)
+</code></pre>
+<p>Accept (API), atomic with Lua on Redis and confirmed in the database:</p>
+<pre><code>-- Lua: returns 1 on success, 0 when sold out, -1 when the buyer hit their limit
+local left = tonumber(redis.call('GET', KEYS[1]))
+local mine = tonumber(redis.call('GET', KEYS[2]) or 0)
+if left &lt;= 0 then return 0 end
+if mine &gt;= tonumber(ARGV[1]) then return -1 end
+redis.call('DECR', KEYS[1]); redis.call('INCR', KEYS[2]); return 1
+</code></pre>
+<pre><code>function accept(offer, buyer):
+  assert offer.status == 'pending' and now &lt; offer.expires_at   -&gt; else not_pending / expired
+  r = redis.eval(script, [camp_left, camp_buyer(buyer)], [limit_qty_per_buyer])
+  if r == 0: return sold_out
+  if r == -1: return per_buyer_limit
+  in transaction:
+    update offers set status='accepted', responded_at=now where id=offer.id and status='pending'   -- 1 row, else rollback + redis undo
+    update campaigns set accepted_total = accepted_total + 1 where id=campaign.id
+    insert offer_events(type='accepted')
+    if accepted_total == limit_qty_total: enqueue sold_out(campaign)
+  return handoff_url(offer)                                        # A6
+sold_out(campaign):
+  update offers set status='sold_out' where campaign_id=id and status='pending'
+  for each such offer: create message(kind='event', offer_id, body=sold_out_notice(compensation))  -- D2, D10
+  campaigns.sold_out_at = now
+</code></pre>
+<h3>A13 Transparency renderer (R21, D14)</h3>
+<pre><code>function rules_block(offer, campaign?, locale):
+  lines = []
+  if offer.expires_at: lines += t('expires_at', offer.expires_at)
+  if campaign: lines += t('fcfs_total', campaign.limit_qty_total); lines += t('per_buyer', campaign.limit_qty_per_buyer)
+  if campaign and campaign.compensation: lines += t('compensation', campaign.compensation)     # shown before sold-out
+  if offer.pct &gt; 0: lines += t('reference_price', reference_price(offer.product), market.reference_price_days)
+  lines += t('reason', offer.reason_seller ?? offer.reason_engine)
+  return lines
+</code></pre>
+<p>Every channel template (chat card, e-mail, letter, newsletter, sold-out notice) calls
+<code>rules_block</code> and renders every line; a rendering without it fails the template test.
+Reconciliation: hourly, <code>campaigns.accepted_total</code> is the truth; Redis keys are rebuilt
+from it if they diverge.</p>
+<h3>A6 Hand-off and write-back (R7, D1)</h3>
+<pre><code>function handoff_url(offer):
+  offer.price_lock_until = now + settings.checkout_handoff.price_lock_minutes
+  token = hmac_sign({offer_id, price, currency, exp: price_lock_until})
+  return f&quot;{platform_base}/handoff/{token}&quot;
+
+GET /handoff/{token}:
+  claims = verify(token) -&gt; else 410
+  offer = load(claims.offer_id); assert offer.status == 'accepted'
+  link = connector(seller).createCheckoutLink({product, qty:1, price: claims.price, ref: offer.id})
+  insert offer_events('handoff_opened'); redirect 302 link
+
+on shop order webhook(order):
+  if order.attributes.ref matches an offer: offer.order_ref = order.external_id; insert orders(source='handoff'); event 'order_written_back'
+  else: ingest as ordinary order; recompute relationship counts and segment
+lock expiry job: accepted offers past price_lock_until without order_ref get event 'handoff_not_completed' (status unchanged)
+</code></pre>
+<h3>A7 Coupons (R13, D6)</h3>
+<pre><code>code = base32(hmac(offer_id))[:10] formatted DIRECT-XXXX-XXXX
+redeem(code, channel):
+  in transaction: select coupon for update
+    if redeemed_at: return already_redeemed
+    coupon.redeemed_at = now; coupon.redeemed_channel = channel
+    offer.status = 'redeemed' (from pending or accepted); event 'redeemed'
+</code></pre>
+<h3>A8 Consent and frequency cap (R15, R16, D8, D11)</h3>
+<pre><code>function may_send(buyer, seller, channel):
+  m = seller.market
+  scope_key = (buyer, seller) if seller.settings.consent_scope == 'per_seller' else (buyer)
+  if objected(scope_key): return blocked('objection')
+  basis = m.legal_basis_by_channel[channel]
+  if basis == 'legitimate_interest':
+    ok = m.soft_opt_in and relationship.order_count &gt;= 1 and channel in buyer.channels_allowed
+  else:
+    ok = consent(scope_key, channel).granted and not withdrawn
+  if not ok: return blocked('consent')
+  cap, window = seller.settings.frequency_cap[channel]
+  if redis.count(f&quot;cap:{scope_key}:{channel}&quot;, window) &gt;= cap: return deferred(next_window_start)
+  return allowed
+on send: redis.incr with expiry = window
+</code></pre>
+<p>Deferred sends are re-queued at the window boundary and logged as <code>deferred</code>.</p>
+<h3>A9 Holdout (R19)</h3>
+<pre><code>holdout(buyer, scope_id) = (murmur3(buyer.id + scope_id) % 100) &lt; seller.settings.holdout_pct
+</code></pre>
+<p>Deterministic, so the same buyer is consistently held out within one campaign or
+automation and independently across them.</p>
+<h3>A10 Scheduler (F4)</h3>
+<pre><code>every minute: for a in automations where state='active' and next_run_at &lt;= now:
+  lock a; run = create automation_run(content_freeze = snapshot(products, prices, relevance))
+  for buyer, items in split(a):
+    if holdout(buyer, a.id): continue
+    d = may_send(buyer, seller, channel)  ; if blocked: skip ; if deferred: enqueue at time
+    create offers(kind='list_item') per item; enqueue newsletter delivery
+  a.next_run_at = next(a.frequency, now); run.done
+</code></pre>
+<h3>A11 Discount guardrails (R4, D5)</h3>
+<pre><code>function validate_pct(seller, relationship, product, pct):
+  g = effective(seller, 'discount')          # merges settings.discount_guardrails
+  if seller.settings.discount_mode == 'steps': assert pct in seller.settings.discount_steps
+  else: assert g.floor_pct &lt;= pct &lt;= g.max_pct
+  if segment_max := g.per_segment_max.get(relationship.segment): assert pct &lt;= segment_max
+  if product.cost: assert round(product.price*(1-pct/100)) &gt;= product.cost*(1+g.margin_floor_pct/100)
+  if reference_price(product) &lt; product.price: raise guardrail('reference_price')   # R18
+</code></pre>
+<h3>A12 Reason ownership (R3, D4)</h3>
+<pre><code>on send: offer.reason_engine = recommendation.reason_engine; offer.reason_seller = body.reason_seller (if settings.reason_editable)
+buyer view: offer.reason_seller ?? offer.reason_engine ; audit view: both + reason_code + model_version
+</code></pre>
+<h2>5. Integration contracts (TypeScript)</h2>
+<pre><code class="language-ts">interface ShopConnector {
+  listProducts(since?: Date): AsyncIterable&lt;ProductDTO&gt;;
+  listOrders(since?: Date): AsyncIterable&lt;OrderDTO&gt;;
+  getStock(externalIds: string[]): Promise&lt;Record&lt;string, number&gt;&gt;;
+  createCheckoutLink(input: { externalProductId: string; qty: number; unitPrice: number; currency: string; ref: string; expiresAt: Date }): Promise&lt;{ url: string }&gt;;
+  registerWebhooks(callbackUrl: string): Promise&lt;void&gt;;
+  verifyWebhook(req: RawRequest): Promise&lt;{ kind: 'order' | 'product' | 'stock'; payload: unknown }&gt;;
+}
+interface ChannelAdapter {
+  channel: 'email' | 'mailing' | 'rcs' | 'whatsapp';
+  capabilities(): { richCard: boolean; buttons: boolean };
+  send(d: DeliveryDTO): Promise&lt;{ providerRef: string }&gt;;
+  parseStatus(req: RawRequest): Promise&lt;{ providerRef: string; status: DeliveryStatus; at: Date }&gt;;
+}
+interface PrintPartner extends ChannelAdapter { channel: 'mailing'; submit(job: { pdfRef: string; address: PostalAddress }): Promise&lt;{ partnerRef: string }&gt;; }
+</code></pre>
+<h2>6. Security details</h2>
+<ul>
+<li>Tokens: JWT (RS256), 15-minute access, 30-day rotating refresh; <code>aud</code> = console or buyer.</li>
+<li>Hand-off tokens: HMAC-SHA256 over <code>offer_id|price|currency|exp</code> with a per-seller key;
+  base64url; verified server-side, never decoded by the client.</li>
+<li>RLS: <code>set local app.seller_id</code> per request in a transaction; platform ops use a
+  separate role with audit logging.</li>
+<li>Webhooks: signature verification per provider; replay protection by event id.</li>
+<li>Rate limits: accept endpoint 10/min per buyer; coupon redeem 5/min per code.</li>
+</ul>
+<h2>7. Observability</h2>
+<p>Domain events emitted as metrics: <code>offer_sent</code>, <code>offer_accepted</code>, <code>offer_declined</code>,
+<code>offer_expired</code>, <code>campaign_sold_out</code>, <code>handoff_opened</code>, <code>order_written_back</code>,
+<code>delivery_failed</code>, <code>send_deferred_cap</code>, <code>send_blocked_consent</code>. Traces span
+accept → hand-off → connector. Dashboards: fan-out throughput, accept latency,
+write-back lag, deferred/blocked ratios, dead-letter depth.</p>
+<h2>8. Testing strategy</h2>
+<ul>
+<li>Unit: pricing (R4, R5, R18), consent (R15, R16), split (R17), replenishment (A3),
+  holdout (A9), template resolution (A1) — table-driven.</li>
+<li>Concurrency: flash accept under 1 000 parallel requests never exceeds either limit.</li>
+<li>Contract: connector and adapter interfaces against recorded provider fixtures.</li>
+<li>End to end: the prototype's sample data (ElektroHome, Anna Kovács / Gábor Nagy /
+  Réka Szabó) as seed fixtures; the seven-step client journey as a Playwright script.</li>
+<li>Compliance: a test asserting no marketing send without a passing <code>may_send</code>.</li>
+</ul>
+<h2>9. Mapping the prototype to the design</h2>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>Prototype (index.html)</th>
+<th>Design</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>state.conversations[].messages</code> with <code>type: offer</code></td>
+<td><code>offers</code> + <code>messages(kind='offer_ref')</code></td>
+</tr>
+<tr>
+<td>recommendation cards with hard-coded reasons</td>
+<td><code>recommendations</code> from the engine (A2)</td>
+</tr>
+<tr>
+<td><code>relevance</code> sets per product</td>
+<td><code>relevance</code> table</td>
+</tr>
+<tr>
+<td>flash campaign form and fan-out loop</td>
+<td><code>POST /campaigns</code>, A5</td>
+</tr>
+<tr>
+<td>automations with per-buyer split</td>
+<td><code>automations</code>, A4, A10</td>
+</tr>
+<tr>
+<td>buyer tabs chat / e-mail / letter / newsletter</td>
+<td><code>deliveries</code> per channel, templates per channel</td>
+</tr>
+<tr>
+<td><code>DIRECT-&lt;pct&gt;-&lt;initials&gt;</code> coupon</td>
+<td>A7</td>
+</tr>
+<tr>
+<td>"Miért kapom?" context pane</td>
+<td>R3, R15 audit view</td>
+</tr>
+</tbody>
+</table></div>
+<footer>Source: <code>discountdirect/TECHNICAL-DESIGN.md</code>, rendered by <code>build-docs.py</code>. Token names follow GDS 6.5.0 roles (<code>GDS-TOKEN-MAP.md</code>).</footer>
+</div></body></html>

@@ -3,7 +3,7 @@
 Run: python3 discountdirect/build-docs.py  (needs the `markdown` package)."""
 import re, pathlib, markdown
 HERE = pathlib.Path(__file__).parent
-PAGES = [("EXECUTIVE.md", "executive.html", "Executive summary"), ("RESEARCH.md", "research.html", "Research"), ("BUSINESS-LOGIC.md", "business-logic.html", "Business logic")]
+PAGES = [("EXECUTIVE.md", "executive.html", "Executive summary"), ("RESEARCH.md", "research.html", "Research"), ("BUSINESS-LOGIC.md", "business-logic.html", "Business logic"), ("SSOT.md", "ssot.html", "SSOT"), ("ARCHITECTURE.md", "architecture.html", "Architecture"), ("TECHNICAL-DESIGN.md", "technical-design.html", "Technical design"), ("IMPLEMENTATION-PLAN.md", "implementation-plan.html", "Implementation plan")]
 def render(src, out, label):
   md = (HERE / src).read_text(encoding="utf-8")
   title = re.match(r"#\s+(.+)", md).group(1)

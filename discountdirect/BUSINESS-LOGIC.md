@@ -23,13 +23,21 @@ The unit of the system is the **seller–buyer pair**: a conversation with its h
 recommendations and timeline. Nothing crosses pairs except campaigns and automations,
 which fan out to many pairs at once.
 
-**Platform principle (product owner, 2026-09-17, D10).** The platform ships **built-in
-business-logic templates and recommended user journeys** — offer types, campaign
-shapes, sold-out handling, compensation menus, timing ladders, consent settings. A
-seller can **follow, modify or overwrite** any of them according to its own business
-targets. The platform's job is automated support for sellers and help for buyers; every
-rule in §3 is therefore a default, not a constraint, unless it is a legal or consent
-rule.
+**Mission (product owner, 2026-09-17, D12).** DiscountDirect is a **retention system**:
+it exists to avoid churn and raise customer lifetime value for the seller, and to make
+every offer worth receiving for the buyer.
+
+**Platform principle (D10, D13).** The platform ships **predefined rule sets** and
+recommended user journeys — offer types, campaign shapes, sold-out handling,
+compensation menus, incentives, timing ladders, consent settings. A seller runs on the
+predefined rule set or switches an area to **advanced mode**, where its own business
+decisions apply — percentages, vouchers, freebies, compensation. Legal and consent
+defaults belong to the platform; advanced mode may add to them but never go below their
+floor. Every rule in §3 is therefore a predefined default, not a constraint.
+
+**Transparency (D14).** Everything is clearly communicated to the buyer: if compensation
+is available it is stated; if an offer is first-come-first-served with limited quantity,
+or carries any other rule, that rule appears on every communication of the offer.
 
 ## 2. Entities and data model (as coded)
 
@@ -95,6 +103,9 @@ formatted `hu-HU`; all UI strings are Hungarian.
   (default chat + e-mail; if none checked the send reports chat).
 - **Targets = the product's relevant buyers**, each with the product's per-buyer reason;
   shown before sending ("Kik kapják?").
+- Decided (D14, §10): the flash card and every channel rendering carry a **rules block**
+  — expiry, total and per-buyer quantity, first-come-first-served, and the compensation
+  if one is configured — before the buyer decides.
 - Live preview of the card the buyer will see: tag "⚡ Villámajánlat · H óráig · Q db",
   templated reason "Csak H óráig vagy a készlet erejéig (Q db) — a korábbi vásárlásaid
   alapján neked szól.", prices, channel chips, disabled buy/skip buttons.
@@ -106,8 +117,9 @@ formatted `hu-HU`; all UI strings are Hungarian.
   buyer**; both are set by the seller and both are enforced. When the campaign sells out,
   buyers who already received the offer are **informed** in the thread, and the seller may
   attach an **optional compensation** to that message — either **pre-configured** from the
-  platform's menu (voucher, free delivery, priority on the next campaign) or a **free
-  choice** made by the seller at the time (D10).
+  platform's menu (voucher, free delivery, priority on the next campaign) or the seller's
+  own choice in **advanced mode** (D10, D13); when configured in advance it is shown on
+  the flash card itself (D14).
 
 ### 3.6 Recurring personalised list (🗞 Automatikus ajánlatlista)
 - **Many products** (checkboxes); each option lists the buyers it is relevant to.
@@ -240,11 +252,15 @@ the demo shows. Every state change re-renders everything (`renderAll`).
 10. **Notifications** to the seller on buyer actions; to the buyer on new offers.
 11. **Design system**: the CSS tokens are already named after GDS 6.5.0 roles
     (`GDS-TOKEN-MAP.md`); the dev build swaps the `:root` block for the GDS theme.
-12. **Templates and journeys** (D10): a library of business-logic templates and
-    recommended user journeys with per-seller overrides — offer kinds, campaign
-    defaults, sold-out and compensation handling, timing ladders, consent scope — plus
-    the seller-facing UI to follow, modify or overwrite each one, and versioning so an
-    audit can show which template and which override produced a given offer.
+12. **Predefined rule sets, advanced mode and journeys** (D10, D13): a library of rule
+    sets and recommended journeys — offer kinds, campaign defaults, incentives,
+    sold-out and compensation handling, timing ladders, consent scope — a per-area
+    **advanced mode** switch with the seller's own values above the legal floor, and
+    versioning so an audit can show which rule set and which advanced values produced a
+    given offer.
+14. **Transparency renderer** (D14): one component that composes the rules block for
+    every channel rendering of an offer from its limits, expiry, compensation and
+    reference price.
 13. **Print fulfilment** (D9): printable letter generation for every offer; an optional
     print-and-post service through an integrated partner, or download for the seller's
     own printing; delivery status back to the timeline either way.
@@ -261,7 +277,8 @@ Seller(id, name, tagline,
        compensation_mode: preset|free)                                    -- D10
 Template(id, kind: offer|campaign|journey|sold_out|compensation|timing|consent,
          version, defaults{})                                             -- D10 platform library
-SellerOverride(seller_id, template_id, mode: follow|modified|overwritten, values{}, version)
+SellerOverride(seller_id, template_id, mode: predefined|advanced, values{}, version)   -- D13
+Template(..., legal: bool, floor{})                                       -- legal floor for advanced mode
 Market(code, legal_basis: legitimate_interest|consent, retention_days, soft_opt_in: bool)  -- D8
 Buyer(id, name, postal_address, email, consents{chat,email,mailing,newsletter}, preferences{frequency})
 Relationship(seller_id, buyer_id, segment, order_count, since)          -- one per pair
@@ -301,13 +318,13 @@ tag *Decided (Dn)*.
 | D7 | Newsletter discount: a rule, or set per list? | **Both** | Seller-level default rule, overridable per list (§3.6–3.7, §9). |
 | D8 | Legal basis and retention for purchase-history marketing, per market | **Both bases** | Per-market configuration: legitimate interest with soft opt-in where allowed, consent elsewhere; retention per market (§8.6, §9). Read as "both legal bases, chosen per market"; correct if meant otherwise. |
 | D9 | Postal letters: who prints and posts? | **Either** — a DiscountDirect service or the seller; **the platform always provides the printable content** | Seller setting `print_mode`; letter generation is core, print-and-post is an optional service (§3.7, §8.13, §9). |
-| D10 | Sold-out compensation: fixed menu or free choice? | **Both** — pre-set from a menu, or chosen freely at the time. **General principle:** the platform provides built-in business-logic templates and user-journey recommendations that the seller can follow, modify or overwrite according to its business targets; the platform automates support for sellers and helps buyers | Template library with per-seller overrides and versioning; every §3 rule is a default (§1, §3.5, §8.12, §9). |
+| D10 | Sold-out compensation: fixed menu or free choice? | **Both** — pre-set from a menu, or chosen freely at the time. **General principle:** the platform provides built-in business-logic templates and user-journey recommendations that the seller can follow, modify or overwrite according to its business targets; the platform automates support for sellers and helps buyers (owner's words; since D13 the terms are *predefined rule set* and *advanced mode*) | Rule-set library with per-area advanced mode and versioning; every §3 rule is a default (§1, §3.5, §8.12, §9). |
 | D11 | Marketplace mode: consent and frequency cap per seller or across the inbox? | **Both, as a setting** | `consent_scope` setting; the cap engine must count per seller or per inbox accordingly (§8.6, §9). |
+| D12 | (mission) | The platform is a **well-designed retention system** to avoid churn and improve customer lifetime value | Stated in §1; churn and LTV become the north-star metrics (SSOT §7). |
+| D13 | Who may change legal or consent defaults? Where do incentives come from? | **Platform owns legal and consent defaults; the seller keeps additional options within limits.** Percentages, vouchers, freebies and compensation come from **predefined rule sets** or from the seller in **advanced mode** — the system-wide term for the seller's own business decisions | `OperatingMode {predefined, advanced}` per area replaces follow/modify/overwrite; legal templates carry a floor (§1, §8.12, §9). |
+| D14 | Compensation promised before sold-out or issued after? | **Everything clearly communicated**: compensation if available, first-come-first-served, limited quantities and every other rule on every communication | Rules block on every rendering (§3.5, §3.7); SSOT R21. |
 
 ## 11. Still open
 
-1. Who may change a platform template's *legal or consent* defaults — the seller within
-   limits, or only the platform (D10 vs D8)?
-2. Pricing of the print-and-post service and the partner to integrate (D9).
-3. Whether a preset compensation (D10) is shown to the buyer as a promise before sold-out,
-   or only issued after.
+1. Which print partner to integrate for the print-and-post service (D9); the commercial
+   rules for it follow D13 (predefined rule set or advanced mode).

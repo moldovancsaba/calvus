@@ -1,7 +1,8 @@
 # DiscountDirect — executive summary
 
-*A direct, explained, consented relationship machine between a web shop and each of
-its customers — where the discount is the last lever, not the first.* Prepared 2026-09-17. The evidence for every figure is in the research page;
+*A retention system for web shops: it avoids churn and raises customer lifetime value
+through a direct, explained, consented relationship with each customer — where the
+discount is the last lever, not the first.* Prepared 2026-09-17. The evidence for every figure is in the research page;
 the rules of the prototype are in the business-logic page.
 
 ## The problem
@@ -32,11 +33,13 @@ carry a price cut, it is:
 - **consented** — the customer sees the history that justifies each offer and controls
   channels and frequency.
 
-**How the platform behaves.** It ships built-in business-logic templates and
-recommended user journeys — offer types, campaign shapes, timing, sold-out handling,
-consent settings — and every seller can follow, modify or overwrite them according to
-its own business targets. The platform automates the seller's work and helps the buyer;
-it does not dictate the seller's commercial rules.
+**How the platform behaves.** It ships predefined rule sets and recommended user
+journeys — offer types, campaign shapes, incentives, timing, sold-out handling, consent
+settings. A seller runs on them as they are, or switches an area to **advanced mode**
+and applies its own business decisions: percentages, vouchers, freebies, compensation.
+Legal and consent defaults belong to the platform and advanced mode never goes below
+them. And everything is communicated to the customer: limits, first-come-first-served,
+expiry, and compensation when it exists, on every message.
 
 Three seller tools sit on top: one-off personalised offers from a recommendation list,
 one-product flash campaigns to every relevant customer, and recurring per-customer offer

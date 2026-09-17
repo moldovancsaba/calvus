@@ -26,10 +26,11 @@ footer{margin-top:48px;padding-top:16px;border-top:1px solid var(--gds-border-ca
 </style>
 </head>
 <body><div class="wrap">
-<div class="top"><b>DiscountDirect</b><a href="executive.html" class=on>Executive summary</a><a href="research.html">Research</a><a href="business-logic.html">Business logic</a><a href="index.html">Open the prototype →</a><a href="../index.html">Calvus Hub</a></div>
+<div class="top"><b>DiscountDirect</b><a href="executive.html" class=on>Executive summary</a><a href="research.html">Research</a><a href="business-logic.html">Business logic</a><a href="ssot.html">SSOT</a><a href="architecture.html">Architecture</a><a href="technical-design.html">Technical design</a><a href="implementation-plan.html">Implementation plan</a><a href="index.html">Open the prototype →</a><a href="../index.html">Calvus Hub</a></div>
 <h1>DiscountDirect — executive summary</h1>
-<p><em>A direct, explained, consented relationship machine between a web shop and each of
-its customers — where the discount is the last lever, not the first.</em> Prepared 2026-09-17. The evidence for every figure is in the research page;
+<p><em>A retention system for web shops: it avoids churn and raises customer lifetime value
+through a direct, explained, consented relationship with each customer — where the
+discount is the last lever, not the first.</em> Prepared 2026-09-17. The evidence for every figure is in the research page;
 the rules of the prototype are in the business-logic page.</p>
 <h2>The problem</h2>
 <p>Web shops discount blindly. Mass coupons and newsletters go to everyone, so most of the
@@ -56,11 +57,13 @@ carry a price cut, it is:</p>
 <li><strong>consented</strong> — the customer sees the history that justifies each offer and controls
   channels and frequency.</li>
 </ul>
-<p><strong>How the platform behaves.</strong> It ships built-in business-logic templates and
-recommended user journeys — offer types, campaign shapes, timing, sold-out handling,
-consent settings — and every seller can follow, modify or overwrite them according to
-its own business targets. The platform automates the seller's work and helps the buyer;
-it does not dictate the seller's commercial rules.</p>
+<p><strong>How the platform behaves.</strong> It ships predefined rule sets and recommended user
+journeys — offer types, campaign shapes, incentives, timing, sold-out handling, consent
+settings. A seller runs on them as they are, or switches an area to <strong>advanced mode</strong>
+and applies its own business decisions: percentages, vouchers, freebies, compensation.
+Legal and consent defaults belong to the platform and advanced mode never goes below
+them. And everything is communicated to the customer: limits, first-come-first-served,
+expiry, and compensation when it exists, on every message.</p>
 <p>Three seller tools sit on top: one-off personalised offers from a recommendation list,
 one-product flash campaigns to every relevant customer, and recurring per-customer offer
 lists that each customer receives only with the products relevant to them.</p>
