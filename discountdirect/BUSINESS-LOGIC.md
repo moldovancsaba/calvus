@@ -143,8 +143,8 @@ formatted `hu-HU`; all UI strings are Hungarian.
   DiscountDirectben", the line that replying continues the conversation in chat, and a
   footer with the reason for receipt plus *Leiratkozás · Ajánlatbeállítások*.
 - **Postal letter (Mailing)**: letterhead and date, postal address, formal salutation
-  (*Tisztelt X Úr!* / *Tisztelt X!* — the prototype guesses gender from the first name, a
-  placeholder heuristic, not a rule), the offer, a **coupon code** `DIRECT-<pct>-<initials>`
+  (the prototype guesses gender from the first name; decided D23: the product uses the
+  neutral *Tisztelt {teljes név}!* and never infers gender), the offer, a **coupon code** `DIRECT-<pct>-<initials>`
   redeemable in store and online, and a pointer to the app. Decided (D6, §10): the coupon
   is **single-use** and **maps one-to-one to the online offer** — redeeming either closes
   both. Decided (D9, §10): the platform always produces the **printable content**;
@@ -323,8 +323,12 @@ tag *Decided (Dn)*.
 | D12 | (mission) | The platform is a **well-designed retention system** to avoid churn and improve customer lifetime value | Stated in §1; churn and LTV become the north-star metrics (SSOT §7). |
 | D13 | Who may change legal or consent defaults? Where do incentives come from? | **Platform owns legal and consent defaults; the seller keeps additional options within limits.** Percentages, vouchers, freebies and compensation come from **predefined rule sets** or from the seller in **advanced mode** — the system-wide term for the seller's own business decisions | `OperatingMode {predefined, advanced}` per area replaces follow/modify/overwrite; legal templates carry a floor (§1, §8.12, §9). |
 | D14 | Compensation promised before sold-out or issued after? | **Everything clearly communicated**: compensation if available, first-come-first-served, limited quantities and every other rule on every communication | Rules block on every rendering (§3.5, §3.7); SSOT R21. |
+| D15–D25 | Remaining items, recommended and applied for Release 1 (2026-09-17) | Print partner: seller mode first, Pingen candidate for the platform service; stack adopted; Hungary only; Shoprenter and UNAS connectors first; SES and hosting in eu-central-1; channels chat, e-mail, letter, newsletter; holdout 10 % pooled for small sellers; membership per seller with free delivery and early access; neutral salutation; reason-wording experiments only; Release 1 scope fixed | Full text in `ssot.html` §5; scope in `implementation-plan.html` §7. |
 
 ## 11. Still open
+
+Nothing for Release 1. The print partner question became D15; every later item is a
+Release 1.1+ scope question, tracked in `implementation-plan.html` §7.
 
 1. Which print partner to integrate for the print-and-post service (D9); the commercial
    rules for it follow D13 (predefined rule set or advanced mode).

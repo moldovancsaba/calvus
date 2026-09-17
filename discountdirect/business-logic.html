@@ -232,8 +232,8 @@ formatted <code>hu-HU</code>; all UI strings are Hungarian.</p>
   DiscountDirectben", the line that replying continues the conversation in chat, and a
   footer with the reason for receipt plus <em>Leiratkozás · Ajánlatbeállítások</em>.</li>
 <li><strong>Postal letter (Mailing)</strong>: letterhead and date, postal address, formal salutation
-  (<em>Tisztelt X Úr!</em> / <em>Tisztelt X!</em> — the prototype guesses gender from the first name, a
-  placeholder heuristic, not a rule), the offer, a <strong>coupon code</strong> <code>DIRECT-&lt;pct&gt;-&lt;initials&gt;</code>
+  (the prototype guesses gender from the first name; decided D23: the product uses the
+  neutral <em>Tisztelt {teljes név}!</em> and never infers gender), the offer, a <strong>coupon code</strong> <code>DIRECT-&lt;pct&gt;-&lt;initials&gt;</code>
   redeemable in store and online, and a pointer to the app. Decided (D6, §10): the coupon
   is <strong>single-use</strong> and <strong>maps one-to-one to the online offer</strong> — redeeming either closes
   both. Decided (D9, §10): the platform always produces the <strong>printable content</strong>;
@@ -550,9 +550,17 @@ tag <em>Decided (Dn)</em>.</p>
 <td><strong>Everything clearly communicated</strong>: compensation if available, first-come-first-served, limited quantities and every other rule on every communication</td>
 <td>Rules block on every rendering (§3.5, §3.7); SSOT R21.</td>
 </tr>
+<tr>
+<td>D15–D25</td>
+<td>Remaining items, recommended and applied for Release 1 (2026-09-17)</td>
+<td>Print partner: seller mode first, Pingen candidate for the platform service; stack adopted; Hungary only; Shoprenter and UNAS connectors first; SES and hosting in eu-central-1; channels chat, e-mail, letter, newsletter; holdout 10 % pooled for small sellers; membership per seller with free delivery and early access; neutral salutation; reason-wording experiments only; Release 1 scope fixed</td>
+<td>Full text in <code>ssot.html</code> §5; scope in <code>implementation-plan.html</code> §7.</td>
+</tr>
 </tbody>
 </table></div>
 <h2>11. Still open</h2>
+<p>Nothing for Release 1. The print partner question became D15; every later item is a
+Release 1.1+ scope question, tracked in <code>implementation-plan.html</code> §7.</p>
 <ol>
 <li>Which print partner to integrate for the print-and-post service (D9); the commercial
    rules for it follow D13 (predefined rule set or advanced mode).</li>

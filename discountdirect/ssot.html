@@ -178,7 +178,7 @@ serve that purpose.</p>
 <tr>
 <td><code>Channel</code></td>
 <td><code>chat</code>, <code>email</code>, <code>mailing</code>, <code>newsletter</code>, <code>rcs</code>, <code>whatsapp</code></td>
-<td><code>rcs</code>, <code>whatsapp</code> are milestone-2 channels.</td>
+<td>Release 1: the first four (D20); <code>whatsapp</code> then <code>rcs</code> in Release 2.</td>
 </tr>
 <tr>
 <td><code>Frequency</code></td>
@@ -411,7 +411,7 @@ platform never edits it.</p>
 <td><code>print_mode</code></td>
 <td><code>PrintMode</code></td>
 <td><code>seller</code></td>
-<td>D9</td>
+<td>D9, D15 (Release 1: <code>seller</code> only)</td>
 </tr>
 <tr>
 <td><code>consent_scope</code></td>
@@ -441,7 +441,25 @@ platform never edits it.</p>
 <td><code>holdout_pct</code></td>
 <td>int 0–20</td>
 <td>10</td>
-<td>research §4</td>
+<td>research §4, D21</td>
+</tr>
+<tr>
+<td><code>holdout_mode</code></td>
+<td><code>per_campaign</code> | <code>pooled</code></td>
+<td><code>pooled</code> under 1 000 active relationships, else <code>per_campaign</code></td>
+<td>D21</td>
+</tr>
+<tr>
+<td><code>min_outcomes_for_learning</code></td>
+<td>int</td>
+<td>2000</td>
+<td>D21</td>
+</tr>
+<tr>
+<td><code>early_access_minutes</code></td>
+<td>int</td>
+<td>60</td>
+<td>D22</td>
 </tr>
 <tr>
 <td><code>flash_defaults</code></td>
@@ -557,40 +575,67 @@ platform never edits it.</p>
 <td>Everything is clearly communicated to the buyer: compensation if available, first-come-first-served, limited quantity and every other rule appear on every communication</td>
 <td>R21</td>
 </tr>
+<tr>
+<td>D15</td>
+<td>Print partner (recommended, applied)</td>
+<td>Release 1 ships the <strong>seller print mode</strong> only (PDF download, "posted" action). The platform print-and-post service follows in Release 1.1 through an API-first provider that posts through the domestic postal network; <strong>Pingen</strong> is the first integration candidate, behind the <code>PrintPartner</code> interface so it can be swapped</td>
+</tr>
+<tr>
+<td>D16</td>
+<td>Technology stack (recommended, applied)</td>
+<td>The proposal in <code>architecture.html</code> §10 is adopted: TypeScript, Fastify, BullMQ on Redis, PostgreSQL 16, React, a Python decision engine</td>
+</tr>
+<tr>
+<td>D17</td>
+<td>Release 1 market (recommended, applied)</td>
+<td><strong>Hungary only</strong>: <code>hu-HU</code>, HUF, the HU market row seeded; further markets are configuration, not code</td>
+</tr>
+<tr>
+<td>D18</td>
+<td>Connector order (recommended, applied)</td>
+<td><strong>Shoprenter and UNAS first</strong> (the leading Hungarian rental platforms), then WooCommerce, then Shopify</td>
+</tr>
+<tr>
+<td>D19</td>
+<td>Providers and hosting (recommended, applied)</td>
+<td>E-mail through <strong>Amazon SES in eu-central-1</strong>; hosting in <strong>AWS eu-central-1</strong> (Frankfurt) for EU data residency; object store S3</td>
+</tr>
+<tr>
+<td>D20</td>
+<td>Release 1 channels (recommended, applied)</td>
+<td><strong>chat, e-mail, postal letter (seller print mode), newsletter</strong>. RCS and WhatsApp in Release 2, <strong>WhatsApp first</strong> in Hungary because it does not depend on carrier RCS support</td>
+</tr>
+<tr>
+<td>D21</td>
+<td>Measurement defaults (recommended, applied)</td>
+<td>Holdout <strong>10 %</strong>; sellers with fewer than 1 000 active relationships use one <strong>pooled seller-level holdout</strong> instead of per-campaign ones; learned discount depth is enabled only after <strong>2 000 offers with outcomes</strong></td>
+</tr>
+<tr>
+<td>D22</td>
+<td>Membership unit and perks (recommended, applied)</td>
+<td><strong>Per seller</strong> in Release 1; default perks <strong>free delivery</strong> and <strong>early access 60 minutes</strong> before a flash campaign; samples and gifts in advanced mode; a cross-seller wallet in Release 3</td>
+</tr>
+<tr>
+<td>D23</td>
+<td>Salutation (recommended, applied)</td>
+<td>Neutral formal salutation <strong>"Tisztelt {teljes név}!"</strong> on letters and e-mails; no inference of gender from names</td>
+</tr>
+<tr>
+<td>D24</td>
+<td>Reason experiments (recommended, applied)</td>
+<td>The reason is always present (D14); experiments compare <strong>engine wording against seller wording</strong> only, never reason against no reason</td>
+</tr>
+<tr>
+<td>D25</td>
+<td>Release 1 scope (recommended, applied)</td>
+<td>The issue list in <code>implementation-plan.html</code> §7; everything else is Release 1.1 or later</td>
+</tr>
 </tbody>
 </table></div>
-<h3>Open questions and the assumption in force until answered</h3>
-<div class="tbl"><table>
-<thead>
-<tr>
-<th>ID</th>
-<th>Question</th>
-<th>Assumption in force</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>O1</td>
-<td>answered → D13</td>
-<td>—</td>
-</tr>
-<tr>
-<td>O2</td>
-<td>Which print partner to integrate (the commercial rule set is settled by D13)</td>
-<td>Interface designed against a generic partner API; partner chosen before milestone 3.</td>
-</tr>
-<tr>
-<td>O3</td>
-<td>answered → D14</td>
-<td>—</td>
-</tr>
-<tr>
-<td>A1</td>
-<td>Technology stack</td>
-<td>The proposal in <code>architecture.html</code> §10 stands until objected to.</td>
-</tr>
-</tbody>
-</table></div>
+<h3>Open questions</h3>
+<p>None for Release 1. O1 → D13, O2 → D15, O3 → D14, A1 → D16. D15–D25 were recommended
+and applied on 2026-09-17 so that Release 1 is fully specified; the product owner may
+overrule any of them, in which case this register changes first.</p>
 <h2>6. Rules register</h2>
 <div class="tbl"><table>
 <thead>

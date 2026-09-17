@@ -21,9 +21,11 @@ decision records. Definitions are in `ssot.html`; details in `technical-design.h
                stock)
 ```
 
-External systems: the seller's **shop platform** (Shopify, WooCommerce, UNAS, Shoprenter
-first; connector per platform), a transactional **e-mail provider**, a **print partner**
-(D9), **messaging providers** later, and an **identity provider** for seller SSO (optional).
+External systems: the seller's **shop platform** (Shoprenter and UNAS first, then
+WooCommerce and Shopify — D18; connector per platform), a transactional **e-mail
+provider** (Amazon SES — D19), a **print partner** (Pingen candidate, Release 1.1 — D15),
+**messaging providers** later (WhatsApp first — D20), and an **identity provider** for
+seller SSO (optional).
 
 **Mission.** The platform is a retention system: churn and customer lifetime value are
 the outcome metrics every container serves (D12).
@@ -200,7 +202,7 @@ SSOT §7 metrics → console dashboards read the rollups.
 - Service objectives: accept path availability 99.9 %; fan-out of 50 000 offers under
   10 minutes; write-back lag under 5 minutes p95.
 
-## 10. Proposed stack (assumption A1, open to objection)
+## 10. Stack (decided, D16)
 
 | Layer | Choice | Rationale |
 |---|---|---|
@@ -210,9 +212,10 @@ SSOT §7 metrics → console dashboards read the rollups.
 | Database | PostgreSQL 16 | RLS for tenancy, JSONB for template values, reliable counters |
 | Front ends | React + Vite (console), React PWA (buyer) | shares the design tokens already named after GDS 6.5.0 |
 | Decision engine | Python service (FastAPI) with scikit-learn/causalml for uplift; rules in milestone 1 | data-science tooling where it lives; versioned models |
-| E-mail | Postmark or Amazon SES | transactional deliverability, webhooks for status |
+| E-mail | Amazon SES, eu-central-1 | transactional deliverability, status webhooks, EU data residency (D19) |
 | Object store | S3-compatible | PDFs, exports |
-| Hosting | container platform (Kubernetes or a managed equivalent) in an EU region | data residency |
+| Hosting | AWS eu-central-1 (Frankfurt), containers on ECS or EKS | data residency (D19) |
+| Print partner | Pingen (Release 1.1), behind `PrintPartner` | domestic posting in Hungary through an API (D15) |
 
 Alternatives considered: a single Next.js app (simpler, weaker worker story); Go for
 the API (faster, second language); a managed BaaS (fast start, weak RLS and audit).
@@ -230,4 +233,7 @@ the API (faster, second language); a managed BaaS (fast start, weak RLS and audi
 | ADR-10 | One transparency renderer composes the rules block for every channel | accepted (D14) |
 | ADR-7 | Consent scope is a seller setting (per seller or inbox) | accepted (D11) |
 | ADR-8 | Rules-based decision engine in milestone 1; model-based from milestone 2 behind the same interface | accepted |
-| ADR-9 | Stack per §10 | proposed (A1) |
+| ADR-9 | Stack per §10 | accepted (D16) |
+| ADR-11 | Release 1 is Hungary only; markets are configuration | accepted (D17) |
+| ADR-12 | Connectors in the order Shoprenter, UNAS, WooCommerce, Shopify | accepted (D18) |
+| ADR-13 | Seller print mode first; platform print service through a swappable partner | accepted (D15) |

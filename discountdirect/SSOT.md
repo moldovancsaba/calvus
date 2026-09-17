@@ -52,7 +52,7 @@ serve that purpose.
 |---|---|---|
 | `OfferKind` | `standard`, `flash`, `list_item`, `reorder`, `reminder`, `progress`, `surprise`, `back_in_stock`, `price_drop`, `birthday`, `sold_out_notice` | The first three exist in the prototype; the rest are decided message types from the research. |
 | `OfferStatus` | `draft`, `pending`, `accepted`, `declined`, `expired`, `sold_out`, `redeemed`, `withdrawn` | `accepted`, `declined`, `expired`, `sold_out`, `redeemed`, `withdrawn` are terminal. |
-| `Channel` | `chat`, `email`, `mailing`, `newsletter`, `rcs`, `whatsapp` | `rcs`, `whatsapp` are milestone-2 channels. |
+| `Channel` | `chat`, `email`, `mailing`, `newsletter`, `rcs`, `whatsapp` | Release 1: the first four (D20); `whatsapp` then `rcs` in Release 2. |
 | `Frequency` | `weekly`, `biweekly`, `monthly`, `event` | `event` = trigger-driven journey step. |
 | `DiscountMode` | `steps`, `free` | D5. Seller setting. |
 | `InboxMode` | `marketplace`, `per_seller` | D3. Seller setting. |
@@ -105,12 +105,15 @@ platform never edits it.
 | `discount_steps` | int[] | `[10,15,20,25]` | D5 |
 | `discount_guardrails` | {floor_pct, max_pct, margin_floor_pct, per_segment_max{}} | {0, 30, 10, {}} | D5 |
 | `newsletter_discount_rule` | {mode: recommendation_pct\|fixed, fixed_pct} | recommendation_pct, 10 | D7 |
-| `print_mode` | `PrintMode` | `seller` | D9 |
+| `print_mode` | `PrintMode` | `seller` | D9, D15 (Release 1: `seller` only) |
 | `consent_scope` | `ConsentScope` | `per_seller` | D11 |
 | `compensation_mode` | `CompensationMode` | `preset` | D10 |
 | `compensation_presets` | CompensationKind[] | `[voucher, free_delivery, priority_next_campaign]` | D10 |
 | `frequency_cap` | {email_per_30d, chat_per_7d, mailing_per_90d, rcs_per_7d} | {4, 3, 1, 1} | research §6 |
-| `holdout_pct` | int 0–20 | 10 | research §4 |
+| `holdout_pct` | int 0–20 | 10 | research §4, D21 |
+| `holdout_mode` | `per_campaign` \| `pooled` | `pooled` under 1 000 active relationships, else `per_campaign` | D21 |
+| `min_outcomes_for_learning` | int | 2000 | D21 |
+| `early_access_minutes` | int | 60 | D22 |
 | `flash_defaults` | {pct, limit_hours, limit_qty_total, limit_qty_per_buyer, channels[]} | {15, 24, 20, 1, [chat,email]} | prototype + D2 |
 | `list_defaults` | {frequency, channels[]} | {biweekly, [email]} | prototype |
 | `reason_editable` | bool | true | D4 |
@@ -138,15 +141,23 @@ Buyer-level preferences: `frequency_pref` (per seller or inbox per `consent_scop
 | D12 | The platform is a retention system: avoid churn, raise customer lifetime value | mission, metrics §7 |
 | D13 | Legal and consent defaults belong to the platform; the seller keeps additional options within limits. Incentives (percentages, vouchers, freebies, compensation) come from predefined rule sets or from the seller in **advanced mode**; "advanced mode" is the system-wide term for the seller's own business decisions | R1, `advanced_mode`, `OperatingMode` |
 | D14 | Everything is clearly communicated to the buyer: compensation if available, first-come-first-served, limited quantity and every other rule appear on every communication | R21 |
+| D15 | Print partner (recommended, applied) | Release 1 ships the **seller print mode** only (PDF download, "posted" action). The platform print-and-post service follows in Release 1.1 through an API-first provider that posts through the domestic postal network; **Pingen** is the first integration candidate, behind the `PrintPartner` interface so it can be swapped | R14, DD-054 |
+| D16 | Technology stack (recommended, applied) | The proposal in `architecture.html` §10 is adopted: TypeScript, Fastify, BullMQ on Redis, PostgreSQL 16, React, a Python decision engine | ADR-9 accepted |
+| D17 | Release 1 market (recommended, applied) | **Hungary only**: `hu-HU`, HUF, the HU market row seeded; further markets are configuration, not code | `markets` |
+| D18 | Connector order (recommended, applied) | **Shoprenter and UNAS first** (the leading Hungarian rental platforms), then WooCommerce, then Shopify | DD-071–074 |
+| D19 | Providers and hosting (recommended, applied) | E-mail through **Amazon SES in eu-central-1**; hosting in **AWS eu-central-1** (Frankfurt) for EU data residency; object store S3 | architecture §10 |
+| D20 | Release 1 channels (recommended, applied) | **chat, e-mail, postal letter (seller print mode), newsletter**. RCS and WhatsApp in Release 2, **WhatsApp first** in Hungary because it does not depend on carrier RCS support | `Channel` |
+| D21 | Measurement defaults (recommended, applied) | Holdout **10 %**; sellers with fewer than 1 000 active relationships use one **pooled seller-level holdout** instead of per-campaign ones; learned discount depth is enabled only after **2 000 offers with outcomes** | R19, `holdout_pct`, `min_outcomes_for_learning` |
+| D22 | Membership unit and perks (recommended, applied) | **Per seller** in Release 1; default perks **free delivery** and **early access 60 minutes** before a flash campaign; samples and gifts in advanced mode; a cross-seller wallet in Release 3 | DD-086, `early_access_minutes` |
+| D23 | Salutation (recommended, applied) | Neutral formal salutation **"Tisztelt {teljes név}!"** on letters and e-mails; no inference of gender from names | BL §3.7, DD-052 |
+| D24 | Reason experiments (recommended, applied) | The reason is always present (D14); experiments compare **engine wording against seller wording** only, never reason against no reason | DD-091 |
+| D25 | Release 1 scope (recommended, applied) | The issue list in `implementation-plan.html` §7; everything else is Release 1.1 or later | plan §7 |
 
-### Open questions and the assumption in force until answered
+### Open questions
 
-| ID | Question | Assumption in force |
-|---|---|---|
-| O1 | answered → D13 | — |
-| O2 | Which print partner to integrate (the commercial rule set is settled by D13) | Interface designed against a generic partner API; partner chosen before milestone 3. |
-| O3 | answered → D14 | — |
-| A1 | Technology stack | The proposal in `architecture.html` §10 stands until objected to. |
+None for Release 1. O1 → D13, O2 → D15, O3 → D14, A1 → D16. D15–D25 were recommended
+and applied on 2026-09-17 so that Release 1 is fully specified; the product owner may
+overrule any of them, in which case this register changes first.
 
 ## 6. Rules register
 

@@ -329,9 +329,10 @@ on send: redis.incr with expiry = window
 ```
 Deferred sends are re-queued at the window boundary and logged as `deferred`.
 
-### A9 Holdout (R19)
+### A9 Holdout (R19, D21)
 ```
-holdout(buyer, scope_id) = (murmur3(buyer.id + scope_id) % 100) < seller.settings.holdout_pct
+scope = campaign_or_automation.id if seller.settings.holdout_mode == 'per_campaign' else seller.id   # pooled for small sellers
+holdout(buyer, scope) = (murmur3(buyer.id + scope) % 100) < seller.settings.holdout_pct
 ```
 Deterministic, so the same buyer is consistently held out within one campaign or
 automation and independently across them.

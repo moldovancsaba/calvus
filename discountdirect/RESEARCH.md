@@ -479,13 +479,14 @@ non-price side: never lead with a discount where convenience or a reminder would
 no streaks, timers, badges or progress bars that are not true; no membership that is
 only a coupon in disguise; no wheel-and-farm mechanics that borrow from gambling.
 
-## 11. Open research questions
+## 11. Research questions, decided for Release 1
 
-Optimal discount-depth model for a small catalogue with thin history; the right holdout
-size for a single web shop's volume; whether a buyer-side "reason" changes acceptance
-(A/B); RCS availability and cost on Hungarian carriers; which non-price perk Hungarian
-buyers value most (free delivery vs early access vs samples); whether a per-seller
-membership or a cross-seller one is the right unit.
+The questions this research left open were decided on 2026-09-17 (SSOT D21–D24):
+discount depth stays rule-based until 2 000 offers have outcomes; the holdout is 10 %,
+pooled at seller level for sellers under 1 000 active relationships; reason experiments
+compare wordings only, since a reason is always shown; WhatsApp precedes RCS in Hungary;
+the default non-price perks are free delivery and early access; membership is per
+seller first. Each stays open as a research topic for Release 2 and later.
 
 ## 12. Sources consulted
 

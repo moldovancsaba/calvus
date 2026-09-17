@@ -45,9 +45,11 @@ decision records. Definitions are in <code>ssot.html</code>; details in <code>te
                checkout,
                stock)
 </code></pre>
-<p>External systems: the seller's <strong>shop platform</strong> (Shopify, WooCommerce, UNAS, Shoprenter
-first; connector per platform), a transactional <strong>e-mail provider</strong>, a <strong>print partner</strong>
-(D9), <strong>messaging providers</strong> later, and an <strong>identity provider</strong> for seller SSO (optional).</p>
+<p>External systems: the seller's <strong>shop platform</strong> (Shoprenter and UNAS first, then
+WooCommerce and Shopify — D18; connector per platform), a transactional <strong>e-mail
+provider</strong> (Amazon SES — D19), a <strong>print partner</strong> (Pingen candidate, Release 1.1 — D15),
+<strong>messaging providers</strong> later (WhatsApp first — D20), and an <strong>identity provider</strong> for
+seller SSO (optional).</p>
 <p><strong>Mission.</strong> The platform is a retention system: churn and customer lifetime value are
 the outcome metrics every container serves (D12).</p>
 <h2>2. Quality attributes</h2>
@@ -349,7 +351,7 @@ SSOT §7 metrics → console dashboards read the rollups.</p>
 <li>Service objectives: accept path availability 99.9 %; fan-out of 50 000 offers under
   10 minutes; write-back lag under 5 minutes p95.</li>
 </ul>
-<h2>10. Proposed stack (assumption A1, open to objection)</h2>
+<h2>10. Stack (decided, D16)</h2>
 <div class="tbl"><table>
 <thead>
 <tr>
@@ -391,8 +393,8 @@ SSOT §7 metrics → console dashboards read the rollups.</p>
 </tr>
 <tr>
 <td>E-mail</td>
-<td>Postmark or Amazon SES</td>
-<td>transactional deliverability, webhooks for status</td>
+<td>Amazon SES, eu-central-1</td>
+<td>transactional deliverability, status webhooks, EU data residency (D19)</td>
 </tr>
 <tr>
 <td>Object store</td>
@@ -401,8 +403,13 @@ SSOT §7 metrics → console dashboards read the rollups.</p>
 </tr>
 <tr>
 <td>Hosting</td>
-<td>container platform (Kubernetes or a managed equivalent) in an EU region</td>
-<td>data residency</td>
+<td>AWS eu-central-1 (Frankfurt), containers on ECS or EKS</td>
+<td>data residency (D19)</td>
+</tr>
+<tr>
+<td>Print partner</td>
+<td>Pingen (Release 1.1), behind <code>PrintPartner</code></td>
+<td>domestic posting in Hungary through an API (D15)</td>
 </tr>
 </tbody>
 </table></div>
@@ -466,7 +473,22 @@ the API (faster, second language); a managed BaaS (fast start, weak RLS and audi
 <tr>
 <td>ADR-9</td>
 <td>Stack per §10</td>
-<td>proposed (A1)</td>
+<td>accepted (D16)</td>
+</tr>
+<tr>
+<td>ADR-11</td>
+<td>Release 1 is Hungary only; markets are configuration</td>
+<td>accepted (D17)</td>
+</tr>
+<tr>
+<td>ADR-12</td>
+<td>Connectors in the order Shoprenter, UNAS, WooCommerce, Shopify</td>
+<td>accepted (D18)</td>
+</tr>
+<tr>
+<td>ADR-13</td>
+<td>Seller print mode first; platform print service through a swappable partner</td>
+<td>accepted (D15)</td>
 </tr>
 </tbody>
 </table></div>

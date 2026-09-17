@@ -430,8 +430,9 @@ redeem(code, channel):
 on send: redis.incr with expiry = window
 </code></pre>
 <p>Deferred sends are re-queued at the window boundary and logged as <code>deferred</code>.</p>
-<h3>A9 Holdout (R19)</h3>
-<pre><code>holdout(buyer, scope_id) = (murmur3(buyer.id + scope_id) % 100) &lt; seller.settings.holdout_pct
+<h3>A9 Holdout (R19, D21)</h3>
+<pre><code>scope = campaign_or_automation.id if seller.settings.holdout_mode == 'per_campaign' else seller.id   # pooled for small sellers
+holdout(buyer, scope) = (murmur3(buyer.id + scope) % 100) &lt; seller.settings.holdout_pct
 </code></pre>
 <p>Deterministic, so the same buyer is consistently held out within one campaign or
 automation and independently across them.</p>

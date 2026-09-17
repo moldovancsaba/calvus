@@ -104,9 +104,8 @@ now, not this often" without leaving.
 
 ## How we implement it
 
-**Phase 1 — Foundation (rules, not models).** Integrate with the shop's order data
-(Shopify, WooCommerce, and the Hungarian platforms UNAS and Shoprenter as the first
-connectors); build the seller–customer thread, **one-tap reorder of the customer's usuals with
+**Phase 1 — Foundation (rules, not models), Hungary first.** Integrate with the shop's
+order data (Shoprenter and UNAS first, then WooCommerce and Shopify); build the seller–customer thread, **one-tap reorder of the customer's usuals with
 saved payment**, offers with reasons, flash campaigns with enforced limits, recurring
 lists, in-app and e-mail delivery; write reasons from rules (replenishment interval,
 accessory of an owned product, upgrade after N months); ship the first non-price
@@ -143,3 +142,5 @@ from the repeat core.
 - The clickable prototype: [index.html](index.html)
 - The rules it implements: [business-logic.html](business-logic.html)
 - The research and sources: [research.html](research.html)
+- The engineering package: [ssot.html](ssot.html), [architecture.html](architecture.html),
+  [technical-design.html](technical-design.html), [implementation-plan.html](implementation-plan.html)

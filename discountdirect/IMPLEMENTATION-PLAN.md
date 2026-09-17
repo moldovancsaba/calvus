@@ -221,7 +221,7 @@ Acceptance: staging send to a sandbox inbox renders per the prototype's e-mail t
 statuses appear in the thread.
 
 **DD-052 Postal letter PDF** · M · area:delivery · depends DD-050
-Scope: letter per BL §3.7 with a neutral salutation rule (no gender guessing), locale,
+Scope: letter per BL §3.7 with the neutral salutation "Tisztelt {teljes név}!" (D23), locale,
 coupon code (DD-053); PDF stored in the object store.
 Acceptance: PDF matches the prototype's letter tab; address block validated.
 
@@ -230,12 +230,13 @@ Pseudo code: TD A7.
 Acceptance: redeem once succeeds and closes the offer everywhere; a second redeem
 returns `already_redeemed`; store-staff page works on a phone.
 
-**DD-054 Print modes: platform service or seller** · M · area:delivery · depends DD-052 · blocked:O2 (partner choice)
+**DD-054 Print modes: platform service or seller** · M · area:delivery · depends DD-052
 Scope: `print_mode` (D9); `platform_service` → `PrintPartner.submit` and status
 ingestion; `seller` → download in the console and a "posted" action.
 Acceptance: both modes advance the delivery to `printed` / `posted`; partner failures
-surface in the thread. The service's commercial terms come from the predefined rule
-set or advanced mode (D13); the partner itself is still to be chosen (O2).
+surface in the thread. Release 1 ships the `seller` mode; the `platform_service` mode
+integrates Pingen behind `PrintPartner` in Release 1.1 (D15); its commercial terms come
+from the predefined rule set or advanced mode (D13).
 
 **DD-055 Newsletter renderer** · S · area:delivery · depends DD-041, DD-051
 Scope: per-buyer newsletter per BL §3.7 with the list's items, reasons, discounts,
@@ -282,8 +283,8 @@ Scope: TD §5 `ShopConnector`; sync worker with watermark; webhook registration 
 verification; `products`, `orders`, `order_lines`.
 Acceptance: a contract test suite every connector must pass; sync is idempotent.
 
-**DD-071 Shopify connector** · M · depends DD-070 · **DD-072 WooCommerce** · M ·
-**DD-073 UNAS** · M · **DD-074 Shoprenter** · M
+**DD-074 Shoprenter connector** · M · **DD-073 UNAS** · M · **DD-072 WooCommerce** · M ·
+**DD-071 Shopify** · M — all depend on DD-070, built in this order (D18)
 Acceptance: each passes DD-070's contract suite against a sandbox store; checkout link
 carries the locked price (discount code or pre-built cart) and the `ref`.
 
@@ -321,7 +322,7 @@ run step: if may_send and not holdout: create offer(kind=step.kind, template=j) 
 Acceptance: order confirmed → t+0 complementary → 24–48 h upgrade → run-out reminder
 fire on the seed data with fixed clocks.
 
-**DD-082 Run-out reminder and one-tap reorder** · M · depends DD-081, DD-012
+**DD-082 Run-out reminder and one-tap reorder** · M · depends DD-012 (Release 1 uses a daily run-out job; DD-081 generalises it in Release 1.1)
 Scope: `reorder` and `reminder` kinds with `pct = 0` by default; "my usuals" endpoint
 (R20).
 Acceptance: Anna gets a HEPA reminder six days before the predicted run-out; accepting
@@ -342,15 +343,16 @@ Acceptance: fires once per year per relationship, only with a stored birthday an
 one-step reward.
 
 **DD-086 Membership and tier** · L · depends DD-080, DD-083
-Scope: named membership per seller, tier from order count, non-price perks (free
-delivery, early access to flash campaigns, priority answers), join with one tap.
+Scope: named membership per seller (D22), tier from order count, default perks free
+delivery and early access `early_access_minutes` (60) before flash campaigns, priority
+answers; samples and gifts in advanced mode; join with one tap.
 Acceptance: members receive flash campaigns `early_access_minutes` before others; tier
 is visible to the buyer; leaving is one tap.
 
 ### E9 Measurement (M7)
 
 **DD-090 Holdout assignment** · S · area:measurement · depends DD-002
-Pseudo code: TD A9.
+Pseudo code: TD A9; `holdout_mode` pooled under 1 000 active relationships (D21).
 Acceptance: the same buyer is consistently held out within one campaign; distribution
 within 1 point of `holdout_pct` over 100 000 buyers.
 
@@ -379,12 +381,8 @@ of BL §3.8: history, reason (engine or seller), basis.
 
 ## 4. Blocked register
 
-| Issue | Blocked by | Assumption built against |
-|---|---|---|
-| DD-054 | O2 (print partner choice) | generic print partner API |
-| all | A1 | stack per `architecture.html` §10 |
-
-O1 and O3 were answered on 2026-09-17 (D13, D14) and their issues are unblocked.
+Empty. O1–O3 and A1 were resolved on 2026-09-17 (D13–D16); the recommended decisions
+D15–D25 in `ssot.html` §5 complete the specification of Release 1.
 
 ## 5. Milestones 2 and 3 (epic level)
 
@@ -410,3 +408,32 @@ O1 and O3 were answered on 2026-09-17 (D13, D14) and their issues are unblocked.
 | Advanced-mode values breaking legal defaults | ADR-6, legal floor enforced in A1 (D13) |
 | Thin history for the engine on small shops | rules v1 degrades to `replenish_days` and category defaults |
 | Print partner choice (O2) arrives late | interface-first design; DD-054 ships the seller mode first |
+
+## 7. Release 1 — the first deliverable version (D25)
+
+Release 1 is Hungary only (D17), on the four Release 1 channels (D20), with the seller
+print mode (D15), Shoprenter and UNAS connectors (D18) and the buyer app at phone
+width first. It is complete when every issue below meets the global Definition of Done.
+
+| Epic | Issues in Release 1 |
+|---|---|
+| E0 Foundations | DD-001, 002, 003, 004, 005 |
+| E1 Thread | DD-010, 011, 012, 013 |
+| E2 Offers | DD-020, 021, 022, 023, 024 |
+| E3 Flash | DD-030, 031, 032, 033, 034 |
+| E4 Lists | DD-040, 041, 042 |
+| E5 Channels | DD-050, 051, 052, 053, 054 (seller mode), 055 |
+| E6 Consent | DD-060, 061, 062, 063, 064, 065 |
+| E7 Hand-off | DD-070, 074, 073, 075, 076 |
+| E8 Rule sets | DD-080, 082 |
+| E9 Measurement | DD-090, 091, 092 |
+| E10 Buyer app | DD-100, 101, 102, 103, 104 |
+
+Release 1.1: DD-072 WooCommerce, DD-071 Shopify, DD-054 platform print service
+(Pingen), DD-081 journey runner, DD-083 progress card, DD-084 back-in-stock and
+price-drop, DD-085 birthday, DD-086 membership. Release 2 and 3: §5.
+
+Indicative sequencing for one team of four engineers plus one data engineer: E0 two
+weeks; E1–E2 and E6 in parallel four weeks; E3–E4 and E5 four weeks; E7 four weeks
+(connectors in parallel); E8–E10 four weeks; hardening and the compliance test pass two
+weeks. About twenty weeks to Release 1, with the critical path through E7.
