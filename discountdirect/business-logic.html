@@ -131,7 +131,8 @@ formatted <code>hu-HU</code>; all UI strings are Hungarian.</p>
 <h3>3.1 Personalised offer (seller → one buyer)</h3>
 <ul>
 <li>Source: the buyer's recommendation list. Each card shows product, reason, original
-  price, discounted price and −pct.</li>
+  price, discounted price and −pct. Decided (D4, §10): the reason is <strong>written by the
+  engine and editable by the seller</strong>; both versions are kept.</li>
 <li>The seller picks <strong>exactly one channel</strong> per send (select: chat / e-mail / mailing).</li>
 <li>Sending appends an <strong>offer message</strong> (<code>status: pending</code>, <code>channels: [channel]</code>, <code>at: 'most'</code>)
   to the conversation and <strong>removes the recommendation</strong> — an offer is made once.</li>
@@ -155,7 +156,9 @@ formatted <code>hu-HU</code>; all UI strings are Hungarian.</p>
 <li>Flash offer: <em>Megveszem most</em> → <code>accepted</code> ("Megvásárolva") · <em>Kihagyom</em> → <code>declined</code>
   ("Kihagyva").</li>
 <li><code>accepted</code> and <code>declined</code> are terminal; the card then shows the status label only.</li>
-<li><strong>Accepting does not create an order</strong> in the prototype — see §8.</li>
+<li><strong>Accepting does not create an order</strong> in the prototype. Decided (D1, §10): accepting
+  <strong>hands off to the shop's own checkout</strong> with the offer's price locked; the order is
+  closed in the shop and reported back to the thread.</li>
 </ul>
 <h3>3.4 Conversation list (seller inbox)</h3>
 <ul>
@@ -181,6 +184,11 @@ formatted <code>hu-HU</code>; all UI strings are Hungarian.</p>
   <code>limitQty</code>, <code>channels</code>) and confirms "Elküldve N releváns vevőnek (names) — csatorna: …".</li>
 <li>Not enforced in the prototype: expiry after <code>limitH</code>, decrementing <code>limitQty</code> on
   purchase, first-come-first-served, stock.</li>
+<li>Decided (D2, §10): the quantity limit exists <strong>both per campaign in total and per
+  buyer</strong>; both are set by the seller and both are enforced. When the campaign sells out,
+  buyers who already received the offer are <strong>informed</strong> in the thread, and the seller may
+  attach an <strong>optional compensation</strong> (a goodwill gesture chosen by the seller) to that
+  message.</li>
 </ul>
 <h3>3.6 Recurring personalised list (🗞 Automatikus ajánlatlista)</h3>
 <ul>
@@ -208,11 +216,14 @@ formatted <code>hu-HU</code>; all UI strings are Hungarian.</p>
 <li><strong>Postal letter (Mailing)</strong>: letterhead and date, postal address, formal salutation
   (<em>Tisztelt X Úr!</em> / <em>Tisztelt X!</em> — the prototype guesses gender from the first name, a
   placeholder heuristic, not a rule), the offer, a <strong>coupon code</strong> <code>DIRECT-&lt;pct&gt;-&lt;initials&gt;</code>
-  redeemable in store and online, and a pointer to the app.</li>
+  redeemable in store and online, and a pointer to the app. Decided (D6, §10): the coupon
+  is <strong>single-use</strong> and <strong>maps one-to-one to the online offer</strong> — redeeming either closes
+  both.</li>
 <li><strong>Newsletter (Hírlevél)</strong>: banner with the frequency of the first running automation,
   greeting, <strong>every catalogue product relevant to this buyer</strong> with its per-buyer reason
   and a discount (matching recommendation pct or 10 %), footer with <em>Leiratkozás ·
-  Gyakoriság módosítása</em>.</li>
+  Gyakoriság módosítása</em>. Decided (D7, §10): the list discount is a <strong>seller-level default
+  rule that each list can override</strong>.</li>
 <li>Which offer the e-mail and letter feature: the <strong>newest offer in the thread</strong>, else the
   first recommendation, else the first relevant catalogue product at 15 %.</li>
 </ul>
@@ -345,22 +356,29 @@ the demo shows. Every state change re-renders everything (<code>renderAll</code>
 <ol>
 <li><strong>Persistence and identity</strong>: users, sellers, buyers, conversations, messages, offers,
    automations; roles and authentication for the two actors; a buyer with <strong>many sellers</strong>
-   (the prototype has one).</li>
+   (the prototype has one). Decided (D3): a seller chooses whether its buyers see it in a
+   <strong>shared marketplace inbox</strong> or in a <strong>per-seller app</strong>; both modes ship.</li>
 <li><strong>Recommendation engine</strong> (or its integration): purchase history → per-buyer product
    scores with human-readable reasons; segment derivation (loyal / returning / new, order
    count, tenure).</li>
 <li><strong>Channel delivery</strong>: chat push, transactional e-mail (with the CTA deep link and
    reply-to-thread), printed DM with coupon (print/post integration), newsletter compose
    and send; per-message delivery events written to the timeline.</li>
-<li><strong>Offer lifecycle</strong>: accept → <strong>order</strong> (price locked, quantity, address, payment);
-   decline; expiry by <code>limitH</code>; <code>limitQty</code> decrement and sold-out state; first-come
-   handling for flash campaigns; coupon issuance and redemption (store and online).</li>
+<li><strong>Offer lifecycle</strong>: accept → <strong>hand-off to the shop's checkout</strong> with the price
+   locked (a signed link or cart token), order confirmation written back to the thread;
+   decline; expiry by <code>limitH</code>; per-campaign and per-buyer <code>limitQty</code> decrement and
+   sold-out state; first-come handling for flash campaigns; sold-out notice with optional
+   compensation; single-use coupon issuance and redemption mapped to the offer (D1, D2,
+   D6).</li>
 <li><strong>Scheduler</strong> for automations: frequency → next run, per-run content freeze, per-buyer
    send, skip buyers with no relevant items, stop/pause.</li>
-<li><strong>Consent and preferences</strong>: unsubscribe per channel, frequency preference, GDPR basis
-   for history-driven marketing, audit of why each offer was sent (the reason is already
-   first-class).</li>
-<li><strong>Pricing guardrails</strong>: allowed discount steps, floors/margins, per-segment limits.</li>
+<li><strong>Consent and preferences</strong>: unsubscribe per channel, frequency preference, legal
+   basis for history-driven marketing <strong>configured per market and channel — legitimate
+   interest with soft opt-in where the market allows it, consent elsewhere</strong> — with
+   retention periods per market, and an audit of why each offer was sent (the reason is
+   already first-class) (D8).</li>
+<li><strong>Pricing guardrails</strong>: per seller, <strong>either fixed steps or free entry</strong>, both under
+   guardrails (floor, margin, per-segment limits); the mode is a seller setting (D5).</li>
 <li><strong>Timestamps, time zones, locale</strong>: real datetimes; HUF and <code>hu-HU</code> today, others later.</li>
 <li><strong>Metrics</strong>: sent / opened / accepted / declined / expired per offer, campaign and
    automation; response time; badge counts from real state.</li>
@@ -369,34 +387,100 @@ the demo shows. Every state change re-renders everything (<code>renderAll</code>
     (<code>GDS-TOKEN-MAP.md</code>); the dev build swaps the <code>:root</code> block for the GDS theme.</li>
 </ol>
 <h2>9. Suggested domain model</h2>
-<pre><code>Seller(id, name, tagline)
+<pre><code>Seller(id, name, tagline,
+       inbox_mode: marketplace|per_seller,                                -- D3
+       discount_mode: steps|free, discount_guardrails{floor_pct, max_pct, margin_floor},  -- D5
+       newsletter_discount_rule)                                          -- D7 default
+Market(code, legal_basis: legitimate_interest|consent, retention_days, soft_opt_in: bool)  -- D8
 Buyer(id, name, postal_address, email, consents{chat,email,mailing,newsletter}, preferences{frequency})
 Relationship(seller_id, buyer_id, segment, order_count, since)          -- one per pair
 Order(id, relationship_id, product_id, price, ordered_at)               -- purchase history
 Product(id, seller_id, name, price)
 Relevance(product_id, buyer_id, score, reason)                          -- engine output
 Recommendation(id, relationship_id, product_id, pct, reason, state)     -- available|sent
-Offer(id, relationship_id, product_id, kind, orig, pct, reason, channels[], status,
-      limit_hours, limit_qty, expires_at, sent_at, responded_at, order_id?)
+Offer(id, relationship_id, product_id, kind, orig, pct,
+      reason_engine, reason_seller?,                                      -- D4
+      channels[], status, limit_hours, limit_qty_per_buyer, expires_at, sent_at,
+      responded_at, checkout_url?, order_ref?)                            -- D1 hand-off
 Message(id, relationship_id, from, kind: text|event|offer_ref, body, channel?, at)
-Campaign(id, seller_id, product_id, pct, limit_hours, limit_qty, channels[], sent_at)   -- fans out to Offers
-Automation(id, seller_id, title, frequency, channels[], product_ids[], next_run_at, state)
+Campaign(id, seller_id, product_id, pct, limit_hours, limit_qty_total, limit_qty_per_buyer,
+         channels[], sent_at, sold_out_at?, compensation?)               -- D2; fans out to Offers
+Automation(id, seller_id, title, frequency, channels[], product_ids[], next_run_at, state,
+           discount_rule_override?)                                      -- D7
 Delivery(id, message_id|offer_id, channel, status, at)                  -- per-channel send record
-Coupon(code, offer_id, redeemed_at?)
+Coupon(code, offer_id, single_use: true, redeemed_at?, redeemed_channel?)  -- D6, one per offer
 </code></pre>
-<h2>10. Open questions for the product owner</h2>
+<h2>10. Decisions of the product owner (2026-09-17)</h2>
+<p>The eight open questions were answered by the product owner; the answers are recorded
+here and propagated into §3, §8 and §9 with the tag <em>Decided (Dn)</em>.</p>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>#</th>
+<th>Question</th>
+<th>Decision</th>
+<th>Consequence</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>D1</td>
+<td>Does accepting complete a purchase in-app, or hand off to the shop's checkout?</td>
+<td><strong>Hand off</strong></td>
+<td>Accept opens the shop's checkout with the offer price locked; the order confirmation is written back to the thread (§3.3, §8.4).</td>
+</tr>
+<tr>
+<td>D2</td>
+<td>Flash quantity: per campaign total, or per buyer? What happens at sold-out for buyers who already received it?</td>
+<td><strong>Both limits.</strong> At sold-out, <strong>inform</strong> those buyers and offer <strong>optional compensation</strong> for the disappointment</td>
+<td>Two counters, both enforced; a sold-out notice message type with an optional seller-chosen goodwill gesture (§3.5, §8.4).</td>
+</tr>
+<tr>
+<td>D3</td>
+<td>One inbox across sellers (marketplace) or an app per seller?</td>
+<td><strong>Both, set by the seller</strong></td>
+<td>Seller setting <code>inbox_mode</code>; the buyer view must work in both (§8.1, §9).</td>
+</tr>
+<tr>
+<td>D4</td>
+<td>Who owns the reason text?</td>
+<td><strong>Both</strong> — engine writes, seller may edit</td>
+<td>Two fields kept; the buyer sees the seller's edit when present, the audit keeps both (§3.1, §9).</td>
+</tr>
+<tr>
+<td>D5</td>
+<td>Discount authority: fixed steps or free entry with guardrails?</td>
+<td><strong>Both, set by the seller</strong></td>
+<td>Seller setting <code>discount_mode</code> plus guardrails that apply in either mode (§8.7, §9).</td>
+</tr>
+<tr>
+<td>D6</td>
+<td>Postal coupon: single-use? maps to the online offer?</td>
+<td><strong>Single-use, mapped to the online offer</strong></td>
+<td>One coupon per offer; redeeming in store or online closes the offer everywhere (§3.7, §9). Who prints and posts remains open — see §11.</td>
+</tr>
+<tr>
+<td>D7</td>
+<td>Newsletter discount: a rule, or set per list?</td>
+<td><strong>Both</strong></td>
+<td>Seller-level default rule, overridable per list (§3.6–3.7, §9).</td>
+</tr>
+<tr>
+<td>D8</td>
+<td>Legal basis and retention for purchase-history marketing, per market</td>
+<td><strong>Both bases</strong></td>
+<td>Per-market configuration: legitimate interest with soft opt-in where allowed, consent elsewhere; retention per market (§8.6, §9). Read as "both legal bases, chosen per market"; correct if meant otherwise.</td>
+</tr>
+</tbody>
+</table></div>
+<h2>11. Still open</h2>
 <ol>
-<li>Does accepting an offer complete a purchase in-app, or hand off to the shop's checkout?</li>
-<li>Flash quantity: per campaign total, or per buyer? What happens at sold-out for buyers
-   who already received it?</li>
-<li>Can a buyer see offers from several sellers in one inbox (marketplace) or is the app
-   per seller?</li>
-<li>Who owns the reason text — the engine, the seller (editable), or both?</li>
-<li>Discount authority: fixed steps as in the prototype, or free entry with guardrails?</li>
-<li>Postal letters: printed and posted by whom; is the coupon single-use; does it map to
-   the online offer?</li>
-<li>Newsletter discount: a rule, or set per list?</li>
-<li>Legal basis and retention for using purchase history in marketing, per market.</li>
+<li>Postal letters: who prints and posts (the seller, or a print partner integrated by
+   the platform)?</li>
+<li>The compensation at sold-out (D2): a fixed menu (voucher, free delivery, priority on
+   the next campaign) or free choice by the seller?</li>
+<li>In marketplace mode (D3): does a buyer's consent and frequency cap apply per seller
+   or across the inbox?</li>
 </ol>
 <footer>Source: <code>discountdirect/BUSINESS-LOGIC.md</code>, rendered by <code>build-docs.py</code>. Token names follow GDS 6.5.0 roles (<code>GDS-TOKEN-MAP.md</code>).</footer>
 </div></body></html>
