@@ -144,4 +144,9 @@ numbers, a seven-step walk through the live pages shown in scaled phone frames w
 open-in-HU/EN buttons, what is real, six asks, three next steps. Direct address to
 the estate, short sections, no documentation chrome.
 
+**2026-09-17 — documentation pages on the site tokens.** The docs stylesheet carried
+its own palette and a dark-mode override that turned the documentation pages dark on
+a phone in dark mode — the treatment rejected for the site. The docs now use
+`assets/tokens.css` directly and stay on the light ground in every colour scheme.
+
 **Next.** Client review of the whole; then the items in §6 of the plan as they arrive.

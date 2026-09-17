@@ -44,6 +44,7 @@ def render(src, out, label):
 <title>{title} — Holdvölgy 2026 docs</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:opsz,wght@6..96,400;6..96,500&family=Archivo:wdth,wght@112.5,400;112.5,500;112.5,600&display=swap">
+<link rel="stylesheet" href="../assets/tokens.css">
 <style>{CSS}</style>
 </head>
 <body>
