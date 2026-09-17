@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>DiscountDirect — research: how B2C machines upsell and cross-sell, and how to fine-tune the idea</title>
+<style>
+:root{--gds-bg-canvas:#f8fafc;--gds-bg-surface:#ffffff;--gds-bg-inverse:#111827;--gds-text-body:#111827;--gds-text-meta:#64748b;--gds-border-card:#e2e8f0;--gds-brand-accent:#3b5bdb;--gds-brand-accent-tint:#e7ecfb;--gds-radius-card:14px}
+*{box-sizing:border-box}
+body{margin:0;background:var(--gds-bg-canvas);color:var(--gds-text-body);font:15.5px/1.6 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;padding-block:0 64px;padding-inline:clamp(16px,4vw,40px)}
+.wrap{max-width:76ch;margin-inline:auto}
+.top{display:flex;flex-wrap:wrap;gap:8px 18px;align-items:center;padding:16px 0;border-bottom:1px solid var(--gds-border-card);font-size:13px;color:var(--gds-text-meta)}
+.top b{color:var(--gds-text-body)} .top a{color:var(--gds-brand-accent);text-decoration:none;min-height:44px;display:inline-flex;align-items:center} .top a.on{color:var(--gds-text-body);font-weight:600}
+h1{font-size:clamp(26px,5vw,38px);line-height:1.15;margin:32px 0 10px;letter-spacing:-.01em}
+h2{font-size:22px;margin:44px 0 10px;padding-top:18px;border-top:1px solid var(--gds-border-card)}
+h3{font-size:17px;margin:26px 0 8px}
+p{margin:0 0 12px} li{margin:4px 0} strong{font-weight:600}
+code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.86em;background:var(--gds-brand-accent-tint);padding:1px 5px;border-radius:5px}
+pre{background:var(--gds-bg-inverse);color:#f8fafc;padding:16px;border-radius:var(--gds-radius-card);overflow-x:auto;font-size:13px;line-height:1.5} pre code{background:none;color:inherit;padding:0;font-size:inherit}
+.tbl{overflow-x:auto;margin:12px 0 20px;border:1px solid var(--gds-border-card);border-radius:var(--gds-radius-card);background:var(--gds-bg-surface)}
+table{border-collapse:collapse;width:100%;font-size:13.5px;min-width:560px}
+th{text-align:left;font-weight:600;background:var(--gds-bg-canvas);padding:10px 12px;border-bottom:1px solid var(--gds-border-card);font-size:12px;letter-spacing:.04em;text-transform:uppercase;color:var(--gds-text-meta)}
+td{padding:10px 12px;border-top:1px solid var(--gds-border-card);vertical-align:top}
+a{color:var(--gds-brand-accent)}
+footer{margin-top:48px;padding-top:16px;border-top:1px solid var(--gds-border-card);font-size:12px;color:var(--gds-text-meta)}
+</style>
+</head>
+<body><div class="wrap">
+<div class="top"><b>DiscountDirect</b><a href="executive.html">Executive summary</a><a href="research.html" class=on>Research</a><a href="business-logic.html">Business logic</a><a href="index.html">Open the prototype →</a><a href="../index.html">Calvus Hub</a></div>
+<h1>DiscountDirect — research: how B2C machines upsell and cross-sell, and how to fine-tune the idea</h1>
+<p>Read and compiled 2026-09-17. Every claim below carries a numbered source from §11;
+figures that circulate without a primary source are marked <em>industry-reported</em>. The
+purpose is practical: what the best B2C operators actually do, what the evidence says
+works and what backfires, and what that means for DiscountDirect — the prototype at
+<code>index.html</code> and its rules in <code>business-logic.html</code>.</p>
+<h2>1. Why personalised offers pay — the evidence base</h2>
+<ul>
+<li>McKinsey's <em>Next in Personalization</em> research: personalisation most often lifts revenue
+  10–15 % (range 5–25 % by sector and execution), improves marketing efficiency 10–30 %,
+  and companies that excel at it generate <strong>40 % more revenue</strong> from those activities than
+  average players; 71 % of consumers expect personalised interactions and 76 % are
+  frustrated when they don't get them. [1][2]</li>
+<li>Netflix (Gomez-Uribe &amp; Hunt, ACM TMIS 2015): about <strong>80 % of hours streamed</strong> come from
+  recommendations, and the system's value is estimated at <strong>over $1 billion a year</strong> in
+  retained subscribers. [3]</li>
+<li>Amazon's "35 % of revenue from recommendations" is a widely repeated McKinsey estimate
+  with no primary Amazon disclosure — <em>industry-reported</em>, useful as an order of magnitude
+  only. [4]</li>
+<li>Barilliance's 2023 study: product recommendations account for up to <strong>31 % of e-commerce
+  revenue</strong> in sessions where shoppers engage with them. [5]</li>
+<li>Automated, behaviour-triggered messages are where the money is: essential automated
+  flows generate 30–50 % of a store's e-mail revenue on 2 % of the volume; post-purchase
+  flows return <strong>$2–5 per recipient</strong>, abandoned-cart $3–8, VIP $5–15+. [6][7]</li>
+</ul>
+<p>What the numbers share: the lift comes from <strong>relevance and timing</strong>, not from the size of
+the discount.</p>
+<h2>2. How the best B2C operators upsell and cross-sell — the mechanics</h2>
+<h3>2.1 The surfaces</h3>
+<p>Product page ("bought together"), cart, the <strong>confirmation page</strong> (one-click add before
+the thank-you), post-purchase e-mail and SMS, the account/app home, and — increasingly —
+the messaging thread (RCS, WhatsApp, in-app chat). [7][8]</p>
+<h3>2.2 The timing ladder (the single most transferable pattern)</h3>
+<p>Compiled benchmarks, sources in [7]:</p>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>Moment</th>
+<th>Offer type</th>
+<th>Observed take rate</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Confirmation page, t + 0</td>
+<td>complementary item, one click, under ~30–50 % of cart value</td>
+<td>10–16 % (14.6 % across 1 847 businesses)</td>
+</tr>
+<tr>
+<td>24–48 h, e-mail</td>
+<td>upgrade / accessory</td>
+<td>post-purchase sequences 11.3 % vs 1–3 % for generic promos</td>
+</tr>
+<tr>
+<td>7–14 days</td>
+<td>category expansion</td>
+<td>—</td>
+</tr>
+<tr>
+<td>5–7 days before predicted run-out</td>
+<td><strong>replenishment</strong>; for consumables the subscription upsell ("never run out, save 10–15 %")</td>
+<td>8–15 %</td>
+</tr>
+<tr>
+<td>60–90 days, durables</td>
+<td>accessory / next-generation</td>
+<td>—</td>
+</tr>
+</tbody>
+</table></div>
+<p>Two hard lessons: requiring payment re-entry cuts post-purchase conversion by ~78 %, and
+some wallets (Apple Pay, Google Pay, Klarna) never show the post-purchase page — the
+message channel is the fallback. [7]</p>
+<h3>2.3 Loyalty and context as the recommendation substrate</h3>
+<p>Sephora's Beauty Insider consolidates cross-channel history into one profile that drives
+recommendations, early access and limited promotions [9]; Starbucks' Deep Brew chooses
+offers from app and loyalty data plus context (weather, time, local events) — the
+mechanics are documented, the revenue figures that circulate for it are not. [10]</p>
+<h3>2.4 Conversational and rich messaging</h3>
+<p>Sinch's retail cases: RCS delivers 3–7× the click-through of rich SMS; Clarins 2.5× CTR
+and 79 % read rate; Cdiscount <strong>+9 % average basket</strong>; 54 % of US consumers prefer
+abandoned-cart notices via RCS. Infobip: 71 % of consumers want personalised offers and
+proactive assistance, only 34 % of brands provide them. [11][12] The thread is becoming
+the storefront — which is DiscountDirect's premise.</p>
+<h2>3. Next best action and recommendations — what a decision engine actually needs</h2>
+<h3>3.1 Propensity is not enough; uplift is the target</h3>
+<p>The classic segmentation (Radcliffe &amp; Surry, 1999): <strong>persuadables</strong> (buy only if
+treated), <strong>sure things</strong> (buy anyway), <strong>lost causes</strong> (never buy), <strong>sleeping dogs</strong>
+(buy less if treated). A propensity model finds likely buyers — which includes sure
+things, whose discount is pure margin loss. An uplift model estimates the <em>difference</em>
+treatment makes and targets persuadables only. When propensity-driven programmes are
+re-measured with uplift methods, 20–40 % typically show negligible incremental lift;
+banking and telco projects report 29–59 % revenue increases from switching. [13][14][15]</p>
+<h3>3.2 An NBA pipeline in practice (Grid Dynamics)</h3>
+<p>Inputs: profile, interaction history, past treatments, outcomes. Stages: bias correction
+(propensity-score matching), uplift estimation (S/T/X-learners or uplift trees),
+<strong>treatment selection by predicted uplift</strong> from a small menu of 5–10 actions, and
+offline evaluation with incremental-gains and decile-uplift curves before anything goes
+live. [14]</p>
+<h3>3.3 Discount depth as a learned decision</h3>
+<p>ASOS's DISCO framework allocates personalised discount codes with a <strong>contextual bandit
+(Thompson sampling) inside an integer programme</strong> that enforces the cost budget — the
+depth of each customer's discount is learned, under a margin constraint, rather than
+fixed. [16]</p>
+<h3>3.4 Explanations are not decoration</h3>
+<p>Zhang &amp; Chen's survey: explainable recommendation improves transparency, persuasiveness,
+effectiveness, trustworthiness and satisfaction; process-based explanations foster
+trust through perceived control and fairness. [17][18] DiscountDirect's "reason" on every
+offer is the right instinct — it should be generated by the same model that scores the
+offer, not written by hand.</p>
+<h2>4. Discount economics — what backfires</h2>
+<ul>
+<li><em>Industry-reported</em> but consistent across sources: most promotional volume is not
+  incremental (figures of 94 % non-incremental category revenue and 35 % subsidising
+  loyal buyers who would have paid full price circulate), and 50–60 % of promotions fail
+  to return; cannibalisation runs 20–60 % for broad coupons versus 10–25 % for targeted
+  ones. [19][20]</li>
+<li>Promotion fatigue is real: brands running flash sales more than twice a month see
+  conversion drop 15–25 %. [21]</li>
+<li>The only honest metric is <strong>incremental contribution margin against a randomised
+  holdout</strong> that never saw the offer. [19]</li>
+</ul>
+<h2>5. Urgency and scarcity — the evidence and the legal line</h2>
+<p>Countdown timers lift conversion by ~8.6 % on average (studies range 8–32 %); timers
+under six hours and quantity limits tied to real stock work best; transparent urgency
+outperforms fake urgency, which destroys trust. [21] The law now draws the line: the EU
+Digital Services Act prohibits dark patterns including <strong>fake countdowns and untrue
+scarcity claims</strong>; the Omnibus Directive requires struck-through prices to be the lowest
+of the previous 30 days; the Digital Fairness Act is expected in Q4 2026. [22][23]
+Consequence for DiscountDirect: a flash campaign's time and quantity limits must be
+<strong>enforced and true</strong>, and the "was" price must be the 30-day low.</p>
+<h2>6. Channels, consent and frequency</h2>
+<ul>
+<li>GDPR Recital 47: direct marketing <em>may</em> be a legitimate interest, subject to the data
+  subject's reasonable expectations at collection; Article 21 gives an absolute right to
+  object. ePrivacy adds the <strong>soft opt-in</strong>: existing customers may be e-mailed about
+  similar products on an opt-out basis, but profiling technologies need consent, and a
+  documented legitimate-interest assessment is expected. [24][25]</li>
+<li>Frequency: 56 % of US consumers unsubscribe after four or more messages from one
+  company in 30 days; practitioner caps are 2–4 e-mails a month and at most one SMS a
+  week, segmented by engagement. [26]</li>
+</ul>
+<h2>7. The Hungarian market context</h2>
+<p>PwC Hungary's <em>Online Retail Big Picture</em> (June 2026): online retail turnover reached
+<strong>HUF 2 092 billion</strong> in 2025 (about EUR 5.7 bn), 4.4 million people shop online, roughly
+<strong>a quarter of shoppers generate nearly 80 % of parcels</strong>, cross-border marketplaces take
+about 18 % of turnover, and 60 % of orders are placed on mobile. [27] The concentration is
+the point: a Hungarian web shop's revenue sits with a small, repeat-buying core — exactly
+the buyers DiscountDirect addresses one by one.</p>
+<h2>8. What this means for DiscountDirect — fine-tuning the idea</h2>
+<p>The prototype's rules are in <code>business-logic.html</code>. Against the evidence above, twelve
+changes, each traceable to a source:</p>
+<ol>
+<li><strong>Score relevance, don't hard-code it.</strong> Replace the fixed relevance sets with a
+   buyer × product score plus a machine-written reason code (§3.2, §3.4). The reason
+   stays first-class in the UI.</li>
+<li><strong>Target uplift, not propensity.</strong> Send to persuadables; never discount a sure thing.
+   Keep a permanent randomised holdout (5–10 %) per campaign and automation and report
+   incremental margin, not acceptance (§3.1, §4).</li>
+<li><strong>Detect replenishment cycles from history.</strong> Anna buys HEPA filters every ~8 months
+   in the sample data; the engine should predict run-out and fire 5–7 days before it —
+   the highest-converting moment in the ladder (§2.2).</li>
+<li><strong>Add the timing ladder to automations.</strong> Frequency today is weekly/fortnightly/
+   monthly; the evidence favours event-driven triggers — order confirmed (t + 0),
+   24–48 h, 7–14 days, predicted run-out, 60–90 days for durables (§2.2).</li>
+<li><strong>Make the discount a decision.</strong> Replace the fixed 10/15/20/25 steps with a learned
+   depth under a margin floor and a budget (DISCO pattern), with seller-set guardrails
+   (§3.3, §4).</li>
+<li><strong>Frequency caps per buyer per channel</strong>, and offer-fatigue signals (declines,
+   unsubscribes, non-opens) feeding back into targeting (§6).</li>
+<li><strong>True scarcity only.</strong> Enforce <code>limitH</code> and <code>limitQty</code>, show real remaining stock,
+   expire visibly, and keep the 30-day-low price rule on every "was" price (§5).</li>
+<li><strong>Consent by channel and preference controls</strong> in the buyer view: frequency, channels,
+   "why this" and "don't show me this category" — the buyer's context pane already
+   frames the consent story (§6, §3.4).</li>
+<li><strong>Post-purchase moment in the thread.</strong> The order-confirmed event is the best cross-
+   sell moment; the timeline already records events — make that event carry a one-click
+   complementary offer (§2.2).</li>
+<li><strong>Subscription upsell for consumables</strong> as an offer type ("never run out, −10–15 %"),
+    with the buyer's actual interval as the default (§2.2).</li>
+<li><strong>Rich channels.</strong> In-app chat first; RCS/WhatsApp as the next channel (3–7× the
+    click-through of SMS); printed DM stays for high-value durables where a coupon in the
+    hand still converts (§2.4).</li>
+<li><strong>Measurement built in from day one</strong>: every offer stamped with model version,
+    reason code, holdout flag, channel, timing trigger and outcome; a dashboard that reads
+    incremental margin, take rate, unsubscribe rate and frequency per buyer (§4, §6).</li>
+</ol>
+<p>Product ideas the evidence supports beyond the current scope: a buyer-initiated "ask for
+a deal" in the thread; bundles from co-purchase patterns; a win-back trigger at the
+segment's typical churn point; a buyer "offer wallet" across sellers.</p>
+<h2>9. What not to build</h2>
+<p>Mass newsletters to everyone (non-incremental, fatigue), fake urgency (illegal in the EU),
+discounts to sure things (margin loss), profiling without a consent path (ePrivacy),
+and acceptance rate as the success metric (measures generosity, not value).</p>
+<h2>10. Open research questions</h2>
+<p>Optimal discount-depth model for a small catalogue with thin history; the right holdout
+size for a single web shop's volume; whether a buyer-side "reason" changes acceptance
+(A/B); RCS availability and cost on Hungarian carriers.</p>
+<h2>11. Sources consulted</h2>
+<ol>
+<li>McKinsey &amp; Company — <em>The value of getting personalization right—or wrong—is multiplying</em> (Next in Personalization 2021). https://www.mckinsey.com/capabilities/growth-marketing-and-sales/our-insights/the-value-of-getting-personalization-right-or-wrong-is-multiplying</li>
+<li>McKinsey — <em>What is personalization?</em> (explainer, 2023). https://www.mckinsey.com/~/media/mckinsey/featured%20insights/mckinsey%20explainers/what%20is%20personalization/what-is-personalization.pdf</li>
+<li>Gomez-Uribe, C. A. &amp; Hunt, N. — <em>The Netflix Recommender System: Algorithms, Business Value, and Innovation</em>, ACM TMIS 6(4), 2015. https://dl.acm.org/doi/10.1145/2843948</li>
+<li>Firney — <em>Amazon's 35% revenue from recommendations</em> (secondary). https://www.firney.com/news-and-insights/ai-product-recommendations-from-amazons-35-revenue-model-to-your-e-commerce-platform</li>
+<li>Barilliance — <em>Recommendations drive a third of e-commerce revenue</em>. https://www.barilliance.com/recommendations-drive-third-e-commerce-revenue/</li>
+<li>1Digital Agency — <em>The 7 essential Klaviyo flows (with revenue benchmarks)</em>, 2026. https://www.1digitalagency.com/blog/the-7-essential-klaviyo-flows-every-shopify-store-needs-with-revenue-benchmarks-70284/</li>
+<li>Digital Applied — <em>Post-purchase upsell: the 2026 eCommerce AOV playbook</em> (compiles Yotpo, Focus Digital, Opensend, GemPages, Klaviyo data). https://www.digitalapplied.com/blog/post-purchase-upsell-thank-you-page-2026-ecommerce-playbook</li>
+<li>Omnisend — <em>Post-purchase email guide</em>. https://www.omnisend.com/blog/post-purchase-emails/</li>
+<li>CommerceNext — <em>Omnichannel retailing examples</em> (Sephora). https://community.commercenext.com/5-omnichannel-retailing-examples-that-drive-results/</li>
+<li>Marketer in the Loop — <em>Starbucks' AI-powered hyper-personalization with Deep Brew</em> (mechanics; results unsourced). https://marketerintheloop.com/p/starbucks-ai-powered-hyper-personalization-with-deep-brew</li>
+<li>Sinch — <em>RCS use cases and examples</em> (Clarins, Courir, Cdiscount cases). http://sinch.com/blog/rcs-use-cases-and-examples/</li>
+<li>Infobip — <em>Conversational commerce in retail</em>. https://www.infobip.com/blog/conversational-commerce-in-retail</li>
+<li>Radcliffe, N. J. &amp; Surry, P. D. — <em>Differential response analysis: modeling true response by isolating the effect of a single action</em>, Credit Scoring and Credit Control VI, 1999 (via Wikipedia, <em>Uplift modelling</em>). https://en.wikipedia.org/wiki/Uplift_modelling</li>
+<li>Grid Dynamics — <em>Next best action model: building and evaluation</em>. https://www.griddynamics.com/blog/next-best-action-churn-prevention</li>
+<li>California Management Review — <em>To treat or not to treat? Five lessons from uplift modeling</em>, 2025. https://cmr.berkeley.edu/2025/11/to-treat-or-not-to-treat-five-lessons-learned-from-using-uplift-modeling-to-optimize-marketing-campaigns/</li>
+<li><em>DISCO: An end-to-end bandit framework for personalised discount allocation</em> (ASOS), arXiv 2406.06433. https://arxiv.org/pdf/2406.06433</li>
+<li>Zhang, Y. &amp; Chen, X. — <em>Explainable recommendation: a survey and new perspectives</em>, 2018/2020. https://arxiv.org/abs/1804.11192</li>
+<li><em>Why process-based explanations foster algorithmic trust</em>, JTAER 2026. https://doi.org/10.3390/jtaer21070208</li>
+<li>Insight Lime Analytics — <em>How to (really) measure your coupons and discounts</em>. https://www.insightlimeanalytics.com/blog/how-to-measure-discounts</li>
+<li>Accuris — <em>The heavy toll of over-promoting</em>. https://www.accuris.com/post/the-heavy-toll-of-over-promoting</li>
+<li>Heartly — <em>The psychology behind flash sales</em> (timer and frequency figures). https://www.heartly.io/blog/flash-sale-psychology-urgency-fomo</li>
+<li>European Parliament Think Tank — <em>Regulating dark patterns in the EU: towards digital fairness</em>, 2025. https://epthinktank.eu/2025/01/14/regulating-dark-patterns-in-the-eu-towards-digital-fairness/</li>
+<li>DynamicPricing.AI — <em>EU pricing regulatory rules</em> (Omnibus 30-day rule). https://dynamicpricing.ai/eu-pricing-regulatory-compliance-ecommerce/</li>
+<li>GDPR Recital 47. https://gdpr-info.eu/recitals/no-47/</li>
+<li>GDPR Register — <em>Direct marketing GDPR rules and exceptions</em> (soft opt-in). https://www.gdprregister.eu/articles/direct-marketing-rules-and-exceptions/</li>
+<li>Braze — <em>Frequency capping: what it is, how it works</em>; FlareLane — <em>How many messages a month is too many</em>. https://www.braze.com/resources/articles/whats-frequency-capping · https://flarelane.com/en/blog/message-frequency-capping/</li>
+<li>PwC Hungary — <em>Online Retail Big Picture</em> (June 2026), via Daily News Hungary. https://dailynewshungary.com/hungarian-spending-online-foreign-retailers/</li>
+</ol>
+<footer>Source: <code>discountdirect/RESEARCH.md</code>, rendered by <code>build-docs.py</code>. Token names follow GDS 6.5.0 roles (<code>GDS-TOKEN-MAP.md</code>).</footer>
+</div></body></html>
