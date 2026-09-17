@@ -33,9 +33,11 @@ for f in ALL:
         tgt = next((k for k in ids if k.resolve() == tgt), None)
         if tgt is not None and m.group(2) not in ids[tgt]: findings.append(f"missing anchor  {f.relative_to(ROOT)} → {m.group(1)}#{m.group(2)}")
 
-# 3
-names = [p.stem for p in DOCS]
+# 3 — every documentation page links every other; client-facing pages carry no documentation menu by design
+CLIENT_PAGES = {"bemutato"}
+names = [p.stem for p in DOCS if p.stem not in CLIENT_PAGES]
 for p in DOCS:
+    if p.stem in CLIENT_PAGES: continue
     t = p.read_text(encoding="utf-8")
     for q in names:
         if q != p.stem and f'href="{q}.html"' not in t: findings.append(f"docs nav gap  {p.name} lacks {q}.html")

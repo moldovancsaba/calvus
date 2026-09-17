@@ -3,185 +3,127 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Holdvölgy 2026 — bemutató a birtoknak — Holdvölgy 2026 docs</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
+<title>Holdvölgy 2026 — bemutató</title>
+<meta name="description" content="Az új holdvolgy.com bemutatása a birtoknak: mit nézzenek meg, milyen sorrendben, mi valódi benne, és mit kérünk.">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:opsz,wght@6..96,400;6..96,500&family=Archivo:wdth,wght@112.5,400;112.5,500;112.5,600&display=swap">
-<style>:root{--ground:#FAFAFA;--card:#FFFFFF;--ink:#1D1D1B;--text:#4A4744;--muted:#7A7672;--accent:#B8A689;--accent-deep:#8B705B;--line:#E4E0D9;--line-soft:#EFECE6;--note:#F4F1EB}
-@media (prefers-color-scheme:dark){:root{--ground:#1D1D1B;--card:#252321;--ink:#F3EFE8;--text:#CFC9C0;--muted:#9B9796;--accent:#BAA793;--accent-deep:#D2BFA6;--line:#3A3733;--line-soft:#2E2B28;--note:#2A2724}}
+<link rel="stylesheet" href="../assets/tokens.css">
+<script>try{sessionStorage.setItem('hv-age','ok')}catch(e){}</script>
+<style>
 *{box-sizing:border-box}
-body{margin:0;background:var(--ground);color:var(--text);font-family:"Archivo","Helvetica Neue",Arial,sans-serif;font-stretch:112.5%;font-size:15.5px;line-height:1.6;padding-block:0 64px;padding-inline:clamp(16px,4vw,40px)}
-.wrap{max-width:72ch;margin-inline:auto}
-.docnav{display:flex;flex-wrap:wrap;gap:4px 18px;align-items:center;padding:16px 0;border-bottom:1px solid var(--line);font-size:12px;letter-spacing:.06em;text-transform:uppercase}
-.docnav a{color:var(--muted);text-decoration:none;min-height:44px;display:inline-flex;align-items:center;border-bottom:2px solid transparent}
-.docnav a:hover,.docnav a[aria-current]{color:var(--ink);border-color:var(--accent)}
-.docnav-brand{color:var(--accent-deep);font-weight:600;margin-right:6px}
-.docnav-hub{margin-left:auto}
-header{padding-block:40px 24px;border-bottom:1px solid var(--line);margin-bottom:28px}
-.eyebrow{font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--accent-deep);margin:0 0 12px}
-h1,h2,h3{font-family:"Bodoni Moda",Didot,"Bodoni 72",serif;font-weight:400;color:var(--ink);line-height:1.1;text-wrap:balance;margin:0}
-h1{font-size:clamp(32px,6.5vw,50px);font-optical-sizing:auto}
-h2{font-size:clamp(25px,4.5vw,32px);margin:48px 0 14px;padding-top:20px;border-top:1px solid var(--line)}
-h3{font-size:19px;margin:30px 0 8px;font-weight:500}
-p{margin:0 0 14px} strong{color:var(--ink);font-weight:600}
-ul,ol{padding-left:22px;margin:0 0 16px} li{margin:5px 0} li>ul{margin:6px 0 0}
-code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.86em;background:var(--note);padding:1px 5px;border-radius:2px;color:var(--ink)}
-a{color:var(--accent-deep)} :focus-visible{outline:2px solid var(--accent-deep);outline-offset:2px}
-.tbl{overflow-x:auto;margin:14px 0 22px;border:1px solid var(--line)}
-table{border-collapse:collapse;width:100%;font-size:13.5px;min-width:560px}
-th{text-align:left;font-weight:600;color:var(--ink);background:var(--note);padding:10px 12px;border-bottom:1px solid var(--line);font-size:11.5px;letter-spacing:.06em;text-transform:uppercase}
-td{padding:10px 12px;border-top:1px solid var(--line-soft);vertical-align:top;background:var(--card)} td:first-child{color:var(--ink)}
-footer{margin-top:56px;padding-top:18px;border-top:1px solid var(--line);font-size:12px;color:var(--muted)}
-
-/* embedded gate-2 frames */
-.frames{display:grid;gap:28px;margin:18px 0 30px}
-.frames figure{margin:0} .frames figcaption{font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);margin-bottom:8px}
-.scale-d{width:100%;aspect-ratio:1440/2900;position:relative;overflow:hidden;border:1px solid var(--line);background:#FAFAFA}
-.scale-d iframe{position:absolute;top:0;left:0;width:1440px;height:2900px;border:0;transform-origin:0 0;transform:scale(calc(var(--w,720) / 1440))}
-.scale-p{width:390px;max-width:100%;aspect-ratio:390/2100;position:relative;overflow:hidden;border:1px solid var(--line);background:#FAFAFA}
-.scale-p iframe{position:absolute;top:0;left:0;width:390px;height:2100px;border:0;transform-origin:0 0;transform:scale(calc(var(--pw,390) / 390))}
+body{margin:0;background:var(--hv-ground);color:var(--hv-text);font-family:var(--hv-sans);font-stretch:var(--hv-sans-width);font-size:16px;line-height:1.6;-webkit-font-smoothing:antialiased}
+img{max-width:100%;height:auto;display:block}
+.wrap{width:min(100% - 32px,1100px);margin-inline:auto} @media(min-width:768px){.wrap{width:min(100% - 80px,1100px)}}
+h1,h2,h3{font-family:var(--hv-display);font-weight:400;color:var(--hv-ink);line-height:1.08;margin:0;text-wrap:balance;font-optical-sizing:auto}
+.label{font-size:12px;letter-spacing:.14em;text-transform:uppercase}
+.btn{display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:12px 22px;border:1px solid var(--hv-accent);border-radius:var(--hv-radius);background:var(--hv-accent);color:var(--hv-ink);font-size:12px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;text-decoration:none}
+.btn:hover{background:var(--hv-accent-deep);border-color:var(--hv-accent-deep);color:#fff} .btn-2{background:transparent;color:var(--hv-ink)} .btn-2:hover{background:var(--hv-ink);border-color:var(--hv-ink);color:#fff}
+:focus-visible{outline:2px solid var(--hv-accent-deep);outline-offset:3px}
+/* top bar */
+.top{position:sticky;top:0;z-index:5;background:rgba(250,250,250,.94);backdrop-filter:blur(8px);border-bottom:1px solid var(--hv-line-soft)} .top .wrap{display:flex;align-items:center;justify-content:space-between;min-height:60px;gap:16px}
+.wordmark{font-family:var(--hv-display);font-size:19px;letter-spacing:.18em;color:var(--hv-ink);text-decoration:none;display:inline-flex;align-items:center;min-height:44px} .top .label{color:var(--hv-muted)} .top a.label{text-decoration:none;display:inline-flex;align-items:center;min-height:44px}
+/* hero */
+.hero{position:relative;height:520px;background:#2b2621;overflow:hidden} .hero picture,.hero img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover} .hero::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(29,29,27,0) 40%,rgba(29,29,27,.74) 100%)}
+.hero .wrap{position:absolute;left:0;right:0;bottom:36px;z-index:1;color:#fff} .hero .label{display:inline-block;margin-bottom:12px;color:#F3EFE8;border:1px solid rgba(255,255,255,.5);padding:6px 10px} .hero h1{font-size:34px;color:#fff;max-width:18ch} .hero p{margin:12px 0 0;max-width:52ch;color:#F3EFE8}
+@media(min-width:768px){.hero{height:620px} .hero h1{font-size:56px} .hero .wrap{bottom:64px}}
+/* sections */
+section{padding:48px 0} @media(min-width:768px){section{padding:72px 0}}
+.eyebrow{margin:0 0 10px;font-size:11px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--hv-accent-deep)}
+h2{font-size:30px;margin-bottom:14px} @media(min-width:768px){h2{font-size:40px}}
+.lede{font-size:17px;max-width:58ch;color:var(--hv-text);margin:0}
+.three{display:grid;gap:14px;margin-top:28px} .three div{background:var(--hv-card);border:1px solid var(--hv-line-soft);padding:20px} .three b{display:block;font-family:var(--hv-display);font-weight:400;font-size:34px;color:var(--hv-ink);line-height:1} .three span{display:block;margin-top:8px;font-size:13px;color:var(--hv-muted)}
+@media(min-width:768px){.three{grid-template-columns:repeat(3,1fr);gap:20px}}
+/* journey */
+.band{background:var(--hv-band)}
+.steps{display:grid;gap:28px;margin-top:32px} @media(min-width:768px){.steps{gap:40px}}
+.step{background:var(--hv-card);border:1px solid var(--hv-line-soft);display:grid;gap:0} .step .txt{padding:22px 22px 24px} .step .n{font-family:var(--hv-display);font-size:34px;color:var(--hv-accent-deep);line-height:1;margin-bottom:8px} .step h3{font-size:26px;margin-bottom:8px} .step p{margin:0 0 16px;color:var(--hv-text)} .step .links{display:flex;flex-wrap:wrap;gap:10px}
+.frame{background:var(--hv-band);padding:18px;display:grid;place-items:center} .phone{width:100%;max-width:300px;aspect-ratio:390/780;position:relative;overflow:hidden;border:1px solid var(--hv-line);background:#FAFAFA} .phone iframe{position:absolute;top:0;left:0;width:390px;height:1014px;border:0;transform-origin:0 0;transform:scale(calc(var(--pw,300) / 390));pointer-events:none}
+@media(min-width:768px){.step{grid-template-columns:1fr 1fr} .step:nth-child(even) .frame{order:-1} .step .txt{padding:32px} .frame{padding:28px}}
+/* real */
+.real{display:grid;gap:14px;margin-top:24px} .real div{background:var(--hv-card);border:1px solid var(--hv-line-soft);padding:18px 20px} .real b{display:block;font-family:var(--hv-display);font-weight:400;font-size:22px;color:var(--hv-ink);margin-bottom:6px} .real p{margin:0;font-size:14.5px;color:var(--hv-text)}
+@media(min-width:768px){.real{grid-template-columns:1fr 1fr;gap:20px}}
+/* asks */
+.asks{list-style:none;padding:0;margin:24px 0 0;display:grid;gap:12px;counter-reset:a} .asks li{background:var(--hv-card);border:1px solid var(--hv-line-soft);padding:16px 18px 16px 62px;position:relative;counter-increment:a} .asks li::before{content:counter(a);position:absolute;left:18px;top:14px;font-family:var(--hv-display);font-size:26px;color:var(--hv-accent-deep);line-height:1} .asks b{display:block;color:var(--hv-ink);font-weight:500;margin-bottom:2px} .asks span{font-size:14px;color:var(--hv-muted)}
+@media(min-width:768px){.asks{grid-template-columns:1fr 1fr;gap:16px}}
+/* next */
+.next{display:grid;gap:14px;margin-top:24px} .next div{border-top:2px solid var(--hv-accent);padding-top:14px} .next b{display:block;font-family:var(--hv-display);font-weight:400;font-size:22px;color:var(--hv-ink);margin-bottom:6px} .next p{margin:0;font-size:14.5px}
+@media(min-width:768px){.next{grid-template-columns:repeat(3,1fr);gap:24px}}
+footer{border-top:1px solid var(--hv-line);padding:28px 0 40px;font-size:13px;color:var(--hv-muted)} footer .wrap{display:flex;flex-wrap:wrap;gap:10px 24px;align-items:center;justify-content:space-between} footer a{color:var(--hv-accent-deep);min-height:44px;display:inline-flex;align-items:center}
 </style>
 </head>
 <body>
-<div class="wrap">
-<nav class="docnav" aria-label="Project documentation"><span class="docnav-brand">Holdvölgy 2026 · docs</span><a href="index.html">Overview</a><a href="bemutato.html" aria-current=page>Bemutató</a><a href="plan.html">Plan</a><a href="benchmarks.html">Benchmarks</a><a href="audit.html">Brand & site audit</a><a href="assets.html">Assets</a><a href="decisions.html">Decisions</a><a href="design-system.html">Design system</a><a href="layouts.html">Layouts</a><a href="home-build.html">Home build</a><a href="birtok-build.html">Birtok build</a><a href="aszu-build.html">Aszú build</a><a href="latogatas-build.html">Látogatás build</a><a href="shop-build.html">Shop build</a><a href="gate-sweep.html">Gate sweep</a><a class="docnav-hub" href="../../index.html">Calvus Hub</a></nav>
-<header><p class="eyebrow">Calvus · Holdvölgy · project documentation</p><h1>Holdvölgy 2026 — bemutató a birtoknak</h1></header>
-<p>Ez az oldal az, amit a Holdvölgy Birtoknak mutatunk és mondunk. Magyarul, a birtok
-nyelvén; a mögötte lévő munkanapló és a kutatás angolul, ugyanebben a mappában.</p>
-<h2>Mit nézzenek meg</h2>
-<p>A prototípus él, telefonon és asztali gépen egyaránt. Az első megnyitáskor a 18+
-kapu jelenik meg — ez a bor törvényi feltétele, ezért tervezett eleme az oldalnak,
-nem utólag ráragasztott ablak.</p>
-<div class="tbl"><table>
-<thead>
-<tr>
-<th>Oldal</th>
-<th>Magyar</th>
-<th>Angol</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Kezdőlap</td>
-<td><a href="../index.html">holdvolgy/</a></td>
-<td><a href="../en/index.html">holdvolgy/en/</a></td>
-</tr>
-<tr>
-<td>Birtok — történet, hét dűlő a saját kőzetével, fajták, évjáratok, csapat</td>
-<td><a href="../birtok.html">birtok</a></td>
-<td><a href="../en/birtok.html">estate</a></td>
-</tr>
-<tr>
-<td>Tokaji aszú — Culture 2006–2018 évjáratfal árakkal, készítés, érlelés, Időkapszula, PreCulture, Tokaj öröksége</td>
-<td><a href="../aszu.html">aszú</a></td>
-<td><a href="../en/aszu.html">aszú</a></td>
-</tr>
-<tr>
-<td>Látogatás — jegyek, Experience, Millennium Bortrezor, geológia, foglalás</td>
-<td><a href="../latogatas.html">látogatás</a></td>
-<td><a href="../en/latogatas.html">visit</a></td>
-</tr>
-<tr>
-<td>Borok — 32 tétel, szűrés, rendezés</td>
-<td><a href="../borok.html">borok</a></td>
-<td><a href="../en/borok.html">wines</a></td>
-</tr>
-<tr>
-<td>Egy termékoldal — kóstolási jegyzet, évjárat, teljes adatlap</td>
-<td><a href="../bor/vision-2021.html">Vision 2021</a></td>
-<td><a href="../en/bor/vision-2021.html">Vision 2021</a></td>
-</tr>
-<tr>
-<td>Borklub — a valódi kedvezményszintek</td>
-<td><a href="../borklub.html">borklub</a></td>
-<td><a href="../en/borklub.html">wine club</a></td>
-</tr>
-</tbody>
-</table></div>
-<h2>Miért így néz ki</h2>
-<p>Mielőtt egyetlen oldalt megterveztünk volna, végignéztük, hogyan mutatják be és adják
-el magukat a világ legjobb birtokai — Château Margaux, Krug, Château d'Yquem, Opus
-One, Antinori, Penfolds, Bodega Garzón, Klein Constantia és a tokaji szomszédok,
-Royal Tokaji, Disznókő, Barta: huszonegy oldal.</p>
-<p>Amit ez adott:</p>
-<ul>
-<li><strong>Világos alap, nem sötét.</strong> Tizenhárom világos hátterű oldal egy sötéttel szemben.
-  A prémium borvilág a fényképre bízza a színt, nem a felületre.</li>
-<li><strong>A birtok saját arculata.</strong> A jelenlegi holdvolgy.com színei és betűi jók — a
-  meleg pezsgőszín (#B8A689) a majdnem-fekete tintával, a széles groteszk betű a
-  Didot-címekkel. Ezt tartottuk meg, és ezt vittük végig következetesen; a betűket
-  ingyenes, Google Fonts-os megfelelőikkel (Archivo, Bodoni Moda) helyettesítettük.</li>
-<li><strong>Fénykép és egy mondat.</strong> Minden oldal a birtok saját fotójával és egyetlen
-  mondattal nyit — „A tokaji álmot töltjük pohárba az élet nagy pillanataihoz”.</li>
-<li><strong>Hét dűlő, hét kőzet.</strong> A dűlők saját kőzetfotói olyan eszköz, amivel egyetlen
-  versenytárs sem rendelkezik — ezért kapnak főszerepet.</li>
-<li><strong>Culture évjáratfal.</strong> Tizenhárom évjárat 2006-tól, saját palackfotóval és árral.
-  Tokajban senki más nem mutat vertikálist.</li>
-<li><strong>Két élmény, nem egy összenyomott elrendezés.</strong> Az asztali változat a birtok
-  „magazinja”; a telefonos változat foglalási és vásárlási eszköz, alul rögzített
-  sávval — Foglalás · Borok · Kosár · Menü — a hüvelykujj alatt.</li>
-</ul>
-<h2>Mi valódi benne</h2>
-<p>Minden szöveg, ár és kép a birtoké. A borok neve, kategóriája, kiszerelése, ára,
-szlogenje és leírása a webshopból; a 31 tétel technikai adatlapja (alkohol, cukor,
-sav, illósav, SO₂, cukormentes extrakt, besorolás, tárolás, fogyasztási
-hőmérséklet), 22 tétel kóstolási és évjáratjegyzete a termékoldalakról; az angol
-szövegek a birtok saját angol oldalairól. A 130 kép a birtok 180 saját képéből
-készült, mindegyik visszakövethető a forrásáig.</p>
-<p>Ami <strong>nem</strong> működik, mert prototípus: a kosár és az űrlapok nem küldenek — a
-vásárlás és a foglalás a holdvolgy.com-on él. Ezt minden oldal tetején egy sáv
-mondja ki.</p>
-<h2>Amit mértünk</h2>
-<div class="tbl"><table>
-<thead>
-<tr>
-<th></th>
-<th>Jelenlegi holdvolgy.com</th>
-<th>Prototípus</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Kezdőlap súlya</td>
-<td>8,8 MB</td>
-<td>600 KB telefonon, 734 KB asztalon</td>
-</tr>
-<tr>
-<td>Kérések száma</td>
-<td>226</td>
-<td>4 a betűk és képek előtt</td>
-</tr>
-<tr>
-<td>Oldalanként egy főcím</td>
-<td>nincs (négy a kezdőlapon)</td>
-<td>igen, mind a 76 oldalon</td>
-</tr>
-<tr>
-<td>Érintési célok ≥ 44 px</td>
-<td>—</td>
-<td>mind a 76 oldalon, két méretben</td>
-</tr>
-</tbody>
-</table></div>
-<p>A műszaki átvételi célértéket (kezdőlap 1,5 MB alatt) minden oldal teljesíti.</p>
-<h2>Amit a birtoktól kérünk</h2>
-<ol>
-<li><strong>Portrék</strong> — az alapítóról nagy felbontásban, és a csapat nyolc tagjáról.</li>
-<li><strong>Két kőzetfotó</strong> — Úrágya és Kakasok; a jelenlegi oldalon nincs.</li>
-<li><strong>Álló formátumú fényképek</strong> a telefonos nyitóképekhez (pince, szőlő, aszú).</li>
-<li><strong>Strukturált adatok</strong>, amiket a jelenlegi oldalról nem lehetett megbízhatóan
-   átvenni: szüreti dátumok (minden termékoldalon „2012. október” szerepel), díjak,
-   érlelési potenciál.</li>
-<li><strong>Döntés az angol szövegekről</strong> — a Vision 2021 angol oldala magyarul van.</li>
-<li><strong>A jelenlegi oldal hibái</strong>, amiket közben találtunk: két termék-URL 404-et ad,
-   az Exaltation 2017 Reserve 0 Ft-on szerepel, három kép mesterséges
-   intelligenciával generált — ezeket a prototípus nem vette át.</li>
-</ol>
-<h2>Hogyan tovább</h2>
-<p>Visszajelzés a fenti oldalakra; a módosításokat ugyanígy, mérve és dokumentálva
-építjük be. Az október 15. és január 15. közötti változtatási tilalom miatt az új
-oldal élesítése 2027 első negyedévére tervezhető — a prototípus addig érhet.</p>
-<script>(function(){function f(){document.querySelectorAll('.scale-d').forEach(function(e){e.style.setProperty('--w',e.clientWidth)});document.querySelectorAll('.scale-p').forEach(function(e){e.style.setProperty('--pw',e.clientWidth)})}f();addEventListener('resize',f)})();</script>
-<footer>Calvus · Holdvölgy 2026 prototípus · a birtok saját arculatával, betűi a Google Fonts Bodoni Moda és Archivo családjából.</footer>
-</div>
+<div class="top"><div class="wrap"><a class="wordmark" href="../index.html">HOLDVÖLGY</a><span class="label">Bemutató · 2026</span><a class="label" href="../index.html" style="color:var(--hv-accent-deep)">Az oldal megnyitása →</a></div></div>
+
+<section class="hero" style="padding:0">
+  <picture>
+    <source media="(max-width: 767px)" type="image/avif" srcset="../assets/img/hero-cellar-portrait-780.avif"><source media="(max-width: 767px)" type="image/webp" srcset="../assets/img/hero-cellar-portrait-780.webp">
+    <source type="image/avif" srcset="../assets/img/hero-cellar-1440.avif">
+    <img src="../assets/img/hero-cellar-1440.webp" alt="A Holdvölgy pincelabirintusa" width="1440" height="659" fetchpriority="high">
+  </picture>
+  <div class="wrap"><span class="label">Az új holdvolgy.com</span><h1>A birtok, ahogy a világ legjobb pincészetei mutatnák be magukat</h1><p>Ez a bemutató végigvezeti Önöket az új oldalon: mit nézzenek, milyen sorrendben, mi valódi benne, és mire van szükségünk Önöktől.</p></div>
+</section>
+
+<section><div class="wrap">
+  <p class="eyebrow">Egy mondatban</p>
+  <h2>Ugyanaz a Holdvölgy — gyorsabban, tisztábban, a saját arculatával</h2>
+  <p class="lede">Nem új arculatot terveztünk. A birtok meglévő színeit, betűit, fotóit és szövegeit rendeztük úgy, ahogy Château Margaux, Krug, Opus One vagy Penfolds mutatja be magát: világos alapon, egy fényképpel és egy mondattal nyitva, telefonon és asztali gépen két külön élményként.</p>
+  <div class="three">
+    <div><b>600 KB</b><span>a kezdőlap telefonon — a jelenlegi 8,8 MB helyett</span></div>
+    <div><b>76 oldal</b><span>magyarul és angolul, minden szöveg és ár a birtoké</span></div>
+    <div><b>5 menüpont</b><span>a jelenlegi tizenegy helyett: Birtok · Borok · Látogatás · Borklub · Kapcsolat</span></div>
+  </div>
+</div></section>
+
+<section class="band"><div class="wrap">
+  <p class="eyebrow">A bejárás</p>
+  <h2>Hét lépés, ebben a sorrendben</h2>
+  <p class="lede">Minden lépésnél az élő oldal látszik telefonon. A gombokkal a teljes oldal nyílik meg, magyarul vagy angolul.</p>
+  <div class="steps">
+    <article class="step"><div class="txt"><div class="n">1</div><h3>Kezdőlap</h3><p>A pince fotója és a birtok mondata. Alatta három kártya — Év pincészete 2026, borkóstoló, PreCulture —, a borsor, a hét dűlő a saját kőzetével, a látogatás. Telefonon alul rögzített sáv: Foglalás · Borok · Kosár · Menü.</p><div class="links"><a class="btn" href="../index.html">Megnyitás</a><a class="btn btn-2" href="../en/index.html">English</a></div></div><div class="frame"><div class="phone"><iframe src="../index.html" title="Kezdőlap telefonon" loading="lazy"></iframe></div></div></article>
+    <article class="step"><div class="txt"><div class="n">2</div><h3>Birtok</h3><p>A vízió és az alapító szavai, a történet 1998-tól tíz lépésben, a hét dűlő telepítéssel, kitettséggel, kőzettel és fajtákkal, az évjáratok 2021-től, a csapat.</p><div class="links"><a class="btn" href="../birtok.html">Megnyitás</a><a class="btn btn-2" href="../en/birtok.html">English</a></div></div><div class="frame"><div class="phone"><iframe src="../birtok.html" title="Birtok telefonon" loading="lazy"></iframe></div></div></article>
+    <article class="step"><div class="txt"><div class="n">3</div><h3>Tokaji aszú</h3><p>A Culture évjáratfal 2006-tól 2018-ig, saját palackfotóval és árral — ilyet Tokajban senki más nem mutat. Készítés, érlelés, Időkapszula, PreCulture, Tokaj öröksége.</p><div class="links"><a class="btn" href="../aszu.html">Megnyitás</a><a class="btn btn-2" href="../en/aszu.html">English</a></div></div><div class="frame"><div class="phone"><iframe src="../aszu.html" title="Tokaji aszú telefonon" loading="lazy"></iframe></div></div></article>
+    <article class="step"><div class="txt"><div class="n">4</div><h3>Látogatás</h3><p>Borkóstoló a föld alatt: a pince története, a négy program, a Holdvölgy Experience, a Millennium Bortrezor, a geológia, a hasznos tudnivalók és a foglalási űrlap a mai mezőkkel.</p><div class="links"><a class="btn" href="../latogatas.html">Megnyitás</a><a class="btn btn-2" href="../en/latogatas.html">English</a></div></div><div class="frame"><div class="phone"><iframe src="../latogatas.html" title="Látogatás telefonon" loading="lazy"></iframe></div></div></article>
+    <article class="step"><div class="txt"><div class="n">5</div><h3>Borok</h3><p>Mind a 32 tétel a webshop mai áraival. Szűrés száraz, édes, aszú és Hold and Hollo szerint; rendezés kollekció vagy ár szerint. Telefonon két, asztalon négy oszlop.</p><div class="links"><a class="btn" href="../borok.html">Megnyitás</a><a class="btn btn-2" href="../en/borok.html">English</a></div></div><div class="frame"><div class="phone"><iframe src="../borok.html" title="Borok telefonon" loading="lazy"></iframe></div></div></article>
+    <article class="step"><div class="txt"><div class="n">6</div><h3>Egy bor oldala</h3><p>A Vision 2021 példáján: a birtok szlogenje és leírása, kóstolási jegyzet, az évjárat, és a teljes adatlap — alkohol, cukor, sav, SO₂, extrakt, besorolás, tárolás, fogyasztási hőmérséklet. Ugyanez mind a 32 tételen.</p><div class="links"><a class="btn" href="../bor/vision-2021.html">Megnyitás</a><a class="btn btn-2" href="../en/bor/vision-2021.html">English</a></div></div><div class="frame"><div class="phone"><iframe src="../bor/vision-2021.html" title="Vision 2021 telefonon" loading="lazy"></iframe></div></div></article>
+    <article class="step"><div class="txt"><div class="n">7</div><h3>Borklub</h3><p>A mai hűségprogram: 5, 10, 15 és 20 % kedvezmény 50 000, 150 000, 300 000 és 600 000 Ft-nál, a két ajándék kóstolóval, a három lépéssel és a szabályokkal.</p><div class="links"><a class="btn" href="../borklub.html">Megnyitás</a><a class="btn btn-2" href="../en/borklub.html">English</a></div></div><div class="frame"><div class="phone"><iframe src="../borklub.html" title="Borklub telefonon" loading="lazy"></iframe></div></div></article>
+  </div>
+</div></section>
+
+<section><div class="wrap">
+  <p class="eyebrow">Mi valódi benne</p>
+  <h2>Minden szöveg, ár és kép a birtoké</h2>
+  <div class="real">
+    <div><b>Szövegek és árak</b><p>A borok neve, kategóriája, kiszerelése, ára, szlogenje és leírása a webshopból; az angol szövegek a birtok saját angol oldalairól.</p></div>
+    <div><b>Adatlapok</b><p>31 tétel technikai adatlapja és 22 tétel kóstolási és évjáratjegyzete a mai termékoldalakról — most először egy helyen, rendezetten.</p></div>
+    <div><b>Képek</b><p>A 130 kép a birtok 180 saját fotójából készült: palackok, pince, dűlők, a hét kőzet. Egyetlen generált kép sincs köztük.</p></div>
+    <div><b>Ami nem működik — még</b><p>A kosár és az űrlapok nem küldenek; a vásárlás és a foglalás a holdvolgy.com-on él. Ezt minden oldal tetején egy sáv mondja ki.</p></div>
+  </div>
+</div></section>
+
+<section class="band"><div class="wrap">
+  <p class="eyebrow">Amit Önöktől kérünk</p>
+  <h2>Hat dolog, ami csak a birtoktól jöhet</h2>
+  <ol class="asks">
+    <li><b>Portrék</b><span>az alapítóról nagy felbontásban, és a csapat nyolc tagjáról</span></li>
+    <li><b>Két kőzetfotó</b><span>Úrágya és Kakasok — a mai oldalon nincs</span></li>
+    <li><b>Álló formátumú fényképek</b><span>a telefonos nyitóképekhez: pince, szőlő, aszú</span></li>
+    <li><b>Szüreti dátumok, díjak, érlelési potenciál</b><span>a mai oldalról nem vehetők át megbízhatóan — minden termékoldalon „2012. október” szerepel</span></li>
+    <li><b>Döntés az angol szövegekről</b><span>a Vision 2021 angol oldala ma magyarul van</span></li>
+    <li><b>A mai oldal hibái</b><span>két termék-URL 404-et ad, az Exaltation 2017 Reserve 0 Ft-on szerepel, három kép generált — ezeket az új oldal nem vette át</span></li>
+  </ol>
+</div></section>
+
+<section><div class="wrap">
+  <p class="eyebrow">Hogyan tovább</p>
+  <h2>Három lépés az élesítésig</h2>
+  <div class="next">
+    <div><b>Visszajelzés</b><p>Önök végignézik a hét lépést, és jelzik, mi legyen másképp.</p></div>
+    <div><b>Módosítás</b><p>A változtatásokat ugyanígy, mérve és dokumentálva építjük be, a fenti anyagokkal együtt.</p></div>
+    <div><b>Élesítés 2027 elején</b><p>Az október 15. és január 15. közötti változtatási tilalom után — a prototípus addig érik.</p></div>
+  </div>
+</div></section>
+
+<footer><div class="wrap"><span>Calvus · Holdvölgy 2026</span><a href="index.html">A teljes munkanapló és kutatás (angolul)</a></div></footer>
+<script>(function(){function f(){document.querySelectorAll('.phone').forEach(function(e){e.style.setProperty('--pw',e.clientWidth)})}f();addEventListener('resize',f)})();</script>
 </body>
 </html>

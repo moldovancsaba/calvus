@@ -6,7 +6,7 @@ record. Each file is dated inside; this index is the process log.
 
 | File | What it holds |
 |---|---|
-| `bemutato.md` | **A birtoknak szóló bemutató, magyarul** — mit nézzenek, miért így, mi valódi, mit mértünk, mit kérünk tőlük |
+| `bemutato.html` | **A birtoknak szóló bemutató, magyarul** — a birtok saját arculatában: hét lépés az élő oldalakkal, mi valódi, mit kérünk, hogyan tovább |
 | `00-plan.md` | Research findings and the phased implementation plan — the approval document |
 | `01-research-benchmarks.md` | Every estate site read, what it returned, and the sites that could not be reached |
 | `02-brand-and-site-audit.md` | Holdvölgy's measured brand tokens, fonts, page architecture, product/booking/club pages, and defects found |
@@ -136,5 +136,12 @@ client presentation live on GitHub Pages or only as a claude.ai artifact. The pl
 did (`plan.html`); a client-facing presentation did not exist. `bemutato.html` is
 now that page, in Hungarian: what to look at, why it looks this way, what is real,
 what was measured, what we ask of the estate, and what comes next.
+
+**2026-09-17 — the presentation rebuilt in the estate's own visual language.** The
+owner rejected the documentation-shell version: the bemutató is now a standalone
+page on the Holdvölgy design system — cellar photograph and one sentence, three
+numbers, a seven-step walk through the live pages shown in scaled phone frames with
+open-in-HU/EN buttons, what is real, six asks, three next steps. Direct address to
+the estate, short sections, no documentation chrome.
 
 **Next.** Client review of the whole; then the items in §6 of the plan as they arrive.
