@@ -47,7 +47,7 @@ decision records. Definitions are in <code>ssot.html</code>; details in <code>te
 </code></pre>
 <p>External systems: the seller's <strong>shop platform</strong> (Shoprenter and UNAS first, then
 WooCommerce and Shopify — D18; connector per platform), a transactional <strong>e-mail
-provider</strong> (Amazon SES — D19), a <strong>print partner</strong> (Pingen candidate, Release 1.1 — D15),
+provider</strong> (Resend — D26), a <strong>print partner</strong> (Pingen candidate, Release 1.1 — D15),
 <strong>messaging providers</strong> later (WhatsApp first — D20), and an <strong>identity provider</strong> for
 seller SSO (optional).</p>
 <p><strong>Mission.</strong> The platform is a retention system: churn and customer lifetime value are
@@ -64,7 +64,7 @@ the outcome metrics every container serves (D12).</p>
 <tbody>
 <tr>
 <td>Tenancy isolation</td>
-<td>no cross-seller data access, enforced in the database (row-level security) and in every query</td>
+<td>no cross-seller data access, enforced by the tenant plugin on every query and by database roles on event collections (TD §1b)</td>
 <td>multi-tenant SaaS, GDPR</td>
 </tr>
 <tr>
@@ -104,32 +104,31 @@ the outcome metrics every container serves (D12).</p>
 </tr>
 </tbody>
 </table></div>
-<h2>3. Containers</h2>
-<pre><code>┌───────────────┐   ┌───────────────┐   ┌──────────────────┐
-│ Seller console│   │ Buyer app     │   │ Public hand-off  │
-│ (SPA)         │   │ (PWA)         │   │ &amp; coupon pages   │
-└──────┬────────┘   └──────┬────────┘   └────────┬─────────┘
-       └──────────┬────────┴─────────────────────┘
-                  ▼
-        ┌──────────────────┐        ┌──────────────────┐
-        │ API (HTTP/JSON)  │◄──────►│ Decision engine  │
-        │ auth, tenancy,   │        │ relevance, reason│
-        │ core modules     │        │ codes, uplift,   │
-        └───────┬──────────┘        │ replenishment    │
-                │ outbox            └──────────────────┘
-                ▼
-        ┌──────────────────┐        ┌──────────────────┐
-        │ Workers (queue)  │───────►│ Channel adapters │──► e-mail / print / RCS
-        │ fan-out, sched-  │        └──────────────────┘
-        │ uler, deliveries,│        ┌──────────────────┐
-        │ write-backs      │◄──────►│ Shop connectors  │◄─► shop platforms
-        └───────┬──────────┘        └──────────────────┘
-                ▼
-   ┌────────────┴───────────┐   ┌──────────┐   ┌──────────────┐
-   │ PostgreSQL (OLTP, RLS) │   │ Redis    │   │ Object store │
-   │ + append-only events   │   │ queues,  │   │ PDFs, exports│
-   └────────────────────────┘   │ counters │   └──────────────┘
-                                └──────────┘
+<h2>3. Containers (D26: the existing Next.js spine, extended)</h2>
+<pre><code>┌──────────────────────────────────────────────────────────────┐
+│ Next.js 15 App Router on Vercel (Node 24)                     │
+│  • server-rendered seller console and buyer app (GDS/Mantine) │
+│  • Server Actions for UI mutations                            │
+│  • Route Handlers: APIs, webhooks (Resend, shop connectors),   │
+│    hand-off and coupon pages, cron entry points               │
+└───────┬──────────────┬──────────────┬───────────────┬────────┘
+        │              │              │               │
+   MongoDB Atlas   Upstash Redis   Vercel Blob    Resend (out + inbound
+   (Mongoose,      (caps, rate     (letters,      replies, webhooks,
+    transactions,   limits, flash   exports,       unsubscribe)
+    outbox, offer   counters,       PDFs, audit
+    events, consent idempotency,    snapshots)
+    events, campaign throttling)
+    reservations)
+        │
+   Vercel Cron → durable outbox workers (fan-out, scheduler, deliveries,
+                 write-backs, retention, rollups)
+   Socket.IO realtime over Vercel with durable HTTP fallback (convenience only)
+   DoneIsBetter SSO (seller staff and buyers; local password routes fail closed)
+   Decision engine: a module inside the app in Release 1 (rules), a separate
+   service behind the same interface from Release 2 (ADR-8)
+   Reporting read model: MongoDB materialised aggregates, or a Postgres
+   projection (Neon), never the primary store (D26)
 </code></pre>
 <div class="tbl"><table>
 <thead>
@@ -140,48 +139,48 @@ the outcome metrics every container serves (D12).</p>
 </thead>
 <tbody>
 <tr>
-<td>Seller console</td>
-<td>inbox, thread, recommendations, offer send, flash campaign, automations, templates and overrides, settings, metrics</td>
+<td>Next.js app</td>
+<td>seller console, buyer app, Server Actions, Route Handlers, webhook receivers, hand-off and coupon pages, cron entry points</td>
 </tr>
 <tr>
-<td>Buyer app</td>
-<td>thread per seller or marketplace inbox (D3), accept/decline, "my usuals", preferences and consent centre, history</td>
+<td>MongoDB Atlas</td>
+<td>system of record: every platform-owned entity, the append-only <code>offer_events</code>, consent events, campaign reservations, the durable outbox</td>
 </tr>
 <tr>
-<td>Public pages</td>
-<td>signed hand-off redirect (D1), coupon redemption page for store staff (D6), unsubscribe / object</td>
+<td>Upstash Redis</td>
+<td>frequency caps (R16), rate limits, flash counters (R10), idempotency locks, delivery throttling, worker coordination</td>
 </tr>
 <tr>
-<td>API</td>
-<td>authentication, tenancy, the core modules of §4, outbox writer</td>
+<td>Vercel Blob</td>
+<td>letter PDFs (R14), privacy exports, list PDFs, audit snapshots</td>
 </tr>
 <tr>
-<td>Workers</td>
-<td>campaign fan-out, scheduler runs, delivery sends and status ingestion, order write-back, retention jobs, metrics rollups</td>
+<td>Resend</td>
+<td>outbound e-mail, inbound reply-to-thread, status webhooks, unsubscribe handling</td>
+</tr>
+<tr>
+<td>Vercel Cron + outbox</td>
+<td>scheduled and event-driven work: fan-out, scheduler, deliveries, write-backs, retention, rollups</td>
+</tr>
+<tr>
+<td>Socket.IO</td>
+<td>live updates in open threads; never the source of truth</td>
+</tr>
+<tr>
+<td>DoneIsBetter SSO</td>
+<td>authentication for seller staff and buyers</td>
 </tr>
 <tr>
 <td>Decision engine</td>
-<td>relevance scores and reason codes, replenishment prediction, uplift targeting (milestone 2), discount depth (milestone 3); versioned models; batch and on-demand</td>
+<td>relevance, reason codes, replenishment (rules in Release 1); uplift and discount depth later</td>
 </tr>
 <tr>
-<td>Channel adapters</td>
-<td>one per channel behind one interface: e-mail provider, print partner, RCS/WhatsApp</td>
+<td>Reporting read model</td>
+<td>SSOT §7 metrics, incrementality and margin analytics</td>
 </tr>
 <tr>
 <td>Shop connectors</td>
-<td>one per platform behind one interface: products, orders, stock, checkout link or cart creation, order webhooks</td>
-</tr>
-<tr>
-<td>PostgreSQL</td>
-<td>system of record for platform-owned entities; append-only <code>offer_events</code>; RLS by <code>seller_id</code></td>
-</tr>
-<tr>
-<td>Redis</td>
-<td>queues (fan-out, deliveries), atomic counters for flash limits and frequency caps</td>
-</tr>
-<tr>
-<td>Object store</td>
-<td>letter PDFs, exports</td>
+<td>modules per platform behind one interface, called from cron workers and webhook handlers</td>
 </tr>
 </tbody>
 </table></div>
@@ -299,17 +298,21 @@ interest for that scope (R15).</p>
 SSOT §7 metrics → console dashboards read the rollups.</p>
 <h2>6. Data architecture</h2>
 <ul>
-<li><strong>System of record</strong> is PostgreSQL. Shop-owned entities (<code>Product</code>, <code>Order</code>) are
-  mirrored, read-only, with <code>external_id</code> and a sync watermark per seller.</li>
+<li><strong>System of record</strong> is MongoDB Atlas (D26). Shop-owned entities (<code>Product</code>,
+  <code>Order</code>) are mirrored, read-only, with <code>external_id</code> and a sync watermark per seller.</li>
 <li><strong>Append-only</strong> <code>offer_events</code> for the audit trail; entity rows hold the current
   state, events hold the history. Never update an event.</li>
-<li><strong>Outbox pattern</strong>: state changes and their side effects are committed together; a
-  worker relays outbox rows to queues. Consumers are idempotent by <code>event_id</code>.</li>
-<li><strong>Counters</strong> for flash limits and frequency caps live in Redis for speed, with the
-  database as the source of truth on reconciliation (§4 A5 of the technical design).</li>
+<li><strong>Outbox pattern</strong>: state changes and their side effects are committed in one
+  Mongoose transaction; Vercel Cron workers relay outbox rows. Consumers are idempotent
+  by <code>event_id</code>, with short-lived Redis locks for concurrency.</li>
+<li><strong>Counters</strong> for flash limits and frequency caps live in Upstash Redis for speed;
+  campaign reservations and <code>accepted_total</code> in MongoDB are the truth on reconciliation
+  (§4 A5 of the technical design).</li>
 <li><strong>Retention</strong>: per market (<code>Market.retention_days</code>); a nightly job anonymises
   relationships past retention with no consent and no order in the window.</li>
-<li><strong>Reporting</strong>: rollup tables in PostgreSQL for milestone 1; a warehouse export later.</li>
+<li><strong>Reporting</strong>: a read model separate from the transactional collections — MongoDB
+  materialised aggregates first, a Postgres projection (Neon) if analytics outgrow them;
+  the primary database does not change until the product model settles (D26).</li>
 </ul>
 <h2>7. Integration architecture</h2>
 <ul>
@@ -326,18 +329,19 @@ SSOT §7 metrics → console dashboards read the rollups.</p>
 </ul>
 <h2>8. Security and privacy</h2>
 <ul>
-<li><strong>Authentication</strong>: seller staff by e-mail + one-time code or SSO; buyers by magic
-  link or one-time code; short-lived access tokens, rotating refresh tokens.</li>
+<li><strong>Authentication</strong> is DoneIsBetter SSO; local password routes fail closed (D26).</li>
 <li><strong>Authorisation</strong>: roles (<code>seller_admin</code>, <code>seller_agent</code>, <code>buyer</code>, <code>platform_ops</code>);
-  every request carries a tenant context; PostgreSQL row-level security policies on
-  <code>seller_id</code>; buyers see only their own relationships.</li>
+  every request carries a tenant context; a Mongoose plugin injects <code>seller_id</code> into
+  every tenant-scoped query and rejects queries without it; buyers see only their own
+  relationships.</li>
 <li><strong>Signed links</strong>: hand-off URLs and coupon codes are HMAC-signed with an expiry; the
   price is in the signed payload, never trusted from the client.</li>
 <li><strong>PII minimisation</strong>: postal address only when <code>mailing</code> is consented; phone only
   when a messaging channel is consented; birthdays optional.</li>
 <li><strong>Legal</strong>: R15 and R18 enforced in code, not policy; DSA "true scarcity": limits are
   enforced before the countdown is shown; the sold-out state is real.</li>
-<li><strong>Secrets</strong>: provider keys per seller encrypted at rest with a per-tenant key.</li>
+<li><strong>Secrets</strong>: provider keys per seller encrypted at rest with a per-tenant key; the
+  Resend webhook signing secret is rotated before broad rollout (DD-008).</li>
 <li><strong>Logging</strong>: no PII in logs; events reference ids.</li>
 </ul>
 <h2>9. Deployment and operations</h2>
@@ -351,70 +355,77 @@ SSOT §7 metrics → console dashboards read the rollups.</p>
 <li>Service objectives: accept path availability 99.9 %; fan-out of 50 000 offers under
   10 minutes; write-back lag under 5 minutes p95.</li>
 </ul>
-<h2>10. Stack (decided, D16)</h2>
+<h2>10. Stack (decided, D26)</h2>
+<p>The product is extended on its existing spine; a rewrite is not on the table until the
+business logic is complete.</p>
 <div class="tbl"><table>
 <thead>
 <tr>
 <th>Layer</th>
-<th>Choice</th>
-<th>Rationale</th>
+<th>Current</th>
+<th>Add for Release 1</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>Language</td>
-<td>TypeScript end to end</td>
-<td>one language for console, buyer app, API, workers; strong typing on the domain model</td>
-</tr>
-<tr>
-<td>API</td>
-<td>Node 22 + Fastify</td>
-<td>fast, plain HTTP/JSON, schema validation built in</td>
-</tr>
-<tr>
-<td>Workers</td>
-<td>BullMQ on Redis</td>
-<td>queues, delayed jobs, retries, rate limiting in one library</td>
+<td>App and API</td>
+<td>Next.js 15 App Router on Vercel, Node 24; Server Actions; Route Handlers</td>
+<td>—</td>
 </tr>
 <tr>
 <td>Database</td>
-<td>PostgreSQL 16</td>
-<td>RLS for tenancy, JSONB for template values, reliable counters</td>
+<td>MongoDB Atlas via Mongoose: transactions, optimistic versions, idempotent imports, outbox, campaign reservations, consent and offer events</td>
+<td>reporting read model (materialised aggregates or Neon projection)</td>
 </tr>
 <tr>
-<td>Front ends</td>
-<td>React + Vite (console), React PWA (buyer)</td>
-<td>shares the design tokens already named after GDS 6.5.0</td>
+<td>Cache and counters</td>
+<td>—</td>
+<td><strong>Upstash Redis</strong>: caps, rate limits, flash counters, idempotency locks, throttling, worker coordination</td>
 </tr>
 <tr>
-<td>Decision engine</td>
-<td>Python service (FastAPI) with scikit-learn/causalml for uplift; rules in milestone 1</td>
-<td>data-science tooling where it lives; versioned models</td>
+<td>Object storage</td>
+<td>—</td>
+<td><strong>Vercel Blob</strong>: letters, exports, PDFs, audit snapshots</td>
 </tr>
 <tr>
 <td>E-mail</td>
-<td>Amazon SES, eu-central-1</td>
-<td>transactional deliverability, status webhooks, EU data residency (D19)</td>
+<td>Resend: outbound, inbound replies, webhook verification, unsubscribe</td>
+<td>keep; rotate the webhook secret</td>
 </tr>
 <tr>
-<td>Object store</td>
-<td>S3-compatible</td>
-<td>PDFs, exports</td>
+<td>Jobs</td>
+<td>Vercel Cron + durable outbox</td>
+<td>—</td>
+</tr>
+<tr>
+<td>Realtime</td>
+<td>Socket.IO over Vercel with durable HTTP fallback</td>
+<td>convenience layer only</td>
+</tr>
+<tr>
+<td>Auth</td>
+<td>DoneIsBetter SSO; local password routes fail closed</td>
+<td>—</td>
+</tr>
+<tr>
+<td>UI</td>
+<td>SovereignSquad GDS, Mantine underneath</td>
+<td>—</td>
+</tr>
+<tr>
+<td>Decision engine</td>
+<td>rules module inside the app</td>
+<td>separate service from Release 2 (ADR-8)</td>
 </tr>
 <tr>
 <td>Hosting</td>
-<td>AWS eu-central-1 (Frankfurt), containers on ECS or EKS</td>
-<td>data residency (D19)</td>
-</tr>
-<tr>
-<td>Print partner</td>
-<td>Pingen (Release 1.1), behind <code>PrintPartner</code></td>
-<td>domestic posting in Hungary through an API (D15)</td>
+<td>Vercel; MongoDB Atlas in an EU region</td>
+<td>—</td>
 </tr>
 </tbody>
 </table></div>
-<p>Alternatives considered: a single Next.js app (simpler, weaker worker story); Go for
-the API (faster, second language); a managed BaaS (fast start, weak RLS and audit).</p>
+<p>Withdrawn: React/Vite + Fastify + PostgreSQL + BullMQ + SES (the first proposal, D16).
+The earlier documents remain the business requirements; the stack is the one above.</p>
 <h2>11. Architecture decision records</h2>
 <div class="tbl"><table>
 <thead>
@@ -437,7 +448,7 @@ the API (faster, second language); a managed BaaS (fast start, weak RLS and audi
 </tr>
 <tr>
 <td>ADR-3</td>
-<td>Append-only offer events plus current-state rows; outbox relay</td>
+<td>Append-only offer events plus current-state documents; outbox relay</td>
 <td>accepted</td>
 </tr>
 <tr>
@@ -447,8 +458,8 @@ the API (faster, second language); a managed BaaS (fast start, weak RLS and audi
 </tr>
 <tr>
 <td>ADR-5</td>
-<td>Flash limits enforced with atomic counters, database as reconciliation truth</td>
-<td>accepted (D2)</td>
+<td>Flash limits enforced with atomic Redis counters and MongoDB campaign reservations as reconciliation truth</td>
+<td>accepted (D2, D26)</td>
 </tr>
 <tr>
 <td>ADR-6</td>
@@ -472,8 +483,13 @@ the API (faster, second language); a managed BaaS (fast start, weak RLS and audi
 </tr>
 <tr>
 <td>ADR-9</td>
-<td>Stack per §10</td>
-<td>accepted (D16)</td>
+<td>Greenfield stack (Fastify, Vite, PostgreSQL, BullMQ, SES)</td>
+<td>superseded by ADR-14</td>
+</tr>
+<tr>
+<td>ADR-14</td>
+<td>Extend the existing Next.js / Vercel / MongoDB / Resend / SSO implementation; add Upstash Redis and Vercel Blob; reporting read model before any primary-database change; realtime never authoritative</td>
+<td>accepted (D26)</td>
 </tr>
 <tr>
 <td>ADR-11</td>

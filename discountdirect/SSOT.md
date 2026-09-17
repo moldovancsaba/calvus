@@ -76,6 +76,7 @@ platform never edits it.
 | Entity | Key fields | Owner |
 |---|---|---|
 | `Seller` | id, name, tagline, market_code, settings (§4) | Platform |
+| (physical) | Entities are MongoDB collections with Mongoose schemas, `seller_id` on every tenant-scoped document, `version` for optimistic concurrency, and an append-only `offer_events` collection (D26). The tables in `technical-design.html` §1 are the logical model; §1b gives the collection mapping. | |
 | `Buyer` | id, email, phone?, postal_address?, locale, birthday? | Platform (identity), buyer (profile edits) |
 | `Relationship` | seller_id, buyer_id, segment, order_count, first_order_at, last_order_at, consents[], frequency_pref, holdout_bucket | Platform (derived from orders + buyer choices) |
 | `Product` | id, seller_id, external_id, name, price, currency, category, consumable: bool, replenish_days?, stock? | Shop (via connector) |
@@ -142,22 +143,29 @@ Buyer-level preferences: `frequency_pref` (per seller or inbox per `consent_scop
 | D13 | Legal and consent defaults belong to the platform; the seller keeps additional options within limits. Incentives (percentages, vouchers, freebies, compensation) come from predefined rule sets or from the seller in **advanced mode**; "advanced mode" is the system-wide term for the seller's own business decisions | R1, `advanced_mode`, `OperatingMode` |
 | D14 | Everything is clearly communicated to the buyer: compensation if available, first-come-first-served, limited quantity and every other rule appear on every communication | R21 |
 | D15 | Print partner (recommended, applied) | Release 1 ships the **seller print mode** only (PDF download, "posted" action). The platform print-and-post service follows in Release 1.1 through an API-first provider that posts through the domestic postal network; **Pingen** is the first integration candidate, behind the `PrintPartner` interface so it can be swapped | R14, DD-054 |
-| D16 | Technology stack (recommended, applied) | The proposal in `architecture.html` §10 is adopted: TypeScript, Fastify, BullMQ on Redis, PostgreSQL 16, React, a Python decision engine | ADR-9 accepted |
+| D16 | Technology stack (recommended, applied) | superseded by D26 | — |
 | D17 | Release 1 market (recommended, applied) | **Hungary only**: `hu-HU`, HUF, the HU market row seeded; further markets are configuration, not code | `markets` |
 | D18 | Connector order (recommended, applied) | **Shoprenter and UNAS first** (the leading Hungarian rental platforms), then WooCommerce, then Shopify | DD-071–074 |
-| D19 | Providers and hosting (recommended, applied) | E-mail through **Amazon SES in eu-central-1**; hosting in **AWS eu-central-1** (Frankfurt) for EU data residency; object store S3 | architecture §10 |
+| D19 | Providers and hosting (recommended, applied) | superseded by D26: **Resend** for e-mail, **Vercel** hosting, **Vercel Blob** object storage | architecture §10 |
 | D20 | Release 1 channels (recommended, applied) | **chat, e-mail, postal letter (seller print mode), newsletter**. RCS and WhatsApp in Release 2, **WhatsApp first** in Hungary because it does not depend on carrier RCS support | `Channel` |
 | D21 | Measurement defaults (recommended, applied) | Holdout **10 %**; sellers with fewer than 1 000 active relationships use one **pooled seller-level holdout** instead of per-campaign ones; learned discount depth is enabled only after **2 000 offers with outcomes** | R19, `holdout_pct`, `min_outcomes_for_learning` |
 | D22 | Membership unit and perks (recommended, applied) | **Per seller** in Release 1; default perks **free delivery** and **early access 60 minutes** before a flash campaign; samples and gifts in advanced mode; a cross-seller wallet in Release 3 | DD-086, `early_access_minutes` |
 | D23 | Salutation (recommended, applied) | Neutral formal salutation **"Tisztelt {teljes név}!"** on letters and e-mails; no inference of gender from names | BL §3.7, DD-052 |
 | D24 | Reason experiments (recommended, applied) | The reason is always present (D14); experiments compare **engine wording against seller wording** only, never reason against no reason | DD-091 |
 | D25 | Release 1 scope (recommended, applied) | The issue list in `implementation-plan.html` §7; everything else is Release 1.1 or later | plan §7 |
+| D26 | Stack: extend the existing implementation, do not rewrite (product owner, 2026-09-17) | The product already has a working spine: **Next.js 15 App Router on Vercel (Node 24), MongoDB Atlas with Mongoose transactions, DoneIsBetter SSO (local password routes fail closed), Resend for outbound and inbound e-mail with webhook verification and unsubscribe, Vercel Cron with a durable outbox, Socket.IO realtime with a durable HTTP fallback, the SovereignSquad GDS with Mantine under it.** Target: add **Upstash Redis** (frequency caps, rate limits, flash counters, idempotency locks, throttling, worker coordination) and **Vercel Blob** (letters, exports, PDFs, audit snapshots); keep Resend; realtime is a convenience layer, the durable MongoDB event log is authoritative; add a **reporting read model** (MongoDB materialised aggregates, or a Postgres projection) before any primary-database change. The greenfield stack of the first proposal (Fastify, Vite, PostgreSQL, BullMQ, SES) is withdrawn. | ADR-14; architecture §3, §10; TD §1b, §3 |
 
 ### Open questions
 
-None for Release 1. O1 → D13, O2 → D15, O3 → D14, A1 → D16. D15–D25 were recommended
-and applied on 2026-09-17 so that Release 1 is fully specified; the product owner may
-overrule any of them, in which case this register changes first.
+None for Release 1. O1 → D13, O2 → D15, O3 → D14, A1 → D16 → D26. D15–D25 were
+recommended and applied on 2026-09-17 so that Release 1 is fully specified; the product
+owner may overrule any of them, in which case this register changes first.
+
+**Verification note (D26).** The implementation repository the owner cites
+(`/Users/Shared/Projects/discountdirect`: `package.json`, `src/lib/database-core.ts`,
+`docs/architecture.md`) was not reachable from the machine that maintains these
+documents on 2026-09-17, so the stack facts in D26 are recorded as stated by the owner.
+Issue DD-000 verifies them against the code before any other Release 1 work starts.
 
 ## 6. Rules register
 

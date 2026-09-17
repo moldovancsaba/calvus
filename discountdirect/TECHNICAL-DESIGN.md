@@ -4,11 +4,12 @@ Version 1.0 · 2026-09-17. Schema, state machines, API, algorithms with pseudo c
 integration contracts, security details, observability and testing. Terms per
 `ssot.html`; structure per `architecture.html`.
 
-## 1. Schema (PostgreSQL)
+## 1. Logical schema (relational notation)
 
-Conventions: `id uuid primary key default gen_random_uuid()`, `created_at timestamptz
-not null default now()`, money in integer minor units with a `currency` code, every
-tenant-scoped table has `seller_id` with a row-level-security policy.
+The tables below are the **logical model**: names, fields, keys and constraints. The
+physical store is MongoDB Atlas (D26); §1b maps every table to a collection and states
+how each constraint is enforced there. Conventions: `id`, `created_at`, money in integer
+minor units with a `currency` code, `seller_id` on every tenant-scoped entity.
 
 ```sql
 create table sellers (
@@ -117,10 +118,26 @@ create table print_jobs (id uuid primary key, offer_id uuid, mode text, pdf_ref 
 create table outbox (id bigserial primary key, aggregate text, aggregate_id uuid, type text, payload jsonb, created_at timestamptz default now(), relayed_at timestamptz);
 create table metric_rollups (seller_id uuid, scope text, scope_id uuid, day date, metrics jsonb, primary key (seller_id, scope, scope_id, day));
 
-alter table offers enable row level security;
-create policy tenant_offers on offers using (seller_id = current_setting('app.seller_id')::uuid);
--- the same policy shape on every seller-scoped table
 ```
+
+## 1b. Physical model on MongoDB (D26)
+
+| Logical table | Collection | Enforcement on MongoDB |
+|---|---|---|
+| every seller-scoped table | same name, `seller_id` indexed first in every compound index | a Mongoose plugin adds `seller_id` to every query from the request's tenant context and throws when it is missing (replaces row-level security) |
+| `offers` | `offers` | `version` field for optimistic concurrency; status transitions in a transaction with `offer_events` |
+| `offer_events`, consent events | `offer_events`, `consent_events` | insert-only: the model exposes no update or delete; a database user without update/delete on these collections in production |
+| `campaigns` + counters | `campaigns`, `campaign_reservations` | one reservation document per accepted unit `(campaign_id, buyer_id, seq)` with a unique index; `accepted_total` is the count of reservations on reconciliation (A5) |
+| `outbox` | `outbox` | written in the same transaction as the state change; relayed by Vercel Cron workers; `relayed_at` set idempotently |
+| `coupons` | `coupons` | unique index on `code` and on `offer_id`; redeem is a `findOneAndUpdate` with `redeemed_at: null` as the filter (A7) |
+| `orders`, `products` | `orders`, `products` | unique `(seller_id, external_id)`; idempotent imports |
+| `price_history` | `price_history` | `(product_id, valid_from)` unique |
+| `metric_rollups` | `metric_rollups` (read model) | materialised by cron; or projected to Neon/Postgres later |
+| `consents`, `objections` | `consents`, `objections` | scope key `(buyer_id, seller_id|null, channel)` unique on active rows |
+
+Transactions: Mongoose sessions on the Atlas replica set for every multi-document
+change (send, accept, sold-out, redeem, write-back). Files: Vercel Blob keys stored in
+`print_jobs.pdf_ref` and export records.
 
 ## 2. State machines
 
@@ -143,10 +160,13 @@ Guards: accept requires status = pending ∧ now < expires_at ∧ R10 counters o
 **Coupon**: `issued → redeemed`; a second redeem returns `already_redeemed`.
 **PrintJob**: `created → submitted → printed → posted | failed`.
 
-## 3. API (HTTP/JSON, versioned under `/v1`)
+## 3. API surface (Next.js App Router, D26)
 
-Auth: bearer token; seller endpoints require a seller role and set `app.seller_id`;
-buyer endpoints require a buyer session. Errors: `{error: {code, message, details}}`;
+UI mutations are **Server Actions**; APIs, webhooks, cron entry points, hand-off and
+coupon pages are **Route Handlers** under `/api/v1`. Auth: DoneIsBetter SSO session;
+seller routes require a seller role and set the tenant context; buyer routes require a
+buyer session. The table lists the logical operations; each maps to a Server Action
+(console and buyer app) and, where external callers need it, a Route Handler. Errors: `{error: {code, message, details}}`;
 codes include `validation`, `not_pending`, `expired`, `sold_out`, `per_buyer_limit`,
 `consent_blocked`, `frequency_capped`, `guardrail`, `already_redeemed`.
 
@@ -238,7 +258,8 @@ for batch in chunks(targets, 500):
   enqueue deliveries
 redis.set(f"camp:{id}:left", limit_qty_total)
 ```
-Accept (API), atomic with Lua on Redis and confirmed in the database:
+Accept (Server Action / Route Handler), atomic with Lua on Upstash Redis and confirmed
+in MongoDB by a unique campaign reservation:
 ```
 -- Lua: returns 1 on success, 0 when sold out, -1 when the buyer hit their limit
 local left = tonumber(redis.call('GET', KEYS[1]))
@@ -253,11 +274,11 @@ function accept(offer, buyer):
   r = redis.eval(script, [camp_left, camp_buyer(buyer)], [limit_qty_per_buyer])
   if r == 0: return sold_out
   if r == -1: return per_buyer_limit
-  in transaction:
-    update offers set status='accepted', responded_at=now where id=offer.id and status='pending'   -- 1 row, else rollback + redis undo
-    update campaigns set accepted_total = accepted_total + 1 where id=campaign.id
-    insert offer_events(type='accepted')
-    if accepted_total == limit_qty_total: enqueue sold_out(campaign)
+  in mongoose session:
+    offers.updateOne({_id: offer.id, status:'pending', version}, {status:'accepted', responded_at: now, $inc:{version:1}})  -- 1 doc, else abort + redis undo
+    campaign_reservations.insertOne({campaign_id, buyer_id, seq: offer.id})                 -- unique index = the reservation
+    campaigns.updateOne({_id}, {$inc:{accepted_total:1}}); offer_events.insertOne({type:'accepted'})
+    if accepted_total == limit_qty_total: outbox.insertOne({type:'campaign.sold_out'})
   return handoff_url(offer)                                        # A6
 sold_out(campaign):
   update offers set status='sold_out' where campaign_id=id and status='pending'
@@ -278,8 +299,8 @@ function rules_block(offer, campaign?, locale):
 ```
 Every channel template (chat card, e-mail, letter, newsletter, sold-out notice) calls
 `rules_block` and renders every line; a rendering without it fails the template test.
-Reconciliation: hourly, `campaigns.accepted_total` is the truth; Redis keys are rebuilt
-from it if they diverge.
+Reconciliation: hourly, the count of `campaign_reservations` is the truth; Redis keys
+and `accepted_total` are rebuilt from it if they diverge.
 
 ### A6 Hand-off and write-back (R7, D1)
 ```
@@ -382,17 +403,18 @@ interface ChannelAdapter {
   send(d: DeliveryDTO): Promise<{ providerRef: string }>;
   parseStatus(req: RawRequest): Promise<{ providerRef: string; status: DeliveryStatus; at: Date }>;
 }
-interface PrintPartner extends ChannelAdapter { channel: 'mailing'; submit(job: { pdfRef: string; address: PostalAddress }): Promise<{ partnerRef: string }>; }
+interface PrintPartner extends ChannelAdapter { channel: 'mailing'; submit(job: { pdfRef: string /* Vercel Blob key */; address: PostalAddress }): Promise<{ partnerRef: string }>; }
 ```
 
 ## 6. Security details
 
-- Tokens: JWT (RS256), 15-minute access, 30-day rotating refresh; `aud` = console or buyer.
+- Sessions come from DoneIsBetter SSO; local password routes fail closed (D26).
 - Hand-off tokens: HMAC-SHA256 over `offer_id|price|currency|exp` with a per-seller key;
   base64url; verified server-side, never decoded by the client.
-- RLS: `set local app.seller_id` per request in a transaction; platform ops use a
+- Tenancy: the Mongoose tenant plugin (§1b) scopes every query; platform ops use a
   separate role with audit logging.
-- Webhooks: signature verification per provider; replay protection by event id.
+- Webhooks: signature verification per provider (Resend, shop platforms); replay
+  protection by event id; the Resend webhook secret is rotated before broad rollout.
 - Rate limits: accept endpoint 10/min per buyer; coupon redeem 5/min per code.
 
 ## 7. Observability
@@ -407,6 +429,8 @@ write-back lag, deferred/blocked ratios, dead-letter depth.
 
 - Unit: pricing (R4, R5, R18), consent (R15, R16), split (R17), replenishment (A3),
   holdout (A9), template resolution (A1) — table-driven.
+- Tenancy: a test that issues every tenant-scoped query without a tenant context and
+  expects the plugin to throw (replaces the row-level-security test).
 - Concurrency: flash accept under 1 000 parallel requests never exceeds either limit.
 - Contract: connector and adapter interfaces against recorded provider fixtures.
 - End to end: the prototype's sample data (ElektroHome, Anna Kovács / Gábor Nagy /

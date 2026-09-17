@@ -21,7 +21,8 @@ An issue is done only when all of the following are true:
 1. Code merged to `main` behind a feature flag if user-visible and incomplete.
 2. Unit tests for every rule the issue touches (table-driven, named by rule id).
 3. Contract or integration test where an external interface is involved.
-4. Row-level security verified for every new table (a cross-tenant read test fails).
+4. Tenant scoping verified for every new collection (a query without tenant context
+   throws; a cross-tenant read test fails).
 5. No PII in logs; new events registered in the observability catalogue (TD §7).
 6. `ssot.html` updated if a term, enum, setting, rule or metric changed; TD updated
    if a schema, endpoint or algorithm changed; this plan updated if scope changed.
@@ -48,28 +49,60 @@ M1, because no send may go out without `may_send`.
 
 ## 3. Issues
 
-### E0 Foundations (M0)
+### E0 Foundations (M0) — on the existing implementation (D26)
 
-**DD-001 Repository, environments, CI** · S · area:platform
-Story: as an engineer I can build, test and deploy to dev/staging/prod from one repo.
-Scope: monorepo (api, workers, console, buyer-app, engine), lint/type/test pipeline,
-forward-only migrations, secrets management, EU region.
-Acceptance: a change merged to `main` reaches staging automatically; migrations run once.
-DoD: global + runbook page.
+**DD-000 Verify the implementation baseline** · S · area:platform
+Story: as the team I confirm what the existing DiscountDirect repository already
+provides before planning on it.
+Scope: read `package.json`, `src/lib/database-core.ts`, `docs/architecture.md` and the
+route and model folders; record versions, the Mongoose models that exist (offers,
+conversations, outbox, campaign reservations, consent events, offer events), the Resend
+and SSO integrations, cron jobs and the Socket.IO fallback; diff the result against
+`ssot.html` §3 and TD §1b; update those documents.
+Acceptance: an inventory page in the implementation repo and a corrected §1b; every
+later issue's "existing" note is confirmed or amended.
 
-**DD-002 Schema v1 and row-level security** · M · area:data · depends DD-001
-Scope: TD §1 tables, RLS policies on every seller-scoped table, `offer_events` with
-update/delete revoked, `outbox`.
+**DD-001 Environments and CI on the existing repo** · S · area:platform · depends DD-000
+Scope: Vercel preview/staging/production environments, MongoDB Atlas EU cluster per
+environment, lint/type/test pipeline, secrets in Vercel, EU region confirmed.
+Acceptance: a change merged to `main` deploys to staging automatically; production
+needs a promotion.
+
+**DD-002 Models v1, tenant plugin, event collections** · M · area:data · depends DD-001
+Scope: TD §1 logical model realised as Mongoose schemas per §1b; the tenant plugin that
+injects `seller_id` and throws without a context; insert-only `offer_events` and
+`consent_events`; `outbox`; indexes; Blob keys on `print_jobs`.
 Pseudo code (request wrapper):
 ```
-with transaction: set local app.seller_id = ctx.seller_id; run handler
+withTenant(ctx.seller_id, () => handler())   // plugin reads the async-local tenant context
 ```
-Acceptance: cross-tenant read test fails; event update raises; migrations reversible in dev.
+Acceptance: a query without a tenant context throws; a cross-tenant read returns
+nothing; an update on an event document is refused by the model and by the database
+role in production.
 
-**DD-003 Identity and roles** · M · area:identity · depends DD-002
-Scope: seller staff (e-mail + one-time code, optional SSO), buyer (magic link / code),
-roles per SSOT §2, JWT per TD §6, refresh rotation.
-Acceptance: role matrix test (16 endpoint × role cases); token expiry and rotation tests.
+**DD-003 Roles on top of DoneIsBetter SSO** · M · area:identity · depends DD-002
+Scope: SSO session → platform roles per SSOT §2 (`seller_admin`, `seller_agent`,
+`buyer`, `platform_ops`); buyer identity linking across sellers; local password routes
+stay fail-closed.
+Acceptance: role matrix test over every Server Action and Route Handler; a password
+route returns a hard refusal.
+
+**DD-006 Upstash Redis** · S · area:platform · depends DD-001
+Scope: client, key conventions (`cap:`, `camp:`, `lock:`, `rate:`), Lua script loading,
+TTL policy, reconciliation job hook.
+Acceptance: A5 and A8 scripts run against a staging Redis; a lost key is rebuilt from
+MongoDB.
+
+**DD-007 Vercel Blob** · S · area:platform · depends DD-001
+Scope: private store, signed read URLs with expiry, key conventions per seller, retention
+by market.
+Acceptance: a letter PDF is written and read back through a signed URL; a cross-tenant
+key is refused.
+
+**DD-008 Rotate the Resend webhook secret and verify signatures** · S · area:security · depends DD-001
+Scope: rotate the exposed signing secret, store it only in Vercel secrets, verify every
+inbound Resend webhook, add replay protection by event id.
+Acceptance: a webhook with the old secret is refused; a replayed event is ignored.
 
 **DD-004 Seed fixtures from the prototype** · S · area:data · depends DD-002
 Scope: ElektroHome, three buyers, catalogue, orders, relevance, recommendations exactly
@@ -207,14 +240,16 @@ Acceptance: table-driven tests over `recommendation_pct` and `fixed` modes.
 
 ### E5 Channels (M3)
 
-**DD-050 Delivery model and outbox relay** · M · area:delivery · depends DD-002
-Scope: `deliveries`, outbox relay worker, idempotent consumers, dead-letter queue and
-alert.
+**DD-050 Delivery model and outbox relay** · M · area:delivery · depends DD-002, DD-006
+Scope: `deliveries`, outbox relay through Vercel Cron workers with Redis locks,
+idempotent consumers, dead-letter collection and alert; Socket.IO notifies open threads
+but the outbox is the record.
 Acceptance: a failed adapter call retries with backoff and lands in the dead-letter
 queue after 5 attempts; the thread shows the failure.
 
-**DD-051 E-mail adapter** · M · area:delivery · depends DD-050
-Scope: TD §5 `ChannelAdapter` for the chosen provider; templates per BL §3.7 (subject,
+**DD-051 E-mail adapter on Resend** · M · area:delivery · depends DD-050, DD-008
+Scope: TD §5 `ChannelAdapter` over the existing Resend integration (outbound, inbound
+reply-to-thread, unsubscribe); templates per BL §3.7 (subject,
 greeting, card, CTA deep link, reply-to-thread, footer with reason and unsubscribe);
 status webhooks (`delivered`, `opened`, `clicked`, `bounced`).
 Acceptance: staging send to a sandbox inbox renders per the prototype's e-mail tab;
@@ -356,9 +391,10 @@ Pseudo code: TD A9; `holdout_mode` pooled under 1 000 active relationships (D21)
 Acceptance: the same buyer is consistently held out within one campaign; distribution
 within 1 point of `holdout_pct` over 100 000 buyers.
 
-**DD-091 Event catalogue and metric rollups** · M · depends DD-050
-Scope: TD §7 events; nightly rollups per SSOT §7 into `metric_rollups`; attribution
-window 14 days.
+**DD-091 Event catalogue and metric rollups (reporting read model)** · M · depends DD-050
+Scope: TD §7 events; nightly rollups per SSOT §7 into the `metric_rollups` read model as
+MongoDB materialised aggregates; a documented path to a Postgres projection (Neon) if
+analytics outgrow them (D26); attribution window 14 days.
 Acceptance: incremental margin computed against the holdout on the seed data with
 synthetic orders; take rate by kind and channel.
 
@@ -381,8 +417,9 @@ of BL §3.8: history, reason (engine or seller), basis.
 
 ## 4. Blocked register
 
-Empty. O1–O3 and A1 were resolved on 2026-09-17 (D13–D16); the recommended decisions
-D15–D25 in `ssot.html` §5 complete the specification of Release 1.
+Empty. O1–O3 and A1 were resolved on 2026-09-17 (D13–D16, then D26 for the stack);
+the recommended decisions D15–D25 in `ssot.html` §5 complete the specification of
+Release 1. DD-000 confirms the implementation baseline first.
 
 ## 5. Milestones 2 and 3 (epic level)
 
@@ -417,7 +454,7 @@ width first. It is complete when every issue below meets the global Definition o
 
 | Epic | Issues in Release 1 |
 |---|---|
-| E0 Foundations | DD-001, 002, 003, 004, 005 |
+| E0 Foundations | DD-000, 001, 002, 003, 004, 005, 006, 007, 008 |
 | E1 Thread | DD-010, 011, 012, 013 |
 | E2 Offers | DD-020, 021, 022, 023, 024 |
 | E3 Flash | DD-030, 031, 032, 033, 034 |
@@ -433,7 +470,7 @@ Release 1.1: DD-072 WooCommerce, DD-071 Shopify, DD-054 platform print service
 (Pingen), DD-081 journey runner, DD-083 progress card, DD-084 back-in-stock and
 price-drop, DD-085 birthday, DD-086 membership. Release 2 and 3: §5.
 
-Indicative sequencing for one team of four engineers plus one data engineer: E0 two
-weeks; E1–E2 and E6 in parallel four weeks; E3–E4 and E5 four weeks; E7 four weeks
+Indicative sequencing for one team of four engineers plus one data engineer, on the
+existing implementation (D26): E0 two weeks; E1–E2 and E6 in parallel four weeks; E3–E4 and E5 four weeks; E7 four weeks
 (connectors in parallel); E8–E10 four weeks; hardening and the compliance test pass two
 weeks. About twenty weeks to Release 1, with the critical path through E7.
