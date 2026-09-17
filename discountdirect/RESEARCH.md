@@ -1,10 +1,18 @@
-# DiscountDirect — research: how B2C machines upsell and cross-sell, and how to fine-tune the idea
+# DiscountDirect — research: how B2C machines make people buy again, and how to fine-tune the idea
 
 Read and compiled 2026-09-17. Every claim below carries a numbered source from §11;
 figures that circulate without a primary source are marked *industry-reported*. The
 purpose is practical: what the best B2C operators actually do, what the evidence says
 works and what backfires, and what that means for DiscountDirect — the prototype at
 `index.html` and its rules in `business-logic.html`.
+
+One framing runs through the whole document: **the discount is only one lever, and
+usually the most expensive one.** Part A (§1–§6) covers offers, targeting and price.
+Part B (§7) covers what the strongest B2C machines actually run on — convenience,
+habit, membership, progress, social proof, reciprocity, choice architecture and
+timing — and Part C (§8–§11) turns both into changes to the prototype.
+
+## Part A — offers, targeting and price
 
 ## 1. Why personalised offers pay — the evidence base
 
@@ -128,19 +136,168 @@ Consequence for DiscountDirect: a flash campaign's time and quantity limits must
   company in 30 days; practitioner caps are 2–4 e-mails a month and at most one SMS a
   week, segmented by engagement. [26]
 
-## 7. The Hungarian market context
+## Part B — beyond price: the levers that make people buy again
+
+Most of what the best operators do is not discounting. The evidence below is grouped
+by the human mechanism each lever works on; every one of them is cheaper than a
+discount and most of them compound.
+
+### 7.1 Laziness — remove effort, and the easiest action wins
+- Fogg's behaviour model: a behaviour happens when motivation, **ability** and a
+  prompt meet; when motivation is ordinary, lowering the effort is the cheapest way to
+  trigger the action. [36]
+- Baymard: 70 % of carts are abandoned; 26 % of US shoppers have abandoned because an
+  account was required, 17 % because checkout was too long; the average large site can
+  raise conversion 35 % through checkout design alone. [35]
+- Defaults are the strongest form of "easy": switching a savings plan from opt-in to
+  opt-out took participation from 50 % to 86 % with no change in the economics
+  (Madrian & Shea). [37]
+- Amazon built the lazy path into the product: Subscribe & Save is active for 23 % of
+  US customers and gives sellers 20–35 % of their sales; the app's home page tested a
+  **Buy Again** feed built from order history. [32][34]
+- Across 156 000 customers, 77 % of repeat purchases are reorders (23 % cross-sells);
+  half happen within 30 days and three quarters within 90. [33]
+- Post-purchase offers that force payment re-entry lose ~78 % of conversion (§2.2). [7]
+
+For DiscountDirect: the one-tap "Elfogadom" is the product. A reorder with no discount
+and no effort converts better than a discount that needs a checkout.
+
+### 7.2 Habit and rhythm — become the customer's default
+- About 43 % of everyday actions are habitual — performed while thinking of something
+  else (Wood & Neal). A shop that becomes the habit does not compete on price. [38]
+- The Hook model (trigger → action → variable reward → investment): a habit forms when
+  an external prompt is repeated at the moment of need, the action is trivial, the
+  reward is not fully predictable, and the customer has invested something (history,
+  preferences, a streak) that raises the cost of leaving. [39]
+- Duolingo's streak mechanics are the reference case; the figures that circulate
+  (streak-freeze cut churn ~21 %, 7-day streak users retain 2–4×) come from secondary
+  analyses, not Duolingo filings — *industry-reported*. [40]
+- Starbucks Rewards: 35.5 million 90-day-active US members, nearly 60 % of US
+  company-operated revenue, members 5.6× more likely to visit daily. [30]
+- Replenishment cadence is the retail habit: predicted run-out, then a reminder 5–7
+  days before it (§2.2). [7]
+
+For DiscountDirect: a fixed rhythm the customer can predict ("your usual, every
+fourth week, one tap") beats random blasts; the thread's job is to become the reorder
+habit.
+
+### 7.3 Membership and identity — commitment before discount
+- Prime members spend $1 170 a year against $570 for non-members, chiefly because they
+  shop more often; Prime renews at 97–99 %. [28][33]
+- Costco renews 92.3 % in the US and Canada and earned about $5.3 billion in fees in
+  fiscal 2025 — the fee is the profit, the low prices are the reason to keep paying it.
+  [29]
+- Tesco Clubcard: 84 % of UK sales are Clubcard-linked; personalised digital coupons
+  go to over 9 million customers; the programme is thirty years old. [31]
+- Nike claims members spend about 3× non-members — from Nike's own communications,
+  *industry-reported*. [46]
+- Hungary: 93 % of internet users over 15 belong to a loyalty programme; 42 % want
+  personalised discounts; two thirds are reluctant to hand over data unless it is
+  needed for the benefit. [47]
+- Commitment and consistency (Cialdini; Freedman & Fraser): a small first "yes" —
+  saving a preference, joining a list — raises the chance of the larger later "yes". [55]
+
+For DiscountDirect: a named membership with non-price benefits (free delivery,
+early access, priority help) turns the seller-customer thread into something the
+customer has joined, not something that happens to them.
+
+### 7.4 Progress, goals and play
+- Endowed progress (Nunes & Drèze, JCR 2006): a car-wash card needing 8 stamps but
+  issued with 2 already stamped was completed by 34 % of customers versus 19 % for an
+  8-stamp card with none — same effort, a visible head start. [41]
+- Tesco Clubcard Challenges: personalised spend thresholds over six weeks, offered to
+  up to 10 million customers; Global Loyalty Award 2025. [31]
+- A Portuguese grocery study (203 loyalty-card users) links ease of use to programme
+  satisfaction to loyalty; industry claims of "47 % more engagement" from gamification
+  are vendor-reported. [42][43]
+
+For DiscountDirect: "two more orders to free delivery — you are already at 3 of 5" is
+a message with no discount in it and a measured effect.
+
+### 7.5 Social proof and community
+- Spiegel Research Center: the first five reviews carry the largest conversion effect;
+  purchase likelihood peaks between 4.2 and 4.5 stars and falls toward 5.0. [44]
+- "Frequently bought together" is social proof as much as recommendation; real-time
+  proof notifications lift conversion 10–15 % across ~20 000 sites (vendor data). [44]
+- Peloton holds monthly connected-fitness churn near 1.6 % on community, instructors
+  and lifecycle messaging — *industry-reported* from filings summaries. [45]
+
+For DiscountDirect: an offer card can say "31 customers who own this filter bought
+these pre-filters" — a reason that is also proof.
+
+### 7.6 Reciprocity, surprise and non-price rewards
+- Free samples raise later ratings and purchase through reciprocity (JECR 2023); the
+  obligation fades within about a week if no purchase opportunity follows. [48]
+- Surprise coupons handed over in-store led to 11 % higher spend than coupons received
+  in advance — surprise, not size. [49]
+- Gaertig & Simmons (JCR 2025, 8 969 participants): uncertain promotions ("1 in 10
+  orders is free") beat equivalent sure discounts **only when the sure discount is or
+  seems trivial**; in a field test a 1 % lottery discount produced 54 % more spend than
+  a 1 % fixed discount. [50]
+- NielsenIQ: bundles carry 40 % of promoted revenue against 52 % for price cuts; premium
+  (gift-with-purchase) promotions relate positively to repeat purchase and advocacy. [51]
+
+For DiscountDirect: a sample, a gift, a bundle or a small lottery is often cheaper and
+more memorable than 15 % off — and none of them lowers the reference price.
+
+### 7.7 Choice architecture — fewer options, one clear default
+- Iyengar & Lepper's jam study: 24 flavours drew more tasters, 6 flavours sold ten
+  times as often (30 % vs 3 %); later meta-analyses find the effect real but
+  conditional on complexity and time pressure. [52]
+- The decoy effect (Ariely's Economist pricing, 68 % → 84 % for the target option)
+  became a pricing-page staple, but large replications with realistic stimuli found
+  it mostly disappears — use with caution. [53]
+- The Behavioural Insights Team's EAST checklist — Easy, Attractive, Social, Timely —
+  is the practitioner summary of this whole section. [54]
+- Free-shipping thresholds set 20–30 % above the average order lift order value
+  12–30 % (industry-reported ranges; thresholds over 40 % above AOV push shoppers to
+  abandon). [57]
+
+For DiscountDirect: one offer per message, at most three choices, one default
+already selected.
+
+### 7.8 Timing and attention
+- Personalised push notifications open at up to 4× the rate of generic ones; sending in
+  a user's own preferred window lifts opens up to 40 %; retail apps peak 8–9 and 18–20;
+  a day-3 / day-7 / day-14 re-engagement ladder recovers 10–25 % of lapsing users —
+  all vendor benchmarks. [56]
+- HelloFresh's add-on market lifted order value about 15 % by asking at the weekly
+  order moment, not in a separate campaign — *industry-reported*. [58]
+- Frequency caps are part of timing: four messages in 30 days is where 56 % unsubscribe
+  (§6). [26]
+
+### 7.9 The levers side by side
+
+| Lever | Mechanism | Strongest evidence | DiscountDirect use |
+|---|---|---|---|
+| Laziness | lower effort, defaults | Madrian & Shea 50 → 86 %; Baymard 26 % / 17 % | one-tap reorder, saved payment, "your usual" |
+| Habit | repeated prompt at the moment of need | Wood 43 %; Starbucks 5.6× daily | replenishment rhythm, predictable cadence |
+| Membership | commitment, identity | Prime 2:1 spend; Costco 92 % renewal; Tesco 84 % | named membership, non-price perks |
+| Progress | endowed progress, goals | Nunes & Drèze 34 % vs 19 % | head-start progress toward a perk |
+| Social proof | others like me | Spiegel first-five-reviews, 4.2–4.5 stars | proof inside the reason line |
+| Reciprocity | gift before ask | surprise coupon +11 %; samples | sample, gift, bundle, small lottery |
+| Choice | fewer options | jam 30 % vs 3 % | one offer, ≤3 choices, one default |
+| Timing | right moment, right cadence | personalised push 4×; frequency cap | send-time per customer, re-engagement ladder |
+| Price | last resort, margin cost | uplift 20–40 % non-incremental | learned depth, persuadables only |
+
+## Part C — what this means for the prototype
+
+## 8. The Hungarian market context
 
 PwC Hungary's *Online Retail Big Picture* (June 2026): online retail turnover reached
 **HUF 2 092 billion** in 2025 (about EUR 5.7 bn), 4.4 million people shop online, roughly
 **a quarter of shoppers generate nearly 80 % of parcels**, cross-border marketplaces take
 about 18 % of turnover, and 60 % of orders are placed on mobile. [27] The concentration is
 the point: a Hungarian web shop's revenue sits with a small, repeat-buying core — exactly
-the buyers DiscountDirect addresses one by one.
+the buyers DiscountDirect addresses one by one. And 93 % of them already carry loyalty
+cards: membership is expected here, personalisation is wanted (42 %), and data
+reluctance is high — the benefit has to be visible before the data is asked for. [47]
 
-## 8. What this means for DiscountDirect — fine-tuning the idea
+## 9. Fine-tuning the idea — twenty-two changes to the prototype
 
-The prototype's rules are in `business-logic.html`. Against the evidence above, twelve
-changes, each traceable to a source:
+The prototype's rules are in `business-logic.html`. Against the evidence above,
+twenty-two changes, each traceable to a source. The first twelve are about offers and
+price (Part A); the last ten are the non-price levers (Part B) and matter more.
 
 1. **Score relevance, don't hard-code it.** Replace the fixed relevance sets with a
    buyer × product score plus a machine-written reason code (§3.2, §3.4). The reason
@@ -176,23 +333,54 @@ changes, each traceable to a source:
     reason code, holdout flag, channel, timing trigger and outcome; a dashboard that reads
     incremental margin, take rate, unsubscribe rate and frequency per buyer (§4, §6).
 
+13. **Make reorder the default message type, not the offer.** "Your usual — one tap"
+    with no discount attached; the discount appears only when the uplift model says
+    the customer will not reorder otherwise (§7.1, §3.1).
+14. **A "my usuals" surface for the buyer** built from order history, with the
+    predicted next date on each item — the Buy Again pattern inside the thread (§7.1).
+15. **Saved payment and address inside the accept step**; never send the buyer to a
+    checkout that asks again (§7.1).
+16. **A named membership** per seller with non-price perks — free delivery, early
+    access to flash campaigns, priority answers — that the buyer joins with one tap;
+    joining is the small first "yes" (§7.3).
+17. **Progress with a head start**: "3 of 5 orders toward free delivery" as a message
+    type, issued with the first stamp already earned (§7.4).
+18. **Non-price rewards as offer kinds**: sample, gift-with-purchase, bundle, and a
+    small probabilistic reward ("one in ten orders free") for cases where the sure
+    discount would be trivial (§7.6).
+19. **Proof in the reason line**: the reason field carries what similar customers did,
+    with real counts, never invented ones (§7.5).
+20. **One offer per message, at most three choices, one default selected**; the
+    recommendation list in the seller view is for the seller, the buyer sees one card
+    (§7.7).
+21. **Send-time per customer** learned from when they open and accept, plus a lapse
+    ladder at day 3 / 7 / 14 of inactivity relative to their own rhythm (§7.8, §7.2).
+22. **Investment the buyer keeps**: preferences, usuals, progress and history visible
+    in the buyer view, so leaving has a cost the buyer can see (§7.2).
+
 Product ideas the evidence supports beyond the current scope: a buyer-initiated "ask for
 a deal" in the thread; bundles from co-purchase patterns; a win-back trigger at the
-segment's typical churn point; a buyer "offer wallet" across sellers.
+segment's typical churn point; a buyer "offer wallet" across sellers; seller-to-buyer
+content at the moment of use (how to change the filter, when to reorder).
 
-## 9. What not to build
+## 10. What not to build
 
 Mass newsletters to everyone (non-incremental, fatigue), fake urgency (illegal in the EU),
 discounts to sure things (margin loss), profiling without a consent path (ePrivacy),
-and acceptance rate as the success metric (measures generosity, not value).
+and acceptance rate as the success metric (measures generosity, not value). And on the
+non-price side: never lead with a discount where convenience or a reminder would do;
+no streaks, timers or progress bars that are not true; no membership that is only a
+coupon in disguise.
 
-## 10. Open research questions
+## 11. Open research questions
 
 Optimal discount-depth model for a small catalogue with thin history; the right holdout
 size for a single web shop's volume; whether a buyer-side "reason" changes acceptance
-(A/B); RCS availability and cost on Hungarian carriers.
+(A/B); RCS availability and cost on Hungarian carriers; which non-price perk Hungarian
+buyers value most (free delivery vs early access vs samples); whether a per-seller
+membership or a cross-seller one is the right unit.
 
-## 11. Sources consulted
+## 12. Sources consulted
 
 1. McKinsey & Company — *The value of getting personalization right—or wrong—is multiplying* (Next in Personalization 2021). https://www.mckinsey.com/capabilities/growth-marketing-and-sales/our-insights/the-value-of-getting-personalization-right-or-wrong-is-multiplying
 2. McKinsey — *What is personalization?* (explainer, 2023). https://www.mckinsey.com/~/media/mckinsey/featured%20insights/mckinsey%20explainers/what%20is%20personalization/what-is-personalization.pdf
@@ -221,3 +409,34 @@ size for a single web shop's volume; whether a buyer-side "reason" changes accep
 25. GDPR Register — *Direct marketing GDPR rules and exceptions* (soft opt-in). https://www.gdprregister.eu/articles/direct-marketing-rules-and-exceptions/
 26. Braze — *Frequency capping: what it is, how it works*; FlareLane — *How many messages a month is too many*. https://www.braze.com/resources/articles/whats-frequency-capping · https://flarelane.com/en/blog/message-frequency-capping/
 27. PwC Hungary — *Online Retail Big Picture* (June 2026), via Daily News Hungary. https://dailynewshungary.com/hungarian-spending-online-foreign-retailers/
+28. CIRP — *Amazon Prime shoppers outspend the rest* (2024 spend, $1 170 vs $570). https://cirpamazon.substack.com/p/amazon-prime-shoppers-outspend-the
+29. Yahoo Finance / Zacks — *Costco's renewal rate slips to 89.8 %* and *Costco membership fees surge in 2025*. https://finance.yahoo.com/news/costcos-renewal-rate-slips-89-132600457.html · https://finance.yahoo.com/news/costco-membership-fees-surge-2025-142000361.html
+30. Starbucks — *Starbucks unveils reimagined loyalty program* (2026) and Form 8-K FY2025 (34.6 m active members). https://about.starbucks.com/press/2026/starbucks-unveils-reimagined-loyalty-program-to-deliver-more-meaningful-value-personalization-and-engagement-to-members/ · https://www.sec.gov/Archives/edgar/data/829224/000082922425000013/sbux-12292024xexhibit991.htm
+31. Eagle Eye — *Tesco Clubcard Challenges: personalization at scale*; The Grocer — *Tesco Clubcard: a 30-year legacy*. https://eagleeye.com/case-studies/tesco-clubcard-challenges · https://www.thegrocer.co.uk/comment-and-opinion/why-tesco-clubcard-is-a-30-year-legacy-of-supermarket-loyalty/701617.article
+32. Red Stag Fulfillment — *What percentage of Amazon customers use Subscribe & Save?*; Velocity Sellers — *Subscribe & Save data deep-dive 2026*. https://redstagfulfillment.com/what-percentage-of-amazon-customers-use-subscribe-and-save/ · https://www.velocitysellers.com/2026/07/05/amazon-subscribe-save-data-deep-dive-2026/
+33. BS&Co — *Repeat purchase rate benchmarks: 156K customers*. https://bsandco.us/blog-post/repeat-purchase-rate-benchmarks
+34. NACS — *New Amazon feature to help "Buy Again"* (2023). https://www.convenience.org/stay-current/news/2023/october/11/5-new-amazon-feature_tech
+35. Baymard Institute — *Cart abandonment rate statistics*. https://baymard.com/lists/cart-abandonment-rate
+36. Fogg, B. J. — *Fogg Behavior Model*. https://www.behaviormodel.org/
+37. Madrian, B. & Shea, D. — *The Power of Suggestion: Inertia in 401(k) Participation and Savings Behavior*, NBER w7682 (2000). https://www.nber.org/papers/w7682
+38. APA Monitor — *Harnessing the power of habits* (Wood & Neal, 43 % of daily behaviour). https://www.apa.org/monitor/2020/11/career-lab-habits
+39. Eyal, N. — *The Hooked Model: how to manufacture desire in 4 steps*. https://www.nirandfar.com/how-to-manufacture-desire/
+40. Sensor Tower — *Duolingo's streak feature*; StriveCloud — *Duolingo gamification explained* (secondary figures). https://sensortower.com/blog/duolingo-streak-feature-app-engagement-growth · https://www.strivecloud.io/duolingo-gamification-explained
+41. Nunes, J. & Drèze, X. — *The Endowed Progress Effect*, Journal of Consumer Research 32(4), 2006 (summary via Loyalty & Reward Co). https://loyaltyrewardco.com/loyalty-psychology-series-endowed-progress-effect/
+42. *Playing to win: the impact of gamified loyalty programs in grocery retail*, Spanish Journal of Marketing – ESIC, 2025. https://doi.org/10.1108/SJME-10-2024-0276
+43. Mastercard Advisors — *The impact of gamification on loyalty strategies* (industry figures). https://www.mastercardservices.com/en/advisors/consumer-engagement-loyalty-consulting/insights/impact-gamification-loyalty-strategies
+44. Spiegel Research Center, Northwestern — *From reviews to revenue*. https://spiegel.medill.northwestern.edu/from-reviews-to-revenue/
+45. Propel — *Peloton retention strategy teardown* (secondary). https://www.trypropel.ai/resources/blogs/peloton-retention-strategy-teardown
+46. Joy — *Nike loyalty program: 7 pillars behind 300M members* (secondary). https://joy.so/blog/nike-loyalty-program/
+47. Euronics — *A magyarok szívesen regisztrálnak hűségprogramokba*; marketing.hu — *Szeretik a magyarok a hűségprogramokat*. https://euronics.hu/blog/a-magyarok-szivesen-regisztralnak-husegprogramokba/ · https://marketing.hu/cikkek/hirek/szeretik-a-magyarok-a-husegprogramokat
+48. Journal of Electronic Commerce Research 24(3), 2023 — *The reciprocity and diagnosticity effects* (free sampling). http://www.jecr.org/sites/default/files/2023vol24no3_Paper1.pdf
+49. InsideBE — *Use reciprocity to increase sales* (surprise-coupon study). https://insidebe.com/articles/use-reciprocity-to-increase-sales/
+50. Gaertig, C. & Simmons, J. P. — *Why (and When) Are Uncertain Price Promotions More Effective Than Equivalent Sure Discounts?*, Journal of Consumer Research 52(5), 2025. https://academic.oup.com/jcr/article/52/5/1022/8171334
+51. NielsenIQ — *The relevance of price and non-price promotions* (2024). https://nielseniq.com/global/en/insights/commentary/2024/the-relevance-of-price-and-non-price-promotions/
+52. Iyengar & Lepper (2000) via Econsultancy — *Want more sales? Give consumers fewer options*; *A Better Test of Choice Overload* (arXiv 2212.03931) for the replication picture. https://econsultancy.com/want-more-sales-give-consumers-fewer-options/ · https://arxiv.org/pdf/2212.03931
+53. The Conversation — *The decoy effect*; Atticus Li — *The decoy effect: the pricing-page tactic that doesn't replicate*. https://theconversation.com/the-decoy-effect-how-you-are-influenced-to-choose-without-really-knowing-it-111259 · https://atticusli.com/replication-crisis/decoy-effect-asymmetric-dominance/
+54. Behavioural Insights Team — *EAST: four simple ways to apply behavioural insights* (2014, revised 2024). https://www.bi.team/publications/east-four-simple-ways-to-apply-behavioural-insights/
+55. Simply Psychology — *Techniques of compliance* (Freedman & Fraser foot-in-the-door). https://www.simplypsychology.org/compliance.html
+56. MobiLoud — *50+ push notification statistics*; Business of Apps — *Push notifications statistics (2026)*. https://www.mobiloud.com/blog/push-notification-statistics · https://www.businessofapps.com/marketplace/push-notifications/research/push-notifications-statistics/
+57. Digital Applied — *Free shipping threshold strategy 2026* (industry ranges). https://www.digitalapplied.com/blog/free-shipping-threshold-strategy-2026-ecommerce-playbook
+58. The Brand Hopper — *HelloFresh marketing strategy* (add-on figures, secondary). https://thebrandhopper.com/brand/a-deep-dive-into-the-marketing-strategies-of-hellofresh/
