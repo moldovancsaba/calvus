@@ -61,9 +61,49 @@
       .site-nav { display: flex; gap: 20px; font-weight: 500; color: var(--muted); flex-wrap: wrap; }
       .site-nav a { color: var(--muted); text-decoration: none; }
       .site-nav a:hover { color: var(--text); }
-    </style>
+    
+    /* hub gate — a client-side courtesy lock; the page keeps only a hash */
+    #gate{position:fixed;inset:0;z-index:100;display:grid;place-items:center;background:#f5f5f7;padding:24px}
+    #gate[hidden]{display:none}
+    .gate-card{width:min(100%,380px);background:#fff;border:1px solid #e3e3e8;border-radius:16px;padding:32px 28px;box-shadow:0 12px 32px rgba(0,0,0,.06)}
+    .gate-card h1{margin:0 0 6px;font-size:22px}
+    .gate-card p{margin:0 0 18px;color:#555;font-size:14px}
+    .gate-card label{display:block;font-size:12px;color:#555;margin-bottom:6px}
+    .gate-card input{width:100%;font:inherit;font-size:16px;padding:12px 14px;border:1px solid #cfcfd6;border-radius:10px;min-height:44px}
+    .gate-card button{margin-top:12px;width:100%;min-height:44px;border:0;border-radius:999px;background:#111;color:#fff;font:inherit;font-weight:600;cursor:pointer}
+    .gate-card .err{display:none;margin:10px 0 0;color:#b3261e;font-size:13px}
+    .gate-card.is-wrong .err{display:block}
+    body.locked > :not(#gate){visibility:hidden}
+  </style>
   </head>
-  <body>
+  <body class="locked">
+<div id="gate" role="dialog" aria-modal="true" aria-labelledby="gateTitle">
+  <form class="gate-card" id="gateForm" autocomplete="off">
+    <h1 id="gateTitle">Calvus Project Hub</h1>
+    <p>Private workspace. Enter the access word to continue.</p>
+    <label for="gatePw">Access word</label>
+    <input id="gatePw" type="password" autocomplete="current-password" required autofocus>
+    <button type="submit">Enter</button>
+    <p class="err" id="gateErr">That's not it — try again.</p>
+  </form>
+</div>
+<script>
+(function(){
+  var KEY='calvus-hub-unlocked', HASH='5a7b2e919d9eb13cbcfcdaa0bda8bf6aec156a00e29448e96f1702676f70b119';
+  var gate=document.getElementById('gate'), form=document.getElementById('gateForm'), pw=document.getElementById('gatePw');
+  function unlock(){ gate.hidden=true; document.body.classList.remove('locked'); }
+  var ok=false; try{ ok=localStorage.getItem(KEY)===HASH; }catch(e){}
+  if(ok){ unlock(); } else { document.body.classList.add('locked'); }
+  async function sha256(t){ var b=new TextEncoder().encode(t); var d=await crypto.subtle.digest('SHA-256',b); return Array.from(new Uint8Array(d)).map(function(x){return x.toString(16).padStart(2,'0');}).join(''); }
+  form.addEventListener('submit', async function(ev){
+    ev.preventDefault();
+    var h = await sha256(pw.value.trim());
+    if(h===HASH){ try{ localStorage.setItem(KEY,HASH); }catch(e){} unlock(); }
+    else { form.classList.add('is-wrong'); pw.select(); }
+  });
+})();
+</script>
+
     <header class="site-header">
       <div class="nav-wrap">
         <a class="brand-text" href="./index.html">Calvus</a>
