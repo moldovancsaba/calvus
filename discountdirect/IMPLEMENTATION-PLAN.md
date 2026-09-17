@@ -51,16 +51,17 @@ M1, because no send may go out without `may_send`.
 
 ### E0 Foundations (M0) — on the existing implementation (D26)
 
-**DD-000 Verify the implementation baseline** · S · area:platform
-Story: as the team I confirm what the existing DiscountDirect repository already
-provides before planning on it.
-Scope: read `package.json`, `src/lib/database-core.ts`, `docs/architecture.md` and the
-route and model folders; record versions, the Mongoose models that exist (offers,
-conversations, outbox, campaign reservations, consent events, offer events), the Resend
-and SSO integrations, cron jobs and the Socket.IO fallback; diff the result against
-`ssot.html` §3 and TD §1b; update those documents.
-Acceptance: an inventory page in the implementation repo and a corrected §1b; every
-later issue's "existing" note is confirmed or amended.
+**DD-000 Maintain the implementation baseline inventory** · S · area:platform
+Story: as the team I keep the Release 1 plan grounded in the real DiscountDirect
+repository instead of a greenfield assumption.
+Scope: publish and maintain an inventory page in the implementation repo based on the
+verified 2026-09-17 baseline: `package.json`, `src/lib/database-core.ts`, `vercel.json`,
+`docs/architecture.md`, App Router routes, Mongoose models, domain services, Resend and
+SSO integrations, cron jobs and the Socket.IO fallback. Every material stack or model
+change updates SSOT D26 and TD §1b in the same pull request.
+Acceptance: the inventory exists in the implementation repo; D26 and TD §1b match the
+code; later issues' "existing" notes are corrected whenever implementation reality
+changes.
 
 **DD-001 Environments and CI on the existing repo** · S · area:platform · depends DD-000
 Scope: Vercel preview/staging/production environments, MongoDB Atlas EU cluster per

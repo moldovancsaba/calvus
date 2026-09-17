@@ -153,7 +153,7 @@ Buyer-level preferences: `frequency_pref` (per seller or inbox per `consent_scop
 | D23 | Salutation (recommended, applied) | Neutral formal salutation **"Tisztelt {teljes név}!"** on letters and e-mails; no inference of gender from names | BL §3.7, DD-052 |
 | D24 | Reason experiments (recommended, applied) | The reason is always present (D14); experiments compare **engine wording against seller wording** only, never reason against no reason | DD-091 |
 | D25 | Release 1 scope (recommended, applied) | The issue list in `implementation-plan.html` §7; everything else is Release 1.1 or later | plan §7 |
-| D26 | Stack: extend the existing implementation, do not rewrite (product owner, 2026-09-17) | The product already has a working spine: **Next.js 15 App Router on Vercel (Node 24), MongoDB Atlas with Mongoose transactions, DoneIsBetter SSO (local password routes fail closed), Resend for outbound and inbound e-mail with webhook verification and unsubscribe, Vercel Cron with a durable outbox, Socket.IO realtime with a durable HTTP fallback, the SovereignSquad GDS with Mantine under it.** Target: add **Upstash Redis** (frequency caps, rate limits, flash counters, idempotency locks, throttling, worker coordination) and **Vercel Blob** (letters, exports, PDFs, audit snapshots); keep Resend; realtime is a convenience layer, the durable MongoDB event log is authoritative; add a **reporting read model** (MongoDB materialised aggregates, or a Postgres projection) before any primary-database change. The greenfield stack of the first proposal (Fastify, Vite, PostgreSQL, BullMQ, SES) is withdrawn. | ADR-14; architecture §3, §10; TD §1b, §3 |
+| D26 | Stack: extend the existing implementation, do not rewrite (verified, 2026-09-17) | The product already has a working spine: **Next.js 15 App Router on Vercel (Node 24), MongoDB Atlas with Mongoose transactions, DoneIsBetter SSO (local password routes fail closed), Resend for outbound and inbound e-mail with webhook verification and unsubscribe, Vercel Cron with a durable outbox, Socket.IO realtime with a durable HTTP fallback, the SovereignSquad GDS with Mantine under it.** Target: add **Upstash Redis** (frequency caps, rate limits, flash counters, idempotency locks, throttling, worker coordination) and **Vercel Blob** (letters, exports, PDFs, audit snapshots); keep Resend; realtime is a convenience layer, the durable MongoDB event log is authoritative; add a **reporting read model** (MongoDB materialised aggregates, or a Postgres projection) before any primary-database change. The greenfield stack of the first proposal (Fastify, Vite, PostgreSQL, BullMQ, SES) is withdrawn. | ADR-14; architecture §3, §10; TD §1b, §3 |
 
 ### Open questions
 
@@ -161,11 +161,11 @@ None for Release 1. O1 → D13, O2 → D15, O3 → D14, A1 → D16 → D26. D15�
 recommended and applied on 2026-09-17 so that Release 1 is fully specified; the product
 owner may overrule any of them, in which case this register changes first.
 
-**Verification note (D26).** The implementation repository the owner cites
-(`/Users/Shared/Projects/discountdirect`: `package.json`, `src/lib/database-core.ts`,
-`docs/architecture.md`) was not reachable from the machine that maintains these
-documents on 2026-09-17, so the stack facts in D26 are recorded as stated by the owner.
-Issue DD-000 verifies them against the code before any other Release 1 work starts.
+**Verification note (D26).** D26 was verified on 2026-09-17 against the implementation
+repository at `/Users/Shared/Projects/discountdirect`. The check covered `package.json`,
+`src/lib/database-core.ts`, `vercel.json`, `docs/architecture.md`, the App Router route
+tree and the domain model/service folders. DD-000 keeps that implementation inventory
+current and keeps this SSOT plus the technical design aligned with the code.
 
 ## 6. Rules register
 
