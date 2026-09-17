@@ -12,7 +12,7 @@ import re, sys, pathlib
 ROOT = pathlib.Path(__file__).resolve().parent.parent
 SITE = [p for p in (ROOT/"holdvolgy").rglob("*.html") if "docs" not in p.parts]
 DOCS = sorted((ROOT/"holdvolgy"/"docs").glob("*.html"))
-ALL  = SITE + DOCS + [ROOT/"index.html"]
+ALL  = SITE + DOCS + [ROOT/"index.html"] + sorted((ROOT/"discountdirect").glob("*.html"))
 findings = []
 
 # 1 + 2

@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>DiscountDirect — business logic breakdown</title>
+<style>
+:root{--gds-bg-canvas:#f8fafc;--gds-bg-surface:#ffffff;--gds-bg-inverse:#111827;--gds-text-body:#111827;--gds-text-meta:#64748b;--gds-border-card:#e2e8f0;--gds-brand-accent:#3b5bdb;--gds-brand-accent-tint:#e7ecfb;--gds-radius-card:14px}
+*{box-sizing:border-box}
+body{margin:0;background:var(--gds-bg-canvas);color:var(--gds-text-body);font:15.5px/1.6 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;padding-block:0 64px;padding-inline:clamp(16px,4vw,40px)}
+.wrap{max-width:76ch;margin-inline:auto}
+.top{display:flex;flex-wrap:wrap;gap:8px 18px;align-items:center;padding:16px 0;border-bottom:1px solid var(--gds-border-card);font-size:13px;color:var(--gds-text-meta)}
+.top b{color:var(--gds-text-body)} .top a{color:var(--gds-brand-accent);text-decoration:none;min-height:44px;display:inline-flex;align-items:center}
+h1{font-size:clamp(26px,5vw,38px);line-height:1.15;margin:32px 0 10px;letter-spacing:-.01em}
+h2{font-size:22px;margin:44px 0 10px;padding-top:18px;border-top:1px solid var(--gds-border-card)}
+h3{font-size:17px;margin:26px 0 8px}
+p{margin:0 0 12px} li{margin:4px 0} strong{font-weight:600}
+code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.86em;background:var(--gds-brand-accent-tint);padding:1px 5px;border-radius:5px}
+pre{background:var(--gds-bg-inverse);color:#f8fafc;padding:16px;border-radius:var(--gds-radius-card);overflow-x:auto;font-size:13px;line-height:1.5} pre code{background:none;color:inherit;padding:0;font-size:inherit}
+.tbl{overflow-x:auto;margin:12px 0 20px;border:1px solid var(--gds-border-card);border-radius:var(--gds-radius-card);background:var(--gds-bg-surface)}
+table{border-collapse:collapse;width:100%;font-size:13.5px;min-width:560px}
+th{text-align:left;font-weight:600;background:var(--gds-bg-canvas);padding:10px 12px;border-bottom:1px solid var(--gds-border-card);font-size:12px;letter-spacing:.04em;text-transform:uppercase;color:var(--gds-text-meta)}
+td{padding:10px 12px;border-top:1px solid var(--gds-border-card);vertical-align:top}
+a{color:var(--gds-brand-accent)}
+footer{margin-top:48px;padding-top:16px;border-top:1px solid var(--gds-border-card);font-size:12px;color:var(--gds-text-meta)}
+</style>
+</head>
+<body><div class="wrap">
+<div class="top"><b>DiscountDirect</b><span>business logic</span><a href="index.html">Open the prototype →</a><a href="../index.html">Calvus Hub</a></div>
+<h1>DiscountDirect — business logic breakdown</h1>
+<p>Derived from the prototype at <code>discountdirect/index.html</code> (v15) on 2026-09-17, function by
+function and data structure by data structure. Everything below is what the prototype
+<em>does</em>; §8 lists what it <em>implies</em> but does not do, which is the development backlog.
+Sample data (one seller, eight buyers, 26 catalogue products, one running automation) is
+in-memory and resets on reload.</p>
+<h2>1. Purpose and actors</h2>
+<p>DiscountDirect is a messaging surface between a <strong>seller</strong> (a web shop; the sample is
+ElektroHome Kft.) and each of its <strong>buyers</strong>, in which the seller sends <strong>personalised
+discount offers</strong> grounded in that buyer's purchase history with that seller — instead of
+untargeted mass promotions. The buyer sees why every offer was sent.</p>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>Actor</th>
+<th>What they do in the prototype</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Seller</td>
+<td>Reads each buyer's history and recommendations; sends one-off offers on a chosen channel; runs one-product flash campaigns to every relevant buyer; sets up recurring per-buyer offer lists; chats.</td>
+</tr>
+<tr>
+<td>Buyer</td>
+<td>Sees one conversation (with this seller), the history that justifies the offers, and the offers themselves in chat, e-mail, postal letter or newsletter form; accepts or declines pending offers; chats.</td>
+</tr>
+<tr>
+<td>Recommendation engine (implied)</td>
+<td>Produces the per-buyer recommendation list and the per-product relevance set with a reason per buyer. In the prototype both are hard-coded "the way an engine's output would look".</td>
+</tr>
+</tbody>
+</table></div>
+<p>The unit of the system is the <strong>seller–buyer pair</strong>: a conversation with its history,
+recommendations and timeline. Nothing crosses pairs except campaigns and automations,
+which fan out to many pairs at once.</p>
+<h2>2. Entities and data model (as coded)</h2>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>Entity</th>
+<th>Fields</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Seller</strong></td>
+<td><code>name</code>, <code>sub</code> (tagline: category · response time)</td>
+<td>Single seller in the prototype.</td>
+</tr>
+<tr>
+<td><strong>Conversation</strong> (= buyer relationship)</td>
+<td><code>id</code>, <code>buyer</code> (name), <code>color</code>, <code>buyerSub</code> (segment label), <code>history[]</code>, <code>recs[]</code>, <code>messages[]</code></td>
+<td><code>buyerSub</code> encodes a segment — <em>Törzsvásárló / Visszatérő vevő / Új vevő</em> · order count · since year — as free text; a real model needs these as fields.</td>
+</tr>
+<tr>
+<td><strong>PurchaseHistoryItem</strong></td>
+<td><code>item</code>, <code>when</code> (date text), <code>price</code> (HUF)</td>
+<td>2–9 items per buyer, 2023–2026.</td>
+</tr>
+<tr>
+<td><strong>Recommendation</strong></td>
+<td><code>product</code>, <code>reason</code>, <code>orig</code>, <code>pct</code></td>
+<td>Per buyer. <strong>Consumed when sent</strong> (removed from the list); not linked to a catalogue id.</td>
+</tr>
+<tr>
+<td><strong>CatalogueProduct</strong></td>
+<td><code>id</code>, <code>name</code>, <code>price</code>, <code>relevant[]</code> (buyer ids), <code>why{buyerId: reason}</code></td>
+<td>Relevance is a precomputed set per product with a per-buyer justification. 24 products relevant to one buyer, one to three, one to five.</td>
+</tr>
+<tr>
+<td><strong>Message</strong> — text</td>
+<td><code>from</code> (<code>seller</code>/<code>buyer</code>), <code>text</code>, <code>at</code></td>
+<td>Free chat.</td>
+</tr>
+<tr>
+<td><strong>Message</strong> — event</td>
+<td><code>from: seller</code>, <code>event{channel, text}</code>, <code>at</code></td>
+<td>A delivery on a non-chat channel (DM letter sent, newsletter sent, e-mail sent).</td>
+</tr>
+<tr>
+<td><strong>Message</strong> — offer</td>
+<td><code>from</code>, <code>offer{kind?, product, reason, orig, pct, status, channels[], limitH?, limitQty?}</code>, <code>at</code></td>
+<td><code>kind = 'flash'</code> for campaign offers, absent for personal offers. <code>status ∈ pending / accepted / declined</code>.</td>
+</tr>
+<tr>
+<td><strong>Automation</strong> (recurring list)</td>
+<td><code>title</code>, <code>freq</code> (<em>Hetente / Kéthetente / Havonta</em>), <code>channels[]</code>, <code>products[]</code> (names), <code>next</code> (date text)</td>
+<td>Per-buyer content is derived at render time from catalogue relevance, not stored.</td>
+</tr>
+<tr>
+<td><strong>Channel</strong></td>
+<td>enum: <em>Azonnali üzenet</em> (in-app chat), <em>E-mail</em>, <em>Mailing</em> (printed DM letter); plus <em>Hírlevél</em> (newsletter) as an event/automation channel</td>
+<td>Icons: 💬 ✉️ 📮 🗞.</td>
+</tr>
+</tbody>
+</table></div>
+<p>Timestamps are display strings (<code>'most'</code>, <code>'tegnap'</code>, <code>'ápr. 15.'</code>); currency is HUF,
+formatted <code>hu-HU</code>; all UI strings are Hungarian.</p>
+<h2>3. Business rules, as implemented</h2>
+<h3>3.1 Personalised offer (seller → one buyer)</h3>
+<ul>
+<li>Source: the buyer's recommendation list. Each card shows product, reason, original
+  price, discounted price and −pct.</li>
+<li>The seller picks <strong>exactly one channel</strong> per send (select: chat / e-mail / mailing).</li>
+<li>Sending appends an <strong>offer message</strong> (<code>status: pending</code>, <code>channels: [channel]</code>, <code>at: 'most'</code>)
+  to the conversation and <strong>removes the recommendation</strong> — an offer is made once.</li>
+<li>Discounted price everywhere: <code>round(orig × (1 − pct/100))</code>.</li>
+</ul>
+<h3>3.2 Where an offer appears in the timeline</h3>
+<ul>
+<li>If the offer's channels include <em>Azonnali üzenet</em>, it renders as a <strong>chat bubble</strong> on the
+  sender's side (seller view: right; buyer view: mirrored).</li>
+<li>Otherwise it renders as a <strong>full-width timeline event</strong> headed by the channel labels
+  ("✉️ E-mail + 📮 Mailing · ajánlat kiküldve" / "… · villámajánlat").</li>
+<li>Non-offer deliveries (a letter sent, a newsletter sent, a file e-mailed) are timeline
+  events with their channel — the timeline is the single record of every touch, on every
+  channel, in one place.</li>
+</ul>
+<h3>3.3 Buyer response to an offer</h3>
+<ul>
+<li>Only the <strong>buyer</strong>, only on <strong>seller-sent</strong> offers, only while <strong>pending</strong>.</li>
+<li>Standard offer: <em>Elfogadom</em> → <code>accepted</code> ("Elfogadva") · <em>Most nem</em> → <code>declined</code>
+  ("Elutasítva").</li>
+<li>Flash offer: <em>Megveszem most</em> → <code>accepted</code> ("Megvásárolva") · <em>Kihagyom</em> → <code>declined</code>
+  ("Kihagyva").</li>
+<li><code>accepted</code> and <code>declined</code> are terminal; the card then shows the status label only.</li>
+<li><strong>Accepting does not create an order</strong> in the prototype — see §8.</li>
+</ul>
+<h3>3.4 Conversation list (seller inbox)</h3>
+<ul>
+<li>One row per buyer: avatar (initials, buyer colour), name, <strong>last-message preview</strong>
+  (text, or the event text, or "Ajánlat: product"), and a <strong>badge = number of pending
+  offers</strong> in that conversation.</li>
+<li>Buyer view shows a single row — the conversation with this seller; which buyer the demo
+  is showing is chosen in the top-bar persona selector, not in the list.</li>
+</ul>
+<h3>3.5 Flash campaign (⚡ Villámajánlat)</h3>
+<ul>
+<li><strong>One product</strong> (radio), from the whole catalogue; each option shows price and
+  "N releváns vevő".</li>
+<li>Parameters: discount <code>pct ∈ {10, 15, 20, 25}</code> (default 15), time limit <code>∈ {6, 24, 48}</code> h
+  (default 24), quantity limit <code>∈ {10, 20, 50}</code> (default 20), channels multi-select
+  (default chat + e-mail; if none checked the send reports chat).</li>
+<li><strong>Targets = the product's relevant buyers</strong>, each with the product's per-buyer reason;
+  shown before sending ("Kik kapják?").</li>
+<li>Live preview of the card the buyer will see: tag "⚡ Villámajánlat · H óráig · Q db",
+  templated reason "Csak H óráig vagy a készlet erejéig (Q db) — a korábbi vásárlásaid
+  alapján neked szól.", prices, channel chips, disabled buy/skip buttons.</li>
+<li>Sending appends <strong>one pending flash offer per relevant buyer</strong> (with <code>limitH</code>,
+  <code>limitQty</code>, <code>channels</code>) and confirms "Elküldve N releváns vevőnek (names) — csatorna: …".</li>
+<li>Not enforced in the prototype: expiry after <code>limitH</code>, decrementing <code>limitQty</code> on
+  purchase, first-come-first-served, stock.</li>
+</ul>
+<h3>3.6 Recurring personalised list (🗞 Automatikus ajánlatlista)</h3>
+<ul>
+<li><strong>Many products</strong> (checkboxes); each option lists the buyers it is relevant to.</li>
+<li>Frequency <em>Hetente / Kéthetente / Havonta</em> (default Kéthetente); channels multi-select
+  (default e-mail; falls back to e-mail if none).</li>
+<li><strong>Per-buyer split</strong> (the core rule): for every buyer, the list contains only the selected
+  products whose relevance set includes that buyer; buyers with no matching product are
+  left out entirely. The split is previewed live before starting.</li>
+<li>Starting creates an Automation titled "Ajánlatlista #n" with a next-send date
+  (<em>Hetente</em> → "hétfő", <em>Kéthetente</em> → "szeptember 7.", <em>Havonta</em> → "szeptember 1." —
+  hard-coded); the selection is cleared.</li>
+<li>Active automations show title, frequency, product count and channels, the per-buyer
+  breakdown, next send, and <strong>Leállítás</strong> (delete).</li>
+<li>Not implemented: the scheduler, the actual sends, a per-item discount for list items
+  (the newsletter mock uses the buyer's matching recommendation pct or 10 %).</li>
+</ul>
+<h3>3.7 How the same offer reaches the buyer on each channel (buyer view tabs)</h3>
+<ul>
+<li><strong>Chat</strong>: the timeline of §3.2 with the accept/decline actions of §3.3.</li>
+<li><strong>E-mail</strong>: from <code>ajanlat@elektrohome.hu</code>, subject "Személyre szabott ajánlat: product
+  −pct%", greeting by first name, the offer card, a CTA "Ajánlat megnyitása a
+  DiscountDirectben", the line that replying continues the conversation in chat, and a
+  footer with the reason for receipt plus <em>Leiratkozás · Ajánlatbeállítások</em>.</li>
+<li><strong>Postal letter (Mailing)</strong>: letterhead and date, postal address, formal salutation
+  (<em>Tisztelt X Úr!</em> / <em>Tisztelt X!</em> — the prototype guesses gender from the first name, a
+  placeholder heuristic, not a rule), the offer, a <strong>coupon code</strong> <code>DIRECT-&lt;pct&gt;-&lt;initials&gt;</code>
+  redeemable in store and online, and a pointer to the app.</li>
+<li><strong>Newsletter (Hírlevél)</strong>: banner with the frequency of the first running automation,
+  greeting, <strong>every catalogue product relevant to this buyer</strong> with its per-buyer reason
+  and a discount (matching recommendation pct or 10 %), footer with <em>Leiratkozás ·
+  Gyakoriság módosítása</em>.</li>
+<li>Which offer the e-mail and letter feature: the <strong>newest offer in the thread</strong>, else the
+  first recommendation, else the first relevant catalogue product at 15 %.</li>
+</ul>
+<h3>3.8 Transparency to the buyer</h3>
+<ul>
+<li>The buyer's context pane shows their purchase history at this seller and the statement
+  that offers are sent only on the basis of those orders and matching recommendations —
+  "kéretlen tömegajánlat helyett". Every offer carries its reason. This is a product
+  principle, not decoration: it is the consent story.</li>
+</ul>
+<h3>3.9 Chat</h3>
+<ul>
+<li>Free text both ways; Enter or the button sends; the message is stamped 'most' and
+  attributed to the current view's role.</li>
+</ul>
+<h2>4. State and lifecycle</h2>
+<p><strong>Offer</strong>: <code>pending → accepted | declined</code> (terminal). Created by: recommendation send
+(personal) or flash campaign send (flash). Only the buyer transitions it.</p>
+<p><strong>Recommendation</strong>: <code>available → sent</code> (removed from the list on send; the offer message is
+the record).</p>
+<p><strong>Automation</strong>: <code>running → stopped</code> (deleted). <code>next</code> is display text; there is no clock.</p>
+<p><strong>Flash offer limits</strong> (<code>limitH</code>, <code>limitQty</code>): carried on the offer, displayed, never
+evaluated.</p>
+<h2>5. Screens and navigation</h2>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>View</th>
+<th>Tab</th>
+<th>Screen</th>
+<th>Panes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Seller</td>
+<td>Csevegések</td>
+<td>chat</td>
+<td>buyer list · thread + composer · context (history, recommendations with channel select + send)</td>
+</tr>
+<tr>
+<td>Seller</td>
+<td>⚡ Villámajánlat</td>
+<td>flash</td>
+<td>campaign setup (product, pct, hours, qty, channels, send, result) · targeting + live preview</td>
+</tr>
+<tr>
+<td>Seller</td>
+<td>🗞 Ajánlatlisták</td>
+<td>list</td>
+<td>new list (products, frequency, channels, start, result) · per-buyer preview · active automations</td>
+</tr>
+<tr>
+<td>Buyer</td>
+<td>Csevegés</td>
+<td>chat</td>
+<td>own inbox (one row) · thread with accept/decline · context (history, "why these offers")</td>
+</tr>
+<tr>
+<td>Buyer</td>
+<td>E-mail / Postai levél / Hírlevél</td>
+<td>mocks</td>
+<td>the same offer rendered for that channel</td>
+</tr>
+</tbody>
+</table></div>
+<p>A top-bar toggle switches view; a persona selector (buyer view only) chooses which buyer
+the demo shows. Every state change re-renders everything (<code>renderAll</code>).</p>
+<h2>6. Derived values</h2>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>Value</th>
+<th>Rule</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Discounted price</td>
+<td><code>round(orig × (1 − pct/100))</code></td>
+</tr>
+<tr>
+<td>Pending badge</td>
+<td>count of offers with <code>status = pending</code> in the conversation</td>
+</tr>
+<tr>
+<td>Last-message preview</td>
+<td>text · event text · "Ajánlat: product"</td>
+</tr>
+<tr>
+<td>"N releváns vevő"</td>
+<td><code>product.relevant.length</code></td>
+</tr>
+<tr>
+<td>Flash targets</td>
+<td><code>product.relevant</code> with <code>product.why[buyer]</code></td>
+</tr>
+<tr>
+<td>List split per buyer</td>
+<td>selected products ∩ products relevant to the buyer</td>
+</tr>
+<tr>
+<td>Newsletter items</td>
+<td>all catalogue products relevant to the buyer</td>
+</tr>
+<tr>
+<td>Newsletter discount</td>
+<td>buyer's recommendation pct for that product, else 10 %</td>
+</tr>
+<tr>
+<td>Featured deal (e-mail, letter)</td>
+<td>newest offer → first recommendation → first relevant product at 15 %</td>
+</tr>
+<tr>
+<td>Coupon code</td>
+<td><code>DIRECT-&lt;pct&gt;-&lt;buyer initials&gt;</code></td>
+</tr>
+</tbody>
+</table></div>
+<h2>7. Data the prototype treats as given</h2>
+<ul>
+<li>The <strong>recommendation list per buyer</strong> and the <strong>relevance set per product with a reason
+  per buyer</strong> — two separate hard-coded outputs of the same implied engine. Development
+  should produce both from one model (buyer × product → score + reason) or make the
+  catalogue relevance the single source and derive recommendations from it.</li>
+<li>Segment labels (<em>Törzsvásárló</em> etc.), order counts and "since" years as text.</li>
+<li>Dates and times as display strings.</li>
+</ul>
+<h2>8. What development has to build (implied, not implemented)</h2>
+<ol>
+<li><strong>Persistence and identity</strong>: users, sellers, buyers, conversations, messages, offers,
+   automations; roles and authentication for the two actors; a buyer with <strong>many sellers</strong>
+   (the prototype has one).</li>
+<li><strong>Recommendation engine</strong> (or its integration): purchase history → per-buyer product
+   scores with human-readable reasons; segment derivation (loyal / returning / new, order
+   count, tenure).</li>
+<li><strong>Channel delivery</strong>: chat push, transactional e-mail (with the CTA deep link and
+   reply-to-thread), printed DM with coupon (print/post integration), newsletter compose
+   and send; per-message delivery events written to the timeline.</li>
+<li><strong>Offer lifecycle</strong>: accept → <strong>order</strong> (price locked, quantity, address, payment);
+   decline; expiry by <code>limitH</code>; <code>limitQty</code> decrement and sold-out state; first-come
+   handling for flash campaigns; coupon issuance and redemption (store and online).</li>
+<li><strong>Scheduler</strong> for automations: frequency → next run, per-run content freeze, per-buyer
+   send, skip buyers with no relevant items, stop/pause.</li>
+<li><strong>Consent and preferences</strong>: unsubscribe per channel, frequency preference, GDPR basis
+   for history-driven marketing, audit of why each offer was sent (the reason is already
+   first-class).</li>
+<li><strong>Pricing guardrails</strong>: allowed discount steps, floors/margins, per-segment limits.</li>
+<li><strong>Timestamps, time zones, locale</strong>: real datetimes; HUF and <code>hu-HU</code> today, others later.</li>
+<li><strong>Metrics</strong>: sent / opened / accepted / declined / expired per offer, campaign and
+   automation; response time; badge counts from real state.</li>
+<li><strong>Notifications</strong> to the seller on buyer actions; to the buyer on new offers.</li>
+<li><strong>Design system</strong>: the CSS tokens are already named after GDS 6.5.0 roles
+    (<code>GDS-TOKEN-MAP.md</code>); the dev build swaps the <code>:root</code> block for the GDS theme.</li>
+</ol>
+<h2>9. Suggested domain model</h2>
+<pre><code>Seller(id, name, tagline)
+Buyer(id, name, postal_address, email, consents{chat,email,mailing,newsletter}, preferences{frequency})
+Relationship(seller_id, buyer_id, segment, order_count, since)          -- one per pair
+Order(id, relationship_id, product_id, price, ordered_at)               -- purchase history
+Product(id, seller_id, name, price)
+Relevance(product_id, buyer_id, score, reason)                          -- engine output
+Recommendation(id, relationship_id, product_id, pct, reason, state)     -- available|sent
+Offer(id, relationship_id, product_id, kind, orig, pct, reason, channels[], status,
+      limit_hours, limit_qty, expires_at, sent_at, responded_at, order_id?)
+Message(id, relationship_id, from, kind: text|event|offer_ref, body, channel?, at)
+Campaign(id, seller_id, product_id, pct, limit_hours, limit_qty, channels[], sent_at)   -- fans out to Offers
+Automation(id, seller_id, title, frequency, channels[], product_ids[], next_run_at, state)
+Delivery(id, message_id|offer_id, channel, status, at)                  -- per-channel send record
+Coupon(code, offer_id, redeemed_at?)
+</code></pre>
+<h2>10. Open questions for the product owner</h2>
+<ol>
+<li>Does accepting an offer complete a purchase in-app, or hand off to the shop's checkout?</li>
+<li>Flash quantity: per campaign total, or per buyer? What happens at sold-out for buyers
+   who already received it?</li>
+<li>Can a buyer see offers from several sellers in one inbox (marketplace) or is the app
+   per seller?</li>
+<li>Who owns the reason text — the engine, the seller (editable), or both?</li>
+<li>Discount authority: fixed steps as in the prototype, or free entry with guardrails?</li>
+<li>Postal letters: printed and posted by whom; is the coupon single-use; does it map to
+   the online offer?</li>
+<li>Newsletter discount: a rule, or set per list?</li>
+<li>Legal basis and retention for using purchase history in marketing, per market.</li>
+</ol>
+<footer>Source: <code>discountdirect/BUSINESS-LOGIC.md</code>, rendered by <code>build-docs.py</code>. Token names follow GDS 6.5.0 roles (<code>GDS-TOKEN-MAP.md</code>).</footer>
+</div></body></html>
