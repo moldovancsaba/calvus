@@ -32,6 +32,12 @@ carry a price cut, it is:
 - **consented** — the customer sees the history that justifies each offer and controls
   channels and frequency.
 
+**How the platform behaves.** It ships built-in business-logic templates and
+recommended user journeys — offer types, campaign shapes, timing, sold-out handling,
+consent settings — and every seller can follow, modify or overwrite them according to
+its own business targets. The platform automates the seller's work and helps the buyer;
+it does not dictate the seller's commercial rules.
+
 Three seller tools sit on top: one-off personalised offers from a recommendation list,
 one-product flash campaigns to every relevant customer, and recurring per-customer offer
 lists that each customer receives only with the products relevant to them.

@@ -23,6 +23,14 @@ The unit of the system is the **seller–buyer pair**: a conversation with its h
 recommendations and timeline. Nothing crosses pairs except campaigns and automations,
 which fan out to many pairs at once.
 
+**Platform principle (product owner, 2026-09-17, D10).** The platform ships **built-in
+business-logic templates and recommended user journeys** — offer types, campaign
+shapes, sold-out handling, compensation menus, timing ladders, consent settings. A
+seller can **follow, modify or overwrite** any of them according to its own business
+targets. The platform's job is automated support for sellers and help for buyers; every
+rule in §3 is therefore a default, not a constraint, unless it is a legal or consent
+rule.
+
 ## 2. Entities and data model (as coded)
 
 | Entity | Fields | Notes |
@@ -97,8 +105,9 @@ formatted `hu-HU`; all UI strings are Hungarian.
 - Decided (D2, §10): the quantity limit exists **both per campaign in total and per
   buyer**; both are set by the seller and both are enforced. When the campaign sells out,
   buyers who already received the offer are **informed** in the thread, and the seller may
-  attach an **optional compensation** (a goodwill gesture chosen by the seller) to that
-  message.
+  attach an **optional compensation** to that message — either **pre-configured** from the
+  platform's menu (voucher, free delivery, priority on the next campaign) or a **free
+  choice** made by the seller at the time (D10).
 
 ### 3.6 Recurring personalised list (🗞 Automatikus ajánlatlista)
 - **Many products** (checkboxes); each option lists the buyers it is relevant to.
@@ -126,7 +135,9 @@ formatted `hu-HU`; all UI strings are Hungarian.
   placeholder heuristic, not a rule), the offer, a **coupon code** `DIRECT-<pct>-<initials>`
   redeemable in store and online, and a pointer to the app. Decided (D6, §10): the coupon
   is **single-use** and **maps one-to-one to the online offer** — redeeming either closes
-  both.
+  both. Decided (D9, §10): the platform always produces the **printable content**;
+  printing and posting is either a **DiscountDirect service** (print partner integrated
+  by the platform) or done **by the seller** — the seller chooses.
 - **Newsletter (Hírlevél)**: banner with the frequency of the first running automation,
   greeting, **every catalogue product relevant to this buyer** with its per-buyer reason
   and a discount (matching recommendation pct or 10 %), footer with *Leiratkozás ·
@@ -219,7 +230,8 @@ the demo shows. Every state change re-renders everything (`renderAll`).
    basis for history-driven marketing **configured per market and channel — legitimate
    interest with soft opt-in where the market allows it, consent elsewhere** — with
    retention periods per market, and an audit of why each offer was sent (the reason is
-   already first-class) (D8).
+   already first-class) (D8). In marketplace mode the buyer's consent and frequency cap
+   apply **per seller or across the inbox — both scopes exist and are a setting** (D11).
 7. **Pricing guardrails**: per seller, **either fixed steps or free entry**, both under
    guardrails (floor, margin, per-segment limits); the mode is a seller setting (D5).
 8. **Timestamps, time zones, locale**: real datetimes; HUF and `hu-HU` today, others later.
@@ -228,6 +240,14 @@ the demo shows. Every state change re-renders everything (`renderAll`).
 10. **Notifications** to the seller on buyer actions; to the buyer on new offers.
 11. **Design system**: the CSS tokens are already named after GDS 6.5.0 roles
     (`GDS-TOKEN-MAP.md`); the dev build swaps the `:root` block for the GDS theme.
+12. **Templates and journeys** (D10): a library of business-logic templates and
+    recommended user journeys with per-seller overrides — offer kinds, campaign
+    defaults, sold-out and compensation handling, timing ladders, consent scope — plus
+    the seller-facing UI to follow, modify or overwrite each one, and versioning so an
+    audit can show which template and which override produced a given offer.
+13. **Print fulfilment** (D9): printable letter generation for every offer; an optional
+    print-and-post service through an integrated partner, or download for the seller's
+    own printing; delivery status back to the timeline either way.
 
 ## 9. Suggested domain model
 
@@ -235,7 +255,13 @@ the demo shows. Every state change re-renders everything (`renderAll`).
 Seller(id, name, tagline,
        inbox_mode: marketplace|per_seller,                                -- D3
        discount_mode: steps|free, discount_guardrails{floor_pct, max_pct, margin_floor},  -- D5
-       newsletter_discount_rule)                                          -- D7 default
+       newsletter_discount_rule,                                         -- D7 default
+       print_mode: platform_service|seller,                               -- D9
+       consent_scope: per_seller|inbox,                                   -- D11
+       compensation_mode: preset|free)                                    -- D10
+Template(id, kind: offer|campaign|journey|sold_out|compensation|timing|consent,
+         version, defaults{})                                             -- D10 platform library
+SellerOverride(seller_id, template_id, mode: follow|modified|overwritten, values{}, version)
 Market(code, legal_basis: legitimate_interest|consent, retention_days, soft_opt_in: bool)  -- D8
 Buyer(id, name, postal_address, email, consents{chat,email,mailing,newsletter}, preferences{frequency})
 Relationship(seller_id, buyer_id, segment, order_count, since)          -- one per pair
@@ -249,17 +275,20 @@ Offer(id, relationship_id, product_id, kind, orig, pct,
       responded_at, checkout_url?, order_ref?)                            -- D1 hand-off
 Message(id, relationship_id, from, kind: text|event|offer_ref, body, channel?, at)
 Campaign(id, seller_id, product_id, pct, limit_hours, limit_qty_total, limit_qty_per_buyer,
-         channels[], sent_at, sold_out_at?, compensation?)               -- D2; fans out to Offers
+         channels[], sent_at, sold_out_at?,
+         compensation?{kind: voucher|free_delivery|priority|custom, value})  -- D2, D10; fans out to Offers
 Automation(id, seller_id, title, frequency, channels[], product_ids[], next_run_at, state,
            discount_rule_override?)                                      -- D7
-Delivery(id, message_id|offer_id, channel, status, at)                  -- per-channel send record
+Delivery(id, message_id|offer_id, channel, status, at,
+         print_job_id?)                                                   -- per-channel send record; D9
 Coupon(code, offer_id, single_use: true, redeemed_at?, redeemed_channel?)  -- D6, one per offer
 ```
 
 ## 10. Decisions of the product owner (2026-09-17)
 
-The eight open questions were answered by the product owner; the answers are recorded
-here and propagated into §3, §8 and §9 with the tag *Decided (Dn)*.
+The open questions were answered by the product owner in two rounds (D1–D8, then
+D9–D11); the answers are recorded here and propagated into §1, §3, §8 and §9 with the
+tag *Decided (Dn)*.
 
 | # | Question | Decision | Consequence |
 |---|---|---|---|
@@ -271,12 +300,14 @@ here and propagated into §3, §8 and §9 with the tag *Decided (Dn)*.
 | D6 | Postal coupon: single-use? maps to the online offer? | **Single-use, mapped to the online offer** | One coupon per offer; redeeming in store or online closes the offer everywhere (§3.7, §9). Who prints and posts remains open — see §11. |
 | D7 | Newsletter discount: a rule, or set per list? | **Both** | Seller-level default rule, overridable per list (§3.6–3.7, §9). |
 | D8 | Legal basis and retention for purchase-history marketing, per market | **Both bases** | Per-market configuration: legitimate interest with soft opt-in where allowed, consent elsewhere; retention per market (§8.6, §9). Read as "both legal bases, chosen per market"; correct if meant otherwise. |
+| D9 | Postal letters: who prints and posts? | **Either** — a DiscountDirect service or the seller; **the platform always provides the printable content** | Seller setting `print_mode`; letter generation is core, print-and-post is an optional service (§3.7, §8.13, §9). |
+| D10 | Sold-out compensation: fixed menu or free choice? | **Both** — pre-set from a menu, or chosen freely at the time. **General principle:** the platform provides built-in business-logic templates and user-journey recommendations that the seller can follow, modify or overwrite according to its business targets; the platform automates support for sellers and helps buyers | Template library with per-seller overrides and versioning; every §3 rule is a default (§1, §3.5, §8.12, §9). |
+| D11 | Marketplace mode: consent and frequency cap per seller or across the inbox? | **Both, as a setting** | `consent_scope` setting; the cap engine must count per seller or per inbox accordingly (§8.6, §9). |
 
 ## 11. Still open
 
-1. Postal letters: who prints and posts (the seller, or a print partner integrated by
-   the platform)?
-2. The compensation at sold-out (D2): a fixed menu (voucher, free delivery, priority on
-   the next campaign) or free choice by the seller?
-3. In marketplace mode (D3): does a buyer's consent and frequency cap apply per seller
-   or across the inbox?
+1. Who may change a platform template's *legal or consent* defaults — the seller within
+   limits, or only the platform (D10 vs D8)?
+2. Pricing of the print-and-post service and the partner to integrate (D9).
+3. Whether a preset compensation (D10) is shown to the buyer as a promise before sold-out,
+   or only issued after.
