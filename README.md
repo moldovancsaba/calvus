@@ -77,6 +77,16 @@ once its job — getting everyone to agreement — is done.
 | `index.html` | The hub page linking every project above | — |
 | `public/` | Image assets — currently unreferenced by any page in this repo; worth checking before assuming it's live |
 
+## The standard documentation structure
+
+Every project carries the same set next to its prototype, in its `docs/` (DiscountDirect:
+flat in its folder), indexed by a `README.md` that is also the process log: a Hungarian
+client presentation (`bemutato.html`); brief, research, audit, sources, decisions, design,
+build log, gate, client asks; and a technical package — SSOT, architecture, technical
+design, implementation plan, token map — with every stack decision marked PROPOSED until
+the owner or client flips it. `python3 build-docs.py` renders all of them; `python3
+check.py` is the one gate. Adopted 2026-09-18.
+
 ## How agents (and humans) should behave here
 
 `CLAUDE.md` is the operational rule set for this repo — read-first discipline,
