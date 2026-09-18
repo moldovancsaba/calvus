@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>IDBC Salary Guide — architecture — IDBC Salary Guide docs</title>
+<style>/* IDBC Salary Guide — documentation pages, on the guide's own tokens (dark green, light ground, Inter). */
+:root{--ground:#eef5ec;--card:#ffffff;--ink:#101818;--text:#2a3333;--muted:rgba(16,24,24,.66);--accent:#a5df8f;--accent-deep:#245d54;--line:rgba(19,35,35,.18);--line-soft:rgba(19,35,35,.08);--note:#e3efdf}
+*{box-sizing:border-box}
+body{margin:0;background:var(--ground);color:var(--text);font-family:"Inter","Montserrat","Segoe UI",Arial,sans-serif;font-size:15.5px;line-height:1.6;padding-block:0 64px;padding-inline:clamp(16px,4vw,40px)}
+.wrap{max-width:74ch;margin-inline:auto}
+.docnav{display:flex;flex-wrap:wrap;gap:4px 18px;align-items:center;padding:16px 0;border-bottom:1px solid var(--line);font-size:12px;letter-spacing:.06em;text-transform:uppercase}
+.docnav a{color:var(--muted);text-decoration:none;min-height:44px;display:inline-flex;align-items:center;border-bottom:2px solid transparent}
+.docnav a:hover,.docnav a[aria-current]{color:var(--ink);border-color:var(--accent)}
+.docnav-brand{color:var(--accent-deep);font-weight:800;margin-right:6px}
+.docnav-hub{margin-left:auto}
+header{padding-block:40px 24px;border-bottom:1px solid var(--line);margin-bottom:28px}
+.eyebrow{font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--accent-deep);margin:0 0 12px;font-weight:800}
+h1,h2,h3{color:var(--ink);line-height:1.1;text-wrap:balance;margin:0;letter-spacing:-.02em}
+h1{font-size:clamp(30px,6vw,46px);font-weight:900}
+h2{font-size:clamp(23px,4vw,30px);font-weight:900;margin:48px 0 14px;padding-top:20px;border-top:1px solid var(--line)}
+h3{font-size:18px;margin:30px 0 8px;font-weight:800}
+p{margin:0 0 14px} strong{color:var(--ink);font-weight:800}
+ul,ol{padding-left:22px;margin:0 0 16px} li{margin:5px 0} li>ul{margin:6px 0 0}
+code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.86em;background:var(--note);padding:1px 5px;border-radius:4px;color:var(--ink);overflow-wrap:anywhere}
+pre{overflow-x:auto;padding:14px 16px;border:1px solid var(--line);border-radius:10px;background:var(--card);font-size:12px;line-height:1.35}
+pre code{background:none;padding:0;font-size:inherit}
+a{color:var(--accent-deep)} :focus-visible{outline:2px solid var(--accent-deep);outline-offset:2px}
+.tbl{overflow-x:auto;margin:14px 0 22px;border:1px solid var(--line);border-radius:10px;background:var(--card)}
+table{border-collapse:collapse;width:100%;font-size:13.5px;min-width:560px}
+th{text-align:left;font-weight:800;color:var(--ink);background:var(--note);padding:10px 12px;border-bottom:1px solid var(--line);font-size:11.5px;letter-spacing:.06em;text-transform:uppercase}
+td{padding:10px 12px;border-top:1px solid var(--line-soft);vertical-align:top;background:var(--card)} td:first-child{color:var(--ink)}
+footer{margin-top:56px;padding-top:18px;border-top:1px solid var(--line);font-size:12px;color:var(--muted)}
+</style>
+</head>
+<body>
+<div class="wrap">
+<nav class="docnav" aria-label="Project documentation"><span class="docnav-brand">IDBC Salary Guide · docs</span><a href="index.html">Overview</a><a href="bemutato.html">Bemutató</a><a href="brief.html">Brief</a><a href="research.html">Research</a><a href="audit.html">Audit</a><a href="sources.html">Sources & gaps</a><a href="decisions.html">Decisions</a><a href="design.html">Design</a><a href="gate.html">Gate</a><a href="client-asks.html">Client asks</a><a href="ssot.html">SSOT</a><a href="architecture.html" aria-current=page>Architecture</a><a href="technical-design.html">Technical design</a><a href="implementation-plan.html">Implementation plan</a><a href="token-map.html">Token map</a><a class="docnav-hub" href="../../index.html">Calvus Hub</a></nav>
+<header><p class="eyebrow">Calvus · IDBC Salary Guide · project documentation</p><h1>IDBC Salary Guide — architecture</h1></header>
+<p><em>How the prototype becomes the gated guide inside idbc.hu. §2 is measured. The stack in §10
+and the ADRs in §11 are </em><em>PROPOSED</em><em> — the client's own spec assumed one architecture and
+that assumption is examined, not adopted blindly. Written 2026-09-18.</em></p>
+<h2>1. System context</h2>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>Actor</th>
+<th>With the guide</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Visitor</td>
+<td>reaches the teaser inside idbc.hu; registers (company or candidate) to read</td>
+</tr>
+<tr>
+<td>Reader (registered)</td>
+<td>browses trends, areas, Bérek, SAP, Expert Community, case studies; downloads the Excel; sends Ajánlatkérés or joins the community</td>
+</tr>
+<tr>
+<td>IDBC marketing</td>
+<td>supplies data and copy; receives leads; wants usage numbers</td>
+</tr>
+<tr>
+<td>IDBC recruiters</td>
+<td>answer Ajánlatkérés and community joins</td>
+</tr>
+<tr>
+<td>Site maintainer (idbc.hu's developer)</td>
+<td>runs WordPress + WPML; would host the guide</td>
+</tr>
+<tr>
+<td>Calvus</td>
+<td>built the prototype and the data pipeline; wrote this package</td>
+</tr>
+</tbody>
+</table></div>
+<p>External: Google Drive/Sheets (where the client's workbooks live), LinkedIn Talent
+Insight (numbers delivered as a workbook, no API), IDBC's CRM (unknown — to ask),
+Google Tag Manager (present on idbc.hu), a video host (YouTube/Vimeo, to choose).</p>
+<h2>2. The host, measured (2026-09-18, <code>curl</code>)</h2>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>Measure</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>idbc.hu</td>
+<td>WordPress; WPML 4.8.5; <code>performance-lab</code> + <code>webp-uploads</code>; no page builder detected; theme path not exposed</td>
+</tr>
+<tr>
+<td>Home HTML / requests</td>
+<td>78,6 KB; 9 scripts; 6 stylesheets</td>
+</tr>
+<tr>
+<td>TTFB</td>
+<td>0,12 s</td>
+</tr>
+<tr>
+<td>Tracking</td>
+<td>Google Tag Manager</td>
+</tr>
+<tr>
+<td>Languages</td>
+<td>HU and EN (<code>/en/</code>)</td>
+</tr>
+</tbody>
+</table></div>
+<p>A lean, well-kept WordPress. The guide must not bring it a page builder, a heavy plugin
+set, or a 1,1 MB JSON on every page.</p>
+<h2>3. The client's stated architecture, examined</h2>
+<p>The spec (July) says: WordPress block editor for the pages, <strong>Google Sheets read via
+API</strong> for the data, a registration paywall in front. Three observations:</p>
+<ol>
+<li><strong>The data is not live.</strong> The client called the survey workbook final ("mást nem
+   fogunk már átadni"), the bértábla changes in rounds, and Talent Insight arrives as a
+   file. Nothing changes minute to minute. A runtime Sheets API call adds a credential,
+   a quota, latency and a failure mode to a marketing page, for data that changes a few
+   times a year.</li>
+<li><strong>The data needs transformation, not just reading.</strong> The pages depend on the two
+   converters: crosstab flattening, the weighted-only rule, the Talent Insight matching
+   table, the area-code names. Reading Sheets directly would move that logic into
+   PHP and lose the deterministic, reviewable rebuild.</li>
+<li><strong>The paywall is real work.</strong> Accounts with a type (company / candidate), consent,
+   and a hand-off to IDBC's CRM — not a static-site feature.</li>
+</ol>
+<p>Hence §10: WordPress yes; Sheets API no (a build-time import, optionally scheduled);
+paywall yes, as WordPress users.</p>
+<h2>4. Quality attributes</h2>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>Attribute</th>
+<th>Requirement</th>
+<th>Verified by</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Performance</td>
+<td>no guide page heavier than idbc.hu's home by more than 300 KB of data; TTFB as the host's</td>
+<td><code>13</code> M5</td>
+</tr>
+<tr>
+<td>Data integrity</td>
+<td>every figure reproducible from the client's files by the converters; a new workbook rebuilds all pages in one command</td>
+<td>R1, R6</td>
+</tr>
+<tr>
+<td>Access control</td>
+<td>every guide page and the Excel behind login; teaser public</td>
+<td><code>12</code> §5</td>
+</tr>
+<tr>
+<td>Privacy</td>
+<td>registration consent recorded; GDPR notice; no marketing script before consent (GTM already governs idbc.hu)</td>
+<td><code>12</code> §9</td>
+</tr>
+<tr>
+<td>Accessibility</td>
+<td>one <code>h1</code>, 44 px targets, no overflow at 375, tables with real headers (the prototype's card mode kept)</td>
+<td><a href="gate.html"><code>07-gate.md</code></a> criteria on staging</td>
+</tr>
+<tr>
+<td>Maintainability</td>
+<td>marketing edits copy in the block editor; a developer runs the data rebuild; no page builder</td>
+<td><code>12</code> §2</td>
+</tr>
+<tr>
+<td>Bilingual</td>
+<td>not in scope until EN copy exists; the host has WPML, so nothing blocks it later</td>
+<td><a href="client-asks.html"><code>08-client-asks.md</code></a> #11</td>
+</tr>
+</tbody>
+</table></div>
+<h2>5. Target containers (PROPOSED)</h2>
+<pre><code> reader ──▶ idbc.hu (WordPress + WPML, as today)
+            ├─ theme/plugin &quot;salary-guide&quot;: block templates for the 7 page kinds,
+            │  the prototype's CSS + top3-chart.js as enqueued assets, tokens once
+            ├─ WordPress users: role guide_reader (type: cég | jelölt, consent) ── gate on guide templates
+            ├─ data/: per-page JSON built by the two converters (committed, versioned)
+            ├─ exports/: salary-guide-2026.xlsx built from the same JSON (behind login)
+            ├─ forms: registration, Ajánlatkérés, community join → e-mail + CRM webhook
+            └─ media: video embeds (consent-gated), images in the media library
+ Google Drive workbooks ──(developer runs converters / scheduled import)──▶ data/
+ Google Tag Manager (existing) ◀── page and filter events
+</code></pre>
+<h2>6. Key flows</h2>
+<ol>
+<li><strong>Teaser → registration → guide</strong>: public teaser (the client's home mockup) → register
+   (the field list, D19 page) → e-mail confirmation → any guide page. Logged-out hits on
+   guide URLs redirect to registration and back.</li>
+<li><strong>Data update</strong>: client sends a workbook → developer runs <code>build-guide-data.py</code> or
+   <code>build-salary-data.py</code> → JSON changes reviewed in a diff → deploy; converter asserts
+   (question resolution, Talent Insight matching) fail the build on a mismatch.</li>
+<li><strong>Filter</strong>: client-side as in the prototype; the page loads only its own JSON slice.</li>
+<li><strong>Excel download</strong>: link to the generated file; event to GTM; login required.</li>
+<li><strong>Ajánlatkérés / join</strong>: form → e-mail to IDBC + entry stored + CRM webhook.</li>
+</ol>
+<h2>7. Data architecture</h2>
+<p>The JSON is the interface between the pipeline and the pages — kept, and split per page
+at build (<code>12</code> §4). No new database tables beyond WordPress users and form entries. The
+client's workbooks remain the source of truth for numbers; the JSON is the source for
+the pages; nothing is edited by hand between them (R1).</p>
+<h2>8. Security and privacy</h2>
+<p>Accounts with hashed passwords (WordPress core); registration rate-limited and
+spam-protected; consent stored with timestamp; personal data only in WordPress and the
+CRM; the Excel behind login; no PII in URLs; GTM consent mode as idbc.hu already runs.</p>
+<h2>9. Deployment and operations</h2>
+<p>Staging on idbc.hu's host; the guide as a versioned theme/plugin package plus a
+<code>data/</code> directory; deploy = package + data; rollback = previous package. Data rebuilds
+are a developer task with a checklist (<code>12</code> §4); monitoring is the host's.</p>
+<h2>10. Stack (PROPOSED)</h2>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>Layer</th>
+<th>Client's spec</th>
+<th>Proposed</th>
+<th>Why</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Host</td>
+<td>WordPress (idbc.hu)</td>
+<td><strong>WordPress (idbc.hu), kept</strong></td>
+<td>the guide is a section of the client's site by their own mockup; WPML and GTM are there</td>
+</tr>
+<tr>
+<td>Pages</td>
+<td>block editor</td>
+<td><strong>block templates + patterns in a <code>salary-guide</code> theme extension or plugin, transcribed from the prototype</strong></td>
+<td>marketing edits copy; layout and charts are code</td>
+</tr>
+<tr>
+<td>Data</td>
+<td>Google Sheets via API at runtime</td>
+<td><strong>build-time import by the two converters → per-page JSON, committed; optional scheduled re-import from Drive</strong></td>
+<td>§3; deterministic, reviewable, no runtime dependency</td>
+</tr>
+<tr>
+<td>Charts / tables</td>
+<td>—</td>
+<td>the prototype's <code>top3-chart.js</code> and <code>chart.css</code> as-is (vanilla, no dependency)</td>
+<td>already the measured, client-reviewed implementation</td>
+</tr>
+<tr>
+<td>Paywall</td>
+<td>"registration gate"</td>
+<td><strong>WordPress users, role <code>guide_reader</code>, type meta, consent meta; server-side gate on guide templates</strong></td>
+<td>no new auth system; leads are WordPress users the CRM can pull</td>
+</tr>
+<tr>
+<td>Forms</td>
+<td>—</td>
+<td>one form plugin (the host's, if it has one) with a CRM webhook</td>
+<td>Ajánlatkérés, join, contact</td>
+</tr>
+<tr>
+<td>Excel</td>
+<td>download CTA</td>
+<td><strong>generated at data build from the same JSON</strong> (openpyxl), served behind login</td>
+<td>never diverges from the pages</td>
+</tr>
+<tr>
+<td>Video</td>
+<td>—</td>
+<td>YouTube-nocookie / Vimeo embeds, loaded after consent</td>
+<td>the client uploads links</td>
+</tr>
+<tr>
+<td>EN</td>
+<td>switch in mockup</td>
+<td>out of scope until EN copy exists; WPML makes it possible</td>
+<td><code>08</code> #11</td>
+</tr>
+<tr>
+<td>Analytics</td>
+<td>—</td>
+<td>GTM events: register, filter change, download, Ajánlatkérés</td>
+<td>client asked for numbers in July notes</td>
+</tr>
+</tbody>
+</table></div>
+<h2>11. Architecture decision records</h2>
+<p>All <strong>PROPOSED</strong> 2026-09-18.</p>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>ADR</th>
+<th>Decision</th>
+<th>Options</th>
+<th>Why</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ADR-1</td>
+<td>Inside idbc.hu's WordPress, not a separate site</td>
+<td>(a) inside; (b) <code>guide.idbc.hu</code> static site + Cloudflare Access/Netlify Identity; (c) separate Next/Astro app</td>
+<td>(b) cannot do typed registration, consent and CRM hand-off without building an auth service anyway; (c) is a second stack for a marketing section. (a) reuses users, WPML, GTM, hosting.</td>
+</tr>
+<tr>
+<td>ADR-2</td>
+<td>Build-time data import, not a runtime Sheets API</td>
+<td>runtime API (the spec)</td>
+<td>§3: data is periodic and needs transformation; the converters exist and are deterministic. A scheduled import that runs the same converters is the upgrade path if the client wants "edit the Sheet, see it live".</td>
+</tr>
+<tr>
+<td>ADR-3</td>
+<td>Paywall = WordPress users with a <code>guide_reader</code> role and type/consent meta</td>
+<td>membership plugin; external identity provider</td>
+<td>the registration is five fields and a type; a membership plugin is heavier than the need; leads must land where IDBC can read them</td>
+</tr>
+<tr>
+<td>ADR-4</td>
+<td>Per-page JSON slices, ≤ 300 KB each</td>
+<td>one 1,1 MB file (the prototype)</td>
+<td>the prototype fetches everything on every page; fine for review, not for a section of a lean site</td>
+</tr>
+<tr>
+<td>ADR-5</td>
+<td>Excel generated from the JSON at build</td>
+<td>client-supplied file</td>
+<td>the CTA has been inert since July because no file exists; generated, it can never disagree with the pages</td>
+</tr>
+<tr>
+<td>ADR-6</td>
+<td>Prototype markup, CSS and chart code are transcribed, not reinterpreted; deviations recorded as decisions</td>
+<td>redesign in WordPress</td>
+<td>the client has reviewed and corrected the pages three times; they are the acceptance reference</td>
+</tr>
+<tr>
+<td>ADR-7</td>
+<td>EN edition deferred; HU only in Release 1</td>
+<td>build the switch now</td>
+<td>no EN copy, no EN data labels; WPML makes it a content task later</td>
+</tr>
+<tr>
+<td>ADR-8</td>
+<td>Home page built only after the client's structure demo</td>
+<td>build from the July PDF</td>
+<td>the client said a demo is coming; the PDF is lorem ipsum</td>
+</tr>
+</tbody>
+</table></div>
+<footer>Source: <code>idbc-salary-guide/docs/11-architecture.md</code> · rendered by <code>docs/build.py</code>.</footer>
+</div>
+</body>
+</html>

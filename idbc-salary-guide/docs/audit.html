@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>IDBC Salary Guide — audit of the client's starting point — IDBC Salary Guide docs</title>
+<style>/* IDBC Salary Guide — documentation pages, on the guide's own tokens (dark green, light ground, Inter). */
+:root{--ground:#eef5ec;--card:#ffffff;--ink:#101818;--text:#2a3333;--muted:rgba(16,24,24,.66);--accent:#a5df8f;--accent-deep:#245d54;--line:rgba(19,35,35,.18);--line-soft:rgba(19,35,35,.08);--note:#e3efdf}
+*{box-sizing:border-box}
+body{margin:0;background:var(--ground);color:var(--text);font-family:"Inter","Montserrat","Segoe UI",Arial,sans-serif;font-size:15.5px;line-height:1.6;padding-block:0 64px;padding-inline:clamp(16px,4vw,40px)}
+.wrap{max-width:74ch;margin-inline:auto}
+.docnav{display:flex;flex-wrap:wrap;gap:4px 18px;align-items:center;padding:16px 0;border-bottom:1px solid var(--line);font-size:12px;letter-spacing:.06em;text-transform:uppercase}
+.docnav a{color:var(--muted);text-decoration:none;min-height:44px;display:inline-flex;align-items:center;border-bottom:2px solid transparent}
+.docnav a:hover,.docnav a[aria-current]{color:var(--ink);border-color:var(--accent)}
+.docnav-brand{color:var(--accent-deep);font-weight:800;margin-right:6px}
+.docnav-hub{margin-left:auto}
+header{padding-block:40px 24px;border-bottom:1px solid var(--line);margin-bottom:28px}
+.eyebrow{font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--accent-deep);margin:0 0 12px;font-weight:800}
+h1,h2,h3{color:var(--ink);line-height:1.1;text-wrap:balance;margin:0;letter-spacing:-.02em}
+h1{font-size:clamp(30px,6vw,46px);font-weight:900}
+h2{font-size:clamp(23px,4vw,30px);font-weight:900;margin:48px 0 14px;padding-top:20px;border-top:1px solid var(--line)}
+h3{font-size:18px;margin:30px 0 8px;font-weight:800}
+p{margin:0 0 14px} strong{color:var(--ink);font-weight:800}
+ul,ol{padding-left:22px;margin:0 0 16px} li{margin:5px 0} li>ul{margin:6px 0 0}
+code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.86em;background:var(--note);padding:1px 5px;border-radius:4px;color:var(--ink);overflow-wrap:anywhere}
+pre{overflow-x:auto;padding:14px 16px;border:1px solid var(--line);border-radius:10px;background:var(--card);font-size:12px;line-height:1.35}
+pre code{background:none;padding:0;font-size:inherit}
+a{color:var(--accent-deep)} :focus-visible{outline:2px solid var(--accent-deep);outline-offset:2px}
+.tbl{overflow-x:auto;margin:14px 0 22px;border:1px solid var(--line);border-radius:10px;background:var(--card)}
+table{border-collapse:collapse;width:100%;font-size:13.5px;min-width:560px}
+th{text-align:left;font-weight:800;color:var(--ink);background:var(--note);padding:10px 12px;border-bottom:1px solid var(--line);font-size:11.5px;letter-spacing:.06em;text-transform:uppercase}
+td{padding:10px 12px;border-top:1px solid var(--line-soft);vertical-align:top;background:var(--card)} td:first-child{color:var(--ink)}
+footer{margin-top:56px;padding-top:18px;border-top:1px solid var(--line);font-size:12px;color:var(--muted)}
+</style>
+</head>
+<body>
+<div class="wrap">
+<nav class="docnav" aria-label="Project documentation"><span class="docnav-brand">IDBC Salary Guide · docs</span><a href="index.html">Overview</a><a href="bemutato.html">Bemutató</a><a href="brief.html">Brief</a><a href="research.html">Research</a><a href="audit.html" aria-current=page>Audit</a><a href="sources.html">Sources & gaps</a><a href="decisions.html">Decisions</a><a href="design.html">Design</a><a href="gate.html">Gate</a><a href="client-asks.html">Client asks</a><a href="ssot.html">SSOT</a><a href="architecture.html">Architecture</a><a href="technical-design.html">Technical design</a><a href="implementation-plan.html">Implementation plan</a><a href="token-map.html">Token map</a><a class="docnav-hub" href="../../index.html">Calvus Hub</a></nav>
+<header><p class="eyebrow">Calvus · IDBC Salary Guide · project documentation</p><h1>IDBC Salary Guide — audit of the client's starting point</h1></header>
+<p><em>What the client had when the project started and what it has now, measured where
+possible. Written 2026-09-18.</em></p>
+<h2>The client's site (idbc.hu), measured 2026-09-18</h2>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>Measure</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Platform</td>
+<td>WordPress; WPML 4.8.5 (HU + EN); <code>performance-lab</code> + <code>webp-uploads</code>; no page builder detected on the home page</td>
+</tr>
+<tr>
+<td>Home page HTML</td>
+<td>78,6 KB; 9 external scripts; 6 stylesheets</td>
+</tr>
+<tr>
+<td>TTFB</td>
+<td>0,12 s (one measurement, from this environment)</td>
+</tr>
+<tr>
+<td>Analytics</td>
+<td>Google Tag Manager present</td>
+</tr>
+<tr>
+<td>Multilingual</td>
+<td>EN exists (<code>/en/</code>), so an EN edition of the guide is technically possible once EN copy exists</td>
+</tr>
+</tbody>
+</table></div>
+<p>The client's PDF mockup places the Salary Guide teaser inside this site's own template
+(hero, three feature cards, text block) — the guide is embedded content, not a
+standalone site (<a href="sources.html"><code>SOURCES-AND-GAPS.md</code></a> gap 1).</p>
+<h2>The client's specification vs. the data</h2>
+<p>The specs described more than the data could carry. Each divergence is recorded as a
+numbered gap in <a href="sources.html"><code>SOURCES-AND-GAPS.md</code></a> ("Current build vs. client intent"); the state on
+2026-09-18:</p>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>Gap</th>
+<th>Status</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1 One page vs. eight-page site</td>
+<td>mostly closed — seven pages exist; the home page waits for the client's structure demo</td>
+</tr>
+<tr>
+<td>2 No registration / paywall on static hosting</td>
+<td>open by nature — a mock registration page exists; the real gate is the build's (<a href="architecture.html"><code>11-architecture.md</code></a>)</td>
+</tr>
+<tr>
+<td>3 TOP3 chart shape</td>
+<td>closed 2026-08-17</td>
+</tr>
+<tr>
+<td>4 No dedicated SAP page</td>
+<td>closed 2026-08-17</td>
+</tr>
+<tr>
+<td>5 Filters the data cannot support</td>
+<td>Terület closed 2026-09-08 (per-area workbook); Generáció and Cégtulajdon remain impossible — a survey-design change, not code</td>
+</tr>
+<tr>
+<td>6 "Three stakeholder ranges" are one range with two labels</td>
+<td>open — a labelling choice recorded; the client's own copy asserts real market data while the sheet's own banner still says sample values</td>
+</tr>
+</tbody>
+</table></div>
+<h2>The client's data, as it stands</h2>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>Set</th>
+<th>Rows</th>
+<th>Quality notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Survey (final workbook, 2026-09-08)</td>
+<td>12 datasets × (12 employee + 13 employer questions), crosstabs by experience (employee) and company size (employer)</td>
+<td>tabulated per area; two 1–4 scale questions carry only a weighted average by the client's choice; crosstab rows exist for empty segments (all-zero) — the pages hide those</td>
+</tr>
+<tr>
+<td>Bértábla (Google Sheet, re-pulled 2026-09-18)</td>
+<td>432 rows, 13 areas, 39 standalone TOP3 rows</td>
+<td>levels Trainee → Manager, 19 senior roles without a level; IDBC recommendation only on TOP3 rows; the sheet's banner still calls the figures sample values awaiting professional approval</td>
+</tr>
+<tr>
+<td>Talent Insight (LinkedIn)</td>
+<td>39 TOP3 counts (37 filled), 15 pool counts (13 filled)</td>
+<td>four numbers still owed by the client; position names differ from the bértábla by spelling and language — mapped by hand in <code>build-salary-data.py</code></td>
+</tr>
+<tr>
+<td>Expert Pool</td>
+<td>15 rows, 3 industries</td>
+<td>as delivered</td>
+</tr>
+</tbody>
+</table></div>
+<h2>Defects found in the client's material, for the record</h2>
+<ul>
+<li><code>Salary Guide- kutatási eredmények-final_2.xlsx</code> (re-sent 2026-09-18) is byte-identical
+  to the 2026-09-08 workbook.</li>
+<li>Talent Insight spellings: "Stategic Buyer", "Senior Tax Avisor"; bértábla: "Mechanical
+  Designe Engineer" — kept as delivered on the pages that print them, mapped where a
+  match was needed.</li>
+<li>The demo PNG for the Expert Pool tile reads "IDBC Expert Commuinty"; the page prints
+  "Community".</li>
+<li>The <code>siteMap</code> block inside <code>guide-data.json</code> carried July statuses until 2026-09-18.</li>
+</ul>
+<footer>Source: <code>idbc-salary-guide/docs/02-audit.md</code> · rendered by <code>docs/build.py</code>.</footer>
+</div>
+</body>
+</html>

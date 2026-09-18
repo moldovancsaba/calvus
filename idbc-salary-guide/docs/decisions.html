@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>IDBC Salary Guide — decision register — IDBC Salary Guide docs</title>
+<style>/* IDBC Salary Guide — documentation pages, on the guide's own tokens (dark green, light ground, Inter). */
+:root{--ground:#eef5ec;--card:#ffffff;--ink:#101818;--text:#2a3333;--muted:rgba(16,24,24,.66);--accent:#a5df8f;--accent-deep:#245d54;--line:rgba(19,35,35,.18);--line-soft:rgba(19,35,35,.08);--note:#e3efdf}
+*{box-sizing:border-box}
+body{margin:0;background:var(--ground);color:var(--text);font-family:"Inter","Montserrat","Segoe UI",Arial,sans-serif;font-size:15.5px;line-height:1.6;padding-block:0 64px;padding-inline:clamp(16px,4vw,40px)}
+.wrap{max-width:74ch;margin-inline:auto}
+.docnav{display:flex;flex-wrap:wrap;gap:4px 18px;align-items:center;padding:16px 0;border-bottom:1px solid var(--line);font-size:12px;letter-spacing:.06em;text-transform:uppercase}
+.docnav a{color:var(--muted);text-decoration:none;min-height:44px;display:inline-flex;align-items:center;border-bottom:2px solid transparent}
+.docnav a:hover,.docnav a[aria-current]{color:var(--ink);border-color:var(--accent)}
+.docnav-brand{color:var(--accent-deep);font-weight:800;margin-right:6px}
+.docnav-hub{margin-left:auto}
+header{padding-block:40px 24px;border-bottom:1px solid var(--line);margin-bottom:28px}
+.eyebrow{font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--accent-deep);margin:0 0 12px;font-weight:800}
+h1,h2,h3{color:var(--ink);line-height:1.1;text-wrap:balance;margin:0;letter-spacing:-.02em}
+h1{font-size:clamp(30px,6vw,46px);font-weight:900}
+h2{font-size:clamp(23px,4vw,30px);font-weight:900;margin:48px 0 14px;padding-top:20px;border-top:1px solid var(--line)}
+h3{font-size:18px;margin:30px 0 8px;font-weight:800}
+p{margin:0 0 14px} strong{color:var(--ink);font-weight:800}
+ul,ol{padding-left:22px;margin:0 0 16px} li{margin:5px 0} li>ul{margin:6px 0 0}
+code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.86em;background:var(--note);padding:1px 5px;border-radius:4px;color:var(--ink);overflow-wrap:anywhere}
+pre{overflow-x:auto;padding:14px 16px;border:1px solid var(--line);border-radius:10px;background:var(--card);font-size:12px;line-height:1.35}
+pre code{background:none;padding:0;font-size:inherit}
+a{color:var(--accent-deep)} :focus-visible{outline:2px solid var(--accent-deep);outline-offset:2px}
+.tbl{overflow-x:auto;margin:14px 0 22px;border:1px solid var(--line);border-radius:10px;background:var(--card)}
+table{border-collapse:collapse;width:100%;font-size:13.5px;min-width:560px}
+th{text-align:left;font-weight:800;color:var(--ink);background:var(--note);padding:10px 12px;border-bottom:1px solid var(--line);font-size:11.5px;letter-spacing:.06em;text-transform:uppercase}
+td{padding:10px 12px;border-top:1px solid var(--line-soft);vertical-align:top;background:var(--card)} td:first-child{color:var(--ink)}
+footer{margin-top:56px;padding-top:18px;border-top:1px solid var(--line);font-size:12px;color:var(--muted)}
+</style>
+</head>
+<body>
+<div class="wrap">
+<nav class="docnav" aria-label="Project documentation"><span class="docnav-brand">IDBC Salary Guide · docs</span><a href="index.html">Overview</a><a href="bemutato.html">Bemutató</a><a href="brief.html">Brief</a><a href="research.html">Research</a><a href="audit.html">Audit</a><a href="sources.html">Sources & gaps</a><a href="decisions.html" aria-current=page>Decisions</a><a href="design.html">Design</a><a href="gate.html">Gate</a><a href="client-asks.html">Client asks</a><a href="ssot.html">SSOT</a><a href="architecture.html">Architecture</a><a href="technical-design.html">Technical design</a><a href="implementation-plan.html">Implementation plan</a><a href="token-map.html">Token map</a><a class="docnav-hub" href="../../index.html">Calvus Hub</a></nav>
+<header><p class="eyebrow">Calvus · IDBC Salary Guide · project documentation</p><h1>IDBC Salary Guide — decision register</h1></header>
+<p><em>Numbered, dated, with who decided and what it replaced. Reconstructed on 2026-09-18 from
+the dated entries in <a href="sources.html"><code>SOURCES-AND-GAPS.md</code></a> and the commit history; from here on, a new
+decision is added here first. "Owner" is the Calvus side; "client" is IDBC.</em></p>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>#</th>
+<th>Date</th>
+<th>Decision</th>
+<th>By</th>
+<th>Why / what it replaced</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>D1</td>
+<td>2026-07-30</td>
+<td>Bérezés and Expert Pool become standalone pages; the trends page keeps the survey only</td>
+<td>owner</td>
+<td>one combined page had grown past what a reader could hold; also the spec's page split</td>
+</tr>
+<tr>
+<td>D2</td>
+<td>2026-07-30</td>
+<td>Empty salary columns are hidden rather than shown as dashes</td>
+<td>owner</td>
+<td>a column of "–" reads as missing data</td>
+</tr>
+<tr>
+<td>D3</td>
+<td>2026-07-31</td>
+<td>Ordinal answer scales keep their order; 0 %-response options are hidden everywhere</td>
+<td>owner</td>
+<td>zero-respondent options presented as findings</td>
+</tr>
+<tr>
+<td>D4</td>
+<td>2026-08-17</td>
+<td>Adopt the client's <code>3_SAP</code> mockup as the layout of all three subpages; build the point-line TOP3 chart from it as a shared component</td>
+<td>owner</td>
+<td>replaced the static range cards; the mockup was the client's own design</td>
+</tr>
+<tr>
+<td>D5</td>
+<td>2026-08-17</td>
+<td>The salary band's two ends are labelled "Vállalatok által kínált bér" / "Jelöltek által elvárt bér" per the mockup, although the sheet holds one range</td>
+<td>owner</td>
+<td>a labelling choice, recorded as gap 6 with its risk; the neutral "Min./Max." was rejected</td>
+</tr>
+<tr>
+<td>D6</td>
+<td>2026-08-18</td>
+<td>"Összes" (later "Összesített adatok") is a pseudo-segment, always first and default; segment options are computed per topic</td>
+<td>owner</td>
+<td>landing on a real segment with zero respondents</td>
+</tr>
+<tr>
+<td>D7</td>
+<td>2026-08-24</td>
+<td>Two topics renamed and the EU pay-transparency question moved to the end of Bérezés</td>
+<td>client</td>
+<td>editorial</td>
+</tr>
+<tr>
+<td>D8</td>
+<td>2026-08-24</td>
+<td>Eleven-area filter on the trends page with a per-area summary block; the summaries do not filter the survey until re-tabulated data exists</td>
+<td>client ask, owner scope</td>
+<td>honest skeleton over a fake filter</td>
+</tr>
+<tr>
+<td>D9</td>
+<td>2026-08-25</td>
+<td>Questions with no data under a real segment are hidden outright; the aggregate is never shown in their place; one panel-level sentence remains</td>
+<td>owner, refining the client's per-question message</td>
+<td>the client saw the message version live and the owner simplified</td>
+</tr>
+<tr>
+<td>D10</td>
+<td>2026-08-25</td>
+<td>The stacked whole-sample chart is the only rendering of the two 1–4 scale questions; the mean-bar variant is rejected</td>
+<td>owner</td>
+<td>"the stacked chart is the good one"</td>
+</tr>
+<tr>
+<td>D11</td>
+<td>2026-08-25</td>
+<td>The area dropdown is replaced by eleven area links opening a dedicated area page from one template; area texts move to <code>areas.json</code></td>
+<td>owner, after client feedback</td>
+<td>one renderer for eleven areas instead of eleven copies</td>
+</tr>
+<tr>
+<td>D12</td>
+<td>2026-08-25</td>
+<td>Until per-area data exists, area pages show the matching edition's pooled sample and say so</td>
+<td>owner</td>
+<td>never claim area-level data that does not exist</td>
+</tr>
+<tr>
+<td>D13</td>
+<td>2026-08-25</td>
+<td>The client's final area names and texts are adopted; five labels renamed</td>
+<td>client</td>
+<td><code>SG_Területi_összefoglalók_final.docx</code></td>
+</tr>
+<tr>
+<td>D14</td>
+<td>2026-08</td>
+<td>The Bérsávok table returns to neutral Minimum / Maximum headers; the chart keeps the stakeholder labels; the client's "valós piaci adatok" note is shipped as their copy</td>
+<td>client</td>
+<td>recorded next to gap 6</td>
+</tr>
+<tr>
+<td>D15</td>
+<td>2026-09-01</td>
+<td>Area pages read the client's per-area re-tabulation; the pooled stand-in (D12) is retired</td>
+<td>owner, on client data</td>
+<td>closes the client's 2026-09-01 feedback on missing segment filters</td>
+</tr>
+<tr>
+<td>D16</td>
+<td>2026-09-08</td>
+<td>The final workbook replaces the survey half; <code>datasets</code> replaces editions/answers; the two 1–4 questions show the weighted average only; the aggregate is labelled "Összesített adatok"</td>
+<td>client (data and labels), owner (schema)</td>
+<td>"ez már a teljesen végleges kutatási anyag"</td>
+</tr>
+<tr>
+<td>D17</td>
+<td>2026-09-15</td>
+<td>Below 600 px of container width the salary tables render as cards; Bérsávok groups collapse behind a header, SAP rows do not</td>
+<td>owner</td>
+<td>419 px of sideways overflow on a phone</td>
+</tr>
+<tr>
+<td>D18</td>
+<td>2026-09-16</td>
+<td>SAP cards collapse like Bérsávok'; the panel behind the mobile cards is dropped, the cards stay white; the TOP3 chart gets a narrow one-block-per-position layout with its own value scale under every chart</td>
+<td>client (workshop)</td>
+<td>corrected once by the client the same day</td>
+</tr>
+<tr>
+<td>D19</td>
+<td>2026-09-18</td>
+<td>Header on every page: Piaci trendek · Bérek · SAP · Expert Pool · Esettanulmányok, Ajánlatkérés and Kijelentkezés right-aligned; Ajánlatkérés links to <code>idbc.hu/ajanlatkeres/</code> pending confirmation</td>
+<td>client (menu), owner (target)</td>
+<td>the client named the item, not the target</td>
+</tr>
+<tr>
+<td>D20</td>
+<td>2026-09-18</td>
+<td>Area media: seven areas get a video placeholder, four a key-thought box; the Finance infographic slot is retired</td>
+<td>client</td>
+<td>their list of which area gets which</td>
+</tr>
+<tr>
+<td>D21</td>
+<td>2026-09-18</td>
+<td>Expert Pool becomes the Expert Community page with the client's copy; tiles per the client's PNG; join and contact forms inert</td>
+<td>client (copy, tile), owner (inert forms)</td>
+<td></td>
+</tr>
+<tr>
+<td>D22</td>
+<td>2026-09-18</td>
+<td>TOP3 rows carry a LinkedIn pill and a footnote; counts matched by an explicit table, never guessed; a renamed position fails the build</td>
+<td>owner</td>
+<td>the first pass showed zero pills because the old bértábla did not match</td>
+</tr>
+<tr>
+<td>D23</td>
+<td>2026-09-18</td>
+<td>The salary data is rebuilt from the client's current bértábla (13 areas, 432 rows, 39 standalone TOP3 rows); area codes get the names already used on the trends pages; Sales and Marketing stay split</td>
+<td>owner, on client data</td>
+<td>the Talent Insight list was cut to this table</td>
+</tr>
+<tr>
+<td>D24</td>
+<td>2026-09-18</td>
+<td>The Bérek and SAP tables always show and include the TOP3 rows</td>
+<td>owner, reverting the same day's exclusion</td>
+<td>the owner saw a missing table on Retail; the table is the complete reference</td>
+</tr>
+<tr>
+<td>D25</td>
+<td>2026-09-18</td>
+<td>Esettanulmányok is a conventional article, not a card grid</td>
+<td>client and owner (workshop)</td>
+<td>the first pass had not been briefed</td>
+</tr>
+<tr>
+<td>D26</td>
+<td>2026-09-18</td>
+<td>Expert Pool tile bars align to the card bottom so tiles with and without a market line line up</td>
+<td>client note</td>
+<td></td>
+</tr>
+<tr>
+<td>D27</td>
+<td>2026-09-18</td>
+<td>Standard documentation structure; technical package written with every stack decision in status PROPOSED</td>
+<td>owner</td>
+<td>see <a href="architecture.html"><code>11-architecture.md</code></a> §11; the flip of any ADR is the next D-number here</td>
+</tr>
+</tbody>
+</table></div>
+<h2>Standing rules that came out of these</h2>
+<ul>
+<li>No figure is ever invented; an inert control is shown with an "unavailable" treatment and a reason (D2, D9, D12, D22).</li>
+<li>The client's own copy ships as written, even where it asserts more than the source data does — and the divergence is recorded (D5, D14).</li>
+<li>One template per repeated thing (area pages, tiles, chart) — never eleven copies (D11).</li>
+<li>In fine-tuning, only the reported item changes; nothing is restructured or hidden unasked (D24, D25).</li>
+</ul>
+<footer>Source: <code>idbc-salary-guide/docs/04-decisions.md</code> · rendered by <code>docs/build.py</code>.</footer>
+</div>
+</body>
+</html>

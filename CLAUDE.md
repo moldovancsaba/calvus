@@ -130,6 +130,11 @@ must actually happen before every push, not just be claimed:
   the change (a background curl-poll loop for a unique marker in the new
   content, per the established pattern) before reporting success.
 
+- For IDBC changes also run `python3 idbc-salary-guide/check.py` (links, anchors, docs
+  cross-links, one chart-asset version everywhere, inert controls still marked) — must
+  print `GATE: CLEAN`. Added 2026-09-18 with the standard documentation structure
+  (`idbc-salary-guide/docs/`); after editing any `.md` there, run
+  `python3 idbc-salary-guide/docs/build.py`.
 - Run `python3 holdvolgy/check.py` — the one-command gate: link audit, cross-page
   anchors, docs cross-links, a **stale-state phrase scan** (anything that was true
   once — "in Phase N", "for approval", "coming soon", placeholders) and the single

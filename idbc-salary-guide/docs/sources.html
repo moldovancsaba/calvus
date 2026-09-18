@@ -1,0 +1,644 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>IDBC Salary Guide — data sources and design-intent audit — IDBC Salary Guide docs</title>
+<style>/* IDBC Salary Guide — documentation pages, on the guide's own tokens (dark green, light ground, Inter). */
+:root{--ground:#eef5ec;--card:#ffffff;--ink:#101818;--text:#2a3333;--muted:rgba(16,24,24,.66);--accent:#a5df8f;--accent-deep:#245d54;--line:rgba(19,35,35,.18);--line-soft:rgba(19,35,35,.08);--note:#e3efdf}
+*{box-sizing:border-box}
+body{margin:0;background:var(--ground);color:var(--text);font-family:"Inter","Montserrat","Segoe UI",Arial,sans-serif;font-size:15.5px;line-height:1.6;padding-block:0 64px;padding-inline:clamp(16px,4vw,40px)}
+.wrap{max-width:74ch;margin-inline:auto}
+.docnav{display:flex;flex-wrap:wrap;gap:4px 18px;align-items:center;padding:16px 0;border-bottom:1px solid var(--line);font-size:12px;letter-spacing:.06em;text-transform:uppercase}
+.docnav a{color:var(--muted);text-decoration:none;min-height:44px;display:inline-flex;align-items:center;border-bottom:2px solid transparent}
+.docnav a:hover,.docnav a[aria-current]{color:var(--ink);border-color:var(--accent)}
+.docnav-brand{color:var(--accent-deep);font-weight:800;margin-right:6px}
+.docnav-hub{margin-left:auto}
+header{padding-block:40px 24px;border-bottom:1px solid var(--line);margin-bottom:28px}
+.eyebrow{font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--accent-deep);margin:0 0 12px;font-weight:800}
+h1,h2,h3{color:var(--ink);line-height:1.1;text-wrap:balance;margin:0;letter-spacing:-.02em}
+h1{font-size:clamp(30px,6vw,46px);font-weight:900}
+h2{font-size:clamp(23px,4vw,30px);font-weight:900;margin:48px 0 14px;padding-top:20px;border-top:1px solid var(--line)}
+h3{font-size:18px;margin:30px 0 8px;font-weight:800}
+p{margin:0 0 14px} strong{color:var(--ink);font-weight:800}
+ul,ol{padding-left:22px;margin:0 0 16px} li{margin:5px 0} li>ul{margin:6px 0 0}
+code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.86em;background:var(--note);padding:1px 5px;border-radius:4px;color:var(--ink);overflow-wrap:anywhere}
+pre{overflow-x:auto;padding:14px 16px;border:1px solid var(--line);border-radius:10px;background:var(--card);font-size:12px;line-height:1.35}
+pre code{background:none;padding:0;font-size:inherit}
+a{color:var(--accent-deep)} :focus-visible{outline:2px solid var(--accent-deep);outline-offset:2px}
+.tbl{overflow-x:auto;margin:14px 0 22px;border:1px solid var(--line);border-radius:10px;background:var(--card)}
+table{border-collapse:collapse;width:100%;font-size:13.5px;min-width:560px}
+th{text-align:left;font-weight:800;color:var(--ink);background:var(--note);padding:10px 12px;border-bottom:1px solid var(--line);font-size:11.5px;letter-spacing:.06em;text-transform:uppercase}
+td{padding:10px 12px;border-top:1px solid var(--line-soft);vertical-align:top;background:var(--card)} td:first-child{color:var(--ink)}
+footer{margin-top:56px;padding-top:18px;border-top:1px solid var(--line);font-size:12px;color:var(--muted)}
+</style>
+</head>
+<body>
+<div class="wrap">
+<nav class="docnav" aria-label="Project documentation"><span class="docnav-brand">IDBC Salary Guide · docs</span><a href="index.html">Overview</a><a href="bemutato.html">Bemutató</a><a href="brief.html">Brief</a><a href="research.html">Research</a><a href="audit.html">Audit</a><a href="sources.html" aria-current=page>Sources & gaps</a><a href="decisions.html">Decisions</a><a href="design.html">Design</a><a href="gate.html">Gate</a><a href="client-asks.html">Client asks</a><a href="ssot.html">SSOT</a><a href="architecture.html">Architecture</a><a href="technical-design.html">Technical design</a><a href="implementation-plan.html">Implementation plan</a><a href="token-map.html">Token map</a><a class="docnav-hub" href="../../index.html">Calvus Hub</a></nav>
+<header><p class="eyebrow">Calvus · IDBC Salary Guide · project documentation</p><h1>IDBC Salary Guide — data sources and design-intent audit</h1></header>
+<p>This documents every file in the client's Drive folder (<code>IDBC</code>, folder id
+<code>1aOhkzvH0YtJVFkaIq85QsrCaqb4_JTQv</code>) that feeds this project, how each one
+was used, and where the currently deployed page diverges from what the
+client's own specs and mockups actually describe. <code>guide-data.json</code> in this
+folder is the single consolidated data source built from all of it.</p>
+<h2>Source files and what they contributed</h2>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>File</th>
+<th>Type</th>
+<th>Contribution</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>Salary Guide - munkaerőpiaci trendek - minta</code></td>
+<td>Google Sheet</td>
+<td>Real survey data → <code>answers</code> (9 tabs: employee/employer × general/IT+Contracting × base/crosstab). 157 respondents, 89 questions, 1,450 response rows.</td>
+</tr>
+<tr>
+<td><code>Salary Guide- kutatási eredmények-final (1).xlsx</code></td>
+<td>Excel (2026-09-01)</td>
+<td>Real <strong>per-area</strong> re-tabulation → <code>areaAnswers</code> (11 areas × 4 tabs: B2C Total/Tapasztalat, B2B Total/Cégméret). Supersedes the edition-mapped stand-in for every <code>terulet/</code> page — see the 2026-09-01 update note below.</td>
+</tr>
+<tr>
+<td><code>IDBC_bertabla</code></td>
+<td>Google Sheet (<code>1aQA6Kw5k1U9LQMiWYgcn__m2YCuGmEhx79QFSzE0hJg</code>)</td>
+<td>Real salary-band data → <code>salary.webBertabla</code> and <code>salary.expertPool</code> (15 rows), rebuilt by <code>build-salary-data.py</code>. Re-pulled 2026-09-18: <strong>432 rows, 13 areas, 39 standalone TOP3 rows</strong> (was 270 rows / 8 areas in August). Includes the <code>UTMUTATO</code> instructions tab, captured verbatim in <code>salary.readme</code>.</td>
+</tr>
+<tr>
+<td><code>IDBC_web_bertabla_roviditett_import_v9.xlsx</code>, <code>Salary Guide ... minta.xlsx</code></td>
+<td>Excel</td>
+<td>Duplicate exports of the two sheets above — not separately re-parsed, no new data.</td>
+</tr>
+<tr>
+<td><code>IDBC Salary Guide specifikáció</code></td>
+<td>Google Doc</td>
+<td>Functional spec: registration/paywall gate, 3 data-driven functions (Bérezés, Igény-elvárás, Expert Pool), Google-Sheets-via-API + WordPress block-editor architecture.</td>
+</tr>
+<tr>
+<td><code>SG_landing_speci.docx</code></td>
+<td>Word doc</td>
+<td>Full site map (8 pages) and per-page content-block breakdown — see <code>siteMap</code> in the data file. Added detail the shorter spec didn't have: split IT/Contracting result blocks, the Non-IT area filter, the 3-tier-range-vs-1-average-range table distinction, the full SAP product catalogue, and the Excel-download CTA.</td>
+</tr>
+<tr>
+<td><code>Szűrők</code></td>
+<td>Google Doc</td>
+<td>The intended filter taxonomy (Terület, Téma, Generáció, Tapasztalati szint, Cégméret, Cégtulajdon) — see <code>filterDimensions</code> in the data file for which of these the real survey data actually supports.</td>
+</tr>
+<tr>
+<td><code>MEGBESZÉLÉS JEGYZET</code>, <code>Megbeszélés jegyzet bérsáv tábla</code>, <code>Vázlatos egyeztetés TH+Csaba+Bence 06.12.</code></td>
+<td>Doc/Sheets</td>
+<td>Internal meeting notes — mostly superseded by the two spec docs above; the last one gives a rough frontend/backend effort breakdown per feature, no new content requirements.</td>
+</tr>
+<tr>
+<td><code>html demok/1_regisztracio.html</code></td>
+<td>HTML mockup</td>
+<td>Real registration-page design (Gmail/Facebook/e-mail signup, private-vs-company account type toggle) — not yet built.</td>
+</tr>
+<tr>
+<td><code>html demok/2_savok.html</code></td>
+<td>HTML mockup</td>
+<td>Real design for the B2C/B2B filterable trends dashboard — this is what the current "Piaci trendek" section is built from.</td>
+</tr>
+<tr>
+<td><code>html demok/3_SAP.html</code></td>
+<td>HTML mockup</td>
+<td>Real design for a dedicated SAP article page (exec summary, contact card, product grid, TOP3 + full salary table) — not yet built as its own page.</td>
+</tr>
+<tr>
+<td><code>IDBC_SalaryGuide_home.pdf</code></td>
+<td>PDF mockup (lorem ipsum)</td>
+<td>Shows the Salary Guide teaser as it would sit inside IDBC's main homepage template (hero, 3 feature cards, text block) — confirms this is meant to be embedded content, not a standalone site.</td>
+</tr>
+<tr>
+<td><code>Talent Insight riport.xlsx</code></td>
+<td>Excel (2026-09-18)</td>
+<td>LinkedIn Talent Insight market counts: sheet 1 the TOP3 positions per area (39 rows, stored as <code>salary.talentInsightTop3</code>), sheet 2 the Expert Pool positions (13 rows, merged as <code>linkedin</code> onto <code>salary.expertPool</code>).</td>
+</tr>
+<tr>
+<td><code>SG- Esettanulmányok.docx</code>, <code>SG - kezdő oldal.docx</code>, <code>SG - SAP tartalom.docx</code>, <code>SG - Expert Community.docx</code></td>
+<td>Word (2026-09-18)</td>
+<td>Final client copy for the case studies, home page, SAP trends and Expert Community — see the 2026-09-18 round below.</td>
+</tr>
+<tr>
+<td><code>IDBC_SalaryGuide_aloldal.pdf</code></td>
+<td>PDF mockup (lorem ipsum)</td>
+<td><strong>Most important visual find</strong>: shows the actual salary/trends article-page layout, including a horizontal <strong>point-line chart</strong> for the TOP3 salary comparison (three connected, labeled dots per role along one HUF axis) — a materially different (better) chart than the static range-cards currently deployed.</td>
+</tr>
+</tbody>
+</table></div>
+<h2>Current build vs. client intent — concrete gaps</h2>
+<ol>
+<li><strong>Single combined page vs. an 8-page site.</strong> The live page merges what the
+   spec splits into Home, Registration, IT trends, Non-IT+Perm trends,
+   Bérek, SAP guide, Expert Pool, and Esettanulmányok. Fine as a working
+   prototype; a production build would need real routing/pages.</li>
+<li><strong>No registration/paywall gate.</strong> Every mockup and both specs describe
+   content sitting behind a login wall. Not implementable on static GitHub
+   Pages without a real backend/auth provider.</li>
+<li>~~<strong>Salary TOP3 chart is the wrong shape.</strong>~~ <strong>Closed.</strong> The point-line
+   chart connecting min → IDBC-recommended → max along one shared axis is
+   now built, from the <code>3_SAP_TOP3_chart_gradient_tooltip_categories.html</code>
+   mockup: per-row gradient connector, three-tone dots, hover/focus tooltip.
+   Shared implementation in <code>assets/top3-chart.js</code> + <code>assets/chart.css</code>,
+   used by <code>sap/</code> and <code>berezes/</code>; <code>expert-pool/</code> reuses the tooltip and the
+   same colour ramp on its pool bars.</li>
+<li><strong>SAP gets no dedicated page.</strong> The 20-item product catalogue is real
+   client content (now captured in <code>sapProducts</code>) but isn't surfaced
+   anywhere in the current build.</li>
+<li><strong>Missing filters the real data can't support anyway:</strong> Generáció
+   (birth-generation) and a Terület filter on the employee/trends side, plus
+   full Cégtulajdon crosstabs — these appear in every spec/filter doc but
+   the underlying survey was never fielded with those breakdowns. Building
+   them would require the client re-running or re-tabulating the survey,
+   not a code change.</li>
+</ol>
+<p>Update (2026-09-01, real per-area data arrives): the client sent
+   <code>Salary Guide- kutatási eredmények-final (1).xlsx</code>, which re-tabulates the
+   whole survey <strong>per area</strong> — 11 areas × 4 sheets each (B2C Total, B2C
+   Tapasztalat, B2B Total, B2B Cégméret). This supersedes the 2026-08-25
+   edition-mapped stand-in described below: <code>guide-data.json</code> now carries a
+   new <code>areaAnswers</code> key, keyed by the same 11 area slugs as <code>data/areas.json</code>,
+   each holding real <code>{employee, employer}</code> base + crosstab data for that
+   area alone — not a pooled Általános/IT+Contracting sample. <code>terulet/</code>
+   reads from <code>areaAnswers[area.slug]</code> instead of <code>answers[edition]</code>; the
+   <code>edition</code> field on each area in <code>areas.json</code> is kept only to pick the
+   right <em>question set</em> (the survey instrument itself still only has two
+   variants — general and IT/IT Contracting — verified question-for-question
+   against <code>topics[].editions</code>), not to select which sample's numbers to
+   show. The sample-note copy changed accordingly (no longer claims an area
+   is showing someone else's data). The main trends page (<code>index.html</code>) is
+   untouched — it still shows the Általános/IT + Contracting pooled view;
+   this file has no combined-sample sheet to replace that with.</p>
+<p>Concretely, this closes the client's 2026-09-01 feedback that the AI and
+   Bérezés és juttatások topics had no tapasztalati szint / cégméret filter
+   on the area pages: that was a genuine data gap in the old pooled samples
+   (zero non-zero segment rows for those two topics under IT + Contracting),
+   not a code bug, and the new per-area crosstabs have real segment data for
+   both topics in all 11 areas. Generáció and Cégtulajdon crosstabs are
+   still absent from this file — gap 5 above still stands for those two.</p>
+<p>Update (2026-08-25, client feedback round 2): the area dropdown is gone. The
+   trends page now shows <strong>11 bubble links</strong>, each opening a dedicated area page
+   (<code>terulet/index.html?terulet=&lt;slug&gt;</code>) with that area's summary, infographic
+   and research results. One template serves all 11 areas — separate files would
+   mean eleven copies of the same renderer in a repo with no build step. The
+   area texts and per-area image/edition mapping moved out of <code>index.html</code> into
+   <code>data/areas.json</code>, which both pages read.</p>
+<p><strong>The per-area results are edition-mapped, not area-tabulated</strong> (owner
+   decision, 2026-08-25): the survey still has no area breakdown, so <code>IT</code> and
+   <code>IT Contracting</code> show the genuinely matching <em>IT + Contracting</em> sample, and
+   the other nine show <em>Általános</em> (whole sample). Each page states in words
+   which sample is on screen and never claims area-level data. When re-tabulated
+   survey data arrives, only the <code>edition</code> field per area in <code>data/areas.json</code>
+   and the answers file need to change.</p>
+<p>Also in this round: <code>Kapcsolat</code> removed from every page header (the footer
+   contact block stays), a visible but inert <code>Kijelentkezés</code> button added
+   top-right on all five pages — there is still no auth behind it, so it carries
+   the same <code>is-unavailable</code> treatment as the Excel and EN controls — and the
+   area summary text is clamped to the infographic's height with an "Olvass
+   tovább" toggle.</p>
+<p>Update (2026-08-24): the client's change round asks for an 11-area filter
+   at the top of the trends page. A <strong>skeleton</strong> is now built: the 11-option
+   dropdown plus a per-area summary block (text + video) that swaps with the
+   selection. It deliberately does <em>not</em> filter the survey answers — that
+   still needs re-tabulated data. The summaries are the <strong>client's final
+   texts</strong> (<code>SG_Területi_összefoglalók_final.docx</code>, received 2026-08-25),
+   and the client confirmed the same doc's headings are the final filter
+   names — five labels were renamed accordingly (Finance → Pénzügy és
+   számvitel, Szállítás, beszerzés → Logisztika és szállítás,
+   Ügyfélszolgálat, Adminisztráció → Office Support &amp; Ügyfélszolgálat,
+   Pharma, Life sciences → Pharma &amp; Life Sciences, BSC (Business Services
+   Center) → BSC; the doc's two all-caps headings were title-cased and pure
+   capitalisation differences left alone). The media slot shows the client's
+   infographic images instead of the earlier sample video: per-area files go
+   in <code>assets/</code> and the <code>AREA_IMAGES</code> map in <code>index.html</code>; only the Finance
+   infographic has arrived so far, so it doubles as the shared default until
+   the rest come.
+6. <strong>"3 stakeholder ranges" (candidate / company / IDBC) is aspirational —
+   and the shipped labels now assert it anyway (owner decision, 2026-08-17).</strong>
+   The real <code>webBertabla</code> sheet has one range (<code>min</code>/<code>max</code>) plus one
+   IDBC-recommended point — a single perspective, not three independently
+   sourced ones. The chart, legend, summary cards and SAP table headers now
+   read <code>min</code> as "Vállalatok által kínált bér" and <code>max</code> as "Jelöltek által
+   elvárt bér", per the client mockup's wording, chosen by the owner over
+   the neutral "Min./Max. havi bruttó".</p>
+<p><strong>This is a labelling choice, not new data.</strong> No figure changed — only
+   what the two ends of the existing band are called. If the client reads
+   those labels as two separately surveyed populations, they are wrong, and
+   the fix is a data-collection change (survey candidates and employers
+   separately), not a code change. Revisit if the numbers are ever quoted
+   externally as employer-vs-candidate evidence.</p>
+<p>Update (2026-08): the Bérsávok <em>table</em> returned to neutral <code>Minimum</code> /
+   <code>Maximum</code> headers at the client's request, while the chart, legend and
+   summary cards keep the stakeholder labels. The client's own note under the
+   table now also asserts the figures are "valós piaci adatokon alapuló" —
+   their copy, shipped as requested; the source sheet's UTMUTATO still calls
+   the same figures szemléltető MINTAADATOK awaiting szakmai jóváhagyás.</p>
+<h2>Schema in <code>guide-data.json</code></h2>
+<ul>
+<li><code>editions</code>, <code>topics</code>, <code>answers</code> — survey trends (unchanged from before).</li>
+<li><code>salary.webBertabla</code>, <code>salary.expertPool</code>, <code>salary.readme</code> — salary bands (unchanged from before).</li>
+<li><code>filterDimensions</code> — <strong>new</strong>: every filter named in the client's <code>Szűrők</code> doc, each flagged <code>available</code> / <code>partial</code> / not-available against what the real data supports, with a note explaining the gap.</li>
+<li><code>sapProducts</code> — <strong>new</strong>: the real 5-category, 20-item SAP product catalogue from the client's own SAP mockup/spec.</li>
+<li><code>siteMap</code> — <strong>new</strong>: the full intended 8-page site structure with a <code>status</code> (<code>built</code> / <code>partially built</code> / <code>not built</code>) and note per page.</li>
+</ul>
+<h2>Client feedback round (2026-09-18)</h2>
+<p>Two client mails and their attachments (three content docs, the Expert Community doc, the
+Talent Insight workbook, three design PNGs, and the research workbook again). What each item
+became:</p>
+<ul>
+<li><strong>Kutatási adatok</strong> — the re-sent <code>Salary Guide- kutatási eredmények-final.xlsx</code> is
+  byte-identical to the one the 2026-09-08 rebuild consumed (converter re-run into scratch,
+  output identical). Weighted-average-only for the two 1–4 scale questions and the
+  <code>Összesített adatok</code> label were already in place. Nothing changed.</li>
+<li><strong>Fejléc</strong> — every guide page now carries the client's menu: Piaci trendek · Bérek · SAP ·
+  Expert Pool · Esettanulmányok, with Ajánlatkérés and Kijelentkezés right-aligned. Ajánlatkérés
+  links to <code>idbc.hu/ajanlatkeres/</code> (the client named the item, not the target — a live page on
+  their site was the least presumptuous choice; change the <code>href</code> if they want the in-guide
+  contact form instead). Kijelentkezés stays inert. Footer navigation matches.</li>
+<li><strong>Esettanulmányok</strong> — new page (<code>esettanulmanyok/</code>) from <code>SG- Esettanulmányok.docx</code>: DGITSHU
+  (IT Contracting + try&amp;hire, RPO) and Publicis Groupe (RPO), one video placeholder each, bottom
+  CTA to <code>idbc.hu/szolgaltatasok/</code>. <code>siteMap</code> status updated from "not built".</li>
+<li><strong>SAP tartalom</strong> — the page's executive summary is replaced by the client's two blocks
+  (Technológiai trendek with four sub-sections, Toborzási trendek SAP területen). "TOP 3 SAP
+  pozi" and "További bérek" in the doc are the existing section headings.</li>
+<li><strong>Piaci trendek — videó / kulcsgondolat</strong> — <code>areas.json</code> gained <code>media: "video" | "highlight"</code>
+  (video: IT, IT Contracting, Sales &amp; Marketing, HR, Gyártás, Logisztika, BSC; highlight:
+  Pénzügy, Építőipar, Pharma, Office Support). The area page renders a play-button placeholder
+  or the green quote box from <code>Highlight 1.png</code>, with placeholder text naming the area; the
+  client uploads the finals. The <code>image</code> field and the Finance infographic slot are gone from
+  the page (the file stays in <code>assets/</code>, unreferenced, until the client says it is retired).</li>
+<li><strong>Expert Pool</strong> — the page is now the client's Expert Community page (<code>SG - Expert
+  Community.docx</code>): intro, "Szakemberként csatlakoznál?" with the join form behind the button
+  (vezetéknév, keresztnév, pozíció, e-mail, telefon, üzenet), "Új kollégát keresel?" with
+  Ajánlatkérés jumping to the contact form at the bottom, then the tiles. Tiles follow the demo
+  PNG: category, position, "Piacon elérhető szakember: N fő*", an "IDBC Expert Community"
+  label over the bar, the IDBC count. Both forms are inert (<code>is-unavailable</code>, note under the
+  button). The LinkedIn numbers come from sheet 2 of <code>Talent Insight riport.xlsx</code>, stored as
+  <code>linkedin</code> on each <code>salary.expertPool</code> row — 13 of 15 rows; <code>Pharma / Team Leader</code> and
+  <code>Finance / Desk Analyst</code> are the two the client is still sourcing, and those tiles show no
+  market line. The footnote appears only when a star is on screen.</li>
+<li><strong>Bérek — TOP3 market counts</strong> — <code>top3-chart.js</code> renders a green pill under the position
+  (<code>N elérhető jelölt*</code>) in both layouts and the footnote under the chart whenever a row carries
+  <code>linkedin</code>. Sheet 1 of the Talent Insight workbook (39 positions, 13 areas) is stored verbatim
+  as <code>salary.talentInsightTop3</code>; the converter matches it onto <code>webBertabla</code> TOP3 rows by
+  (terulet, pozicio). <strong>Today that matches zero rows</strong>: the client's list is cut to the new
+  bértábla they are sending next week (SAP + IT salaries, new area set — Retail, Marketing,
+  Építőipar appear, position names differ, e.g. "SAP Consultant (MM, SD, FI/CO, EWM)" vs our
+  "SAP FI/CO Consultant"). No name was guess-matched. When the new salary rows land, re-run
+  the matching and the pills light up. The rendering was verified with synthetic rows.</li>
+<li><strong>Regisztráció</strong> — new page (<code>regisztracio/</code>) with exactly the client's field list
+  (Vezetéknév, Keresztnév, E-mail, Cégnév, Pozíció, cég/jelölt fióktípus, Jelszó, adatvédelmi
+  elfogadás; the newsletter checkbox is deliberately absent per the mail). Submit is inert —
+  still no backend on static hosting (gap 2 above stands).</li>
+<li><strong>Kezdőoldal</strong> — copy received (<code>SG - kezdő oldal.docx</code>: intro signed Dohos Ágnes &amp; Illés
+  József, methodology, six chamber logos, podcast playlist, 1 552 munkavállalói / 148
+  munkáltatói válasz). <strong>Not built</strong>: the client sends the structure demo next week; the copy
+  is in the Drive doc and goes in once the layout exists.</li>
+</ul>
+<p>Client review of the round (2026-09-18, same day): two defects. (1) On the SAP page the longer
+article stretched the side column — the video card measured 1053 px tall, the contact card 937 px
+— because the summary grid's default <code>align-items: stretch</code> plus the aside's own grid spread the
+extra height over both cards. Fixed with <code>align-self: start</code> on the aside (sticky on desktop,
+static on one-column widths). (2) On Bérek the TOP3 block simply vanished on the five areas that
+have no <code>top3</code> rows in the current bértábla (Banki, IT, Gyártás, Ügyfélszolgálat, Adminisztráció)
+— pre-existing behaviour, but it read as a defect once the client expected their 13-area TOP3 list
+there. The block now stays and says the current bértábla marks no TOP3 for that area. The real
+resolution for both the missing charts and the missing LinkedIn numbers is the client's current
+bértábla (Drive sheet <code>1aQA6Kw5k1U9LQMiWYgcn__m2YCuGmEhx79QFSzE0hJg</code>, shared 2026-09-18 but
+account-restricted — not yet readable from this environment); its areas and position names are the
+ones the Talent Insight list is cut to.</p>
+<p>Still pending from the client: the SAP + IT salary excel, the two missing Expert Pool numbers,
+the structure demos for Kezdőoldal / Bérek / Expert Pool, and the final videos / key thoughts.</p>
+<p>Measured before push: every guide page (7) at 375 and desktop width — no horizontal
+overflow, no tap target under 44 px (two short menu labels were under 44 px wide in the open
+phone menu; fixed with a <code>min-width</code> on the shared rule), no console errors; 132 relative
+links resolve. Screenshots were unavailable in this session (browser pane hidden), so the
+gate was DOM-measured, not eyeballed — worth a visual pass on the Expert Pool tiles and the
+highlight box before the client sees them.</p>
+<h2>The current bértábla (2026-09-18, second push of the day)</h2>
+<p>The owner shared the live <code>IDBC_bertabla</code> sheet after the client's review. It is not the
+August table with additions — it is a reworked table, and it is what the Talent Insight list
+was cut to:</p>
+<ul>
+<li><strong>13 areas by code</strong> (<code>BSC, PENZUGY, Sales, Marketing, HR, Office Support, Retail, GYARTAS,
+  LOGISZTIKA, CP, PHARMA, IT, SAP</code>), 432 rows. Gone: Banki, Adminisztráció, Ügyfélszolgálat as
+  separate areas. New: Sales and Marketing (split, where the trends survey pools them), Retail,
+  Logisztika, Építőipar (<code>CP</code>), Pharma, HR. Display names follow <code>areas.json</code> wherever the same
+  area exists on the trends pages; the code→name table is at the top of
+  <code>build-salary-data.py</code> and is the one place to change a label.</li>
+<li><strong>TOP3 rows are standalone</strong>: 39 rows flagged <code>x</code>, one per Talent Insight position, with
+  min / IDBC / max and (mostly) no level. They are no longer the Senior row of a grouped
+  position. The tables on Bérek and SAP list them like every other row (level <code>–</code>): the table
+  is the complete reference and is always shown — an earlier pass excluded them and hid the
+  block on Retail and Office Support, which have only TOP3 rows; the owner rejected that on
+  sight (2026-09-18) and it was reverted the same hour.</li>
+<li><strong>Levels</strong> are now Trainee / Junior / Medior / Senior / Team Leader / Manager, and 19 senior
+  roles (mostly Pharma, plus Finance and Construction heads) carry no level; the table orders by
+  that list and prints <code>–</code> for a missing level. Junior/Medior/Senior keep the client's year
+  ranges in the label.</li>
+<li><code>idbc_javasolt_ber_huf</code> is filled only on TOP3 rows — the summary cards already derive from
+  TOP3 rows only, so nothing changed there.</li>
+<li>The sheet's own banner still reads "szakmai jóváhagyást igénylő … mintaértékek"; the page
+  copy under the table is the client's ("valós piaci adatokon alapuló") — same situation as
+  recorded under gap 6.</li>
+</ul>
+<p><strong>Talent Insight matching.</strong> All 39 TOP3 positions were paired with the sheet by hand
+(area code map + a spelling table in <code>build-salary-data.py</code>; identical labels need no
+entry). Three Építőipar rows are Hungarian in the Talent Insight file and English in the sheet
+(Generál építésvezető = Architectural Site Manager, Elektromos előkészítő mérnök = Electrical
+Quantity Surveyor, Gépész tervező = Mechanical Designe Engineer — the sheet's own spelling).
+Result: <strong>37 of 39 TOP3 rows carry a count</strong>; the two without are the Építőipar numbers the
+client is still sourcing. Expert Pool: 13 of 15, unchanged. The converter asserts that every
+Talent Insight position resolves to a sheet TOP3 row, so a renamed position fails the build
+instead of silently losing its number.</p>
+<p><strong>Two converters now.</strong> <code>build-guide-data.py</code> (survey workbook → <code>topics</code>/<code>datasets</code>) carries
+the salary block through untouched; <code>build-salary-data.py</code> (bértábla + Talent Insight →
+<code>salary</code>) carries the survey half through untouched. The earlier re-match step in the survey
+converter is gone — it matched raw Talent Insight names and would have stripped the counts.</p>
+<p>Measured before push, local server, desktop and 375 px: Bérek shows the chart with pills on
+all 12 areas (Építőipar: one pill), table groups render with the new levels, no overflow, no
+tap target under 44 px, no console errors; SAP chart 3 pills + footnote, 9 table rows with
+level, side column 446 px; Expert Pool unchanged.</p>
+<h2>Client notes after the rebuild (2026-09-18, third push)</h2>
+<ul>
+<li><strong>Expert Pool tiles</strong>: the bar and the IDBC count sat higher on tiles without a LinkedIn line
+  (the two pending positions). A reserved empty line was not enough — the position name and the
+  market line wrap differently per tile — so the tile is now a flex column with the bar block
+  pushed to the bottom of grid-stretched, equal-height cards. Measured: bar and count on one
+  line across every tile in a row, desktop and 375 px.</li>
+<li><strong>Esettanulmányok</strong>: the client and the owner agreed at the last workshop on a conventional
+  article format, not the card grid built on the first pass. The page is now one column per case
+  study — title, video placeholder, running text with sub-headings and lists — with the services
+  CTA at the end. Content unchanged.</li>
+</ul>
+<h2>Card header alignment (2026-09-16)</h2>
+<p>The collapsed card headers sat 5px below their own centre, which the client spotted. Two causes,
+both in the card CSS rather than the content:</p>
+<ul>
+<li><code>tr &gt; td:nth-child(1) { padding-top: 10px }</code> also matched the position header cell and, at
+  specificity (0,1,2), outranked that cell's own <code>td.pos-cell { padding: 0 }</code> (0,1,1) — so the
+  header carried 10px of top padding and none at the bottom. The level-block spacing is now
+  targeted by <code>td[data-label="Tapasztalati szint"]</code>, which cannot collide with the header cell.</li>
+<li>The chevron's <code>transform: rotate(45deg) translate(-2px, -2px)</code> was applied <em>after</em> the
+  rotation, so the translate resolved to a pure 2.8px upward shift on screen. The translate is
+  gone; rotation alone centres it.</li>
+</ul>
+<p>Measured after: position name, amount and chevron all 0px from the card's vertical centre, on
+both Bérsávok and SAP, for one- and two-line position names.</p>
+<h2>Workshop feedback round (2026-09-16)</h2>
+<p>Three changes after the client's workshop:</p>
+<ul>
+<li><strong>SAP's mobile cards collapse like Bérsávok'.</strong> Each SAP row is now a card whose header holds
+  the position and its range, with the juttatási megjegyzés behind the toggle. Bérsávok groups
+  three experience levels per card; SAP is a flat table, so one row is one card.</li>
+<li><strong>The panel behind the mobile cards is gone; the cards stay white.</strong> First read as "make the
+  cards transparent", corrected by the client on 2026-09-16: the salary blocks themselves stay
+  filled white, and it is the extra full-width surface <em>under</em> them — the scroll wrapper's own
+  background, border and shadow — that is dropped below the breakpoint, so the cards sit directly
+  on the page. Desktop keeps the wrapper panel.</li>
+<li><strong>The TOP3 chart has a narrow layout.</strong> Instead of one 900px-wide chart with the role names in
+  a left gutter (34% of it visible on a phone, sideways-scrolled), each position now renders as
+  its own block — name and sub-label above, a short band chart below — sharing one domain so the
+  bands stay comparable. Every chart carries its own value scale underneath (client request,
+  2026-09-16 — it started as one shared axis under the group). Values are abbreviated to millions in
+  Hungarian notation (<code>1,25M</code>, <code>1,3M</code>, <code>2M</code>). The wide layout is unchanged above 700px; the
+  component picks a layout from <code>matchMedia</code> and both pages re-render when that line is crossed.</li>
+</ul>
+<p><strong>Two implementation notes worth keeping:</strong></p>
+<ul>
+<li>An element that declares <code>container-type</code> <strong>cannot be styled by its own <code>@container</code> query</strong>.
+  Both table wrappers declare it, so their own background/border/shadow in card mode comes from a
+  <code>@media (max-width: 640px)</code> rule instead. Their descendants still use the container query.</li>
+<li>The shared chart assets are cache-busted with a version query (<code>top3-chart.js?v=4</code>,
+  <code>chart.css?v=4</code>). <strong>Bump it whenever either file changes</strong> — without it the browser pane and
+  GitHub Pages both serve the previous renderer, which looks exactly like the change silently
+  failing.</li>
+</ul>
+<h2>Mobile audit follow-ups (2026-09-15)</h2>
+<p>A measured pass over all five guide pages at 375px produced two fixes:</p>
+<ul>
+<li><strong>The area subpages had no mobile navigation.</strong> <code>terulet/</code> hid <code>.nav-links</code> below 900px but,
+  unlike the other four pages, shipped no <code>.menu-toggle</code> — so on a phone only the brand link,
+  Bérsávok and Kijelentkezés were reachable, and Piaci trendek / SAP / Expert Pool were dead
+  ends. The standard hamburger (same markup, CSS and script as the other pages) is now ported
+  across.</li>
+<li><strong>Tap targets below the 44px floor</strong> (WCAG 2.5.5 / Apple HIG). The hamburger itself measured
+  31×29px, footer and nav links 14–19px tall, and two of the newer controls — the Bérsávok
+  accordion toggle and the area pages' "Olvass tovább" — sat at 40px and 36px. A small-screen
+  rule sets a 44px minimum on navigation, footer links, selects and the brand, and the two
+  components carry their own <code>min-height</code>. Measured after: <strong>0 undersized targets on all five
+  pages</strong>, desktop density untouched (the rules are inside a <code>max-width: 980px</code> query).</li>
+</ul>
+<p><strong>Known and deliberately not changed yet:</strong> the TOP3 point-line chart renders 900px wide inside a
+305px scroller on phones — only 34% is visible at a time, and that scroller has no <code>tabindex</code>,
+<code>role</code> or label, so a keyboard user cannot reach the rest. The SVG's <code>aria-label</code> does read out
+all three bands, so screen-reader users are served. Options are a focusable labelled region with
+a visible scroll hint, or a compact mobile variant of the chart; the latter is a design change
+the client would see, so it is waiting on a decision.</p>
+<h2>Salary tables on mobile — cards instead of sideways scrolling (2026-09-15)</h2>
+<p>Measured before the change, at a 375px viewport: the Bérsávok table was forced to
+<code>min-width: 760px</code> inside a 343px container — <strong>419px of horizontal overflow</strong>, more than the
+visible width. <code>Minimum</code> was cut mid-number and <code>Maximum</code> and <code>Egyéb juttatás</code> sat entirely
+off-screen, reachable only by discovering that the table scrolls sideways. The scroll container
+was also not keyboard-reachable.</p>
+<p>Below <strong>600px of container width</strong> (a container query on the table wrapper, not a viewport media
+query — the same markup appears at different widths), both salary tables now render as cards:</p>
+<ul>
+<li><strong>Bérsávok</strong>: each position group is its own <code>&lt;tbody&gt;</code>, which <em>is</em> the card. That is what lets
+  the <code>rowspan</code> grouping survive the switch to block layout — a spanning cell stops spanning under
+  <code>display: block</code>, so levels 2 and 3 would otherwise lose their position name. The card header
+  carries the position and its <strong>full band across all three levels</strong>, so the headline figure needs
+  no interaction; the three experience levels collapse behind it, because the largest area (IT, 24
+  positions) is 10.2 phone screens tall fully expanded versus ~1.4 collapsed.</li>
+<li><strong>SAP</strong>: flat three-column table, so one row is one card and nothing collapses — nine rows do
+  not need an accordion.</li>
+</ul>
+<p><strong>Accessibility notes, since this is the part that is easy to get wrong:</strong></p>
+<ul>
+<li>Changing a table's <code>display</code> historically strips its semantics (screen readers stop associating
+  headers with cells). Fixed across Chromium/Gecko/WebKit since Safari 17, but the explicit
+  <code>role="table" / rowgroup / row / columnheader / cell</code> attributes are emitted anyway as
+  belt-and-braces for older iOS Safari. Note <code>cell</code>, not <code>gridcell</code>.</li>
+<li>Visible labels come from <code>data-label</code> + <code>::before</code>, which is <strong>purely decorative</strong>: the real
+  <code>&lt;th&gt;</code> association is intact, so assistive tech already announces the header. Deliberately <strong>no
+  <code>aria-label</code> on cells</strong> — it is poorly supported on static content (JAWS ignores it) and here it
+  would cause the column name to be announced twice.</li>
+<li>Both scroll wrappers gained <code>tabindex="0"</code> + <code>role="region"</code> + an accessible name, and both
+  tables gained a visually-hidden <code>&lt;caption&gt;</code> and <code>scope="col"</code> headers. Those were missing
+  before and are worth having regardless of the card layout.</li>
+<li>The accordion toggle is <code>display: none</code> above the breakpoint, so on desktop it is neither
+  focusable nor operable, and the collapse rules live <em>inside</em> the container query — desktop
+  cannot be affected by the collapsed class.</li>
+</ul>
+<p><strong>Not verified here:</strong> no screen-reader pass. Structure, roles, labels and layout were checked in
+the browser at 375px and 1280px, but VoiceOver/NVDA behaviour on a real device has not been
+tested. Worth doing before this is relied on by an audience that includes screen-reader users.</p>
+<h2>Final research data (2026-09-08)</h2>
+<p><code>guide-data.json</code>'s survey half is now generated from the client's final workbook,
+<code>Salary Guide- kutatási eredmények-final.xlsx</code> ("ez már a teljesen végleges kutatási
+anyag, mást nem fogunk már átadni"). Three things changed materially:</p>
+<ul>
+<li><strong>The survey is now tabulated per area.</strong> The workbook carries a whole-sample set plus
+  its own Total + crosstab sheets for all eleven areas. The long-standing gap 5 — no area
+  breakdown — is <strong>closed</strong>: every area page shows that area's own responses, and the
+  earlier edition-mapped fallback (and its apologetic note) is gone. <code>datasets</code> replaces
+  the old <code>editions</code>/<code>answers</code> pair; <code>topics[].questionSets</code> replaces <code>topics[].editions</code>,
+  since the survey instrument still only has two question variants (Általános and
+  IT + Contracting) and each dataset declares which one it follows.</li>
+<li><strong>The two "Jelöld 1-4-ig terjedő skálán…" questions show only the weighted average</strong>
+  (client request). The workbook supplies a <code>Súlyozott átlag</code> column for them; the
+  per-option percentages are deliberately dropped, and these questions render as
+  <code>kind: "weighted"</code> bars scaled to 1–4. They carry no crosstab, so under a real segment
+  they are hidden by the existing no-data rule.</li>
+<li><strong>The aggregate option is labelled <code>Összesített adatok</code></strong> everywhere (client request),
+  replacing <code>Összes</code>.</li>
+</ul>
+<p>The client's earlier editorial decisions are re-applied by the converter, because the
+workbook's own topic sheet predates them: the two topic renames (Munkahely váltás →
+… és toborzási kilátások, Béremelés → Bérezés és juttatások) and the move of the EU
+pay-transparency question to the end of the Bérezés topic's employer list. The converter
+validates that every question a topic lists resolves in every dataset that uses that
+question set. The salary half of the file (<code>salary</code>, <code>sapProducts</code>, <code>siteMap</code>,
+<code>filterDimensions</code>) is carried over untouched — the workbook contains no salary data.</p>
+<h2>Trends filters — what "no data" means</h2>
+<p>The survey's crosstabs contain a row for <strong>every</strong> canonical segment value,
+including segments nobody in that topic actually answered — those rows exist
+with all percentages at <code>0</code>. The presence of a row is therefore not evidence
+of real data, and the filter logic on the main page is built around that:</p>
+<ul>
+<li><strong><code>Összes</code> is a pseudo-segment</strong>, not a value from the data. It is always the
+  first option and the default on load, so the landing view shows the whole
+  sample rather than whichever real segment happens to sort first (which may be
+  one with zero respondents for the current topic).</li>
+<li><strong>Segment options are computed per topic</strong>, not per edition+side. A value is
+  offered only if at least one question in the <em>currently selected</em> topic has a
+  non-zero row for it. A value that is real under one topic but empty under
+  another appears only where it applies — e.g. on the employee side of
+  <em>Általános</em>, <code>3-5 év</code> is offered under <em>Munkahely váltás és toborzási
+  kilátások</em> but not under <em>Bérezés és juttatások</em>, where <code>1-2 év</code> is the only
+  experience band with data. (<code>kevesebb, mint 1 év</code> is in the canonical order but has non-zero data
+  under no topic at all, so it is never offered.)</li>
+<li><strong>Empty combinations are hidden; the aggregate is never shown in their
+  place.</strong> A question with no data under the selected real segment (including
+  questions with no crosstab at all) is omitted outright — owner decision,
+  2026-08-25, refining the client's 2026-08-24 ask for a per-question message
+  after seeing it live. The client's uniform sentence ("A kiválasztott
+  szűrési feltételekhez nem érhető el adat.") still appears once, at panel
+  level, if nothing in a panel matches the filter. The earlier
+  aggregate-fallback-with-"Összesített"-badge behaviour remains gone.
+  <code>Összes</code> still deliberately shows the whole-sample figure.</li>
+<li><strong>The segment dropdown is hidden entirely</strong> (tapasztalati szint on the
+  munkavállalói side, cégméret on the munkáltatói side) when no question on
+  that side has a crosstab for the current topic, or when it would have no
+  options — selecting a value would change nothing, so showing the control was
+  actively misleading.</li>
+</ul>
+<p>Also at client request (same round): the two "Jelöld 1-4-ig terjedő skálán…"
+matrix questions are now displayed (previously filtered out as too noisy),
+always as the stacked whole-sample percentage chart. The váltási-szempontok
+question's crosstab holds only mean scores per experience level — no
+per-segment distributions exist — and a mean-bar rendering of those was
+tried and rejected (owner decision, 2026-08-25: "the stacked chart is the
+good one"), so under a real segment both scale questions are hidden (see
+the no-data bullet above); the mean crosstab stays in the data unused. The benefits
+category dropdown (the one question-level group filter) and the
+"Többválasztós kérdés…" notes were removed — every multi-select list now
+renders in full.</p>
+<p>None of this changes any figure — it only stops the page from presenting
+zero-respondent slices as if they were findings. If the client needs a
+breakdown that is currently unavailable, that is a data-collection change
+(re-fielding or re-tabulating the survey), not a code change — see gap 5 above.</p>
+<h2>Shared front-end assets</h2>
+<ul>
+<li><code>assets/top3-chart.js</code> — <code>IDBCChart.renderTop3Chart(rows, opts)</code> returns the
+  legend + SVG for a set of salary rows; <code>IDBCChart.attachTooltip(root)</code> binds
+  the cursor-following tooltip to any <code>[data-tooltip]</code> element under <code>root</code>
+  (idempotent, so it is safe to re-call after a filter re-render).</li>
+<li><code>assets/chart.css</code> — chart card, legend, dot/label states and tooltip. Relies
+  on each page's own <code>:root</code> tokens.</li>
+</ul>
+<p>Two behaviours worth knowing before editing these:</p>
+<ul>
+<li>The dot's hover growth uses <code>transform: scale()</code>, <strong>not</strong> the CSS <code>r</code>
+  geometry property. <code>r</code> is silently ignored in this environment (verified in
+  Chrome 148: neither <code>r: 9</code> nor <code>r: 9px</code> changes the rendered radius), which
+  is why the original mockup's hover effect never actually fired.</li>
+<li>Value labels are nudged apart by an estimated-width collision pass, since
+  the IDBC and max dots frequently sit within a label-width of each other.</li>
+</ul>
+<h2>Layout adopted from the SAP mockup</h2>
+<p><code>3_SAP_TOP3_chart_gradient_tooltip_categories.html</code> is now the layout reference
+for all three subpages. Adopted: the fixed navbar sitting flush to the top and
+overlaying the hero (the pages previously pushed content down with
+<code>padding-top: 78px</code>), the hero eyebrow, the EN/HU switch, the three-card
+summary block above the chart, the Excel CTA in the section head and below the
+table, and a single flat green for all three summary cards.</p>
+<p>Data is unchanged — every figure still comes from <code>guide-data.json</code>. Where the
+mockup's static example had no equivalent in our data, the block was filled
+from what each page actually has rather than dropped:</p>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>Block</th>
+<th>SAP</th>
+<th>Bérsávok</th>
+<th>Expert Pool</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Summary cards</td>
+<td>TOP3 band per perspective</td>
+<td>same, per selected area</td>
+<td>pool size / positions covered / largest pool</td>
+</tr>
+<tr>
+<td>Chart</td>
+<td>TOP3 point-line</td>
+<td>same, per area</td>
+<td>n/a — bars keep the same colour ramp</td>
+</tr>
+<tr>
+<td>Salary table</td>
+<td>3 columns, mockup shape</td>
+<td>grouped: Pozíció / Tapasztalati szint / Minimum / Maximum / Egyéb juttatás</td>
+<td>n/a</td>
+</tr>
+</tbody>
+</table></div>
+<p>The SAP table follows the mockup exactly: <code>Job / terület</code> | <code>Átlagos range</code> |
+<code>Juttatási megjegyzés</code>, with the band collapsed into one <code>min – max</code> cell. That
+drops <code>Szint</code> and the IDBC figure from the table — the chart directly above
+carries the IDBC recommendation as its own point on every row.</p>
+<p>The Bérsávok table was regrouped per the client's 2026-08 change round: the
+szint filter is gone, every position of the selected area shows as one
+three-row group (Junior/Medior/Senior with the client-supplied year ranges in
+the label), columns are the neutral <code>Minimum</code> / <code>Maximum</code> plus <code>Egyéb
+juttatás</code>, the IDBC figure lives only in the chart, and the 10-row cap was
+dropped. TOP3 rows are included in the table too — the <code>top3</code> flag marks
+Senior rows only, so excluding them would leave two-row orphan groups. The
+"havi bruttó, egész Magyarországra vonatkozó" scope note the client asked for
+sits above the table under the "További bérek" heading.</p>
+<p><code>sapProducts</code> was aligned to the mockup's catalogue: the S/4 HANA conversion
+bullet is split back into "átállás és konverzió" plus "brownfield és bluefield
+megközelítések" (5 items, not 4), and the fifth category is titled "Egyedi SAP
+megoldások partnereinkre szabva". Item-level wording still differs from the
+mockup in a few places (<code>Rise</code>/<code>RISE</code>, <code>SAP Carve-out</code>/<code>SAP carve-out
+projektek</code>, colon-vs-parenthesis lists, and a few capitalisations) — the
+substance is identical, so these were left alone rather than churned.</p>
+<p>Two mockup controls are rendered in position but visibly inert
+(<code>.is-unavailable</code>), because nothing exists behind them yet:</p>
+<ul>
+<li><strong>Excel/<code>.xlsx</code> download</strong> — no spreadsheet exists anywhere in this repo, so
+  the CTA does not link to a 404. Needs the client to supply the export.</li>
+<li><strong>EN language</strong> — <code>editions</code> are <em>Általános</em> / <em>IT + Contracting</em>, which are
+  content editions, not languages. There is no English copy to switch to.</li>
+</ul>
+<p>Remove the <code>is-unavailable</code> class (and add the real <code>href</code>) once either lands.</p>
+<footer>Source: <code>idbc-salary-guide/data/SOURCES-AND-GAPS.md</code> · rendered by <code>docs/build.py</code>.</footer>
+</div>
+</body>
+</html>

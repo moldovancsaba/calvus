@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>IDBC Salary Guide — project documentation — IDBC Salary Guide docs</title>
+<style>/* IDBC Salary Guide — documentation pages, on the guide's own tokens (dark green, light ground, Inter). */
+:root{--ground:#eef5ec;--card:#ffffff;--ink:#101818;--text:#2a3333;--muted:rgba(16,24,24,.66);--accent:#a5df8f;--accent-deep:#245d54;--line:rgba(19,35,35,.18);--line-soft:rgba(19,35,35,.08);--note:#e3efdf}
+*{box-sizing:border-box}
+body{margin:0;background:var(--ground);color:var(--text);font-family:"Inter","Montserrat","Segoe UI",Arial,sans-serif;font-size:15.5px;line-height:1.6;padding-block:0 64px;padding-inline:clamp(16px,4vw,40px)}
+.wrap{max-width:74ch;margin-inline:auto}
+.docnav{display:flex;flex-wrap:wrap;gap:4px 18px;align-items:center;padding:16px 0;border-bottom:1px solid var(--line);font-size:12px;letter-spacing:.06em;text-transform:uppercase}
+.docnav a{color:var(--muted);text-decoration:none;min-height:44px;display:inline-flex;align-items:center;border-bottom:2px solid transparent}
+.docnav a:hover,.docnav a[aria-current]{color:var(--ink);border-color:var(--accent)}
+.docnav-brand{color:var(--accent-deep);font-weight:800;margin-right:6px}
+.docnav-hub{margin-left:auto}
+header{padding-block:40px 24px;border-bottom:1px solid var(--line);margin-bottom:28px}
+.eyebrow{font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--accent-deep);margin:0 0 12px;font-weight:800}
+h1,h2,h3{color:var(--ink);line-height:1.1;text-wrap:balance;margin:0;letter-spacing:-.02em}
+h1{font-size:clamp(30px,6vw,46px);font-weight:900}
+h2{font-size:clamp(23px,4vw,30px);font-weight:900;margin:48px 0 14px;padding-top:20px;border-top:1px solid var(--line)}
+h3{font-size:18px;margin:30px 0 8px;font-weight:800}
+p{margin:0 0 14px} strong{color:var(--ink);font-weight:800}
+ul,ol{padding-left:22px;margin:0 0 16px} li{margin:5px 0} li>ul{margin:6px 0 0}
+code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.86em;background:var(--note);padding:1px 5px;border-radius:4px;color:var(--ink);overflow-wrap:anywhere}
+pre{overflow-x:auto;padding:14px 16px;border:1px solid var(--line);border-radius:10px;background:var(--card);font-size:12px;line-height:1.35}
+pre code{background:none;padding:0;font-size:inherit}
+a{color:var(--accent-deep)} :focus-visible{outline:2px solid var(--accent-deep);outline-offset:2px}
+.tbl{overflow-x:auto;margin:14px 0 22px;border:1px solid var(--line);border-radius:10px;background:var(--card)}
+table{border-collapse:collapse;width:100%;font-size:13.5px;min-width:560px}
+th{text-align:left;font-weight:800;color:var(--ink);background:var(--note);padding:10px 12px;border-bottom:1px solid var(--line);font-size:11.5px;letter-spacing:.06em;text-transform:uppercase}
+td{padding:10px 12px;border-top:1px solid var(--line-soft);vertical-align:top;background:var(--card)} td:first-child{color:var(--ink)}
+footer{margin-top:56px;padding-top:18px;border-top:1px solid var(--line);font-size:12px;color:var(--muted)}
+</style>
+</head>
+<body>
+<div class="wrap">
+<nav class="docnav" aria-label="Project documentation"><span class="docnav-brand">IDBC Salary Guide · docs</span><a href="index.html" aria-current=page>Overview</a><a href="bemutato.html">Bemutató</a><a href="brief.html">Brief</a><a href="research.html">Research</a><a href="audit.html">Audit</a><a href="sources.html">Sources & gaps</a><a href="decisions.html">Decisions</a><a href="design.html">Design</a><a href="gate.html">Gate</a><a href="client-asks.html">Client asks</a><a href="ssot.html">SSOT</a><a href="architecture.html">Architecture</a><a href="technical-design.html">Technical design</a><a href="implementation-plan.html">Implementation plan</a><a href="token-map.html">Token map</a><a class="docnav-hub" href="../../index.html">Calvus Hub</a></nav>
+<header><p class="eyebrow">Calvus · IDBC Salary Guide · project documentation</p><h1>IDBC Salary Guide — project documentation</h1></header>
+<p>The whole project next to the prototype: what it is, what the client gave, what was
+decided, what was measured, what production needs. Each file is dated inside; this index
+is the process log. Standard structure (owner decision 2026-09-18) — the same slots as
+every Calvus project.</p>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>Slot</th>
+<th>File</th>
+<th>What it holds</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Presentation</td>
+<td><code>bemutato.html</code></td>
+<td><strong>Az IDBC-nek szóló bemutató, magyarul</strong> — mit nézzenek, mi valódi, mit kérünk, hogyan tovább</td>
+</tr>
+<tr>
+<td>00 brief</td>
+<td><a href="brief.html"><code>00-brief.md</code></a></td>
+<td>Two pages for a first reader: client, problem, what the prototype is, what is real, where it stands</td>
+</tr>
+<tr>
+<td>01 research</td>
+<td><a href="research.html"><code>01-research.md</code></a></td>
+<td>What was read (the client's specs, mockups, data, copy), the one external measurement, what was not researched and why</td>
+</tr>
+<tr>
+<td>02 audit</td>
+<td><a href="audit.html"><code>02-audit.md</code></a></td>
+<td>idbc.hu measured; the spec vs. the data; the client's data as it stands; defects found in the material</td>
+</tr>
+<tr>
+<td>03 sources and assets</td>
+<td><code>../data/SOURCES-AND-GAPS.md</code></td>
+<td>Every source file and what it contributed, every gap, every change round with measurements — the running record since July</td>
+</tr>
+<tr>
+<td>04 decisions</td>
+<td><a href="decisions.html"><code>04-decisions.md</code></a></td>
+<td>D1–D27, dated, with who and why</td>
+</tr>
+<tr>
+<td>05 design</td>
+<td><a href="design.html"><code>05-design.md</code></a></td>
+<td>Where the look comes from (the client's mockups), tokens, layout</td>
+</tr>
+<tr>
+<td>06 build log</td>
+<td><code>../data/SOURCES-AND-GAPS.md</code></td>
+<td>the dated change notes are the build log</td>
+</tr>
+<tr>
+<td>07 gate</td>
+<td><a href="gate.html"><code>07-gate.md</code></a> + <code>../check.py</code></td>
+<td>The one-command gate, the measured pass, deliberate deviations</td>
+</tr>
+<tr>
+<td>08 client asks</td>
+<td><a href="client-asks.html"><code>08-client-asks.md</code></a></td>
+<td>Fifteen open items only the client can close</td>
+</tr>
+<tr>
+<td>10 SSOT</td>
+<td><a href="ssot.html"><code>10-ssot.md</code></a></td>
+<td>Glossary, enumerations, entities, settings, rules, metrics</td>
+</tr>
+<tr>
+<td>11 architecture</td>
+<td><a href="architecture.html"><code>11-architecture.md</code></a></td>
+<td>idbc.hu measured; the client's Sheets-API assumption examined; containers; <strong>PROPOSED</strong> stack; ADR-1..8</td>
+</tr>
+<tr>
+<td>12 technical design</td>
+<td><a href="technical-design.html"><code>12-technical-design.md</code></a></td>
+<td>Templates, content model, data pipeline, JSON slices, registration and gate, forms, media, analytics, performance, operations</td>
+</tr>
+<tr>
+<td>13 implementation plan</td>
+<td><a href="implementation-plan.html"><code>13-implementation-plan.md</code></a></td>
+<td>M0–M6, SG-000..081 with DoD, blocked register, risks, Release 1</td>
+</tr>
+<tr>
+<td>14 token map</td>
+<td><a href="token-map.html"><code>14-token-map.md</code></a></td>
+<td>Page tokens → one stylesheet; components → templates</td>
+</tr>
+</tbody>
+</table></div>
+<h2>Reading these on the web</h2>
+<p>GitHub Pages serves this folder: <code>index.html</code> (this file), <code>brief.html</code>, <code>research.html</code>,
+<code>audit.html</code>, <code>sources.html</code>, <code>decisions.html</code>, <code>design.html</code>, <code>gate.html</code>,
+<code>client-asks.html</code>, <code>ssot.html</code>, <code>architecture.html</code>, <code>technical-design.html</code>,
+<code>implementation-plan.html</code>, <code>token-map.html</code> — generated from the markdown by
+<code>build.py</code> (run <code>python3 idbc-salary-guide/docs/build.py</code> after editing any <code>.md</code>;
+needs the <code>markdown</code> package). The <code>.md</code> files stay the source of truth.</p>
+<h2>Process log</h2>
+<p><strong>2026-07-30 — first build.</strong> One combined page from the client's Drive folder: survey
+trends, salary table, expert pool. Split the same day into standalone pages; the mobile
+menu fixed.</p>
+<p><strong>2026-07-31 — first client round.</strong> Ordinal scales keep their order; zero-response
+options hidden; benefits category filter added (later removed).</p>
+<p><strong>2026-08-17 — the SAP mockup becomes the layout.</strong> Point-line TOP3 chart built as a
+shared component; dedicated SAP page; band labels per the mockup (D4, D5).</p>
+<p><strong>2026-08-18 — filter semantics.</strong> <em>Összes</em> pseudo-segment; empty combinations hidden
+(D6). Documented in <a href="sources.html"><code>SOURCES-AND-GAPS.md</code></a> on 2026-08-24.</p>
+<p><strong>2026-08-24/25 — change round 2.</strong> Eleven-area filter, then eleven area pages from one
+template; the client's final area texts and names; the Finance infographic; questions
+with no data hidden; the stacked chart kept for the scale questions (D8–D13).</p>
+<p><strong>2026-09-01 — real per-area data.</strong> The area pages read the client's per-area
+re-tabulation; segment filters on the area pages (D15).</p>
+<p><strong>2026-09-08 — final research workbook.</strong> Survey half rebuilt; weighted-only questions;
+<em>Összesített adatok</em> (D16).</p>
+<p><strong>2026-09-15 — mobile.</strong> Tables as cards below 600 px; area pages get the hamburger;
+44 px tap floor (D17).</p>
+<p><strong>2026-09-16 — workshop round.</strong> SAP cards, white cards, compact chart with its own
+scales; card header centring (D18).</p>
+<p><strong>2026-09-18 — feedback round and the current bértábla.</strong> Header, case studies, SAP copy,
+Expert Community page, area media placeholders, registration mock, Talent Insight pill and
+tiles (D19–D22). The Bérek page then showed no counts: the client's list was cut to a
+reworked bértábla. The sheet became readable that afternoon and the salary data was
+rebuilt from it — 13 areas, 432 rows, 37 of 39 counts (D23). Three corrections the same
+day: tables always complete (D24), case studies as articles (D25), tile alignment (D26).
+The owner set the rule for this phase: fix only the reported item.</p>
+<p><strong>2026-09-18 — documentation standard (D27).</strong> This folder written: brief, research,
+audit, decision register, design, gate (with <code>check.py</code>), client asks, and the technical
+package <code>10</code>–<code>14</code> with every stack decision PROPOSED. The Hungarian presentation
+<code>bemutato.html</code> added. <a href="sources.html"><code>SOURCES-AND-GAPS.md</code></a> stays where CLAUDE.md rule 4 names it and
+is the 03/06 slot.</p>
+<p><strong>Next.</strong> The client's structure demo for the home page; the four missing counts; the
+stack decisions (blocked register in <code>13</code>).</p>
+<footer>Source: <code>idbc-salary-guide/docs/README.md</code> · rendered by <code>docs/build.py</code>.</footer>
+</div>
+</body>
+</html>

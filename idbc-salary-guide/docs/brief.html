@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>IDBC Salary Guide — brief — IDBC Salary Guide docs</title>
+<style>/* IDBC Salary Guide — documentation pages, on the guide's own tokens (dark green, light ground, Inter). */
+:root{--ground:#eef5ec;--card:#ffffff;--ink:#101818;--text:#2a3333;--muted:rgba(16,24,24,.66);--accent:#a5df8f;--accent-deep:#245d54;--line:rgba(19,35,35,.18);--line-soft:rgba(19,35,35,.08);--note:#e3efdf}
+*{box-sizing:border-box}
+body{margin:0;background:var(--ground);color:var(--text);font-family:"Inter","Montserrat","Segoe UI",Arial,sans-serif;font-size:15.5px;line-height:1.6;padding-block:0 64px;padding-inline:clamp(16px,4vw,40px)}
+.wrap{max-width:74ch;margin-inline:auto}
+.docnav{display:flex;flex-wrap:wrap;gap:4px 18px;align-items:center;padding:16px 0;border-bottom:1px solid var(--line);font-size:12px;letter-spacing:.06em;text-transform:uppercase}
+.docnav a{color:var(--muted);text-decoration:none;min-height:44px;display:inline-flex;align-items:center;border-bottom:2px solid transparent}
+.docnav a:hover,.docnav a[aria-current]{color:var(--ink);border-color:var(--accent)}
+.docnav-brand{color:var(--accent-deep);font-weight:800;margin-right:6px}
+.docnav-hub{margin-left:auto}
+header{padding-block:40px 24px;border-bottom:1px solid var(--line);margin-bottom:28px}
+.eyebrow{font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--accent-deep);margin:0 0 12px;font-weight:800}
+h1,h2,h3{color:var(--ink);line-height:1.1;text-wrap:balance;margin:0;letter-spacing:-.02em}
+h1{font-size:clamp(30px,6vw,46px);font-weight:900}
+h2{font-size:clamp(23px,4vw,30px);font-weight:900;margin:48px 0 14px;padding-top:20px;border-top:1px solid var(--line)}
+h3{font-size:18px;margin:30px 0 8px;font-weight:800}
+p{margin:0 0 14px} strong{color:var(--ink);font-weight:800}
+ul,ol{padding-left:22px;margin:0 0 16px} li{margin:5px 0} li>ul{margin:6px 0 0}
+code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.86em;background:var(--note);padding:1px 5px;border-radius:4px;color:var(--ink);overflow-wrap:anywhere}
+pre{overflow-x:auto;padding:14px 16px;border:1px solid var(--line);border-radius:10px;background:var(--card);font-size:12px;line-height:1.35}
+pre code{background:none;padding:0;font-size:inherit}
+a{color:var(--accent-deep)} :focus-visible{outline:2px solid var(--accent-deep);outline-offset:2px}
+.tbl{overflow-x:auto;margin:14px 0 22px;border:1px solid var(--line);border-radius:10px;background:var(--card)}
+table{border-collapse:collapse;width:100%;font-size:13.5px;min-width:560px}
+th{text-align:left;font-weight:800;color:var(--ink);background:var(--note);padding:10px 12px;border-bottom:1px solid var(--line);font-size:11.5px;letter-spacing:.06em;text-transform:uppercase}
+td{padding:10px 12px;border-top:1px solid var(--line-soft);vertical-align:top;background:var(--card)} td:first-child{color:var(--ink)}
+footer{margin-top:56px;padding-top:18px;border-top:1px solid var(--line);font-size:12px;color:var(--muted)}
+</style>
+</head>
+<body>
+<div class="wrap">
+<nav class="docnav" aria-label="Project documentation"><span class="docnav-brand">IDBC Salary Guide · docs</span><a href="index.html">Overview</a><a href="bemutato.html">Bemutató</a><a href="brief.html" aria-current=page>Brief</a><a href="research.html">Research</a><a href="audit.html">Audit</a><a href="sources.html">Sources & gaps</a><a href="decisions.html">Decisions</a><a href="design.html">Design</a><a href="gate.html">Gate</a><a href="client-asks.html">Client asks</a><a href="ssot.html">SSOT</a><a href="architecture.html">Architecture</a><a href="technical-design.html">Technical design</a><a href="implementation-plan.html">Implementation plan</a><a href="token-map.html">Token map</a><a class="docnav-hub" href="../../index.html">Calvus Hub</a></nav>
+<header><p class="eyebrow">Calvus · IDBC Salary Guide · project documentation</p><h1>IDBC Salary Guide — brief</h1></header>
+<p><em>For a first reader — client, IDBC staff, a developer picking up the build: what this is,
+what is real, where it stands. Written 2026-09-18; the dated trail is the process log in
+<a href="index.html"><code>README.md</code></a> and the change notes in <a href="sources.html"><code>SOURCES-AND-GAPS.md</code></a>.</em></p>
+<h2>The client</h2>
+<p>IDBC Group — a Hungarian recruitment agency (SAP, IT and corporate functions;
+idbc.hu, WordPress with WPML, HU and EN). The product is the <strong>Talent Market &amp; Salary
+Guide 2026</strong>: a gated, data-driven report that IDBC publishes inside its own site —
+market trends from its 2026 survey, salary bands per area, an SAP guide, the Expert
+Community, case studies — as a lead and positioning tool.</p>
+<h2>The problem the client brought</h2>
+<p>Two specs (a functional one and a landing-page one), three HTML mockups and two PDF
+mockups described an eight-page gated site fed from Google Sheets. What the survey and
+the salary table could actually support was narrower than the specs assumed. The
+prototype's job was to make the real data clickable, show every intended control in
+place, and write down each gap between the spec and the data instead of papering over it.</p>
+<h2>What the prototype is</h2>
+<p>Seven static pages on GitHub Pages, all reading one JSON built from the client's
+workbooks by two converters in <code>data/</code>:</p>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>Page</th>
+<th>Content</th>
+<th>Data</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Piaci trendek (<code>index.html</code>)</td>
+<td>4 topics × employee/employer, whole sample, segment filters; 11 area cards</td>
+<td>survey: 12 datasets (whole sample + 11 areas), 12 employee and 13 employer questions per set</td>
+</tr>
+<tr>
+<td>Területi összefoglaló (<code>terulet/</code>)</td>
+<td>one template, 11 areas by <code>?terulet=</code>: summary text, video or key-thought placeholder, that area's results</td>
+<td>same, per area</td>
+</tr>
+<tr>
+<td>Bérek (<code>berezes/</code>)</td>
+<td>13 areas: TOP3 point-line chart with LinkedIn market counts, full table with levels</td>
+<td>bértábla: 432 rows, 39 TOP3 rows; Talent Insight counts 37/39</td>
+</tr>
+<tr>
+<td>SAP (<code>sap/</code>)</td>
+<td>client's trend copy, 20-item product catalogue, TOP3 chart, table</td>
+<td>bértábla SAP rows (12)</td>
+</tr>
+<tr>
+<td>Expert Pool (<code>expert-pool/</code>)</td>
+<td>Expert Community copy, join and contact forms (inert), 15 position tiles with IDBC and market counts</td>
+<td>pool sheet + Talent Insight 13/15</td>
+</tr>
+<tr>
+<td>Esettanulmányok (<code>esettanulmanyok/</code>)</td>
+<td>two case studies as articles, video placeholders</td>
+<td>client copy</td>
+</tr>
+<tr>
+<td>Regisztráció (<code>regisztracio/</code>)</td>
+<td>the client's field list, inert</td>
+<td>—</td>
+</tr>
+</tbody>
+</table></div>
+<p>Live: <a href="https://moldovancsaba.github.io/calvus/idbc-salary-guide/">https://moldovancsaba.github.io/calvus/idbc-salary-guide/</a></p>
+<h2>What is real and what is not</h2>
+<ul>
+<li><strong>Real:</strong> every figure — survey percentages and weighted averages, salary bands, TOP3
+  positions, IDBC pool counts, LinkedIn Talent Insight counts, the SAP catalogue, the case
+  studies, the Expert Community copy, area summaries — comes from a named client file
+  (<a href="sources.html"><code>SOURCES-AND-GAPS.md</code></a>, source table).</li>
+<li><strong>Inert, visibly:</strong> Excel download, EN switch, Kijelentkezés, the registration form, the
+  join and contact forms — shown in place with an "unavailable" treatment and a title
+  saying why. No backend exists on static hosting.</li>
+<li><strong>Placeholders, at the client's request:</strong> the video slots (7 areas, 2 case studies) and
+  the key-thought boxes (4 areas); the client uploads the finals.</li>
+<li><strong>Not built:</strong> the home page (copy received, structure demo pending), the paywall.</li>
+<li><strong>A labelling caveat the client should know:</strong> the salary chart's "companies offer / candidates expect" ends are the one range in the bértábla, named per the client's mockup — not two surveyed populations (gap 6 in <a href="sources.html"><code>SOURCES-AND-GAPS.md</code></a>).</li>
+</ul>
+<h2>Where it stands</h2>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Phase</td>
+<td>fine-tuning with the client — 55 commits since 2026-07-30; three client feedback rounds in September</td>
+</tr>
+<tr>
+<td>Customer side</td>
+<td>data provenance and gaps documented from day one; presentation (<code>bemutato.html</code>), decision register, gate and client-asks list written 2026-09-18</td>
+</tr>
+<tr>
+<td>Technical side</td>
+<td>proposed — SSOT, architecture with a <strong>PROPOSED</strong> stack, technical design, implementation plan, token map (<code>10</code>–<code>14</code>), 2026-09-18; the client's own spec assumed WordPress + Google Sheets API + a paywall and that assumption is examined there</td>
+</tr>
+<tr>
+<td>Open with the client</td>
+<td><a href="client-asks.html"><code>08-client-asks.md</code></a></td>
+</tr>
+</tbody>
+</table></div>
+<footer>Source: <code>idbc-salary-guide/docs/00-brief.md</code> · rendered by <code>docs/build.py</code>.</footer>
+</div>
+</body>
+</html>

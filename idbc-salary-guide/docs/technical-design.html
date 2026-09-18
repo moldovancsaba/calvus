@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>IDBC Salary Guide — technical design — IDBC Salary Guide docs</title>
+<style>/* IDBC Salary Guide — documentation pages, on the guide's own tokens (dark green, light ground, Inter). */
+:root{--ground:#eef5ec;--card:#ffffff;--ink:#101818;--text:#2a3333;--muted:rgba(16,24,24,.66);--accent:#a5df8f;--accent-deep:#245d54;--line:rgba(19,35,35,.18);--line-soft:rgba(19,35,35,.08);--note:#e3efdf}
+*{box-sizing:border-box}
+body{margin:0;background:var(--ground);color:var(--text);font-family:"Inter","Montserrat","Segoe UI",Arial,sans-serif;font-size:15.5px;line-height:1.6;padding-block:0 64px;padding-inline:clamp(16px,4vw,40px)}
+.wrap{max-width:74ch;margin-inline:auto}
+.docnav{display:flex;flex-wrap:wrap;gap:4px 18px;align-items:center;padding:16px 0;border-bottom:1px solid var(--line);font-size:12px;letter-spacing:.06em;text-transform:uppercase}
+.docnav a{color:var(--muted);text-decoration:none;min-height:44px;display:inline-flex;align-items:center;border-bottom:2px solid transparent}
+.docnav a:hover,.docnav a[aria-current]{color:var(--ink);border-color:var(--accent)}
+.docnav-brand{color:var(--accent-deep);font-weight:800;margin-right:6px}
+.docnav-hub{margin-left:auto}
+header{padding-block:40px 24px;border-bottom:1px solid var(--line);margin-bottom:28px}
+.eyebrow{font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--accent-deep);margin:0 0 12px;font-weight:800}
+h1,h2,h3{color:var(--ink);line-height:1.1;text-wrap:balance;margin:0;letter-spacing:-.02em}
+h1{font-size:clamp(30px,6vw,46px);font-weight:900}
+h2{font-size:clamp(23px,4vw,30px);font-weight:900;margin:48px 0 14px;padding-top:20px;border-top:1px solid var(--line)}
+h3{font-size:18px;margin:30px 0 8px;font-weight:800}
+p{margin:0 0 14px} strong{color:var(--ink);font-weight:800}
+ul,ol{padding-left:22px;margin:0 0 16px} li{margin:5px 0} li>ul{margin:6px 0 0}
+code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.86em;background:var(--note);padding:1px 5px;border-radius:4px;color:var(--ink);overflow-wrap:anywhere}
+pre{overflow-x:auto;padding:14px 16px;border:1px solid var(--line);border-radius:10px;background:var(--card);font-size:12px;line-height:1.35}
+pre code{background:none;padding:0;font-size:inherit}
+a{color:var(--accent-deep)} :focus-visible{outline:2px solid var(--accent-deep);outline-offset:2px}
+.tbl{overflow-x:auto;margin:14px 0 22px;border:1px solid var(--line);border-radius:10px;background:var(--card)}
+table{border-collapse:collapse;width:100%;font-size:13.5px;min-width:560px}
+th{text-align:left;font-weight:800;color:var(--ink);background:var(--note);padding:10px 12px;border-bottom:1px solid var(--line);font-size:11.5px;letter-spacing:.06em;text-transform:uppercase}
+td{padding:10px 12px;border-top:1px solid var(--line-soft);vertical-align:top;background:var(--card)} td:first-child{color:var(--ink)}
+footer{margin-top:56px;padding-top:18px;border-top:1px solid var(--line);font-size:12px;color:var(--muted)}
+</style>
+</head>
+<body>
+<div class="wrap">
+<nav class="docnav" aria-label="Project documentation"><span class="docnav-brand">IDBC Salary Guide · docs</span><a href="index.html">Overview</a><a href="bemutato.html">Bemutató</a><a href="brief.html">Brief</a><a href="research.html">Research</a><a href="audit.html">Audit</a><a href="sources.html">Sources & gaps</a><a href="decisions.html">Decisions</a><a href="design.html">Design</a><a href="gate.html">Gate</a><a href="client-asks.html">Client asks</a><a href="ssot.html">SSOT</a><a href="architecture.html">Architecture</a><a href="technical-design.html" aria-current=page>Technical design</a><a href="implementation-plan.html">Implementation plan</a><a href="token-map.html">Token map</a><a class="docnav-hub" href="../../index.html">Calvus Hub</a></nav>
+<header><p class="eyebrow">Calvus · IDBC Salary Guide · project documentation</p><h1>IDBC Salary Guide — technical design</h1></header>
+<p><em>The detail under <a href="architecture.html"><code>11-architecture.md</code></a>, on the PROPOSED stack. Written 2026-09-18.</em></p>
+<h2>1. Page kinds → templates</h2>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>Prototype</th>
+<th>Template</th>
+<th>Data it loads</th>
+<th>Editable by marketing</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Kezdőoldal (not built)</td>
+<td><code>page-salary-guide.html</code> — teaser inside idbc.hu's template per the client's PDF, then the copy from <code>SG - kezdő oldal.docx</code></td>
+<td>none</td>
+<td>all copy, logos, podcast embed</td>
+</tr>
+<tr>
+<td><code>index.html</code> Piaci trendek</td>
+<td><code>page-trends.html</code></td>
+<td><code>data/trends-total.json</code> + area list</td>
+<td>intro, method note</td>
+</tr>
+<tr>
+<td><code>terulet/?terulet=&lt;slug&gt;</code></td>
+<td><code>page-area.html</code> with the slug as a query var (one template, D11)</td>
+<td><code>data/trends-&lt;slug&gt;.json</code>, <code>areas.json</code></td>
+<td>summary text, media URL/key thought</td>
+</tr>
+<tr>
+<td><code>berezes/</code></td>
+<td><code>page-berek.html</code></td>
+<td><code>data/salary.json</code></td>
+<td>table note</td>
+</tr>
+<tr>
+<td><code>sap/</code></td>
+<td><code>page-sap.html</code></td>
+<td><code>data/salary.json</code> (SAP rows) + <code>data/sap-products.json</code></td>
+<td>trend copy, catalogue, contact card</td>
+</tr>
+<tr>
+<td><code>expert-pool/</code></td>
+<td><code>page-expert-community.html</code></td>
+<td><code>data/pool.json</code></td>
+<td>all copy</td>
+</tr>
+<tr>
+<td><code>esettanulmanyok/</code></td>
+<td><code>page-case-studies.html</code></td>
+<td>none</td>
+<td>articles, video URLs</td>
+</tr>
+<tr>
+<td><code>regisztracio/</code></td>
+<td><code>page-register.html</code></td>
+<td>—</td>
+<td>consent text</td>
+</tr>
+<tr>
+<td>shared</td>
+<td><code>parts/guide-header.html</code> (the seven-item nav, D19), <code>parts/guide-footer.html</code></td>
+<td></td>
+<td>menu in one place</td>
+</tr>
+</tbody>
+</table></div>
+<p>Templates are the prototype's HTML with the data loop moved from inline <code>fetch</code> to
+either server-rendered markup (tables) or the same client-side renderer reading a
+smaller JSON (charts, filters). Chart and tooltip code is <code>top3-chart.js</code> unchanged.</p>
+<h2>2. Content model</h2>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>Content</th>
+<th>Storage</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Page copy (intro texts, SAP trends, Expert Community, case studies, area summaries)</td>
+<td>page content in the block editor; area summaries as a repeatable block on the area page keyed by slug</td>
+</tr>
+<tr>
+<td>Numbers</td>
+<td><code>data/*.json</code>, generated (never edited in the editor)</td>
+</tr>
+<tr>
+<td>Media</td>
+<td>video URL per area and per case study as page meta; key thought as a text field; images in the media library</td>
+</tr>
+<tr>
+<td>Registration fields, consent text</td>
+<td>template + options page</td>
+</tr>
+</tbody>
+</table></div>
+<h2>3. Data pipeline</h2>
+<pre><code>client workbook(s) ──▶ build-guide-data.py ──▶ guide-data.json ──▶ split.py ──▶ data/trends-*.json
+                  └──▶ build-salary-data.py ─┘                       ├──▶ data/salary.json, pool.json, sap-products.json
+                                                                     └──▶ exports/salary-guide-2026.xlsx
+</code></pre>
+<ul>
+<li>The two converters stay as they are (deterministic, asserting); their input paths
+  become arguments (today one has a hard-coded Downloads path — <code>13</code> SG-020).</li>
+<li><code>split.py</code> (to write) cuts <code>guide-data.json</code> into per-page files and builds the Excel
+  (openpyxl): one sheet per bértábla area + Expert Pool + Talent Insight, with the same
+  labels as the pages and the footnote.</li>
+<li>Checklist for a data round: run the converter(s) → read the printed summaries (rows,
+  areas, matches) → <code>git diff</code> the JSON → gate → deploy → verify one figure on the live
+  page against the workbook.</li>
+<li>Optional later: a scheduled job that downloads the Drive files and runs the same
+  chain, opening a review instead of deploying (ADR-2 upgrade path).</li>
+</ul>
+<h2>4. JSON slices (ADR-4)</h2>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>File</th>
+<th>Content</th>
+<th>Approx. size</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>trends-total.json</code>, <code>trends-&lt;area&gt;.json</code> ×11</td>
+<td>one dataset + <code>topics</code></td>
+<td>~90 KB each</td>
+</tr>
+<tr>
+<td><code>salary.json</code></td>
+<td><code>webBertabla</code>, <code>talentInsightTop3</code></td>
+<td>~110 KB</td>
+</tr>
+<tr>
+<td><code>pool.json</code></td>
+<td><code>expertPool</code></td>
+<td>&lt; 5 KB</td>
+</tr>
+<tr>
+<td><code>sap-products.json</code></td>
+<td><code>sapProducts</code></td>
+<td>&lt; 10 KB</td>
+</tr>
+<tr>
+<td><code>meta.json</code></td>
+<td><code>filterDimensions</code>, <code>siteMap</code>, <code>readme</code></td>
+<td>documentation only, not loaded by pages</td>
+</tr>
+</tbody>
+</table></div>
+<h2>5. Registration and gate</h2>
+<ul>
+<li>Fields (client, 2026-09-18): Vezetéknév, Keresztnév, E-mail, Cégnév, Pozíció, fióktípus
+  (cég | jelölt), Jelszó, adatvédelmi elfogadás. No newsletter checkbox.</li>
+<li>WordPress user with role <code>guide_reader</code>; meta <code>guide_type</code>, <code>guide_company</code>,
+  <code>guide_position</code>, <code>guide_consent_at</code>. E-mail confirmation before access (double
+  opt-in doubles as address validation).</li>
+<li>Gate: guide templates check <code>is_user_logged_in()</code> and the role; otherwise redirect to
+  <code>/regisztracio/?next=&lt;url&gt;</code>. Teaser and registration public. Kijelentkezés = WordPress
+  logout with redirect to the teaser.</li>
+<li>States: <code>registered (unconfirmed) → confirmed → active</code>; <code>active → logged out</code>.
+  Deletion on request = WordPress user deletion + CRM note.</li>
+<li>CRM: on confirmation, a webhook with the six fields to the client's CRM (unknown —
+  <code>13</code> SG-001); until known, an e-mail to marketing.</li>
+</ul>
+<h2>6. Forms</h2>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>Form</th>
+<th>Fields</th>
+<th>To</th>
+<th>After</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Ajánlatkérés (Expert Community page; header link target to confirm, <code>08</code> #8)</td>
+<td>Cégnév, kapcsolattartó, e-mail, telefon, keresett pozíció / üzenet</td>
+<td>e-mail to IDBC + entry + CRM</td>
+<td>on-page thanks</td>
+</tr>
+<tr>
+<td>Csatlakozom az Expert Communityhez</td>
+<td>vezetéknév, keresztnév, pozíció, e-mail, telefon, üzenet</td>
+<td>e-mail to recruiters + entry</td>
+<td>thanks</td>
+</tr>
+<tr>
+<td>Registration</td>
+<td>§5</td>
+<td>WordPress</td>
+<td>confirmation e-mail</td>
+</tr>
+</tbody>
+</table></div>
+<p>Server-side validation, honeypot + rate limit, no CAPTCHA that blocks real candidates.</p>
+<h2>7. Charts and tables</h2>
+<p><code>top3-chart.js</code> and <code>chart.css</code> are enqueued once, versioned by file hash instead of
+<code>?v=</code>. Wide/compact switching, the pill, the footnote, the tooltip: unchanged. Tables:
+server-rendered with the same markup (<code>role</code> attributes, <code>data-label</code> cells, one
+<code>&lt;tbody&gt;</code> per position) so card mode below 600 px keeps working without JavaScript.</p>
+<h2>8. Media</h2>
+<p>Video: the client supplies YouTube/Vimeo links per area (7) and case study (2); the
+placeholder block becomes an embed loaded after consent (a click-to-play poster, no
+third-party request before it). Key thoughts (4 areas): text field, rendered in the
+green box. Infographic slot: retired (D20).</p>
+<h2>9. Analytics and consent</h2>
+<p>GTM already on idbc.hu. Events: <code>guide_register</code>, <code>guide_login</code>, <code>guide_filter</code>
+(page, topic, segment), <code>guide_area_open</code>, <code>guide_download</code>, <code>guide_ajanlatkeres</code>,
+<code>guide_join</code>. Consent mode as the host runs it; embeds and pixels wait for consent.
+Monthly numbers to the client: registrations by type, downloads, most-used filters.</p>
+<h2>10. Performance</h2>
+<p>Per-page JSON (§4); chart JS ~10 KB; CSS from the prototype (one file, deduplicated
+from the seven page copies — <code>14</code>); images WebP via the host's <code>webp-uploads</code>; fonts
+the host's (Inter fallback stack already). Budget: guide page ≤ host home + 300 KB.</p>
+<h2>11. URLs and SEO</h2>
+<p>Teaser indexable with the client's copy; guide pages <code>noindex</code> (behind login anyway);
+prototype URLs are not production URLs — the section lives under a path the client
+chooses (e.g. <code>/salary-guide/</code>), and the GitHub Pages prototype stays up until the
+client says otherwise (a live URL is never deleted).</p>
+<h2>12. Operations</h2>
+<p>Staging on the host; deploy = package + <code>data/</code>; a data round follows §3's checklist;
+rollback = previous package + previous <code>data/</code>. Backups and monitoring are the host's.</p>
+<footer>Source: <code>idbc-salary-guide/docs/12-technical-design.md</code> · rendered by <code>docs/build.py</code>.</footer>
+</div>
+</body>
+</html>

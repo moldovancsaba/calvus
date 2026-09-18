@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>IDBC Salary Guide — design — IDBC Salary Guide docs</title>
+<style>/* IDBC Salary Guide — documentation pages, on the guide's own tokens (dark green, light ground, Inter). */
+:root{--ground:#eef5ec;--card:#ffffff;--ink:#101818;--text:#2a3333;--muted:rgba(16,24,24,.66);--accent:#a5df8f;--accent-deep:#245d54;--line:rgba(19,35,35,.18);--line-soft:rgba(19,35,35,.08);--note:#e3efdf}
+*{box-sizing:border-box}
+body{margin:0;background:var(--ground);color:var(--text);font-family:"Inter","Montserrat","Segoe UI",Arial,sans-serif;font-size:15.5px;line-height:1.6;padding-block:0 64px;padding-inline:clamp(16px,4vw,40px)}
+.wrap{max-width:74ch;margin-inline:auto}
+.docnav{display:flex;flex-wrap:wrap;gap:4px 18px;align-items:center;padding:16px 0;border-bottom:1px solid var(--line);font-size:12px;letter-spacing:.06em;text-transform:uppercase}
+.docnav a{color:var(--muted);text-decoration:none;min-height:44px;display:inline-flex;align-items:center;border-bottom:2px solid transparent}
+.docnav a:hover,.docnav a[aria-current]{color:var(--ink);border-color:var(--accent)}
+.docnav-brand{color:var(--accent-deep);font-weight:800;margin-right:6px}
+.docnav-hub{margin-left:auto}
+header{padding-block:40px 24px;border-bottom:1px solid var(--line);margin-bottom:28px}
+.eyebrow{font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--accent-deep);margin:0 0 12px;font-weight:800}
+h1,h2,h3{color:var(--ink);line-height:1.1;text-wrap:balance;margin:0;letter-spacing:-.02em}
+h1{font-size:clamp(30px,6vw,46px);font-weight:900}
+h2{font-size:clamp(23px,4vw,30px);font-weight:900;margin:48px 0 14px;padding-top:20px;border-top:1px solid var(--line)}
+h3{font-size:18px;margin:30px 0 8px;font-weight:800}
+p{margin:0 0 14px} strong{color:var(--ink);font-weight:800}
+ul,ol{padding-left:22px;margin:0 0 16px} li{margin:5px 0} li>ul{margin:6px 0 0}
+code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.86em;background:var(--note);padding:1px 5px;border-radius:4px;color:var(--ink);overflow-wrap:anywhere}
+pre{overflow-x:auto;padding:14px 16px;border:1px solid var(--line);border-radius:10px;background:var(--card);font-size:12px;line-height:1.35}
+pre code{background:none;padding:0;font-size:inherit}
+a{color:var(--accent-deep)} :focus-visible{outline:2px solid var(--accent-deep);outline-offset:2px}
+.tbl{overflow-x:auto;margin:14px 0 22px;border:1px solid var(--line);border-radius:10px;background:var(--card)}
+table{border-collapse:collapse;width:100%;font-size:13.5px;min-width:560px}
+th{text-align:left;font-weight:800;color:var(--ink);background:var(--note);padding:10px 12px;border-bottom:1px solid var(--line);font-size:11.5px;letter-spacing:.06em;text-transform:uppercase}
+td{padding:10px 12px;border-top:1px solid var(--line-soft);vertical-align:top;background:var(--card)} td:first-child{color:var(--ink)}
+footer{margin-top:56px;padding-top:18px;border-top:1px solid var(--line);font-size:12px;color:var(--muted)}
+</style>
+</head>
+<body>
+<div class="wrap">
+<nav class="docnav" aria-label="Project documentation"><span class="docnav-brand">IDBC Salary Guide · docs</span><a href="index.html">Overview</a><a href="bemutato.html">Bemutató</a><a href="brief.html">Brief</a><a href="research.html">Research</a><a href="audit.html">Audit</a><a href="sources.html">Sources & gaps</a><a href="decisions.html">Decisions</a><a href="design.html" aria-current=page>Design</a><a href="gate.html">Gate</a><a href="client-asks.html">Client asks</a><a href="ssot.html">SSOT</a><a href="architecture.html">Architecture</a><a href="technical-design.html">Technical design</a><a href="implementation-plan.html">Implementation plan</a><a href="token-map.html">Token map</a><a class="docnav-hub" href="../../index.html">Calvus Hub</a></nav>
+<header><p class="eyebrow">Calvus · IDBC Salary Guide · project documentation</p><h1>IDBC Salary Guide — design</h1></header>
+<p><em>Where the look comes from, what the tokens are, and how the pages are laid out. There was
+no separate design-system approval gate: the client supplied the design as mockups and the
+pages transcribe them. Written 2026-09-18.</em></p>
+<h2>Source of the design</h2>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>Page</th>
+<th>Designed by</th>
+<th>Reference</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Registration</td>
+<td>client</td>
+<td><code>html demok/1_regisztracio.html</code> (not yet transcribed — the mock uses the guide's own components)</td>
+</tr>
+<tr>
+<td>Piaci trendek</td>
+<td>client</td>
+<td><code>html demok/2_savok.html</code> — the B2C/B2B filterable dashboard</td>
+</tr>
+<tr>
+<td>SAP, Bérek, Expert Pool</td>
+<td>client</td>
+<td><code>3_SAP.html</code>, then <code>3_SAP_TOP3_chart_gradient_tooltip_categories.html</code> (D4): fixed navbar over the hero, eyebrow, EN/HU switch, three summary cards, point-line chart, table, Excel CTA</td>
+</tr>
+<tr>
+<td>Area pages</td>
+<td>owner, on the trends page's components; highlight box per the client's <code>Highlight 1.png</code></td>
+<td></td>
+</tr>
+<tr>
+<td>TOP3 pill, Expert Pool tile</td>
+<td>client</td>
+<td><code>TOPpozi 2.png</code>, <code>A bekezdés szövege-2 1.png</code> (2026-09-18)</td>
+</tr>
+<tr>
+<td>Home teaser</td>
+<td>client</td>
+<td><code>IDBC_SalaryGuide_home.pdf</code> — inside idbc.hu's template (not built)</td>
+</tr>
+</tbody>
+</table></div>
+<h2>Tokens (as set in each page's <code>:root</code>)</h2>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>Token</th>
+<th>Value</th>
+<th>Role</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>--dark</code></td>
+<td><code>#132323</code></td>
+<td>navbar, hero card, primary text on green</td>
+</tr>
+<tr>
+<td><code>--dark-2</code></td>
+<td><code>#0b1818</code></td>
+<td>footer</td>
+</tr>
+<tr>
+<td><code>--light-bg</code></td>
+<td><code>#eef5ec</code></td>
+<td>page ground (with a faint dot pattern)</td>
+</tr>
+<tr>
+<td><code>--green</code></td>
+<td><code>#a5df8f</code></td>
+<td>primary button, selects, summary cards, pill, highlight box</td>
+</tr>
+<tr>
+<td><code>--green-strong</code></td>
+<td><code>#8fd474</code></td>
+<td>hover</td>
+</tr>
+<tr>
+<td><code>--text</code></td>
+<td><code>#101818</code></td>
+<td>body</td>
+</tr>
+<tr>
+<td><code>--muted</code></td>
+<td><code>rgba(16,24,24,.66)</code></td>
+<td>secondary copy</td>
+</tr>
+<tr>
+<td><code>--line</code></td>
+<td><code>rgba(19,35,35,.18)</code></td>
+<td>borders</td>
+</tr>
+<tr>
+<td>chart ramp</td>
+<td><code>#a5df8f</code> → <code>#55aa8b</code> → <code>#245d54</code></td>
+<td>offered → IDBC → expected; also the pool bars</td>
+</tr>
+<tr>
+<td>type</td>
+<td>Inter (system fallback), 900/800 weights for headings and labels</td>
+<td></td>
+</tr>
+<tr>
+<td>radii</td>
+<td>28 / 14 / 18 px</td>
+<td>hero, cards, tiles</td>
+</tr>
+<tr>
+<td>tap floor</td>
+<td>44 px on phones</td>
+<td>D17</td>
+</tr>
+</tbody>
+</table></div>
+<p>The tokens are repeated in every page's <code>&lt;style&gt;</code>; <code>assets/chart.css</code> relies on them.
+<a href="token-map.html"><code>14-token-map.md</code></a> is where they become a single definition for the production build.</p>
+<h2>Layout</h2>
+<ul>
+<li><strong>Navbar</strong> fixed, flush to the top, overlaying the hero (from the SAP mockup); hamburger
+  below 980 px; five items + two right-aligned actions (D19).</li>
+<li><strong>Hero</strong> with a dark card bottom-left; eyebrow, <code>h1</code>, one sentence.</li>
+<li><strong>Summary block</strong> of three green cards above every chart (band per perspective; on
+  Expert Pool: pool size / positions / largest pool).</li>
+<li><strong>TOP3 chart</strong>: wide layout above 700 px (role names in a left gutter, one shared
+  axis), compact layout below (one block per position with its own scale; D18); LinkedIn
+  pill under the role name; footnote under the chart (D22).</li>
+<li><strong>Tables</strong>: desktop table; cards below 600 px of container width (D17); Bérek groups
+  collapse behind a header showing the full band.</li>
+<li><strong>Area page</strong>: summary text clamped to the media slot's height with "Olvass tovább";
+  media slot = video placeholder or green key-thought box (D20).</li>
+<li><strong>Expert Community</strong>: intro → two audience cards (join form behind a <code>&lt;details&gt;</code>,
+  Ajánlatkérés anchor) → tiles (bar block anchored to the card bottom, D26) → contact form.</li>
+<li><strong>Articles</strong> (SAP trends, case studies): one column, ≤ 760 px measure (D25).</li>
+</ul>
+<h2>Measured at</h2>
+<p>375 px and desktop on every page after each change round since 2026-09-15; the numbers
+are in the change notes in <a href="sources.html"><code>SOURCES-AND-GAPS.md</code></a> and summarised in <a href="gate.html"><code>07-gate.md</code></a>.</p>
+<footer>Source: <code>idbc-salary-guide/docs/05-design.md</code> · rendered by <code>docs/build.py</code>.</footer>
+</div>
+</body>
+</html>

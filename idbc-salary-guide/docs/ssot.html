@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>IDBC Salary Guide — single source of truth (SSOT) — IDBC Salary Guide docs</title>
+<style>/* IDBC Salary Guide — documentation pages, on the guide's own tokens (dark green, light ground, Inter). */
+:root{--ground:#eef5ec;--card:#ffffff;--ink:#101818;--text:#2a3333;--muted:rgba(16,24,24,.66);--accent:#a5df8f;--accent-deep:#245d54;--line:rgba(19,35,35,.18);--line-soft:rgba(19,35,35,.08);--note:#e3efdf}
+*{box-sizing:border-box}
+body{margin:0;background:var(--ground);color:var(--text);font-family:"Inter","Montserrat","Segoe UI",Arial,sans-serif;font-size:15.5px;line-height:1.6;padding-block:0 64px;padding-inline:clamp(16px,4vw,40px)}
+.wrap{max-width:74ch;margin-inline:auto}
+.docnav{display:flex;flex-wrap:wrap;gap:4px 18px;align-items:center;padding:16px 0;border-bottom:1px solid var(--line);font-size:12px;letter-spacing:.06em;text-transform:uppercase}
+.docnav a{color:var(--muted);text-decoration:none;min-height:44px;display:inline-flex;align-items:center;border-bottom:2px solid transparent}
+.docnav a:hover,.docnav a[aria-current]{color:var(--ink);border-color:var(--accent)}
+.docnav-brand{color:var(--accent-deep);font-weight:800;margin-right:6px}
+.docnav-hub{margin-left:auto}
+header{padding-block:40px 24px;border-bottom:1px solid var(--line);margin-bottom:28px}
+.eyebrow{font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--accent-deep);margin:0 0 12px;font-weight:800}
+h1,h2,h3{color:var(--ink);line-height:1.1;text-wrap:balance;margin:0;letter-spacing:-.02em}
+h1{font-size:clamp(30px,6vw,46px);font-weight:900}
+h2{font-size:clamp(23px,4vw,30px);font-weight:900;margin:48px 0 14px;padding-top:20px;border-top:1px solid var(--line)}
+h3{font-size:18px;margin:30px 0 8px;font-weight:800}
+p{margin:0 0 14px} strong{color:var(--ink);font-weight:800}
+ul,ol{padding-left:22px;margin:0 0 16px} li{margin:5px 0} li>ul{margin:6px 0 0}
+code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.86em;background:var(--note);padding:1px 5px;border-radius:4px;color:var(--ink);overflow-wrap:anywhere}
+pre{overflow-x:auto;padding:14px 16px;border:1px solid var(--line);border-radius:10px;background:var(--card);font-size:12px;line-height:1.35}
+pre code{background:none;padding:0;font-size:inherit}
+a{color:var(--accent-deep)} :focus-visible{outline:2px solid var(--accent-deep);outline-offset:2px}
+.tbl{overflow-x:auto;margin:14px 0 22px;border:1px solid var(--line);border-radius:10px;background:var(--card)}
+table{border-collapse:collapse;width:100%;font-size:13.5px;min-width:560px}
+th{text-align:left;font-weight:800;color:var(--ink);background:var(--note);padding:10px 12px;border-bottom:1px solid var(--line);font-size:11.5px;letter-spacing:.06em;text-transform:uppercase}
+td{padding:10px 12px;border-top:1px solid var(--line-soft);vertical-align:top;background:var(--card)} td:first-child{color:var(--ink)}
+footer{margin-top:56px;padding-top:18px;border-top:1px solid var(--line);font-size:12px;color:var(--muted)}
+</style>
+</head>
+<body>
+<div class="wrap">
+<nav class="docnav" aria-label="Project documentation"><span class="docnav-brand">IDBC Salary Guide · docs</span><a href="index.html">Overview</a><a href="bemutato.html">Bemutató</a><a href="brief.html">Brief</a><a href="research.html">Research</a><a href="audit.html">Audit</a><a href="sources.html">Sources & gaps</a><a href="decisions.html">Decisions</a><a href="design.html">Design</a><a href="gate.html">Gate</a><a href="client-asks.html">Client asks</a><a href="ssot.html" aria-current=page>SSOT</a><a href="architecture.html">Architecture</a><a href="technical-design.html">Technical design</a><a href="implementation-plan.html">Implementation plan</a><a href="token-map.html">Token map</a><a class="docnav-hub" href="../../index.html">Calvus Hub</a></nav>
+<header><p class="eyebrow">Calvus · IDBC Salary Guide · project documentation</p><h1>IDBC Salary Guide — single source of truth (SSOT)</h1></header>
+<p><em>Definitions the technical documents (<code>11</code>–<code>14</code>) use without redefining. Everything is read
+from what the prototype holds (<code>data/guide-data.json</code>, <code>data/areas.json</code>, the two converters,
+the pages). Written 2026-09-18.</em></p>
+<h2>1. Glossary</h2>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>Term</th>
+<th>Meaning here</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Survey</td>
+<td>IDBC's 2026 research: two questionnaires (employee, employer), June–August 2026; the client's published sample sizes are 1 552 and 148 responses.</td>
+</tr>
+<tr>
+<td>Question set</td>
+<td>Which questionnaire variant a dataset follows: <em>Általános</em> or <em>IT + Contracting</em>. Two exist; each topic lists its questions per set. Formerly "edition".</td>
+</tr>
+<tr>
+<td>Dataset</td>
+<td>One tabulation of the survey: the whole sample (<code>__total__</code>, labelled <em>Összesített adatok</em>) or one of 11 areas. 12 datasets.</td>
+</tr>
+<tr>
+<td>Topic</td>
+<td>One of four groupings of questions: Munkahely váltás és toborzási kilátások · Home office · AI · Bérezés és juttatások.</td>
+</tr>
+<tr>
+<td>Side</td>
+<td>Employee (<em>Munkavállalók</em>, B2C in the workbook) or employer (<em>Munkáltatók</em>, B2B).</td>
+</tr>
+<tr>
+<td>Segment</td>
+<td>A crosstab dimension value: experience band on the employee side, company size on the employer side. <em>Összesített adatok</em> is the pseudo-segment for the whole dataset.</td>
+</tr>
+<tr>
+<td>Weighted question</td>
+<td>The two "Jelöld 1-4-ig terjedő skálán…" questions, shown only as a weighted average (D16).</td>
+</tr>
+<tr>
+<td>Area (trends)</td>
+<td>One of 11 areas with a summary text, a media slot and its own dataset (<code>areas.json</code>).</td>
+</tr>
+<tr>
+<td>Area (bértábla)</td>
+<td>One of 13 area codes in the salary sheet; display names are mapped in <code>build-salary-data.py</code> (D23). Not the same set as the trends areas.</td>
+</tr>
+<tr>
+<td>Bértábla</td>
+<td>The client's <code>IDBC_bertabla</code> Google Sheet, <code>WEB_BERTABLA_IMPORT</code> tab: one row per area + position + level.</td>
+</tr>
+<tr>
+<td>TOP3 row</td>
+<td>A standalone bértábla row flagged <code>x</code>: the three highlighted positions of an area, with min / IDBC / max and usually no level. 39 exist.</td>
+</tr>
+<tr>
+<td>Level</td>
+<td><code>tapasztalati_szint</code>: Trainee · Junior · Medior · Senior · Team Leader · Manager, or none.</td>
+</tr>
+<tr>
+<td>Band</td>
+<td>min–max monthly gross HUF; on TOP3 rows also the IDBC recommendation. Labelled per D5.</td>
+</tr>
+<tr>
+<td>Talent Insight count</td>
+<td>LinkedIn Talent Insight's number of professionals in Hungary for a position; on TOP3 rows (<code>linkedin</code>) and pool rows. Always printed with a star and the footnote.</td>
+</tr>
+<tr>
+<td>Expert Pool / Expert Community</td>
+<td>IDBC's candidate community; the pool sheet gives a count per industry + position (15 rows).</td>
+</tr>
+<tr>
+<td>SAP catalogue</td>
+<td>20 items in 5 categories (<code>sapProducts</code>), from the client's SAP spec.</td>
+</tr>
+<tr>
+<td>Inert control</td>
+<td>A control shown in place with class <code>is-unavailable</code>, <code>aria-disabled</code> and a <code>title</code> saying why: Excel export, EN, Kijelentkezés, form submits.</td>
+</tr>
+<tr>
+<td>Gate</td>
+<td><code>python3 idbc-salary-guide/check.py</code> + the measured pass (<a href="gate.html"><code>07-gate.md</code></a>).</td>
+</tr>
+</tbody>
+</table></div>
+<h2>2. Enumerations</h2>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>Enum</th>
+<th>Values</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Topic</td>
+<td>the four above, in that order</td>
+</tr>
+<tr>
+<td>Question set</td>
+<td>Általános · IT + Contracting</td>
+</tr>
+<tr>
+<td>Dataset</td>
+<td><code>__total__</code> + IT · IT Contracting · Pénzügy és számvitel · Sales &amp; Marketing · HR · BSC · Építőipar, ingatlan · Gyártás, termelés, mérnökség · Office Support &amp; Ügyfélszolgálat · Logisztika és szállítás · Pharma &amp; Life Sciences</td>
+</tr>
+<tr>
+<td>Employee segment</td>
+<td>kevesebb, mint 1 év · 1-2 év · 3-5 év · 6-10 év · 11-20 év · 20+ év (offered per topic only where a non-zero row exists, D6)</td>
+</tr>
+<tr>
+<td>Employer segment</td>
+<td>50 fő alatti · 51-100 · 101-350 · 351-1000 · 1000+</td>
+</tr>
+<tr>
+<td>Question kind</td>
+<td>single · multi · weighted (stacked chart; weighted bar 1–4)</td>
+</tr>
+<tr>
+<td>Bértábla area code → name</td>
+<td>BSC · PENZUGY → Pénzügy és számvitel · Sales · Marketing · HR · Office Support → Office Support &amp; Ügyfélszolgálat · Retail · GYARTAS → Gyártás, termelés, mérnökség · LOGISZTIKA → Logisztika és szállítás · CP → Építőipar, ingatlan · PHARMA → Pharma &amp; Life Sciences · IT · SAP</td>
+</tr>
+<tr>
+<td>Level order</td>
+<td>Trainee · Junior · Medior · Senior · Team Leader · Manager · (none)</td>
+</tr>
+<tr>
+<td>Pool industry</td>
+<td>Pharma · IT · Finance</td>
+</tr>
+<tr>
+<td>Area media</td>
+<td>video · highlight</td>
+</tr>
+<tr>
+<td>Account type (registration)</td>
+<td>cég · jelölt</td>
+</tr>
+<tr>
+<td>Nav</td>
+<td>Piaci trendek · Bérek · SAP · Expert Pool · Esettanulmányok · Ajánlatkérés · Kijelentkezés</td>
+</tr>
+</tbody>
+</table></div>
+<h2>3. Canonical entities (as in <code>guide-data.json</code>)</h2>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>Entity</th>
+<th>Key fields</th>
+<th>Source</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>datasets[id]</code></td>
+<td><code>label</code>, <code>questionSet</code>, <code>employee{base, cross}</code>, <code>employer{base, cross}</code>; <code>base[question] = {kind, options[], percent[], count[], weighted?}</code>; <code>cross[question][segment]</code> likewise</td>
+<td>survey workbook via <code>build-guide-data.py</code></td>
+</tr>
+<tr>
+<td><code>topics[]</code></td>
+<td><code>topic</code>, <code>questionSets{set: {employee[], employer[]}}</code> — the question lists per set</td>
+<td>workbook's "Téma besorolás" tab + client renames (D7)</td>
+</tr>
+<tr>
+<td><code>salary.webBertabla[]</code></td>
+<td><code>id</code>, <code>kod</code>, <code>terulet</code>, <code>szint</code>, <code>pozicio</code>, <code>top3</code>, <code>min</code>, <code>idbc</code>, <code>max</code>, <code>juttatas</code>, <code>linkedin?</code></td>
+<td>bértábla via <code>build-salary-data.py</code></td>
+</tr>
+<tr>
+<td><code>salary.talentInsightTop3[]</code></td>
+<td><code>terulet</code>, <code>pozicio</code>, <code>linkedin</code> — the client's list verbatim</td>
+<td>Talent Insight sheet 1</td>
+</tr>
+<tr>
+<td><code>salary.expertPool[]</code></td>
+<td><code>iparag</code>, <code>pozicio</code>, <code>darab</code>, <code>linkedin?</code></td>
+<td>pool sheet + Talent Insight sheet 2</td>
+</tr>
+<tr>
+<td><code>salary.readme</code></td>
+<td>the sheet's UTMUTATO text verbatim</td>
+<td>bértábla</td>
+</tr>
+<tr>
+<td><code>sapProducts[]</code></td>
+<td><code>category</code>, <code>items[]</code></td>
+<td>SAP spec</td>
+</tr>
+<tr>
+<td><code>filterDimensions</code></td>
+<td>every intended filter with <code>available: true/false/"partial"</code> and why</td>
+<td><code>Szűrők</code> doc vs data</td>
+</tr>
+<tr>
+<td><code>siteMap.intendedPages[]</code></td>
+<td>page, status, note</td>
+<td>specs; statuses maintained by hand</td>
+</tr>
+<tr>
+<td><code>areas.json.areas[]</code></td>
+<td><code>slug</code>, <code>name</code>, <code>edition</code> (question set), <code>media</code>, <code>summary</code></td>
+<td>client texts (D13), media list (D20)</td>
+</tr>
+</tbody>
+</table></div>
+<p>Entities the production build adds (defined here, designed in <code>12</code>): <strong>Account</strong> (name,
+e-mail, company, position, type, consent, created), <strong>Lead</strong> (an account handed to
+IDBC's CRM), <strong>Download</strong> (an Excel export event), <strong>Media</strong> (video URL per area /
+case study).</p>
+<h2>4. Settings the prototype fixes</h2>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>Setting</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Default dataset / segment</td>
+<td><code>__total__</code> / <em>Összesített adatok</em></td>
+</tr>
+<tr>
+<td>Chart breakpoint</td>
+<td>compact layout ≤ 700 px viewport</td>
+</tr>
+<tr>
+<td>Table card mode</td>
+<td>container width &lt; 600 px</td>
+</tr>
+<tr>
+<td>Asset version</td>
+<td><code>?v=7</code> on <code>top3-chart.js</code> and <code>chart.css</code> — bump on every change</td>
+</tr>
+<tr>
+<td>Tap floor</td>
+<td>44 px below 980 px</td>
+</tr>
+<tr>
+<td>Currency format</td>
+<td><code>hu-HU</code> grouping, <code>Ft</code>; millions abbreviated <code>1,25M</code> in the compact chart</td>
+</tr>
+</tbody>
+</table></div>
+<h2>5. Decision register</h2>
+<p><a href="decisions.html"><code>04-decisions.md</code></a> (D1–D27). Technical decisions in this package are ADRs in
+<a href="architecture.html"><code>11-architecture.md</code></a> §11, PROPOSED until flipped; the flip is the next D-number.</p>
+<h2>6. Rules register</h2>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>#</th>
+<th>Rule</th>
+<th>Origin</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>R1</td>
+<td>No figure is invented or estimated; every number traces to a client file.</td>
+<td>README of the repo; D22</td>
+</tr>
+<tr>
+<td>R2</td>
+<td><em>Összesített adatok</em> is first and default; a real segment is offered only where the topic has a non-zero row.</td>
+<td>D6</td>
+</tr>
+<tr>
+<td>R3</td>
+<td>A question with no data under the selected segment is hidden; the aggregate is never substituted; one panel-level sentence if a panel is empty.</td>
+<td>D9</td>
+</tr>
+<tr>
+<td>R4</td>
+<td>The two 1–4 questions render as the weighted average only.</td>
+<td>D16</td>
+</tr>
+<tr>
+<td>R5</td>
+<td>An inert control is shown in place with <code>is-unavailable</code> and a <code>title</code>.</td>
+<td>repo principle; gate check 5</td>
+</tr>
+<tr>
+<td>R6</td>
+<td>Talent Insight counts are matched by an explicit table; a renamed position fails the build.</td>
+<td>D22</td>
+</tr>
+<tr>
+<td>R7</td>
+<td>The shared chart assets are versioned; every page loads the same version.</td>
+<td>gate check 4</td>
+</tr>
+<tr>
+<td>R8</td>
+<td>The band labels (D5) and the "valós piaci adatok" note (D14) ship as the client's wording; the divergence from the sheet is documented, not hidden.</td>
+<td>gap 6</td>
+</tr>
+<tr>
+<td>R9</td>
+<td>One template per repeated thing: area page, tile, chart.</td>
+<td>D11</td>
+</tr>
+<tr>
+<td>R10</td>
+<td>Tables are complete: TOP3 rows are listed in the table as well as charted.</td>
+<td>D24</td>
+</tr>
+<tr>
+<td>R11</td>
+<td>In fine-tuning, only the reported item changes.</td>
+<td>owner, 2026-09-18</td>
+</tr>
+</tbody>
+</table></div>
+<h2>7. Metrics</h2>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>Metric</th>
+<th>Target</th>
+<th>Where</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Overflow at 375 / desktop; tap targets &lt; 44 px; console errors</td>
+<td>0 / 0 / 0</td>
+<td><a href="gate.html"><code>07-gate.md</code></a></td>
+</tr>
+<tr>
+<td>Data freshness</td>
+<td>pages rebuilt within one working day of a new client workbook</td>
+<td>converters</td>
+</tr>
+<tr>
+<td>Guide page weight (production)</td>
+<td>≤ 300 KB JSON per page after splitting (<code>12</code> §4); today one 1,1 MB file</td>
+<td><code>13</code></td>
+</tr>
+<tr>
+<td>Registration conversion, downloads, filter use</td>
+<td>reported monthly to the client</td>
+<td><code>12</code> §9</td>
+</tr>
+<tr>
+<td>Business (client's)</td>
+<td>leads by account type; Ajánlatkérés clicks; Expert Community joins</td>
+<td>CRM</td>
+</tr>
+</tbody>
+</table></div>
+<h2>8. Document map</h2>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>Document</th>
+<th>Purpose</th>
+<th>Changes when</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="brief.html"><code>00-brief.md</code></a></td>
+<td>what it is, what is real, where it stands</td>
+<td>status changes</td>
+</tr>
+<tr>
+<td><a href="sources.html"><code>SOURCES-AND-GAPS.md</code></a></td>
+<td>every source file, every gap, every change round</td>
+<td>any input or build changes</td>
+</tr>
+<tr>
+<td><a href="decisions.html"><code>04-decisions.md</code></a></td>
+<td>the register</td>
+<td>a decision is made</td>
+</tr>
+<tr>
+<td><a href="ssot.html"><code>10-ssot.md</code></a></td>
+<td>this file</td>
+<td>a definition changes</td>
+</tr>
+<tr>
+<td><a href="architecture.html"><code>11-architecture.md</code></a></td>
+<td>measured host, containers, PROPOSED stack, ADRs</td>
+<td>an architectural decision changes</td>
+</tr>
+<tr>
+<td><a href="technical-design.html"><code>12-technical-design.md</code></a></td>
+<td>templates, data pipeline, registration, export, media, analytics</td>
+<td>a design detail changes</td>
+</tr>
+<tr>
+<td><a href="implementation-plan.html"><code>13-implementation-plan.md</code></a></td>
+<td>milestones, issues with DoD, blocked register, risks</td>
+<td>scope or sequencing changes</td>
+</tr>
+<tr>
+<td><a href="token-map.html"><code>14-token-map.md</code></a></td>
+<td>page tokens and components → production</td>
+<td>a token or component changes</td>
+</tr>
+</tbody>
+</table></div>
+<footer>Source: <code>idbc-salary-guide/docs/10-ssot.md</code> · rendered by <code>docs/build.py</code>.</footer>
+</div>
+</body>
+</html>
