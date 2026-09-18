@@ -571,10 +571,9 @@
     // The TOP3 chart has a distinct narrow layout, so re-render when crossing that line.
     window.matchMedia('(max-width: 700px)').addEventListener('change', renderTop3);
 
-    // "További bérek": the non-TOP3 SAP rows with their level; the TOP3 rows are standalone in the
-    // 2026-09-18 bértábla and already sit in the chart above.
+    // "További bérek": every SAP row, TOP3 included, with its level where the bértábla gives one.
     const salaryTableBody = document.querySelector('#salaryTableBody');
-    const visibleSapRows = sapRows.filter(r => !r.top3);
+    const visibleSapRows = sapRows;
     const labelOf = r => r.szint ? `${r.pozicio} · ${r.szint}` : r.pozicio;
 
     // Hide the benefits column entirely (header + cells) when every visible row

@@ -241,8 +241,10 @@ was cut to:
   `build-salary-data.py` and is the one place to change a label.
 - **TOP3 rows are standalone**: 39 rows flagged `x`, one per Talent Insight position, with
   min / IDBC / max and (mostly) no level. They are no longer the Senior row of a grouped
-  position, so the "További bérek" tables on Bérek and SAP now exclude them — the chart carries
-  them. Office Support and Retail have *only* TOP3 rows; their table block is hidden.
+  position. The tables on Bérek and SAP list them like every other row (level `–`): the table
+  is the complete reference and is always shown — an earlier pass excluded them and hid the
+  block on Retail and Office Support, which have only TOP3 rows; the owner rejected that on
+  sight (2026-09-18) and it was reverted the same hour.
 - **Levels** are now Trainee / Junior / Medior / Senior / Team Leader / Manager, and 19 senior
   roles (mostly Pharma, plus Finance and Construction heads) carry no level; the table orders by
   that list and prints `–` for a missing level. Junior/Medior/Senior keep the client's year

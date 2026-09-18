@@ -634,10 +634,9 @@
       return true;
     }
 
-    // Table ("További bérek"): every non-TOP3 position of the selected area, one group per
-    // position with whatever levels the bértábla gives it (2026-09-18 sheet: Trainee → Manager,
-    // some senior roles carry no level at all). TOP3 rows are standalone rows in that sheet and
-    // live in the chart above, so they are not repeated here.
+    // Table: every position of the selected area, TOP3 rows included — the table is the complete
+    // reference, the chart the highlight. One group per position with whatever levels the
+    // bértábla gives it (2026-09-18 sheet: Trainee → Manager, some roles carry no level).
     const SZINT_LABELS = {
       Junior: 'Junior (1-2 év tapasztalat)',
       Medior: 'Medior (3-5 év tapasztalat)',
@@ -647,7 +646,7 @@
     const szintRank = s => { const i = SZINT_ORDER.indexOf(s); return i < 0 ? SZINT_ORDER.length : i; };
 
     function renderTable() {
-      const areaRows = nonSapRows.filter(r => r.terulet === teruletSelect.value && !r.top3);
+      const areaRows = nonSapRows.filter(r => r.terulet === teruletSelect.value);
       // Source rows are already adjacent per position, but sort defensively and take the
       // rowspan from the actual group size in case a position ever misses a level.
       const byPos = new Map();
@@ -680,8 +679,6 @@
       salaryTable.querySelectorAll('tbody').forEach(tb => tb.remove());
       salaryTable.insertAdjacentHTML('beforeend', bodyHtml);
       salaryCount.textContent = byPos.size + ' pozíció a kiválasztott területen';
-      // Office Support and Retail carry only TOP3 rows in the 2026-09-18 sheet: nothing further to list.
-      document.querySelector('#moreSalaries').style.display = byPos.size ? '' : 'none';
     }
 
     function renderSalarySection() {
