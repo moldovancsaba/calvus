@@ -357,39 +357,24 @@
       select { min-height: 44px; }
     }
 
-    /* Case studies: one article per client, video placeholder, facts as a grid. */
-    .case { padding: 34px 0 44px; border-top: 2px solid rgba(19,35,35,.55); }
-    .case:first-of-type { border-top: 0; padding-top: 0; }
-    .case-head { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(300px, .9fr); gap: 32px; align-items: start; margin-bottom: 26px; }
-    .case-head h2 { margin: 0 0 12px; font-size: clamp(26px, 3.6vw, 42px); line-height: 1.02; letter-spacing: -1px; }
-    .case-head p { margin: 0 0 12px; font-size: 14px; font-weight: 700; line-height: 1.5; }
-    .video-card { position: relative; min-height: 240px; border-radius: 22px; overflow: hidden; box-shadow: var(--shadow-soft);
+    /* Case studies as conventional articles (client, 2026-09-18 workshop): one column of
+       running text with sub-headings, a video placeholder under each title, CTA at the end. */
+    .article { max-width: 760px; }
+    .article + .article { margin-top: 48px; padding-top: 40px; border-top: 2px solid rgba(19,35,35,.55); }
+    .article h2 { margin: 0 0 16px; font-size: clamp(28px, 3.8vw, 44px); line-height: 1.02; letter-spacing: -1px; }
+    .article h3 { margin: 30px 0 8px; font-size: 22px; letter-spacing: -0.5px; line-height: 1.1; }
+    .article h4 { margin: 18px 0 6px; font-size: 15px; }
+    .article p { margin: 0 0 12px; font-size: 15px; font-weight: 700; line-height: 1.55; }
+    .article ul { margin: 0 0 12px; padding-left: 22px; }
+    .article li { margin: 0 0 6px; font-size: 15px; font-weight: 700; line-height: 1.5; }
+    .video-card { position: relative; min-height: 300px; margin: 18px 0 26px; border-radius: 22px; overflow: hidden; box-shadow: var(--shadow-soft);
       background: linear-gradient(120deg, rgba(19,35,35,.85), rgba(19,35,35,.45)),
         url("https://images.unsplash.com/photo-1552664730-d307ca884978?auto=format&fit=crop&w=1100&q=80") center / cover; }
     .play-button { position: absolute; inset: 0; margin: auto; width: 78px; height: 78px; border-radius: 50%; background: rgba(10,24,24,.9); box-shadow: 0 12px 28px rgba(0,0,0,.25); }
     .play-button::before { content: ""; position: absolute; left: 32px; top: 24px; border-left: 24px solid #fff; border-top: 15px solid transparent; border-bottom: 15px solid transparent; }
     .media-note { position: absolute; left: 0; right: 0; bottom: 14px; margin: 0; text-align: center; color: rgba(255,255,255,.85); font-size: 12px; font-weight: 800; }
-    .service-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 18px; }
-    .service { padding: 24px 26px; border-radius: 20px; background: #fff; border: 1px solid var(--line); }
-    .service h3 { margin: 0 0 14px; font-size: 22px; letter-spacing: -0.5px; }
-    .service h4 { margin: 16px 0 6px; font-size: 12px; text-transform: uppercase; letter-spacing: .06em; color: var(--muted); }
-    .service p { margin: 0 0 8px; font-size: 13.5px; font-weight: 700; line-height: 1.45; }
-    .bullet-list { display: grid; gap: 7px; margin: 0; padding: 0; list-style: none; }
-    .bullet-list li { position: relative; padding-left: 22px; font-size: 13.5px; font-weight: 700; line-height: 1.4; }
-    .bullet-list li::before { content: ""; position: absolute; left: 0; top: .42em; width: 10px; height: 10px; border-radius: 50%; background: var(--green); }
-    .facts { display: flex; flex-wrap: wrap; gap: 10px; margin: 10px 0 0; padding: 0; list-style: none; }
-    .facts li { padding: 8px 14px; border-radius: 10px; background: var(--green); color: var(--dark); font-size: 13px; font-weight: 900; }
-    .facts li strong { font-size: 20px; margin-right: 4px; }
-    .summary { margin-top: 22px; padding: 22px 26px; border-radius: 20px; background: var(--dark); color: #fff; }
-    .summary h3 { margin: 0 0 8px; font-size: 20px; }
-    .summary p { margin: 0 0 8px; font-size: 13.5px; font-weight: 700; line-height: 1.5; color: rgba(255,255,255,.88); }
-    .challenge { display: grid; grid-template-columns: 1fr 1fr; gap: 6px 18px; padding: 14px 0; border-top: 1px solid var(--line); }
-    .challenge h4 { grid-column: 1 / -1; margin: 0 0 2px; font-size: 14px; }
-    .challenge p { margin: 0; font-size: 13px; font-weight: 700; line-height: 1.45; }
-    .challenge p b { display: block; font-size: 11px; text-transform: uppercase; letter-spacing: .06em; color: var(--muted); }
     .cta { display: inline-flex; align-items: center; justify-content: center; min-height: 44px; padding: 10px 22px; border-radius: 11px; background: var(--dark); color: #fff; font-size: 14px; font-weight: 900; }
-    .page-cta { margin-top: 10px; padding: 34px 0 0; border-top: 2px solid rgba(19,35,35,.55); text-align: center; }
-    @media (max-width: 900px) { .case-head, .challenge { grid-template-columns: 1fr; } }
+    .page-cta { max-width: 760px; margin-top: 48px; padding-top: 34px; border-top: 2px solid rgba(19,35,35,.55); }
   </style>
 </head>
 <body>
@@ -458,116 +443,96 @@
     <section class="section" id="esettanulmanyok">
       <div class="container">
 
-        <article class="case" aria-labelledby="case-dgitshu">
-          <div class="case-head">
-            <div>
-              <p class="eyebrow">Hibrid szolgáltatási modell</p>
-              <h2 id="case-dgitshu">Hibrid szolgáltatási modell – DGITSHU</h2>
-              <p>Partnerünk, a DPD Group IT Solutions Hungary Kft. (DGITSHU) az elmúlt 3 év során több szolgáltatásunkat is igénybe vette, az aktuális kapacitás- és toborzási igényeihez igazodva.</p>
-              <p>Az együttműködés keretében IT contracting, try &amp; hire és RPO szolgáltatásainkkal támogattuk partnerünk változó IT-szakértői és kapacitásbővítési szükségleteit, mindig az adott üzleti helyzethez legjobban illeszkedő megoldást választva.</p>
-            </div>
-            <div class="video-card" role="img" aria-label="Videó helye – DGITSHU esettanulmány">
-              <span class="play-button" aria-hidden="true"></span>
-              <p class="media-note">Az esettanulmány videója ide kerül</p>
-            </div>
+        <article class="article" aria-labelledby="case-dgitshu">
+          <p class="eyebrow">Esettanulmány</p>
+          <h2 id="case-dgitshu">Hibrid szolgáltatási modell – DGITSHU</h2>
+          <div class="video-card" role="img" aria-label="Videó helye – DGITSHU esettanulmány">
+            <span class="play-button" aria-hidden="true"></span>
+            <p class="media-note">Az esettanulmány videója ide kerül</p>
           </div>
+          <p>Partnerünk, a DPD Group IT Solutions Hungary Kft. (DGITSHU) az elmúlt 3 év során több szolgáltatásunkat is igénybe vette, az aktuális kapacitás- és toborzási igényeihez igazodva.</p>
+          <p>Az együttműködés keretében IT contracting, try &amp; hire és RPO szolgáltatásainkkal támogattuk partnerünk változó IT-szakértői és kapacitásbővítési szükségleteit, mindig az adott üzleti helyzethez legjobban illeszkedő megoldást választva.</p>
 
-          <div class="service-grid">
-            <section class="service" aria-labelledby="dg-contracting">
-              <h3 id="dg-contracting">IT Contracting</h3>
-              <h4>Üzleti igény</h4>
-              <p>Az IT contracting megoldást a vállalati teljesítménymutatók optimalizálása, valamint a rövid időn belül felmerülő jelentős IT-szakértői kapacitásbővítés tette szükségessé.</p>
-              <p>Keresett szakértői profilok: fejlesztők, projektmenedzserek</p>
-              <h4>Megoldásunk</h4>
-              <ul class="bullet-list">
-                <li>Kiterjedt adatbázisunk, 200+ fős szakértői bázisunk és 500+ fős Expert community-nk segítségével gyorsan azonosítottuk és célzottan szólítottuk meg a releváns szakembereket.</li>
-                <li>Contracting konstrukcióban biztosítottuk a szükséges IT szakértői kapacitást, rugalmasan igazodva partnerünk aktuális igényeihez.</li>
-                <li>Try&amp;hire szolgáltatásunkkal lehetőséget biztosítottunk arra, hogy partnerünk egy meghatározott időszakon keresztül, a napi munkavégzés során is megismerje a szakemberek szakmai és szervezeti illeszkedését, mielőtt a saját állományába venné őket.</li>
-              </ul>
-              <h4>Eredmény</h4>
-              <ul class="facts">
-                <li><strong>14</strong> betöltött pozíció</li>
-                <li><strong>5</strong> szakembert a DGITSHU később saját állományába vett (sikeres try &amp; hire)</li>
-              </ul>
-            </section>
+          <h3>IT Contracting</h3>
+          <h4>Üzleti igény</h4>
+          <p>Az IT contracting megoldást a vállalati teljesítménymutatók optimalizálása, valamint a rövid időn belül felmerülő jelentős IT-szakértői kapacitásbővítés tette szükségessé.</p>
+          <p>Keresett szakértői profilok: fejlesztők, projektmenedzserek</p>
+          <h4>Megoldásunk</h4>
+          <ul>
+            <li>Kiterjedt adatbázisunk, 200+ fős szakértői bázisunk és 500+ fős Expert community-nk segítségével gyorsan azonosítottuk és célzottan szólítottuk meg a releváns szakembereket.</li>
+            <li>Contracting konstrukcióban biztosítottuk a szükséges IT szakértői kapacitást, rugalmasan igazodva partnerünk aktuális igényeihez.</li>
+            <li>Try&amp;hire szolgáltatásunkkal lehetőséget biztosítottunk arra, hogy partnerünk egy meghatározott időszakon keresztül, a napi munkavégzés során is megismerje a szakemberek szakmai és szervezeti illeszkedését, mielőtt a saját állományába venné őket.</li>
+          </ul>
+          <h4>Eredmény</h4>
+          <ul>
+            <li>14 betöltött pozíció</li>
+            <li>Sikeres try &amp; hire: 5 szakembert a DGITSHU később saját állományába vett</li>
+          </ul>
 
-            <section class="service" aria-labelledby="dg-rpo">
-              <h3 id="dg-rpo">RPO</h3>
-              <h4>Üzleti igény</h4>
-              <p>A DGITSHU-nél 2025-ben egy hirtelen megnövekedett toborzási és kapacitásbővítési igény merült fel, amely a belső HR csapat recruitment kapacitásának kiegészítését tette szükségessé.</p>
-              <p>Keresett szakértői profilok: fejlesztő, tesztelő, architekt, BA, PM, DevOps pozíciók</p>
-              <h4>Projektparaméterek</h4>
-              <ul class="bullet-list">
-                <li>4,5 hónapos RPO projekt</li>
-                <li>1 dedikált IDBC-s tanácsadó</li>
-                <li>Teljes körű recruitment támogatás</li>
-              </ul>
-              <h4>Megoldásunk</h4>
-              <ul class="bullet-list">
-                <li>Dedikált tanácsadó bevonása, aki partnerünk csapatába integrálódva támogatta a napi recruitment folyamatokat.</li>
-                <li>Tanácsadói szemlélet: a jelöltek felkutatása mellett folyamatos piaci visszajelzésekkel és a hiring folyamat támogatásával segítettük a döntéshozatalt.</li>
-                <li>End-to-end támogatás: a teljes toborzási folyamatot a jelöltek felkutatásától és előszűrésétől az interjúk koordinációján át az ajánlatkezelésig támogattuk.</li>
-                <li>A folyamat során a szakmai és szervezeti igények összehangolásában, valamint a jelölt- és stakeholder-koordinációban is aktív szerepet vállaltunk.</li>
-              </ul>
-              <h4>Eredmény</h4>
-              <ul class="facts"><li><strong>9</strong> betöltött pozíció</li></ul>
-            </section>
-          </div>
+          <h3>RPO</h3>
+          <h4>Üzleti igény</h4>
+          <p>A DGITSHU-nél 2025-ben egy hirtelen megnövekedett toborzási és kapacitásbővítési igény merült fel, amely a belső HR csapat recruitment kapacitásának kiegészítését tette szükségessé.</p>
+          <p>Keresett szakértői profilok: fejlesztő, tesztelő, architekt, BA, PM, DevOps pozíciók</p>
+          <h4>Projektparaméterek</h4>
+          <ul>
+            <li>4,5 hónapos RPO projekt</li>
+            <li>1 dedikált IDBC-s tanácsadó</li>
+            <li>Teljes körű recruitment támogatás</li>
+          </ul>
+          <h4>Megoldásunk</h4>
+          <ul>
+            <li>Dedikált tanácsadó bevonása, aki partnerünk csapatába integrálódva támogatta a napi recruitment folyamatokat.</li>
+            <li>Tanácsadói szemlélet: a jelöltek felkutatása mellett folyamatos piaci visszajelzésekkel és a hiring folyamat támogatásával segítettük a döntéshozatalt.</li>
+            <li>End-to-end támogatás: a teljes toborzási folyamatot a jelöltek felkutatásától és előszűrésétől az interjúk koordinációján át az ajánlatkezelésig támogattuk.</li>
+            <li>A folyamat során a szakmai és szervezeti igények összehangolásában, valamint a jelölt- és stakeholder-koordinációban is aktív szerepet vállaltunk.</li>
+          </ul>
+          <h4>Eredmény</h4>
+          <ul><li>9 betöltött pozíció</li></ul>
 
-          <div class="summary">
-            <h3>Összegzés – Átfogó partneri támogatás</h3>
-            <p>Az együttműködés során célunk az volt, hogy ne egyetlen megoldással kezeljük partnerünk minden felmerülő igényét, hanem az aktuális helyzethez és célokhoz legjobban illeszkedő szolgáltatással segítsük a DGITSHU-t. Ennek megfelelően IT contracting, try&amp;hire vagy RPO szolgáltatásunkkal nyújtottunk támogatást.</p>
-            <p>Nemcsak a megfelelő IT szakemberek megtalálásában segítettük partnerünket, hanem a teljes jelölt- és folyamatkoordinációban is aktív szerepet vállaltunk, így a gyorsan elérhető szakértői kapacitás mellett a teljes kiválasztási folyamatot támogató, rugalmas megoldást biztosítottunk.</p>
-          </div>
+          <h3>Összegzés – Átfogó partneri támogatás</h3>
+          <p>Az együttműködés során célunk az volt, hogy ne egyetlen megoldással kezeljük partnerünk minden felmerülő igényét, hanem az aktuális helyzethez és célokhoz legjobban illeszkedő szolgáltatással segítsük a DGITSHU-t. Ennek megfelelően IT contracting, try&amp;hire vagy RPO szolgáltatásunkkal nyújtottunk támogatást.</p>
+          <p>Nemcsak a megfelelő IT szakemberek megtalálásában segítettük partnerünket, hanem a teljes jelölt- és folyamatkoordinációban is aktív szerepet vállaltunk, így a gyorsan elérhető szakértői kapacitás mellett a teljes kiválasztási folyamatot támogató, rugalmas megoldást biztosítottunk.</p>
         </article>
 
-        <article class="case" aria-labelledby="case-publicis">
-          <div class="case-head">
-            <div>
-              <p class="eyebrow">RPO (Recruitment Process Outsourcing)</p>
-              <h2 id="case-publicis">RPO – Publicis Groupe</h2>
-              <p><strong>Szolgáltatási kör:</strong> teljes körű toborzás – jelöltek felkutatása, előszűrés, interjúk egyeztetése a vezetőkkel, ajánlatkezelés; együttműködés 10+ közvetlen érintett vezetővel.</p>
-              <p><strong>Induló projektparaméterek:</strong> a Publicis Groupe Hungary media üzletág bővítésének megvalósítása a budapesti irodában, 3 hónapos megvalósítási tervvel. Az eredeti terv szerint 15 új kolléga felvétele média területre.</p>
-              <p><strong>Bővített projektparaméterek:</strong> a tervezett időtartamot 1 hónappal (4 hónapra) meghosszabbította partnerünk. Partnerünk megduplázta az eredeti bővülési tervet és 30 új pozíciót (26 media, 4 non-media) töltöttünk be. A teljes RPO-t és a 30 betöltött pozíciót 1 IDBC-s toborzó valósította meg.</p>
-            </div>
-            <div class="video-card" role="img" aria-label="Videó helye – Publicis Groupe esettanulmány">
-              <span class="play-button" aria-hidden="true"></span>
-              <p class="media-note">Az esettanulmány videója ide kerül</p>
-            </div>
+        <article class="article" aria-labelledby="case-publicis">
+          <p class="eyebrow">Esettanulmány</p>
+          <h2 id="case-publicis">RPO (Recruitment Process Outsourcing) – Publicis Groupe</h2>
+          <div class="video-card" role="img" aria-label="Videó helye – Publicis Groupe esettanulmány">
+            <span class="play-button" aria-hidden="true"></span>
+            <p class="media-note">Az esettanulmány videója ide kerül</p>
           </div>
 
-          <div class="service-grid">
-            <section class="service" aria-labelledby="pg-results">
-              <h3 id="pg-results">Eredmények</h3>
-              <ul class="facts">
-                <li><strong>26</strong> media pozíció 4 hónap alatt, 1 toborzó által</li>
-                <li><strong>4</strong> non-media pozíció 4 hónap alatt, 1 toborzó által</li>
-              </ul>
-              <h4>Media</h4>
-              <p>10 Media Activation Assistant, 4 Performance Media Assistant, 3 Junior Performance Media Specialist, 1 Medior Performance Media Specialist, 3 Senior Performance Media Specialist, 1 Junior Media Planner, 1 Medior Media Planner, 1 Media Account Manager, 1 Media Finance Coordinator</p>
-              <h4>Non-media</h4>
-              <p>1 Production Account Manager, 1 Senior Account Manager, 1 Digital Strategist, 1 Senior Digital Strategist, 1 Project Manager / Account Manager</p>
-            </section>
+          <h3>Szolgáltatási kör</h3>
+          <ul>
+            <li>Teljes körű toborzás: jelöltek felkutatása, előszűrés, interjúk egyeztetése a vezetőkkel, ajánlatkezelés</li>
+            <li>Együttműködés 10+ közvetlen érintett vezetővel</li>
+          </ul>
 
-            <section class="service" aria-labelledby="pg-challenges">
-              <h3 id="pg-challenges">Kihívások</h3>
-              <div class="challenge">
-                <h4>Eltérő működésű csapatokba kerestünk jelölteket</h4>
-                <p><b>Helyzet</b>25 nyitott pozíció, 12 Hiring Manager között – a vezetők rendelkezésre állása és együttműködése szűk keresztmetszet volt.</p>
-                <p><b>Megoldásunk</b>Erős stakeholder menedzsment, heti szinkron megbeszélések, rendszeres konstruktív visszajelzés.</p>
-              </div>
-              <div class="challenge">
-                <h4>Jelöltek elvesztése a folyamat első szakaszában</h4>
-                <p><b>Helyzet</b>Alacsony váltási szándék a jelöltek részéről, sok megkeresés a piac méretéből adódóan (kevés a médiás szakember).</p>
-                <p><b>Megoldásunk</b>Új potenciális csatornák felkutatása, hagyományos fejvadászat, TikTok, LinkedIn videós álláshirdetések, social media source.</p>
-              </div>
-              <div class="challenge">
-                <h4>Piaci tudás megosztása</h4>
-                <p><b>Helyzet</b>Magasabb bérigények, kevésbé versenyképes alapbérrel kompenzálva, magas szakmai színvonal elvárása.</p>
-                <p><b>Megoldásunk</b>A juttatási csomag fejlesztése, riportok formájában visszajelzés készítése a piacról, market mapping szolgáltatás.</p>
-              </div>
-            </section>
-          </div>
+          <h3>Induló projektparaméterek</h3>
+          <p>A Publicis Groupe Hungary media üzletág bővítésének megvalósítása a budapesti irodában, 3 hónapos megvalósítási tervvel.</p>
+          <p>Tervezett pozíciók száma: az eredeti terv szerint 15 új kolléga felvétele média területre.</p>
+
+          <h3>Bővített projektparaméterek</h3>
+          <p>A tervezett időtartamot 1 hónappal (4 hónapra) meghosszabbította partnerünk.</p>
+          <p>Végleges pozíciók száma: partnerünk megduplázta az eredeti bővülési tervet és 30 új pozíciót (26 media, 4 non-media) töltöttünk be.</p>
+          <p>Recruitment támogatás: a teljes RPO-t és a 30 betöltött pozíciót 1 IDBC-s toborzó valósította meg.</p>
+
+          <h3>Eredmények</h3>
+          <h4>Media: 26 betöltött pozíció 4 hónap alatt, 1 toborzó által</h4>
+          <p>10 Media Activation Assistant, 4 Performance Media Assistant, 3 Junior Performance Media Specialist, 1 Medior Performance Media Specialist, 3 Senior Performance Media Specialist, 1 Junior Media Planner, 1 Medior Media Planner, 1 Media Account Manager, 1 Media Finance Coordinator</p>
+          <h4>Non-media: 4 betöltött pozíció 4 hónap alatt, 1 toborzó által</h4>
+          <p>1 Production Account Manager, 1 Senior Account Manager, 1 Digital Strategist, 1 Senior Digital Strategist, 1 Project Manager / Account Manager</p>
+
+          <h3>Kihívások</h3>
+          <h4>Eltérő működésű csapatokba kerestünk jelölteket</h4>
+          <p>Helyzet: 25 nyitott pozíció, 12 Hiring Manager között – a vezetők rendelkezésre állása és együttműködése szűk keresztmetszet volt.</p>
+          <p>Megoldásunk: erős stakeholder menedzsment, heti szinkron megbeszélések, rendszeres konstruktív visszajelzés.</p>
+          <h4>Jelöltek elvesztése a folyamat első szakaszában</h4>
+          <p>Helyzet: alacsony váltási szándék a jelöltek részéről, sok megkeresés a piac méretéből adódóan (kevés a médiás szakember).</p>
+          <p>Megoldásunk: új potenciális csatornák felkutatása, hagyományos fejvadászat, TikTok, LinkedIn videós álláshirdetések, social media source.</p>
+          <h4>Piaci tudás megosztása</h4>
+          <p>Helyzet: magasabb bérigények, kevésbé versenyképes alapbérrel kompenzálva, magas szakmai színvonal elvárása.</p>
+          <p>Megoldásunk: a juttatási csomag fejlesztése, riportok formájában visszajelzés készítése a piacról, market mapping szolgáltatás.</p>
         </article>
 
         <div class="page-cta">

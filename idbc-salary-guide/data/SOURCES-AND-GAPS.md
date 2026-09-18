@@ -273,6 +273,18 @@ all 12 areas (Építőipar: one pill), table groups render with the new levels, 
 tap target under 44 px, no console errors; SAP chart 3 pills + footnote, 9 table rows with
 level, side column 446 px; Expert Pool unchanged.
 
+## Client notes after the rebuild (2026-09-18, third push)
+
+- **Expert Pool tiles**: the bar and the IDBC count sat higher on tiles without a LinkedIn line
+  (the two pending positions). A reserved empty line was not enough — the position name and the
+  market line wrap differently per tile — so the tile is now a flex column with the bar block
+  pushed to the bottom of grid-stretched, equal-height cards. Measured: bar and count on one
+  line across every tile in a row, desktop and 375 px.
+- **Esettanulmányok**: the client and the owner agreed at the last workshop on a conventional
+  article format, not the card grid built on the first pass. The page is now one column per case
+  study — title, video placeholder, running text with sub-headings and lists — with the services
+  CTA at the end. Content unchanged.
+
 ## Card header alignment (2026-09-16)
 
 The collapsed card headers sat 5px below their own centre, which the client spotted. Two causes,

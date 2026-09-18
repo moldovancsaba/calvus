@@ -228,6 +228,11 @@
       cursor: help;
       outline: none;
       transition: transform .16s ease, box-shadow .16s ease;
+      /* Grid rows stretch the cards to equal height; the bar block sits at the bottom, so the
+         bar and count line up across tiles whether or not the market line is present or wraps
+         (client note, 2026-09-18). */
+      display: flex;
+      flex-direction: column;
     }
 
     .expert-card:hover,
@@ -253,6 +258,7 @@
     /* Tile per the client's demo (2026-09): market count line, then the IDBC bar with its own label. */
     .expert-market { margin: -8px 0 16px; font-size: 13px; font-weight: 700; color: var(--muted); }
     .expert-bar-label { margin: 0 0 6px; font-size: 13px; font-weight: 900; }
+    .expert-card .expert-bar-label { margin-top: auto; }
 
     .intro-copy p { margin: 0 0 12px; font-size: 14px; font-weight: 700; line-height: 1.5; max-width: 600px; }
     .audience-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 22px; margin-bottom: 44px; }
