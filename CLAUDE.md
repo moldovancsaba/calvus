@@ -18,6 +18,10 @@ or a design-system engine exist here; they don't. Treat any instruction that
 references such tooling as belonging to a different project until this repo
 actually grows that infrastructure.
 
+`PROTOTYPING.md` is the standard every prototype follows — lifecycle and gates, page
+requirements, the documentation set, the gate, fine-tuning rules, a starter checklist and
+a definition of done. Read it before starting or changing a project.
+
 ## 0. Read first, never guess
 
 Before stating a fact about structure, data, or behavior in this repo: read

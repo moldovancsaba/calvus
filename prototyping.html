@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Prototyping at Calvus — requirements and method</title>
+<style>:root{--bg:#f7f7f7;--surface:#fff;--text:#1e1e1e;--muted:#626262;--line:#e5e5e5;--accent:#111}
+*{box-sizing:border-box}body{margin:0;font-family:Inter,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;background:var(--bg);color:var(--text);font-size:15.5px;line-height:1.6;padding:0 clamp(16px,4vw,40px) 64px}
+.wrap{max-width:76ch;margin:0 auto}.top{display:flex;flex-wrap:wrap;gap:8px 18px;align-items:center;padding:16px 0;border-bottom:1px solid var(--line);font-size:13px;color:var(--muted)}
+.top a{color:var(--accent);text-decoration:none;min-height:44px;display:inline-flex;align-items:center;font-weight:600}
+h1{font-size:clamp(28px,5vw,40px);line-height:1.1;margin:32px 0 10px;letter-spacing:-.01em}h2{font-size:22px;margin:44px 0 10px;padding-top:18px;border-top:1px solid var(--line)}h3{font-size:17px;margin:26px 0 8px}
+p{margin:0 0 12px}li{margin:4px 0}strong{font-weight:700}em{color:var(--muted)}
+code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.86em;background:#ececec;padding:1px 5px;border-radius:5px;overflow-wrap:anywhere}
+.tbl{overflow-x:auto;margin:12px 0 20px;border:1px solid var(--line);border-radius:12px;background:var(--surface)}table{border-collapse:collapse;width:100%;font-size:13.5px;min-width:560px}
+th{text-align:left;font-weight:700;background:var(--bg);padding:10px 12px;border-bottom:1px solid var(--line);font-size:12px;letter-spacing:.04em;text-transform:uppercase;color:var(--muted)}td{padding:10px 12px;border-top:1px solid var(--line);vertical-align:top}
+footer{margin-top:48px;padding-top:16px;border-top:1px solid var(--line);font-size:12px;color:var(--muted)}</style>
+</head>
+<body><div class="wrap">
+<div class="top"><b>Calvus</b><a href="index.html">Project Hub</a><a href="holdvolgy/docs/index.html">Holdvölgy docs</a><a href="discountdirect/docs.html">DiscountDirect docs</a><a href="idbc-salary-guide/docs/index.html">IDBC docs</a><a href="lexodont.hu/docs/index.html">Lexodont docs</a></div>
+<h1>Prototyping at Calvus — requirements and method</h1>
+<p><em>How a client prototype is built here, what it must contain, and what "done" means at each
+stage. Distilled on 2026-09-18 from the four projects in this repo — Holdvölgy (the
+customer-side reference), DiscountDirect (the technical reference), the IDBC Salary Guide
+(real data, live client fine-tuning) and Lexodont (a wireframe that became a site). Every
+rule below has a project behind it; the project is named where it matters. This is the
+standard for the next prototype. <code>README.md</code> says why this repo exists; <code>CLAUDE.md</code> says
+how to act in it; this file says what to build and how to know it is good.</em></p>
+<h2>1. What a prototype is here, and is not</h2>
+<p>A prototype is <strong>the cheapest thing a client can click through and argue with</strong>, built to
+absorb the "what did you actually mean" churn before production code exists. It is static
+HTML/CSS/JS, no framework, no build step beyond a generator you can read in one sitting,
+served from this repo on GitHub Pages so the deliverable is always a URL.</p>
+<p>It is <strong>not</strong> production code that hardens in place, and it is <strong>not</strong> a design exercise:
+its output is agreement — on structure, content, data, rules — recorded so the production
+build has a specification. Lexodont proves the point in both directions: a two-day
+wireframe became the live site, and because nobody recorded that, the repo presented a
+superseded sketch as a live project for five months.</p>
+<p>Three kinds have been built, and the method fits all three:</p>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>Kind</th>
+<th>Example</th>
+<th>What it fixes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Wireframe (two fidelities)</td>
+<td>Lexodont</td>
+<td>page set, navigation, section order, copy tone</td>
+</tr>
+<tr>
+<td>Data prototype</td>
+<td>IDBC</td>
+<td>which data exists, what it supports, how it reads on a phone</td>
+</tr>
+<tr>
+<td>Site or product prototype</td>
+<td>Holdvölgy, DiscountDirect</td>
+<td>the whole experience, generated from one source, with the rules written down</td>
+</tr>
+</tbody>
+</table></div>
+<h2>2. The lifecycle — stages and gates</h2>
+<p>Nothing skips a stage; a stage can be one paragraph if the project is small, but it exists
+and it is dated.</p>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>#</th>
+<th>Stage</th>
+<th>Output</th>
+<th>Gate (who approves)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0</td>
+<td><strong>Brief</strong></td>
+<td><code>00-brief.md</code>: client, problem, what will be built, what is real</td>
+<td>owner reads it</td>
+</tr>
+<tr>
+<td>1</td>
+<td><strong>Research and audit</strong></td>
+<td><code>01-research.md</code> (benchmarks with sources, or "none, because…"), <code>02-audit.md</code> (the client's current site/data/brand, <strong>measured</strong>)</td>
+<td>owner: "direction approved" (Holdvölgy D10)</td>
+</tr>
+<tr>
+<td>2</td>
+<td><strong>Sources</strong></td>
+<td><code>03-sources…md</code>: every input file, what it contributed, every gap between the ask and the data</td>
+<td>—</td>
+</tr>
+<tr>
+<td>3</td>
+<td><strong>Design system</strong></td>
+<td>tokens + a live components page</td>
+<td><strong>owner approves before any layout</strong> (Holdvölgy D11/D12 — the order was corrected once and is now fixed)</td>
+</tr>
+<tr>
+<td>4</td>
+<td><strong>Layout frames</strong></td>
+<td>desktop 1440 and phone 390 composed from the approved components and real assets</td>
+<td>owner approves (D13)</td>
+</tr>
+<tr>
+<td>5</td>
+<td><strong>Build</strong></td>
+<td>pages, generated where anything repeats; one commit per page or round; build log with measurements</td>
+<td>the gate script + measured pass</td>
+</tr>
+<tr>
+<td>6</td>
+<td><strong>Sweep</strong></td>
+<td>every page at 390 and 1440, zero defects</td>
+<td>recorded in the gate doc</td>
+</tr>
+<tr>
+<td>7</td>
+<td><strong>Presentation</strong></td>
+<td><code>bemutato.html</code> in the client's language and brand</td>
+<td>client review</td>
+</tr>
+<tr>
+<td>8</td>
+<td><strong>Fine-tuning</strong></td>
+<td>reported item → minimal fix → measured → URL</td>
+<td>client</td>
+</tr>
+<tr>
+<td>9</td>
+<td><strong>Technical package</strong></td>
+<td>SSOT, architecture, technical design, implementation plan, token map; stack decisions PROPOSED</td>
+<td>owner / client flips ADRs</td>
+</tr>
+</tbody>
+</table></div>
+<p>Stages 3–4 are the ones people are tempted to skip. Holdvölgy's first prototype skipped
+them and was withdrawn as "generic"; the second went through both gates and was approved
+in three steps without a redesign. DiscountDirect and IDBC skipped them (the client
+supplied mockups, or the wireframe was built in a day) and both later paid in unmeasured
+mobile layouts. For a small wireframe the gate can be a single frame; it still exists.</p>
+<h2>3. Requirements for the pages</h2>
+<h3>3.1 Content and data — real, or honestly absent</h3>
+<ul>
+<li><strong>Every number, text and image traces to a client file</strong>, named in the sources doc.
+  IDBC's <code>SOURCES-AND-GAPS.md</code> is the model: file → what it contributed → where the
+  build diverges from the client's intent, numbered.</li>
+<li><strong>No figure is invented or estimated.</strong> If the client's list and the data do not match
+  by name, match by an explicit, reviewed table that fails the build on a mismatch (IDBC
+  <code>build-salary-data.py</code>); never fuzzy-match at runtime, never guess.</li>
+<li><strong>A control with nothing behind it is shown in place, visibly inert</strong> — <code>is-unavailable</code>,
+  <code>aria-disabled</code>, and a <code>title</code> that says why (Excel export with no file, an EN switch
+  with no copy, a logout with no auth). Never faked, never omitted.</li>
+<li><strong>Placeholders only at the client's request</strong>, labelled as such, naming what goes there
+  ("A terület videója ide kerül"). Lorem ipsum does not ship.</li>
+<li><strong>Sample data is declared sample</strong> in the page itself (DiscountDirect's top-bar note and
+  wireframe note; the prototype banner on Holdvölgy).</li>
+<li><strong>The client's own copy ships as written</strong>, even where it asserts more than the data
+  does — and the divergence is recorded, not hidden (IDBC's "valós piaci adatok" vs the
+  sheet's own "mintaértékek" banner, gap 6).</li>
+<li><strong>No AI-generated imagery</strong> (Holdvölgy D6). Stock placeholders are flagged as a client
+  ask (IDBC #15).</li>
+</ul>
+<h3>3.2 Structure and generation</h3>
+<ul>
+<li><strong>One source for anything that repeats.</strong> Eleven area pages are one template with a
+  query parameter (IDBC); 32 product pages in two languages are one catalogue and one
+  generator (Holdvölgy); navigation and document indexes are single-sourced (D15).
+  Never eleven copies of a renderer in a repo with no build step.</li>
+<li><strong>Data enters through a converter, not by hand.</strong> Converters are deterministic, take
+  their inputs as arguments, print what they did, and assert what must hold (every
+  question resolves; every listed position exists). Re-running on the same input must
+  reproduce the committed output byte for byte.</li>
+<li><strong>Shared assets are versioned</strong> (<code>?v=N</code> or a hash) and the gate checks every page loads
+  the same version — GitHub Pages and the browser pane both serve stale copies otherwise,
+  and the failure looks exactly like the change silently not working.</li>
+<li><strong>Every page</strong> has exactly one <code>h1</code>, a <code>&lt;title&gt;</code>, <code>lang</code>, <code>alt</code> on every image, and —
+  when the project is bilingual — <code>hreflang</code> hu / en / x-default. Product-like pages carry
+  JSON-LD.</li>
+<li><strong>Images</strong>: conversions keep alpha (never <code>.convert('RGB')</code> on a transparent PNG);
+  <code>img { height: auto }</code> in base CSS so width/height attributes never distort; images in
+  aspect-ratio boxes are absolutely bounded (Holdvölgy D16/D17 — found as a black,
+  stretched map on the live site).</li>
+<li><strong>Class names are namespaced</strong> where they could read as generic (<code>.sheet</code>, <code>.bar</code>,
+  <code>.card</code>); the gate checks for a second definition (D18 — a fact sheet floated over the
+  page because it shared <code>.sheet</code> with the menu dialog).</li>
+<li><strong>A published URL is never deleted.</strong> Content that moves leaves a redirect stub (D14 —
+  a cached hub card led to a 404).</li>
+</ul>
+<h3>3.3 Phone and desktop — measured, not eyeballed</h3>
+<p>Reference widths are <strong>390 (phone) and 1440 (desktop)</strong>; tablet is resolved explicitly in
+the layout spec. Phone and desktop may be two designed experiences (Holdvölgy D5), but
+both are measured. At both widths, on every page:</p>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>Criterion</th>
+<th>Target</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Horizontal overflow</td>
+<td>0 px</td>
+</tr>
+<tr>
+<td>Tap targets (phone width, menus open)</td>
+<td>none under 44 × 44 px — including short menu labels ("SAP" was 27 px wide)</td>
+</tr>
+<tr>
+<td>Console errors</td>
+<td>0</td>
+</tr>
+<tr>
+<td><code>h1</code> / <code>alt</code> / <code>title</code> / <code>lang</code> / <code>hreflang</code></td>
+<td>as §3.2</td>
+</tr>
+<tr>
+<td>Tables on phones</td>
+<td>cards or real horizontal scrolling with a labelled, focusable region — never 419 px of silent overflow (IDBC, 2026-09-15)</td>
+</tr>
+<tr>
+<td>Home page weight (when a client sets a budget)</td>
+<td>measured with real assets in place</td>
+</tr>
+</tbody>
+</table></div>
+<p>Desktop density is allowed to be tighter than 44 px; the floor is a phone rule.</p>
+<p>The measurement is done in the app's browser pane (Playwright is not installed here):
+<code>resize_window</code> to the phone preset, exercise the feature, read the DOM — or, for a whole
+site, load every page in same-origin iframes at both widths and measure from one script
+(Holdvölgy's 152-measurement sweep, Lexodont's 66). Screenshots are a supplement; when the
+pane is hidden they come back blank, so the gate must not depend on them.</p>
+<h3>3.4 Interaction</h3>
+<p>The feature that changed is exercised, not glanced at: every filter value, every tab,
+every persona, both views. When real data cannot reach a code path (IDBC's TOP3 pill before
+the new bértábla), the path is exercised with synthetic rows through the component's API
+and that is written down.</p>
+<h2>4. The documentation set — one structure, every project</h2>
+<p>Next to every prototype, in <code>docs/</code> (or flat, as DiscountDirect, when the URLs are already
+live), indexed by a <code>README.md</code> that is also the dated process log:</p>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>Slot</th>
+<th>File</th>
+<th>Must contain</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Presentation</td>
+<td><code>bemutato.html</code></td>
+<td>client's language, client's brand tokens, standalone page: one sentence, three numbers, the pages in a recommended order with previews and open buttons, what is real, the asks, what comes next — no documentation chrome</td>
+</tr>
+<tr>
+<td>00</td>
+<td><code>00-brief.md</code></td>
+<td>client, problem, what the prototype is, what is real / inert / placeholder / not built, where it stands, how to read the folder</td>
+</tr>
+<tr>
+<td>01</td>
+<td><code>01-research.md</code></td>
+<td>benchmarks with sources; or the honest sentence that none was done and what a next round would read</td>
+</tr>
+<tr>
+<td>02</td>
+<td><code>02-audit.md</code></td>
+<td>the client's current site, data or brand, <strong>measured</strong> (platform, plugins, weight, TTFB, page architecture, defects)</td>
+</tr>
+<tr>
+<td>03</td>
+<td><code>03-sources…md</code></td>
+<td>every input, what it contributed, what is sample, every gap numbered</td>
+</tr>
+<tr>
+<td>04</td>
+<td><code>04-decisions.md</code></td>
+<td>numbered register: date, decision, by whom, why, what it replaced; standing rules that came out of them</td>
+</tr>
+<tr>
+<td>05</td>
+<td><code>05-design.md</code></td>
+<td>tokens, components, layout at the reference widths; or the client's mockups the pages transcribe</td>
+</tr>
+<tr>
+<td>06</td>
+<td><code>06-build-log.md</code></td>
+<td>every round: what changed, what was measured</td>
+</tr>
+<tr>
+<td>07</td>
+<td><code>07-gate.md</code> + <code>check.py</code></td>
+<td>what the script checks, the measured pass, deliberate deviations with reasons</td>
+</tr>
+<tr>
+<td>08</td>
+<td><code>08-client-asks.md</code></td>
+<td>numbered items only the client can close, each naming where it lands</td>
+</tr>
+<tr>
+<td>10</td>
+<td><code>10-ssot.md</code></td>
+<td>glossary, enumerations, entities, settings, rules register, metrics, document map</td>
+</tr>
+<tr>
+<td>11</td>
+<td><code>11-architecture.md</code></td>
+<td>context, the target measured, quality attributes, containers, flows, stack, ADRs</td>
+</tr>
+<tr>
+<td>12</td>
+<td><code>12-technical-design.md</code></td>
+<td>templates, content model, data mapping, forms, state machines, i18n, SEO/URLs, media, performance, operations</td>
+</tr>
+<tr>
+<td>13</td>
+<td><code>13-implementation-plan.md</code></td>
+<td>milestones, issues with a Definition of Done, blocked register, risks, release scope</td>
+</tr>
+<tr>
+<td>14</td>
+<td><code>14-token-map.md</code></td>
+<td>prototype tokens and components → production; or why there is nothing to map</td>
+</tr>
+</tbody>
+</table></div>
+<p>Rules for the set:</p>
+<ul>
+<li><strong>Markdown is the source; HTML is rendered</strong> by the project's <code>build.py</code> with output
+  names that differ from the <code>.md</code> basenames (Jekyll on GitHub Pages renders <code>x.md</code> to
+  <code>x.html</code> on its own — the two must never collide).</li>
+<li><strong>Every docs page links every other</strong> (the gate checks); the presentation carries no
+  docs navigation and is linked from the index and the hub.</li>
+<li><strong>Dates inside every file</strong>; the process log entry is written in the same commit as the
+  change. A decision is a numbered entry before it is code.</li>
+<li><strong>Stack decisions are ADRs in status PROPOSED</strong> with options and reasons; the owner or
+  client flips one, and the flip is the next D-number. Where production already exists
+  (Lexodont), the architecture records the as-built stack as fact and proposes only
+  measured next steps.</li>
+<li><strong>The audit measures.</strong> <code>curl</code> reaches the client's site from this environment: platform
+  generator tags, plugin slugs in the HTML, script and stylesheet counts, HTML size, TTFB
+  warm and cold, cache headers. Numbers, not impressions — Holdvölgy's 23 plugins against
+  a target of 12 and 4,5 s cold TTFB are the whole argument for its stack proposal.</li>
+<li><strong>Client asks are a list with owners</strong>, not sentences in prose; when one closes it moves
+  to the process log.</li>
+<li><strong>Docs pass the same page rules</strong>: no horizontal overflow at 375 (long <code>code</code> strings
+  need <code>overflow-wrap: anywhere</code>), 44 px links, one <code>h1</code>.</li>
+</ul>
+<h2>5. The gate — what runs before every push</h2>
+<p>There is no CI. The gate is a script per project plus a repo-wide one, and it must print
+<code>GATE: CLEAN</code> before a push — a red gate is never pushed as a "known issue"; either the
+finding is fixed or the check is wrong and is changed with a recorded reason.</p>
+<p><code>python3 check.py</code> at the root runs all of them and a repo-wide link audit. A project's
+<code>check.py</code> checks at least: every relative link and asset resolves; every cross-page anchor
+exists; every docs page links every other; plus the project's own invariants — stale-state
+phrases and the prototype banner (Holdvölgy), one asset version and inert controls still
+marked (IDBC), fidelity parity (Lexodont). A new invariant is added the day its absence
+costs a review round: the stale-phrase scan exists because the owner caught stale text
+four times.</p>
+<p>Then the measured pass (§3.3), then push, then <strong>verify live</strong>: poll the GitHub Pages URL
+with a cache-busting query for a marker unique to the change until it is served (four to
+seven tries at ten seconds is normal), and put the URL in the message. A push without the
+live URL is not finished.</p>
+<h2>6. Working with the client — fine-tuning rules</h2>
+<p>Once a client has seen a URL, the project is in fine-tuning, and the rules change:</p>
+<ul>
+<li><strong>Only the reported item changes.</strong> Nothing is restructured, hidden, removed or
+  "improved" unasked. A table that disappears because a data rebuild made it empty is a
+  defect the client sees within the hour (IDBC D24).</li>
+<li><strong>A data rebuild keeps the page's behaviour</strong> — complete tables stay complete, blocks
+  stay visible — and adapts the minimum.</li>
+<li><strong>When the data suggests a layout change, say so in one line and leave the layout alone</strong>
+  until told.</li>
+<li><strong>The client's words are the headings.</strong> Feedback is answered item by item under the
+  client's own headings, with status: done / done-already / needs X from you.</li>
+<li><strong>Never let the client see "nothing happened".</strong> When a change cannot show (the TOP3
+  pills before the matching bértábla), the message says so before the client asks.</li>
+<li><strong>Every message with a change ends with the live URL.</strong></li>
+</ul>
+<h2>7. Attribution and voice</h2>
+<p>The product speaks as the product. No AI system is an author, contributor, reviewer or
+brand anywhere — commits, pages, docs, metadata (CLAUDE.md rule 1, non-negotiable).
+Documentation is written to the reader (client, staff, developer), in English for the
+engineering set and in the client's language for the presentation; the client's own terms
+are kept (dűlő, bértábla, Expert Community) rather than translated into ours.</p>
+<h2>8. Starting a new project — checklist</h2>
+<ol>
+<li><strong>Folder</strong>: <code>&lt;client&gt;/</code> self-contained; its own <code>styles.css</code> or tokens; no shared
+   components folder. Add it to the hub card list and to <code>README.md</code>'s table.</li>
+<li><strong>Brief</strong> (<code>docs/00-brief.md</code>) before any page: who, what problem, what will be real.</li>
+<li><strong>Audit the client's current state with <code>curl</code></strong> and write <code>02-audit.md</code> the same day;
+   read every file the client sent and write <code>03-sources.md</code> with the gaps.</li>
+<li><strong>Tokens first</strong>: a <code>tokens.css</code> (or a <code>:root</code> block) and a live design-system page;
+   get it approved. Then two frames (1440 / 390); get them approved.</li>
+<li><strong>Generate what repeats</strong>; write the converter for any data with asserts; commit the
+   data file, never edit it by hand.</li>
+<li><strong>Build one page per commit</strong> with its measurement in <code>06-build-log.md</code>.</li>
+<li><strong>Write <code>check.py</code></strong> the day the second page exists; wire it into the root <code>check.py</code>.</li>
+<li><strong>Sweep</strong> at both widths; write <code>07-gate.md</code>.</li>
+<li><strong>Presentation</strong> in the client's language on the client's tokens; link it from the
+   docs index and the hub.</li>
+<li><strong>Decisions as they happen</strong> in <code>04-decisions.md</code>; client asks as a numbered list.</li>
+<li><strong>Technical package</strong> (<code>10</code>–<code>14</code>) once the client has agreed the direction — the stack
+    as PROPOSED ADRs with the audit's numbers behind them.</li>
+<li><strong>Every push</strong>: <code>python3 check.py</code> → measured pass → push → live poll → URL.</li>
+</ol>
+<p>The fastest way to start is to copy <code>idbc-salary-guide/docs/build.py</code> and <code>docs.css</code>,
+change the tokens and the brand line, and create the fifteen files from the table in §4 —
+each can be a paragraph on day one, but each exists and is dated.</p>
+<h2>9. Definition of done, per stage</h2>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>Stage</th>
+<th>Done when</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Brief</td>
+<td>a stranger can say what the prototype is, what is real and where it stands from two pages</td>
+</tr>
+<tr>
+<td>Audit</td>
+<td>every claim about the client's site or data has a measurement or a file behind it</td>
+</tr>
+<tr>
+<td>Design system</td>
+<td>approved by the owner on a rendered page, before any layout</td>
+</tr>
+<tr>
+<td>Frames</td>
+<td>approved at both widths, composed from approved components and real assets</td>
+</tr>
+<tr>
+<td>Page</td>
+<td>matches the frame; gate clean; 0 overflow, 0 small targets, 0 console errors at 390 and 1440; measurement in the build log; live URL served</td>
+</tr>
+<tr>
+<td>Sweep</td>
+<td>every page, both widths, zero defects, written down</td>
+</tr>
+<tr>
+<td>Presentation</td>
+<td>in the client's language and brand, standalone, with previews and asks; the client can review from a phone</td>
+</tr>
+<tr>
+<td>Fine-tuning round</td>
+<td>the reported item changed and nothing else; measured; URL sent under the client's heading</td>
+</tr>
+<tr>
+<td>Technical package</td>
+<td>SSOT defines every term the others use; architecture cites the audit's numbers; every ADR has options and a reason; the plan has DoD per issue and an honest blocked register</td>
+</tr>
+<tr>
+<td>Project</td>
+<td>all fifteen slots exist and are dated; <code>check.py</code> clean; hub, README and CLAUDE.md know about it</td>
+</tr>
+</tbody>
+</table></div>
+<footer>Source: <code>PROTOTYPING.md</code>, rendered by <code>build-docs.py</code>.</footer>
+</div></body></html>

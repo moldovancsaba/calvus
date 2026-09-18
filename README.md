@@ -77,6 +77,14 @@ once its job — getting everyone to agreement — is done.
 | `index.html` | The hub page linking every project above | — |
 | `public/` | Image assets — currently unreferenced by any page in this repo; worth checking before assuming it's live |
 
+## How a prototype is built — the method
+
+`PROTOTYPING.md` (rendered as `prototyping.html`, linked from the hub) is the standard
+for every future prototype: the lifecycle and its gates, the requirements for pages
+(real data honestly flagged, generation, measured phone and desktop passes), the
+documentation set, the gate, the fine-tuning rules, a starter checklist and a definition
+of done per stage. Distilled 2026-09-18 from the four projects here.
+
 ## The standard documentation structure
 
 Every project carries the same set next to its prototype, in its `docs/` (DiscountDirect:
