@@ -204,6 +204,19 @@ became:
   munkáltatói válasz). **Not built**: the client sends the structure demo next week; the copy
   is in the Drive doc and goes in once the layout exists.
 
+Client review of the round (2026-09-18, same day): two defects. (1) On the SAP page the longer
+article stretched the side column — the video card measured 1053 px tall, the contact card 937 px
+— because the summary grid's default `align-items: stretch` plus the aside's own grid spread the
+extra height over both cards. Fixed with `align-self: start` on the aside (sticky on desktop,
+static on one-column widths). (2) On Bérek the TOP3 block simply vanished on the five areas that
+have no `top3` rows in the current bértábla (Banki, IT, Gyártás, Ügyfélszolgálat, Adminisztráció)
+— pre-existing behaviour, but it read as a defect once the client expected their 13-area TOP3 list
+there. The block now stays and says the current bértábla marks no TOP3 for that area. The real
+resolution for both the missing charts and the missing LinkedIn numbers is the client's current
+bértábla (Drive sheet `1aQA6Kw5k1U9LQMiWYgcn__m2YCuGmEhx79QFSzE0hJg`, shared 2026-09-18 but
+account-restricted — not yet readable from this environment); its areas and position names are the
+ones the Talent Insight list is cut to.
+
 Still pending from the client: the SAP + IT salary excel, the two missing Expert Pool numbers,
 the structure demos for Kezdőoldal / Bérek / Expert Pool, and the final videos / key thoughts.
 

@@ -607,12 +607,14 @@
     function renderTop3() {
       const rows = nonSapRows.filter(r => r.top3 && r.terulet === teruletSelect.value);
       if (!rows.length) {
-        // No curated TOP3 for this area — hide the cards and chart entirely,
-        // the table below covers everything.
+        // No curated TOP3 for this area in the current bértábla. Say so in place of the chart:
+        // a silently missing block read as a defect to the client (2026-09-18).
         topCards.style.display = 'none';
         topCards.innerHTML = '';
-        top3Panel.style.display = 'none';
-        top3Panel.innerHTML = '';
+        top3Panel.style.display = '';
+        top3Panel.innerHTML =
+          `<h3>TOP 3 pozíció – ${escapeHtml(teruletSelect.value)}</h3>` +
+          '<p class="no-data">Ehhez a területhez a jelenlegi bértábla nem jelöl kiemelt TOP3 pozíciót.</p>';
         return false;
       }
       topCards.style.display = '';
