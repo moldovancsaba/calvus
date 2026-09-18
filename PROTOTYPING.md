@@ -123,7 +123,9 @@ The measurement is done in the app's browser pane (Playwright is not installed h
 `resize_window` to the phone preset, exercise the feature, read the DOM — or, for a whole
 site, load every page in same-origin iframes at both widths and measure from one script
 (Holdvölgy's 152-measurement sweep, Lexodont's 66). Screenshots are a supplement; when the
-pane is hidden they come back blank, so the gate must not depend on them.
+pane is hidden they come back blank, so the gate must not depend on them — and a hidden
+pane reports a 0 px viewport, so every measurement sets an explicit width first and
+records `clientWidth` with the result.
 
 ### 3.4 Interaction
 

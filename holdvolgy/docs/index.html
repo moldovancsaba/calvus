@@ -194,7 +194,7 @@ record. Each file is dated inside; this index is the process log.</p>
 </tr>
 <tr>
 <td>07 gate</td>
-<td><a href="gate-sweep.html"><code>11-gate-sweep.md</code></a> + <code>python3 holdvolgy/check.py</code></td>
+<td><a href="gate-sweep.html"><code>11-gate-sweep.md</code></a> + <code>holdvolgy/check.py</code> (run by the root <code>check.py</code>)</td>
 </tr>
 <tr>
 <td>08 client asks</td>
@@ -207,13 +207,16 @@ record. Each file is dated inside; this index is the process log.</p>
 </tbody>
 </table></div>
 <h2>Reading these on the web</h2>
-<p>GitHub Pages serves this folder. The styled, phone-readable versions are the
-rendered pages — <code>index.html</code> (this file), <code>plan.html</code>, <code>benchmarks.html</code>,
-<code>audit.html</code>, <code>assets.html</code>, <code>decisions.html</code> — generated from the markdown by
-<code>build.py</code> (run <code>python3 holdvolgy/docs/build.py</code> after editing any <code>.md</code>; needs
-the <code>markdown</code> package). The <code>.md</code> files stay the source of truth. Pages' Jekyll
-pass also auto-renders each <code>.md</code> to an unstyled <code>&lt;name&gt;.html</code>; the generated
-names above are deliberately different so the two never collide.</p>
+<p>GitHub Pages serves this folder. The styled, phone-readable versions are the rendered
+pages — one per markdown file, listed in <code>build.py</code> (<code>index.html</code> for this file,
+<code>brief.html</code>, <code>plan.html</code>, <code>benchmarks.html</code>, <code>audit.html</code>, <code>assets.html</code>,
+<code>decisions.html</code>, <code>layouts.html</code>, the five build pages, <code>gate-sweep.html</code>, <code>ssot.html</code>,
+<code>architecture.html</code>, <code>technical-design.html</code>, <code>implementation-plan.html</code>,
+<code>token-map.html</code>) plus the hand-written <code>design-system.html</code> and <code>bemutato.html</code>. Run
+<code>python3 holdvolgy/docs/build.py</code> (or <code>python3 build-docs.py</code> at the repo root) after
+editing any <code>.md</code>; needs the <code>markdown</code> package. The <code>.md</code> files stay the source of
+truth. Pages' Jekyll pass also auto-renders each <code>.md</code> to an unstyled <code>&lt;name&gt;.html</code>; the
+generated names are deliberately different so the two never collide.</p>
 <h2>Process log</h2>
 <p><strong>2026-09-16 — first prototype (withdrawn as a direction).</strong> Commit <code>8342956</code> built a
 two-page prototype on a dark ground with a gold accent and a serif display face, from

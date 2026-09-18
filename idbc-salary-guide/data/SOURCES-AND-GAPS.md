@@ -149,6 +149,16 @@ folder is the single consolidated data source built from all of it.
 - `sapProducts` — **new**: the real 5-category, 20-item SAP product catalogue from the client's own SAP mockup/spec.
 - `siteMap` — **new**: the full intended 8-page site structure with a `status` (`built` / `partially built` / `not built`) and note per page.
 
+## Consistency pass (2026-09-18, evening)
+
+Deprecated information removed after the day's changes: the trends page's method note
+said the survey was shown "általános és IT + Contracting szegmensben" — it has been
+per-area since 2026-09-08 and now says so; the area page's comments still spoke of the
+infographic the media slot replaced (D20); the trends page's dataset select and its code
+were still named after the July "edition" term (now `datasetSelect`, the SSOT's word);
+the survey converter had a hard-coded Downloads path and now takes the workbook as an
+argument (output verified byte-identical). No figure and no layout changed.
+
 ## Client feedback round (2026-09-18)
 
 Two client mails and their attachments (three content docs, the Expert Community doc, the
@@ -328,8 +338,8 @@ Three changes after the client's workshop:
 - An element that declares `container-type` **cannot be styled by its own `@container` query**.
   Both table wrappers declare it, so their own background/border/shadow in card mode comes from a
   `@media (max-width: 640px)` rule instead. Their descendants still use the container query.
-- The shared chart assets are cache-busted with a version query (`top3-chart.js?v=4`,
-  `chart.css?v=4`). **Bump it whenever either file changes** — without it the browser pane and
+- The shared chart assets are cache-busted with a version query (`top3-chart.js?v=N`,
+  `chart.css?v=N`; 7 as of 2026-09-18, and `check.py` fails if two pages disagree). **Bump it whenever either file changes** — without it the browser pane and
   GitHub Pages both serve the previous renderer, which looks exactly like the change silently
   failing.
 

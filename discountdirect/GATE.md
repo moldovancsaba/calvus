@@ -4,7 +4,7 @@
 
 ## Automated
 
-`python3 holdvolgy/check.py` includes every `discountdirect/*.html` in its link audit,
+`python3 check.py` at the repo root runs every project gate; of these, `holdvolgy/check.py` includes every `discountdirect/*.html` in its link audit,
 cross-page anchor check and stale-phrase scan (the Holdvölgy gate was written to cover
 the hub and this folder as well). It must print `GATE: CLEAN`.
 

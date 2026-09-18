@@ -1,7 +1,7 @@
 # DiscountDirect — GDS token alignment
 
 **What this is:** the prototype's CSS custom properties are named after
-[General Design System](../../general-design-system) **6.5.0** semantic roles, so the eventual
+General Design System (the `general-design-system` repository, a sibling of this one — not reachable from GitHub Pages) **6.5.0** semantic roles, so the eventual
 production build maps 1:1 without a rename pass.
 
 **What this is not:** DiscountDirect does **not** consume GDS. There is no npm dependency, no

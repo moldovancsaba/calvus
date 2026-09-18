@@ -218,3 +218,6 @@ current and keeps this SSOT plus the technical design aligned with the code.
 | `technical-design.html` | schema, state machines, API, algorithms, integrations | a design detail changes |
 | `implementation-plan.html` | milestones, issues, DoD | scope or sequencing changes |
 | `executive.html`, `research.html` | why and what the evidence says | new evidence |
+| `docs.html` | index of the standard documentation set and the process log | any document is added |
+| `audit.html`, `sources.html`, `design.html`, `build-log.html`, `gate.html`, `client-asks.html` | the customer side (2026-09-18): what exists and where prototype and decisions diverge; what is sample; screens and tokens; rounds with measurements; the gate; what the owner must supply | a round, a measurement or an ask changes |
+| `bemutato.html` | the Hungarian client presentation | the pitch or the asks change |

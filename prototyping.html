@@ -233,7 +233,9 @@ both are measured. At both widths, on every page:</p>
 <code>resize_window</code> to the phone preset, exercise the feature, read the DOM — or, for a whole
 site, load every page in same-origin iframes at both widths and measure from one script
 (Holdvölgy's 152-measurement sweep, Lexodont's 66). Screenshots are a supplement; when the
-pane is hidden they come back blank, so the gate must not depend on them.</p>
+pane is hidden they come back blank, so the gate must not depend on them — and a hidden
+pane reports a 0 px viewport, so every measurement sets an explicit width first and
+records <code>clientWidth</code> with the result.</p>
 <h3>3.4 Interaction</h3>
 <p>The feature that changed is exercised, not glanced at: every filter value, every tab,
 every persona, both views. When real data cannot reach a code path (IDBC's TOP3 pill before

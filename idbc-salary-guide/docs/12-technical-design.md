@@ -37,8 +37,9 @@ client workbook(s) ──▶ build-guide-data.py ──▶ guide-data.json ─�
                                                                      └──▶ exports/salary-guide-2026.xlsx
 ```
 
-- The two converters stay as they are (deterministic, asserting); their input paths
-  become arguments (today one has a hard-coded Downloads path — `13` SG-020).
+- The two converters stay as they are (deterministic, asserting); both take their input
+  workbooks as arguments and write next to themselves (the survey converter's hard-coded
+  Downloads path was removed 2026-09-18; SG-020 is therefore only the documentation line).
 - `split.py` (to write) cuts `guide-data.json` into per-page files and builds the Excel
   (openpyxl): one sheet per bértábla area + Expert Pool + Talent Insight, with the same
   labels as the pages and the footnote.

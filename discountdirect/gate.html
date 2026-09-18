@@ -30,7 +30,7 @@ footer{margin-top:48px;padding-top:16px;border-top:1px solid var(--gds-border-ca
 <h1>DiscountDirect — gate</h1>
 <p><em>What is checked before a push, and the state on 2026-09-18.</em></p>
 <h2>Automated</h2>
-<p><code>python3 holdvolgy/check.py</code> includes every <code>discountdirect/*.html</code> in its link audit,
+<p><code>python3 check.py</code> at the repo root runs every project gate; of these, <code>holdvolgy/check.py</code> includes every <code>discountdirect/*.html</code> in its link audit,
 cross-page anchor check and stale-phrase scan (the Holdvölgy gate was written to cover
 the hub and this folder as well). It must print <code>GATE: CLEAN</code>.</p>
 <h2>Measured (browser pane, per round)</h2>

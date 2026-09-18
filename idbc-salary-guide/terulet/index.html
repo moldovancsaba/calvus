@@ -65,7 +65,7 @@
     h1 { margin: 0 0 6px; font-size: clamp(28px, 4vw, 42px); line-height: 1.02; letter-spacing: -1px; }
     .lede { margin: 0; font-size: 13px; font-weight: 700; color: var(--muted); }
 
-    /* Summary: text column clamped to the infographic's height, expandable. */
+    /* Summary: text column clamped to the media slot's height (video placeholder or key-thought box), expandable. */
     .area-summary { display: grid; grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr); gap: 26px; align-items: start; margin: 24px 0 0; }
     .summary-text { position: relative; }
     .summary-body { position: relative; overflow: hidden; }
@@ -306,8 +306,8 @@
     el('summaryBody').innerHTML = area.summary.split('\n\n')
       .map(t => `<p>${esc(t)}</p>`).join('');
 
-    // Clamp the text to the infographic's rendered height; expand on request. Falls back to a
-    // fixed clamp on the stacked layout, where the image is full-width and its height means
+    // Clamp the text to the media slot's rendered height; expand on request. Falls back to a
+    // fixed clamp on the stacked layout, where the slot is full-width and its height means
     // nothing for the text column.
     const media = mediaEl;
     const body = el('summaryBody');

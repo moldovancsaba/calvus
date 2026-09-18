@@ -507,7 +507,7 @@
           <div class="top-filters">
             <label>
               <span>Szegmens</span>
-              <select id="editionSelect"></select>
+              <select id="datasetSelect"></select>
             </label>
             <label>
               <span>Téma</span>
@@ -580,7 +580,7 @@
         <hr />
         <h2 id="method-title">Módszertani megjegyzés</h2>
         <div class="text-columns">
-          <p>A piaci trendek blokk az IDBC 2026-os munkaerőpiaci felmérésének valós válaszmegoszlásait mutatja (munkavállalói és munkáltatói oldal, általános és IT + Contracting szegmensben).</p>
+          <p>A piaci trendek blokk az IDBC 2026-os munkaerőpiaci felmérésének valós válaszmegoszlásait mutatja (munkavállalói és munkáltatói oldal, összesítve és tizenegy területre bontva).</p>
           <p>A bérsávok és juttatások jelenleg piaci logika alapján összeállított, szakmai jóváhagyásra váró mintaadatok — publikálás előtt IDBC szakértői felülvizsgálat szükséges.</p>
         </div>
       </div>
@@ -663,7 +663,7 @@
       return na - nb;
     }
 
-    const editionSelect = document.querySelector('#editionSelect');
+    const datasetSelect = document.querySelector('#datasetSelect');
     const topicSelect = document.querySelector('#topicSelect');
     const empSegmentSelect = document.querySelector('#empSegmentSelect');
     const erSegmentSelect = document.querySelector('#erSegmentSelect');
@@ -673,7 +673,7 @@
     // The final research file is tabulated per area, with a whole-sample "Összesített adatok"
     // dataset alongside. The dataset key is what the panels read.
     const DATASET_KEYS = Object.keys(DATA.datasets);
-    editionSelect.innerHTML = DATASET_KEYS
+    datasetSelect.innerHTML = DATASET_KEYS
       .map(k => `<option value="${escapeHtml(k)}">${escapeHtml(DATA.datasets[k].label)}</option>`).join('');
     topicSelect.innerHTML = DATA.topics.map(t => `<option value="${escapeHtml(t.topic)}">${escapeHtml(t.topic)}</option>`).join('');
 
@@ -686,9 +686,9 @@
     // its percentages are just all 0. Only count a segment as real data for this topic+side if at
     // least one of the topic's questions has a non-empty row for it; otherwise selecting it would
     // show nothing but empty questions, so don't offer it at all.
-    function collectSegmentsForTopic(topic, edition, side, sideKey, canonicalOrder) {
-      const cross = DATA.datasets[edition][side].cross;
-      const questions = getQuestions(topic, edition, sideKey);
+    function collectSegmentsForTopic(topic, dataset, side, sideKey, canonicalOrder) {
+      const cross = DATA.datasets[dataset][side].cross;
+      const questions = getQuestions(topic, dataset, sideKey);
       const found = new Set();
       questions.forEach(q => {
         const c = cross[q];
@@ -702,11 +702,11 @@
 
     function populateSegmentSelects() {
       const topic = topicSelect.value;
-      const edition = editionSelect.value;
+      const dataset = datasetSelect.value;
       const prevEmp = empSegmentSelect.value || ALL_SEGMENT;
       const prevEr = erSegmentSelect.value || ALL_SEGMENT;
-      const empSegs = collectSegmentsForTopic(topic, edition, 'employee', 'Munkavállalók', EXPERIENCE_ORDER);
-      const erSegs = collectSegmentsForTopic(topic, edition, 'employer', 'Munkáltatók', COMPANY_SIZE_ORDER);
+      const empSegs = collectSegmentsForTopic(topic, dataset, 'employee', 'Munkavállalók', EXPERIENCE_ORDER);
+      const erSegs = collectSegmentsForTopic(topic, dataset, 'employer', 'Munkáltatók', COMPANY_SIZE_ORDER);
       empSegmentSelect.innerHTML = empSegs.map(s => `<option value="${escapeHtml(s)}">${escapeHtml(s)}</option>`).join('');
       erSegmentSelect.innerHTML = erSegs.map(s => `<option value="${escapeHtml(s)}">${escapeHtml(s)}</option>`).join('');
       empSegmentSelect.value = empSegs.includes(prevEmp) ? prevEmp : ALL_SEGMENT;
@@ -714,7 +714,7 @@
     }
 
     // For the selected segment, use that segment's crosstab row when the question has one.
-    // "Összes" always means the whole-sample total. A real segment with no crosstab (or an
+    // "Összesített adatok" always means the whole-sample total. A real segment with no crosstab (or an
     // all-zero row) returns null — the caller renders the uniform no-data message instead of
     // quietly falling back to the aggregate. Mean-score (matrix-value) crosstabs also return
     // null: the owner chose the stacked distribution as this question type's one chart shape,
@@ -730,9 +730,9 @@
       return { kind: 'simple', items };
     }
 
-    function getQuestions(topic, edition, sideKey) {
+    function getQuestions(topic, dataset, sideKey) {
       const t = DATA.topics.find(x => x.topic === topic);
-      const ds = DATA.datasets[edition];
+      const ds = DATA.datasets[dataset];
       if (!t || !ds) return [];
       const set = t.questionSets[ds.questionSet];
       return (set && set[sideKey]) || [];
@@ -867,9 +867,9 @@
 
     function renderPanel(target, side, sideKey, segmentValue) {
       const topic = topicSelect.value;
-      const edition = editionSelect.value;
-      const questions = getQuestions(topic, edition, sideKey);
-      const sideData = DATA.datasets[edition][side];
+      const dataset = datasetSelect.value;
+      const questions = getQuestions(topic, dataset, sideKey);
+      const sideData = DATA.datasets[dataset][side];
       if (!questions.length) {
         target.innerHTML = '<p class="no-data">Ehhez a témához nincs kérdés ezen az oldalon.</p>';
         return;
@@ -880,7 +880,7 @@
       target.innerHTML = html || `<p class="no-data">${NO_DATA_MESSAGE}</p>`;
     }
 
-    // The segment dropdown is only worth showing when it offers a real choice: "Összes" is always
+    // The segment dropdown is only worth showing when it offers a real choice: "Összesített adatok" is always
     // present, but if it's the only option (no real segment has data for this topic+side), picking
     // it can't change anything, so the control is just a distraction.
     function segmentDropdownApplicable(selectEl) {
@@ -889,7 +889,7 @@
 
     function renderAll() {
       // Options depend on the current topic (a segment only appears if it has data somewhere in
-      // it), so rebuild them on every render, not just on edition change.
+      // it), so rebuild them on every render, not just on dataset change.
       populateSegmentSelects();
 
       empSegmentSelect.closest('.segment-select').style.display = segmentDropdownApplicable(empSegmentSelect) ? '' : 'none';
@@ -899,7 +899,7 @@
       renderPanel(b2bChart, 'employer', 'Munkáltatók', erSegmentSelect.value);
     }
 
-    [editionSelect, topicSelect, empSegmentSelect, erSegmentSelect].forEach(el => el.addEventListener('change', renderAll));
+    [datasetSelect, topicSelect, empSegmentSelect, erSegmentSelect].forEach(el => el.addEventListener('change', renderAll));
     renderAll();
 
     })();

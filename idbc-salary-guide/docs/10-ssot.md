@@ -25,7 +25,7 @@ the pages). Written 2026-09-18.*
 | Expert Pool / Expert Community | IDBC's candidate community; the pool sheet gives a count per industry + position (15 rows). |
 | SAP catalogue | 20 items in 5 categories (`sapProducts`), from the client's SAP spec. |
 | Inert control | A control shown in place with class `is-unavailable`, `aria-disabled` and a `title` saying why: Excel export, EN, Kijelentkezés, form submits. |
-| Gate | `python3 idbc-salary-guide/check.py` + the measured pass (`07-gate.md`). |
+| Gate | `python3 idbc-salary-guide/check.py` (run by the root `check.py`) + the measured pass (`07-gate.md`). |
 
 ## 2. Enumerations
 
@@ -48,7 +48,7 @@ the pages). Written 2026-09-18.*
 
 | Entity | Key fields | Source |
 |---|---|---|
-| `datasets[id]` | `label`, `questionSet`, `employee{base, cross}`, `employer{base, cross}`; `base[question] = {kind, options[], percent[], count[], weighted?}`; `cross[question][segment]` likewise | survey workbook via `build-guide-data.py` |
+| `datasets[id]` | `label`, `questionSet`, `employee{base, cross}`, `employer{base, cross}`; `base[question] = {kind, options[], percent[], count[], weighted?}`; `cross[question][segment]` likewise | survey workbook via `build-guide-data.py <workbook>`; the trends page's dataset select is `#datasetSelect` (renamed from `editionSelect` 2026-09-18 — "edition" was the July term) |
 | `topics[]` | `topic`, `questionSets{set: {employee[], employer[]}}` — the question lists per set | workbook's "Téma besorolás" tab + client renames (D7) |
 | `salary.webBertabla[]` | `id`, `kod`, `terulet`, `szint`, `pozicio`, `top3`, `min`, `idbc`, `max`, `juttatas`, `linkedin?` | bértábla via `build-salary-data.py` |
 | `salary.talentInsightTop3[]` | `terulet`, `pozicio`, `linkedin` — the client's list verbatim | Talent Insight sheet 1 |

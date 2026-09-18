@@ -24,7 +24,7 @@ Written 2026-09-18. Changes when a definition changes; the process log records w
 | Age gate | The 18+ dialog shown before any page; "Nem" leaves the site. |
 | Prototype banner | The one-line notice on every page that the cart and forms do not send. |
 | Reference widths | 390 (phone) and 1440 (desktop); tablet 768–1023 resolved in `05-layout-specs.md`. |
-| Gate | `python3 holdvolgy/check.py` plus the measured sweep (`11-gate-sweep.md`). Must print `GATE: CLEAN` before a push. |
+| Gate | `python3 check.py` at the repo root (runs `holdvolgy/check.py` and the other project gates) plus the measured sweep (`11-gate-sweep.md`). Must print `GATE: CLEAN` before a push. |
 
 ## 2. Enumerations
 

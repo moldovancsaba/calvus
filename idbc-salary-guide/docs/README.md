@@ -77,5 +77,9 @@ package `10`–`14` with every stack decision PROPOSED. The Hungarian presentati
 `bemutato.html` added. `SOURCES-AND-GAPS.md` stays where CLAUDE.md rule 4 names it and
 is the 03/06 slot.
 
+**2026-09-18 — consistency pass.** Deprecated wording and comments removed after the day's
+rounds (method note, area-page comments, the "edition" name, the converter's hard-coded
+path) — details in `SOURCES-AND-GAPS.md`; no figure or layout changed.
+
 **Next.** The client's structure demo for the home page; the four missing counts; the
 stack decisions (blocked register in `13`).

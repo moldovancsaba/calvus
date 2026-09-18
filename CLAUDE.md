@@ -7,11 +7,13 @@ the rules win; say so explicitly rather than silently overriding them.
 ## What this repo actually is
 
 Static HTML/CSS/JS wireframe and prototype pages (Lexodont dental site,
-IDBC Salary Guide, Holdvölgy), no package manager, no test runner. Two manual
-generators exist and must be re-run after editing their sources:
-`python3 holdvolgy/build.py` (site pages, HU + EN, from `build.py` content and
-`data/catalogue.json`) and `python3 holdvolgy/docs/build.py` (docs pages from the
-markdown); `python3 holdvolgy/check.py` is the gate.
+IDBC Salary Guide, Holdvölgy, DiscountDirect), no package manager, no test runner.
+Generators exist and must be re-run after editing their sources: `python3 holdvolgy/build.py`
+(site pages, HU + EN, from `build.py` content and `data/catalogue.json`); the two IDBC data
+converters (`idbc-salary-guide/data/build-guide-data.py <workbook>`,
+`build-salary-data.py <bértábla> <talent-insight>`); and `python3 build-docs.py` at the
+root, which renders every project's documentation from markdown. `python3 check.py` at the
+root is the gate (it runs the three project gates and a repo-wide link audit).
 Deployed to GitHub Pages straight from the `main` branch — there is no CI
 pipeline, no bundler, no linter. Don't assume npm scripts, a `package.json`,
 or a design-system engine exist here; they don't. Treat any instruction that
@@ -146,7 +148,7 @@ must actually happen before every push, not just be claimed:
   print `GATE: CLEAN`. Added 2026-09-18 with the standard documentation structure
   (`idbc-salary-guide/docs/`); after editing any `.md` there, run
   `python3 idbc-salary-guide/docs/build.py`.
-- Run `python3 holdvolgy/check.py` — the one-command gate: link audit, cross-page
+- `python3 holdvolgy/check.py` (run by the root `check.py`) — the Holdvölgy gate: link audit, cross-page
   anchors, docs cross-links, a **stale-state phrase scan** (anything that was true
   once — "in Phase N", "for approval", "coming soon", placeholders) and the single
   current prototype banner on every page. It must print `GATE: CLEAN`. Added after

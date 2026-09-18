@@ -1,14 +1,18 @@
 # -*- coding: utf-8 -*-
 """Rebuild the survey half of guide-data.json from the client's final Excel.
 
+    python3 idbc-salary-guide/data/build-guide-data.py <Salary Guide- kutatási eredmények-final.xlsx>
+
 The salary half (webBertabla, expertPool, sapProducts, ...) is preserved untouched —
-the workbook only carries survey results.
+the workbook only carries survey results; build-salary-data.py owns that half.
 """
 import io, json, sys
 import openpyxl
 
-SRC = "/Users/chappie/Downloads/Salary Guide- kutatási eredmények-final.xlsx"
-OUT = "/Users/Shared/Projects/calvus/idbc-salary-guide/data/guide-data.json"
+if len(sys.argv) != 2:
+    sys.exit("usage: build-guide-data.py <research workbook .xlsx>")
+SRC = sys.argv[1]
+OUT = __file__.rsplit("/", 1)[0] + "/guide-data.json"
 
 wb = openpyxl.load_workbook(SRC, data_only=True)
 

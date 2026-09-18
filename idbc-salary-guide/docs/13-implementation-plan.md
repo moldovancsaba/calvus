@@ -49,7 +49,7 @@ home demo.
 - **SG-013** Chart assets enqueued, hash-versioned — DoD: one version everywhere (gate check 4 equivalent).
 
 ### E2 Data pipeline (M2)
-- **SG-020** Converter inputs as arguments; documented one-command rebuild — DoD: `README` line; runs from a clean checkout.
+- **SG-020** Documented one-command rebuild — DoD: `README` line; runs from a clean checkout. (Converter inputs are already arguments, 2026-09-18.)
 - **SG-021** `split.py`: per-page JSON ≤ 300 KB — DoD: sizes in the build log.
 - **SG-022** Excel export generated from the JSON with the pages' labels and footnote — DoD: a reader opens it; one figure checked against the page.
 - **SG-023** Data round rehearsal with the current workbooks — DoD: checklist in `12` §3 executed; diff reviewed.

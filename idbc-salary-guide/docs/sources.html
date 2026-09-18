@@ -244,6 +244,14 @@ folder is the single consolidated data source built from all of it.</p>
 <li><code>sapProducts</code> — <strong>new</strong>: the real 5-category, 20-item SAP product catalogue from the client's own SAP mockup/spec.</li>
 <li><code>siteMap</code> — <strong>new</strong>: the full intended 8-page site structure with a <code>status</code> (<code>built</code> / <code>partially built</code> / <code>not built</code>) and note per page.</li>
 </ul>
+<h2>Consistency pass (2026-09-18, evening)</h2>
+<p>Deprecated information removed after the day's changes: the trends page's method note
+said the survey was shown "általános és IT + Contracting szegmensben" — it has been
+per-area since 2026-09-08 and now says so; the area page's comments still spoke of the
+infographic the media slot replaced (D20); the trends page's dataset select and its code
+were still named after the July "edition" term (now <code>datasetSelect</code>, the SSOT's word);
+the survey converter had a hard-coded Downloads path and now takes the workbook as an
+argument (output verified byte-identical). No figure and no layout changed.</p>
 <h2>Client feedback round (2026-09-18)</h2>
 <p>Two client mails and their attachments (three content docs, the Expert Community doc, the
 Talent Insight workbook, three design PNGs, and the research workbook again). What each item
@@ -412,8 +420,8 @@ both Bérsávok and SAP, for one- and two-line position names.</p>
 <li>An element that declares <code>container-type</code> <strong>cannot be styled by its own <code>@container</code> query</strong>.
   Both table wrappers declare it, so their own background/border/shadow in card mode comes from a
   <code>@media (max-width: 640px)</code> rule instead. Their descendants still use the container query.</li>
-<li>The shared chart assets are cache-busted with a version query (<code>top3-chart.js?v=4</code>,
-  <code>chart.css?v=4</code>). <strong>Bump it whenever either file changes</strong> — without it the browser pane and
+<li>The shared chart assets are cache-busted with a version query (<code>top3-chart.js?v=N</code>,
+  <code>chart.css?v=N</code>; 7 as of 2026-09-18, and <code>check.py</code> fails if two pages disagree). <strong>Bump it whenever either file changes</strong> — without it the browser pane and
   GitHub Pages both serve the previous renderer, which looks exactly like the change silently
   failing.</li>
 </ul>
