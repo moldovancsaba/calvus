@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
   <meta http-equiv="Pragma" content="no-cache" />
-  <title>IDBC Salary Guide – IDBC Expert Community</title>
+  <title>IDBC Salary Guide – Regisztráció</title>
   <link rel="stylesheet" href="../assets/chart.css?v=7" />
 
   <style>
@@ -356,6 +356,21 @@
       .brand { min-height: 44px; display: inline-flex; flex-direction: column; justify-content: center; }
       select { min-height: 44px; }
     }
+
+    /* Registration mock (client field list, 2026-09). Nothing behind it: no backend on static hosting. */
+    .reg-wrap { display: grid; grid-template-columns: minmax(0, .9fr) minmax(320px, 1.1fr); gap: 40px; align-items: start; }
+    .reg-wrap h2 { margin: 0 0 12px; font-size: clamp(28px, 3.8vw, 44px); line-height: 1; letter-spacing: -1px; }
+    .reg-wrap p { margin: 0 0 12px; font-size: 14px; font-weight: 700; line-height: 1.5; }
+    .proto-form { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; padding: 28px; border-radius: 20px; background: #fff; border: 1px solid var(--line); }
+    .proto-form label { display: grid; gap: 5px; font-size: 12px; font-weight: 900; }
+    .proto-form .full, .proto-form .cta, .proto-form .form-note, .proto-form .check { grid-column: 1 / -1; }
+    .proto-form input, .proto-form select { font: inherit; font-size: 14px; font-weight: 600; padding: 10px 12px; min-height: 44px; border: 1.5px solid var(--line); border-radius: 10px; background: #fff; color: var(--text); width: 100%; }
+    .proto-form select { appearance: auto; }
+    .proto-form .check { display: flex; align-items: center; gap: 10px; font-size: 13px; font-weight: 700; min-height: 44px; }
+    .proto-form .check input { width: 20px; height: 20px; min-height: 0; }
+    .cta { display: inline-flex; align-items: center; justify-content: center; min-height: 44px; padding: 10px 22px; border: 0; border-radius: 11px; background: var(--dark); color: #fff; font: inherit; font-size: 14px; font-weight: 900; cursor: pointer; width: fit-content; }
+    .form-note { margin: 0; font-size: 12px; font-weight: 700; color: var(--muted); }
+    @media (max-width: 900px) { .reg-wrap { grid-template-columns: 1fr; } .proto-form { grid-template-columns: 1fr; } }
   </style>
 </head>
 <body>
@@ -376,7 +391,7 @@
         <li><a href="../index.html#trends">Piaci trendek</a></li>
         <li><a href="../berezes/index.html">Bérek</a></li>
         <li><a href="../sap/index.html">SAP</a></li>
-        <li><a href="../expert-pool/index.html" aria-current="page">Expert Pool</a></li>
+        <li><a href="../expert-pool/index.html">Expert Pool</a></li>
         <li><a href="../esettanulmanyok/index.html">Esettanulmányok</a></li>
       </ul>
 
@@ -411,136 +426,42 @@
   <main>
     <section class="hero" aria-labelledby="hero-title">
       <div class="hero-media">
-        <img
-          src="https://images.unsplash.com/photo-1600880292203-757bb62b4baf?auto=format&fit=crop&w=1600&q=80"
-          alt="Interjú helyzet két üzletember között irodai környezetben"
-        />
+        <img src="https://images.unsplash.com/photo-1600880292203-757bb62b4baf?auto=format&fit=crop&w=1600&q=80" alt="Interjú helyzet két üzletember között irodai környezetben" />
         <div class="hero-overlay"></div>
       </div>
-
       <div class="hero-card">
         <p class="eyebrow">IDBC Salary Guide</p>
-        <h1 id="hero-title">IDBC Expert Community</h1>
-        <p>Egy közösség, ahol a szakértelem és a megfelelő lehetőség találkozik.</p>
+        <h1 id="hero-title">Regisztráció</h1>
+        <p>A Talent Market &amp; Salary Guide 2026 teljes tartalma regisztráció után érhető el.</p>
       </div>
     </section>
 
-    <section class="section" id="expertpool" aria-labelledby="expertpool-title">
-      <div class="container">
-        <div class="intro-block">
-          <div>
-            <p class="eyebrow">Expert Pool</p>
-            <h2 id="expertpool-title">Mi az IDBC Expert Community?</h2>
-          </div>
-          <div class="intro-copy">
-            <p>
-              Az IDBC Expert Community egy folyamatosan bővülő, több mint 500 IT és non-IT szakemberből álló
-              közösség. Tagjainkkal recruitereink aktív kapcsolatot tartanak, így ismerjük szakmai tapasztalatukat,
-              ambícióikat és karriercéljaikat.
-            </p>
-            <p>
-              A közösség szakembereink számára személyre szabott karrierlehetőségeket, szakmai tartalmakat és
-              értékes kapcsolódásokat kínál. Ügyfeleink számára pedig egy naprakész szakértői közösséget jelent,
-              amelyből gyorsan és célzottan találhatjuk meg a nyitott pozícióhoz leginkább illeszkedő jelölteket,
-              akár 3 munkanapon belül.
-            </p>
-          </div>
+    <section class="section" id="regisztracio">
+      <div class="container reg-wrap">
+        <div>
+          <p class="eyebrow">Regisztráció</p>
+          <h2>Hozd létre a fiókodat</h2>
+          <p>A regisztrációval hozzáférsz a munkaerő-piaci trendekhez, a bérsávokhoz, az SAP útmutatóhoz, az Expert Poolhoz és az esettanulmányokhoz.</p>
+          <p>Cégként és jelöltként egyaránt regisztrálhatsz – a fióktípus a tartalmak személyre szabásához szükséges.</p>
         </div>
-
-        <div class="audience-grid">
-          <article class="audience-card">
-            <h3>Szakemberként csatlakoznál?</h3>
-            <p>
-              Az Expert Community tagjaként recruitereink jobban megismerhetik szakmai tapasztalatodat, céljaidat és
-              ambícióidat, így személyre szabott karrierlehetőségekkel támogathatják szakmai előrelépésedet.
-            </p>
-            <h4>Miért érdemes csatlakoznod?</h4>
-            <ul class="bullet-list">
-              <li>egy magas színvonalú szakmai közösség részévé válhatsz</li>
-              <li>elsőként értesülhetsz a legfrissebb és legizgalmasabb szakmai lehetőségekről</li>
-              <li>releváns szakmai tartalmakhoz és piaci elemzésekhez férhetsz hozzá</li>
-              <li>szakmai meetupokon és közösségi eseményeken vehetsz részt</li>
-            </ul>
-            <details class="join">
-              <summary class="cta">Csatlakozom az Expert Communityhez</summary>
-              <form class="proto-form" aria-label="Csatlakozás az Expert Communityhez">
-                <label><span>Vezetéknév</span><input type="text" name="vezeteknev" autocomplete="family-name" /></label>
-                <label><span>Keresztnév</span><input type="text" name="keresztnev" autocomplete="given-name" /></label>
-                <label><span>Pozíció</span><input type="text" name="pozicio" autocomplete="organization-title" /></label>
-                <label><span>E-mail cím</span><input type="email" name="email" autocomplete="email" /></label>
-                <label><span>Telefonszám</span><input type="tel" name="telefon" autocomplete="tel" /></label>
-                <label class="full"><span>Üzenet</span><textarea name="uzenet" rows="4"></textarea></label>
-                <button class="cta is-unavailable" type="button" aria-disabled="true"
-                  title="A prototípusban az űrlap nem küld — a beküldés a fejlesztett oldalon kerül bekötésre">Csatlakozás elküldése</button>
-                <p class="form-note">A prototípusban az űrlap nem küld adatot.</p>
-              </form>
-            </details>
-          </article>
-
-          <article class="audience-card">
-            <h3>Új kollégát keresel?</h3>
-            <p>
-              Az Expert Community révén gyorsan, akár 3 napon belül és célzottan kapcsolhatjuk össze vállalatodat a
-              nyitott pozícióhoz leginkább illeszkedő szakemberekkel.
-            </p>
-            <h4>Milyen előnyöket nyújt ügyfeleinknek?</h4>
-            <ul class="bullet-list">
-              <li>a pozíció megismerését követően akár 3 munkanapon belül bemutatjuk az ideális jelöltet</li>
-              <li>speciális kompetenciákat igénylő pozíciókat is rövid időn belül betöltünk</li>
-              <li>számos szakterületen rendelkezünk releváns, elérhető szakemberekkel</li>
-              <li>szakmailag és a vállalati kultúra szempontjából is jól illeszkedő jelölteket mutathatunk be, akik hosszú távon erősíthetik a csapatodat</li>
-            </ul>
-            <a class="cta" href="#kontakt">Ajánlatkérés</a>
-          </article>
-        </div>
-
-        <div class="pool-head">
-          <h3>Kiterjedt szakértői közösség</h3>
-          <p>
-            Expert Communitynk tagjai számos szakterületet képviselnek, és változatos technológiai, illetve iparági
-            tapasztalattal rendelkeznek. Ez lehetővé teszi, hogy ügyfeleink speciális szakmai és üzleti igényeire is
-            gyors, célzott megoldást nyújtsunk.
-          </p>
-        </div>
-
-        <div class="expert-filters">
-          <label>
-            <span class="sr-only">Iparág</span>
-            <select id="iparagSelect"></select>
-          </label>
-        </div>
-
-        <div class="top-cards" id="poolCards"></div>
-
-        <ul class="expert-legend" aria-label="Jelmagyarázat">
-          <li><span style="background:#a5df8f"></span>Kisebb pool</li>
-          <li><span style="background:#55aa8b"></span>Közepes pool</li>
-          <li><span style="background:#245d54"></span>Nagyobb pool</li>
-        </ul>
-
-        <div class="expert-grid" id="expertGrid"></div>
-        <p class="talent-note" id="talentNote"></p>
-
-        <p class="pool-outro">
-          Akár a bemutatott szakterületek egyikén, akár más pozícióban keresel új kollégát, vedd fel velünk a
-          kapcsolatot! Szakértőink segítenek megtalálni a vállalatod igényeihez leginkább illeszkedő jelöltet.
-        </p>
-      </div>
-    </section>
-
-    <section class="section contact-section" id="kontakt" aria-labelledby="kontakt-title">
-      <div class="container">
-        <p class="eyebrow">Ajánlatkérés</p>
-        <h2 id="kontakt-title">Vedd fel velünk a kapcsolatot</h2>
-        <form class="proto-form contact-form" aria-label="Kapcsolatfelvétel">
+        <form class="proto-form" aria-label="Regisztráció">
+          <label><span>Vezetéknév</span><input type="text" name="vezeteknev" autocomplete="family-name" /></label>
+          <label><span>Keresztnév</span><input type="text" name="keresztnev" autocomplete="given-name" /></label>
+          <label class="full"><span>E-mail cím</span><input type="email" name="email" autocomplete="email" /></label>
           <label><span>Cégnév</span><input type="text" name="cegnev" autocomplete="organization" /></label>
-          <label><span>Kapcsolattartó neve</span><input type="text" name="nev" autocomplete="name" /></label>
-          <label><span>E-mail cím</span><input type="email" name="email" autocomplete="email" /></label>
-          <label><span>Telefonszám</span><input type="tel" name="telefon" autocomplete="tel" /></label>
-          <label class="full"><span>Keresett pozíció, üzenet</span><textarea name="uzenet" rows="4"></textarea></label>
+          <label><span>Pozíció</span><input type="text" name="pozicio" autocomplete="organization-title" /></label>
+          <label class="full"><span>Fióktípus</span>
+            <select name="fioktipus">
+              <option value="">Válassz…</option>
+              <option value="ceg">Cégként regisztrálok</option>
+              <option value="jelolt">Jelöltként regisztrálok</option>
+            </select>
+          </label>
+          <label class="full"><span>Jelszó</span><input type="password" name="jelszo" autocomplete="new-password" /></label>
+          <label class="check"><input type="checkbox" name="adatvedelem" /> Elfogadom az adatkezelési tájékoztatót</label>
           <button class="cta is-unavailable" type="button" aria-disabled="true"
-            title="A prototípusban az űrlap nem küld — a beküldés a fejlesztett oldalon kerül bekötésre">Ajánlatkérés elküldése</button>
-          <p class="form-note">A prototípusban az űrlap nem küld adatot.</p>
+            title="A prototípusban a regisztráció nem küld — a fiókkezelés a fejlesztett oldalon kerül bekötésre">Regisztrálok</button>
+          <p class="form-note">A prototípusban az űrlap nem küld adatot; a regisztráció és a bejelentkezés a fejlesztett oldalon kerül bekötésre.</p>
         </form>
       </div>
     </section>
@@ -578,83 +499,5 @@
     </div>
   </footer>
 
-  <script src="../assets/top3-chart.js?v=7"></script>
-  <script>
-    (async () => {
-    const DATA = await fetch('../data/guide-data.json', { cache: 'no-cache' }).then(r => r.json());
-
-    function escapeHtml(s) {
-      return String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-    }
-
-    const iparagSelect = document.querySelector('#iparagSelect');
-    const expertGrid = document.querySelector('#expertGrid');
-    const talentNote = document.querySelector('#talentNote');
-    const fmt = new Intl.NumberFormat('hu-HU');
-
-    function populateExpertFilter() {
-      const iparagak = [...new Set(DATA.salary.expertPool.map(r => r.iparag))];
-      iparagSelect.innerHTML = iparagak.map(i => `<option value="${escapeHtml(i)}">${escapeHtml(i)}</option>`).join('');
-    }
-
-    function renderExpertPool() {
-      const iparag = iparagSelect.value;
-      const rows = DATA.salary.expertPool.filter(r => r.iparag === iparag);
-      // Bars are scaled against the whole pool, not just the selected industry,
-      // so switching industries compares like with like.
-      const max = Math.max(...DATA.salary.expertPool.map(r => r.darab));
-      const total = rows.reduce((sum, r) => sum + r.darab, 0);
-
-      expertGrid.innerHTML = rows.map(r => {
-        const share = total ? Math.round(r.darab / total * 100) : 0;
-        const market = r.linkedin != null ? `; piacon elérhető szakember ${fmt.format(r.linkedin)} fő` : '';
-        const tip = `${r.iparag} – ${r.pozicio}: ${r.darab} fő az IDBC Expert Communityben (az iparág poolja ${total} fő, ebből ${share}%)${market}`;
-        return `
-        <article class="expert-card" role="img" tabindex="0"
-                 aria-label="${escapeHtml(tip)}" data-tooltip="${escapeHtml(tip)}">
-          <p class="expert-iparag">${escapeHtml(r.iparag)}</p>
-          <h4>${escapeHtml(r.pozicio)}</h4>
-          ${r.linkedin != null ? `<p class="expert-market">Piacon elérhető szakember: ${fmt.format(r.linkedin)} fő*</p>` : ''}
-          <p class="expert-bar-label">IDBC Expert Community</p>
-          <div class="expert-bar-track"><div class="expert-bar-fill" style="width:${(r.darab / max * 100).toFixed(0)}%"></div></div>
-          <strong class="expert-count">${r.darab} fő</strong>
-        </article>`;
-      }).join('') || '<p class="no-data">Nincs elérhető jelölt ehhez az iparághoz.</p>';
-      // The footnote belongs to the star; no star on screen, no footnote.
-      talentNote.textContent = rows.some(r => r.linkedin != null) ? IDBCChart.TALENT_NOTE : '';
-
-      renderPoolCards(rows, total);
-      IDBCChart.attachTooltip(expertGrid);
-    }
-
-    // Same three-card summary block as the salary pages, filled with what this
-    // page actually has: pool size, breadth, and the strongest single position.
-    const poolCards = document.querySelector('#poolCards');
-
-    function renderPoolCards(rows, total) {
-      if (!rows.length) { poolCards.style.display = 'none'; poolCards.innerHTML = ''; return; }
-      poolCards.style.display = '';
-      const top = rows.reduce((a, b) => (b.darab > a.darab ? b : a));
-      const cards = [
-        { title: 'Elérhető szakértők', value: `${total} fő`,
-          note: `${escapeHtml(iparagSelect.value)} iparág teljes poolja az IDBC Expert Communityben.` },
-        { title: 'Lefedett pozíciók', value: `${rows.length} pozíció`,
-          note: 'Ennyi különböző szerepkörre van azonnal mozgósítható jelöltünk.' },
-        { title: 'Legnagyobb pool', value: escapeHtml(top.pozicio),
-          note: `${top.darab} fő, az iparág pooljának ${Math.round(top.darab / total * 100)}%-a.` },
-      ];
-      poolCards.innerHTML = cards.map(c => `
-        <article class="range-card">
-          <h3>${c.title}</h3>
-          <p class="range-value">${c.value}</p>
-          <p>${c.note}</p>
-        </article>`).join('');
-    }
-
-    populateExpertFilter();
-    iparagSelect.addEventListener('change', renderExpertPool);
-    renderExpertPool();
-    })();
-  </script>
 </body>
 </html>

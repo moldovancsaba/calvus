@@ -354,7 +354,7 @@
       .site-footer a,
       .footer-nav a,
       .footer-bottom a,
-      .back-link { display: inline-flex; align-items: center; min-height: 44px; }
+      .back-link { display: inline-flex; align-items: center; min-height: 44px; min-width: 44px; }
       .brand { min-height: 44px; display: inline-flex; flex-direction: column; justify-content: center; }
       select { min-height: 44px; }
     }
@@ -372,14 +372,15 @@
       <button class="menu-toggle" type="button" aria-label="Menü megnyitása" aria-expanded="false">☰</button>
 
       <ul class="nav-links">
-        <li><a href="#trends">Piaci trendek</a></li>
-        <li><a href="./berezes/index.html">Bérezés</a></li>
+        <li><a href="./index.html#trends" aria-current="page">Piaci trendek</a></li>
+        <li><a href="./berezes/index.html">Bérek</a></li>
         <li><a href="./sap/index.html">SAP</a></li>
         <li><a href="./expert-pool/index.html">Expert Pool</a></li>
+        <li><a href="./esettanulmanyok/index.html">Esettanulmányok</a></li>
       </ul>
 
       <div class="nav-actions">
-        <a class="button button-primary" href="./berezes/index.html">Bérsávok</a>
+        <a class="button button-primary" href="https://idbc.hu/ajanlatkeres/">Ajánlatkérés</a>
         <button class="button button-logout is-unavailable" type="button" aria-disabled="true"
           title="A be- és kijelentkezés a prototípusban még nincs bekötve">Kijelentkezés</button>
       </div>
@@ -600,10 +601,11 @@
       </section>
 
       <nav class="footer-nav" aria-label="Lábléc navigáció">
-        <a href="#trends">Piaci trendek</a>
-        <a href="./berezes/index.html">Bérezés</a>
+        <a href="./index.html#trends">Piaci trendek</a>
+        <a href="./berezes/index.html">Bérek</a>
         <a href="./sap/index.html">SAP</a>
         <a href="./expert-pool/index.html">Expert Pool</a>
+        <a href="./esettanulmanyok/index.html">Esettanulmányok</a>
         <a href="../index.html">Calvus Hub</a>
       </nav>
     </div>

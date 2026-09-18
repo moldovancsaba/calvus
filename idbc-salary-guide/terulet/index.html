@@ -80,8 +80,19 @@
       border: 1.5px solid var(--dark); background: transparent; color: var(--dark); font-size: 13px; font-weight: 900;
     }
     .read-more:hover { background: var(--dark); color: #fff; }
+    /* Media slot (client, 2026-09): seven areas get a video, four a highlighted key thought.
+       Both are placeholders until the client uploads the final material. */
     .area-media { position: relative; aspect-ratio: 16 / 9; border-radius: 18px; overflow: hidden; background: rgba(19,35,35,.1); }
-    .area-media img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+    .area-media.is-video {
+      background: linear-gradient(120deg, rgba(19,35,35,.85), rgba(19,35,35,.45)),
+        url("https://images.unsplash.com/photo-1552664730-d307ca884978?auto=format&fit=crop&w=1100&q=80") center / cover;
+      box-shadow: 0 16px 40px rgba(0,0,0,.12);
+    }
+    .area-media .play-button { position: absolute; inset: 0; margin: auto; width: 78px; height: 78px; border-radius: 50%; background: rgba(10,24,24,.9); box-shadow: 0 12px 28px rgba(0,0,0,.25); }
+    .area-media .play-button::before { content: ""; position: absolute; left: 32px; top: 24px; border-left: 24px solid #fff; border-top: 15px solid transparent; border-bottom: 15px solid transparent; }
+    .area-media .media-note { position: absolute; left: 0; right: 0; bottom: 14px; margin: 0; text-align: center; color: rgba(255,255,255,.85); font-size: 12px; font-weight: 800; }
+    .area-media.is-highlight { display: grid; place-items: center; padding: 28px; background: var(--green); aspect-ratio: auto; min-height: 220px; }
+    .area-media.is-highlight blockquote { margin: 0; font-size: clamp(22px, 2.6vw, 34px); font-weight: 900; font-style: italic; line-height: 1.2; letter-spacing: -0.6px; text-align: center; color: var(--dark); }
 
     .results-head { margin: 46px 0 0; padding-top: 26px; border-top: 2px solid var(--dark); }
     .results-head h2 { margin: 0 0 6px; font-size: clamp(22px, 3vw, 30px); letter-spacing: -0.6px; }
@@ -146,7 +157,7 @@
       .site-footer a,
       .footer-nav a,
       .footer-bottom a,
-      .back-link { display: inline-flex; align-items: center; min-height: 44px; }
+      .back-link { display: inline-flex; align-items: center; min-height: 44px; min-width: 44px; }
       .brand { min-height: 44px; display: inline-flex; flex-direction: column; justify-content: center; }
       select { min-height: 44px; }
     }
@@ -163,12 +174,14 @@
 
       <ul class="nav-links">
         <li><a href="../index.html#trends">Piaci trendek</a></li>
-        <li><a href="../berezes/index.html">Bérezés</a></li>
+        <li><a href="../berezes/index.html">Bérek</a></li>
         <li><a href="../sap/index.html">SAP</a></li>
         <li><a href="../expert-pool/index.html">Expert Pool</a></li>
+        <li><a href="../esettanulmanyok/index.html">Esettanulmányok</a></li>
       </ul>
+
       <div class="nav-actions">
-        <a class="button button-primary" href="../berezes/index.html">Bérsávok</a>
+        <a class="button button-primary" href="https://idbc.hu/ajanlatkeres/">Ajánlatkérés</a>
         <button class="button button-logout is-unavailable" type="button" aria-disabled="true"
           title="A be- és kijelentkezés a prototípusban még nincs bekötve">Kijelentkezés</button>
       </div>
@@ -188,9 +201,7 @@
           <div class="summary-body is-clamped" id="summaryBody"></div>
           <button class="read-more" id="readMore" aria-expanded="false">Olvass tovább</button>
         </div>
-        <div class="area-media">
-          <img id="areaMedia" src="../assets/infografika-finance.png" alt="Területi infografika" />
-        </div>
+        <div class="area-media" id="areaMedia"></div>
       </div>
 
       <div class="results-head">
@@ -281,15 +292,24 @@
     document.title = `${area.name} – Területi összefoglaló – Talent Market & Salary Guide 2026`;
     el('areaTitle').textContent = area.name;
     el('areaLede').textContent = 'Piaci helyzetkép, kereslet és bérezési trendek — az IDBC 2026-os kutatása alapján.';
-    el('areaMedia').src = area.image;
-    el('areaMedia').alt = `Területi infografika – ${area.name}`;
+    // Placeholders in the client's two shapes; the final video / key thought replaces the inner markup.
+    const mediaEl = el('areaMedia');
+    if (area.media === 'video') {
+      mediaEl.classList.add('is-video');
+      mediaEl.setAttribute('role', 'img');
+      mediaEl.setAttribute('aria-label', `Videó helye – ${area.name}`);
+      mediaEl.innerHTML = '<span class="play-button" aria-hidden="true"></span><p class="media-note">A terület videója ide kerül</p>';
+    } else {
+      mediaEl.classList.add('is-highlight');
+      mediaEl.innerHTML = `<blockquote>„A(z) ${esc(area.name)} terület kulcsgondolata ide kerül”</blockquote>`;
+    }
     el('summaryBody').innerHTML = area.summary.split('\n\n')
       .map(t => `<p>${esc(t)}</p>`).join('');
 
     // Clamp the text to the infographic's rendered height; expand on request. Falls back to a
     // fixed clamp on the stacked layout, where the image is full-width and its height means
     // nothing for the text column.
-    const media = document.querySelector('.area-media');
+    const media = mediaEl;
     const body = el('summaryBody');
     const btn = el('readMore');
     let expanded = false;
@@ -312,7 +332,6 @@
       applyClamp();
       if (!expanded) body.scrollIntoView({ block: 'nearest' });
     });
-    el('areaMedia').addEventListener('load', applyClamp);
     window.addEventListener('resize', applyClamp);
     applyClamp();
 

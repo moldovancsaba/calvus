@@ -12,7 +12,12 @@
     max: 'Jelöltek által elvárt bér',
   };
 
+  // LinkedIn Talent Insight market count per TOP3 position (client, 2026-09): a pill under the
+  // role name, and one explanatory footnote under the chart. Rendered only where a row carries
+  // the number, so a position the client's list does not cover shows no pill.
   const hufFormat = new Intl.NumberFormat('hu-HU');
+  const TALENT_NOTE = '*Elérhető szakértők száma Magyarországon LinkedIn Talent Insight adatai alapján.';
+  const talentText = n => `${hufFormat.format(n)} elérhető jelölt*`;
   const fmtHuf = n => (n === null || n === undefined) ? '–' : hufFormat.format(n) + ' Ft';
 
   // Compact millions for the narrow layout: 1 250 000 -> "1,25M", 1 300 000 -> "1,3M".
@@ -112,6 +117,7 @@
         <div class="top3-compact-row">
           <p class="top3-compact-name">${escapeHtml(r.pozicio)}</p>
           ${sub ? `<p class="top3-compact-sub">${escapeHtml(sub)}</p>` : ''}
+          ${r.linkedin != null ? `<p class="talent-pill">${escapeHtml(talentText(r.linkedin))}</p>` : ''}
           <svg class="top3-chart top3-chart-compact" viewBox="0 0 ${W} ${H}" role="img"
                aria-label="${escapeHtml(`${r.pozicio}: ${LABEL.min} ${fmtHuf(r.min)}, ${LABEL.idbc} ${fmtHuf(r.idbc)}, ${LABEL.max} ${fmtHuf(r.max)}`)}">
             <defs>${defs}</defs>${body}
@@ -125,8 +131,12 @@
         <li><span style="background:${COLOR_IDBC}"></span>${LABEL.idbc}</li>
         <li><span style="background:${COLOR_MAX}"></span>${LABEL.max}</li>
       </ul>
-      <div class="top3-compact">${blocks}</div>`;
+      <div class="top3-compact">${blocks}</div>
+      ${talentNote(rows)}`;
   }
+
+  const talentNote = rows => rows.some(r => r.linkedin != null)
+    ? `<p class="talent-note">${escapeHtml(TALENT_NOTE)}</p>` : '';
 
   function renderTop3Chart(rows, options) {
     const opts = options || {};
@@ -139,7 +149,8 @@
           ? window.matchMedia('(max-width: 700px)').matches : false);
     if (compact) return renderCompactChart(rows, opts);
 
-    const W = 1080, PLOT_MIN = 280, PLOT_MAX = 1020, TOP = 42, ROW_H = 74;
+    const hasTalent = rows.some(r => r.linkedin != null);
+    const W = 1080, PLOT_MIN = 280, PLOT_MAX = 1020, TOP = 42, ROW_H = hasTalent ? 104 : 74;
     const rowY = i => TOP + 44 + i * ROW_H;
     const gridBottom = rowY(rows.length - 1) + 44;
     const axisY = gridBottom + 36;
@@ -188,6 +199,12 @@
       const sub = [r.terulet, r.szint].filter(Boolean).join(' · ');
       body += `<text class="role-label" x="0" y="${(y - (sub ? 4 : -5)).toFixed(1)}">${escapeHtml(r.pozicio)}</text>`;
       if (sub) body += `<text class="role-sub" x="0" y="${(y + 13).toFixed(1)}">${escapeHtml(sub)}</text>`;
+      if (r.linkedin != null) {
+        const txt = talentText(r.linkedin);
+        const pw = txt.length * 6.4 + 20;
+        body += `<g class="talent-pill-svg"><rect x="0" y="${(y + 22).toFixed(1)}" width="${pw.toFixed(0)}" height="24" rx="8" />` +
+          `<text x="10" y="${(y + 38).toFixed(1)}">${escapeHtml(txt)}</text></g>`;
+      }
 
       points.forEach(p => {
         const tip = `${r.pozicio} – ${LABEL[p.key]}: ${p.text}`;
@@ -219,7 +236,8 @@
           ${axis}
           ${body}
         </svg>
-      </div>`;
+      </div>
+      ${talentNote(rows)}`;
   }
 
   // Cursor-following tooltip for any [data-tooltip] element inside `root`.
@@ -270,5 +288,5 @@
     return hide;
   }
 
-  window.IDBCChart = { renderTop3Chart, attachTooltip, fmtHuf, fmtMillions, escapeHtml, LABEL, COLOR_MIN, COLOR_IDBC, COLOR_MAX };
+  window.IDBCChart = { renderTop3Chart, attachTooltip, fmtHuf, fmtMillions, escapeHtml, LABEL, TALENT_NOTE, COLOR_MIN, COLOR_IDBC, COLOR_MAX };
 })();

@@ -6,7 +6,7 @@
   <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
   <meta http-equiv="Pragma" content="no-cache" />
   <title>IDBC – SAP piaci trendek és bérsávok</title>
-  <link rel="stylesheet" href="../assets/chart.css?v=6" />
+  <link rel="stylesheet" href="../assets/chart.css?v=7" />
   <style>
     :root {
       --dark: #132323;
@@ -123,6 +123,10 @@
 
     .article-copy h2, .section-title, .salary-title { margin: 0; font-size: clamp(32px, 4.5vw, 50px); line-height: 1; letter-spacing: -1.4px; }
     .article-copy p { margin: 18px 0 0; font-size: 18px; font-weight: 800; line-height: 1.38; }
+    .article-copy h2 { font-size: clamp(28px, 3.4vw, 40px); }
+    .article-copy .trend-title { margin: 30px 0 0; font-size: 22px; line-height: 1.1; letter-spacing: -0.5px; }
+    .article-copy .trend-copy { margin-top: 12px; font-size: 15px; font-weight: 700; line-height: 1.5; }
+    .article-copy .trend-eyebrow { margin: 38px 0 0; padding-top: 26px; border-top: 1px solid rgba(19,35,35,.25); }
 
     .bullet-list { display: grid; gap: 12px; margin: 24px 0 0; padding: 0; list-style: none; }
     .bullet-list li { position: relative; padding-left: 28px; font-size: 15px; font-weight: 800; }
@@ -271,7 +275,7 @@
       .site-footer a,
       .footer-nav a,
       .footer-bottom a,
-      .back-link { display: inline-flex; align-items: center; min-height: 44px; }
+      .back-link { display: inline-flex; align-items: center; min-height: 44px; min-width: 44px; }
       .brand { min-height: 44px; display: inline-flex; flex-direction: column; justify-content: center; }
       select { min-height: 44px; }
     }
@@ -290,15 +294,15 @@
       </div>
       <button class="menu-toggle" type="button" aria-label="Menü megnyitása" aria-expanded="false">☰</button>
       <ul class="nav-links">
-        <li><a href="#summary">Összefoglaló</a></li>
-        <li><a href="#products">SAP szolgáltatások</a></li>
-        <li><a href="#salary">SAP bérsávok</a></li>
-        <li><a href="../berezes/index.html">Bérsávok</a></li>
+        <li><a href="../index.html#trends">Piaci trendek</a></li>
+        <li><a href="../berezes/index.html">Bérek</a></li>
+        <li><a href="../sap/index.html" aria-current="page">SAP</a></li>
         <li><a href="../expert-pool/index.html">Expert Pool</a></li>
+        <li><a href="../esettanulmanyok/index.html">Esettanulmányok</a></li>
       </ul>
+
       <div class="nav-actions">
-        <a class="button button-primary" href="../index.html">Salary Guide</a>
-        <span class="button button-outline is-unavailable" aria-disabled="true" title="Az Excel export még nem érhető el">Excel letöltés</span>
+        <a class="button button-primary" href="https://idbc.hu/ajanlatkeres/">Ajánlatkérés</a>
         <button class="button button-logout is-unavailable" type="button" aria-disabled="true"
           title="A be- és kijelentkezés a prototípusban még nincs bekötve">Kijelentkezés</button>
       </div>
@@ -338,19 +342,72 @@
     <section class="article-section" id="summary">
       <div class="container summary-grid">
         <article class="article-copy">
-          <p class="eyebrow">Cikkoldal</p>
-          <h2>Vezetői összefoglaló</h2>
+          <p class="eyebrow">Technológiai trendek</p>
+          <h2>AI, Cloud és Clean Core: az új SAP-stratégia üzleti alapkövei</h2>
           <p>
-            A SAP ökoszisztémában egyszerre nő az S/4 HANA átállások, a cloud alapú ERP bevezetések,
-            a folyamatoptimalizálás és a specializált dokumentum- és adatkezelési megoldások szerepe.
-            A vállalatok a klasszikus moduláris szakértői tudás mellett egyre inkább end-to-end folyamat,
-            integrációs és transzformációs tapasztalatot keresnek.
+            A magyar SAP-piacot 2026-ban egyre inkább az AI-képességek üzleti integrációja, a cloud-first
+            architektúrák térnyerése és a vállalati rendszerek hosszú távú modernizációja határozza meg.
+            A vezető szervezetek fókuszában már nem önmagában az ERP-rendszerek megújítása áll, hanem olyan
+            skálázható, jövőálló működési modell kialakítása, amely képes támogatni a generatív AI-megoldások
+            bevezetését, az adatvezérelt döntéshozatalt és az automatizált üzleti folyamatokat. Ennek egyik
+            kulcseleme a clean core szemlélet elterjedése, amely a túlzott egyedi fejlesztések helyett a
+            standardizált SAP-képességekre, valamint a SAP Business Technology Platform (BTP) által biztosított
+            integrációs, fejlesztési és automatizációs lehetőségekre épít. Az S/4HANA-transzformációs programok
+            egyre gyakrabban kapcsolódnak össze a SAP Joule, az intelligens automatizációs megoldások és a modern
+            cloud szolgáltatások bevezetésével, így az ERP-fejlesztések stratégiai üzleti innovációs projektekké
+            válnak.
           </p>
-          <ul class="bullet-list">
-            <li>A S/4 HANA transzformációk és RISE bevezetések továbbra is kiemelt keresleti területet jelentenek.</li>
-            <li>A funkcionális tanácsadók iránti igény stabil, különösen pénzügyi, logisztikai, gyártási és eWM fókuszban.</li>
-            <li>A BTP, Signavio, SuccessFactors, xECM és archiválási kompetenciák prémium szakértői területekké váltak.</li>
-          </ul>
+
+          <h3 class="trend-title">SAP Logistics Management (LGM): a logisztika új generációja</h3>
+          <p class="trend-copy">
+            A logisztikai területen kiemelt figyelem övezi a SAP új, cloud-native Logistics Management (LGM)
+            megoldását, amely a raktározási és szállítási folyamatokat egységes platformon kezeli. A megoldás
+            különösen azoknak a vállalatoknak kínál új lehetőségeket, amelyek több telephelyes működésben,
+            regionális logisztikai hálózatokban vagy S/4HANA-átállással párhuzamos ellátási lánc fejlesztésekben
+            gondolkodnak. Az LGM megjelenése jól mutatja, hogy a logisztika digitalizációja már nem csupán
+            operációs kérdés, hanem versenyképességi tényező.
+          </p>
+
+          <h3 class="trend-title">SAP SuccessFactors és SmartRecruiters: a HR digitalizáció következő szintje</h3>
+          <p class="trend-copy">
+            A HR-folyamatok modernizációja szintén gyorsuló ütemben zajlik. A vállalatok egyre nagyobb arányban
+            alkalmazzák a SAP SuccessFactors megoldásait a teljes munkavállalói életciklus kezelésére, míg a
+            SmartRecruiters integrációk a toborzási folyamatok digitalizálásában és a jelöltélmény fejlesztésében
+            kapnak meghatározó szerepet. A fókusz egyre inkább az adatvezérelt HR-működésen, az automatizált
+            folyamatokon és a munkavállalói élmény javításán van. Magyarországon ennek eredményeként a
+            HR-rendszerek fejlesztése ma már szorosan kapcsolódik a vállalatok átfogó digitális transzformációs
+            stratégiájához.
+          </p>
+
+          <h3 class="trend-title">S/4HANA: a felkészülés éve a vállalati transzformációra</h3>
+          <p class="trend-copy">
+            Összességében 2026-ban a SAP ökoszisztéma legfontosabb trendjeit az S/4HANA-átállások felgyorsulása,
+            a cloud-native logisztikai megoldások térnyerése, valamint a HR- és üzleti folyamatok intelligens
+            automatizációja formálja. Azok a vállalatok szerezhetnek tartós versenyelőnyt, amelyek az átállást
+            nem kötelező technológiai projektként, hanem üzleti innovációs lehetőségként kezelik.
+          </p>
+
+          <p class="eyebrow trend-eyebrow">Toborzási trendek SAP területen</p>
+          <p class="trend-copy">
+            Az IT-munkaerőpiac stabilizálódása mellett az SAP továbbra is növekedő és egyre magasabb értéket
+            képviselő terület. A keresletet elsősorban az S/4HANA-transzformációk, a cloudmigráció és a vállalati
+            rendszerek modernizációja hajtják, miközben az SAP- és architect-szerepkörök továbbra is
+            hiánypozícióknak számítanak.
+          </p>
+          <p class="trend-copy">
+            A recruitmentben a senior SAP Consultant, SAP Developer/ABAP Developer, S/4HANA szakértő és SAP
+            Architect profilok a legkeresettebbek. Ezt aktuális álláskínálatunk is alátámasztja, amelyben
+            jelenleg számos ABAP- és S/4HANA-fejlesztői lehetőség is szerepel. A piac közben fokozatosan elmozdul
+            a klasszikus SAP-szerepköröktől a több területet összekapcsoló, hibrid kompetenciák felé: az S/4HANA-,
+            cloud- és integrációs tudás mellett egyre fontosabbá válik az AI ismerete és gyakorlati alkalmazása
+            az SAP-környezetben.
+          </p>
+          <p class="trend-copy">
+            A következő időszakban az SAP BTP, az AI-alapú automatizáció és az intelligens vállalati megoldások
+            térnyerése tovább gyorsíthatja ezt az átalakulást. A jövő keresett SAP-szakembere ezért nem csupán
+            egy-egy modul vagy technológia specialistája lesz, hanem olyan hibrid szakember, aki az SAP- és
+            üzleti tudást modern technológiákkal, különösen AI-kompetenciákkal képes ötvözni.
+          </p>
         </article>
 
         <aside class="side-stack">
@@ -432,13 +489,11 @@
         <p>Cím: Duna Tower Irodaház A torony 5. emelet<br />1138 Budapest, Népfürdő utca 22.</p>
       </section>
       <nav class="footer-nav" aria-label="Lábléc navigáció">
-        <a href="#summary">Összefoglaló</a>
-        <a href="#products">SAP szolgáltatások</a>
-        <a href="#salary">SAP bérsávok</a>
-        <a href="../berezes/index.html">Bérsávok</a>
+        <a href="../index.html#trends">Piaci trendek</a>
+        <a href="../berezes/index.html">Bérek</a>
+        <a href="../sap/index.html">SAP</a>
         <a href="../expert-pool/index.html">Expert Pool</a>
-        <a href="#contact">Kapcsolat</a>
-        <a href="../index.html">IDBC Salary Guide</a>
+        <a href="../esettanulmanyok/index.html">Esettanulmányok</a>
         <a href="../../index.html">Calvus Hub</a>
       </nav>
     </div>
@@ -451,7 +506,7 @@
     </div>
   </footer>
 
-  <script src="../assets/top3-chart.js?v=6"></script>
+  <script src="../assets/top3-chart.js?v=7"></script>
   <script>
     (async () => {
     const DATA = await fetch('../data/guide-data.json', { cache: 'no-cache' }).then(r => r.json());

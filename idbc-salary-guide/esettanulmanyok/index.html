@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
   <meta http-equiv="Pragma" content="no-cache" />
-  <title>IDBC Salary Guide – IDBC Expert Community</title>
+  <title>IDBC Salary Guide – Esettanulmányok</title>
   <link rel="stylesheet" href="../assets/chart.css?v=7" />
 
   <style>
@@ -356,6 +356,40 @@
       .brand { min-height: 44px; display: inline-flex; flex-direction: column; justify-content: center; }
       select { min-height: 44px; }
     }
+
+    /* Case studies: one article per client, video placeholder, facts as a grid. */
+    .case { padding: 34px 0 44px; border-top: 2px solid rgba(19,35,35,.55); }
+    .case:first-of-type { border-top: 0; padding-top: 0; }
+    .case-head { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(300px, .9fr); gap: 32px; align-items: start; margin-bottom: 26px; }
+    .case-head h2 { margin: 0 0 12px; font-size: clamp(26px, 3.6vw, 42px); line-height: 1.02; letter-spacing: -1px; }
+    .case-head p { margin: 0 0 12px; font-size: 14px; font-weight: 700; line-height: 1.5; }
+    .video-card { position: relative; min-height: 240px; border-radius: 22px; overflow: hidden; box-shadow: var(--shadow-soft);
+      background: linear-gradient(120deg, rgba(19,35,35,.85), rgba(19,35,35,.45)),
+        url("https://images.unsplash.com/photo-1552664730-d307ca884978?auto=format&fit=crop&w=1100&q=80") center / cover; }
+    .play-button { position: absolute; inset: 0; margin: auto; width: 78px; height: 78px; border-radius: 50%; background: rgba(10,24,24,.9); box-shadow: 0 12px 28px rgba(0,0,0,.25); }
+    .play-button::before { content: ""; position: absolute; left: 32px; top: 24px; border-left: 24px solid #fff; border-top: 15px solid transparent; border-bottom: 15px solid transparent; }
+    .media-note { position: absolute; left: 0; right: 0; bottom: 14px; margin: 0; text-align: center; color: rgba(255,255,255,.85); font-size: 12px; font-weight: 800; }
+    .service-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 18px; }
+    .service { padding: 24px 26px; border-radius: 20px; background: #fff; border: 1px solid var(--line); }
+    .service h3 { margin: 0 0 14px; font-size: 22px; letter-spacing: -0.5px; }
+    .service h4 { margin: 16px 0 6px; font-size: 12px; text-transform: uppercase; letter-spacing: .06em; color: var(--muted); }
+    .service p { margin: 0 0 8px; font-size: 13.5px; font-weight: 700; line-height: 1.45; }
+    .bullet-list { display: grid; gap: 7px; margin: 0; padding: 0; list-style: none; }
+    .bullet-list li { position: relative; padding-left: 22px; font-size: 13.5px; font-weight: 700; line-height: 1.4; }
+    .bullet-list li::before { content: ""; position: absolute; left: 0; top: .42em; width: 10px; height: 10px; border-radius: 50%; background: var(--green); }
+    .facts { display: flex; flex-wrap: wrap; gap: 10px; margin: 10px 0 0; padding: 0; list-style: none; }
+    .facts li { padding: 8px 14px; border-radius: 10px; background: var(--green); color: var(--dark); font-size: 13px; font-weight: 900; }
+    .facts li strong { font-size: 20px; margin-right: 4px; }
+    .summary { margin-top: 22px; padding: 22px 26px; border-radius: 20px; background: var(--dark); color: #fff; }
+    .summary h3 { margin: 0 0 8px; font-size: 20px; }
+    .summary p { margin: 0 0 8px; font-size: 13.5px; font-weight: 700; line-height: 1.5; color: rgba(255,255,255,.88); }
+    .challenge { display: grid; grid-template-columns: 1fr 1fr; gap: 6px 18px; padding: 14px 0; border-top: 1px solid var(--line); }
+    .challenge h4 { grid-column: 1 / -1; margin: 0 0 2px; font-size: 14px; }
+    .challenge p { margin: 0; font-size: 13px; font-weight: 700; line-height: 1.45; }
+    .challenge p b { display: block; font-size: 11px; text-transform: uppercase; letter-spacing: .06em; color: var(--muted); }
+    .cta { display: inline-flex; align-items: center; justify-content: center; min-height: 44px; padding: 10px 22px; border-radius: 11px; background: var(--dark); color: #fff; font-size: 14px; font-weight: 900; }
+    .page-cta { margin-top: 10px; padding: 34px 0 0; border-top: 2px solid rgba(19,35,35,.55); text-align: center; }
+    @media (max-width: 900px) { .case-head, .challenge { grid-template-columns: 1fr; } }
   </style>
 </head>
 <body>
@@ -376,8 +410,8 @@
         <li><a href="../index.html#trends">Piaci trendek</a></li>
         <li><a href="../berezes/index.html">Bérek</a></li>
         <li><a href="../sap/index.html">SAP</a></li>
-        <li><a href="../expert-pool/index.html" aria-current="page">Expert Pool</a></li>
-        <li><a href="../esettanulmanyok/index.html">Esettanulmányok</a></li>
+        <li><a href="../expert-pool/index.html">Expert Pool</a></li>
+        <li><a href="../esettanulmanyok/index.html" aria-current="page">Esettanulmányok</a></li>
       </ul>
 
       <div class="nav-actions">
@@ -411,137 +445,134 @@
   <main>
     <section class="hero" aria-labelledby="hero-title">
       <div class="hero-media">
-        <img
-          src="https://images.unsplash.com/photo-1600880292203-757bb62b4baf?auto=format&fit=crop&w=1600&q=80"
-          alt="Interjú helyzet két üzletember között irodai környezetben"
-        />
+        <img src="https://images.unsplash.com/photo-1521737604893-d14cc237f11d?auto=format&fit=crop&w=1600&q=80" alt="Csapat közös munka közben egy tárgyalóban" />
         <div class="hero-overlay"></div>
       </div>
-
       <div class="hero-card">
         <p class="eyebrow">IDBC Salary Guide</p>
-        <h1 id="hero-title">IDBC Expert Community</h1>
-        <p>Egy közösség, ahol a szakértelem és a megfelelő lehetőség találkozik.</p>
+        <h1 id="hero-title">Esettanulmányok</h1>
+        <p>Valós üzleti helyzeteken keresztül mutatjuk be, hogyan támogatjuk partnereinket a kritikus kompetenciák megszerzésében.</p>
       </div>
     </section>
 
-    <section class="section" id="expertpool" aria-labelledby="expertpool-title">
+    <section class="section" id="esettanulmanyok">
       <div class="container">
-        <div class="intro-block">
-          <div>
-            <p class="eyebrow">Expert Pool</p>
-            <h2 id="expertpool-title">Mi az IDBC Expert Community?</h2>
+
+        <article class="case" aria-labelledby="case-dgitshu">
+          <div class="case-head">
+            <div>
+              <p class="eyebrow">Hibrid szolgáltatási modell</p>
+              <h2 id="case-dgitshu">Hibrid szolgáltatási modell – DGITSHU</h2>
+              <p>Partnerünk, a DPD Group IT Solutions Hungary Kft. (DGITSHU) az elmúlt 3 év során több szolgáltatásunkat is igénybe vette, az aktuális kapacitás- és toborzási igényeihez igazodva.</p>
+              <p>Az együttműködés keretében IT contracting, try &amp; hire és RPO szolgáltatásainkkal támogattuk partnerünk változó IT-szakértői és kapacitásbővítési szükségleteit, mindig az adott üzleti helyzethez legjobban illeszkedő megoldást választva.</p>
+            </div>
+            <div class="video-card" role="img" aria-label="Videó helye – DGITSHU esettanulmány">
+              <span class="play-button" aria-hidden="true"></span>
+              <p class="media-note">Az esettanulmány videója ide kerül</p>
+            </div>
           </div>
-          <div class="intro-copy">
-            <p>
-              Az IDBC Expert Community egy folyamatosan bővülő, több mint 500 IT és non-IT szakemberből álló
-              közösség. Tagjainkkal recruitereink aktív kapcsolatot tartanak, így ismerjük szakmai tapasztalatukat,
-              ambícióikat és karriercéljaikat.
-            </p>
-            <p>
-              A közösség szakembereink számára személyre szabott karrierlehetőségeket, szakmai tartalmakat és
-              értékes kapcsolódásokat kínál. Ügyfeleink számára pedig egy naprakész szakértői közösséget jelent,
-              amelyből gyorsan és célzottan találhatjuk meg a nyitott pozícióhoz leginkább illeszkedő jelölteket,
-              akár 3 munkanapon belül.
-            </p>
+
+          <div class="service-grid">
+            <section class="service" aria-labelledby="dg-contracting">
+              <h3 id="dg-contracting">IT Contracting</h3>
+              <h4>Üzleti igény</h4>
+              <p>Az IT contracting megoldást a vállalati teljesítménymutatók optimalizálása, valamint a rövid időn belül felmerülő jelentős IT-szakértői kapacitásbővítés tette szükségessé.</p>
+              <p>Keresett szakértői profilok: fejlesztők, projektmenedzserek</p>
+              <h4>Megoldásunk</h4>
+              <ul class="bullet-list">
+                <li>Kiterjedt adatbázisunk, 200+ fős szakértői bázisunk és 500+ fős Expert community-nk segítségével gyorsan azonosítottuk és célzottan szólítottuk meg a releváns szakembereket.</li>
+                <li>Contracting konstrukcióban biztosítottuk a szükséges IT szakértői kapacitást, rugalmasan igazodva partnerünk aktuális igényeihez.</li>
+                <li>Try&amp;hire szolgáltatásunkkal lehetőséget biztosítottunk arra, hogy partnerünk egy meghatározott időszakon keresztül, a napi munkavégzés során is megismerje a szakemberek szakmai és szervezeti illeszkedését, mielőtt a saját állományába venné őket.</li>
+              </ul>
+              <h4>Eredmény</h4>
+              <ul class="facts">
+                <li><strong>14</strong> betöltött pozíció</li>
+                <li><strong>5</strong> szakembert a DGITSHU később saját állományába vett (sikeres try &amp; hire)</li>
+              </ul>
+            </section>
+
+            <section class="service" aria-labelledby="dg-rpo">
+              <h3 id="dg-rpo">RPO</h3>
+              <h4>Üzleti igény</h4>
+              <p>A DGITSHU-nél 2025-ben egy hirtelen megnövekedett toborzási és kapacitásbővítési igény merült fel, amely a belső HR csapat recruitment kapacitásának kiegészítését tette szükségessé.</p>
+              <p>Keresett szakértői profilok: fejlesztő, tesztelő, architekt, BA, PM, DevOps pozíciók</p>
+              <h4>Projektparaméterek</h4>
+              <ul class="bullet-list">
+                <li>4,5 hónapos RPO projekt</li>
+                <li>1 dedikált IDBC-s tanácsadó</li>
+                <li>Teljes körű recruitment támogatás</li>
+              </ul>
+              <h4>Megoldásunk</h4>
+              <ul class="bullet-list">
+                <li>Dedikált tanácsadó bevonása, aki partnerünk csapatába integrálódva támogatta a napi recruitment folyamatokat.</li>
+                <li>Tanácsadói szemlélet: a jelöltek felkutatása mellett folyamatos piaci visszajelzésekkel és a hiring folyamat támogatásával segítettük a döntéshozatalt.</li>
+                <li>End-to-end támogatás: a teljes toborzási folyamatot a jelöltek felkutatásától és előszűrésétől az interjúk koordinációján át az ajánlatkezelésig támogattuk.</li>
+                <li>A folyamat során a szakmai és szervezeti igények összehangolásában, valamint a jelölt- és stakeholder-koordinációban is aktív szerepet vállaltunk.</li>
+              </ul>
+              <h4>Eredmény</h4>
+              <ul class="facts"><li><strong>9</strong> betöltött pozíció</li></ul>
+            </section>
           </div>
+
+          <div class="summary">
+            <h3>Összegzés – Átfogó partneri támogatás</h3>
+            <p>Az együttműködés során célunk az volt, hogy ne egyetlen megoldással kezeljük partnerünk minden felmerülő igényét, hanem az aktuális helyzethez és célokhoz legjobban illeszkedő szolgáltatással segítsük a DGITSHU-t. Ennek megfelelően IT contracting, try&amp;hire vagy RPO szolgáltatásunkkal nyújtottunk támogatást.</p>
+            <p>Nemcsak a megfelelő IT szakemberek megtalálásában segítettük partnerünket, hanem a teljes jelölt- és folyamatkoordinációban is aktív szerepet vállaltunk, így a gyorsan elérhető szakértői kapacitás mellett a teljes kiválasztási folyamatot támogató, rugalmas megoldást biztosítottunk.</p>
+          </div>
+        </article>
+
+        <article class="case" aria-labelledby="case-publicis">
+          <div class="case-head">
+            <div>
+              <p class="eyebrow">RPO (Recruitment Process Outsourcing)</p>
+              <h2 id="case-publicis">RPO – Publicis Groupe</h2>
+              <p><strong>Szolgáltatási kör:</strong> teljes körű toborzás – jelöltek felkutatása, előszűrés, interjúk egyeztetése a vezetőkkel, ajánlatkezelés; együttműködés 10+ közvetlen érintett vezetővel.</p>
+              <p><strong>Induló projektparaméterek:</strong> a Publicis Groupe Hungary media üzletág bővítésének megvalósítása a budapesti irodában, 3 hónapos megvalósítási tervvel. Az eredeti terv szerint 15 új kolléga felvétele média területre.</p>
+              <p><strong>Bővített projektparaméterek:</strong> a tervezett időtartamot 1 hónappal (4 hónapra) meghosszabbította partnerünk. Partnerünk megduplázta az eredeti bővülési tervet és 30 új pozíciót (26 media, 4 non-media) töltöttünk be. A teljes RPO-t és a 30 betöltött pozíciót 1 IDBC-s toborzó valósította meg.</p>
+            </div>
+            <div class="video-card" role="img" aria-label="Videó helye – Publicis Groupe esettanulmány">
+              <span class="play-button" aria-hidden="true"></span>
+              <p class="media-note">Az esettanulmány videója ide kerül</p>
+            </div>
+          </div>
+
+          <div class="service-grid">
+            <section class="service" aria-labelledby="pg-results">
+              <h3 id="pg-results">Eredmények</h3>
+              <ul class="facts">
+                <li><strong>26</strong> media pozíció 4 hónap alatt, 1 toborzó által</li>
+                <li><strong>4</strong> non-media pozíció 4 hónap alatt, 1 toborzó által</li>
+              </ul>
+              <h4>Media</h4>
+              <p>10 Media Activation Assistant, 4 Performance Media Assistant, 3 Junior Performance Media Specialist, 1 Medior Performance Media Specialist, 3 Senior Performance Media Specialist, 1 Junior Media Planner, 1 Medior Media Planner, 1 Media Account Manager, 1 Media Finance Coordinator</p>
+              <h4>Non-media</h4>
+              <p>1 Production Account Manager, 1 Senior Account Manager, 1 Digital Strategist, 1 Senior Digital Strategist, 1 Project Manager / Account Manager</p>
+            </section>
+
+            <section class="service" aria-labelledby="pg-challenges">
+              <h3 id="pg-challenges">Kihívások</h3>
+              <div class="challenge">
+                <h4>Eltérő működésű csapatokba kerestünk jelölteket</h4>
+                <p><b>Helyzet</b>25 nyitott pozíció, 12 Hiring Manager között – a vezetők rendelkezésre állása és együttműködése szűk keresztmetszet volt.</p>
+                <p><b>Megoldásunk</b>Erős stakeholder menedzsment, heti szinkron megbeszélések, rendszeres konstruktív visszajelzés.</p>
+              </div>
+              <div class="challenge">
+                <h4>Jelöltek elvesztése a folyamat első szakaszában</h4>
+                <p><b>Helyzet</b>Alacsony váltási szándék a jelöltek részéről, sok megkeresés a piac méretéből adódóan (kevés a médiás szakember).</p>
+                <p><b>Megoldásunk</b>Új potenciális csatornák felkutatása, hagyományos fejvadászat, TikTok, LinkedIn videós álláshirdetések, social media source.</p>
+              </div>
+              <div class="challenge">
+                <h4>Piaci tudás megosztása</h4>
+                <p><b>Helyzet</b>Magasabb bérigények, kevésbé versenyképes alapbérrel kompenzálva, magas szakmai színvonal elvárása.</p>
+                <p><b>Megoldásunk</b>A juttatási csomag fejlesztése, riportok formájában visszajelzés készítése a piacról, market mapping szolgáltatás.</p>
+              </div>
+            </section>
+          </div>
+        </article>
+
+        <div class="page-cta">
+          <a class="cta" href="https://idbc.hu/szolgaltatasok/">Tudj meg többet szolgáltatásainkról</a>
         </div>
-
-        <div class="audience-grid">
-          <article class="audience-card">
-            <h3>Szakemberként csatlakoznál?</h3>
-            <p>
-              Az Expert Community tagjaként recruitereink jobban megismerhetik szakmai tapasztalatodat, céljaidat és
-              ambícióidat, így személyre szabott karrierlehetőségekkel támogathatják szakmai előrelépésedet.
-            </p>
-            <h4>Miért érdemes csatlakoznod?</h4>
-            <ul class="bullet-list">
-              <li>egy magas színvonalú szakmai közösség részévé válhatsz</li>
-              <li>elsőként értesülhetsz a legfrissebb és legizgalmasabb szakmai lehetőségekről</li>
-              <li>releváns szakmai tartalmakhoz és piaci elemzésekhez férhetsz hozzá</li>
-              <li>szakmai meetupokon és közösségi eseményeken vehetsz részt</li>
-            </ul>
-            <details class="join">
-              <summary class="cta">Csatlakozom az Expert Communityhez</summary>
-              <form class="proto-form" aria-label="Csatlakozás az Expert Communityhez">
-                <label><span>Vezetéknév</span><input type="text" name="vezeteknev" autocomplete="family-name" /></label>
-                <label><span>Keresztnév</span><input type="text" name="keresztnev" autocomplete="given-name" /></label>
-                <label><span>Pozíció</span><input type="text" name="pozicio" autocomplete="organization-title" /></label>
-                <label><span>E-mail cím</span><input type="email" name="email" autocomplete="email" /></label>
-                <label><span>Telefonszám</span><input type="tel" name="telefon" autocomplete="tel" /></label>
-                <label class="full"><span>Üzenet</span><textarea name="uzenet" rows="4"></textarea></label>
-                <button class="cta is-unavailable" type="button" aria-disabled="true"
-                  title="A prototípusban az űrlap nem küld — a beküldés a fejlesztett oldalon kerül bekötésre">Csatlakozás elküldése</button>
-                <p class="form-note">A prototípusban az űrlap nem küld adatot.</p>
-              </form>
-            </details>
-          </article>
-
-          <article class="audience-card">
-            <h3>Új kollégát keresel?</h3>
-            <p>
-              Az Expert Community révén gyorsan, akár 3 napon belül és célzottan kapcsolhatjuk össze vállalatodat a
-              nyitott pozícióhoz leginkább illeszkedő szakemberekkel.
-            </p>
-            <h4>Milyen előnyöket nyújt ügyfeleinknek?</h4>
-            <ul class="bullet-list">
-              <li>a pozíció megismerését követően akár 3 munkanapon belül bemutatjuk az ideális jelöltet</li>
-              <li>speciális kompetenciákat igénylő pozíciókat is rövid időn belül betöltünk</li>
-              <li>számos szakterületen rendelkezünk releváns, elérhető szakemberekkel</li>
-              <li>szakmailag és a vállalati kultúra szempontjából is jól illeszkedő jelölteket mutathatunk be, akik hosszú távon erősíthetik a csapatodat</li>
-            </ul>
-            <a class="cta" href="#kontakt">Ajánlatkérés</a>
-          </article>
-        </div>
-
-        <div class="pool-head">
-          <h3>Kiterjedt szakértői közösség</h3>
-          <p>
-            Expert Communitynk tagjai számos szakterületet képviselnek, és változatos technológiai, illetve iparági
-            tapasztalattal rendelkeznek. Ez lehetővé teszi, hogy ügyfeleink speciális szakmai és üzleti igényeire is
-            gyors, célzott megoldást nyújtsunk.
-          </p>
-        </div>
-
-        <div class="expert-filters">
-          <label>
-            <span class="sr-only">Iparág</span>
-            <select id="iparagSelect"></select>
-          </label>
-        </div>
-
-        <div class="top-cards" id="poolCards"></div>
-
-        <ul class="expert-legend" aria-label="Jelmagyarázat">
-          <li><span style="background:#a5df8f"></span>Kisebb pool</li>
-          <li><span style="background:#55aa8b"></span>Közepes pool</li>
-          <li><span style="background:#245d54"></span>Nagyobb pool</li>
-        </ul>
-
-        <div class="expert-grid" id="expertGrid"></div>
-        <p class="talent-note" id="talentNote"></p>
-
-        <p class="pool-outro">
-          Akár a bemutatott szakterületek egyikén, akár más pozícióban keresel új kollégát, vedd fel velünk a
-          kapcsolatot! Szakértőink segítenek megtalálni a vállalatod igényeihez leginkább illeszkedő jelöltet.
-        </p>
-      </div>
-    </section>
-
-    <section class="section contact-section" id="kontakt" aria-labelledby="kontakt-title">
-      <div class="container">
-        <p class="eyebrow">Ajánlatkérés</p>
-        <h2 id="kontakt-title">Vedd fel velünk a kapcsolatot</h2>
-        <form class="proto-form contact-form" aria-label="Kapcsolatfelvétel">
-          <label><span>Cégnév</span><input type="text" name="cegnev" autocomplete="organization" /></label>
-          <label><span>Kapcsolattartó neve</span><input type="text" name="nev" autocomplete="name" /></label>
-          <label><span>E-mail cím</span><input type="email" name="email" autocomplete="email" /></label>
-          <label><span>Telefonszám</span><input type="tel" name="telefon" autocomplete="tel" /></label>
-          <label class="full"><span>Keresett pozíció, üzenet</span><textarea name="uzenet" rows="4"></textarea></label>
-          <button class="cta is-unavailable" type="button" aria-disabled="true"
-            title="A prototípusban az űrlap nem küld — a beküldés a fejlesztett oldalon kerül bekötésre">Ajánlatkérés elküldése</button>
-          <p class="form-note">A prototípusban az űrlap nem küld adatot.</p>
-        </form>
       </div>
     </section>
   </main>
@@ -578,83 +609,5 @@
     </div>
   </footer>
 
-  <script src="../assets/top3-chart.js?v=7"></script>
-  <script>
-    (async () => {
-    const DATA = await fetch('../data/guide-data.json', { cache: 'no-cache' }).then(r => r.json());
-
-    function escapeHtml(s) {
-      return String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-    }
-
-    const iparagSelect = document.querySelector('#iparagSelect');
-    const expertGrid = document.querySelector('#expertGrid');
-    const talentNote = document.querySelector('#talentNote');
-    const fmt = new Intl.NumberFormat('hu-HU');
-
-    function populateExpertFilter() {
-      const iparagak = [...new Set(DATA.salary.expertPool.map(r => r.iparag))];
-      iparagSelect.innerHTML = iparagak.map(i => `<option value="${escapeHtml(i)}">${escapeHtml(i)}</option>`).join('');
-    }
-
-    function renderExpertPool() {
-      const iparag = iparagSelect.value;
-      const rows = DATA.salary.expertPool.filter(r => r.iparag === iparag);
-      // Bars are scaled against the whole pool, not just the selected industry,
-      // so switching industries compares like with like.
-      const max = Math.max(...DATA.salary.expertPool.map(r => r.darab));
-      const total = rows.reduce((sum, r) => sum + r.darab, 0);
-
-      expertGrid.innerHTML = rows.map(r => {
-        const share = total ? Math.round(r.darab / total * 100) : 0;
-        const market = r.linkedin != null ? `; piacon elérhető szakember ${fmt.format(r.linkedin)} fő` : '';
-        const tip = `${r.iparag} – ${r.pozicio}: ${r.darab} fő az IDBC Expert Communityben (az iparág poolja ${total} fő, ebből ${share}%)${market}`;
-        return `
-        <article class="expert-card" role="img" tabindex="0"
-                 aria-label="${escapeHtml(tip)}" data-tooltip="${escapeHtml(tip)}">
-          <p class="expert-iparag">${escapeHtml(r.iparag)}</p>
-          <h4>${escapeHtml(r.pozicio)}</h4>
-          ${r.linkedin != null ? `<p class="expert-market">Piacon elérhető szakember: ${fmt.format(r.linkedin)} fő*</p>` : ''}
-          <p class="expert-bar-label">IDBC Expert Community</p>
-          <div class="expert-bar-track"><div class="expert-bar-fill" style="width:${(r.darab / max * 100).toFixed(0)}%"></div></div>
-          <strong class="expert-count">${r.darab} fő</strong>
-        </article>`;
-      }).join('') || '<p class="no-data">Nincs elérhető jelölt ehhez az iparághoz.</p>';
-      // The footnote belongs to the star; no star on screen, no footnote.
-      talentNote.textContent = rows.some(r => r.linkedin != null) ? IDBCChart.TALENT_NOTE : '';
-
-      renderPoolCards(rows, total);
-      IDBCChart.attachTooltip(expertGrid);
-    }
-
-    // Same three-card summary block as the salary pages, filled with what this
-    // page actually has: pool size, breadth, and the strongest single position.
-    const poolCards = document.querySelector('#poolCards');
-
-    function renderPoolCards(rows, total) {
-      if (!rows.length) { poolCards.style.display = 'none'; poolCards.innerHTML = ''; return; }
-      poolCards.style.display = '';
-      const top = rows.reduce((a, b) => (b.darab > a.darab ? b : a));
-      const cards = [
-        { title: 'Elérhető szakértők', value: `${total} fő`,
-          note: `${escapeHtml(iparagSelect.value)} iparág teljes poolja az IDBC Expert Communityben.` },
-        { title: 'Lefedett pozíciók', value: `${rows.length} pozíció`,
-          note: 'Ennyi különböző szerepkörre van azonnal mozgósítható jelöltünk.' },
-        { title: 'Legnagyobb pool', value: escapeHtml(top.pozicio),
-          note: `${top.darab} fő, az iparág pooljának ${Math.round(top.darab / total * 100)}%-a.` },
-      ];
-      poolCards.innerHTML = cards.map(c => `
-        <article class="range-card">
-          <h3>${c.title}</h3>
-          <p class="range-value">${c.value}</p>
-          <p>${c.note}</p>
-        </article>`).join('');
-    }
-
-    populateExpertFilter();
-    iparagSelect.addEventListener('change', renderExpertPool);
-    renderExpertPool();
-    })();
-  </script>
 </body>
 </html>

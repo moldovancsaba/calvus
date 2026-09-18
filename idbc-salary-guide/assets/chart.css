@@ -210,3 +210,10 @@
 .top3-chart-compact { margin-top: 2px; }
 .top3-chart-compact .value-label { font-size: 13px; font-weight: 900; }
 .top3-compact-axis .axis-label { font-size: 12px; font-weight: 800; }
+
+/* LinkedIn Talent Insight market count (client, 2026-09): green pill under the role name,
+   one footnote under the chart. Same pill on the Expert Pool tiles' market line. */
+.talent-pill-svg rect { fill: #a5df8f; }
+.talent-pill-svg text { font-size: 12px; font-weight: 800; fill: #132323; }
+.talent-pill { display: inline-block; margin: 6px 0 8px; padding: 4px 10px; border-radius: 8px; background: #a5df8f; color: #132323; font-size: 12px; font-weight: 800; }
+.talent-note { margin: 14px 0 0; font-size: 12px; font-weight: 700; color: rgba(16,24,24,.66); }

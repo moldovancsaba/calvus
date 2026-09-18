@@ -22,6 +22,8 @@ folder is the single consolidated data source built from all of it.
 | `html demok/2_savok.html` | HTML mockup | Real design for the B2C/B2B filterable trends dashboard — this is what the current "Piaci trendek" section is built from. |
 | `html demok/3_SAP.html` | HTML mockup | Real design for a dedicated SAP article page (exec summary, contact card, product grid, TOP3 + full salary table) — not yet built as its own page. |
 | `IDBC_SalaryGuide_home.pdf` | PDF mockup (lorem ipsum) | Shows the Salary Guide teaser as it would sit inside IDBC's main homepage template (hero, 3 feature cards, text block) — confirms this is meant to be embedded content, not a standalone site. |
+| `Talent Insight riport.xlsx` | Excel (2026-09-18) | LinkedIn Talent Insight market counts: sheet 1 the TOP3 positions per area (39 rows, stored as `salary.talentInsightTop3`), sheet 2 the Expert Pool positions (13 rows, merged as `linkedin` onto `salary.expertPool`). |
+| `SG- Esettanulmányok.docx`, `SG - kezdő oldal.docx`, `SG - SAP tartalom.docx`, `SG - Expert Community.docx` | Word (2026-09-18) | Final client copy for the case studies, home page, SAP trends and Expert Community — see the 2026-09-18 round below. |
 | `IDBC_SalaryGuide_aloldal.pdf` | PDF mockup (lorem ipsum) | **Most important visual find**: shows the actual salary/trends article-page layout, including a horizontal **point-line chart** for the TOP3 salary comparison (three connected, labeled dots per role along one HUF axis) — a materially different (better) chart than the static range-cards currently deployed. |
 
 ## Current build vs. client intent — concrete gaps
@@ -146,6 +148,71 @@ folder is the single consolidated data source built from all of it.
 - `filterDimensions` — **new**: every filter named in the client's `Szűrők` doc, each flagged `available` / `partial` / not-available against what the real data supports, with a note explaining the gap.
 - `sapProducts` — **new**: the real 5-category, 20-item SAP product catalogue from the client's own SAP mockup/spec.
 - `siteMap` — **new**: the full intended 8-page site structure with a `status` (`built` / `partially built` / `not built`) and note per page.
+
+## Client feedback round (2026-09-18)
+
+Two client mails and their attachments (three content docs, the Expert Community doc, the
+Talent Insight workbook, three design PNGs, and the research workbook again). What each item
+became:
+
+- **Kutatási adatok** — the re-sent `Salary Guide- kutatási eredmények-final.xlsx` is
+  byte-identical to the one the 2026-09-08 rebuild consumed (converter re-run into scratch,
+  output identical). Weighted-average-only for the two 1–4 scale questions and the
+  `Összesített adatok` label were already in place. Nothing changed.
+- **Fejléc** — every guide page now carries the client's menu: Piaci trendek · Bérek · SAP ·
+  Expert Pool · Esettanulmányok, with Ajánlatkérés and Kijelentkezés right-aligned. Ajánlatkérés
+  links to `idbc.hu/ajanlatkeres/` (the client named the item, not the target — a live page on
+  their site was the least presumptuous choice; change the `href` if they want the in-guide
+  contact form instead). Kijelentkezés stays inert. Footer navigation matches.
+- **Esettanulmányok** — new page (`esettanulmanyok/`) from `SG- Esettanulmányok.docx`: DGITSHU
+  (IT Contracting + try&hire, RPO) and Publicis Groupe (RPO), one video placeholder each, bottom
+  CTA to `idbc.hu/szolgaltatasok/`. `siteMap` status updated from "not built".
+- **SAP tartalom** — the page's executive summary is replaced by the client's two blocks
+  (Technológiai trendek with four sub-sections, Toborzási trendek SAP területen). "TOP 3 SAP
+  pozi" and "További bérek" in the doc are the existing section headings.
+- **Piaci trendek — videó / kulcsgondolat** — `areas.json` gained `media: "video" | "highlight"`
+  (video: IT, IT Contracting, Sales & Marketing, HR, Gyártás, Logisztika, BSC; highlight:
+  Pénzügy, Építőipar, Pharma, Office Support). The area page renders a play-button placeholder
+  or the green quote box from `Highlight 1.png`, with placeholder text naming the area; the
+  client uploads the finals. The `image` field and the Finance infographic slot are gone from
+  the page (the file stays in `assets/`, unreferenced, until the client says it is retired).
+- **Expert Pool** — the page is now the client's Expert Community page (`SG - Expert
+  Community.docx`): intro, "Szakemberként csatlakoznál?" with the join form behind the button
+  (vezetéknév, keresztnév, pozíció, e-mail, telefon, üzenet), "Új kollégát keresel?" with
+  Ajánlatkérés jumping to the contact form at the bottom, then the tiles. Tiles follow the demo
+  PNG: category, position, "Piacon elérhető szakember: N fő\*", an "IDBC Expert Community"
+  label over the bar, the IDBC count. Both forms are inert (`is-unavailable`, note under the
+  button). The LinkedIn numbers come from sheet 2 of `Talent Insight riport.xlsx`, stored as
+  `linkedin` on each `salary.expertPool` row — 13 of 15 rows; `Pharma / Team Leader` and
+  `Finance / Desk Analyst` are the two the client is still sourcing, and those tiles show no
+  market line. The footnote appears only when a star is on screen.
+- **Bérek — TOP3 market counts** — `top3-chart.js` renders a green pill under the position
+  (`N elérhető jelölt*`) in both layouts and the footnote under the chart whenever a row carries
+  `linkedin`. Sheet 1 of the Talent Insight workbook (39 positions, 13 areas) is stored verbatim
+  as `salary.talentInsightTop3`; the converter matches it onto `webBertabla` TOP3 rows by
+  (terulet, pozicio). **Today that matches zero rows**: the client's list is cut to the new
+  bértábla they are sending next week (SAP + IT salaries, new area set — Retail, Marketing,
+  Építőipar appear, position names differ, e.g. "SAP Consultant (MM, SD, FI/CO, EWM)" vs our
+  "SAP FI/CO Consultant"). No name was guess-matched. When the new salary rows land, re-run
+  the matching and the pills light up. The rendering was verified with synthetic rows.
+- **Regisztráció** — new page (`regisztracio/`) with exactly the client's field list
+  (Vezetéknév, Keresztnév, E-mail, Cégnév, Pozíció, cég/jelölt fióktípus, Jelszó, adatvédelmi
+  elfogadás; the newsletter checkbox is deliberately absent per the mail). Submit is inert —
+  still no backend on static hosting (gap 2 above stands).
+- **Kezdőoldal** — copy received (`SG - kezdő oldal.docx`: intro signed Dohos Ágnes & Illés
+  József, methodology, six chamber logos, podcast playlist, 1 552 munkavállalói / 148
+  munkáltatói válasz). **Not built**: the client sends the structure demo next week; the copy
+  is in the Drive doc and goes in once the layout exists.
+
+Still pending from the client: the SAP + IT salary excel, the two missing Expert Pool numbers,
+the structure demos for Kezdőoldal / Bérek / Expert Pool, and the final videos / key thoughts.
+
+Measured before push: every guide page (7) at 375 and desktop width — no horizontal
+overflow, no tap target under 44 px (two short menu labels were under 44 px wide in the open
+phone menu; fixed with a `min-width` on the shared rule), no console errors; 132 relative
+links resolve. Screenshots were unavailable in this session (browser pane hidden), so the
+gate was DOM-measured, not eyeballed — worth a visual pass on the Expert Pool tiles and the
+highlight box before the client sees them.
 
 ## Card header alignment (2026-09-16)
 
