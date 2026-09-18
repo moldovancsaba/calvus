@@ -571,9 +571,11 @@
     // The TOP3 chart has a distinct narrow layout, so re-render when crossing that line.
     window.matchMedia('(max-width: 700px)').addEventListener('change', renderTop3);
 
-    const MAX_TABLE_ROWS = 10;
+    // "További bérek": the non-TOP3 SAP rows with their level; the TOP3 rows are standalone in the
+    // 2026-09-18 bértábla and already sit in the chart above.
     const salaryTableBody = document.querySelector('#salaryTableBody');
-    const visibleSapRows = sapRows.slice(0, MAX_TABLE_ROWS);
+    const visibleSapRows = sapRows.filter(r => !r.top3);
+    const labelOf = r => r.szint ? `${r.pozicio} · ${r.szint}` : r.pozicio;
 
     // Hide the benefits column entirely (header + cells) when every visible row
     // has no value for it, instead of showing a column of dashes.
@@ -589,9 +591,9 @@
     salaryTableBody.innerHTML = visibleSapRows.map(r => `
       <tr role="row" class="is-collapsed">
         <td role="cell" class="pos-cell" data-label="Job / terület">
-          <span class="pos-name-plain">${escapeHtml(r.pozicio)}</span>
+          <span class="pos-name-plain">${escapeHtml(labelOf(r))}</span>
           <button type="button" class="pos-toggle" aria-expanded="false">
-            <span class="pos-name">${escapeHtml(r.pozicio)}</span>
+            <span class="pos-name">${escapeHtml(labelOf(r))}</span>
             <span class="pos-band">${escapeHtml(rangeOf(r))}</span>
             <span class="pos-chevron" aria-hidden="true"></span>
           </button>

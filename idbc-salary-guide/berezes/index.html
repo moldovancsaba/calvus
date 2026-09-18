@@ -454,7 +454,7 @@
         <p class="eyebrow">IDBC Salary Guide</p>
         <h1 id="hero-title">Bérsávok területenként</h1>
         <p>
-          270 pozíció-bérsáv valós piaci adatok alapján — területenként, junior–medior–senior
+          Pozíció-bérsávok valós piaci adatok alapján — területenként, tapasztalati szint szerinti
           bontásban, TOP3 kiemelt pozíciókkal.
         </p>
       </div>
@@ -494,6 +494,7 @@
 
         <div class="top3-chart-card" id="top3Panel" aria-label="TOP3 kiemelt pozíciók bérsávja"></div>
 
+        <div id="moreSalaries">
         <h3 class="table-title">További bérek</h3>
         <p class="table-note">A bemutatott, 2026-os valós piaci adatokon alapuló bérsávok egész Magyarországra vonatkozó, havi bruttó forintösszegek.</p>
         <p class="salary-count" id="salaryCount"></p>
@@ -511,6 +512,7 @@
               </tr>
             </thead>
           </table>
+        </div>
         </div>
         <div class="bottom-cta">
           <span class="cta-button is-unavailable" aria-disabled="true" title="Az Excel export még nem érhető el">Excel letöltése az összes bérrel</span>
@@ -632,19 +634,20 @@
       return true;
     }
 
-    // Table: every position of the selected area, grouped into Junior/Medior/Senior rows per
-    // position. TOP3 rows are included too — the top3 flag marks Senior rows only, so excluding
-    // them would leave two-row orphan groups; the chart above stays the highlight, the table the
-    // complete reference.
+    // Table ("További bérek"): every non-TOP3 position of the selected area, one group per
+    // position with whatever levels the bértábla gives it (2026-09-18 sheet: Trainee → Manager,
+    // some senior roles carry no level at all). TOP3 rows are standalone rows in that sheet and
+    // live in the chart above, so they are not repeated here.
     const SZINT_LABELS = {
       Junior: 'Junior (1-2 év tapasztalat)',
       Medior: 'Medior (3-5 év tapasztalat)',
       Senior: 'Senior (5+ év tapasztalat)',
     };
-    const SZINT_ORDER = ['Junior', 'Medior', 'Senior'];
+    const SZINT_ORDER = ['Trainee', 'Junior', 'Medior', 'Senior', 'Team Leader', 'Manager'];
+    const szintRank = s => { const i = SZINT_ORDER.indexOf(s); return i < 0 ? SZINT_ORDER.length : i; };
 
     function renderTable() {
-      const areaRows = nonSapRows.filter(r => r.terulet === teruletSelect.value);
+      const areaRows = nonSapRows.filter(r => r.terulet === teruletSelect.value && !r.top3);
       // Source rows are already adjacent per position, but sort defensively and take the
       // rowspan from the actual group size in case a position ever misses a level.
       const byPos = new Map();
@@ -655,7 +658,7 @@
       // One <tbody> per position: harmless on desktop, and in card mode it *is* the card,
       // which is what lets the rowspan grouping survive the switch to block layout.
       const bodyHtml = [...byPos.entries()].map(([pozicio, group]) => {
-        const rows = [...group].sort((a, b) => SZINT_ORDER.indexOf(a.szint) - SZINT_ORDER.indexOf(b.szint));
+        const rows = [...group].sort((a, b) => szintRank(a.szint) - szintRank(b.szint));
         const band = `${fmtHuf(Math.min(...rows.map(r => r.min)))} – ${fmtHuf(Math.max(...rows.map(r => r.max)))}`;
         const cells = rows.map((r, i) => `
           <tr role="row"${i === 0 ? ' class="pos-row"' : ''}>
@@ -667,7 +670,7 @@
                 <span class="pos-chevron" aria-hidden="true"></span>
               </button>
             </td>` : ''}
-            <td role="cell" data-label="Tapasztalati szint">${escapeHtml(SZINT_LABELS[r.szint] || r.szint)}</td>
+            <td role="cell" data-label="Tapasztalati szint">${escapeHtml(r.szint ? (SZINT_LABELS[r.szint] || r.szint) : '–')}</td>
             <td class="num" role="cell" data-label="Minimum">${fmtHuf(r.min)}</td>
             <td class="num" role="cell" data-label="Maximum">${fmtHuf(r.max)}</td>
             <td role="cell" data-label="Egyéb juttatás">${escapeHtml(r.juttatas)}</td>
@@ -677,6 +680,8 @@
       salaryTable.querySelectorAll('tbody').forEach(tb => tb.remove());
       salaryTable.insertAdjacentHTML('beforeend', bodyHtml);
       salaryCount.textContent = byPos.size + ' pozíció a kiválasztott területen';
+      // Office Support and Retail carry only TOP3 rows in the 2026-09-18 sheet: nothing further to list.
+      document.querySelector('#moreSalaries').style.display = byPos.size ? '' : 'none';
     }
 
     function renderSalarySection() {

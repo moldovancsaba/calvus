@@ -12,7 +12,7 @@ folder is the single consolidated data source built from all of it.
 |---|---|---|
 | `Salary Guide - munkaerőpiaci trendek - minta` | Google Sheet | Real survey data → `answers` (9 tabs: employee/employer × general/IT+Contracting × base/crosstab). 157 respondents, 89 questions, 1,450 response rows. |
 | `Salary Guide- kutatási eredmények-final (1).xlsx` | Excel (2026-09-01) | Real **per-area** re-tabulation → `areaAnswers` (11 areas × 4 tabs: B2C Total/Tapasztalat, B2B Total/Cégméret). Supersedes the edition-mapped stand-in for every `terulet/` page — see the 2026-09-01 update note below. |
-| `IDBC_bertabla` | Google Sheet | Real salary-band data → `salary.webBertabla` (270 rows, 8 areas) and `salary.expertPool` (15 rows). Includes the `UTMUTATO` instructions tab, captured verbatim in `salary.readme`. |
+| `IDBC_bertabla` | Google Sheet (`1aQA6Kw5k1U9LQMiWYgcn__m2YCuGmEhx79QFSzE0hJg`) | Real salary-band data → `salary.webBertabla` and `salary.expertPool` (15 rows), rebuilt by `build-salary-data.py`. Re-pulled 2026-09-18: **432 rows, 13 areas, 39 standalone TOP3 rows** (was 270 rows / 8 areas in August). Includes the `UTMUTATO` instructions tab, captured verbatim in `salary.readme`. |
 | `IDBC_web_bertabla_roviditett_import_v9.xlsx`, `Salary Guide ... minta.xlsx` | Excel | Duplicate exports of the two sheets above — not separately re-parsed, no new data. |
 | `IDBC Salary Guide specifikáció` | Google Doc | Functional spec: registration/paywall gate, 3 data-driven functions (Bérezés, Igény-elvárás, Expert Pool), Google-Sheets-via-API + WordPress block-editor architecture. |
 | `SG_landing_speci.docx` | Word doc | Full site map (8 pages) and per-page content-block breakdown — see `siteMap` in the data file. Added detail the shorter spec didn't have: split IT/Contracting result blocks, the Non-IT area filter, the 3-tier-range-vs-1-average-range table distinction, the full SAP product catalogue, and the Excel-download CTA. |
@@ -226,6 +226,52 @@ phone menu; fixed with a `min-width` on the shared rule), no console errors; 132
 links resolve. Screenshots were unavailable in this session (browser pane hidden), so the
 gate was DOM-measured, not eyeballed — worth a visual pass on the Expert Pool tiles and the
 highlight box before the client sees them.
+
+## The current bértábla (2026-09-18, second push of the day)
+
+The owner shared the live `IDBC_bertabla` sheet after the client's review. It is not the
+August table with additions — it is a reworked table, and it is what the Talent Insight list
+was cut to:
+
+- **13 areas by code** (`BSC, PENZUGY, Sales, Marketing, HR, Office Support, Retail, GYARTAS,
+  LOGISZTIKA, CP, PHARMA, IT, SAP`), 432 rows. Gone: Banki, Adminisztráció, Ügyfélszolgálat as
+  separate areas. New: Sales and Marketing (split, where the trends survey pools them), Retail,
+  Logisztika, Építőipar (`CP`), Pharma, HR. Display names follow `areas.json` wherever the same
+  area exists on the trends pages; the code→name table is at the top of
+  `build-salary-data.py` and is the one place to change a label.
+- **TOP3 rows are standalone**: 39 rows flagged `x`, one per Talent Insight position, with
+  min / IDBC / max and (mostly) no level. They are no longer the Senior row of a grouped
+  position, so the "További bérek" tables on Bérek and SAP now exclude them — the chart carries
+  them. Office Support and Retail have *only* TOP3 rows; their table block is hidden.
+- **Levels** are now Trainee / Junior / Medior / Senior / Team Leader / Manager, and 19 senior
+  roles (mostly Pharma, plus Finance and Construction heads) carry no level; the table orders by
+  that list and prints `–` for a missing level. Junior/Medior/Senior keep the client's year
+  ranges in the label.
+- `idbc_javasolt_ber_huf` is filled only on TOP3 rows — the summary cards already derive from
+  TOP3 rows only, so nothing changed there.
+- The sheet's own banner still reads "szakmai jóváhagyást igénylő … mintaértékek"; the page
+  copy under the table is the client's ("valós piaci adatokon alapuló") — same situation as
+  recorded under gap 6.
+
+**Talent Insight matching.** All 39 TOP3 positions were paired with the sheet by hand
+(area code map + a spelling table in `build-salary-data.py`; identical labels need no
+entry). Three Építőipar rows are Hungarian in the Talent Insight file and English in the sheet
+(Generál építésvezető = Architectural Site Manager, Elektromos előkészítő mérnök = Electrical
+Quantity Surveyor, Gépész tervező = Mechanical Designe Engineer — the sheet's own spelling).
+Result: **37 of 39 TOP3 rows carry a count**; the two without are the Építőipar numbers the
+client is still sourcing. Expert Pool: 13 of 15, unchanged. The converter asserts that every
+Talent Insight position resolves to a sheet TOP3 row, so a renamed position fails the build
+instead of silently losing its number.
+
+**Two converters now.** `build-guide-data.py` (survey workbook → `topics`/`datasets`) carries
+the salary block through untouched; `build-salary-data.py` (bértábla + Talent Insight →
+`salary`) carries the survey half through untouched. The earlier re-match step in the survey
+converter is gone — it matched raw Talent Insight names and would have stripped the counts.
+
+Measured before push, local server, desktop and 375 px: Bérek shows the chart with pills on
+all 12 areas (Építőipar: one pill), table groups render with the new levels, no overflow, no
+tap target under 44 px, no console errors; SAP chart 3 pills + footnote, 9 table rows with
+level, side column 446 px; Expert Pool unchanged.
 
 ## Card header alignment (2026-09-16)
 

@@ -262,17 +262,7 @@ new = {
     "filterDimensions": old["filterDimensions"],
 }
 
-# LinkedIn Talent Insight counts (client, 2026-09-18) live on the TOP3 salary rows, matched by
-# (terulet, pozicio) against the client's own list in salary.talentInsightTop3. Re-matched on
-# every run so a new bertabla picks its numbers up without a hand edit; unmatched rows carry none.
-ti = {(r["terulet"], r["pozicio"]): r["linkedin"] for r in new["salary"].get("talentInsightTop3", [])}
-matched = 0
-for r in new["salary"]["webBertabla"]:
-    n = ti.get((r["terulet"], r["pozicio"])) if r.get("top3") else None
-    if n is None: r.pop("linkedin", None)
-    else: r["linkedin"] = n; matched += 1
-print("TOP3 rows with a Talent Insight count:", matched, "of", sum(1 for r in new["salary"]["webBertabla"] if r.get("top3")))
-
+# The salary block (including the Talent Insight counts) is owned by build-salary-data.py.
 io.open(OUT, "w", encoding="utf-8").write(json.dumps(new, ensure_ascii=False, separators=(",", ":")))
 
 # ---- report ----
