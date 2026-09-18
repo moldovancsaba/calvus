@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Holdvölgy 2026 — token and component map — Holdvölgy 2026 docs</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:opsz,wght@6..96,400;6..96,500&family=Archivo:wdth,wght@112.5,400;112.5,500;112.5,600&display=swap">
+<link rel="stylesheet" href="../assets/tokens.css">
+<style>:root{--ground:var(--hv-ground);--card:var(--hv-card);--ink:var(--hv-ink);--text:var(--hv-text);--muted:var(--hv-muted);--accent:var(--hv-accent);--accent-deep:var(--hv-accent-deep);--line:var(--hv-line);--line-soft:var(--hv-line-soft);--note:var(--hv-band)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--ground);color:var(--text);font-family:"Archivo","Helvetica Neue",Arial,sans-serif;font-stretch:112.5%;font-size:15.5px;line-height:1.6;padding-block:0 64px;padding-inline:clamp(16px,4vw,40px)}
+.wrap{max-width:72ch;margin-inline:auto}
+.docnav{display:flex;flex-wrap:wrap;gap:4px 18px;align-items:center;padding:16px 0;border-bottom:1px solid var(--line);font-size:12px;letter-spacing:.06em;text-transform:uppercase}
+.docnav a{color:var(--muted);text-decoration:none;min-height:44px;display:inline-flex;align-items:center;border-bottom:2px solid transparent}
+.docnav a:hover,.docnav a[aria-current]{color:var(--ink);border-color:var(--accent)}
+.docnav-brand{color:var(--accent-deep);font-weight:600;margin-right:6px}
+.docnav-hub{margin-left:auto}
+header{padding-block:40px 24px;border-bottom:1px solid var(--line);margin-bottom:28px}
+.eyebrow{font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--accent-deep);margin:0 0 12px}
+h1,h2,h3{font-family:"Bodoni Moda",Didot,"Bodoni 72",serif;font-weight:400;color:var(--ink);line-height:1.1;text-wrap:balance;margin:0}
+h1{font-size:clamp(32px,6.5vw,50px);font-optical-sizing:auto}
+h2{font-size:clamp(25px,4.5vw,32px);margin:48px 0 14px;padding-top:20px;border-top:1px solid var(--line)}
+h3{font-size:19px;margin:30px 0 8px;font-weight:500}
+p{margin:0 0 14px} strong{color:var(--ink);font-weight:600}
+ul,ol{padding-left:22px;margin:0 0 16px} li{margin:5px 0} li>ul{margin:6px 0 0}
+code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.86em;background:var(--note);padding:1px 5px;border-radius:2px;color:var(--ink)}
+a{color:var(--accent-deep)} :focus-visible{outline:2px solid var(--accent-deep);outline-offset:2px}
+.tbl{overflow-x:auto;margin:14px 0 22px;border:1px solid var(--line)}
+table{border-collapse:collapse;width:100%;font-size:13.5px;min-width:560px}
+th{text-align:left;font-weight:600;color:var(--ink);background:var(--note);padding:10px 12px;border-bottom:1px solid var(--line);font-size:11.5px;letter-spacing:.06em;text-transform:uppercase}
+td{padding:10px 12px;border-top:1px solid var(--line-soft);vertical-align:top;background:var(--card)} td:first-child{color:var(--ink)}
+footer{margin-top:56px;padding-top:18px;border-top:1px solid var(--line);font-size:12px;color:var(--muted)}
+
+/* embedded gate-2 frames */
+.frames{display:grid;gap:28px;margin:18px 0 30px}
+.frames figure{margin:0} .frames figcaption{font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);margin-bottom:8px}
+.scale-d{width:100%;aspect-ratio:1440/2900;position:relative;overflow:hidden;border:1px solid var(--line);background:#FAFAFA}
+.scale-d iframe{position:absolute;top:0;left:0;width:1440px;height:2900px;border:0;transform-origin:0 0;transform:scale(calc(var(--w,720) / 1440))}
+.scale-p{width:390px;max-width:100%;aspect-ratio:390/2100;position:relative;overflow:hidden;border:1px solid var(--line);background:#FAFAFA}
+.scale-p iframe{position:absolute;top:0;left:0;width:390px;height:2100px;border:0;transform-origin:0 0;transform:scale(calc(var(--pw,390) / 390))}
+
+pre{overflow-x:auto;padding:14px 16px;border:1px solid var(--hv-line);border-radius:2px;background:var(--hv-card);font-size:12px;line-height:1.35}
+pre code{background:none;padding:0;font-size:inherit}
+</style>
+</head>
+<body>
+<div class="wrap">
+<nav class="docnav" aria-label="Project documentation"><span class="docnav-brand">Holdvölgy 2026 · docs</span><a href="index.html">Overview</a><a href="brief.html">Brief</a><a href="bemutato.html">Bemutató</a><a href="plan.html">Plan</a><a href="benchmarks.html">Benchmarks</a><a href="audit.html">Brand & site audit</a><a href="assets.html">Assets</a><a href="decisions.html">Decisions</a><a href="design-system.html">Design system</a><a href="layouts.html">Layouts</a><a href="home-build.html">Home build</a><a href="birtok-build.html">Birtok build</a><a href="aszu-build.html">Aszú build</a><a href="latogatas-build.html">Látogatás build</a><a href="shop-build.html">Shop build</a><a href="gate-sweep.html">Gate sweep</a><a href="ssot.html">SSOT</a><a href="architecture.html">Architecture</a><a href="technical-design.html">Technical design</a><a href="implementation-plan.html">Implementation plan</a><a href="token-map.html" aria-current=page>Token map</a><a class="docnav-hub" href="../../index.html">Calvus Hub</a></nav>
+<header><p class="eyebrow">Calvus · Holdvölgy · project documentation</p><h1>Holdvölgy 2026 — token and component map</h1></header>
+<p><em>How <code>assets/tokens.css</code> and the prototype's components become a WordPress block theme
+(<code>theme.json</code> + a base stylesheet), per ADR-2. The token file is the source; this table is
+the contract. Every value below is copied from <code>tokens.css</code> as of 2026-09-18 — if the two
+ever differ, the CSS wins and this file is wrong.</em></p>
+<h2>1. Colour</h2>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>Token</th>
+<th>Value</th>
+<th><code>theme.json</code> <code>settings.color.palette</code> slug</th>
+<th>Role</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>--hv-ground</code></td>
+<td><code>#FAFAFA</code></td>
+<td><code>ground</code></td>
+<td>page background (D2: light ground)</td>
+</tr>
+<tr>
+<td><code>--hv-card</code></td>
+<td><code>#FFFFFF</code></td>
+<td><code>card</code></td>
+<td>card and panel surface</td>
+</tr>
+<tr>
+<td><code>--hv-band</code></td>
+<td><code>#F4F4F4</code></td>
+<td><code>band</code></td>
+<td>full-width tinted band (wine rail)</td>
+</tr>
+<tr>
+<td><code>--hv-line</code></td>
+<td><code>#D9D9D9</code></td>
+<td><code>line</code></td>
+<td>rules, borders</td>
+</tr>
+<tr>
+<td><code>--hv-line-soft</code></td>
+<td><code>#EAEAE6</code></td>
+<td><code>line-soft</code></td>
+<td>hairlines inside cards</td>
+</tr>
+<tr>
+<td><code>--hv-ink</code></td>
+<td><code>#1D1D1B</code></td>
+<td><code>ink</code></td>
+<td>headings, wordmark, primary button</td>
+</tr>
+<tr>
+<td><code>--hv-text</code></td>
+<td><code>#4A4744</code></td>
+<td><code>text</code></td>
+<td>body copy</td>
+</tr>
+<tr>
+<td><code>--hv-muted</code></td>
+<td><code>#666666</code></td>
+<td><code>muted</code></td>
+<td>secondary copy (the live site's text colour)</td>
+</tr>
+<tr>
+<td><code>--hv-grey</code></td>
+<td><code>#9B9796</code></td>
+<td><code>grey</code></td>
+<td>labels, disabled</td>
+</tr>
+<tr>
+<td><code>--hv-accent</code></td>
+<td><code>#B8A689</code></td>
+<td><code>accent</code></td>
+<td>the only accent — greige, from the live kit</td>
+</tr>
+<tr>
+<td><code>--hv-accent-2</code></td>
+<td><code>#BAA793</code></td>
+<td><code>accent-2</code></td>
+<td>accent on tinted grounds</td>
+</tr>
+<tr>
+<td><code>--hv-accent-deep</code></td>
+<td><code>#8B705B</code></td>
+<td><code>accent-deep</code></td>
+<td>hover / pressed</td>
+</tr>
+</tbody>
+</table></div>
+<p>No gradients, no second accent, no dark mode (the docs' own dark-mode override was
+removed for the same reason — process log 2026-09-17). <code>theme.json</code> sets
+<code>settings.color.custom: false</code> so editors cannot introduce colours.</p>
+<h2>2. Type</h2>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>Token</th>
+<th>Value</th>
+<th><code>theme.json</code></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>--hv-display</code></td>
+<td><code>"Bodoni Moda", Didot, "Bodoni 72", "Bodoni MT", serif</code></td>
+<td><code>fontFamilies[display]</code>, self-hosted WOFF2 (HV-015), weights 400/500, optical size axis 6–96</td>
+</tr>
+<tr>
+<td><code>--hv-sans</code></td>
+<td><code>"Archivo", "Helvetica Neue", Arial, sans-serif</code></td>
+<td><code>fontFamilies[sans]</code>, WOFF2, weights 400/500/600</td>
+</tr>
+<tr>
+<td><code>--hv-sans-width</code></td>
+<td><code>112.5%</code></td>
+<td><code>font-stretch</code> on body — Archivo's <code>wdth</code> axis standing in for Akzidenz BQ Extended (D3)</td>
+</tr>
+<tr>
+<td><code>--hv-t-hero</code></td>
+<td><code>clamp(34px, 4.6vw, 64px)</code></td>
+<td><code>fontSizes[hero]</code> (fluid)</td>
+</tr>
+<tr>
+<td><code>--hv-t-h2</code></td>
+<td><code>clamp(26px, 2.9vw, 40px)</code></td>
+<td><code>fontSizes[h2]</code></td>
+</tr>
+<tr>
+<td><code>--hv-t-h3</code></td>
+<td><code>clamp(20px, 2vw, 28px)</code></td>
+<td><code>fontSizes[h3]</code></td>
+</tr>
+<tr>
+<td><code>--hv-t-body</code></td>
+<td><code>15px</code></td>
+<td><code>fontSizes[body]</code></td>
+</tr>
+<tr>
+<td><code>--hv-t-label</code></td>
+<td><code>12px</code></td>
+<td><code>fontSizes[label]</code></td>
+</tr>
+<tr>
+<td><code>--hv-track-label</code></td>
+<td><code>.14em</code></td>
+<td>letter-spacing on eyebrows/labels</td>
+</tr>
+</tbody>
+</table></div>
+<p>Roles: display face on <code>h1</code>/<code>h2</code> and the wordmark only; sans everywhere else (benchmark
+finding 1.2). Editors get exactly these five sizes (<code>settings.typography.customFontSize:
+false</code>).</p>
+<h2>3. Spacing, grid, corners, targets</h2>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>Token</th>
+<th>Value</th>
+<th><code>theme.json</code> / CSS</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>--hv-radius</code></td>
+<td><code>2px</code></td>
+<td><code>border-radius</code> on cards, buttons, fields — square-cornered brand</td>
+</tr>
+<tr>
+<td><code>--hv-tap</code></td>
+<td><code>44px</code></td>
+<td>min tap size on every interactive element</td>
+</tr>
+<tr>
+<td><code>--hv-gutter</code></td>
+<td><code>24px</code></td>
+<td>grid gap</td>
+</tr>
+<tr>
+<td><code>--hv-margin-desktop</code></td>
+<td><code>80px</code></td>
+<td>page margin ≥ 1024</td>
+</tr>
+<tr>
+<td><code>--hv-margin-phone</code></td>
+<td><code>16px</code></td>
+<td>page margin &lt; 768</td>
+</tr>
+<tr>
+<td><code>--hv-content-max</code></td>
+<td><code>1280px</code></td>
+<td><code>settings.layout.contentSize</code> / <code>wideSize</code></td>
+</tr>
+<tr>
+<td><code>--hv-measure</code></td>
+<td><code>62ch</code></td>
+<td>max line length for running text</td>
+</tr>
+<tr>
+<td>Breakpoints</td>
+<td>phone ≤ 767 · tablet 768–1023 · desktop ≥ 1024</td>
+<td><a href="layouts.html"><code>05-layout-specs.md</code></a>; the same three in the theme CSS</td>
+</tr>
+</tbody>
+</table></div>
+<h2>4. Components → theme parts / blocks</h2>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>Prototype component (class)</th>
+<th>Where it lives in the theme</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>.wrap</code></td>
+<td>layout root (<code>contentSize</code>)</td>
+<td></td>
+</tr>
+<tr>
+<td><code>.btn</code>, <code>.btn-2</code>, <code>.btn-3</code> (+ <code>.short</code>/<code>.long</code> label pairs)</td>
+<td><code>core/button</code> styles <code>primary</code> / <code>secondary</code> / <code>text</code></td>
+<td>the short/long pair is the responsive label trick — keep as two spans</td>
+</tr>
+<tr>
+<td><code>.card</code> (three home cards)</td>
+<td>block pattern <code>hv/card</code></td>
+<td>image, eyebrow, title, text, CTA pair (R1: hospitality first)</td>
+</tr>
+<tr>
+<td><code>.bottle</code> (+ <code>.price</code>)</td>
+<td>block pattern <code>hv/bottle</code> fed by a product</td>
+<td>one product per bottle; price from WooCommerce</td>
+</tr>
+<tr>
+<td><code>.rail</code></td>
+<td><code>hv/wine-rail</code> pattern = horizontal list of <code>hv/bottle</code></td>
+<td>swipeable on phone</td>
+</tr>
+<tr>
+<td><code>.rock</code>, dűlő row</td>
+<td><code>hv/dulo-row</code> pattern</td>
+<td>seven rows, two rock photos pending (HV-081)</td>
+</tr>
+<tr>
+<td><code>.hero</code></td>
+<td><code>hv/hero</code> pattern</td>
+<td>photograph + one sentence</td>
+</tr>
+<tr>
+<td><code>.top</code>, <code>.wordmark</code>, <code>.lang</code> (desktop nav)</td>
+<td><code>parts/header.html</code> + <code>core/navigation</code></td>
+<td>single menu (R11)</td>
+</tr>
+<tr>
+<td><code>.bar</code>, <code>.sheet</code> (phone nav)</td>
+<td><code>parts/bottom-bar.html</code></td>
+<td>bottom action bar + sheet, &lt; 1024</td>
+</tr>
+<tr>
+<td><code>.age</code> (<code>&lt;dialog&gt;</code>)</td>
+<td><code>parts/age-gate.html</code></td>
+<td>R8</td>
+</tr>
+<tr>
+<td><code>.proto</code> (banner)</td>
+<td><strong>not carried</strong> — prototype-only</td>
+<td>the banner is removed at cutover; the gate's "current banner" check does not apply to production</td>
+</tr>
+<tr>
+<td>form field (design-system §9)</td>
+<td>form plugin field styles</td>
+<td>tokens applied via the base stylesheet</td>
+</tr>
+<tr>
+<td>tiers (<code>.tiers</code>, <code>.tier</code>)</td>
+<td><code>hv/club-tiers</code> pattern reading reward-points settings</td>
+<td><code>12</code> §6</td>
+</tr>
+<tr>
+<td>tickets</td>
+<td><code>hv/ticket</code> pattern</td>
+<td>four instances on Látogatás</td>
+</tr>
+<tr>
+<td>product tabs (Kóstolási jegyzet · Az évjárat · Adatlap)</td>
+<td><code>single-product.html</code> sections from meta</td>
+<td><code>12</code> §3</td>
+</tr>
+</tbody>
+</table></div>
+<p>Class names are namespaced as D18 requires; in the theme they become <code>hv-</code> prefixed
+block styles so a plugin's <code>.card</code> can never collide.</p>
+<h2>5. What is deliberately not tokenised</h2>
+<p>Photographs (they are the colour of the site — benchmark finding 1.1), the map, the
+bottle renders. Hard-coded values in the prototype that are not in <code>tokens.css</code> are
+layout-local (a section's padding, a rail's item width) and move into the pattern's CSS,
+not into <code>theme.json</code>.</p>
+<h2>6. Verification</h2>
+<p>HV-004 ships a script that reads <code>tokens.css</code> and <code>theme.json</code> and fails if any value in
+§1–§3 differs. The design-system page (<code>design-system.html</code>) rendered by the theme must
+look identical to the prototype's — that comparison is M1's exit criterion.</p>
+<script>(function(){function f(){document.querySelectorAll('.scale-d').forEach(function(e){e.style.setProperty('--w',e.clientWidth)});document.querySelectorAll('.scale-p').forEach(function(e){e.style.setProperty('--pw',e.clientWidth)})}f();addEventListener('resize',f)})();</script>
+<footer>Source: <code>holdvolgy/docs/14-token-map.md</code> · rendered by <code>docs/build.py</code>. Set in Bodoni Moda and Archivo (Google Fonts, SIL OFL) on Holdvölgy's measured palette — decision D3.</footer>
+</div>
+</body>
+</html>

@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Holdvölgy 2026 — implementation plan — Holdvölgy 2026 docs</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:opsz,wght@6..96,400;6..96,500&family=Archivo:wdth,wght@112.5,400;112.5,500;112.5,600&display=swap">
+<link rel="stylesheet" href="../assets/tokens.css">
+<style>:root{--ground:var(--hv-ground);--card:var(--hv-card);--ink:var(--hv-ink);--text:var(--hv-text);--muted:var(--hv-muted);--accent:var(--hv-accent);--accent-deep:var(--hv-accent-deep);--line:var(--hv-line);--line-soft:var(--hv-line-soft);--note:var(--hv-band)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--ground);color:var(--text);font-family:"Archivo","Helvetica Neue",Arial,sans-serif;font-stretch:112.5%;font-size:15.5px;line-height:1.6;padding-block:0 64px;padding-inline:clamp(16px,4vw,40px)}
+.wrap{max-width:72ch;margin-inline:auto}
+.docnav{display:flex;flex-wrap:wrap;gap:4px 18px;align-items:center;padding:16px 0;border-bottom:1px solid var(--line);font-size:12px;letter-spacing:.06em;text-transform:uppercase}
+.docnav a{color:var(--muted);text-decoration:none;min-height:44px;display:inline-flex;align-items:center;border-bottom:2px solid transparent}
+.docnav a:hover,.docnav a[aria-current]{color:var(--ink);border-color:var(--accent)}
+.docnav-brand{color:var(--accent-deep);font-weight:600;margin-right:6px}
+.docnav-hub{margin-left:auto}
+header{padding-block:40px 24px;border-bottom:1px solid var(--line);margin-bottom:28px}
+.eyebrow{font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--accent-deep);margin:0 0 12px}
+h1,h2,h3{font-family:"Bodoni Moda",Didot,"Bodoni 72",serif;font-weight:400;color:var(--ink);line-height:1.1;text-wrap:balance;margin:0}
+h1{font-size:clamp(32px,6.5vw,50px);font-optical-sizing:auto}
+h2{font-size:clamp(25px,4.5vw,32px);margin:48px 0 14px;padding-top:20px;border-top:1px solid var(--line)}
+h3{font-size:19px;margin:30px 0 8px;font-weight:500}
+p{margin:0 0 14px} strong{color:var(--ink);font-weight:600}
+ul,ol{padding-left:22px;margin:0 0 16px} li{margin:5px 0} li>ul{margin:6px 0 0}
+code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.86em;background:var(--note);padding:1px 5px;border-radius:2px;color:var(--ink)}
+a{color:var(--accent-deep)} :focus-visible{outline:2px solid var(--accent-deep);outline-offset:2px}
+.tbl{overflow-x:auto;margin:14px 0 22px;border:1px solid var(--line)}
+table{border-collapse:collapse;width:100%;font-size:13.5px;min-width:560px}
+th{text-align:left;font-weight:600;color:var(--ink);background:var(--note);padding:10px 12px;border-bottom:1px solid var(--line);font-size:11.5px;letter-spacing:.06em;text-transform:uppercase}
+td{padding:10px 12px;border-top:1px solid var(--line-soft);vertical-align:top;background:var(--card)} td:first-child{color:var(--ink)}
+footer{margin-top:56px;padding-top:18px;border-top:1px solid var(--line);font-size:12px;color:var(--muted)}
+
+/* embedded gate-2 frames */
+.frames{display:grid;gap:28px;margin:18px 0 30px}
+.frames figure{margin:0} .frames figcaption{font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);margin-bottom:8px}
+.scale-d{width:100%;aspect-ratio:1440/2900;position:relative;overflow:hidden;border:1px solid var(--line);background:#FAFAFA}
+.scale-d iframe{position:absolute;top:0;left:0;width:1440px;height:2900px;border:0;transform-origin:0 0;transform:scale(calc(var(--w,720) / 1440))}
+.scale-p{width:390px;max-width:100%;aspect-ratio:390/2100;position:relative;overflow:hidden;border:1px solid var(--line);background:#FAFAFA}
+.scale-p iframe{position:absolute;top:0;left:0;width:390px;height:2100px;border:0;transform-origin:0 0;transform:scale(calc(var(--pw,390) / 390))}
+
+pre{overflow-x:auto;padding:14px 16px;border:1px solid var(--hv-line);border-radius:2px;background:var(--hv-card);font-size:12px;line-height:1.35}
+pre code{background:none;padding:0;font-size:inherit}
+</style>
+</head>
+<body>
+<div class="wrap">
+<nav class="docnav" aria-label="Project documentation"><span class="docnav-brand">Holdvölgy 2026 · docs</span><a href="index.html">Overview</a><a href="brief.html">Brief</a><a href="bemutato.html">Bemutató</a><a href="plan.html">Plan</a><a href="benchmarks.html">Benchmarks</a><a href="audit.html">Brand & site audit</a><a href="assets.html">Assets</a><a href="decisions.html">Decisions</a><a href="design-system.html">Design system</a><a href="layouts.html">Layouts</a><a href="home-build.html">Home build</a><a href="birtok-build.html">Birtok build</a><a href="aszu-build.html">Aszú build</a><a href="latogatas-build.html">Látogatás build</a><a href="shop-build.html">Shop build</a><a href="gate-sweep.html">Gate sweep</a><a href="ssot.html">SSOT</a><a href="architecture.html">Architecture</a><a href="technical-design.html">Technical design</a><a href="implementation-plan.html" aria-current=page>Implementation plan</a><a href="token-map.html">Token map</a><a class="docnav-hub" href="../../index.html">Calvus Hub</a></nav>
+<header><p class="eyebrow">Calvus · Holdvölgy · project documentation</p><h1>Holdvölgy 2026 — implementation plan</h1></header>
+<p><em>Milestones, issues with a Definition of Done, what is blocked and on whom, risks. Sized
+for whoever builds — the incumbent developer, Calvus, or both — under the PROPOSED stack
+(<a href="architecture.html"><code>11-architecture.md</code></a>). Nothing here is scheduled until the blocked register is empty.
+Written 2026-09-18.</em></p>
+<h2>0. Conventions</h2>
+<p>Issue ids <code>HV-nnn</code>; epics E0–E8; milestones M0–M6. Every issue names its acceptance in
+measurable terms taken from the prototype's gate (<a href="ssot.html"><code>10-ssot.md</code></a> §7). "Matches the
+prototype" means: same section order, same copy, same images, gate criteria green at 390
+and 1440, and a side-by-side screenshot in the build log.</p>
+<h2>1. Global Definition of Done</h2>
+<p>An issue is done when: built on staging; HU and EN both; gate criteria measured and
+recorded (one <code>h1</code>, <code>alt</code>, <code>hreflang</code>, 0 px overflow, 0 tap targets under 44 px, 0
+console errors); the affected URLs in the redirect map still resolve; no new plugin
+without a written justification (ADR-4); the build log entry written.</p>
+<h2>2. Milestones</h2>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>M</th>
+<th>Name</th>
+<th>Exit criterion</th>
+<th>Freeze</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>M0</td>
+<td>Baseline and staging</td>
+<td>staging clone of production; monitoring live on staging; the 23-plugin inventory confirmed from the admin side; theme repo created with <code>theme.json</code> from <a href="token-map.html"><code>14-token-map.md</code></a></td>
+<td>before or during</td>
+</tr>
+<tr>
+<td>M1</td>
+<td>Theme foundation</td>
+<td>header/mega-nav, bottom bar + sheet, footer, age gate, banner-free base; tokens render the design-system page's components identically</td>
+<td>during</td>
+</tr>
+<tr>
+<td>M2</td>
+<td>Content pages</td>
+<td>Home, Birtok, Tokaji aszú, Látogatás, Borklub as templates + patterns, HU + EN, matching the prototype</td>
+<td>during</td>
+</tr>
+<tr>
+<td>M3</td>
+<td>Shop</td>
+<td>product import from <code>catalogue.json</code>; Borok archive with filters and sort; product template with the three tabs; cart/checkout restyled; club tiers configured and tested</td>
+<td>during</td>
+</tr>
+<tr>
+<td>M4</td>
+<td>Language and URLs</td>
+<td>EN parity on every page and product; <code>hreflang</code>; redirect map live on staging and audited</td>
+<td>during</td>
+</tr>
+<tr>
+<td>M5</td>
+<td>Performance and plugin prune</td>
+<td>origin TTFB &lt; 800 ms measured on staging (cache off); home &lt; 1,5 MB; ≤ 10 front-end plugins; LCP &lt; 2,5 s at 390 on throttled 4G</td>
+<td>during</td>
+</tr>
+<tr>
+<td>M6</td>
+<td>Cutover</td>
+<td>after 15 January: production switch per <code>12</code> §12; measurements repeated on production; monitoring green 7 days</td>
+<td>after</td>
+</tr>
+</tbody>
+</table></div>
+<p>Indicative effort for one experienced WordPress developer with the prototype in hand: M0
+one week; M1 two; M2 three; M3 three; M4 one; M5 one; M6 one plus a week of watching.
+About twelve weeks, comfortably inside the freeze window if M0 starts by early November.</p>
+<h2>3. Issues</h2>
+<h3>E0 Foundations (M0)</h3>
+<ul>
+<li><strong>HV-000</strong> Confirm assumption A1 with the client (freeze binds production only) — DoD: written yes/no in <a href="decisions.html"><code>04-decisions.md</code></a>.</li>
+<li><strong>HV-001</strong> Staging environment on the current host, copy of production data — DoD: staging URL reachable, admin access for the builder, <code>noindex</code>.</li>
+<li><strong>HV-002</strong> Plugin inventory from the admin (installed, active, licensed, last update) — DoD: table in the build log; each of the 23 marked keep / replace / remove with the reason.</li>
+<li><strong>HV-003</strong> Monitoring: uptime check + PHP error alerting to a named estate contact and the developer — DoD: a forced 500 on staging produces an alert within 2 minutes.</li>
+<li><strong>HV-004</strong> Theme repository with <code>theme.json</code> generated from <code>tokens.css</code> (<code>14</code>) and the prototype HTML per page kind checked in as reference — DoD: <code>theme.json</code> values equal the token values, verified by a script.</li>
+<li><strong>HV-005</strong> Decide multilingual plugin (Polylang vs WPML) on WooCommerce support and licence — DoD: ADR-3 detail recorded in <a href="decisions.html"><code>04-decisions.md</code></a>.</li>
+</ul>
+<h3>E1 Theme foundation (M1)</h3>
+<ul>
+<li><strong>HV-010</strong> Header + desktop mega-nav (≥ 1024) from <code>parts/header.html</code> — DoD: five items (D4), matches design-system page.</li>
+<li><strong>HV-011</strong> Phone bottom action bar + sheet (&lt; 1024) — DoD: matches <a href="layouts.html"><code>05-layout-specs.md</code></a>; 44 px targets.</li>
+<li><strong>HV-012</strong> Footer — DoD: matches prototype; newsletter field wired (E5).</li>
+<li><strong>HV-013</strong> Age gate as a <code>&lt;dialog&gt;</code> in every page, session-remembered, keyboard-operable — DoD: R8; no content hidden from crawlers.</li>
+<li><strong>HV-014</strong> Base stylesheet: tokens + components (buttons, card, bottle, dűlő row, form field) — DoD: ≤ 40 KB; <code>img { height: auto }</code> (R4).</li>
+<li><strong>HV-015</strong> Self-hosted Bodoni Moda + Archivo WOFF2, <code>font-display: swap</code> — DoD: no Google Fonts request.</li>
+</ul>
+<h3>E2 Content pages (M2)</h3>
+<ul>
+<li><strong>HV-020</strong> Home template + patterns — DoD: matches <code>index.html</code> / <code>en/index.html</code>; weight ≤ prototype's 734 KB desktop.</li>
+<li><strong>HV-021</strong> Birtok — timeline and team as repeatable blocks — DoD: matches; portraits slot ready for the client's images.</li>
+<li><strong>HV-022</strong> Tokaji aszú — Culture wall data-driven from products of line Culture — DoD: 13 vintages with live prices; matches.</li>
+<li><strong>HV-023</strong> Látogatás — tickets block, practical info, guestbook — DoD: matches; form in E5.</li>
+<li><strong>HV-024</strong> Borklub — tiers rendered from configuration — DoD: four tiers equal the settings in E3.</li>
+<li><strong>HV-025</strong> Initial content import HU + EN from <code>build.py</code> strings — DoD: no copy differs from the prototype (diff script).</li>
+</ul>
+<h3>E3 Shop (M3)</h3>
+<ul>
+<li><strong>HV-030</strong> Taxonomies <code>wine_type</code>, <code>wine_line</code>; product meta fields per <code>12</code> §3 — DoD: schema documented in the theme repo.</li>
+<li><strong>HV-031</strong> <code>data/export-woo.py</code> and the import — DoD: 32 products, every field present, one "price on request".</li>
+<li><strong>HV-032</strong> Borok archive: filter, sort, two-up on phones — DoD: matches <code>borok.html</code>.</li>
+<li><strong>HV-033</strong> Product template with Kóstolási jegyzet · Az évjárat · Adatlap and JSON-LD — DoD: matches a sample of 5 product pages incl. the tab-less one.</li>
+<li><strong>HV-034</strong> Cart, checkout, account restyled with tokens — DoD: a test order completes on staging in HU and EN.</li>
+<li><strong>HV-035</strong> Club tiers in reward points — DoD: test customers at each threshold receive the right discount; rolling-window behaviour recorded.</li>
+<li><strong>HV-036</strong> Gift card and shipping extensions verified — DoD: gift card purchase and a shipping quote succeed on staging.</li>
+</ul>
+<h3>E4 Language and URLs (M4)</h3>
+<ul>
+<li><strong>HV-040</strong> Every page and product paired HU/EN with <code>hreflang</code> — DoD: sweep shows 3 <code>hreflang</code> links on every page.</li>
+<li><strong>HV-041</strong> Redirect map for merged pages and any changed slug — DoD: every URL in <a href="assets.html"><code>03-asset-inventory.md</code></a>/audit resolves 200 or 301 to the right anchor.</li>
+<li><strong>HV-042</strong> Sitemaps per language; <code>noindex</code> on transactional screens — DoD: sitemap validates.</li>
+</ul>
+<h3>E5 Forms and consent (M2–M3)</h3>
+<ul>
+<li><strong>HV-050</strong> Booking request form — DoD: <code>12</code> §5 validation; e-mail + entry; auto-reply; honeypot.</li>
+<li><strong>HV-051</strong> Newsletter to Mailchimp — DoD: double opt-in lands in the audience.</li>
+<li><strong>HV-052</strong> Consent banner gating PixelYourSite — DoD: no pixel request before consent (network log).</li>
+</ul>
+<h3>E6 Performance and plugin prune (M5)</h3>
+<ul>
+<li><strong>HV-060</strong> Deactivate Elementor, Pro, the four add-ons, TranslatePress, and the unused Woo extensions on staging — DoD: front end renders without them; plugin count ≤ 10.</li>
+<li><strong>HV-061</strong> CDN in front; browser cache headers for static assets — DoD: assets served with long max-age; HTML cache policy documented.</li>
+<li><strong>HV-062</strong> Measurements: origin TTFB (cache off) HU and EN, home weight, LCP at 390 — DoD: all under target, numbers in the build log.</li>
+</ul>
+<h3>E7 Cutover (M6)</h3>
+<ul>
+<li><strong>HV-070</strong> Cutover rehearsal on staging — DoD: runbook in <code>12</code> §12 executed end to end once.</li>
+<li><strong>HV-071</strong> Production cutover after 15 January — DoD: runbook steps ticked; link audit clean; measurements repeated; monitoring green for 7 days.</li>
+<li><strong>HV-072</strong> Hand-over session with estate staff (editing pages, products, prices, answering bookings) — DoD: staff edit a product price and a page text unaided.</li>
+</ul>
+<h3>E8 Client items (any time; content, not code)</h3>
+<ul>
+<li><strong>HV-080</strong> Founder and team portraits; <strong>HV-081</strong> Úrágya and Kakasok rock photographs; <strong>HV-082</strong> harvest dates, awards, ageing potential as structured data; <strong>HV-083</strong> Culture 133 000 Ft item confirmed; <strong>HV-084</strong> EN copy confirmation — DoD each: received, imported, page updated (plan §6).</li>
+</ul>
+<h2>4. Blocked register</h2>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>Item</th>
+<th>Blocked on</th>
+<th>Unblocks</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ADR-1..9 status</td>
+<td>owner / client decision on the stack</td>
+<td>everything from M0</td>
+</tr>
+<tr>
+<td>A1 (freeze binds production only)</td>
+<td>client</td>
+<td>M0–M5 timing</td>
+</tr>
+<tr>
+<td>Who builds</td>
+<td>client (incumbent's offer vs Calvus vs both)</td>
+<td>M0</td>
+</tr>
+<tr>
+<td>Admin access to production/hosting</td>
+<td>client</td>
+<td>HV-001, HV-002</td>
+</tr>
+<tr>
+<td>Multilingual plugin choice</td>
+<td>builder (HV-005)</td>
+<td>M4</td>
+</tr>
+<tr>
+<td>HV-080..084</td>
+<td>client</td>
+<td>content completeness, not the build</td>
+</tr>
+</tbody>
+</table></div>
+<h2>5. Risks</h2>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>Risk</th>
+<th>Effect</th>
+<th>Mitigation</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>The incumbent's offer is an Elementor rebuild</td>
+<td>targets cannot be met (§2 of the architecture)</td>
+<td>put the measured numbers in front of the client with the offer</td>
+</tr>
+<tr>
+<td>Reward-points extension cannot express rolling 12-month tiers</td>
+<td>club rules diverge from the page</td>
+<td><code>12</code> §6 fallback; verify in HV-035 before M2 copy is final</td>
+</tr>
+<tr>
+<td>WooCommerce screens look foreign next to the theme</td>
+<td>brand break at the moment of purchase</td>
+<td>HV-034 restyle is in scope; not a redesign</td>
+</tr>
+<tr>
+<td>EN content drift after go-live (staff edit HU only)</td>
+<td>parity lost</td>
+<td>the multilingual plugin's "needs translation" state; monthly check in the process log</td>
+</tr>
+<tr>
+<td>Freeze assumption A1 wrong</td>
+<td>build cannot start until mid-January</td>
+<td>ask in HV-000 first</td>
+</tr>
+<tr>
+<td>Client data (portraits, photos) arrives late</td>
+<td>pages ship with slots absent</td>
+<td>slots are absent by design (R2); nothing blocks go-live</td>
+</tr>
+</tbody>
+</table></div>
+<h2>6. Release scope</h2>
+<p><strong>Release 1 (go-live, early 2027):</strong> M0–M6 as above — the whole prototype as the live
+site, shop and club working on WooCommerce as today, booking as a request form, EN
+parity, targets measured and met.</p>
+<p><strong>Not in Release 1, recorded so nobody expects it:</strong> timed booking with availability and
+payment (ADR-7), a redesigned checkout, gift-card page redesign, blog/news beyond the home
+teaser, a members-only area, PreCulture purchase flow (needs the estate's allocation
+rules), print or e-mail templates.</p>
+<script>(function(){function f(){document.querySelectorAll('.scale-d').forEach(function(e){e.style.setProperty('--w',e.clientWidth)});document.querySelectorAll('.scale-p').forEach(function(e){e.style.setProperty('--pw',e.clientWidth)})}f();addEventListener('resize',f)})();</script>
+<footer>Source: <code>holdvolgy/docs/13-implementation-plan.md</code> · rendered by <code>docs/build.py</code>. Set in Bodoni Moda and Archivo (Google Fonts, SIL OFL) on Holdvölgy's measured palette — decision D3.</footer>
+</div>
+</body>
+</html>

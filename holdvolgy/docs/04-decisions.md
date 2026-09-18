@@ -104,3 +104,13 @@ Standing, 2026-09-16. A fact-sheet section named `.sheet` collided with the menu
 dialog's `.sheet` (fixed-position) and floated over the page. Section classes that
 could read as generic (`sheet`, `bar`, `card`, `grid`) are either namespaced
 (`factsheet`) or checked for a second definition before use.
+
+**D19 — Standard documentation structure; technical package in status PROPOSED.**
+Owner, 2026-09-18. Every project carries the same documentation set next to its
+prototype (customer side: presentation, brief, research, audit, sources, decisions,
+design, build log, gate, client asks; technical side: SSOT, architecture, technical
+design, implementation plan, token map). For Holdvölgy the customer side existed; the
+technical side was written the same day. Stack recommendations are ADRs in
+`11-architecture.md` and stay PROPOSED until the owner or the client flips one — the
+flip is recorded here as the next D-number. Replaces: nothing; before this the project
+had no technical package at all.

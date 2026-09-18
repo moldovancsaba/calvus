@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Holdvölgy 2026 — technical design — Holdvölgy 2026 docs</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:opsz,wght@6..96,400;6..96,500&family=Archivo:wdth,wght@112.5,400;112.5,500;112.5,600&display=swap">
+<link rel="stylesheet" href="../assets/tokens.css">
+<style>:root{--ground:var(--hv-ground);--card:var(--hv-card);--ink:var(--hv-ink);--text:var(--hv-text);--muted:var(--hv-muted);--accent:var(--hv-accent);--accent-deep:var(--hv-accent-deep);--line:var(--hv-line);--line-soft:var(--hv-line-soft);--note:var(--hv-band)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--ground);color:var(--text);font-family:"Archivo","Helvetica Neue",Arial,sans-serif;font-stretch:112.5%;font-size:15.5px;line-height:1.6;padding-block:0 64px;padding-inline:clamp(16px,4vw,40px)}
+.wrap{max-width:72ch;margin-inline:auto}
+.docnav{display:flex;flex-wrap:wrap;gap:4px 18px;align-items:center;padding:16px 0;border-bottom:1px solid var(--line);font-size:12px;letter-spacing:.06em;text-transform:uppercase}
+.docnav a{color:var(--muted);text-decoration:none;min-height:44px;display:inline-flex;align-items:center;border-bottom:2px solid transparent}
+.docnav a:hover,.docnav a[aria-current]{color:var(--ink);border-color:var(--accent)}
+.docnav-brand{color:var(--accent-deep);font-weight:600;margin-right:6px}
+.docnav-hub{margin-left:auto}
+header{padding-block:40px 24px;border-bottom:1px solid var(--line);margin-bottom:28px}
+.eyebrow{font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--accent-deep);margin:0 0 12px}
+h1,h2,h3{font-family:"Bodoni Moda",Didot,"Bodoni 72",serif;font-weight:400;color:var(--ink);line-height:1.1;text-wrap:balance;margin:0}
+h1{font-size:clamp(32px,6.5vw,50px);font-optical-sizing:auto}
+h2{font-size:clamp(25px,4.5vw,32px);margin:48px 0 14px;padding-top:20px;border-top:1px solid var(--line)}
+h3{font-size:19px;margin:30px 0 8px;font-weight:500}
+p{margin:0 0 14px} strong{color:var(--ink);font-weight:600}
+ul,ol{padding-left:22px;margin:0 0 16px} li{margin:5px 0} li>ul{margin:6px 0 0}
+code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.86em;background:var(--note);padding:1px 5px;border-radius:2px;color:var(--ink)}
+a{color:var(--accent-deep)} :focus-visible{outline:2px solid var(--accent-deep);outline-offset:2px}
+.tbl{overflow-x:auto;margin:14px 0 22px;border:1px solid var(--line)}
+table{border-collapse:collapse;width:100%;font-size:13.5px;min-width:560px}
+th{text-align:left;font-weight:600;color:var(--ink);background:var(--note);padding:10px 12px;border-bottom:1px solid var(--line);font-size:11.5px;letter-spacing:.06em;text-transform:uppercase}
+td{padding:10px 12px;border-top:1px solid var(--line-soft);vertical-align:top;background:var(--card)} td:first-child{color:var(--ink)}
+footer{margin-top:56px;padding-top:18px;border-top:1px solid var(--line);font-size:12px;color:var(--muted)}
+
+/* embedded gate-2 frames */
+.frames{display:grid;gap:28px;margin:18px 0 30px}
+.frames figure{margin:0} .frames figcaption{font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);margin-bottom:8px}
+.scale-d{width:100%;aspect-ratio:1440/2900;position:relative;overflow:hidden;border:1px solid var(--line);background:#FAFAFA}
+.scale-d iframe{position:absolute;top:0;left:0;width:1440px;height:2900px;border:0;transform-origin:0 0;transform:scale(calc(var(--w,720) / 1440))}
+.scale-p{width:390px;max-width:100%;aspect-ratio:390/2100;position:relative;overflow:hidden;border:1px solid var(--line);background:#FAFAFA}
+.scale-p iframe{position:absolute;top:0;left:0;width:390px;height:2100px;border:0;transform-origin:0 0;transform:scale(calc(var(--pw,390) / 390))}
+
+pre{overflow-x:auto;padding:14px 16px;border:1px solid var(--hv-line);border-radius:2px;background:var(--hv-card);font-size:12px;line-height:1.35}
+pre code{background:none;padding:0;font-size:inherit}
+</style>
+</head>
+<body>
+<div class="wrap">
+<nav class="docnav" aria-label="Project documentation"><span class="docnav-brand">Holdvölgy 2026 · docs</span><a href="index.html">Overview</a><a href="brief.html">Brief</a><a href="bemutato.html">Bemutató</a><a href="plan.html">Plan</a><a href="benchmarks.html">Benchmarks</a><a href="audit.html">Brand & site audit</a><a href="assets.html">Assets</a><a href="decisions.html">Decisions</a><a href="design-system.html">Design system</a><a href="layouts.html">Layouts</a><a href="home-build.html">Home build</a><a href="birtok-build.html">Birtok build</a><a href="aszu-build.html">Aszú build</a><a href="latogatas-build.html">Látogatás build</a><a href="shop-build.html">Shop build</a><a href="gate-sweep.html">Gate sweep</a><a href="ssot.html">SSOT</a><a href="architecture.html">Architecture</a><a href="technical-design.html" aria-current=page>Technical design</a><a href="implementation-plan.html">Implementation plan</a><a href="token-map.html">Token map</a><a class="docnav-hub" href="../../index.html">Calvus Hub</a></nav>
+<header><p class="eyebrow">Calvus · Holdvölgy · project documentation</p><h1>Holdvölgy 2026 — technical design</h1></header>
+<p><em>The detail under <a href="architecture.html"><code>11-architecture.md</code></a>: how each prototype page becomes a theme template,
+how <code>catalogue.json</code> maps onto WooCommerce, what the forms, club, gate, languages, images,
+SEO and operations do. Everything here follows the PROPOSED stack (ADR-1..9); if a decision
+flips, the affected section is rewritten. Written 2026-09-18.</em></p>
+<h2>1. Theme structure — one template per prototype page kind</h2>
+<p><code>build.py</code> renders seven page kinds; the theme has the same seven. The prototype's markup
+is the acceptance reference (ADR-8): a template is done when its rendered HTML matches the
+prototype's structure and the gate criteria (<a href="ssot.html"><code>10-ssot.md</code></a> §7) at 390 and 1440.</p>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>Page kind</th>
+<th>Prototype</th>
+<th>Theme template</th>
+<th>Editable by staff</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Home</td>
+<td><code>index.html</code>, <code>en/index.html</code></td>
+<td><code>front-page.html</code> — hero, three cards, wine rail, dűlő teaser, visit, news, newsletter as patterns</td>
+<td>every text and image; rail picks products by line</td>
+</tr>
+<tr>
+<td>Birtok</td>
+<td><code>birtok.html</code></td>
+<td><code>page-birtok.html</code> — story, ten-step timeline, dűlők with map and rocks, varieties, vintages, team</td>
+<td>timeline steps, team members as a repeatable block</td>
+</tr>
+<tr>
+<td>Tokaji aszú</td>
+<td><code>aszu.html</code></td>
+<td><code>page-aszu.html</code> — Culture wall (from products of line Culture, ordered by vintage), making, ageing, Time Capsule, PreCulture, heritage</td>
+<td>wall is data-driven; the rest text/images</td>
+</tr>
+<tr>
+<td>Látogatás</td>
+<td><code>latogatas.html</code></td>
+<td><code>page-latogatas.html</code> — cellar numbers, history, tickets, Experience, Trezor, geology, practical info, booking form, guestbook</td>
+<td>tickets as a repeatable block; form fields fixed (§5)</td>
+</tr>
+<tr>
+<td>Borok</td>
+<td><code>borok.html</code></td>
+<td><code>archive-product.html</code> — grid with filter Mind/Száraz/Édes/Aszú/Hold and Hollo (product taxonomy <code>type</code> + line), sort by collection or price, two-up on phones</td>
+<td>products only</td>
+</tr>
+<tr>
+<td>Product</td>
+<td><code>bor/&lt;id&gt;.html</code> (32)</td>
+<td><code>single-product.html</code> — §3 blocks</td>
+<td>product fields</td>
+</tr>
+<tr>
+<td>Borklub</td>
+<td><code>borklub.html</code></td>
+<td><code>page-borklub.html</code> — benefits, four tiers, how it works</td>
+<td>tiers from reward-points settings (§6), text editable</td>
+</tr>
+<tr>
+<td>Shared</td>
+<td>header, footer, age gate, banner</td>
+<td><code>parts/header.html</code> (mega-nav ≥ 1024), <code>parts/footer.html</code>, <code>parts/bottom-bar.html</code> (&lt; 1024, bottom action bar + sheet), <code>parts/age-gate.html</code></td>
+<td>navigation items in one menu (R11)</td>
+</tr>
+</tbody>
+</table></div>
+<p>Not in the prototype and therefore <strong>WooCommerce's own screens restyled, not redesigned</strong>:
+cart, checkout, order confirmation, my account, gift-card purchase. Restyling = the token
+layer (<a href="token-map.html"><code>14-token-map.md</code></a>) and the button/field components; no new layouts.</p>
+<p>Tablet 768–1023 uses the phone navigation and the desktop grids as <a href="layouts.html"><code>05-layout-specs.md</code></a>
+resolves it; the theme carries the same breakpoints (<code>--hv-*</code> in <code>theme.json</code>).</p>
+<h2>2. Content model</h2>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>Content</th>
+<th>Storage</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Products</td>
+<td>WooCommerce product (simple) + taxonomy <code>wine_type</code> {szaraz, edes, aszu, pezsgo} + taxonomy <code>wine_line</code> (10 lines) + product meta (§3)</td>
+<td>one product per catalogue row; sizes are separate products as on the live site (Vision 2018 and Vision 2018 Magnum are two rows), not variations</td>
+</tr>
+<tr>
+<td>Tickets (4)</td>
+<td>a <code>ticket</code> block pattern on Látogatás with name, duration, price, description</td>
+<td>not products — nothing is sold online (ADR-7)</td>
+</tr>
+<tr>
+<td>Club tiers (4)</td>
+<td>reward-points plugin configuration</td>
+<td>§6</td>
+</tr>
+<tr>
+<td>Timeline steps, team members, heritage milestones, dűlők</td>
+<td>repeatable blocks inside the page (patterns), text + image</td>
+<td>no custom post types: each list lives on exactly one page and is edited there</td>
+</tr>
+<tr>
+<td>Site copy (HU, EN)</td>
+<td>page content per language (ADR-3)</td>
+<td>the prototype's compiled strings in <code>build.py</code> are the initial import</td>
+</tr>
+<tr>
+<td>Media</td>
+<td>WordPress media library, uploaded from <code>assets/img/</code> derivatives with their <code>alt</code> from the prototype</td>
+<td>source URLs in <code>assets-used.md</code></td>
+</tr>
+</tbody>
+</table></div>
+<h2>3. Product mapping — <code>catalogue.json</code> → WooCommerce</h2>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>Catalogue field</th>
+<th>WooCommerce</th>
+<th>Rule</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>id</code></td>
+<td>product slug</td>
+<td><strong>not</strong> used as the public URL — the live slug is kept (§8); <code>id</code> is stored as SKU-like meta <code>hv_id</code> for traceability</td>
+</tr>
+<tr>
+<td><code>name</code></td>
+<td>product title</td>
+<td>"Culture 2006"</td>
+</tr>
+<tr>
+<td><code>line</code></td>
+<td>taxonomy <code>wine_line</code></td>
+<td>one term per product</td>
+</tr>
+<tr>
+<td><code>type</code></td>
+<td>taxonomy <code>wine_type</code></td>
+<td>drives the Borok filter</td>
+</tr>
+<tr>
+<td><code>vintage</code></td>
+<td>meta <code>hv_vintage</code> (text)</td>
+<td>may be empty</td>
+</tr>
+<tr>
+<td><code>size</code></td>
+<td>meta <code>hv_size</code></td>
+<td><code>37,5 CL</code> etc., printed under the price</td>
+</tr>
+<tr>
+<td><code>price</code></td>
+<td>regular price (HUF, tax-inclusive as on the live shop)</td>
+<td><code>0</code> → product marked "price on request": no add-to-cart, <em>Érdeklődöm</em> mailto (as the prototype)</td>
+</tr>
+<tr>
+<td><code>variety</code>, <code>dulo</code></td>
+<td>meta <code>hv_variety</code>, <code>hv_dulo</code></td>
+<td>facts list</td>
+</tr>
+<tr>
+<td><code>cat</code> (hu/en)</td>
+<td>short description, per language</td>
+<td>"6 puttonyos tokaji aszú"</td>
+</tr>
+<tr>
+<td><code>tagline</code> (hu/en)</td>
+<td>meta <code>hv_tagline</code>, per language</td>
+<td></td>
+</tr>
+<tr>
+<td><code>desc</code>, <code>tasting</code>, <code>vintage_note</code> (hu/en)</td>
+<td>description + meta <code>hv_tasting</code>, <code>hv_vintage_note</code>, per language</td>
+<td>rendered as the three tabs Kóstolási jegyzet · Az évjárat · Adatlap</td>
+</tr>
+<tr>
+<td><code>tech.*</code></td>
+<td>meta group <code>hv_tech</code> (11 keys, strings as printed)</td>
+<td>Adatlap tab; absent on 1 product — tab hidden, not empty</td>
+</tr>
+<tr>
+<td><code>storage</code>, <code>serve_temp</code> (hu/en)</td>
+<td>meta, per language</td>
+<td>facts list</td>
+</tr>
+<tr>
+<td><code>render</code></td>
+<td>product image (WebP with alpha, R4)</td>
+<td>one image per product; the same render for HU and EN</td>
+</tr>
+<tr>
+<td><code>live_url</code></td>
+<td>the product's current permalink</td>
+<td>see §8</td>
+</tr>
+</tbody>
+</table></div>
+<p>Import: a one-off WP-CLI/CSV import generated from <code>catalogue.json</code> by a script kept in
+this repo (<code>data/export-woo.py</code>, to be written in M3) so the mapping is executable, not
+prose. After import, WooCommerce is the source and the catalogue is retired.</p>
+<p>Structured data: the prototype's Product/Offer JSON-LD is reproduced by the template
+from the same fields (price, currency HUF, availability, image, sku = <code>hv_id</code>).</p>
+<h2>4. State machines</h2>
+<p><strong>Age gate</strong>: <code>unknown → verified</code> (Igen; <code>sessionStorage hv-age=ok</code>, dialog closed for
+the session) · <code>unknown → left</code> (Nem; navigate away). Rendered in every page's HTML,
+<code>&lt;dialog&gt;</code> opened by script; no content hidden from crawlers.</p>
+<p><strong>Booking request</strong>: <code>submitted → received (e-mail + stored) → answered by staff</code>. The
+site's only states are submit and confirmation; the rest is the estate's inbox.
+Validation: required Név, E-mail, Borkóstoló, Dátum ≥ today, Vendégek száma ≥ 1, GDPR
+checked; server-side; spam protection (honeypot + rate limit, no CAPTCHA that blocks
+real guests).</p>
+<p><strong>Order</strong>: WooCommerce's (pending → processing → completed / cancelled / refunded);
+untouched.</p>
+<p><strong>Club membership</strong>: <code>none → tier(5|10|15|20)</code> on reaching the threshold within a rolling
+12 months; tier kept while spend in the window ≥ threshold; drops at window end
+otherwise — implemented as reward-points rules (§6), verified with test orders on staging.</p>
+<h2>5. Forms</h2>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>Form</th>
+<th>Fields</th>
+<th>Goes to</th>
+<th>Response</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Booking request (Látogatás)</td>
+<td>Név, E-mail, Telefon, Borkóstoló (4 programmes), Dátum, Vendégek száma, Üzenet, GDPR</td>
+<td>e-mail to <code>visit@holdvolgy.com</code> (the address on the page) + stored entry</td>
+<td>on-page confirmation "one working day" (the live copy); auto-reply</td>
+</tr>
+<tr>
+<td>Newsletter (home, footer)</td>
+<td>E-mail (+ GDPR)</td>
+<td>Mailchimp for WooCommerce audience</td>
+<td>double opt-in as Mailchimp does</td>
+</tr>
+<tr>
+<td>Club sign-up</td>
+<td>WooCommerce account creation</td>
+<td>WooCommerce</td>
+<td>tiers apply automatically</td>
+</tr>
+</tbody>
+</table></div>
+<p>Amelia: leave installed but inactive on the front end unless the estate decides to sell
+timed slots (ADR-7). If it does, the booking block becomes Amelia's and this section is
+rewritten.</p>
+<h2>6. Club tiers</h2>
+<p>Four tiers as configuration in the reward-points extension (the plugin the live site
+already runs): threshold spend 50 000 / 150 000 / 300 000 / 600 000 Ft over a rolling 12
+months → 5 / 10 / 15 / 20 % discount on every order, plus the two gift experiences at
+first attainment of the 15 % and 20 % tiers (manual fulfilment by staff, triggered by an
+order note). If the extension cannot express "rolling 12 months", the fallback is a
+scheduled recalculation (daily cron) writing the tier to customer meta — recorded as a
+decision if taken.</p>
+<h2>7. Languages</h2>
+<p>Polylang or WPML (ADR-3): HU as default at the root, EN under <code>/en/</code>, every page and
+product paired; <code>hreflang</code> hu / en / x-default emitted per pair; language switcher in
+header and sheet links the counterpart page (not the EN home). The initial EN content is
+the prototype's — the estate's own EN copy from the live <code>/en/</code> pages. Product meta
+fields marked translatable. The current EN URLs (<code>/en/…</code>, <code>/en/wine/…</code>) are kept or
+redirected (§8).</p>
+<h2>8. URLs, redirects, SEO</h2>
+<ul>
+<li><strong>Every live URL is kept</strong> (R6). Product permalinks stay <code>/bor/&lt;live-slug&gt;</code> (the
+  catalogue holds each <code>live_url</code>); pages stay <code>/birtok</code>, <code>/tokaji-aszu</code>, <code>/borkostolo</code>,
+  <code>/bortrezor</code>, <code>/holdvolgy-experience</code>, <code>/holdvolgy-borklub</code>, <code>/shop</code>, <code>/en/…</code>. Where the
+  prototype merged pages (Borkóstoló + Experience + Bortrezor into Látogatás), the old
+  URLs 301 to the section anchor. The redirect map is a file in the theme repo, written
+  before cutover and tested on staging with the link audit from <code>check.py</code>.</li>
+<li>Canonical per page; sitemap per language; <code>noindex</code> on cart/checkout/account;
+  Product/Offer JSON-LD (§3); Organization + LocalBusiness JSON-LD on home and Látogatás
+  (address, hours from the practical info block).</li>
+<li>Titles and descriptions: the prototype's per page, editable.</li>
+</ul>
+<h2>9. Analytics, consent, privacy</h2>
+<p>Consent banner (one plugin) before any marketing script; PixelYourSite fires only after
+consent; first-party analytics (<code>independent-analytics</code>, no cookies) may run without —
+the client decides whether GA4 is wanted at all. The 18+ gate is not consent and stores
+nothing beyond the session flag. Privacy policy and terms pages kept at their URLs.</p>
+<h2>10. Images</h2>
+<p>Derivatives generated once from the estate's originals (<code>assets-used.md</code> lists source →
+derivative sizes): WebP, alpha preserved for bottle renders (R4), <code>srcset</code> at 390 / 780 /
+1440 widths, <code>width</code>/<code>height</code> attributes on every <code>&lt;img&gt;</code> with <code>height: auto</code> in the
+base CSS (D16), <code>loading="lazy"</code> below the fold, hero preloaded. Home budget &lt; 1,5 MB
+measured with all derivatives in place (<a href="home-build.html"><code>06-home-build.md</code></a> has the prototype's number).</p>
+<h2>11. Performance</h2>
+<p>Targets and how they are met: origin TTFB &lt; 800 ms by removing the builder and runtime
+translation (no measurement exists for the new origin yet — M5 measures it); LiteSpeed
+page cache kept, CDN in front (ADR-5), browser caching for static assets (today
+<code>no-store</code> on everything); CSS = tokens + one theme stylesheet (&lt; 40 KB, the prototype's
+is the reference); JS = the age gate, the phone sheet, the shop filter — no framework;
+fonts self-hosted WOFF2 with <code>font-display: swap</code>; third-party requests limited to
+payment provider, Mailchimp, pixel-after-consent.</p>
+<h2>12. Operations</h2>
+<p>Staging on the same host; deploy = theme package + plugin list + config export;
+production cutover after 15 January (ADR-9): redirect map live → theme switch → plugin
+prune → cache purge and warm → link audit → measurements → monitoring green.
+Rollback = switch theme back and re-enable plugins (data untouched). Backups daily,
+restore tested once on staging. Monitoring: uptime check every minute, alert to a named
+estate contact and the developer; PHP error log to the same channel.</p>
+<h2>13. Hand-off artefacts</h2>
+<p>The theme repository (outside this repo) receives: <code>assets/tokens.css</code> → <code>theme.json</code>
+(<a href="token-map.html"><code>14-token-map.md</code></a>), the prototype's HTML per page kind as the markup reference, the
+compiled copy from <code>build.py</code> as the initial content, <code>data/catalogue.json</code> and
+<code>data/export-woo.py</code> for the product import, <code>assets-used.md</code> for the media, the
+redirect map, and the gate criteria as the acceptance checklist.</p>
+<script>(function(){function f(){document.querySelectorAll('.scale-d').forEach(function(e){e.style.setProperty('--w',e.clientWidth)});document.querySelectorAll('.scale-p').forEach(function(e){e.style.setProperty('--pw',e.clientWidth)})}f();addEventListener('resize',f)})();</script>
+<footer>Source: <code>holdvolgy/docs/12-technical-design.md</code> · rendered by <code>docs/build.py</code>. Set in Bodoni Moda and Archivo (Google Fonts, SIL OFL) on Holdvölgy's measured palette — decision D3.</footer>
+</div>
+</body>
+</html>

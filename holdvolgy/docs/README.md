@@ -7,6 +7,7 @@ record. Each file is dated inside; this index is the process log.
 | File | What it holds |
 |---|---|
 | `bemutato.html` | **A birtoknak szóló bemutató, magyarul** — a birtok saját arculatában: hét lépés az élő oldalakkal, mi valódi, mit kérünk, hogyan tovább |
+| `00-brief.md` | Two pages for a first reader: the client, the problem, what the prototype is, what is real, where it stands |
 | `00-plan.md` | Research findings and the phased implementation plan — the approval document |
 | `01-research-benchmarks.md` | Every estate site read, what it returned, and the sites that could not be reached |
 | `02-brand-and-site-audit.md` | Holdvölgy's measured brand tokens, fonts, page architecture, product/booking/club pages, and defects found |
@@ -22,6 +23,30 @@ record. Each file is dated inside; this index is the process log.
 | `07-birtok-build.md` | Phase 2: the Birtok page — content sources, sections, measurements at 390/768/1440, and the navigation fixes made in the same round |
 | `06-home-build.md` | Gate 3: the built home page — what was built, and the measured results at 390, 768 and 1440 |
 | `05-layout-specs.md` | Phase 1: the desktop-1440 and phone-390 layout specifications with schematics, tablet resolution and the home weight budget |
+| `10-ssot.md` | **Technical package** — glossary, enumerations, the product entity, settings, rules register, metrics, document map |
+| `11-architecture.md` | The live site measured (platform, 23 plugins, weight, TTFB), quality attributes, target containers, the **PROPOSED** stack and nine ADRs |
+| `12-technical-design.md` | Page kinds → theme templates, content model, `catalogue.json` → WooCommerce mapping, forms, club tiers, languages, URLs and redirects, images, performance, operations |
+| `13-implementation-plan.md` | Milestones M0–M6 inside the change freeze, issues HV-000..084 with Definition of Done, blocked register, risks, Release 1 scope |
+| `14-token-map.md` | `tokens.css` → `theme.json`, components → theme parts and patterns, what is not tokenised, how it is verified |
+
+## The standard documentation structure
+
+Every Calvus project carries the same set next to its prototype (owner decision
+2026-09-18). Where this folder predates the standard, the slot maps to the existing file:
+
+| Slot | Here |
+|---|---|
+| Presentation | `bemutato.html` |
+| 00 brief | `00-brief.md` |
+| 01 research | `01-research-benchmarks.md` |
+| 02 audit | `02-brand-and-site-audit.md` |
+| 03 sources and assets | `03-asset-inventory.md`, `asset-inventory.json`, `assets-used.md` |
+| 04 decisions | `04-decisions.md` |
+| 05 design | `design-system.html`, `05-layout-specs.md`, `frames/` |
+| 06 build log | `06-home-build.md` … `10-shop-build.md` |
+| 07 gate | `11-gate-sweep.md` + `python3 holdvolgy/check.py` |
+| 08 client asks | `00-plan.md` §6 |
+| 10–14 technical | `10-ssot.md`, `11-architecture.md`, `12-technical-design.md`, `13-implementation-plan.md`, `14-token-map.md` |
 
 ## Reading these on the web
 
@@ -149,4 +174,15 @@ its own palette and a dark-mode override that turned the documentation pages dar
 a phone in dark mode — the treatment rejected for the site. The docs now use
 `assets/tokens.css` directly and stay on the light ground in every colour scheme.
 
-**Next.** Client review of the whole; then the items in §6 of the plan as they arrive.
+**2026-09-18 — technical package written (D19).** The owner set a standard
+documentation structure for every project — customer side as this folder already had
+it, plus a technical side on the DiscountDirect pattern. `00-brief.md` and `10`–`14`
+added. The live site was measured for it (WordPress, Elementor, WooCommerce; 23
+front-end plugins against a target of 12; 8,8 MB home; cached TTFB 0,06 s, cold 4,5 s).
+The proposed stack — stay on WordPress and WooCommerce, replace Elementor with a block
+theme transcribed from the prototype, stored-content multilingual, CDN, monitoring — is
+in `11-architecture.md` §10–11 in status **PROPOSED**; nothing is decided with the
+client yet. The docs renderer's page list and navigation grew by six pages.
+
+**Next.** Client review of the whole; the stack decision and who builds (blocked
+register in `13`); then the items in §6 of the plan as they arrive.

@@ -11,6 +11,7 @@ import re, pathlib, markdown
 HERE = pathlib.Path(__file__).parent
 PAGES = [  # (source, output, nav label)
     ("README.md", "index.html", "Overview"),
+    ("00-brief.md", "brief.html", "Brief"),
     ("00-plan.md", "plan.html", "Plan"),
     ("01-research-benchmarks.md", "benchmarks.html", "Benchmarks"),
     ("02-brand-and-site-audit.md", "audit.html", "Brand & site audit"),
@@ -23,6 +24,11 @@ PAGES = [  # (source, output, nav label)
     ("09-latogatas-build.md", "latogatas-build.html", "Látogatás build"),
     ("10-shop-build.md", "shop-build.html", "Shop build"),
     ("11-gate-sweep.md", "gate-sweep.html", "Gate sweep"),
+    ("10-ssot.md", "ssot.html", "SSOT"),
+    ("11-architecture.md", "architecture.html", "Architecture"),
+    ("12-technical-design.md", "technical-design.html", "Technical design"),
+    ("13-implementation-plan.md", "implementation-plan.html", "Implementation plan"),
+    ("14-token-map.md", "token-map.html", "Token map"),
 ]
 CSS = (HERE / "docs.css").read_text(encoding="utf-8")
 
@@ -30,7 +36,7 @@ def render(src, out, label):
     md = (HERE / src).read_text(encoding="utf-8")
     m = re.match(r"#\s+(.+)", md); title = m.group(1).strip() if m else label
     md = md[m.end():] if m else md
-    body = markdown.markdown(md, extensions=["tables", "sane_lists"])
+    body = markdown.markdown(md, extensions=["tables", "sane_lists", "fenced_code"])
     body = body.replace("<table>", '<div class="tbl"><table>').replace("</table>", "</table></div>")
     # links between the markdown files must point at the rendered names
     for s, o, _ in PAGES:

@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Holdvölgy 2026 — single source of truth (SSOT) — Holdvölgy 2026 docs</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:opsz,wght@6..96,400;6..96,500&family=Archivo:wdth,wght@112.5,400;112.5,500;112.5,600&display=swap">
+<link rel="stylesheet" href="../assets/tokens.css">
+<style>:root{--ground:var(--hv-ground);--card:var(--hv-card);--ink:var(--hv-ink);--text:var(--hv-text);--muted:var(--hv-muted);--accent:var(--hv-accent);--accent-deep:var(--hv-accent-deep);--line:var(--hv-line);--line-soft:var(--hv-line-soft);--note:var(--hv-band)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--ground);color:var(--text);font-family:"Archivo","Helvetica Neue",Arial,sans-serif;font-stretch:112.5%;font-size:15.5px;line-height:1.6;padding-block:0 64px;padding-inline:clamp(16px,4vw,40px)}
+.wrap{max-width:72ch;margin-inline:auto}
+.docnav{display:flex;flex-wrap:wrap;gap:4px 18px;align-items:center;padding:16px 0;border-bottom:1px solid var(--line);font-size:12px;letter-spacing:.06em;text-transform:uppercase}
+.docnav a{color:var(--muted);text-decoration:none;min-height:44px;display:inline-flex;align-items:center;border-bottom:2px solid transparent}
+.docnav a:hover,.docnav a[aria-current]{color:var(--ink);border-color:var(--accent)}
+.docnav-brand{color:var(--accent-deep);font-weight:600;margin-right:6px}
+.docnav-hub{margin-left:auto}
+header{padding-block:40px 24px;border-bottom:1px solid var(--line);margin-bottom:28px}
+.eyebrow{font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--accent-deep);margin:0 0 12px}
+h1,h2,h3{font-family:"Bodoni Moda",Didot,"Bodoni 72",serif;font-weight:400;color:var(--ink);line-height:1.1;text-wrap:balance;margin:0}
+h1{font-size:clamp(32px,6.5vw,50px);font-optical-sizing:auto}
+h2{font-size:clamp(25px,4.5vw,32px);margin:48px 0 14px;padding-top:20px;border-top:1px solid var(--line)}
+h3{font-size:19px;margin:30px 0 8px;font-weight:500}
+p{margin:0 0 14px} strong{color:var(--ink);font-weight:600}
+ul,ol{padding-left:22px;margin:0 0 16px} li{margin:5px 0} li>ul{margin:6px 0 0}
+code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.86em;background:var(--note);padding:1px 5px;border-radius:2px;color:var(--ink)}
+a{color:var(--accent-deep)} :focus-visible{outline:2px solid var(--accent-deep);outline-offset:2px}
+.tbl{overflow-x:auto;margin:14px 0 22px;border:1px solid var(--line)}
+table{border-collapse:collapse;width:100%;font-size:13.5px;min-width:560px}
+th{text-align:left;font-weight:600;color:var(--ink);background:var(--note);padding:10px 12px;border-bottom:1px solid var(--line);font-size:11.5px;letter-spacing:.06em;text-transform:uppercase}
+td{padding:10px 12px;border-top:1px solid var(--line-soft);vertical-align:top;background:var(--card)} td:first-child{color:var(--ink)}
+footer{margin-top:56px;padding-top:18px;border-top:1px solid var(--line);font-size:12px;color:var(--muted)}
+
+/* embedded gate-2 frames */
+.frames{display:grid;gap:28px;margin:18px 0 30px}
+.frames figure{margin:0} .frames figcaption{font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);margin-bottom:8px}
+.scale-d{width:100%;aspect-ratio:1440/2900;position:relative;overflow:hidden;border:1px solid var(--line);background:#FAFAFA}
+.scale-d iframe{position:absolute;top:0;left:0;width:1440px;height:2900px;border:0;transform-origin:0 0;transform:scale(calc(var(--w,720) / 1440))}
+.scale-p{width:390px;max-width:100%;aspect-ratio:390/2100;position:relative;overflow:hidden;border:1px solid var(--line);background:#FAFAFA}
+.scale-p iframe{position:absolute;top:0;left:0;width:390px;height:2100px;border:0;transform-origin:0 0;transform:scale(calc(var(--pw,390) / 390))}
+
+pre{overflow-x:auto;padding:14px 16px;border:1px solid var(--hv-line);border-radius:2px;background:var(--hv-card);font-size:12px;line-height:1.35}
+pre code{background:none;padding:0;font-size:inherit}
+</style>
+</head>
+<body>
+<div class="wrap">
+<nav class="docnav" aria-label="Project documentation"><span class="docnav-brand">Holdvölgy 2026 · docs</span><a href="index.html">Overview</a><a href="brief.html">Brief</a><a href="bemutato.html">Bemutató</a><a href="plan.html">Plan</a><a href="benchmarks.html">Benchmarks</a><a href="audit.html">Brand & site audit</a><a href="assets.html">Assets</a><a href="decisions.html">Decisions</a><a href="design-system.html">Design system</a><a href="layouts.html">Layouts</a><a href="home-build.html">Home build</a><a href="birtok-build.html">Birtok build</a><a href="aszu-build.html">Aszú build</a><a href="latogatas-build.html">Látogatás build</a><a href="shop-build.html">Shop build</a><a href="gate-sweep.html">Gate sweep</a><a href="ssot.html" aria-current=page>SSOT</a><a href="architecture.html">Architecture</a><a href="technical-design.html">Technical design</a><a href="implementation-plan.html">Implementation plan</a><a href="token-map.html">Token map</a><a class="docnav-hub" href="../../index.html">Calvus Hub</a></nav>
+<header><p class="eyebrow">Calvus · Holdvölgy · project documentation</p><h1>Holdvölgy 2026 — single source of truth (SSOT)</h1></header>
+<p><em>Definitions the other technical documents (<code>11</code>–<code>14</code>) use without redefining. Every entity
+and enumeration below is read from what the prototype actually holds (<code>data/catalogue.json</code>,
+<code>build.py</code>, the built pages) or from the live site audit (<a href="audit.html"><code>02-brand-and-site-audit.md</code></a>).
+Written 2026-09-18. Changes when a definition changes; the process log records when.</em></p>
+<h2>1. Glossary</h2>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>Term</th>
+<th>Meaning here</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Birtok</td>
+<td>The estate as a whole and the page that tells it: history, dűlők, geology, varieties, vintages, team.</td>
+</tr>
+<tr>
+<td>Dűlő</td>
+<td>A named vineyard site (cru) around Mád. The estate farms seven; the catalogue names four on wines: Becsek, Holdvölgy, Király, Nyulászó.</td>
+</tr>
+<tr>
+<td>Parcella</td>
+<td>A parcel within a dűlő; the estate has thirty. Not modelled per wine.</td>
+</tr>
+<tr>
+<td>Line (collection)</td>
+<td>The estate's naming of a wine family: Culture, Aszú Útkeresés, Signature, Eloquence, Intuition, Exaltation, Expression, Vision, Meditation, Hold and Hollo. A product belongs to exactly one line.</td>
+</tr>
+<tr>
+<td>Type</td>
+<td>The wine's commercial category: <code>szaraz</code> (dry), <code>edes</code> (sweet), <code>aszu</code> (Tokaji aszú), <code>pezsgo</code> (sparkling).</td>
+</tr>
+<tr>
+<td>Aszú, puttonyos</td>
+<td>Tokaji botrytised sweet wine; "6 puttonyos" is the traditional sweetness class. Culture is the estate's 6-puttonyos aszú line.</td>
+</tr>
+<tr>
+<td>Culture wall</td>
+<td>The vertical list of thirteen Culture vintages 2006–2018 with prices on the Tokaji aszú page.</td>
+</tr>
+<tr>
+<td>PreCulture</td>
+<td>A pre-order product (a future Culture vintage sold ahead). Listed; not purchasable in the prototype.</td>
+</tr>
+<tr>
+<td>Trezor (Millennium Bortrezor)</td>
+<td>Experiential programme: guests take part in a blend and receive a certificate. A page section and a ticket, not a product.</td>
+</tr>
+<tr>
+<td>Ticket / programme</td>
+<td>A visit product — a tasting or cellar programme with a price and duration. Four are listed on Látogatás; booking is a request, not a purchase.</td>
+</tr>
+<tr>
+<td>Booking request</td>
+<td>The form on Látogatás (Név, E-mail, Telefon, Borkóstoló, Dátum, Vendégek száma, Üzenet, GDPR). A message to the estate; no availability, no payment.</td>
+</tr>
+<tr>
+<td>Borklub</td>
+<td>The loyalty programme: four discount tiers earned by 12-month spend.</td>
+</tr>
+<tr>
+<td>Age gate</td>
+<td>The 18+ dialog shown before any page; "Nem" leaves the site.</td>
+</tr>
+<tr>
+<td>Prototype banner</td>
+<td>The one-line notice on every page that the cart and forms do not send.</td>
+</tr>
+<tr>
+<td>Reference widths</td>
+<td>390 (phone) and 1440 (desktop); tablet 768–1023 resolved in <a href="layouts.html"><code>05-layout-specs.md</code></a>.</td>
+</tr>
+<tr>
+<td>Gate</td>
+<td><code>python3 holdvolgy/check.py</code> plus the measured sweep (<a href="gate-sweep.html"><code>11-gate-sweep.md</code></a>). Must print <code>GATE: CLEAN</code> before a push.</td>
+</tr>
+</tbody>
+</table></div>
+<h2>2. Enumerations</h2>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>Enum</th>
+<th>Values</th>
+<th>Source</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>product.type</code></td>
+<td><code>szaraz</code> · <code>edes</code> · <code>aszu</code> · <code>pezsgo</code></td>
+<td>catalogue: 9 / 8 / 14 / 1</td>
+</tr>
+<tr>
+<td><code>product.line</code></td>
+<td>Aszú Útkeresés · Culture · Eloquence · Exaltation · Expression · Hold and Hollo · Intuition · Meditation · Signature · Vision</td>
+<td>catalogue</td>
+</tr>
+<tr>
+<td><code>product.size</code></td>
+<td><code>37,5 CL</code> · <code>50 CL</code> · <code>75 CL</code> · <code>150 CL</code></td>
+<td>catalogue: 14 / 7 / 10 / 1</td>
+</tr>
+<tr>
+<td><code>product.dulo</code></td>
+<td><code>Becsek</code> · <code>Holdvölgy</code> · <code>Király</code> · <code>Nyulászó</code> · empty (blend or unspecified)</td>
+<td>catalogue</td>
+</tr>
+<tr>
+<td>Shop filter</td>
+<td>Mind · Száraz · Édes · Aszú · Hold and Hollo</td>
+<td><code>borok.html</code></td>
+</tr>
+<tr>
+<td>Shop sort</td>
+<td>by collection · by price</td>
+<td><code>borok.html</code></td>
+</tr>
+<tr>
+<td>Language</td>
+<td><code>hu</code> (primary, root) · <code>en</code> (<code>/en/</code>), <code>x-default</code> = hu</td>
+<td>every page's <code>hreflang</code></td>
+</tr>
+<tr>
+<td>Club tier</td>
+<td>5 % @ 50 000 Ft · 10 % @ 150 000 Ft · 15 % @ 300 000 Ft · 20 % @ 600 000 Ft, each over 12 months</td>
+<td><code>borklub.html</code></td>
+</tr>
+<tr>
+<td>Ticket programme</td>
+<td>the four programmes on Látogatás (names and prices as built)</td>
+<td><code>latogatas.html</code></td>
+</tr>
+<tr>
+<td>Page kind</td>
+<td>home · birtok · aszu · latogatas · borok · product · borklub · redirect stub</td>
+<td><code>build.py</code></td>
+</tr>
+</tbody>
+</table></div>
+<h2>3. Canonical entities</h2>
+<p>The prototype has one data file. Everything else is content compiled into <code>build.py</code>.</p>
+<p><strong>Product</strong> (<code>data/catalogue.json</code>, 32 rows) — the only structured entity.</p>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>id</code></td>
+<td>slug</td>
+<td>stable page name: <code>bor/&lt;id&gt;.html</code>, <code>en/bor/&lt;id&gt;.html</code></td>
+</tr>
+<tr>
+<td><code>line</code>, <code>name</code>, <code>vintage</code>, <code>size</code></td>
+<td>text</td>
+<td><code>vintage</code> may be empty (non-vintage blends)</td>
+</tr>
+<tr>
+<td><code>price</code></td>
+<td>integer HUF</td>
+<td><code>0</code> means "price on request" (one product: <code>exaltation-2017-reserve</code>); rendered as <em>Ár egyeztetés alatt</em></td>
+</tr>
+<tr>
+<td><code>type</code>, <code>variety</code>, <code>dulo</code></td>
+<td>enum / text</td>
+<td>see §2</td>
+</tr>
+<tr>
+<td><code>cat</code>, <code>tagline</code>, <code>desc</code>, <code>tasting</code>, <code>vintage_note</code>, <code>storage</code>, <code>serve_temp</code></td>
+<td><code>{hu, en}</code></td>
+<td>client copy from the live HU and EN pages; EN may be empty where the live EN page has none</td>
+</tr>
+<tr>
+<td><code>tech</code></td>
+<td>object</td>
+<td><code>alkohol</code>, <code>cukor</code>, <code>sav</code>, <code>illo</code>, <code>so2</code>, <code>extrakt</code>, <code>fajta</code>, <code>alapbor</code>, <code>dulok</code>, <code>palack</code>, <code>besorolas</code> — strings as printed on the live sheet, present on 31 of 32</td>
+</tr>
+<tr>
+<td><code>render</code></td>
+<td>asset key</td>
+<td>bottle image under <code>assets/img/</code>, alpha preserved (D16)</td>
+</tr>
+<tr>
+<td><code>live_url</code></td>
+<td>URL</td>
+<td>the live product page the data was read from</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Entities the live site has and the prototype only presents</strong> (defined here so the
+architecture can name them; their data lives in the client's WooCommerce today):
+Order, Cart, Customer, Club membership (tier, 12-month window, spend), Gift card,
+Booking request, Newsletter subscription, Ticket.</p>
+<p><strong>Page</strong> — generated by <code>build.py</code> from compiled content + catalogue; HU and EN are two
+renders of one source (D8). <strong>Asset</strong> — every image with its source URL and derivative
+sizes in <code>assets-used.md</code>; alpha-preserving conversion is a rule (R4).</p>
+<h2>4. Settings the prototype fixes</h2>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>Setting</th>
+<th>Value</th>
+<th>Where</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Currency, price format</td>
+<td>HUF, <code>27 500 Ft</code>, thin-space thousands</td>
+<td><code>build.py</code> <code>_fmt</code></td>
+</tr>
+<tr>
+<td>Languages</td>
+<td>hu root, en under <code>/en/</code></td>
+<td><code>build.py</code></td>
+</tr>
+<tr>
+<td>Age gate</td>
+<td>shown on every page until accepted; accept stored in <code>sessionStorage</code> (<code>hv-age</code>)</td>
+<td>inline script in every page, from <code>build.py</code></td>
+</tr>
+<tr>
+<td>Navigation</td>
+<td>five items: Birtok · Borok · Tokaji aszú · Látogatás · Borklub (D4); desktop mega-nav, phone bottom bar + sheet (D5)</td>
+<td>single-sourced in <code>build.py</code> (D15)</td>
+</tr>
+<tr>
+<td>Home weight budget</td>
+<td>&lt; 1,5 MB with real renders</td>
+<td>plan §5</td>
+</tr>
+<tr>
+<td>Tap floor</td>
+<td>44 px</td>
+<td>tokens <code>--hv-tap</code></td>
+</tr>
+</tbody>
+</table></div>
+<h2>5. Decision register</h2>
+<p>Decisions D1–D18 are in <a href="decisions.html"><code>04-decisions.md</code></a> (design and process). Technical decisions
+made in this package are recorded as <strong>ADRs in <a href="architecture.html"><code>11-architecture.md</code></a> §11</strong>, all in
+status PROPOSED until the owner or client flips them; the log entry that flips one goes
+to <a href="decisions.html"><code>04-decisions.md</code></a> as the next D-number.</p>
+<h2>6. Rules register</h2>
+<p>Standing rules the prototype obeys and the production build must keep.</p>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>#</th>
+<th>Rule</th>
+<th>Origin</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>R1</td>
+<td>Hospitality before shop in every CTA pair.</td>
+<td>plan §4</td>
+</tr>
+<tr>
+<td>R2</td>
+<td>No fake availability: booking is a request, stock is not shown, prices are the estate's.</td>
+<td>plan §5, D9</td>
+</tr>
+<tr>
+<td>R3</td>
+<td>One catalogue drives HU and EN; product pages are never hand-edited.</td>
+<td>D8</td>
+</tr>
+<tr>
+<td>R4</td>
+<td>Image conversions keep alpha; <code>img { height: auto }</code> in base CSS; images in aspect-ratio boxes are absolutely bounded.</td>
+<td>D16, D17</td>
+</tr>
+<tr>
+<td>R5</td>
+<td>Exactly one <code>h1</code> per page; every image has <code>alt</code>; <code>hreflang</code> hu / en / x-default on every page.</td>
+<td>gate sweep</td>
+</tr>
+<tr>
+<td>R6</td>
+<td>A published URL is never deleted; it redirects.</td>
+<td>D14</td>
+</tr>
+<tr>
+<td>R7</td>
+<td>No AI-generated imagery.</td>
+<td>D6</td>
+</tr>
+<tr>
+<td>R8</td>
+<td>18+ gate before any content; "Nem" leaves the site.</td>
+<td>live site, kept</td>
+</tr>
+<tr>
+<td>R9</td>
+<td>Component class names are namespaced; the gate checks for collisions.</td>
+<td>D18</td>
+</tr>
+<tr>
+<td>R10</td>
+<td>No stale-state phrase on any page; the prototype banner says only what is inert.</td>
+<td>check.py</td>
+</tr>
+<tr>
+<td>R11</td>
+<td>Navigation and document indexes are single-sourced.</td>
+<td>D15</td>
+</tr>
+</tbody>
+</table></div>
+<h2>7. Metrics</h2>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>Metric</th>
+<th>Target</th>
+<th>Where measured</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Server response (TTFB)</td>
+<td>&lt; 800 ms</td>
+<td>client brief; measured in <a href="architecture.html"><code>11-architecture.md</code></a> §2</td>
+</tr>
+<tr>
+<td>Home page weight</td>
+<td>&lt; 1,5 MB</td>
+<td>client brief; <a href="home-build.html"><code>06-home-build.md</code></a></td>
+</tr>
+<tr>
+<td>Front-end plugins</td>
+<td>&lt; 12</td>
+<td>client brief; live count in <a href="architecture.html"><code>11-architecture.md</code></a> §2</td>
+</tr>
+<tr>
+<td>Live alerting</td>
+<td>exists, reaches a person</td>
+<td>client brief; <a href="implementation-plan.html"><code>13-implementation-plan.md</code></a></td>
+</tr>
+<tr>
+<td>Horizontal overflow at 390 / 1440</td>
+<td>0 px</td>
+<td><a href="gate-sweep.html"><code>11-gate-sweep.md</code></a></td>
+</tr>
+<tr>
+<td>Tap targets under 44 px</td>
+<td>0</td>
+<td><a href="gate-sweep.html"><code>11-gate-sweep.md</code></a></td>
+</tr>
+<tr>
+<td>Pages without one <code>h1</code>, <code>alt</code>, <code>hreflang</code></td>
+<td>0</td>
+<td><a href="gate-sweep.html"><code>11-gate-sweep.md</code></a></td>
+</tr>
+<tr>
+<td>Console errors per page type</td>
+<td>0</td>
+<td>build logs</td>
+</tr>
+<tr>
+<td>Business (for the estate, after go-live)</td>
+<td>EN share of sessions (up 145 % per brief), shop conversion, booking requests per month, club sign-ups</td>
+<td>not measured here — analytics in <a href="technical-design.html"><code>12-technical-design.md</code></a> §9</td>
+</tr>
+</tbody>
+</table></div>
+<h2>8. Document map</h2>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>Document</th>
+<th>Purpose</th>
+<th>Changes when</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="brief.html"><code>00-brief.md</code></a></td>
+<td>what it is, what is real, where it stands</td>
+<td>status changes</td>
+</tr>
+<tr>
+<td><a href="ssot.html"><code>10-ssot.md</code></a></td>
+<td>this file</td>
+<td>a definition changes</td>
+</tr>
+<tr>
+<td><a href="architecture.html"><code>11-architecture.md</code></a></td>
+<td>measured current state, target containers, NFRs, stack ADRs</td>
+<td>an architectural decision changes</td>
+</tr>
+<tr>
+<td><a href="technical-design.html"><code>12-technical-design.md</code></a></td>
+<td>templates, data mapping, forms, images, i18n, SEO, ops detail</td>
+<td>a design detail changes</td>
+</tr>
+<tr>
+<td><a href="implementation-plan.html"><code>13-implementation-plan.md</code></a></td>
+<td>milestones, issues with DoD, blocked register, risks</td>
+<td>scope or sequencing changes</td>
+</tr>
+<tr>
+<td><a href="token-map.html"><code>14-token-map.md</code></a></td>
+<td>prototype tokens and components → production theme</td>
+<td>a token or component changes</td>
+</tr>
+<tr>
+<td><a href="plan.html"><code>00-plan.md</code></a>, <code>01</code>–<code>11</code>, <code>bemutato.html</code></td>
+<td>the customer side: research, audit, assets, decisions, design, builds, gate, presentation</td>
+<td>see <a href="index.html"><code>README.md</code></a></td>
+</tr>
+</tbody>
+</table></div>
+<script>(function(){function f(){document.querySelectorAll('.scale-d').forEach(function(e){e.style.setProperty('--w',e.clientWidth)});document.querySelectorAll('.scale-p').forEach(function(e){e.style.setProperty('--pw',e.clientWidth)})}f();addEventListener('resize',f)})();</script>
+<footer>Source: <code>holdvolgy/docs/10-ssot.md</code> · rendered by <code>docs/build.py</code>. Set in Bodoni Moda and Archivo (Google Fonts, SIL OFL) on Holdvölgy's measured palette — decision D3.</footer>
+</div>
+</body>
+</html>

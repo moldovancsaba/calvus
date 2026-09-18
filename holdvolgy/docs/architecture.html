@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Holdvölgy 2026 — architecture — Holdvölgy 2026 docs</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:opsz,wght@6..96,400;6..96,500&family=Archivo:wdth,wght@112.5,400;112.5,500;112.5,600&display=swap">
+<link rel="stylesheet" href="../assets/tokens.css">
+<style>:root{--ground:var(--hv-ground);--card:var(--hv-card);--ink:var(--hv-ink);--text:var(--hv-text);--muted:var(--hv-muted);--accent:var(--hv-accent);--accent-deep:var(--hv-accent-deep);--line:var(--hv-line);--line-soft:var(--hv-line-soft);--note:var(--hv-band)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--ground);color:var(--text);font-family:"Archivo","Helvetica Neue",Arial,sans-serif;font-stretch:112.5%;font-size:15.5px;line-height:1.6;padding-block:0 64px;padding-inline:clamp(16px,4vw,40px)}
+.wrap{max-width:72ch;margin-inline:auto}
+.docnav{display:flex;flex-wrap:wrap;gap:4px 18px;align-items:center;padding:16px 0;border-bottom:1px solid var(--line);font-size:12px;letter-spacing:.06em;text-transform:uppercase}
+.docnav a{color:var(--muted);text-decoration:none;min-height:44px;display:inline-flex;align-items:center;border-bottom:2px solid transparent}
+.docnav a:hover,.docnav a[aria-current]{color:var(--ink);border-color:var(--accent)}
+.docnav-brand{color:var(--accent-deep);font-weight:600;margin-right:6px}
+.docnav-hub{margin-left:auto}
+header{padding-block:40px 24px;border-bottom:1px solid var(--line);margin-bottom:28px}
+.eyebrow{font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--accent-deep);margin:0 0 12px}
+h1,h2,h3{font-family:"Bodoni Moda",Didot,"Bodoni 72",serif;font-weight:400;color:var(--ink);line-height:1.1;text-wrap:balance;margin:0}
+h1{font-size:clamp(32px,6.5vw,50px);font-optical-sizing:auto}
+h2{font-size:clamp(25px,4.5vw,32px);margin:48px 0 14px;padding-top:20px;border-top:1px solid var(--line)}
+h3{font-size:19px;margin:30px 0 8px;font-weight:500}
+p{margin:0 0 14px} strong{color:var(--ink);font-weight:600}
+ul,ol{padding-left:22px;margin:0 0 16px} li{margin:5px 0} li>ul{margin:6px 0 0}
+code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.86em;background:var(--note);padding:1px 5px;border-radius:2px;color:var(--ink)}
+a{color:var(--accent-deep)} :focus-visible{outline:2px solid var(--accent-deep);outline-offset:2px}
+.tbl{overflow-x:auto;margin:14px 0 22px;border:1px solid var(--line)}
+table{border-collapse:collapse;width:100%;font-size:13.5px;min-width:560px}
+th{text-align:left;font-weight:600;color:var(--ink);background:var(--note);padding:10px 12px;border-bottom:1px solid var(--line);font-size:11.5px;letter-spacing:.06em;text-transform:uppercase}
+td{padding:10px 12px;border-top:1px solid var(--line-soft);vertical-align:top;background:var(--card)} td:first-child{color:var(--ink)}
+footer{margin-top:56px;padding-top:18px;border-top:1px solid var(--line);font-size:12px;color:var(--muted)}
+
+/* embedded gate-2 frames */
+.frames{display:grid;gap:28px;margin:18px 0 30px}
+.frames figure{margin:0} .frames figcaption{font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);margin-bottom:8px}
+.scale-d{width:100%;aspect-ratio:1440/2900;position:relative;overflow:hidden;border:1px solid var(--line);background:#FAFAFA}
+.scale-d iframe{position:absolute;top:0;left:0;width:1440px;height:2900px;border:0;transform-origin:0 0;transform:scale(calc(var(--w,720) / 1440))}
+.scale-p{width:390px;max-width:100%;aspect-ratio:390/2100;position:relative;overflow:hidden;border:1px solid var(--line);background:#FAFAFA}
+.scale-p iframe{position:absolute;top:0;left:0;width:390px;height:2100px;border:0;transform-origin:0 0;transform:scale(calc(var(--pw,390) / 390))}
+
+pre{overflow-x:auto;padding:14px 16px;border:1px solid var(--hv-line);border-radius:2px;background:var(--hv-card);font-size:12px;line-height:1.35}
+pre code{background:none;padding:0;font-size:inherit}
+</style>
+</head>
+<body>
+<div class="wrap">
+<nav class="docnav" aria-label="Project documentation"><span class="docnav-brand">Holdvölgy 2026 · docs</span><a href="index.html">Overview</a><a href="brief.html">Brief</a><a href="bemutato.html">Bemutató</a><a href="plan.html">Plan</a><a href="benchmarks.html">Benchmarks</a><a href="audit.html">Brand & site audit</a><a href="assets.html">Assets</a><a href="decisions.html">Decisions</a><a href="design-system.html">Design system</a><a href="layouts.html">Layouts</a><a href="home-build.html">Home build</a><a href="birtok-build.html">Birtok build</a><a href="aszu-build.html">Aszú build</a><a href="latogatas-build.html">Látogatás build</a><a href="shop-build.html">Shop build</a><a href="gate-sweep.html">Gate sweep</a><a href="ssot.html">SSOT</a><a href="architecture.html" aria-current=page>Architecture</a><a href="technical-design.html">Technical design</a><a href="implementation-plan.html">Implementation plan</a><a href="token-map.html">Token map</a><a class="docnav-hub" href="../../index.html">Calvus Hub</a></nav>
+<header><p class="eyebrow">Calvus · Holdvölgy · project documentation</p><h1>Holdvölgy 2026 — architecture</h1></header>
+<p><em>How the prototype becomes the live site. §2 is measured, not assumed. The stack in §10 and
+the ADRs in §11 are </em><em>PROPOSED</em><em> — recommended with reasons, decided by nobody yet. Terms
+are defined in <a href="ssot.html"><code>10-ssot.md</code></a>. Written 2026-09-18.</em></p>
+<h2>1. System context</h2>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>Actor</th>
+<th>What they do with the site</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Visitor (HU, EN)</td>
+<td>reads the estate, the wines, the visit programmes; passes the 18+ gate</td>
+</tr>
+<tr>
+<td>Buyer</td>
+<td>browses the shop, buys wine and gift cards, reorders; may be a club member with a tier discount</td>
+</tr>
+<tr>
+<td>Guest</td>
+<td>sends a booking request for a tasting or cellar programme</td>
+</tr>
+<tr>
+<td>Estate staff</td>
+<td>edits content and prices, answers booking requests, fulfils orders, runs the club and the newsletter</td>
+</tr>
+<tr>
+<td>Incumbent developer (KM Építő / kiszervezettmarketing.hu, per the live <code>generator</code> tag)</td>
+<td>maintains the current WordPress; has a priced offer for the rebuild</td>
+</tr>
+<tr>
+<td>Calvus</td>
+<td>designed and built the prototype; wrote this package</td>
+</tr>
+</tbody>
+</table></div>
+<p>External systems the live site already talks to: WooCommerce payment and shipping
+providers (not identified from the front end), Mailchimp (newsletter, <code>mailchimp-for-
+woocommerce</code>), Facebook/Meta pixel (<code>pixelyoursite</code>), Google Fonts, an analytics
+plugin (<code>independent-analytics</code>, first-party), Amelia (booking plugin present but the
+booking is a contact form — audit §2).</p>
+<h2>2. The live site, measured (2026-09-18, <code>curl</code>, from this environment)</h2>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>Measure</th>
+<th>Value</th>
+<th>Target</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Platform</td>
+<td>WordPress; theme <code>hello-elementor</code> + child <code>hello-theme-child-master</code>; Elementor 4.1.4 + Elementor Pro; page builder on every page</td>
+<td>—</td>
+</tr>
+<tr>
+<td>Commerce</td>
+<td>WooCommerce + 8 extensions: side-cart-premium, bought-together, reward-points, one-click-order-reorder, ultimate-gift-card, variation-swatches, tm-extra-product-options, flexible-shipping</td>
+<td>—</td>
+</tr>
+<tr>
+<td>Languages</td>
+<td>TranslatePress (runtime translation of one HU content tree into <code>/en/</code>)</td>
+<td>—</td>
+</tr>
+<tr>
+<td>Distinct plugins referenced on home + shop front end</td>
+<td><strong>23</strong> (list in §2.1)</td>
+<td><strong>&lt; 12</strong></td>
+</tr>
+<tr>
+<td>Home HTML alone</td>
+<td><strong>624 KB</strong>; 79 <code>&lt;script src&gt;</code>, 76 stylesheets, 30 <code>&lt;img&gt;</code></td>
+<td>whole page <strong>&lt; 1,5 MB</strong></td>
+</tr>
+<tr>
+<td>Home, whole page</td>
+<td><strong>8,8 MB, 226 requests</strong> (client's technical brief, 2026-09-08); the prototype's home measures 600–734 KB (<a href="home-build.html"><code>06-home-build.md</code></a>)</td>
+<td><strong>&lt; 1,5 MB</strong> ✗</td>
+</tr>
+<tr>
+<td>Shop HTML alone</td>
+<td>887 KB</td>
+<td></td>
+</tr>
+<tr>
+<td>TTFB, cached (<code>x-litespeed-cache: hit</code>)</td>
+<td>HU 0,06 s · EN 0,06 s (three runs each)</td>
+<td><strong>&lt; 800 ms</strong> ✓</td>
+</tr>
+<tr>
+<td>TTFB, cache miss</td>
+<td>EN <strong>4,49 s</strong> (one cold hit)</td>
+<td><strong>&lt; 800 ms</strong> ✗</td>
+</tr>
+<tr>
+<td>Cache policy sent to browsers</td>
+<td><code>cache-control: no-store, no-cache, must-revalidate</code> — the LiteSpeed page cache serves hits, browsers re-fetch everything</td>
+<td></td>
+</tr>
+<tr>
+<td>Security headers</td>
+<td>HSTS, <code>x-frame-options</code>, <code>x-content-type-options</code> present</td>
+<td></td>
+</tr>
+<tr>
+<td>Alerting</td>
+<td>none visible from outside; brief says none exists</td>
+<td><strong>exists</strong></td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>2.1 The 23 plugins.</strong> agile-store-locator · ameliabooking · dynamic-content-for-
+elementor · elementor · elementor-pro · flexible-shipping · independent-analytics ·
+mailchimp-for-woocommerce · marquee-addons-for-elementor · one-click-order-reorder ·
+pixelyoursite · sassy-social-share · smart-wishlist-for-more-convert · the-plus-addons-
+for-elementor-page-builder · theplus_elementor_addon · translatepress-multilingual ·
+woo-bought-together · woo-variation-swatches · woocommerce · woocommerce-reward-points ·
+woocommerce-side-cart-premium · woocommerce-tm-extra-product-options · woocommerce-
+ultimate-gift-card. (Referenced from the front end; the installed count may be higher.)</p>
+<p><strong>Reading.</strong> The 800 ms target is met by the page cache and missed by the origin: every
+content edit or cache purge exposes a multi-second render, and the EN tree is produced at
+request time by TranslatePress. The plugin target cannot be met while Elementor and its
+four add-ons (7 of 23) build the pages. The weight target is decided by HTML and CSS/JS
+count before any image is loaded. All three targets point at the same change: take the
+page builder out of the rendering path.</p>
+<h2>3. Quality attributes</h2>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>Attribute</th>
+<th>Requirement</th>
+<th>Verified by</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Performance</td>
+<td>TTFB &lt; 800 ms <strong>at the origin</strong> (cache miss), home &lt; 1,5 MB, LCP under 2,5 s on 4G phone</td>
+<td><code>13</code> M5, WebPageTest / Lighthouse on staging</td>
+</tr>
+<tr>
+<td>Plugin budget</td>
+<td>&lt; 12 active plugins serving the front end</td>
+<td><code>13</code> M5, plugin list in §10</td>
+</tr>
+<tr>
+<td>Availability</td>
+<td>uptime monitor with alerting to a named person; error alerting from WordPress</td>
+<td><code>13</code> M0</td>
+</tr>
+<tr>
+<td>Accessibility</td>
+<td>one <code>h1</code>, <code>alt</code> on every image, 44 px tap targets, no horizontal overflow at 390, visible focus, <code>dialog</code> age gate keyboard-operable</td>
+<td>gate sweep criteria carried to staging</td>
+</tr>
+<tr>
+<td>SEO</td>
+<td><code>hreflang</code> hu/en/x-default, canonical, Product/Offer JSON-LD, every current URL kept or 301'd (R6)</td>
+<td><code>12</code> §8</td>
+</tr>
+<tr>
+<td>Privacy</td>
+<td>GDPR consent for marketing pixels; 18+ gate; no tracking before consent</td>
+<td><code>12</code> §9</td>
+</tr>
+<tr>
+<td>Bilingual parity</td>
+<td>every page and product exists in EN with the estate's own copy</td>
+<td>R3</td>
+</tr>
+<tr>
+<td>Change freeze</td>
+<td>no production change 15 Oct – 15 Jan; staging work allowed (assumption A1)</td>
+<td><code>13</code></td>
+</tr>
+<tr>
+<td>Maintainability</td>
+<td>estate staff edit content, prices and products without a developer; theme has no page builder dependency</td>
+<td><code>12</code> §2</td>
+</tr>
+</tbody>
+</table></div>
+<h2>4. Target containers (PROPOSED)</h2>
+<pre><code>                 ┌──────────────── CDN / edge cache (Cloudflare or host CDN) ────────────────┐
+browser ───────▶ │  full-page cache for anonymous HU and EN pages; images; fonts               │
+                 └───────────────────────────────┬────────────────────────────────────────────┘
+                                                 │ miss
+                 ┌───────────────────────────────▼────────────────────────────────────────────┐
+                 │  WordPress (LiteSpeed host as today)                                        │
+                 │  ┌─────────────────────────┐  ┌──────────────────────────────────────────┐ │
+                 │  │ theme &quot;holdvolgy-2026&quot;  │  │ WooCommerce core                          │ │
+                 │  │ block theme from the    │  │ products = catalogue.json rows            │ │
+                 │  │ prototype: tokens.css,  │  │ orders, customers, gift cards, reward     │ │
+                 │  │ templates = build.py    │  │ points (club tiers), shipping, payment    │ │
+                 │  │ page kinds, no builder  │  └──────────────────────────────────────────┘ │
+                 │  └─────────────────────────┘  multilingual: one plugin, stored translations │
+                 │  forms (booking request, newsletter) · SEO · consent · cache plugin          │
+                 └───────────────┬───────────────────────────┬─────────────────┬──────────────┘
+                                 │                           │                 │
+                        payment / shipping           Mailchimp          uptime + error
+                        providers (as today)                            alerting → person
+</code></pre>
+<p>Containers: <strong>theme</strong> (rendering, all markup and CSS from the prototype), <strong>WooCommerce</strong>
+(everything transactional, unchanged data), <strong>multilingual plugin</strong> (stored per-language
+content, not runtime translation), <strong>forms</strong> (booking request to e-mail + WP entry;
+newsletter to Mailchimp), <strong>cache + CDN</strong>, <strong>monitoring</strong>.</p>
+<h2>5. Key flows</h2>
+<ol>
+<li><strong>Browse → product → cart → checkout</strong> — theme renders the Borok grid and product
+   template from WooCommerce data; cart and checkout are WooCommerce's own screens
+   restyled with the tokens (not redesigned; the prototype has no checkout).</li>
+<li><strong>Booking request</strong> — Látogatás form posts to WordPress; e-mail to the estate;
+   entry stored; auto-reply "one working day"; no availability (R2). Amelia stays
+   installed only if the estate wants calendar availability later (<code>12</code> §5).</li>
+<li><strong>Club</strong> — spend over 12 months sets the tier; discount applied at checkout;
+   the four tiers and thresholds are configuration, not code (<code>12</code> §6).</li>
+<li><strong>Language</strong> — <code>/en/</code> served from stored EN content; language switch links the
+   translated counterpart; <code>hreflang</code> on every page.</li>
+<li><strong>Age gate</strong> — rendered server-side in every page, dismissed client-side, remembered
+   for the session (as the prototype); no tracking before consent + gate.</li>
+<li><strong>Content edit</strong> — staff edit posts, pages, products in the block editor; theme
+   patterns give them the prototype's sections; cache purges on publish.</li>
+</ol>
+<h2>6. Data architecture</h2>
+<p>The prototype's <code>catalogue.json</code> is the target product model expressed in WooCommerce
+terms — the field-by-field mapping is <a href="technical-design.html"><code>12-technical-design.md</code></a> §3. No new database:
+WooCommerce's product, order, customer and coupon tables carry everything; the
+tasting note, vintage note and technical sheet become product meta fields (or
+attributes, decided in <code>12</code> §3). Content pages (home, Birtok, aszú, Látogatás,
+Borklub) are block patterns with editable text and images — not builder layouts.</p>
+<h2>7. Integration architecture</h2>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>Integration</th>
+<th>Today</th>
+<th>Target</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Payment, shipping</td>
+<td>WooCommerce providers, flexible-shipping</td>
+<td>unchanged; re-verify on staging</td>
+</tr>
+<tr>
+<td>Newsletter</td>
+<td>Mailchimp for WooCommerce</td>
+<td>unchanged; the form is the theme's</td>
+</tr>
+<tr>
+<td>Marketing pixel</td>
+<td>PixelYourSite (Meta)</td>
+<td>behind consent; one consent plugin</td>
+</tr>
+<tr>
+<td>Analytics</td>
+<td>independent-analytics (first-party)</td>
+<td>keep (no consent needed) or GA4 behind consent — client choice</td>
+</tr>
+<tr>
+<td>Booking</td>
+<td>contact form (Amelia installed, unused for booking)</td>
+<td>form plugin; Amelia optional later</td>
+</tr>
+<tr>
+<td>Fonts</td>
+<td>Google Fonts (Akzidenz is a licensed face on the live site)</td>
+<td>Bodoni Moda + Archivo self-hosted (D3, and one fewer third-party request)</td>
+</tr>
+<tr>
+<td>Store locator</td>
+<td>agile-store-locator</td>
+<td>remove unless the estate uses it (not in the prototype)</td>
+</tr>
+</tbody>
+</table></div>
+<h2>8. Security and privacy</h2>
+<p>WordPress and plugin updates on a schedule; admin behind 2FA; HSTS and the existing
+headers kept; backups daily with a tested restore; GDPR: consent banner gating pixels,
+privacy policy and terms pages kept at their URLs; 18+ gate on every entry point; forms
+with spam protection and no PII in URLs; no AI-generated imagery (R7).</p>
+<h2>9. Deployment and operations</h2>
+<p>Staging site (same host, <code>staging.</code> subdomain or host-provided) built during the
+freeze; production untouched until 15 January; cutover = theme switch + plugin
+prune + cache warm, with the redirect map from <code>12</code> §8 in place first; rollback = switch
+theme back (WooCommerce data is shared, nothing migrates). Monitoring from day one on
+staging: uptime check every minute with alert to a named estate contact and the
+developer; WordPress error log shipped to the same channel.</p>
+<h2>10. Stack (PROPOSED)</h2>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>Layer</th>
+<th>Today (measured)</th>
+<th>Proposed</th>
+<th>Why</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>CMS</td>
+<td>WordPress</td>
+<td><strong>WordPress, kept</strong></td>
+<td>the estate's content, orders, customers and club live there; staff know it; the incumbent supports it; the "&lt; 12 plugins" target is a WordPress metric — the brief assumes WordPress</td>
+</tr>
+<tr>
+<td>Theme / rendering</td>
+<td>Hello Elementor child + Elementor Pro + 4 add-ons</td>
+<td><strong>custom block theme built from the prototype</strong> (<code>tokens.css</code> → <code>theme.json</code>, <code>build.py</code> page kinds → block templates and patterns)</td>
+<td>removes 7 plugins and the runtime page builder; the prototype <em>is</em> the spec, measured; staff keep the block editor</td>
+</tr>
+<tr>
+<td>Commerce</td>
+<td>WooCommerce + 8 extensions</td>
+<td><strong>WooCommerce core + ≤ 4 extensions</strong>: reward points (club), gift card, flexible shipping, one more if the estate needs it (bought-together <em>or</em> reorder)</td>
+<td>keeps every transaction feature the site actually sells; drops side-cart, swatches, extra options, wishlist unless used</td>
+</tr>
+<tr>
+<td>Multilingual</td>
+<td>TranslatePress (runtime)</td>
+<td><strong>Polylang or WPML — stored EN content</strong></td>
+<td>EN is the estate's own copy already (D8); stored content is cacheable and editable; removes the cold-miss render</td>
+</tr>
+<tr>
+<td>Forms</td>
+<td>(contact form, provider not identified)</td>
+<td>one form plugin (Fluent Forms / WPForms)</td>
+<td>booking request + newsletter</td>
+</tr>
+<tr>
+<td>SEO</td>
+<td>(not identified)</td>
+<td>one SEO plugin or theme-native JSON-LD (the prototype already emits it)</td>
+<td><code>hreflang</code>, canonical, sitemap</td>
+</tr>
+<tr>
+<td>Consent</td>
+<td>(none identified)</td>
+<td>one consent plugin</td>
+<td>pixel behind consent</td>
+</tr>
+<tr>
+<td>Cache</td>
+<td>LiteSpeed cache (host)</td>
+<td>keep + CDN in front; fix browser cache headers</td>
+<td>cache-miss TTFB is the failing number</td>
+</tr>
+<tr>
+<td>Monitoring</td>
+<td>none</td>
+<td>uptime + error alerting</td>
+<td>acceptance target</td>
+</tr>
+<tr>
+<td>Fonts</td>
+<td>Google Fonts</td>
+<td>self-hosted WOFF2</td>
+<td>one fewer origin; D3 faces are OFL</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Plugin count under this proposal: 9–10</strong> (WooCommerce, 3–4 Woo extensions,
+multilingual, forms, SEO, consent, cache, analytics) — under the target with room for
+one the estate insists on.</p>
+<h2>11. Architecture decision records</h2>
+<p>All <strong>PROPOSED</strong> 2026-09-18. Flipping one to DECIDED is a <a href="decisions.html"><code>04-decisions.md</code></a> entry.</p>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>ADR</th>
+<th>Decision</th>
+<th>Options considered</th>
+<th>Why this one</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ADR-1</td>
+<td>Stay on WordPress + WooCommerce</td>
+<td>(a) keep; (b) headless WordPress + static front (Astro/Next, essentially this repo's <code>build.py</code> at scale); (c) replatform (Shopify + CMS)</td>
+<td>(b) doubles the surface (two deploys, two skill sets) for an estate whose staff and developer are WordPress people, and WooCommerce data would still live in WP; (c) migrates orders, customers, club history and every URL for no target the brief sets. (a) meets all four targets once the builder goes.</td>
+</tr>
+<tr>
+<td>ADR-2</td>
+<td>Replace Elementor with a custom block theme transcribed from the prototype</td>
+<td>(a) keep Elementor and tune; (b) classic PHP theme; (c) block theme</td>
+<td>(a) cannot reach &lt; 12 plugins or the weight target; (b) works but loses the block editor's patterns for staff; (c) <code>theme.json</code> maps 1:1 onto <code>tokens.css</code> (<a href="token-map.html"><code>14-token-map.md</code></a>) and patterns map onto the prototype's sections.</td>
+</tr>
+<tr>
+<td>ADR-3</td>
+<td>Stored-content multilingual (Polylang/WPML) instead of runtime translation</td>
+<td>keep TranslatePress</td>
+<td>the EN copy already exists as content (catalogue, live EN pages); runtime translation is the cold-miss cost and makes EN uneditable as content. Choice between Polylang and WPML is the developer's, on licence and WooCommerce support.</td>
+</tr>
+<tr>
+<td>ADR-4</td>
+<td>Plugin budget ≤ 10, list in §10, every addition justified in writing</td>
+<td>none</td>
+<td>acceptance target &lt; 12 with headroom</td>
+</tr>
+<tr>
+<td>ADR-5</td>
+<td>CDN in front of the existing LiteSpeed cache; browser caching enabled for static assets</td>
+<td>tune origin only</td>
+<td>the origin will still miss; the target is measured at the edge and at the origin both</td>
+</tr>
+<tr>
+<td>ADR-6</td>
+<td>Uptime + error alerting to a named person, from staging onward</td>
+<td>none</td>
+<td>acceptance target</td>
+</tr>
+<tr>
+<td>ADR-7</td>
+<td>Booking stays a request form (no availability engine) in Release 1</td>
+<td>Amelia availability + payment</td>
+<td>R2 and the audit: the live "booking system" is a form; availability is a business-process change the estate has not asked for</td>
+</tr>
+<tr>
+<td>ADR-8</td>
+<td>The prototype is the specification: markup, CSS, copy and images are transcribed, not reinterpreted; deviations are recorded as decisions</td>
+<td>redesign in the theme</td>
+<td>three gates were approved on it; the measurements are its acceptance evidence</td>
+</tr>
+<tr>
+<td>ADR-9</td>
+<td>Build on staging inside the freeze; cut over after 15 January (assumption A1: the freeze binds production only)</td>
+<td>wait for the freeze to end before building</td>
+<td>the freeze is the window; confirm A1 with the client in <code>13</code> blocked register</td>
+</tr>
+</tbody>
+</table></div>
+<script>(function(){function f(){document.querySelectorAll('.scale-d').forEach(function(e){e.style.setProperty('--w',e.clientWidth)});document.querySelectorAll('.scale-p').forEach(function(e){e.style.setProperty('--pw',e.clientWidth)})}f();addEventListener('resize',f)})();</script>
+<footer>Source: <code>holdvolgy/docs/11-architecture.md</code> · rendered by <code>docs/build.py</code>. Set in Bodoni Moda and Archivo (Google Fonts, SIL OFL) on Holdvölgy's measured palette — decision D3.</footer>
+</div>
+</body>
+</html>

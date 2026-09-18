@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Holdvölgy 2026 — brief — Holdvölgy 2026 docs</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:opsz,wght@6..96,400;6..96,500&family=Archivo:wdth,wght@112.5,400;112.5,500;112.5,600&display=swap">
+<link rel="stylesheet" href="../assets/tokens.css">
+<style>:root{--ground:var(--hv-ground);--card:var(--hv-card);--ink:var(--hv-ink);--text:var(--hv-text);--muted:var(--hv-muted);--accent:var(--hv-accent);--accent-deep:var(--hv-accent-deep);--line:var(--hv-line);--line-soft:var(--hv-line-soft);--note:var(--hv-band)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--ground);color:var(--text);font-family:"Archivo","Helvetica Neue",Arial,sans-serif;font-stretch:112.5%;font-size:15.5px;line-height:1.6;padding-block:0 64px;padding-inline:clamp(16px,4vw,40px)}
+.wrap{max-width:72ch;margin-inline:auto}
+.docnav{display:flex;flex-wrap:wrap;gap:4px 18px;align-items:center;padding:16px 0;border-bottom:1px solid var(--line);font-size:12px;letter-spacing:.06em;text-transform:uppercase}
+.docnav a{color:var(--muted);text-decoration:none;min-height:44px;display:inline-flex;align-items:center;border-bottom:2px solid transparent}
+.docnav a:hover,.docnav a[aria-current]{color:var(--ink);border-color:var(--accent)}
+.docnav-brand{color:var(--accent-deep);font-weight:600;margin-right:6px}
+.docnav-hub{margin-left:auto}
+header{padding-block:40px 24px;border-bottom:1px solid var(--line);margin-bottom:28px}
+.eyebrow{font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--accent-deep);margin:0 0 12px}
+h1,h2,h3{font-family:"Bodoni Moda",Didot,"Bodoni 72",serif;font-weight:400;color:var(--ink);line-height:1.1;text-wrap:balance;margin:0}
+h1{font-size:clamp(32px,6.5vw,50px);font-optical-sizing:auto}
+h2{font-size:clamp(25px,4.5vw,32px);margin:48px 0 14px;padding-top:20px;border-top:1px solid var(--line)}
+h3{font-size:19px;margin:30px 0 8px;font-weight:500}
+p{margin:0 0 14px} strong{color:var(--ink);font-weight:600}
+ul,ol{padding-left:22px;margin:0 0 16px} li{margin:5px 0} li>ul{margin:6px 0 0}
+code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.86em;background:var(--note);padding:1px 5px;border-radius:2px;color:var(--ink)}
+a{color:var(--accent-deep)} :focus-visible{outline:2px solid var(--accent-deep);outline-offset:2px}
+.tbl{overflow-x:auto;margin:14px 0 22px;border:1px solid var(--line)}
+table{border-collapse:collapse;width:100%;font-size:13.5px;min-width:560px}
+th{text-align:left;font-weight:600;color:var(--ink);background:var(--note);padding:10px 12px;border-bottom:1px solid var(--line);font-size:11.5px;letter-spacing:.06em;text-transform:uppercase}
+td{padding:10px 12px;border-top:1px solid var(--line-soft);vertical-align:top;background:var(--card)} td:first-child{color:var(--ink)}
+footer{margin-top:56px;padding-top:18px;border-top:1px solid var(--line);font-size:12px;color:var(--muted)}
+
+/* embedded gate-2 frames */
+.frames{display:grid;gap:28px;margin:18px 0 30px}
+.frames figure{margin:0} .frames figcaption{font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);margin-bottom:8px}
+.scale-d{width:100%;aspect-ratio:1440/2900;position:relative;overflow:hidden;border:1px solid var(--line);background:#FAFAFA}
+.scale-d iframe{position:absolute;top:0;left:0;width:1440px;height:2900px;border:0;transform-origin:0 0;transform:scale(calc(var(--w,720) / 1440))}
+.scale-p{width:390px;max-width:100%;aspect-ratio:390/2100;position:relative;overflow:hidden;border:1px solid var(--line);background:#FAFAFA}
+.scale-p iframe{position:absolute;top:0;left:0;width:390px;height:2100px;border:0;transform-origin:0 0;transform:scale(calc(var(--pw,390) / 390))}
+
+pre{overflow-x:auto;padding:14px 16px;border:1px solid var(--hv-line);border-radius:2px;background:var(--hv-card);font-size:12px;line-height:1.35}
+pre code{background:none;padding:0;font-size:inherit}
+</style>
+</head>
+<body>
+<div class="wrap">
+<nav class="docnav" aria-label="Project documentation"><span class="docnav-brand">Holdvölgy 2026 · docs</span><a href="index.html">Overview</a><a href="brief.html" aria-current=page>Brief</a><a href="bemutato.html">Bemutató</a><a href="plan.html">Plan</a><a href="benchmarks.html">Benchmarks</a><a href="audit.html">Brand & site audit</a><a href="assets.html">Assets</a><a href="decisions.html">Decisions</a><a href="design-system.html">Design system</a><a href="layouts.html">Layouts</a><a href="home-build.html">Home build</a><a href="birtok-build.html">Birtok build</a><a href="aszu-build.html">Aszú build</a><a href="latogatas-build.html">Látogatás build</a><a href="shop-build.html">Shop build</a><a href="gate-sweep.html">Gate sweep</a><a href="ssot.html">SSOT</a><a href="architecture.html">Architecture</a><a href="technical-design.html">Technical design</a><a href="implementation-plan.html">Implementation plan</a><a href="token-map.html">Token map</a><a class="docnav-hub" href="../../index.html">Calvus Hub</a></nav>
+<header><p class="eyebrow">Calvus · Holdvölgy · project documentation</p><h1>Holdvölgy 2026 — brief</h1></header>
+<p><em>Who this is for: anyone opening this project for the first time — client, estate staff,
+a developer picking up the build. Two pages of what it is, what is real, and where it
+stands. Written 2026-09-18; the process log in <a href="index.html"><code>README.md</code></a> is the dated trail.</em></p>
+<h2>The client</h2>
+<p>Holdvölgy — a Tokaji wine estate in Mád: seven dűlők, thirty parcels, a 1,8 km cellar
+on three levels, thirteen Culture aszú vintages 2006–2018, open direct-to-consumer
+sales with prices in HU and EN, a loyalty club, visits and tastings, an experiential
+programme (Trezor). The live site is holdvolgy.com — WordPress, Elementor, WooCommerce
+(measured in <a href="architecture.html"><code>11-architecture.md</code></a> §2).</p>
+<h2>The problem the estate brought</h2>
+<p>A 2026 rebuild of the site. The client's technical brief (received 2026-09-16, not in
+this repo) sets four acceptance targets — server response under 800 ms, home page
+under 1,5 MB, fewer than 12 front-end plugins, live alerting — and a change freeze on
+the live site from 15 October to 15 January. A first prototype (commit <code>8342956</code>) was
+withdrawn as a direction: dark ground, gold accent, generic. The owner required
+industry research before any second build.</p>
+<h2>What the prototype is</h2>
+<p>A complete, generated, bilingual site on the estate's own brand, served from this repo
+on GitHub Pages: home, Birtok, Tokaji aszú, Látogatás, Borok with 32 product pages,
+Borklub — HU and EN, 76 pages. Built through three approval gates (design system →
+layout frames → home) and five phases, every page measured at 390 and 1440. The
+research (21 estate sites), the audit of the live site, the asset inventory, every
+decision and every build round are in this folder. The client-facing walkthrough is
+<code>bemutato.html</code>.</p>
+<p>Live: <a href="https://moldovancsaba.github.io/calvus/holdvolgy/">https://moldovancsaba.github.io/calvus/holdvolgy/</a> · EN
+<a href="https://moldovancsaba.github.io/calvus/holdvolgy/en/">https://moldovancsaba.github.io/calvus/holdvolgy/en/</a></p>
+<h2>What is real and what is not</h2>
+<ul>
+<li><strong>Real:</strong> every text, price, image and technical sheet is the estate's, taken from
+  the live site (<code>assets-used.md</code>, <code>data/catalogue.json</code>); the palette is the one
+  measured from the live Elementor kit; the fonts are commercially free equivalents
+  chosen by the owner (D3).</li>
+<li><strong>Inert, by design:</strong> the cart, the booking form, the newsletter field and the club
+  sign-up do not send. Every page says so in its banner. Nothing pretends to be
+  available that is not (no fake stock, no fake dates).</li>
+<li><strong>Placeholders:</strong> none. Where the estate has not supplied something (founder and
+  team portraits, two rock photographs, harvest dates and awards as structured data),
+  the slot is absent, not faked — the list is plan §6 (<a href="plan.html"><code>00-plan.md</code></a>) and the bemutató's "Hat dolog".</li>
+</ul>
+<h2>Where it stands</h2>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Customer side</td>
+<td>complete — presentation, research, audit, assets, decisions, design system, layouts, build logs, gate sweep (0 defects over 152 measurements)</td>
+</tr>
+<tr>
+<td>Technical side</td>
+<td>proposed — SSOT, architecture with a <strong>PROPOSED</strong> stack, technical design, implementation plan and token map written 2026-09-18 (<code>10</code>–<code>14</code>); nothing decided with the client yet</td>
+</tr>
+<tr>
+<td>Open with the client</td>
+<td>review of the whole; the items in plan §6; the stack decision; who builds (the incumbent developer has a priced offer)</td>
+</tr>
+<tr>
+<td>Timing</td>
+<td>production is frozen 15 Oct – 15 Jan; the plan builds on staging inside the freeze and goes live early 2027 (<a href="implementation-plan.html"><code>13-implementation-plan.md</code></a>)</td>
+</tr>
+</tbody>
+</table></div>
+<h2>How to read this folder</h2>
+<p>Customer side first (<a href="index.html"><code>README.md</code></a> index, then <code>bemutato.html</code> for the client's view);
+technical side <code>10</code>–<code>14</code> in order — the SSOT defines the words the others use.</p>
+<script>(function(){function f(){document.querySelectorAll('.scale-d').forEach(function(e){e.style.setProperty('--w',e.clientWidth)});document.querySelectorAll('.scale-p').forEach(function(e){e.style.setProperty('--pw',e.clientWidth)})}f();addEventListener('resize',f)})();</script>
+<footer>Source: <code>holdvolgy/docs/00-brief.md</code> · rendered by <code>docs/build.py</code>. Set in Bodoni Moda and Archivo (Google Fonts, SIL OFL) on Holdvölgy's measured palette — decision D3.</footer>
+</div>
+</body>
+</html>

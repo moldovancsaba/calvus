@@ -39,11 +39,14 @@ footer{margin-top:56px;padding-top:18px;border-top:1px solid var(--line);font-si
 .scale-d iframe{position:absolute;top:0;left:0;width:1440px;height:2900px;border:0;transform-origin:0 0;transform:scale(calc(var(--w,720) / 1440))}
 .scale-p{width:390px;max-width:100%;aspect-ratio:390/2100;position:relative;overflow:hidden;border:1px solid var(--line);background:#FAFAFA}
 .scale-p iframe{position:absolute;top:0;left:0;width:390px;height:2100px;border:0;transform-origin:0 0;transform:scale(calc(var(--pw,390) / 390))}
+
+pre{overflow-x:auto;padding:14px 16px;border:1px solid var(--hv-line);border-radius:2px;background:var(--hv-card);font-size:12px;line-height:1.35}
+pre code{background:none;padding:0;font-size:inherit}
 </style>
 </head>
 <body>
 <div class="wrap">
-<nav class="docnav" aria-label="Project documentation"><span class="docnav-brand">Holdvölgy 2026 · docs</span><a href="index.html" aria-current=page>Overview</a><a href="bemutato.html">Bemutató</a><a href="plan.html">Plan</a><a href="benchmarks.html">Benchmarks</a><a href="audit.html">Brand & site audit</a><a href="assets.html">Assets</a><a href="decisions.html">Decisions</a><a href="design-system.html">Design system</a><a href="layouts.html">Layouts</a><a href="home-build.html">Home build</a><a href="birtok-build.html">Birtok build</a><a href="aszu-build.html">Aszú build</a><a href="latogatas-build.html">Látogatás build</a><a href="shop-build.html">Shop build</a><a href="gate-sweep.html">Gate sweep</a><a class="docnav-hub" href="../../index.html">Calvus Hub</a></nav>
+<nav class="docnav" aria-label="Project documentation"><span class="docnav-brand">Holdvölgy 2026 · docs</span><a href="index.html" aria-current=page>Overview</a><a href="brief.html">Brief</a><a href="bemutato.html">Bemutató</a><a href="plan.html">Plan</a><a href="benchmarks.html">Benchmarks</a><a href="audit.html">Brand & site audit</a><a href="assets.html">Assets</a><a href="decisions.html">Decisions</a><a href="design-system.html">Design system</a><a href="layouts.html">Layouts</a><a href="home-build.html">Home build</a><a href="birtok-build.html">Birtok build</a><a href="aszu-build.html">Aszú build</a><a href="latogatas-build.html">Látogatás build</a><a href="shop-build.html">Shop build</a><a href="gate-sweep.html">Gate sweep</a><a href="ssot.html">SSOT</a><a href="architecture.html">Architecture</a><a href="technical-design.html">Technical design</a><a href="implementation-plan.html">Implementation plan</a><a href="token-map.html">Token map</a><a class="docnav-hub" href="../../index.html">Calvus Hub</a></nav>
 <header><p class="eyebrow">Calvus · Holdvölgy · project documentation</p><h1>Holdvölgy 2026 — project documentation</h1></header>
 <p>Owner directive 2026-09-16: the whole process is documented next to the project —
 research, findings, decisions, assets, and every build round. This folder is that
@@ -59,6 +62,10 @@ record. Each file is dated inside; this index is the process log.</p>
 <tr>
 <td><code>bemutato.html</code></td>
 <td><strong>A birtoknak szóló bemutató, magyarul</strong> — a birtok saját arculatában: hét lépés az élő oldalakkal, mi valódi, mit kérünk, hogyan tovább</td>
+</tr>
+<tr>
+<td><a href="brief.html"><code>00-brief.md</code></a></td>
+<td>Two pages for a first reader: the client, the problem, what the prototype is, what is real, where it stands</td>
 </tr>
 <tr>
 <td><a href="plan.html"><code>00-plan.md</code></a></td>
@@ -119,6 +126,83 @@ record. Each file is dated inside; this index is the process log.</p>
 <tr>
 <td><a href="layouts.html"><code>05-layout-specs.md</code></a></td>
 <td>Phase 1: the desktop-1440 and phone-390 layout specifications with schematics, tablet resolution and the home weight budget</td>
+</tr>
+<tr>
+<td><a href="ssot.html"><code>10-ssot.md</code></a></td>
+<td><strong>Technical package</strong> — glossary, enumerations, the product entity, settings, rules register, metrics, document map</td>
+</tr>
+<tr>
+<td><a href="architecture.html"><code>11-architecture.md</code></a></td>
+<td>The live site measured (platform, 23 plugins, weight, TTFB), quality attributes, target containers, the <strong>PROPOSED</strong> stack and nine ADRs</td>
+</tr>
+<tr>
+<td><a href="technical-design.html"><code>12-technical-design.md</code></a></td>
+<td>Page kinds → theme templates, content model, <code>catalogue.json</code> → WooCommerce mapping, forms, club tiers, languages, URLs and redirects, images, performance, operations</td>
+</tr>
+<tr>
+<td><a href="implementation-plan.html"><code>13-implementation-plan.md</code></a></td>
+<td>Milestones M0–M6 inside the change freeze, issues HV-000..084 with Definition of Done, blocked register, risks, Release 1 scope</td>
+</tr>
+<tr>
+<td><a href="token-map.html"><code>14-token-map.md</code></a></td>
+<td><code>tokens.css</code> → <code>theme.json</code>, components → theme parts and patterns, what is not tokenised, how it is verified</td>
+</tr>
+</tbody>
+</table></div>
+<h2>The standard documentation structure</h2>
+<p>Every Calvus project carries the same set next to its prototype (owner decision
+2026-09-18). Where this folder predates the standard, the slot maps to the existing file:</p>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>Slot</th>
+<th>Here</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Presentation</td>
+<td><code>bemutato.html</code></td>
+</tr>
+<tr>
+<td>00 brief</td>
+<td><a href="brief.html"><code>00-brief.md</code></a></td>
+</tr>
+<tr>
+<td>01 research</td>
+<td><a href="benchmarks.html"><code>01-research-benchmarks.md</code></a></td>
+</tr>
+<tr>
+<td>02 audit</td>
+<td><a href="audit.html"><code>02-brand-and-site-audit.md</code></a></td>
+</tr>
+<tr>
+<td>03 sources and assets</td>
+<td><a href="assets.html"><code>03-asset-inventory.md</code></a>, <code>asset-inventory.json</code>, <code>assets-used.md</code></td>
+</tr>
+<tr>
+<td>04 decisions</td>
+<td><a href="decisions.html"><code>04-decisions.md</code></a></td>
+</tr>
+<tr>
+<td>05 design</td>
+<td><code>design-system.html</code>, <a href="layouts.html"><code>05-layout-specs.md</code></a>, <code>frames/</code></td>
+</tr>
+<tr>
+<td>06 build log</td>
+<td><a href="home-build.html"><code>06-home-build.md</code></a> … <a href="shop-build.html"><code>10-shop-build.md</code></a></td>
+</tr>
+<tr>
+<td>07 gate</td>
+<td><a href="gate-sweep.html"><code>11-gate-sweep.md</code></a> + <code>python3 holdvolgy/check.py</code></td>
+</tr>
+<tr>
+<td>08 client asks</td>
+<td><a href="plan.html"><code>00-plan.md</code></a> §6</td>
+</tr>
+<tr>
+<td>10–14 technical</td>
+<td><a href="ssot.html"><code>10-ssot.md</code></a>, <a href="architecture.html"><code>11-architecture.md</code></a>, <a href="technical-design.html"><code>12-technical-design.md</code></a>, <a href="implementation-plan.html"><code>13-implementation-plan.md</code></a>, <a href="token-map.html"><code>14-token-map.md</code></a></td>
 </tr>
 </tbody>
 </table></div>
@@ -226,7 +310,17 @@ the estate, short sections, no documentation chrome.</p>
 its own palette and a dark-mode override that turned the documentation pages dark on
 a phone in dark mode — the treatment rejected for the site. The docs now use
 <code>assets/tokens.css</code> directly and stay on the light ground in every colour scheme.</p>
-<p><strong>Next.</strong> Client review of the whole; then the items in §6 of the plan as they arrive.</p>
+<p><strong>2026-09-18 — technical package written (D19).</strong> The owner set a standard
+documentation structure for every project — customer side as this folder already had
+it, plus a technical side on the DiscountDirect pattern. <a href="brief.html"><code>00-brief.md</code></a> and <code>10</code>–<code>14</code>
+added. The live site was measured for it (WordPress, Elementor, WooCommerce; 23
+front-end plugins against a target of 12; 8,8 MB home; cached TTFB 0,06 s, cold 4,5 s).
+The proposed stack — stay on WordPress and WooCommerce, replace Elementor with a block
+theme transcribed from the prototype, stored-content multilingual, CDN, monitoring — is
+in <a href="architecture.html"><code>11-architecture.md</code></a> §10–11 in status <strong>PROPOSED</strong>; nothing is decided with the
+client yet. The docs renderer's page list and navigation grew by six pages.</p>
+<p><strong>Next.</strong> Client review of the whole; the stack decision and who builds (blocked
+register in <code>13</code>); then the items in §6 of the plan as they arrive.</p>
 <script>(function(){function f(){document.querySelectorAll('.scale-d').forEach(function(e){e.style.setProperty('--w',e.clientWidth)});document.querySelectorAll('.scale-p').forEach(function(e){e.style.setProperty('--pw',e.clientWidth)})}f();addEventListener('resize',f)})();</script>
 <footer>Source: <code>holdvolgy/docs/README.md</code> · rendered by <code>docs/build.py</code>. Set in Bodoni Moda and Archivo (Google Fonts, SIL OFL) on Holdvölgy's measured palette — decision D3.</footer>
 </div>
