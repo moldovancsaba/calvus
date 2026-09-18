@@ -130,6 +130,10 @@ must actually happen before every push, not just be claimed:
   the change (a background curl-poll loop for a unique marker in the new
   content, per the established pattern) before reporting success.
 
+- For Lexodont changes run `python3 lexodont.hu/check.py` (links, anchors, docs cross-links,
+  polished/sketch parity); docs render with `python3 lexodont.hu/docs/build.py`. For
+  DiscountDirect, `holdvolgy/check.py` covers the folder; docs render with
+  `python3 discountdirect/build-docs.py`.
 - For IDBC changes also run `python3 idbc-salary-guide/check.py` (links, anchors, docs
   cross-links, one chart-asset version everywhere, inert controls still marked) — must
   print `GATE: CLEAN`. Added 2026-09-18 with the standard documentation structure

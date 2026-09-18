@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Lexodont — what needs the client — Lexodont docs</title>
+<style>/* Lexodont — documentation pages, on the wireframe's neutral grey and the hub's Inter. */
+:root{--ground:#f4f4f4;--card:#ffffff;--ink:#1e1e1e;--text:#333333;--muted:#626262;--accent:#4a4a4a;--accent-deep:#2e2e2e;--line:#d9d9d9;--line-soft:#ececec;--note:#e9e9e9}
+*{box-sizing:border-box}
+body{margin:0;background:var(--ground);color:var(--text);font-family:Inter,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;font-size:15.5px;line-height:1.6;padding-block:0 64px;padding-inline:clamp(16px,4vw,40px)}
+.wrap{max-width:74ch;margin-inline:auto}
+.docnav{display:flex;flex-wrap:wrap;gap:4px 18px;align-items:center;padding:16px 0;border-bottom:1px solid var(--line);font-size:12px;letter-spacing:.06em;text-transform:uppercase}
+.docnav a{color:var(--muted);text-decoration:none;min-height:44px;display:inline-flex;align-items:center;border-bottom:2px solid transparent}
+.docnav a:hover,.docnav a[aria-current]{color:var(--ink);border-color:var(--accent)}
+.docnav-brand{color:var(--ink);font-weight:800;margin-right:6px}
+.docnav-hub{margin-left:auto}
+header{padding-block:40px 24px;border-bottom:1px solid var(--line);margin-bottom:28px}
+.eyebrow{font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);margin:0 0 12px;font-weight:700}
+h1,h2,h3{color:var(--ink);line-height:1.1;text-wrap:balance;margin:0;letter-spacing:-.02em}
+h1{font-size:clamp(30px,6vw,46px);font-weight:800}
+h2{font-size:clamp(23px,4vw,30px);font-weight:800;margin:48px 0 14px;padding-top:20px;border-top:1px solid var(--line)}
+h3{font-size:18px;margin:30px 0 8px;font-weight:700}
+p{margin:0 0 14px} strong{color:var(--ink);font-weight:700}
+ul,ol{padding-left:22px;margin:0 0 16px} li{margin:5px 0} li>ul{margin:6px 0 0}
+code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.86em;background:var(--note);padding:1px 5px;border-radius:3px;color:var(--ink);overflow-wrap:anywhere}
+pre{overflow-x:auto;padding:14px 16px;border:1px solid var(--line);border-radius:6px;background:var(--card);font-size:12px;line-height:1.35}
+pre code{background:none;padding:0;font-size:inherit}
+a{color:var(--accent-deep)} :focus-visible{outline:2px solid var(--accent-deep);outline-offset:2px}
+.tbl{overflow-x:auto;margin:14px 0 22px;border:1px solid var(--line);border-radius:6px;background:var(--card)}
+table{border-collapse:collapse;width:100%;font-size:13.5px;min-width:560px}
+th{text-align:left;font-weight:700;color:var(--ink);background:var(--note);padding:10px 12px;border-bottom:1px solid var(--line);font-size:11.5px;letter-spacing:.06em;text-transform:uppercase}
+td{padding:10px 12px;border-top:1px solid var(--line-soft);vertical-align:top;background:var(--card)} td:first-child{color:var(--ink)}
+footer{margin-top:56px;padding-top:18px;border-top:1px solid var(--line);font-size:12px;color:var(--muted)}
+</style>
+</head>
+<body>
+<div class="wrap">
+<nav class="docnav" aria-label="Project documentation"><span class="docnav-brand">Lexodont · docs</span><a href="index.html">Overview</a><a href="bemutato.html">Bemutató</a><a href="brief.html">Brief</a><a href="research.html">Research</a><a href="audit.html">Audit</a><a href="sources.html">Sources</a><a href="decisions.html">Decisions</a><a href="design.html">Design</a><a href="build-log.html">Build log</a><a href="gate.html">Gate</a><a href="client-asks.html" aria-current=page>Client asks</a><a href="ssot.html">SSOT</a><a href="architecture.html">Architecture</a><a href="technical-design.html">Technical design</a><a href="implementation-plan.html">Implementation plan</a><a href="token-map.html">Token map</a><a class="docnav-hub" href="../../index.html">Calvus Hub</a></nav>
+<header><p class="eyebrow">Calvus · Lexodont · project documentation</p><h1>Lexodont — what needs the client</h1></header>
+<p><em>As of 2026-09-18 the client's site is live and built by their own developer. These are
+the questions that decide whether this project has a next step at all.</em></p>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>#</th>
+<th>Question</th>
+<th>Why</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>Is Lexodont a client for a second iteration, or is the engagement complete?</td>
+<td>everything below depends on it; if complete, this folder is the closing record</td>
+</tr>
+<tr>
+<td>2</td>
+<td>May we archive the wireframe (keep the URLs live, mark it "delivered" on the hub)?</td>
+<td>the hub still presents it as a live project</td>
+</tr>
+<tr>
+<td>3</td>
+<td>If there is a second iteration: access to GA4 (installed on the live site) and Flexi-Dent booking numbers</td>
+<td>to prioritise by what visitors do, not by opinion</td>
+</tr>
+<tr>
+<td>4</td>
+<td>The items the wireframe had and the live site does not: WhatsApp CTA, per-doctor fun facts, OSM map — dropped on purpose?</td>
+<td>to close D6/D3/D8 either way</td>
+</tr>
+<tr>
+<td>5</td>
+<td>The items the live site has and the wireframe did not: Technológiák, e-max betét, EMS pages, EN — should the record (this folder) be the spec for them too?</td>
+<td>scope of <a href="ssot.html"><code>10-ssot.md</code></a></td>
+</tr>
+<tr>
+<td>6</td>
+<td>Photography rights for anything shown here again</td>
+<td>every wireframe image is a placeholder</td>
+</tr>
+</tbody>
+</table></div>
+<footer>Source: <code>lexodont.hu/docs/08-client-asks.md</code> · rendered by <code>docs/build.py</code>.</footer>
+</div>
+</body>
+</html>

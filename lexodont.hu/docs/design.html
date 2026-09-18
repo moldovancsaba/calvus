@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Lexodont — design — Lexodont docs</title>
+<style>/* Lexodont — documentation pages, on the wireframe's neutral grey and the hub's Inter. */
+:root{--ground:#f4f4f4;--card:#ffffff;--ink:#1e1e1e;--text:#333333;--muted:#626262;--accent:#4a4a4a;--accent-deep:#2e2e2e;--line:#d9d9d9;--line-soft:#ececec;--note:#e9e9e9}
+*{box-sizing:border-box}
+body{margin:0;background:var(--ground);color:var(--text);font-family:Inter,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;font-size:15.5px;line-height:1.6;padding-block:0 64px;padding-inline:clamp(16px,4vw,40px)}
+.wrap{max-width:74ch;margin-inline:auto}
+.docnav{display:flex;flex-wrap:wrap;gap:4px 18px;align-items:center;padding:16px 0;border-bottom:1px solid var(--line);font-size:12px;letter-spacing:.06em;text-transform:uppercase}
+.docnav a{color:var(--muted);text-decoration:none;min-height:44px;display:inline-flex;align-items:center;border-bottom:2px solid transparent}
+.docnav a:hover,.docnav a[aria-current]{color:var(--ink);border-color:var(--accent)}
+.docnav-brand{color:var(--ink);font-weight:800;margin-right:6px}
+.docnav-hub{margin-left:auto}
+header{padding-block:40px 24px;border-bottom:1px solid var(--line);margin-bottom:28px}
+.eyebrow{font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);margin:0 0 12px;font-weight:700}
+h1,h2,h3{color:var(--ink);line-height:1.1;text-wrap:balance;margin:0;letter-spacing:-.02em}
+h1{font-size:clamp(30px,6vw,46px);font-weight:800}
+h2{font-size:clamp(23px,4vw,30px);font-weight:800;margin:48px 0 14px;padding-top:20px;border-top:1px solid var(--line)}
+h3{font-size:18px;margin:30px 0 8px;font-weight:700}
+p{margin:0 0 14px} strong{color:var(--ink);font-weight:700}
+ul,ol{padding-left:22px;margin:0 0 16px} li{margin:5px 0} li>ul{margin:6px 0 0}
+code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.86em;background:var(--note);padding:1px 5px;border-radius:3px;color:var(--ink);overflow-wrap:anywhere}
+pre{overflow-x:auto;padding:14px 16px;border:1px solid var(--line);border-radius:6px;background:var(--card);font-size:12px;line-height:1.35}
+pre code{background:none;padding:0;font-size:inherit}
+a{color:var(--accent-deep)} :focus-visible{outline:2px solid var(--accent-deep);outline-offset:2px}
+.tbl{overflow-x:auto;margin:14px 0 22px;border:1px solid var(--line);border-radius:6px;background:var(--card)}
+table{border-collapse:collapse;width:100%;font-size:13.5px;min-width:560px}
+th{text-align:left;font-weight:700;color:var(--ink);background:var(--note);padding:10px 12px;border-bottom:1px solid var(--line);font-size:11.5px;letter-spacing:.06em;text-transform:uppercase}
+td{padding:10px 12px;border-top:1px solid var(--line-soft);vertical-align:top;background:var(--card)} td:first-child{color:var(--ink)}
+footer{margin-top:56px;padding-top:18px;border-top:1px solid var(--line);font-size:12px;color:var(--muted)}
+</style>
+</head>
+<body>
+<div class="wrap">
+<nav class="docnav" aria-label="Project documentation"><span class="docnav-brand">Lexodont · docs</span><a href="index.html">Overview</a><a href="bemutato.html">Bemutató</a><a href="brief.html">Brief</a><a href="research.html">Research</a><a href="audit.html">Audit</a><a href="sources.html">Sources</a><a href="decisions.html">Decisions</a><a href="design.html" aria-current=page>Design</a><a href="build-log.html">Build log</a><a href="gate.html">Gate</a><a href="client-asks.html">Client asks</a><a href="ssot.html">SSOT</a><a href="architecture.html">Architecture</a><a href="technical-design.html">Technical design</a><a href="implementation-plan.html">Implementation plan</a><a href="token-map.html">Token map</a><a class="docnav-hub" href="../../index.html">Calvus Hub</a></nav>
+<header><p class="eyebrow">Calvus · Lexodont · project documentation</p><h1>Lexodont — design</h1></header>
+<p><em>The wireframe's two fidelities, their tokens and layout; and what the built site chose
+instead. Written 2026-09-18.</em></p>
+<h2>Two fidelities, one content</h2>
+<ul>
+<li><strong>Polished</strong> (<code>lexodont.hu/styles.css</code>): grey-scale "classic wireframe" (D5) — ground
+  <code>#dcdcdc</code>, surface <code>#e2e2e2</code>, text <code>#2e2e2e</code>, lines <code>#8f8f8f</code>, primary <code>#4a4a4a</code>,
+  radius 0, no shadows; Inter from Google Fonts; sticky header with brand text, six nav
+  items and a booking CTA; sections <code>.section</code> / <code>.section-soft</code>; cards, case cards with
+  the slider, staff grid, knowledge list, review grid, partner grid, three-column contact
+  footer with the map.</li>
+<li><strong>Sketch</strong> (<code>lexodont.hu_balsamic/styles.css</code>): Comic Sans / Marker Felt, 2 px <code>#444</code>
+  borders, hatched "paper" hero, boxes in 2- and 3-column grids, underlined inline links —
+  the Balsamiq idiom, for structural feedback (D10).</li>
+</ul>
+<h2>Layout</h2>
+<p>Max width 1160 px; home sections in order: hero (image, kicker, <code>h1</code>, two CTAs, trust
+list, wireframe note) → team cover + CTA → why-us (3 cards) → featured specialties (2 × 2)
++ CTAs → before/after (2 cases + CTA) → knowledge (text + 4 links) → reviews (3) → partners
+(featured 2 + 5) → footer (contact, hours/parking, transport + map). Subpages: sub-hero
++ one content section + CTA panel + one-line footer.</p>
+<h2>Tokens</h2>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>Token</th>
+<th>Polished</th>
+<th>Role</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>--bg</code> / <code>--surface</code> / <code>--surface-soft</code></td>
+<td><code>#dcdcdc</code> / <code>#e2e2e2</code> / <code>#d6d6d6</code></td>
+<td>grounds</td>
+</tr>
+<tr>
+<td><code>--text</code> / <code>--muted</code></td>
+<td><code>#2e2e2e</code> / <code>#4f4f4f</code></td>
+<td>copy</td>
+</tr>
+<tr>
+<td><code>--line</code></td>
+<td><code>#8f8f8f</code></td>
+<td>borders</td>
+</tr>
+<tr>
+<td><code>--primary</code> / <code>--primary-strong</code> / <code>--accent</code></td>
+<td><code>#4a4a4a</code> / <code>#3e3e3e</code> / <code>#5a5a5a</code></td>
+<td>buttons, links</td>
+</tr>
+<tr>
+<td><code>--radius</code> / <code>--shadow</code></td>
+<td><code>0</code> / <code>none</code></td>
+<td>wireframe flatness</td>
+</tr>
+<tr>
+<td><code>--split</code></td>
+<td><code>50%</code></td>
+<td>before/after slider position (set by JS)</td>
+</tr>
+</tbody>
+</table></div>
+<p>Deliberately no brand colour: a wireframe asks about structure, not palette.</p>
+<h2>What the built site chose</h2>
+<p>Outfit as the typeface, Bootstrap 5 components and grid, a real palette and photography,
+Bootstrap Icons, Owl Carousel for galleries. The wireframe's tokens therefore map to
+nothing in production — <a href="token-map.html"><code>14-token-map.md</code></a> records this rather than inventing a mapping.</p>
+<footer>Source: <code>lexodont.hu/docs/05-design.md</code> · rendered by <code>docs/build.py</code>.</footer>
+</div>
+</body>
+</html>

@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Lexodont — single source of truth (SSOT) — Lexodont docs</title>
+<style>/* Lexodont — documentation pages, on the wireframe's neutral grey and the hub's Inter. */
+:root{--ground:#f4f4f4;--card:#ffffff;--ink:#1e1e1e;--text:#333333;--muted:#626262;--accent:#4a4a4a;--accent-deep:#2e2e2e;--line:#d9d9d9;--line-soft:#ececec;--note:#e9e9e9}
+*{box-sizing:border-box}
+body{margin:0;background:var(--ground);color:var(--text);font-family:Inter,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;font-size:15.5px;line-height:1.6;padding-block:0 64px;padding-inline:clamp(16px,4vw,40px)}
+.wrap{max-width:74ch;margin-inline:auto}
+.docnav{display:flex;flex-wrap:wrap;gap:4px 18px;align-items:center;padding:16px 0;border-bottom:1px solid var(--line);font-size:12px;letter-spacing:.06em;text-transform:uppercase}
+.docnav a{color:var(--muted);text-decoration:none;min-height:44px;display:inline-flex;align-items:center;border-bottom:2px solid transparent}
+.docnav a:hover,.docnav a[aria-current]{color:var(--ink);border-color:var(--accent)}
+.docnav-brand{color:var(--ink);font-weight:800;margin-right:6px}
+.docnav-hub{margin-left:auto}
+header{padding-block:40px 24px;border-bottom:1px solid var(--line);margin-bottom:28px}
+.eyebrow{font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);margin:0 0 12px;font-weight:700}
+h1,h2,h3{color:var(--ink);line-height:1.1;text-wrap:balance;margin:0;letter-spacing:-.02em}
+h1{font-size:clamp(30px,6vw,46px);font-weight:800}
+h2{font-size:clamp(23px,4vw,30px);font-weight:800;margin:48px 0 14px;padding-top:20px;border-top:1px solid var(--line)}
+h3{font-size:18px;margin:30px 0 8px;font-weight:700}
+p{margin:0 0 14px} strong{color:var(--ink);font-weight:700}
+ul,ol{padding-left:22px;margin:0 0 16px} li{margin:5px 0} li>ul{margin:6px 0 0}
+code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.86em;background:var(--note);padding:1px 5px;border-radius:3px;color:var(--ink);overflow-wrap:anywhere}
+pre{overflow-x:auto;padding:14px 16px;border:1px solid var(--line);border-radius:6px;background:var(--card);font-size:12px;line-height:1.35}
+pre code{background:none;padding:0;font-size:inherit}
+a{color:var(--accent-deep)} :focus-visible{outline:2px solid var(--accent-deep);outline-offset:2px}
+.tbl{overflow-x:auto;margin:14px 0 22px;border:1px solid var(--line);border-radius:6px;background:var(--card)}
+table{border-collapse:collapse;width:100%;font-size:13.5px;min-width:560px}
+th{text-align:left;font-weight:700;color:var(--ink);background:var(--note);padding:10px 12px;border-bottom:1px solid var(--line);font-size:11.5px;letter-spacing:.06em;text-transform:uppercase}
+td{padding:10px 12px;border-top:1px solid var(--line-soft);vertical-align:top;background:var(--card)} td:first-child{color:var(--ink)}
+footer{margin-top:56px;padding-top:18px;border-top:1px solid var(--line);font-size:12px;color:var(--muted)}
+</style>
+</head>
+<body>
+<div class="wrap">
+<nav class="docnav" aria-label="Project documentation"><span class="docnav-brand">Lexodont · docs</span><a href="index.html">Overview</a><a href="bemutato.html">Bemutató</a><a href="brief.html">Brief</a><a href="research.html">Research</a><a href="audit.html">Audit</a><a href="sources.html">Sources</a><a href="decisions.html">Decisions</a><a href="design.html">Design</a><a href="build-log.html">Build log</a><a href="gate.html">Gate</a><a href="client-asks.html">Client asks</a><a href="ssot.html" aria-current=page>SSOT</a><a href="architecture.html">Architecture</a><a href="technical-design.html">Technical design</a><a href="implementation-plan.html">Implementation plan</a><a href="token-map.html">Token map</a><a class="docnav-hub" href="../../index.html">Calvus Hub</a></nav>
+<header><p class="eyebrow">Calvus · Lexodont · project documentation</p><h1>Lexodont — single source of truth (SSOT)</h1></header>
+<p><em>The content model of the practice's site as the wireframe fixed it and the live site
+confirmed it. Written 2026-09-18 from the wireframe pages and the 2026-09-18 measurement of
+lexodont.hu.</em></p>
+<h2>1. Glossary</h2>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>Term</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Szakterület</td>
+<td>A specialty (nine): parodontológia, implantológia, gyökérkezelés, fogszabályozás, fogpótlás, szájsebészet, gyerekfogászat, fogkőeltávolítás, megtartó fogászat. Four are "featured" on the home page.</td>
+</tr>
+<tr>
+<td>Kezelés / ár</td>
+<td>A priced treatment line on Áraink; the live site prices are the truth, the wireframe's were examples.</td>
+</tr>
+<tr>
+<td>Csapattag</td>
+<td>A dentist with portrait, name, role and a personal note; live: four.</td>
+</tr>
+<tr>
+<td>Esettanulmány</td>
+<td>A before/after case: two images behind a slider, starting situation, result, a detail page.</td>
+</tr>
+<tr>
+<td>Tudásközpont cikk</td>
+<td>A knowledge article on a treatment topic; the hub links four in the wireframe.</td>
+</tr>
+<tr>
+<td>Technológia</td>
+<td>A technology page (live only: Technológiák, e-max betét, EMS).</td>
+</tr>
+<tr>
+<td>Kapcsolat</td>
+<td>The contact block: address, doorbell, phone, mobile, e-mail, hours, parking, transport, map.</td>
+</tr>
+<tr>
+<td>Időpontfoglalás</td>
+<td>Booking; wireframe: a CTA to the contact block; live: the Flexi-Dent embed page.</td>
+</tr>
+<tr>
+<td>Partner</td>
+<td>A named supplier/brand; two featured, five listed.</td>
+</tr>
+<tr>
+<td>Fidelity</td>
+<td>polished (<code>lexodont.hu/</code>) or sketch (<code>lexodont.hu_balsamic/</code>); same content (D10).</td>
+</tr>
+</tbody>
+</table></div>
+<h2>2. Enumerations</h2>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>Enum</th>
+<th>Values</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Specialty</td>
+<td>the nine above; featured: parodontológia · implantológia · gyökérkezelés · fogszabályozás</td>
+</tr>
+<tr>
+<td>Navigation (wireframe)</td>
+<td>Rólunk · Szakterületek · Áraink · Esettanulmányok · Csapat · Kapcsolat + "Időpont foglalás" CTA</td>
+</tr>
+<tr>
+<td>Navigation (live)</td>
+<td>Rólunk · Szakterületek · Technológiák · Áraink · Esettanulmányok · Tudásközpont · Csapat · Kapcsolat + Időpontfoglalás; HU / EN</td>
+</tr>
+<tr>
+<td>Page kinds</td>
+<td>home · specialties hub · specialty · prices · cases hub · case · team · knowledge hub · article · (live) technology · booking · legal</td>
+</tr>
+<tr>
+<td>Language</td>
+<td>hu (root); en under <code>/en/</code> (live only)</td>
+</tr>
+</tbody>
+</table></div>
+<h2>3. Entities</h2>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>Entity</th>
+<th>Fields (as rendered)</th>
+<th>Where it lives today</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Specialty page</td>
+<td>name, lead, sections, CTA</td>
+<td>WordPress page under <code>/szakterulet/</code></td>
+</tr>
+<tr>
+<td>Price line</td>
+<td>treatment name, price HUF</td>
+<td>Áraink page content</td>
+</tr>
+<tr>
+<td>Team member</td>
+<td>name, role, portrait, note</td>
+<td>Csapat page content</td>
+</tr>
+<tr>
+<td>Case</td>
+<td>title, before image, after image, starting situation, result</td>
+<td><code>/esettanulmany/&lt;n&gt;-eset/</code></td>
+</tr>
+<tr>
+<td>Article</td>
+<td>title, body, related specialty</td>
+<td><code>/tudaskozpont/…</code></td>
+</tr>
+<tr>
+<td>Contact</td>
+<td>address, doorbell, phone, mobile, e-mail, hours (4 lines), parking (2 zones), transport, map</td>
+<td>theme footer</td>
+</tr>
+<tr>
+<td>Partner</td>
+<td>name, featured flag, link</td>
+<td>home content</td>
+</tr>
+</tbody>
+</table></div>
+<p>The wireframe holds all of these as static HTML; the live site as WordPress pages in a
+custom theme. No structured data file exists in this repo for Lexodont.</p>
+<h2>4. Rules</h2>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>#</th>
+<th>Rule</th>
+<th>Origin</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>R1</td>
+<td>Prices are never on home cards; Áraink is the one place (D7).</td>
+<td>client</td>
+</tr>
+<tr>
+<td>R2</td>
+<td>Contact, hours, parking and transport are one block in the footer on every page (D8).</td>
+<td>client</td>
+</tr>
+<tr>
+<td>R3</td>
+<td>One navigation and CTA set on every page (D11).</td>
+<td>owner</td>
+</tr>
+<tr>
+<td>R4</td>
+<td>Before/after imagery only on case pages and the two home samples; each case has a detail page (D9).</td>
+<td>owner</td>
+</tr>
+<tr>
+<td>R5</td>
+<td>Featured specialties are the four named above, two columns (D12).</td>
+<td>client</td>
+</tr>
+<tr>
+<td>R6</td>
+<td>Both fidelities carry the same page set (D10); the gate's parity check enforces it (D15).</td>
+<td>owner</td>
+</tr>
+<tr>
+<td>R7</td>
+<td>Every published URL stays (repo rule).</td>
+<td>repo</td>
+</tr>
+</tbody>
+</table></div>
+<h2>5. Metrics</h2>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>Metric</th>
+<th>Live value (2026-09-18)</th>
+<th>Wireframe</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>TTFB</td>
+<td>0,24–0,38 s</td>
+<td>n/a (static)</td>
+</tr>
+<tr>
+<td>Home HTML / scripts / stylesheets</td>
+<td>76 KB / 6 / 5</td>
+<td>16 KB / 0 external / 1</td>
+</tr>
+<tr>
+<td><code>hreflang</code> hu/en/x-default</td>
+<td>every page</td>
+<td>none (HU only)</td>
+</tr>
+<tr>
+<td>One <code>h1</code></td>
+<td>yes (booking page: none)</td>
+<td>every page</td>
+</tr>
+<tr>
+<td>Overflow at 390</td>
+<td>not measured</td>
+<td>8 px on one page</td>
+</tr>
+<tr>
+<td>Tap targets &lt; 44 px at 390</td>
+<td>not measured</td>
+<td>18 pages</td>
+</tr>
+</tbody>
+</table></div>
+<h2>6. Document map</h2>
+<p><a href="brief.html"><code>00-brief.md</code></a> · <a href="audit.html"><code>02-audit.md</code></a> (start here) · <a href="decisions.html"><code>04-decisions.md</code></a> · <a href="design.html"><code>05-design.md</code></a> ·
+<a href="gate.html"><code>07-gate.md</code></a> · <a href="client-asks.html"><code>08-client-asks.md</code></a> · <a href="architecture.html"><code>11-architecture.md</code></a> (as built) ·
+<a href="technical-design.html"><code>12-technical-design.md</code></a> · <a href="implementation-plan.html"><code>13-implementation-plan.md</code></a> (iteration 2, proposed) ·
+<a href="token-map.html"><code>14-token-map.md</code></a>.</p>
+<footer>Source: <code>lexodont.hu/docs/10-ssot.md</code> · rendered by <code>docs/build.py</code>.</footer>
+</div>
+</body>
+</html>

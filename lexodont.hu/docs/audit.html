@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Lexodont — audit: the wireframe and the site that was built from it — Lexodont docs</title>
+<style>/* Lexodont — documentation pages, on the wireframe's neutral grey and the hub's Inter. */
+:root{--ground:#f4f4f4;--card:#ffffff;--ink:#1e1e1e;--text:#333333;--muted:#626262;--accent:#4a4a4a;--accent-deep:#2e2e2e;--line:#d9d9d9;--line-soft:#ececec;--note:#e9e9e9}
+*{box-sizing:border-box}
+body{margin:0;background:var(--ground);color:var(--text);font-family:Inter,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;font-size:15.5px;line-height:1.6;padding-block:0 64px;padding-inline:clamp(16px,4vw,40px)}
+.wrap{max-width:74ch;margin-inline:auto}
+.docnav{display:flex;flex-wrap:wrap;gap:4px 18px;align-items:center;padding:16px 0;border-bottom:1px solid var(--line);font-size:12px;letter-spacing:.06em;text-transform:uppercase}
+.docnav a{color:var(--muted);text-decoration:none;min-height:44px;display:inline-flex;align-items:center;border-bottom:2px solid transparent}
+.docnav a:hover,.docnav a[aria-current]{color:var(--ink);border-color:var(--accent)}
+.docnav-brand{color:var(--ink);font-weight:800;margin-right:6px}
+.docnav-hub{margin-left:auto}
+header{padding-block:40px 24px;border-bottom:1px solid var(--line);margin-bottom:28px}
+.eyebrow{font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);margin:0 0 12px;font-weight:700}
+h1,h2,h3{color:var(--ink);line-height:1.1;text-wrap:balance;margin:0;letter-spacing:-.02em}
+h1{font-size:clamp(30px,6vw,46px);font-weight:800}
+h2{font-size:clamp(23px,4vw,30px);font-weight:800;margin:48px 0 14px;padding-top:20px;border-top:1px solid var(--line)}
+h3{font-size:18px;margin:30px 0 8px;font-weight:700}
+p{margin:0 0 14px} strong{color:var(--ink);font-weight:700}
+ul,ol{padding-left:22px;margin:0 0 16px} li{margin:5px 0} li>ul{margin:6px 0 0}
+code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.86em;background:var(--note);padding:1px 5px;border-radius:3px;color:var(--ink);overflow-wrap:anywhere}
+pre{overflow-x:auto;padding:14px 16px;border:1px solid var(--line);border-radius:6px;background:var(--card);font-size:12px;line-height:1.35}
+pre code{background:none;padding:0;font-size:inherit}
+a{color:var(--accent-deep)} :focus-visible{outline:2px solid var(--accent-deep);outline-offset:2px}
+.tbl{overflow-x:auto;margin:14px 0 22px;border:1px solid var(--line);border-radius:6px;background:var(--card)}
+table{border-collapse:collapse;width:100%;font-size:13.5px;min-width:560px}
+th{text-align:left;font-weight:700;color:var(--ink);background:var(--note);padding:10px 12px;border-bottom:1px solid var(--line);font-size:11.5px;letter-spacing:.06em;text-transform:uppercase}
+td{padding:10px 12px;border-top:1px solid var(--line-soft);vertical-align:top;background:var(--card)} td:first-child{color:var(--ink)}
+footer{margin-top:56px;padding-top:18px;border-top:1px solid var(--line);font-size:12px;color:var(--muted)}
+</style>
+</head>
+<body>
+<div class="wrap">
+<nav class="docnav" aria-label="Project documentation"><span class="docnav-brand">Lexodont · docs</span><a href="index.html">Overview</a><a href="bemutato.html">Bemutató</a><a href="brief.html">Brief</a><a href="research.html">Research</a><a href="audit.html" aria-current=page>Audit</a><a href="sources.html">Sources</a><a href="decisions.html">Decisions</a><a href="design.html">Design</a><a href="build-log.html">Build log</a><a href="gate.html">Gate</a><a href="client-asks.html">Client asks</a><a href="ssot.html">SSOT</a><a href="architecture.html">Architecture</a><a href="technical-design.html">Technical design</a><a href="implementation-plan.html">Implementation plan</a><a href="token-map.html">Token map</a><a class="docnav-hub" href="../../index.html">Calvus Hub</a></nav>
+<header><p class="eyebrow">Calvus · Lexodont · project documentation</p><h1>Lexodont — audit: the wireframe and the site that was built from it</h1></header>
+<p><em>Measured 2026-09-18 with <code>curl</code> from this environment; the prototype measured in the
+browser pane (<a href="gate.html"><code>07-gate.md</code></a>).</em></p>
+<h2>The live site (lexodont.hu)</h2>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>Measure</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Platform</td>
+<td>WordPress; custom theme <code>lexodont</code> (Bootstrap 5, jQuery 3.5.1, Owl Carousel, one <code>style.css</code> of 162 KB, one <code>scripts.min.js</code>); no page builder</td>
+</tr>
+<tr>
+<td>Plugins visible from the front end</td>
+<td>WPML 4.7.1 (<code>sitepress-multilingual-cms</code>), Yoast SEO 28.4, <code>performance-lab</code> + <code>webp-uploads</code>; Google Analytics 4 (<code>G-YEDLSJR6LH</code>)</td>
+</tr>
+<tr>
+<td>Booking</td>
+<td><strong>Flexi-Dent</strong> embed (<code>publicapi.flexi-dent.hu/api/booking/embed/js</code>) on <code>/idopontfoglalas/</code> — a dental practice-management system, not a contact form</td>
+</tr>
+<tr>
+<td>Languages</td>
+<td>HU root, EN under <code>/en/</code> with <code>hreflang</code> hu / en / x-default on every page</td>
+</tr>
+<tr>
+<td>Home</td>
+<td>76 KB HTML, 6 scripts, 5 stylesheets, 30 images from <code>/uploads/</code> (WebP), TTFB 0,36–0,38 s</td>
+</tr>
+<tr>
+<td>Subpages</td>
+<td>30–80 KB; TTFB 0,24–0,32 s; last modified 2026-07-30 (Szakterületek) to 2026-09-18 (EN home)</td>
+</tr>
+<tr>
+<td>Fonts, icons</td>
+<td>Google Fonts Outfit; Bootstrap Icons 1.10.3 from jsDelivr</td>
+</tr>
+<tr>
+<td>Map</td>
+<td>Google Maps (the wireframe had OpenStreetMap)</td>
+</tr>
+<tr>
+<td>Before/after</td>
+<td>present on the home page (18 matches for the slider markup)</td>
+</tr>
+</tbody>
+</table></div>
+<h2>Wireframe → live, page by page</h2>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>Wireframe page</th>
+<th>Live URL</th>
+<th>Note</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>index (hero, why us, 4 featured specialties, 2 before/after cases, knowledge, reviews, partners, contact footer)</td>
+<td><code>/</code></td>
+<td>same <code>h1</code>; same section order; contact footer verbatim</td>
+</tr>
+<tr>
+<td>szakteruletek + 9 treatment pages</td>
+<td><code>/szakteruletek/</code>, <code>/szakterulet/&lt;slug&gt;/</code></td>
+<td>live links show fogszabályozás, gyökérkezelés, implantológia, parodontológia as featured — the wireframe's four</td>
+</tr>
+<tr>
+<td>araink (illustrative prices)</td>
+<td><code>/araink/</code></td>
+<td>real prices (15 000 · 5 000 · 10 000 · 29 000 · 35 000 · 51 000 · 135 000 Ft …); the wireframe's 210 000 Ft implant line is not on the live page as such</td>
+</tr>
+<tr>
+<td>csapat (8 placeholder doctors with fun facts)</td>
+<td><code>/csapat/</code></td>
+<td>four real dentists: Dr. Gaál Petra, Dr. Kerekes Fanni, Dr. Makra Krisztián, Dr. Reichert Éva</td>
+</tr>
+<tr>
+<td>esettanulmanyok (sliders)</td>
+<td><code>/esettanulmanyok/</code>, <code>/esettanulmany/1-eset/</code>, <code>/2-eset/</code></td>
+<td>one page per case, as the wireframe's "részletes esetlap" link implied</td>
+</tr>
+<tr>
+<td>tudaskozpont-* (4 articles)</td>
+<td><code>/tudaskozpont/</code>, article URLs (e.g. the PRF article)</td>
+<td>hub page + articles</td>
+</tr>
+<tr>
+<td>(none)</td>
+<td><code>/technologiak/</code></td>
+<td><strong>new on the live site</strong> — not in the wireframe</td>
+</tr>
+<tr>
+<td>(none)</td>
+<td><code>/e-max-betet/</code>, <code>/ems/</code></td>
+<td>treatment/technology pages not in the wireframe</td>
+</tr>
+<tr>
+<td>footer "Időpont foglalás" → <code>#kapcsolat</code></td>
+<td><code>/idopontfoglalas/</code> with Flexi-Dent</td>
+<td>the wireframe had no booking mechanism</td>
+</tr>
+<tr>
+<td>WhatsApp CTA (commit 298a2af)</td>
+<td>not found on the live home</td>
+<td>dropped</td>
+</tr>
+<tr>
+<td>OpenStreetMap embed</td>
+<td>Google Maps</td>
+<td>replaced</td>
+</tr>
+<tr>
+<td>Impresszum, Adatkezelés <code>#</code></td>
+<td><code>/adatkezelesi-tajekoztato/</code></td>
+<td>real</td>
+</tr>
+<tr>
+<td>EN switch (none in wireframe)</td>
+<td><code>/en/</code> full mirror via WPML</td>
+<td>added</td>
+</tr>
+</tbody>
+</table></div>
+<h2>The wireframe itself</h2>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>Measure</th>
+<th>Polished (18 pages)</th>
+<th>Sketch (15 pages)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Overflow at 390 / 1440</td>
+<td>8 px on <code>parodontologia</code> at 390; 0 elsewhere</td>
+<td>0</td>
+</tr>
+<tr>
+<td>Tap targets under 44 px at 390</td>
+<td>index 5, esettanulmanyok 3</td>
+<td>3–16 on every page (underlined inline links, 2 px-bordered buttons)</td>
+</tr>
+<tr>
+<td>One <code>h1</code>, <code>alt</code> on every image, <code>&lt;title&gt;</code>, <code>lang</code></td>
+<td>all pages</td>
+<td>all pages</td>
+</tr>
+<tr>
+<td>Images</td>
+<td>49 of 49 are picsum.photos placeholders</td>
+<td>6 (sliders), all placeholders</td>
+</tr>
+<tr>
+<td>JavaScript</td>
+<td>before/after slider only (home, case studies)</td>
+<td>same</td>
+</tr>
+<tr>
+<td>Parity</td>
+<td>—</td>
+<td>lacked gyerekfogászat, gyökérkezelés, parodontológia (added to the polished set on 2026-04-09, never mirrored) — mirrored on 2026-09-18 so the gate's parity check is clean (D15)</td>
+</tr>
+<tr>
+<td><code>public/</code> (repo root)</td>
+<td>20 PNGs from the first build (crew, hero, team) — unreferenced since the switch to picsum on 2026-03-31</td>
+<td></td>
+</tr>
+</tbody>
+</table></div>
+<h2>Reading</h2>
+<p>The wireframe did what a wireframe is for: the structure, navigation, section order and
+copy tone it fixed are on the live site. What it did not carry — real photography, real
+prices, a booking engine, a technologies page, EN — the client's developer added. The
+prototype's remaining defects (phone tap targets, one 8 px overflow) are recorded, not
+fixed: there is no reader left for the wireframe except this record. The three missing
+sketch pages were added, because the gate would otherwise stay red by design.</p>
+<footer>Source: <code>lexodont.hu/docs/02-audit.md</code> · rendered by <code>docs/build.py</code>.</footer>
+</div>
+</body>
+</html>

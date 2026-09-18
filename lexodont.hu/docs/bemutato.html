@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Lexodont — bemutató</title>
+<meta name="description" content="A Lexodont weboldal-drótváz bemutatója: mi készült, mi lett belőle az élő oldalon, mi a következő kérdés.">
+<style>
+:root{--bg:#f4f4f4;--surface:#ffffff;--text:#1e1e1e;--muted:#626262;--line:#d9d9d9;--ink:#111111;--soft:#e9e9e9}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);font-family:Inter,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;line-height:1.55}
+a{color:inherit}
+.wrap{max-width:1040px;margin-inline:auto;padding-inline:clamp(16px,4vw,32px)}
+.hero{background:var(--ink);color:#fff;padding:clamp(28px,5vw,56px) 0}
+.eyebrow{margin:0 0 10px;font-size:12px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#bdbdbd}
+.hero h1{margin:0 0 12px;max-width:18ch;font-size:clamp(30px,5.5vw,54px);line-height:1;letter-spacing:-1px;font-weight:800}
+.hero p{margin:0;max-width:64ch;font-size:16px;color:rgba(255,255,255,.85)}
+.nums{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px;margin:26px 0 0}
+.num{padding:18px 20px;border-radius:12px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.14)}
+.num b{display:block;font-size:30px;letter-spacing:-.8px;line-height:1;color:#fff}
+.num span{font-size:13px;color:rgba(255,255,255,.75)}
+section{padding:44px 0 8px}
+h2{margin:0 0 8px;font-size:clamp(24px,3.6vw,34px);letter-spacing:-.6px;line-height:1.05;font-weight:800}
+.lede{margin:0 0 22px;max-width:66ch;font-size:15px;color:var(--muted)}
+.pair{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.frame{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:14px}
+.frame h3{margin:0 0 10px;font-size:14px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+.desk{width:100%;aspect-ratio:1440/1000;position:relative;overflow:hidden;border-radius:8px;border:1px solid var(--line);background:var(--bg)}
+.desk iframe{position:absolute;top:0;left:0;width:1440px;height:1000px;border:0;transform-origin:0 0;transform:scale(calc(var(--dw,480) / 1440));pointer-events:none}
+.btns{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
+.btn{display:inline-flex;align-items:center;min-height:44px;padding:8px 16px;border-radius:999px;background:var(--ink);color:#fff;text-decoration:none;font-size:13px;font-weight:700}
+.btn.alt{background:var(--soft);color:var(--ink)}
+.tbl{overflow-x:auto;background:var(--surface);border:1px solid var(--line);border-radius:12px}
+table{border-collapse:collapse;width:100%;font-size:14px;min-width:560px}
+th{text-align:left;font-size:11.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);padding:12px 14px;border-bottom:1px solid var(--line)}
+td{padding:11px 14px;border-top:1px solid var(--soft);vertical-align:top}
+td:first-child{font-weight:700}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px}
+.card{padding:20px 22px;border-radius:12px;background:var(--surface);border:1px solid var(--line)}
+.card h3{margin:0 0 8px;font-size:17px;letter-spacing:-.2px}
+.card p,.card li{margin:0;font-size:14px;line-height:1.55}
+.card ul{margin:0;padding-left:18px}
+.asks{counter-reset:a;display:grid;gap:10px}
+.ask{display:grid;grid-template-columns:36px 1fr;gap:12px;align-items:start;padding:14px 16px;border-radius:12px;background:var(--surface);border:1px solid var(--line);font-size:14px}
+.ask::before{counter-increment:a;content:counter(a);width:32px;height:32px;border-radius:50%;display:grid;place-items:center;background:var(--soft);color:var(--ink);font-weight:800}
+footer{margin:44px 0 24px;padding-top:18px;border-top:1px solid var(--line);font-size:12px;color:var(--muted)}
+footer a{display:inline-flex;align-items:center;min-height:44px}
+@media (max-width:760px){.pair{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<header class="hero">
+  <div class="wrap">
+    <p class="eyebrow">Lexodont Dental Studio · weboldal-drótváz · 2026. március–április</p>
+    <h1>A drótváz, amelyből az oldal elkészült</h1>
+    <p>2026 márciusában két napon át készült a rendelő új weboldalának szerkezeti vázlata: oldaltérkép, navigáció, szekciók, felhívások — két kidolgozottságban, hogy a szerkezetről és ne a színekről szóljon a beszélgetés. 2026 nyarán a lexodont.hu ebből a szerkezetből épült fel. Ez az oldal a kettőt teszi egymás mellé.</p>
+    <div class="nums">
+      <div class="num"><b>18 + 15</b><span>oldal a kidolgozott és a vázlatos változatban — ugyanaz a tartalom, két hűségfok</span></div>
+      <div class="num"><b>24</b><span>módosítás két nap alatt, a rendelő visszajelzéseire: árak le a főoldalról, kapcsolat a láblécbe, két gomb a foglalásnak</span></div>
+      <div class="num"><b>0,36 s</b><span>az élő lexodont.hu válaszideje 2026. szeptember 18-án — 76 KB, hat szkript, WordPress saját sablonnal</span></div>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+  <section>
+    <h2>A drótváz és az élő oldal</h2>
+    <p class="lede">Balra a 2026. áprilisi kidolgozott drótváz, jobbra a vázlatos változat. Az élő oldal főcíme, oldalkészlete, lábléce és az előtte-utána csúszka ebből a szerkezetből származik.</p>
+    <div class="pair">
+      <div class="frame"><h3>Kidolgozott drótváz</h3><div class="desk"><iframe src="../index.html" title="Kidolgozott drótváz előnézet" loading="lazy" tabindex="-1"></iframe></div><div class="btns"><a class="btn" href="../index.html">Megnyitás</a></div></div>
+      <div class="frame"><h3>Vázlatos (Balsamiq-stílus)</h3><div class="desk"><iframe src="../../lexodont.hu_balsamic/index.html" title="Vázlatos drótváz előnézet" loading="lazy" tabindex="-1"></iframe></div><div class="btns"><a class="btn alt" href="../../lexodont.hu_balsamic/index.html">Megnyitás</a></div></div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Mi került át, mi változott</h2>
+    <p class="lede">A lexodont.hu 2026. szeptember 18-i mérése alapján.</p>
+    <div class="tbl"><table>
+      <thead><tr><th>A drótvázban</th><th>Az élő oldalon</th></tr></thead>
+      <tbody>
+        <tr><td>Főcím: „Szebb mosoly, nyugodt élmény, modern fogászat.”</td><td>Ugyanaz.</td></tr>
+        <tr><td>Oldalak: főoldal, szakterületek és kilenc kezelés, áraink, esettanulmányok, csapat, tudásközpont</td><td>Ugyanezek — plusz Technológiák, e-max betét, EMS, angol változat, adatkezelési tájékoztató.</td></tr>
+        <tr><td>Kapcsolat, nyitvatartás, parkolás, tömegközlekedés a láblécben</td><td>Szó szerint ugyanaz.</td></tr>
+        <tr><td>Árak: hat példasor</td><td>Valódi árlista.</td></tr>
+        <tr><td>Csapat: nyolc kitalált orvos, „fun fact”-tel</td><td>Négy valódi fogorvos.</td></tr>
+        <tr><td>Képek: helykitöltők</td><td>Saját fotók.</td></tr>
+        <tr><td>Időpontfoglalás: gomb a kapcsolati blokkra</td><td>Flexi-Dent foglalási felület saját oldalon.</td></tr>
+        <tr><td>OpenStreetMap; WhatsApp gomb</td><td>Google Maps; WhatsApp gomb nincs.</td></tr>
+      </tbody>
+    </table></div>
+  </section>
+
+  <section>
+    <h2>Mi valódi a drótvázban</h2>
+    <div class="grid">
+      <div class="card"><h3>Valódi</h3><p>Cím, kapucsengő, telefonszámok, e-mail, nyitvatartás, parkolási zónák, villamosok; a partnerek nevei; a kilenc szakterület.</p></div>
+      <div class="card"><h3>Példa és helykitöltő</h3><p>Az árak, az orvosok és a róluk szóló mondatok, a vélemények, az esettanulmányok szövege, a cikkek — és minden kép. A drótváz a szerkezetet rögzítette, nem a tartalmat.</p></div>
+      <div class="card"><h3>Amit tudni érdemes</h3><ul><li>A vázlatos változatból áprilisban kimaradt három kezelésoldal (gyerekfogászat, gyökérkezelés, parodontológia); 2026. szeptember 18-án pótoltuk, hogy a két változat újra ugyanazt az oldalkészletet mutassa.</li><li>Telefonon néhány gomb és link kisebb a 44 pixeles ajánlásnál; az élő oldalon ezt nem mértük.</li></ul></div>
+    </div>
+  </section>
+
+  <section>
+    <h2>A következő kérdés</h2>
+    <div class="asks">
+      <div class="ask">Lezárt megbízás ez, vagy lesz második kör? Ha lezárt, ez az oldal a záró dokumentum.</div>
+      <div class="ask">Ha lesz második kör: az élő oldal mérése telefonon (gombok, túlcsordulás, sebesség), a Google Analytics és a Flexi-Dent számai — és ezekből a lista.</div>
+      <div class="ask">A drótvázból kimaradt elemek (WhatsApp, orvosonkénti mondatok, OpenStreetMap) szándékosan maradtak-e ki?</div>
+    </div>
+  </section>
+
+  <footer>Calvus · Lexodont · <a href="index.html">A teljes projektdokumentáció (angolul)</a></footer>
+</main>
+<script>(function(){function f(){document.querySelectorAll('.desk').forEach(function(e){e.style.setProperty('--dw',e.clientWidth)})}f();addEventListener('resize',f)})();</script>
+</body>
+</html>

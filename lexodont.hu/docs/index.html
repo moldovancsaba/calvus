@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Lexodont — project documentation — Lexodont docs</title>
+<style>/* Lexodont — documentation pages, on the wireframe's neutral grey and the hub's Inter. */
+:root{--ground:#f4f4f4;--card:#ffffff;--ink:#1e1e1e;--text:#333333;--muted:#626262;--accent:#4a4a4a;--accent-deep:#2e2e2e;--line:#d9d9d9;--line-soft:#ececec;--note:#e9e9e9}
+*{box-sizing:border-box}
+body{margin:0;background:var(--ground);color:var(--text);font-family:Inter,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;font-size:15.5px;line-height:1.6;padding-block:0 64px;padding-inline:clamp(16px,4vw,40px)}
+.wrap{max-width:74ch;margin-inline:auto}
+.docnav{display:flex;flex-wrap:wrap;gap:4px 18px;align-items:center;padding:16px 0;border-bottom:1px solid var(--line);font-size:12px;letter-spacing:.06em;text-transform:uppercase}
+.docnav a{color:var(--muted);text-decoration:none;min-height:44px;display:inline-flex;align-items:center;border-bottom:2px solid transparent}
+.docnav a:hover,.docnav a[aria-current]{color:var(--ink);border-color:var(--accent)}
+.docnav-brand{color:var(--ink);font-weight:800;margin-right:6px}
+.docnav-hub{margin-left:auto}
+header{padding-block:40px 24px;border-bottom:1px solid var(--line);margin-bottom:28px}
+.eyebrow{font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);margin:0 0 12px;font-weight:700}
+h1,h2,h3{color:var(--ink);line-height:1.1;text-wrap:balance;margin:0;letter-spacing:-.02em}
+h1{font-size:clamp(30px,6vw,46px);font-weight:800}
+h2{font-size:clamp(23px,4vw,30px);font-weight:800;margin:48px 0 14px;padding-top:20px;border-top:1px solid var(--line)}
+h3{font-size:18px;margin:30px 0 8px;font-weight:700}
+p{margin:0 0 14px} strong{color:var(--ink);font-weight:700}
+ul,ol{padding-left:22px;margin:0 0 16px} li{margin:5px 0} li>ul{margin:6px 0 0}
+code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.86em;background:var(--note);padding:1px 5px;border-radius:3px;color:var(--ink);overflow-wrap:anywhere}
+pre{overflow-x:auto;padding:14px 16px;border:1px solid var(--line);border-radius:6px;background:var(--card);font-size:12px;line-height:1.35}
+pre code{background:none;padding:0;font-size:inherit}
+a{color:var(--accent-deep)} :focus-visible{outline:2px solid var(--accent-deep);outline-offset:2px}
+.tbl{overflow-x:auto;margin:14px 0 22px;border:1px solid var(--line);border-radius:6px;background:var(--card)}
+table{border-collapse:collapse;width:100%;font-size:13.5px;min-width:560px}
+th{text-align:left;font-weight:700;color:var(--ink);background:var(--note);padding:10px 12px;border-bottom:1px solid var(--line);font-size:11.5px;letter-spacing:.06em;text-transform:uppercase}
+td{padding:10px 12px;border-top:1px solid var(--line-soft);vertical-align:top;background:var(--card)} td:first-child{color:var(--ink)}
+footer{margin-top:56px;padding-top:18px;border-top:1px solid var(--line);font-size:12px;color:var(--muted)}
+</style>
+</head>
+<body>
+<div class="wrap">
+<nav class="docnav" aria-label="Project documentation"><span class="docnav-brand">Lexodont · docs</span><a href="index.html" aria-current=page>Overview</a><a href="bemutato.html">Bemutató</a><a href="brief.html">Brief</a><a href="research.html">Research</a><a href="audit.html">Audit</a><a href="sources.html">Sources</a><a href="decisions.html">Decisions</a><a href="design.html">Design</a><a href="build-log.html">Build log</a><a href="gate.html">Gate</a><a href="client-asks.html">Client asks</a><a href="ssot.html">SSOT</a><a href="architecture.html">Architecture</a><a href="technical-design.html">Technical design</a><a href="implementation-plan.html">Implementation plan</a><a href="token-map.html">Token map</a><a class="docnav-hub" href="../../index.html">Calvus Hub</a></nav>
+<header><p class="eyebrow">Calvus · Lexodont · project documentation</p><h1>Lexodont — project documentation</h1></header>
+<p>The wireframe of Lexodont Dental Studio's website (March–April 2026), and — found on
+2026-09-18 — the record that the practice's site went live from it. Standard structure
+(owner decision 2026-09-18); each file is dated inside; this index is the process log.</p>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>Slot</th>
+<th>File</th>
+<th>What it holds</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Presentation</td>
+<td><code>bemutato.html</code></td>
+<td><strong>A rendelőnek szóló bemutató, magyarul</strong> — mi készült, mi lett belőle, mi a következő kérdés</td>
+</tr>
+<tr>
+<td>00 brief</td>
+<td><a href="brief.html"><code>00-brief.md</code></a></td>
+<td>Client, what the prototype is, what happened next, where it stands</td>
+</tr>
+<tr>
+<td>01 research</td>
+<td><a href="research.html"><code>01-research.md</code></a></td>
+<td>None was done — said plainly; what was read; what a second iteration would read</td>
+</tr>
+<tr>
+<td>02 audit</td>
+<td><a href="audit.html"><code>02-audit.md</code></a></td>
+<td><strong>Start here</strong>: the live lexodont.hu measured, wireframe → live page by page, the wireframe's own measurements</td>
+</tr>
+<tr>
+<td>03 sources</td>
+<td><a href="sources.html"><code>03-sources.md</code></a></td>
+<td>What is real, what is placeholder, what is fictional; the unreferenced <code>public/</code> set</td>
+</tr>
+<tr>
+<td>04 decisions</td>
+<td><a href="decisions.html"><code>04-decisions.md</code></a></td>
+<td>D1–D14 reconstructed from the commits; what the live site decided without this repo</td>
+</tr>
+<tr>
+<td>05 design</td>
+<td><a href="design.html"><code>05-design.md</code></a></td>
+<td>Two fidelities, tokens, layout; what the built site chose instead</td>
+</tr>
+<tr>
+<td>06 build log</td>
+<td><a href="build-log.html"><code>06-build-log.md</code></a></td>
+<td>The two build days and the 2026-09-18 measurement</td>
+</tr>
+<tr>
+<td>07 gate</td>
+<td><a href="gate.html"><code>07-gate.md</code></a> + <code>../check.py</code></td>
+<td>Links, anchors, docs cross-links, fidelity parity; findings left open and why</td>
+</tr>
+<tr>
+<td>08 client asks</td>
+<td><a href="client-asks.html"><code>08-client-asks.md</code></a></td>
+<td>Six questions, the first of which decides everything</td>
+</tr>
+<tr>
+<td>10 SSOT</td>
+<td><a href="ssot.html"><code>10-ssot.md</code></a></td>
+<td>Glossary, page kinds, entities, rules, metrics</td>
+</tr>
+<tr>
+<td>11 architecture</td>
+<td><a href="architecture.html"><code>11-architecture.md</code></a></td>
+<td>As built, measured; five PROPOSED ADRs for a second iteration, none a rebuild</td>
+</tr>
+<tr>
+<td>12 technical design</td>
+<td><a href="technical-design.html"><code>12-technical-design.md</code></a></td>
+<td>Wireframe page → live template; content model; booking; the checks a second iteration runs</td>
+</tr>
+<tr>
+<td>13 implementation plan</td>
+<td><a href="implementation-plan.html"><code>13-implementation-plan.md</code></a></td>
+<td>Closing steps, or LX-001..006</td>
+</tr>
+<tr>
+<td>14 token map</td>
+<td><a href="token-map.html"><code>14-token-map.md</code></a></td>
+<td>Nothing to map, and why</td>
+</tr>
+</tbody>
+</table></div>
+<p>Rendered: <code>index.html</code> (this), <code>bemutato.html</code>, <code>brief.html</code>, <code>research.html</code>, <code>audit.html</code>,
+<code>sources.html</code>, <code>decisions.html</code>, <code>design.html</code>, <code>build-log.html</code>, <code>gate.html</code>,
+<code>client-asks.html</code>, <code>ssot.html</code>, <code>architecture.html</code>, <code>technical-design.html</code>,
+<code>implementation-plan.html</code>, <code>token-map.html</code> — by <code>build.py</code> (<code>python3 lexodont.hu/docs/build.py</code>).
+The docs serve both fidelities: <code>../</code> is the polished set, <code>../../lexodont.hu_balsamic/</code> the sketch.</p>
+<h2>Process log</h2>
+<p><strong>2026-03-31 — the wireframe, in a day.</strong> Twenty commits: hub, structure, crew, subpages,
+grey wireframe style, sliders, footer with map, Áraink and Szakterületek, the Balsamiq
+variant, unified navigation. Client feedback applied the same day (crew layout, split
+CTAs, prices off the home, contact into the footer).</p>
+<p><strong>2026-04-09 — feedback round.</strong> Home Szakterületek and Partnereink reworked, two-column
+featured specialties, orphan links fixed, three treatment pages added (polished set only).</p>
+<p><strong>2026-04-09 → 2026-09-18 — silence in this repo.</strong> The client's developer built the
+site: pages modified on lexodont.hu between 2026-07-30 and 2026-09-18.</p>
+<p><strong>2026-09-18 — the record written (D14).</strong> lexodont.hu measured and found to be the
+wireframe built; this folder written; the wireframe measured (66 measurements, findings recorded);
+<code>check.py</code> added with a parity check, which reported the three sketch pages missing since
+April — mirrored the same day (D15); nothing else on the pages changed.</p>
+<p><strong>Next.</strong> <a href="client-asks.html"><code>08-client-asks.md</code></a> #1.</p>
+<footer>Source: <code>lexodont.hu/docs/README.md</code> · rendered by <code>docs/build.py</code>.</footer>
+</div>
+</body>
+</html>

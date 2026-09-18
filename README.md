@@ -69,7 +69,7 @@ once its job — getting everyone to agreement — is done.
 
 | Project | What it is | Fidelity |
 |---|---|---|
-| `lexodont.hu/` | Dental clinic marketing site — services, team, pricing, case studies | Polished |
+| `lexodont.hu/` | Dental clinic marketing site — services, team, pricing, case studies. The live lexodont.hu was built from this wireframe (measured 2026-09-18); `lexodont.hu/docs/` is the record — presentation, audit of the built site, decisions, gate | Polished — delivered |
 | `lexodont.hu_balsamic/` | Same site, sketch-style | Low-fidelity / Balsamiq |
 | `idbc-salary-guide/` | SAP and general market salary-survey dashboard, real client data, filterable by area/segment/experience level | Polished |
 | `discountdirect/` | Seller–buyer messaging app concept — communication timeline with personalised offer cards, channel selection (chat/e-mail/mailing), one-product flash campaigns with time/quantity limits, and automated per-buyer offer lists. CSS custom properties are named after GDS 6.5.0 roles for a 1:1 dev handoff (`discountdirect/GDS-TOKEN-MAP.md`) — naming only, no dependency. `discountdirect/EXECUTIVE.md`, `RESEARCH.md` and `BUSINESS-LOGIC.md` (rendered by `build-docs.py`) carry the executive summary, the sourced research on B2C upsell/cross-sell and next-best-action, and the rule-by-rule breakdown for development; `SSOT.md`, `ARCHITECTURE.md`, `TECHNICAL-DESIGN.md` and `IMPLEMENTATION-PLAN.md` are the engineering package (definitions, containers and flows, schema/API/algorithms, milestones and issues with DoD); `README.md` there indexes the standard documentation set incl. the Hungarian `bemutato.html`, audit, design, build log, gate and client asks | Interactive prototype |

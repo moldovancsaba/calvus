@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Lexodont — decision register — Lexodont docs</title>
+<style>/* Lexodont — documentation pages, on the wireframe's neutral grey and the hub's Inter. */
+:root{--ground:#f4f4f4;--card:#ffffff;--ink:#1e1e1e;--text:#333333;--muted:#626262;--accent:#4a4a4a;--accent-deep:#2e2e2e;--line:#d9d9d9;--line-soft:#ececec;--note:#e9e9e9}
+*{box-sizing:border-box}
+body{margin:0;background:var(--ground);color:var(--text);font-family:Inter,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;font-size:15.5px;line-height:1.6;padding-block:0 64px;padding-inline:clamp(16px,4vw,40px)}
+.wrap{max-width:74ch;margin-inline:auto}
+.docnav{display:flex;flex-wrap:wrap;gap:4px 18px;align-items:center;padding:16px 0;border-bottom:1px solid var(--line);font-size:12px;letter-spacing:.06em;text-transform:uppercase}
+.docnav a{color:var(--muted);text-decoration:none;min-height:44px;display:inline-flex;align-items:center;border-bottom:2px solid transparent}
+.docnav a:hover,.docnav a[aria-current]{color:var(--ink);border-color:var(--accent)}
+.docnav-brand{color:var(--ink);font-weight:800;margin-right:6px}
+.docnav-hub{margin-left:auto}
+header{padding-block:40px 24px;border-bottom:1px solid var(--line);margin-bottom:28px}
+.eyebrow{font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);margin:0 0 12px;font-weight:700}
+h1,h2,h3{color:var(--ink);line-height:1.1;text-wrap:balance;margin:0;letter-spacing:-.02em}
+h1{font-size:clamp(30px,6vw,46px);font-weight:800}
+h2{font-size:clamp(23px,4vw,30px);font-weight:800;margin:48px 0 14px;padding-top:20px;border-top:1px solid var(--line)}
+h3{font-size:18px;margin:30px 0 8px;font-weight:700}
+p{margin:0 0 14px} strong{color:var(--ink);font-weight:700}
+ul,ol{padding-left:22px;margin:0 0 16px} li{margin:5px 0} li>ul{margin:6px 0 0}
+code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.86em;background:var(--note);padding:1px 5px;border-radius:3px;color:var(--ink);overflow-wrap:anywhere}
+pre{overflow-x:auto;padding:14px 16px;border:1px solid var(--line);border-radius:6px;background:var(--card);font-size:12px;line-height:1.35}
+pre code{background:none;padding:0;font-size:inherit}
+a{color:var(--accent-deep)} :focus-visible{outline:2px solid var(--accent-deep);outline-offset:2px}
+.tbl{overflow-x:auto;margin:14px 0 22px;border:1px solid var(--line);border-radius:6px;background:var(--card)}
+table{border-collapse:collapse;width:100%;font-size:13.5px;min-width:560px}
+th{text-align:left;font-weight:700;color:var(--ink);background:var(--note);padding:10px 12px;border-bottom:1px solid var(--line);font-size:11.5px;letter-spacing:.06em;text-transform:uppercase}
+td{padding:10px 12px;border-top:1px solid var(--line-soft);vertical-align:top;background:var(--card)} td:first-child{color:var(--ink)}
+footer{margin-top:56px;padding-top:18px;border-top:1px solid var(--line);font-size:12px;color:var(--muted)}
+</style>
+</head>
+<body>
+<div class="wrap">
+<nav class="docnav" aria-label="Project documentation"><span class="docnav-brand">Lexodont · docs</span><a href="index.html">Overview</a><a href="bemutato.html">Bemutató</a><a href="brief.html">Brief</a><a href="research.html">Research</a><a href="audit.html">Audit</a><a href="sources.html">Sources</a><a href="decisions.html" aria-current=page>Decisions</a><a href="design.html">Design</a><a href="build-log.html">Build log</a><a href="gate.html">Gate</a><a href="client-asks.html">Client asks</a><a href="ssot.html">SSOT</a><a href="architecture.html">Architecture</a><a href="technical-design.html">Technical design</a><a href="implementation-plan.html">Implementation plan</a><a href="token-map.html">Token map</a><a class="docnav-hub" href="../../index.html">Calvus Hub</a></nav>
+<header><p class="eyebrow">Calvus · Lexodont · project documentation</p><h1>Lexodont — decision register</h1></header>
+<p><em>Reconstructed on 2026-09-18 from the 24 commits of 2026-03-31 and 2026-04-09; nothing
+else was recorded at the time. "Client" is Lexodont; "owner" is the Calvus side.</em></p>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>#</th>
+<th>Date</th>
+<th>Decision</th>
+<th>By</th>
+<th>Trace</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>D1</td>
+<td>2026-03-31</td>
+<td>Project named Lexodont (was "Lexodent"); a hub page links every project</td>
+<td>owner</td>
+<td><code>c6e9874</code>, <code>7656aee</code></td>
+</tr>
+<tr>
+<td>D2</td>
+<td>2026-03-31</td>
+<td>Structure: home + linked landing pages per specialty, team, cases, knowledge</td>
+<td>owner, on the brief</td>
+<td><code>2fdd358</code></td>
+</tr>
+<tr>
+<td>D3</td>
+<td>2026-03-31</td>
+<td>13-person crew section with hero/team assets; then crew reduced and fun facts placed under names, square portraits, alternating layout</td>
+<td>client feedback</td>
+<td><code>746ac72</code>, <code>22121cf</code>, <code>e61373c</code>, <code>e6c3d67</code></td>
+</tr>
+<tr>
+<td>D4</td>
+<td>2026-03-31</td>
+<td>Subpages standardised with complete, content-ready layouts</td>
+<td>owner</td>
+<td><code>7f1a5ee</code></td>
+</tr>
+<tr>
+<td>D5</td>
+<td>2026-03-31</td>
+<td>Classic wireframe style: grey palette, no radius, no shadow, placeholder images</td>
+<td>owner</td>
+<td><code>cc6dcf7</code>, <code>5508d4f</code></td>
+</tr>
+<tr>
+<td>D6</td>
+<td>2026-03-31</td>
+<td>Booking and WhatsApp CTAs split into two buttons</td>
+<td>client feedback</td>
+<td><code>298a2af</code></td>
+</tr>
+<tr>
+<td>D7</td>
+<td>2026-03-31</td>
+<td>Treatment prices removed from the home cards; a dedicated Áraink page instead</td>
+<td>client feedback</td>
+<td><code>f6b7cab</code>, <code>541dd96</code></td>
+</tr>
+<tr>
+<td>D8</td>
+<td>2026-03-31</td>
+<td>Contact, hours, parking, transport and an OpenStreetMap embed move into the footer</td>
+<td>client feedback</td>
+<td><code>97e870d</code>, <code>edc0dd9</code></td>
+</tr>
+<tr>
+<td>D9</td>
+<td>2026-03-31</td>
+<td>Interactive before/after sliders on home and case studies</td>
+<td>owner</td>
+<td><code>5508d4f</code></td>
+</tr>
+<tr>
+<td>D10</td>
+<td>2026-03-31</td>
+<td>A Balsamiq-style sketch variant of the full page set, same content</td>
+<td>owner</td>
+<td><code>51d2917</code>, <code>48d1c91</code></td>
+</tr>
+<tr>
+<td>D11</td>
+<td>2026-03-31</td>
+<td>One navigation and CTA set on every page</td>
+<td>owner</td>
+<td><code>2c4c296</code></td>
+</tr>
+<tr>
+<td>D12</td>
+<td>2026-04-09</td>
+<td>Client feedback round applied; Szakterületek and Partnereink on the home reworked; featured specialties in two columns</td>
+<td>client</td>
+<td><code>bacdab2</code>, <code>e896bec</code>, <code>898f55e</code></td>
+</tr>
+<tr>
+<td>D13</td>
+<td>2026-04-09</td>
+<td>Orphan links fixed; three missing treatment pages (gyerekfogászat, gyökérkezelés, parodontológia) added to the polished set only</td>
+<td>owner</td>
+<td><code>eaa8a66</code></td>
+</tr>
+<tr>
+<td>D14</td>
+<td>2026-09-18</td>
+<td>The wireframe is superseded by the live lexodont.hu; it is kept as the record, its remaining defects recorded rather than fixed; the standard documentation set written</td>
+<td>owner</td>
+<td>this folder</td>
+</tr>
+<tr>
+<td>D15</td>
+<td>2026-09-18</td>
+<td>The three treatment pages missing from the sketch set are mirrored from the sketch template so both fidelities carry the same page set again and the gate's parity check is clean</td>
+<td>owner</td>
+<td><code>lexodont.hu_balsamic/{parodontologia,gyokerkezeles,gyerekfogaszat}.html</code></td>
+</tr>
+</tbody>
+</table></div>
+<h2>What the live site decided without this repo</h2>
+<p>Real prices, four real dentists, real photography, Google Maps instead of OSM, a
+Flexi-Dent booking page, a Technológiák page, EN via WPML, no WhatsApp CTA — see
+<a href="audit.html"><code>02-audit.md</code></a>. None of these came through a recorded decision here.</p>
+<footer>Source: <code>lexodont.hu/docs/04-decisions.md</code> · rendered by <code>docs/build.py</code>.</footer>
+</div>
+</body>
+</html>

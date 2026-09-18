@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Lexodont — technical design — Lexodont docs</title>
+<style>/* Lexodont — documentation pages, on the wireframe's neutral grey and the hub's Inter. */
+:root{--ground:#f4f4f4;--card:#ffffff;--ink:#1e1e1e;--text:#333333;--muted:#626262;--accent:#4a4a4a;--accent-deep:#2e2e2e;--line:#d9d9d9;--line-soft:#ececec;--note:#e9e9e9}
+*{box-sizing:border-box}
+body{margin:0;background:var(--ground);color:var(--text);font-family:Inter,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;font-size:15.5px;line-height:1.6;padding-block:0 64px;padding-inline:clamp(16px,4vw,40px)}
+.wrap{max-width:74ch;margin-inline:auto}
+.docnav{display:flex;flex-wrap:wrap;gap:4px 18px;align-items:center;padding:16px 0;border-bottom:1px solid var(--line);font-size:12px;letter-spacing:.06em;text-transform:uppercase}
+.docnav a{color:var(--muted);text-decoration:none;min-height:44px;display:inline-flex;align-items:center;border-bottom:2px solid transparent}
+.docnav a:hover,.docnav a[aria-current]{color:var(--ink);border-color:var(--accent)}
+.docnav-brand{color:var(--ink);font-weight:800;margin-right:6px}
+.docnav-hub{margin-left:auto}
+header{padding-block:40px 24px;border-bottom:1px solid var(--line);margin-bottom:28px}
+.eyebrow{font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);margin:0 0 12px;font-weight:700}
+h1,h2,h3{color:var(--ink);line-height:1.1;text-wrap:balance;margin:0;letter-spacing:-.02em}
+h1{font-size:clamp(30px,6vw,46px);font-weight:800}
+h2{font-size:clamp(23px,4vw,30px);font-weight:800;margin:48px 0 14px;padding-top:20px;border-top:1px solid var(--line)}
+h3{font-size:18px;margin:30px 0 8px;font-weight:700}
+p{margin:0 0 14px} strong{color:var(--ink);font-weight:700}
+ul,ol{padding-left:22px;margin:0 0 16px} li{margin:5px 0} li>ul{margin:6px 0 0}
+code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.86em;background:var(--note);padding:1px 5px;border-radius:3px;color:var(--ink);overflow-wrap:anywhere}
+pre{overflow-x:auto;padding:14px 16px;border:1px solid var(--line);border-radius:6px;background:var(--card);font-size:12px;line-height:1.35}
+pre code{background:none;padding:0;font-size:inherit}
+a{color:var(--accent-deep)} :focus-visible{outline:2px solid var(--accent-deep);outline-offset:2px}
+.tbl{overflow-x:auto;margin:14px 0 22px;border:1px solid var(--line);border-radius:6px;background:var(--card)}
+table{border-collapse:collapse;width:100%;font-size:13.5px;min-width:560px}
+th{text-align:left;font-weight:700;color:var(--ink);background:var(--note);padding:10px 12px;border-bottom:1px solid var(--line);font-size:11.5px;letter-spacing:.06em;text-transform:uppercase}
+td{padding:10px 12px;border-top:1px solid var(--line-soft);vertical-align:top;background:var(--card)} td:first-child{color:var(--ink)}
+footer{margin-top:56px;padding-top:18px;border-top:1px solid var(--line);font-size:12px;color:var(--muted)}
+</style>
+</head>
+<body>
+<div class="wrap">
+<nav class="docnav" aria-label="Project documentation"><span class="docnav-brand">Lexodont · docs</span><a href="index.html">Overview</a><a href="bemutato.html">Bemutató</a><a href="brief.html">Brief</a><a href="research.html">Research</a><a href="audit.html">Audit</a><a href="sources.html">Sources</a><a href="decisions.html">Decisions</a><a href="design.html">Design</a><a href="build-log.html">Build log</a><a href="gate.html">Gate</a><a href="client-asks.html">Client asks</a><a href="ssot.html">SSOT</a><a href="architecture.html">Architecture</a><a href="technical-design.html" aria-current=page>Technical design</a><a href="implementation-plan.html">Implementation plan</a><a href="token-map.html">Token map</a><a class="docnav-hub" href="../../index.html">Calvus Hub</a></nav>
+<header><p class="eyebrow">Calvus · Lexodont · project documentation</p><h1>Lexodont — technical design</h1></header>
+<p><em>Because production exists outside this repo, this is the design of the relationship
+between the wireframe and the live site: which wireframe page specifies which live
+template, what the content model is in WordPress terms, and the checks a second iteration
+runs. Written 2026-09-18.</em></p>
+<h2>1. Wireframe page → live template</h2>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>Wireframe</th>
+<th>Live</th>
+<th>Status</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>index.html</code></td>
+<td>front page</td>
+<td>built as specified</td>
+</tr>
+<tr>
+<td><code>szakteruletek.html</code></td>
+<td><code>/szakteruletek/</code> hub</td>
+<td>built</td>
+</tr>
+<tr>
+<td>nine <code>*.html</code> treatment pages</td>
+<td><code>/szakterulet/&lt;slug&gt;/</code></td>
+<td>built (slugs match the wireframe's file names where seen: fogszabalyozas, gyokerkezeles, implantologia, parodontologia)</td>
+</tr>
+<tr>
+<td><code>araink.html</code></td>
+<td><code>/araink/</code></td>
+<td>built with real prices</td>
+</tr>
+<tr>
+<td><code>esettanulmanyok.html</code></td>
+<td><code>/esettanulmanyok/</code> + <code>/esettanulmany/&lt;n&gt;-eset/</code></td>
+<td>built, one page per case</td>
+</tr>
+<tr>
+<td><code>csapat.html</code></td>
+<td><code>/csapat/</code></td>
+<td>built, four dentists</td>
+</tr>
+<tr>
+<td><code>tudaskozpont-*.html</code> (4)</td>
+<td><code>/tudaskozpont/</code> + articles</td>
+<td>built as a hub + posts</td>
+</tr>
+<tr>
+<td>footer contact</td>
+<td>theme footer</td>
+<td>verbatim</td>
+</tr>
+<tr>
+<td>—</td>
+<td><code>/technologiak/</code>, <code>/e-max-betet/</code>, <code>/ems/</code>, <code>/idopontfoglalas/</code>, <code>/en/*</code>, legal</td>
+<td>added by the client's developer</td>
+</tr>
+</tbody>
+</table></div>
+<h2>2. Content model in WordPress terms (as observed)</h2>
+<p>Pages for the hubs and static content; a custom post type or pages under
+<code>/szakterulet/</code> for specialties; posts (or pages) for articles and cases; theme footer
+options for the contact block; WPML translations per page. Not verified from the admin
+side — an inventory is LX-002.</p>
+<h2>3. Booking</h2>
+<p>Flexi-Dent's embed script renders the booking UI inside <code>/idopontfoglalas/</code>; the page
+itself carries no form and no <code>h1</code>. Data flows to the practice's Flexi-Dent account, not
+to WordPress. Any change to booking is a Flexi-Dent configuration, not a site change.</p>
+<h2>4. Media</h2>
+<p>WebP via <code>webp-uploads</code>; 30 images on the home page from <code>/uploads/</code>; the wireframe's
+picsum placeholders correspond to the real photographs slot by slot (hero, team cover,
+why-us cards, two cases, eight → four portraits).</p>
+<h2>5. Checks a second iteration runs first (LX-001)</h2>
+<p>The wireframe gate's criteria applied to the live site: overflow at 390, tap targets
+under 44 px, one <code>h1</code>, <code>alt</code> coverage, <code>hreflang</code>, console errors; plus Lighthouse on
+the home and one specialty page; plus a Flexi-Dent booking test in HU and EN.</p>
+<footer>Source: <code>lexodont.hu/docs/12-technical-design.md</code> · rendered by <code>docs/build.py</code>.</footer>
+</div>
+</body>
+</html>

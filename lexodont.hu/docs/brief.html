@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Lexodont — brief — Lexodont docs</title>
+<style>/* Lexodont — documentation pages, on the wireframe's neutral grey and the hub's Inter. */
+:root{--ground:#f4f4f4;--card:#ffffff;--ink:#1e1e1e;--text:#333333;--muted:#626262;--accent:#4a4a4a;--accent-deep:#2e2e2e;--line:#d9d9d9;--line-soft:#ececec;--note:#e9e9e9}
+*{box-sizing:border-box}
+body{margin:0;background:var(--ground);color:var(--text);font-family:Inter,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;font-size:15.5px;line-height:1.6;padding-block:0 64px;padding-inline:clamp(16px,4vw,40px)}
+.wrap{max-width:74ch;margin-inline:auto}
+.docnav{display:flex;flex-wrap:wrap;gap:4px 18px;align-items:center;padding:16px 0;border-bottom:1px solid var(--line);font-size:12px;letter-spacing:.06em;text-transform:uppercase}
+.docnav a{color:var(--muted);text-decoration:none;min-height:44px;display:inline-flex;align-items:center;border-bottom:2px solid transparent}
+.docnav a:hover,.docnav a[aria-current]{color:var(--ink);border-color:var(--accent)}
+.docnav-brand{color:var(--ink);font-weight:800;margin-right:6px}
+.docnav-hub{margin-left:auto}
+header{padding-block:40px 24px;border-bottom:1px solid var(--line);margin-bottom:28px}
+.eyebrow{font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);margin:0 0 12px;font-weight:700}
+h1,h2,h3{color:var(--ink);line-height:1.1;text-wrap:balance;margin:0;letter-spacing:-.02em}
+h1{font-size:clamp(30px,6vw,46px);font-weight:800}
+h2{font-size:clamp(23px,4vw,30px);font-weight:800;margin:48px 0 14px;padding-top:20px;border-top:1px solid var(--line)}
+h3{font-size:18px;margin:30px 0 8px;font-weight:700}
+p{margin:0 0 14px} strong{color:var(--ink);font-weight:700}
+ul,ol{padding-left:22px;margin:0 0 16px} li{margin:5px 0} li>ul{margin:6px 0 0}
+code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.86em;background:var(--note);padding:1px 5px;border-radius:3px;color:var(--ink);overflow-wrap:anywhere}
+pre{overflow-x:auto;padding:14px 16px;border:1px solid var(--line);border-radius:6px;background:var(--card);font-size:12px;line-height:1.35}
+pre code{background:none;padding:0;font-size:inherit}
+a{color:var(--accent-deep)} :focus-visible{outline:2px solid var(--accent-deep);outline-offset:2px}
+.tbl{overflow-x:auto;margin:14px 0 22px;border:1px solid var(--line);border-radius:6px;background:var(--card)}
+table{border-collapse:collapse;width:100%;font-size:13.5px;min-width:560px}
+th{text-align:left;font-weight:700;color:var(--ink);background:var(--note);padding:10px 12px;border-bottom:1px solid var(--line);font-size:11.5px;letter-spacing:.06em;text-transform:uppercase}
+td{padding:10px 12px;border-top:1px solid var(--line-soft);vertical-align:top;background:var(--card)} td:first-child{color:var(--ink)}
+footer{margin-top:56px;padding-top:18px;border-top:1px solid var(--line);font-size:12px;color:var(--muted)}
+</style>
+</head>
+<body>
+<div class="wrap">
+<nav class="docnav" aria-label="Project documentation"><span class="docnav-brand">Lexodont · docs</span><a href="index.html">Overview</a><a href="bemutato.html">Bemutató</a><a href="brief.html" aria-current=page>Brief</a><a href="research.html">Research</a><a href="audit.html">Audit</a><a href="sources.html">Sources</a><a href="decisions.html">Decisions</a><a href="design.html">Design</a><a href="build-log.html">Build log</a><a href="gate.html">Gate</a><a href="client-asks.html">Client asks</a><a href="ssot.html">SSOT</a><a href="architecture.html">Architecture</a><a href="technical-design.html">Technical design</a><a href="implementation-plan.html">Implementation plan</a><a href="token-map.html">Token map</a><a class="docnav-hub" href="../../index.html">Calvus Hub</a></nav>
+<header><p class="eyebrow">Calvus · Lexodont · project documentation</p><h1>Lexodont — brief</h1></header>
+<p><em>For a first reader. Written 2026-09-18, five months after the wireframe's last change and
+one month after the client's site went live from it.</em></p>
+<h2>The client</h2>
+<p>Lexodont Dental Studio — a dental practice in Budapest (1026, Trombitás út 2.). Nine
+specialties, a team of four dentists, online booking. Site: lexodont.hu.</p>
+<h2>What the prototype is</h2>
+<p>A <strong>wireframe of the practice's new marketing site</strong>, in two fidelities: a polished
+grey-scale version (<code>lexodont.hu/</code>, 18 pages) and a Balsamiq-style sketch
+(<code>lexodont.hu_balsamic/</code>, 15 pages). Home, specialties hub and nine treatment pages,
+prices, case studies with before/after sliders, team, four knowledge-centre articles.
+Built 2026-03-31 in twenty commits, revised on 2026-04-09 after client feedback. Every
+image is a placeholder; the doctors, fun facts and prices are illustrative; the contact
+details, opening hours, parking zones and partners are real.</p>
+<p>Live prototype: <a href="https://moldovancsaba.github.io/calvus/lexodont.hu/">https://moldovancsaba.github.io/calvus/lexodont.hu/</a> · sketch:
+<a href="https://moldovancsaba.github.io/calvus/lexodont.hu_balsamic/">https://moldovancsaba.github.io/calvus/lexodont.hu_balsamic/</a></p>
+<h2>What happened next — the site went live</h2>
+<p>Measured 2026-09-18 (<a href="audit.html"><code>02-audit.md</code></a>): <strong>lexodont.hu is the wireframe, built.</strong> The same
+<code>h1</code> ("Szebb mosoly, nyugodt élmény, modern fogászat"), the same page set and URLs
+(<code>/araink/</code>, <code>/csapat/</code>, <code>/szakteruletek/</code>, <code>/esettanulmanyok/</code>, <code>/tudaskozpont/</code>,
+<code>/idopontfoglalas/</code>), the footer contact block word for word, before/after sliders on the
+home page. WordPress with a custom <code>lexodont</code> theme, WPML for English, Yoast, Flexi-Dent
+booking embed, Google Analytics; pages last modified 2026-07-30 to 2026-09-18. Real
+prices, four real dentists, real photography. The build was not done in this repo and
+not by this workflow — the wireframe was the specification, and it worked.</p>
+<h2>Where it stands</h2>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Prototype</td>
+<td>superseded by the live site; kept as the record of what was agreed</td>
+</tr>
+<tr>
+<td>Customer side</td>
+<td>this folder, written 2026-09-18: research (none was done, said plainly), audit of the live outcome, sources, decisions reconstructed from the history, design, build log, gate (66 measurements, findings recorded), client asks</td>
+</tr>
+<tr>
+<td>Technical side</td>
+<td><code>10</code>–<code>14</code>: the as-built stack <strong>measured</strong>, not proposed; the content model; a proposed second-iteration plan for the items the wireframe had that the live site does not (and the reverse)</td>
+</tr>
+<tr>
+<td>Open</td>
+<td>whether Lexodont is a client again (<a href="client-asks.html"><code>08-client-asks.md</code></a>); the wireframe's phone-width findings, left as recorded</td>
+</tr>
+</tbody>
+</table></div>
+<h2>How to read this folder</h2>
+<p><a href="index.html"><code>README.md</code></a> is the index and process log; <code>bemutato.html</code> is the client-facing page in
+Hungarian; <a href="audit.html"><code>02-audit.md</code></a> is the one to read first if you want to know what was built.</p>
+<footer>Source: <code>lexodont.hu/docs/00-brief.md</code> · rendered by <code>docs/build.py</code>.</footer>
+</div>
+</body>
+</html>
