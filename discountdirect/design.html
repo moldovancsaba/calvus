@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>DiscountDirect — design</title>
+<style>
+:root{--gds-bg-canvas:#f8fafc;--gds-bg-surface:#ffffff;--gds-bg-inverse:#111827;--gds-text-body:#111827;--gds-text-meta:#64748b;--gds-border-card:#e2e8f0;--gds-brand-accent:#3b5bdb;--gds-brand-accent-tint:#e7ecfb;--gds-radius-card:14px}
+*{box-sizing:border-box}
+body{margin:0;background:var(--gds-bg-canvas);color:var(--gds-text-body);font:15.5px/1.6 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;padding-block:0 64px;padding-inline:clamp(16px,4vw,40px)}
+.wrap{max-width:76ch;margin-inline:auto}
+.top{display:flex;flex-wrap:wrap;gap:8px 18px;align-items:center;padding:16px 0;border-bottom:1px solid var(--gds-border-card);font-size:13px;color:var(--gds-text-meta)}
+.top b{color:var(--gds-text-body)} .top a{color:var(--gds-brand-accent);text-decoration:none;min-height:44px;display:inline-flex;align-items:center} .top a.on{color:var(--gds-text-body);font-weight:600}
+h1{font-size:clamp(26px,5vw,38px);line-height:1.15;margin:32px 0 10px;letter-spacing:-.01em}
+h2{font-size:22px;margin:44px 0 10px;padding-top:18px;border-top:1px solid var(--gds-border-card)}
+h3{font-size:17px;margin:26px 0 8px}
+p{margin:0 0 12px} li{margin:4px 0} strong{font-weight:600}
+code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.86em;background:var(--gds-brand-accent-tint);padding:1px 5px;border-radius:5px}
+pre{background:var(--gds-bg-inverse);color:#f8fafc;padding:16px;border-radius:var(--gds-radius-card);overflow-x:auto;font-size:13px;line-height:1.5} pre code{background:none;color:inherit;padding:0;font-size:inherit}
+.tbl{overflow-x:auto;margin:12px 0 20px;border:1px solid var(--gds-border-card);border-radius:var(--gds-radius-card);background:var(--gds-bg-surface)}
+table{border-collapse:collapse;width:100%;font-size:13.5px;min-width:560px}
+th{text-align:left;font-weight:600;background:var(--gds-bg-canvas);padding:10px 12px;border-bottom:1px solid var(--gds-border-card);font-size:12px;letter-spacing:.04em;text-transform:uppercase;color:var(--gds-text-meta)}
+td{padding:10px 12px;border-top:1px solid var(--gds-border-card);vertical-align:top}
+a{color:var(--gds-brand-accent)}
+footer{margin-top:48px;padding-top:16px;border-top:1px solid var(--gds-border-card);font-size:12px;color:var(--gds-text-meta)}
+</style>
+</head>
+<body><div class="wrap">
+<div class="top"><b>DiscountDirect</b><a href="docs.html">Overview</a><a href="bemutato.html">Bemutató</a><a href="executive.html">Executive summary</a><a href="research.html">Research</a><a href="audit.html">Audit</a><a href="sources.html">Sources</a><a href="business-logic.html">Business logic</a><a href="design.html" class=on>Design</a><a href="build-log.html">Build log</a><a href="gate.html">Gate</a><a href="client-asks.html">Client asks</a><a href="ssot.html">SSOT</a><a href="architecture.html">Architecture</a><a href="technical-design.html">Technical design</a><a href="implementation-plan.html">Implementation plan</a><a href="token-map.html">Token map</a><a href="index.html">Open the prototype →</a><a href="../index.html">Calvus Hub</a></div>
+<h1>DiscountDirect — design</h1>
+<p><em>Screens, components and tokens of the prototype, and what was never designed. There was no
+design-system or layout approval gate: the prototype was built in one day as a wireframe to
+make the business logic clickable. Written 2026-09-18.</em></p>
+<h2>Screens</h2>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>View</th>
+<th>Screen</th>
+<th>Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Eladó</td>
+<td>Csevegések</td>
+<td>roster of buyers (left), channel-aware timeline with offer cards (centre), purchase history and recommended offers (right)</td>
+</tr>
+<tr>
+<td>Eladó</td>
+<td>⚡ Villámajánlat</td>
+<td>one-product flash campaign: product, discount, time and quantity limits, channels, targeting preview</td>
+</tr>
+<tr>
+<td>Eladó</td>
+<td>🗞 Ajánlatlisták</td>
+<td>recurring per-buyer lists: products, cadence, channels, per-buyer preview, active automations</td>
+</tr>
+<tr>
+<td>Vevő</td>
+<td>Csevegés</td>
+<td>the buyer's inbox and thread, persona switch</td>
+</tr>
+<tr>
+<td>Vevő</td>
+<td>E-mail · Postai levél · Hírlevél</td>
+<td>how the same offers arrive on each channel</td>
+</tr>
+</tbody>
+</table></div>
+<h2>Components</h2>
+<p>Top bar with view toggle and persona select; tab rail; pane with head; conversation
+button with badge; timeline event (message, offer card with reason, price, status,
+channels; channel event); composer; recommendation card with send; campaign form fields
+(segmented choices, checkboxes); targeting row; preview cards; letter and newsletter
+mock-ups; wireframe note with the document links.</p>
+<h2>Tokens</h2>
+<p>Custom properties named after GDS 6.5.0 semantic roles — <code>--gds-bg-canvas</code>, <code>--gds-bg-surface</code>,
+<code>--gds-bg-inverse</code>, <code>--gds-text-body</code>, <code>--gds-text-meta</code>, <code>--gds-border-card</code>,
+<code>--gds-brand-accent</code> (<code>#3b5bdb</code>, prototype-owned), <code>--gds-radius-card</code>, <code>--gds-elevation-card</code>
+— one <code>:root</code> block; the full mapping and the hand-off mechanism (delete the block, load
+the GDS theme stylesheet) are in <a href="token-map.html"><code>GDS-TOKEN-MAP.md</code></a>. Type: the system sans stack.</p>
+<h2>Layout</h2>
+<p>Three-pane grid <code>290px / 1fr / 330px</code> above 1080 px, one column below; campaign screens
+on an <code>auto-fit, minmax(340px, 1fr)</code> grid; buyer mock-ups centred at 720 px. Phone
+width (≤ 700 px, added 2026-09-18): single column everywhere, 44 px minimum on every
+control, 12 px side padding.</p>
+<h2>What was never designed</h2>
+<p>A brand (the wordmark is text), a buyer-facing app beyond the mock-ups, the rules block
+on every message (D14), the sold-out notice (D2), advanced-mode settings screens (D13),
+the seller print flow (D15), onboarding, empty states, error states. These are Release 1
+scope in <a href="implementation-plan.html"><code>IMPLEMENTATION-PLAN.md</code></a> and will need design before build.</p>
+<footer>Source: <code>discountdirect/DESIGN.md</code>, rendered by <code>build-docs.py</code>. Token names follow GDS 6.5.0 roles (<code>GDS-TOKEN-MAP.md</code>).</footer>
+</div></body></html>

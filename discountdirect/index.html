@@ -272,7 +272,18 @@
     .wireframe-note a { color: var(--gds-brand-accent); }
 
     @media (max-width: 1080px) {
-      .app { grid-template-columns: 1fr; }
+      .app { grid-template-columns: minmax(0, 1fr); }
+    }
+    /* Phone width (gate, 2026-09-18): the panes kept their min-content width and pushed the
+       page 103px past the viewport; the campaign grid's 340px minimum did the same. Controls
+       get the 44px floor only here, desktop density is untouched. */
+    @media (max-width: 700px) {
+      .campaigns { grid-template-columns: minmax(0, 1fr); }
+      .seller-tabs { flex-wrap: wrap; }
+      .app, .campaigns, .mock-wrap { padding-inline: 12px; }
+      button, select, input:not([type=checkbox]):not([type=radio]), .brand, label:has(> input[type=checkbox]),
+      label:has(> input[type=radio]), footer a, .wireframe-note a { min-height: 44px; min-width: 44px; display: inline-flex; align-items: center; }
+      .brand { display: flex; }
     }
   </style>
 </head>
@@ -290,7 +301,7 @@
       <span>Vevő:</span>
       <select id="personaSelect" aria-label="Melyik vevőként nézed"></select>
     </label>
-    <span class="topbar-note">Kattintható prototípus — mintaadatokkal · v15</span>
+    <span class="topbar-note">Kattintható prototípus — mintaadatokkal · v16</span>
   </header>
 
   <nav class="seller-tabs" id="sellerTabs" aria-label="Eladói funkciók">

@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>DiscountDirect — audit of what exists</title>
+<style>
+:root{--gds-bg-canvas:#f8fafc;--gds-bg-surface:#ffffff;--gds-bg-inverse:#111827;--gds-text-body:#111827;--gds-text-meta:#64748b;--gds-border-card:#e2e8f0;--gds-brand-accent:#3b5bdb;--gds-brand-accent-tint:#e7ecfb;--gds-radius-card:14px}
+*{box-sizing:border-box}
+body{margin:0;background:var(--gds-bg-canvas);color:var(--gds-text-body);font:15.5px/1.6 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;padding-block:0 64px;padding-inline:clamp(16px,4vw,40px)}
+.wrap{max-width:76ch;margin-inline:auto}
+.top{display:flex;flex-wrap:wrap;gap:8px 18px;align-items:center;padding:16px 0;border-bottom:1px solid var(--gds-border-card);font-size:13px;color:var(--gds-text-meta)}
+.top b{color:var(--gds-text-body)} .top a{color:var(--gds-brand-accent);text-decoration:none;min-height:44px;display:inline-flex;align-items:center} .top a.on{color:var(--gds-text-body);font-weight:600}
+h1{font-size:clamp(26px,5vw,38px);line-height:1.15;margin:32px 0 10px;letter-spacing:-.01em}
+h2{font-size:22px;margin:44px 0 10px;padding-top:18px;border-top:1px solid var(--gds-border-card)}
+h3{font-size:17px;margin:26px 0 8px}
+p{margin:0 0 12px} li{margin:4px 0} strong{font-weight:600}
+code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.86em;background:var(--gds-brand-accent-tint);padding:1px 5px;border-radius:5px}
+pre{background:var(--gds-bg-inverse);color:#f8fafc;padding:16px;border-radius:var(--gds-radius-card);overflow-x:auto;font-size:13px;line-height:1.5} pre code{background:none;color:inherit;padding:0;font-size:inherit}
+.tbl{overflow-x:auto;margin:12px 0 20px;border:1px solid var(--gds-border-card);border-radius:var(--gds-radius-card);background:var(--gds-bg-surface)}
+table{border-collapse:collapse;width:100%;font-size:13.5px;min-width:560px}
+th{text-align:left;font-weight:600;background:var(--gds-bg-canvas);padding:10px 12px;border-bottom:1px solid var(--gds-border-card);font-size:12px;letter-spacing:.04em;text-transform:uppercase;color:var(--gds-text-meta)}
+td{padding:10px 12px;border-top:1px solid var(--gds-border-card);vertical-align:top}
+a{color:var(--gds-brand-accent)}
+footer{margin-top:48px;padding-top:16px;border-top:1px solid var(--gds-border-card);font-size:12px;color:var(--gds-text-meta)}
+</style>
+</head>
+<body><div class="wrap">
+<div class="top"><b>DiscountDirect</b><a href="docs.html">Overview</a><a href="bemutato.html">Bemutató</a><a href="executive.html">Executive summary</a><a href="research.html">Research</a><a href="audit.html" class=on>Audit</a><a href="sources.html">Sources</a><a href="business-logic.html">Business logic</a><a href="design.html">Design</a><a href="build-log.html">Build log</a><a href="gate.html">Gate</a><a href="client-asks.html">Client asks</a><a href="ssot.html">SSOT</a><a href="architecture.html">Architecture</a><a href="technical-design.html">Technical design</a><a href="implementation-plan.html">Implementation plan</a><a href="token-map.html">Token map</a><a href="index.html">Open the prototype →</a><a href="../index.html">Calvus Hub</a></div>
+<h1>DiscountDirect — audit of what exists</h1>
+<p><em>Measured 2026-09-18. The "client" here is the product owner; there is no third-party
+client site to audit — the starting point is the prototype itself, the documents, and an
+implementation that lives outside this repository.</em></p>
+<h2>The prototype (<code>index.html</code>)</h2>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>Measure</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Form</td>
+<td>one HTML file, 74 KB, inline CSS and ~830 lines of vanilla JavaScript, no dependency, no build</td>
+</tr>
+<tr>
+<td>Screens</td>
+<td>seller: Csevegések (3-pane), Villámajánlat, Ajánlatlisták; buyer: Csevegés, E-mail, Postai levél, Hírlevél — seven, switched by tabs, one URL</td>
+</tr>
+<tr>
+<td>Sample data</td>
+<td>one seller (ElektroHome Kft., fictional), 8 buyers, 26 products, multi-year purchase histories, automations — in memory, reset on reload</td>
+</tr>
+<tr>
+<td>Version</td>
+<td>v16 (top-bar note); v15 was the 2026-08-25 build, v16 the 2026-09-18 phone fix</td>
+</tr>
+<tr>
+<td>Console</td>
+<td>0 errors on every screen</td>
+</tr>
+<tr>
+<td>Desktop (1024)</td>
+<td>0 px overflow; 3-pane chat becomes one column below 1080 px</td>
+</tr>
+<tr>
+<td>Phone (375), before 2026-09-18</td>
+<td>103 px overflow on the chat screen, 10–29 px on the others; 12–17 targets under 44 px per screen</td>
+</tr>
+<tr>
+<td>Phone (375), after</td>
+<td>0 px overflow; 0 targets under 44 px on every screen</td>
+</tr>
+<tr>
+<td>Language</td>
+<td>Hungarian throughout</td>
+</tr>
+</tbody>
+</table></div>
+<h2>The documents</h2>
+<p>Seven markdown sources rendered to HTML by <code>build-docs.py</code>, all dated 2026-09-17;
+English, written for engineers; <a href="research.html"><code>RESEARCH.md</code></a> cites 74 sources. No Hungarian
+customer-facing material existed before <code>bemutato.html</code> (2026-09-18).</p>
+<h2>The outside implementation</h2>
+<p>D26 states the product is extended on an existing Next.js 15 / MongoDB Atlas / Vercel /
+DoneIsBetter SSO / Resend implementation. <strong>That code is not in this repository and no
+URL for it is recorded here</strong>; the owner marked the stack "verified" on 2026-09-17
+(commit <code>30f4fb7</code>). Nothing about it was measured for this audit. DD-000 in the
+implementation plan is the inventory step that would make it auditable.</p>
+<h2>Where the prototype and the decisions diverge</h2>
+<p>The prototype predates D1–D26 (built 25 Aug, decided 17 Sep). The documents are
+authoritative (<a href="ssot.html"><code>SSOT.md</code></a> §8); the prototype still shows the earlier behaviour in these
+places:</p>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>Behaviour</th>
+<th>Prototype (v16)</th>
+<th>Decided</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Accepting an offer</td>
+<td>accepted in the thread</td>
+<td>hand-off to the shop's checkout with the price locked; confirmation written back (D1)</td>
+</tr>
+<tr>
+<td>Flash sold-out</td>
+<td>quantity counter only</td>
+<td>both per-campaign and per-buyer limits; sold-out notice with optional compensation (D2, D10, D14)</td>
+</tr>
+<tr>
+<td>Reason text</td>
+<td>engine text only</td>
+<td>engine + optional seller edit, both kept (D4)</td>
+</tr>
+<tr>
+<td>Discount entry</td>
+<td>free percentage</td>
+<td><code>discount_mode</code> setting with guardrails (D5)</td>
+</tr>
+<tr>
+<td>Inbox mode</td>
+<td>one seller</td>
+<td><code>inbox_mode</code> per seller, marketplace possible (D3)</td>
+</tr>
+<tr>
+<td>Rules block on every message</td>
+<td>absent</td>
+<td>limits, first-come-first-served, expiry, compensation on every rendering (D14)</td>
+</tr>
+<tr>
+<td>Predefined rule sets / advanced mode</td>
+<td>absent</td>
+<td><code>OperatingMode {predefined, advanced}</code> per area (D13)</td>
+</tr>
+<tr>
+<td>Print mode</td>
+<td>letter mock only</td>
+<td>seller print mode with PDF and "posted" action (D9, D15)</td>
+</tr>
+</tbody>
+</table></div>
+<p>Whether the prototype is updated to the decisions or frozen as the pre-decision
+reference is <a href="client-asks.html"><code>CLIENT-ASKS.md</code></a> #1.</p>
+<footer>Source: <code>discountdirect/AUDIT.md</code>, rendered by <code>build-docs.py</code>. Token names follow GDS 6.5.0 roles (<code>GDS-TOKEN-MAP.md</code>).</footer>
+</div></body></html>

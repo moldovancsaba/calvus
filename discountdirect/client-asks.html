@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>DiscountDirect — what needs the product owner</title>
+<style>
+:root{--gds-bg-canvas:#f8fafc;--gds-bg-surface:#ffffff;--gds-bg-inverse:#111827;--gds-text-body:#111827;--gds-text-meta:#64748b;--gds-border-card:#e2e8f0;--gds-brand-accent:#3b5bdb;--gds-brand-accent-tint:#e7ecfb;--gds-radius-card:14px}
+*{box-sizing:border-box}
+body{margin:0;background:var(--gds-bg-canvas);color:var(--gds-text-body);font:15.5px/1.6 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;padding-block:0 64px;padding-inline:clamp(16px,4vw,40px)}
+.wrap{max-width:76ch;margin-inline:auto}
+.top{display:flex;flex-wrap:wrap;gap:8px 18px;align-items:center;padding:16px 0;border-bottom:1px solid var(--gds-border-card);font-size:13px;color:var(--gds-text-meta)}
+.top b{color:var(--gds-text-body)} .top a{color:var(--gds-brand-accent);text-decoration:none;min-height:44px;display:inline-flex;align-items:center} .top a.on{color:var(--gds-text-body);font-weight:600}
+h1{font-size:clamp(26px,5vw,38px);line-height:1.15;margin:32px 0 10px;letter-spacing:-.01em}
+h2{font-size:22px;margin:44px 0 10px;padding-top:18px;border-top:1px solid var(--gds-border-card)}
+h3{font-size:17px;margin:26px 0 8px}
+p{margin:0 0 12px} li{margin:4px 0} strong{font-weight:600}
+code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.86em;background:var(--gds-brand-accent-tint);padding:1px 5px;border-radius:5px}
+pre{background:var(--gds-bg-inverse);color:#f8fafc;padding:16px;border-radius:var(--gds-radius-card);overflow-x:auto;font-size:13px;line-height:1.5} pre code{background:none;color:inherit;padding:0;font-size:inherit}
+.tbl{overflow-x:auto;margin:12px 0 20px;border:1px solid var(--gds-border-card);border-radius:var(--gds-radius-card);background:var(--gds-bg-surface)}
+table{border-collapse:collapse;width:100%;font-size:13.5px;min-width:560px}
+th{text-align:left;font-weight:600;background:var(--gds-bg-canvas);padding:10px 12px;border-bottom:1px solid var(--gds-border-card);font-size:12px;letter-spacing:.04em;text-transform:uppercase;color:var(--gds-text-meta)}
+td{padding:10px 12px;border-top:1px solid var(--gds-border-card);vertical-align:top}
+a{color:var(--gds-brand-accent)}
+footer{margin-top:48px;padding-top:16px;border-top:1px solid var(--gds-border-card);font-size:12px;color:var(--gds-text-meta)}
+</style>
+</head>
+<body><div class="wrap">
+<div class="top"><b>DiscountDirect</b><a href="docs.html">Overview</a><a href="bemutato.html">Bemutató</a><a href="executive.html">Executive summary</a><a href="research.html">Research</a><a href="audit.html">Audit</a><a href="sources.html">Sources</a><a href="business-logic.html">Business logic</a><a href="design.html">Design</a><a href="build-log.html">Build log</a><a href="gate.html">Gate</a><a href="client-asks.html" class=on>Client asks</a><a href="ssot.html">SSOT</a><a href="architecture.html">Architecture</a><a href="technical-design.html">Technical design</a><a href="implementation-plan.html">Implementation plan</a><a href="token-map.html">Token map</a><a href="index.html">Open the prototype →</a><a href="../index.html">Calvus Hub</a></div>
+<h1>DiscountDirect — what needs the product owner</h1>
+<p><em>Open items only the product owner can close, 2026-09-18.</em></p>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>#</th>
+<th>Item</th>
+<th>Why it matters</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>Update the prototype to D1–D26 (hand-off on accept, sold-out notice, rules block, advanced mode, print mode) or freeze it as the pre-decision reference?</td>
+<td>today the clickable demo and the rules disagree (<a href="audit.html"><code>AUDIT.md</code></a>)</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Real sample data from one real shop (products, a few anonymised histories) for the demo</td>
+<td>every name and price is fictional; a pitch on invented data is weaker than one on a real catalogue</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Access to, or an inventory of, the existing implementation (DD-000)</td>
+<td>the whole plan builds on a codebase this repo cannot see</td>
+</tr>
+<tr>
+<td>4</td>
+<td>Print partner for the platform print service (D9/D15: Pingen candidate)</td>
+<td>Release 1.1</td>
+</tr>
+<tr>
+<td>5</td>
+<td>Confirm the connector order Shoprenter → UNAS → WooCommerce → Shopify (D18)</td>
+<td>E7 sequencing</td>
+</tr>
+<tr>
+<td>6</td>
+<td>Legal review of the consent templates and the legitimate-interest assessment per market (D8, D13)</td>
+<td>E6</td>
+</tr>
+<tr>
+<td>7</td>
+<td>A product name and brand for the buyer-facing app, or confirmation that "DiscountDirect" is it</td>
+<td>the wordmark is text; the buyer app has no identity</td>
+</tr>
+<tr>
+<td>8</td>
+<td>The membership perk list and tier names (D22)</td>
+<td>E8, Release 1.1</td>
+</tr>
+<tr>
+<td>9</td>
+<td>Who designs Release 1's undesigned screens (<a href="design.html"><code>DESIGN.md</code></a> §"never designed")</td>
+<td>before E1</td>
+</tr>
+</tbody>
+</table></div>
+<footer>Source: <code>discountdirect/CLIENT-ASKS.md</code>, rendered by <code>build-docs.py</code>. Token names follow GDS 6.5.0 roles (<code>GDS-TOKEN-MAP.md</code>).</footer>
+</div></body></html>

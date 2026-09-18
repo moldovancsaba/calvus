@@ -3,13 +3,25 @@
 Run: python3 discountdirect/build-docs.py  (needs the `markdown` package)."""
 import re, pathlib, markdown
 HERE = pathlib.Path(__file__).parent
-PAGES = [("EXECUTIVE.md", "executive.html", "Executive summary"), ("RESEARCH.md", "research.html", "Research"), ("BUSINESS-LOGIC.md", "business-logic.html", "Business logic"), ("SSOT.md", "ssot.html", "SSOT"), ("ARCHITECTURE.md", "architecture.html", "Architecture"), ("TECHNICAL-DESIGN.md", "technical-design.html", "Technical design"), ("IMPLEMENTATION-PLAN.md", "implementation-plan.html", "Implementation plan")]
+PAGES = [
+  ("README.md", "docs.html", "Overview"),
+  ("EXECUTIVE.md", "executive.html", "Executive summary"), ("RESEARCH.md", "research.html", "Research"),
+  ("AUDIT.md", "audit.html", "Audit"), ("SOURCES.md", "sources.html", "Sources"),
+  ("BUSINESS-LOGIC.md", "business-logic.html", "Business logic"), ("DESIGN.md", "design.html", "Design"),
+  ("BUILD-LOG.md", "build-log.html", "Build log"), ("GATE.md", "gate.html", "Gate"), ("CLIENT-ASKS.md", "client-asks.html", "Client asks"),
+  ("SSOT.md", "ssot.html", "SSOT"), ("ARCHITECTURE.md", "architecture.html", "Architecture"),
+  ("TECHNICAL-DESIGN.md", "technical-design.html", "Technical design"), ("IMPLEMENTATION-PLAN.md", "implementation-plan.html", "Implementation plan"),
+  ("GDS-TOKEN-MAP.md", "token-map.html", "Token map"),
+]
 def render(src, out, label):
   md = (HERE / src).read_text(encoding="utf-8")
   title = re.match(r"#\s+(.+)", md).group(1)
+  for s, o, _ in PAGES:  # links between the markdown files point at the rendered names
+    md = md.replace(f"`{s}`", f"[`{s}`]({o})")
   body = markdown.markdown(md[md.index("\n"):], extensions=["tables", "fenced_code", "sane_lists"])
   body = body.replace("<table>", '<div class="tbl"><table>').replace("</table>", "</table></div>")
   nav = "".join(f'<a href="{o}"{" class=on" if o == out else ""}>{l}</a>' for _, o, l in PAGES)
+  nav = nav.replace('<a href="executive.html"', '<a href="bemutato.html">Bemutató</a><a href="executive.html"', 1)
   html = f"""<!DOCTYPE html>
 <html lang="en">
 <head>

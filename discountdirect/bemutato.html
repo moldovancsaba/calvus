@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>DiscountDirect — bemutató</title>
+<meta name="description" content="A DiscountDirect prototípus bemutatója: mi ez, mit nézzenek, mi valódi, mit kérünk, hogyan tovább.">
+<style>
+:root{--gds-bg-canvas:#f8fafc;--gds-bg-surface:#ffffff;--gds-bg-inverse:#111827;--gds-text-body:#111827;--gds-text-meta:#64748b;--gds-border-card:#e2e8f0;--gds-brand-accent:#3b5bdb;--gds-brand-accent-tint:#e7ecfb;--gds-radius-card:14px;--gds-elevation-card:0 1px 2px rgba(15,23,42,.06),0 8px 24px rgba(15,23,42,.06)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--gds-bg-canvas);color:var(--gds-text-body);font:15.5px/1.55 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif}
+a{color:inherit}
+.wrap{max-width:1040px;margin-inline:auto;padding-inline:clamp(16px,4vw,32px)}
+.hero{background:var(--gds-bg-inverse);color:#fff;padding:clamp(28px,5vw,56px) 0;border-bottom:6px solid var(--gds-brand-accent)}
+.eyebrow{margin:0 0 10px;font-size:12px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:#93a5f5}
+.hero h1{margin:0 0 12px;max-width:18ch;font-size:clamp(30px,5.5vw,54px);line-height:1;letter-spacing:-1.2px}
+.hero p{margin:0;max-width:64ch;font-size:16px;font-weight:600;color:rgba(255,255,255,.82)}
+.nums{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px;margin:26px 0 0}
+.num{padding:18px 20px;border-radius:var(--gds-radius-card);background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.14)}
+.num b{display:block;font-size:30px;letter-spacing:-.8px;line-height:1;color:#fff}
+.num span{font-size:13px;font-weight:600;color:rgba(255,255,255,.75)}
+section{padding:44px 0 8px}
+h2{margin:0 0 8px;font-size:clamp(24px,3.6vw,34px);letter-spacing:-.6px;line-height:1.05}
+.lede{margin:0 0 22px;max-width:66ch;font-size:15px;font-weight:600;color:var(--gds-text-meta)}
+.steps{display:grid;gap:16px}
+.step{display:grid;grid-template-columns:minmax(0,1fr) 260px;gap:22px;align-items:start;padding:22px;border-radius:var(--gds-radius-card);background:var(--gds-bg-surface);border:1px solid var(--gds-border-card);box-shadow:var(--gds-elevation-card)}
+.step h3{margin:0 0 6px;font-size:20px;letter-spacing:-.3px}
+.step h3 small{display:block;font-size:12px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--gds-text-meta);margin-bottom:4px}
+.step p{margin:0 0 10px;font-size:14px;font-weight:500;line-height:1.55}
+.btns{display:flex;flex-wrap:wrap;gap:8px;margin-top:8px}
+.btn{display:inline-flex;align-items:center;min-height:44px;padding:8px 16px;border-radius:999px;background:var(--gds-brand-accent);color:#fff;text-decoration:none;font-size:13px;font-weight:800}
+.btn.alt{background:var(--gds-brand-accent-tint);color:var(--gds-brand-accent)}
+.phone{width:100%;max-width:260px;justify-self:end;aspect-ratio:375/700;position:relative;overflow:hidden;border-radius:14px;border:1px solid var(--gds-border-card);background:var(--gds-bg-canvas)}
+.phone iframe{position:absolute;top:0;left:0;width:375px;height:1010px;border:0;transform-origin:0 0;transform:scale(calc(var(--pw,260) / 375));pointer-events:none}
+.desk{width:100%;aspect-ratio:1440/900;position:relative;overflow:hidden;border-radius:var(--gds-radius-card);border:1px solid var(--gds-border-card);background:var(--gds-bg-canvas);margin:0 0 8px}
+.desk iframe{position:absolute;top:0;left:0;width:1440px;height:900px;border:0;transform-origin:0 0;transform:scale(calc(var(--dw,1000) / 1440));pointer-events:none}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px}
+.card{padding:20px 22px;border-radius:var(--gds-radius-card);background:var(--gds-bg-surface);border:1px solid var(--gds-border-card)}
+.card h3{margin:0 0 8px;font-size:17px;letter-spacing:-.2px}
+.card p,.card li{margin:0;font-size:14px;font-weight:500;line-height:1.55}
+.card ul{margin:0;padding-left:18px}
+.asks{counter-reset:a;display:grid;gap:10px}
+.ask{display:grid;grid-template-columns:36px 1fr;gap:12px;align-items:start;padding:14px 16px;border-radius:12px;background:var(--gds-bg-surface);border:1px solid var(--gds-border-card);font-size:14px;font-weight:500}
+.ask::before{counter-increment:a;content:counter(a);width:32px;height:32px;border-radius:50%;display:grid;place-items:center;background:var(--gds-brand-accent-tint);color:var(--gds-brand-accent);font-weight:800}
+.next{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px}
+.next .card b{display:block;font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--gds-text-meta);margin-bottom:6px}
+footer{margin:44px 0 24px;padding-top:18px;border-top:1px solid var(--gds-border-card);font-size:12px;font-weight:600;color:var(--gds-text-meta)}
+footer a{display:inline-flex;align-items:center;min-height:44px}
+@media (max-width:760px){.step{grid-template-columns:1fr}.phone{justify-self:start;max-width:100%}}
+</style>
+</head>
+<body>
+<header class="hero">
+  <div class="wrap">
+    <p class="eyebrow">DiscountDirect · prototípus és fejlesztési csomag</p>
+    <h1>A kedvezmény az utolsó eszköz, nem az első</h1>
+    <p>Egy webshop-megtartó rendszer: eladó és vevő között egy szál, benne a vevő saját vásárlási előzményeire épülő, megindokolt, időzített és valóban korlátozott ajánlatok — chatben, e-mailben, levélben, hírlevélben. A prototípus kattintható, a szabályok le vannak írva, a fejlesztési terv kész.</p>
+    <div class="nums">
+      <div class="num"><b>9</b><span>vásárlási mozgatórugó az ár előtt — mindegyik forrásolt bizonyítékkal a kutatási oldalon</span></div>
+      <div class="num"><b>26</b><span>termékgazdai döntés (D1–D26): mi történik elfogadáskor, kifogyáskor, ki írja az indoklást, mi a stack</span></div>
+      <div class="num"><b>~20 hét</b><span>az első kiadásig, négy fejlesztő és egy adatmérnök, Magyarországon, a meglévő rendszerre építve</span></div>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+  <section>
+    <h2>Mit nézzenek meg, ebben a sorrendben</h2>
+    <p class="lede">A prototípus egyetlen oldal, a képernyők között a fejléc füleivel váltanak. Minden adat minta — a webshop, a vevők, a termékek kitaláltak.</p>
+    <div class="desk"><iframe src="index.html" title="DiscountDirect asztali előnézet" loading="lazy" tabindex="-1"></iframe></div>
+    <div class="steps">
+      <article class="step">
+        <div>
+          <h3><small>1 · Eladó nézet</small>Csevegések — egy szál vevőnként</h3>
+          <p>Balra a vevők, középen a beszélgetés idővonala csatorna szerint (chat, e-mail, levél, hírlevél), jobbra a vevő vásárlási előzményei és a belőlük következő ajánlatok. Egy ajánlat elküldése: termék, indoklás, kedvezmény, csatorna. A vevő elfogadja, elutasítja, vagy azt mondja: most nem.</p>
+          <div class="btns"><a class="btn" href="index.html">Prototípus megnyitása</a></div>
+        </div>
+        <div class="phone"><iframe src="index.html" title="Csevegések telefonos előnézet" loading="lazy" tabindex="-1"></iframe></div>
+      </article>
+      <article class="step">
+        <div>
+          <h3><small>2 · Eladó nézet</small>⚡ Villámajánlat — egy termék, valódi korlátokkal</h3>
+          <p>Egy termék, egy kedvezmény, időkorlát és darabszám, csatornák. A célzás előnézete megmutatja, kinek releváns egyáltalán. A döntés szerint a korlát kampányonként és vevőnként is érvényes, kifogyáskor pedig a vevő értesítést és opcionális kompenzációt kap.</p>
+        </div>
+        <div class="phone"><iframe src="index.html" title="Villámajánlat előnézet" loading="lazy" tabindex="-1"></iframe></div>
+      </article>
+      <article class="step">
+        <div>
+          <h3><small>3 · Eladó nézet</small>🗞 Ajánlatlisták — vevőnként csak a releváns</h3>
+          <p>Ismétlődő lista, amelyet minden vevő csak a rá vonatkozó termékekkel kap. Gyakoriság, csatornák, vevőnkénti előnézet, futó automatizmusok.</p>
+        </div>
+        <div class="phone"><iframe src="index.html" title="Ajánlatlisták előnézet" loading="lazy" tabindex="-1"></iframe></div>
+      </article>
+      <article class="step">
+        <div>
+          <h3><small>4 · Vevő nézet</small>Ugyanaz az ajánlat, négy csatornán</h3>
+          <p>Váltson vevő nézetre, válasszon személyt: a chat, az e-mail, a postai levél kuponnal és a hírlevél — ahogy a vevő látja. Minden üzenet megmondja, miért érkezett, és a vevő szabályozza a csatornát és a gyakoriságot.</p>
+        </div>
+        <div class="phone"><iframe src="index.html" title="Vevő nézet előnézet" loading="lazy" tabindex="-1"></iframe></div>
+      </article>
+    </div>
+  </section>
+
+  <section>
+    <h2>Mi valódi, mi minta</h2>
+    <div class="grid">
+      <div class="card"><h3>Valódi: a bizonyíték</h3><p>A vezetői összefoglaló és a kutatási oldal minden száma forrásolt — 74 hivatkozás iparági jelentésekre, tanulmányokra, vállalati közlésekre. Például: a személyre szabás 10–15 % bevételnövekedést hoz; a visszakerült-a-készlet értesítés 14–25 %-on konvertál; négy üzenet egy hónapban az a pont, ahol a legtöbben leiratkoznak.</p></div>
+      <div class="card"><h3>Valódi: a döntések</h3><p>D1–D26 a termékgazda döntései, következményeikkel együtt: elfogadáskor átadás a webshop pénztárába; két korlát a villámajánlaton; a jogi és hozzájárulási alapértékek a platformé; a beállítások előre definiált szabálykészletből vagy haladó módban; a stack a meglévő rendszer.</p></div>
+      <div class="card"><h3>Minta: az adat</h3><p>Az ElektroHome Kft., a nyolc vevő, a 26 termék és a vásárlási előzmények a prototípushoz készültek. Egyetlen valódi webshop adata sincs benne — ezt kérjük a következő lépésben.</p></div>
+      <div class="card"><h3>Amit tudni érdemes</h3><ul><li>A prototípus a döntések előtt készült: néhány helyen még a régi viselkedést mutatja (elfogadás a szálban, nincs kifogyási értesítés). A dokumentumok az irányadók.</li><li>A fejlesztési csomag egy meglévő rendszerre épít, amely nem ebben a tárban van.</li></ul></div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Amit Önöktől kérünk</h2>
+    <div class="asks">
+      <div class="ask">Frissítsük a prototípust a döntésekre, vagy maradjon a döntés előtti referencia?</div>
+      <div class="ask">Egy valódi webshop mintaadata a demóhoz: termékek és néhány anonimizált vásárlási előzmény.</div>
+      <div class="ask">Hozzáférés a meglévő rendszer tárához, vagy annak leltára — a terv erre épül.</div>
+      <div class="ask">Nyomdai partner a platform levélküldő szolgáltatásához (jelölt: Pingen).</div>
+      <div class="ask">A webshop-integrációk sorrendjének megerősítése: Shoprenter, UNAS, majd WooCommerce, Shopify.</div>
+      <div class="ask">Jogi átnézés: hozzájárulási sablonok és jogos érdek piaconként.</div>
+      <div class="ask">A vevői alkalmazás neve és arculata — ma a szómárka szöveg.</div>
+      <div class="ask">Ki tervezi az első kiadás még meg nem tervezett képernyőit?</div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Hogyan tovább</h2>
+    <div class="next">
+      <div class="card"><b>1. kiadás</b><p>Magyarország; chat, e-mail, levél (eladói nyomtatás), hírlevél; Shoprenter és UNAS csatlakozó; egy szál, ajánlatok indoklással, villámajánlat két korláttal, listák; hozzájárulás és gyakoriságkorlát; véletlenszerű kontrollcsoport az első naptól.</p></div>
+      <div class="card"><b>Mérés</b><p>Nem az elfogadási arány, hanem a kampányonkénti többlet-fedezet; a kedvezmény nélküli ismételt rendelések aránya; leiratkozás és elutasítás vevőnként.</p></div>
+      <div class="card"><b>Utána</b><p>Döntési motor (relevancia és uplift), gazdag üzenetküldés, tagság és rangok; majd tanult kedvezménymélység, előfizetés, csomagok, csoportos ajánlatok.</p></div>
+    </div>
+  </section>
+
+  <footer>Calvus · DiscountDirect · <a href="docs.html">A teljes projektdokumentáció (angolul)</a> · <a href="executive.html">Vezetői összefoglaló</a></footer>
+</main>
+<script>(function(){function f(){document.querySelectorAll('.phone').forEach(function(e){e.style.setProperty('--pw',e.clientWidth)});document.querySelectorAll('.desk').forEach(function(e){e.style.setProperty('--dw',e.clientWidth)})}f();addEventListener('resize',f)})();</script>
+</body>
+</html>

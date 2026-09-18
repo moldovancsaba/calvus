@@ -26,7 +26,7 @@ footer{margin-top:48px;padding-top:16px;border-top:1px solid var(--gds-border-ca
 </style>
 </head>
 <body><div class="wrap">
-<div class="top"><b>DiscountDirect</b><a href="executive.html">Executive summary</a><a href="research.html">Research</a><a href="business-logic.html" class=on>Business logic</a><a href="ssot.html">SSOT</a><a href="architecture.html">Architecture</a><a href="technical-design.html">Technical design</a><a href="implementation-plan.html">Implementation plan</a><a href="index.html">Open the prototype →</a><a href="../index.html">Calvus Hub</a></div>
+<div class="top"><b>DiscountDirect</b><a href="docs.html">Overview</a><a href="bemutato.html">Bemutató</a><a href="executive.html">Executive summary</a><a href="research.html">Research</a><a href="audit.html">Audit</a><a href="sources.html">Sources</a><a href="business-logic.html" class=on>Business logic</a><a href="design.html">Design</a><a href="build-log.html">Build log</a><a href="gate.html">Gate</a><a href="client-asks.html">Client asks</a><a href="ssot.html">SSOT</a><a href="architecture.html">Architecture</a><a href="technical-design.html">Technical design</a><a href="implementation-plan.html">Implementation plan</a><a href="token-map.html">Token map</a><a href="index.html">Open the prototype →</a><a href="../index.html">Calvus Hub</a></div>
 <h1>DiscountDirect — business logic breakdown</h1>
 <p>Derived from the prototype at <code>discountdirect/index.html</code> (v15) on 2026-09-17, function by
 function and data structure by data structure. Everything below is what the prototype
@@ -405,7 +405,7 @@ the demo shows. Every state change re-renders everything (<code>renderAll</code>
    automation; response time; badge counts from real state.</li>
 <li><strong>Notifications</strong> to the seller on buyer actions; to the buyer on new offers.</li>
 <li><strong>Design system</strong>: the CSS tokens are already named after GDS 6.5.0 roles
-    (<code>GDS-TOKEN-MAP.md</code>); the dev build swaps the <code>:root</code> block for the GDS theme.</li>
+    (<a href="token-map.html"><code>GDS-TOKEN-MAP.md</code></a>); the dev build swaps the <code>:root</code> block for the GDS theme.</li>
 <li><strong>Predefined rule sets, advanced mode and journeys</strong> (D10, D13): a library of rule
     sets and recommended journeys — offer kinds, campaign defaults, incentives,
     sold-out and compensation handling, timing ladders, consent scope — a per-area

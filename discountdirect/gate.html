@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>DiscountDirect — gate</title>
+<style>
+:root{--gds-bg-canvas:#f8fafc;--gds-bg-surface:#ffffff;--gds-bg-inverse:#111827;--gds-text-body:#111827;--gds-text-meta:#64748b;--gds-border-card:#e2e8f0;--gds-brand-accent:#3b5bdb;--gds-brand-accent-tint:#e7ecfb;--gds-radius-card:14px}
+*{box-sizing:border-box}
+body{margin:0;background:var(--gds-bg-canvas);color:var(--gds-text-body);font:15.5px/1.6 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;padding-block:0 64px;padding-inline:clamp(16px,4vw,40px)}
+.wrap{max-width:76ch;margin-inline:auto}
+.top{display:flex;flex-wrap:wrap;gap:8px 18px;align-items:center;padding:16px 0;border-bottom:1px solid var(--gds-border-card);font-size:13px;color:var(--gds-text-meta)}
+.top b{color:var(--gds-text-body)} .top a{color:var(--gds-brand-accent);text-decoration:none;min-height:44px;display:inline-flex;align-items:center} .top a.on{color:var(--gds-text-body);font-weight:600}
+h1{font-size:clamp(26px,5vw,38px);line-height:1.15;margin:32px 0 10px;letter-spacing:-.01em}
+h2{font-size:22px;margin:44px 0 10px;padding-top:18px;border-top:1px solid var(--gds-border-card)}
+h3{font-size:17px;margin:26px 0 8px}
+p{margin:0 0 12px} li{margin:4px 0} strong{font-weight:600}
+code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.86em;background:var(--gds-brand-accent-tint);padding:1px 5px;border-radius:5px}
+pre{background:var(--gds-bg-inverse);color:#f8fafc;padding:16px;border-radius:var(--gds-radius-card);overflow-x:auto;font-size:13px;line-height:1.5} pre code{background:none;color:inherit;padding:0;font-size:inherit}
+.tbl{overflow-x:auto;margin:12px 0 20px;border:1px solid var(--gds-border-card);border-radius:var(--gds-radius-card);background:var(--gds-bg-surface)}
+table{border-collapse:collapse;width:100%;font-size:13.5px;min-width:560px}
+th{text-align:left;font-weight:600;background:var(--gds-bg-canvas);padding:10px 12px;border-bottom:1px solid var(--gds-border-card);font-size:12px;letter-spacing:.04em;text-transform:uppercase;color:var(--gds-text-meta)}
+td{padding:10px 12px;border-top:1px solid var(--gds-border-card);vertical-align:top}
+a{color:var(--gds-brand-accent)}
+footer{margin-top:48px;padding-top:16px;border-top:1px solid var(--gds-border-card);font-size:12px;color:var(--gds-text-meta)}
+</style>
+</head>
+<body><div class="wrap">
+<div class="top"><b>DiscountDirect</b><a href="docs.html">Overview</a><a href="bemutato.html">Bemutató</a><a href="executive.html">Executive summary</a><a href="research.html">Research</a><a href="audit.html">Audit</a><a href="sources.html">Sources</a><a href="business-logic.html">Business logic</a><a href="design.html">Design</a><a href="build-log.html">Build log</a><a href="gate.html" class=on>Gate</a><a href="client-asks.html">Client asks</a><a href="ssot.html">SSOT</a><a href="architecture.html">Architecture</a><a href="technical-design.html">Technical design</a><a href="implementation-plan.html">Implementation plan</a><a href="token-map.html">Token map</a><a href="index.html">Open the prototype →</a><a href="../index.html">Calvus Hub</a></div>
+<h1>DiscountDirect — gate</h1>
+<p><em>What is checked before a push, and the state on 2026-09-18.</em></p>
+<h2>Automated</h2>
+<p><code>python3 holdvolgy/check.py</code> includes every <code>discountdirect/*.html</code> in its link audit,
+cross-page anchor check and stale-phrase scan (the Holdvölgy gate was written to cover
+the hub and this folder as well). It must print <code>GATE: CLEAN</code>.</p>
+<h2>Measured (browser pane, per round)</h2>
+<p>At 375 px and desktop: every seller and buyer screen opened (view toggle, three seller
+tabs, four buyer tabs, persona switch); horizontal overflow; tap targets under 44 × 44
+px; console errors. Numbers go into <a href="build-log.html"><code>BUILD-LOG.md</code></a>.</p>
+<h2>State on 2026-09-18</h2>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>Check</th>
+<th>Result</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>check.py</code></td>
+<td>clean</td>
+</tr>
+<tr>
+<td>Overflow at 375 / 1024</td>
+<td>0 / 0 on all seven screens</td>
+</tr>
+<tr>
+<td>Targets under 44 px at 375</td>
+<td>0</td>
+</tr>
+<tr>
+<td>Console errors</td>
+<td>0</td>
+</tr>
+</tbody>
+</table></div>
+<h2>Deliberate deviations</h2>
+<ul>
+<li><strong>Desktop density</strong>: controls under 44 px at desktop width (the view toggle is 29 px
+  tall) — the 44 px floor applies to phone width, as on the other projects.</li>
+<li><strong>No <code>h1</code> on the chat screens</strong>: the app-shell screens carry pane <code>h2</code>s; the campaign
+  screens have an <code>h1</code> in their hero. Adding one to the chat shell is a visible change
+  and waits for the owner.</li>
+<li><strong>Prototype banner</strong>: the top-bar note "Kattintható prototípus — mintaadatokkal · v16"
+  and the wireframe note at the bottom serve as the banner.</li>
+<li><strong>Prototype vs decisions</strong>: not a gate failure — the documents are authoritative
+  (<a href="audit.html"><code>AUDIT.md</code></a>), the prototype is the pre-decision reference until <a href="client-asks.html"><code>CLIENT-ASKS.md</code></a> #1 is
+  answered.</li>
+</ul>
+<footer>Source: <code>discountdirect/GATE.md</code>, rendered by <code>build-docs.py</code>. Token names follow GDS 6.5.0 roles (<code>GDS-TOKEN-MAP.md</code>).</footer>
+</div></body></html>

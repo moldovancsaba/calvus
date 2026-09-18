@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>DiscountDirect — project documentation</title>
+<style>
+:root{--gds-bg-canvas:#f8fafc;--gds-bg-surface:#ffffff;--gds-bg-inverse:#111827;--gds-text-body:#111827;--gds-text-meta:#64748b;--gds-border-card:#e2e8f0;--gds-brand-accent:#3b5bdb;--gds-brand-accent-tint:#e7ecfb;--gds-radius-card:14px}
+*{box-sizing:border-box}
+body{margin:0;background:var(--gds-bg-canvas);color:var(--gds-text-body);font:15.5px/1.6 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;padding-block:0 64px;padding-inline:clamp(16px,4vw,40px)}
+.wrap{max-width:76ch;margin-inline:auto}
+.top{display:flex;flex-wrap:wrap;gap:8px 18px;align-items:center;padding:16px 0;border-bottom:1px solid var(--gds-border-card);font-size:13px;color:var(--gds-text-meta)}
+.top b{color:var(--gds-text-body)} .top a{color:var(--gds-brand-accent);text-decoration:none;min-height:44px;display:inline-flex;align-items:center} .top a.on{color:var(--gds-text-body);font-weight:600}
+h1{font-size:clamp(26px,5vw,38px);line-height:1.15;margin:32px 0 10px;letter-spacing:-.01em}
+h2{font-size:22px;margin:44px 0 10px;padding-top:18px;border-top:1px solid var(--gds-border-card)}
+h3{font-size:17px;margin:26px 0 8px}
+p{margin:0 0 12px} li{margin:4px 0} strong{font-weight:600}
+code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.86em;background:var(--gds-brand-accent-tint);padding:1px 5px;border-radius:5px}
+pre{background:var(--gds-bg-inverse);color:#f8fafc;padding:16px;border-radius:var(--gds-radius-card);overflow-x:auto;font-size:13px;line-height:1.5} pre code{background:none;color:inherit;padding:0;font-size:inherit}
+.tbl{overflow-x:auto;margin:12px 0 20px;border:1px solid var(--gds-border-card);border-radius:var(--gds-radius-card);background:var(--gds-bg-surface)}
+table{border-collapse:collapse;width:100%;font-size:13.5px;min-width:560px}
+th{text-align:left;font-weight:600;background:var(--gds-bg-canvas);padding:10px 12px;border-bottom:1px solid var(--gds-border-card);font-size:12px;letter-spacing:.04em;text-transform:uppercase;color:var(--gds-text-meta)}
+td{padding:10px 12px;border-top:1px solid var(--gds-border-card);vertical-align:top}
+a{color:var(--gds-brand-accent)}
+footer{margin-top:48px;padding-top:16px;border-top:1px solid var(--gds-border-card);font-size:12px;color:var(--gds-text-meta)}
+</style>
+</head>
+<body><div class="wrap">
+<div class="top"><b>DiscountDirect</b><a href="docs.html" class=on>Overview</a><a href="bemutato.html">Bemutató</a><a href="executive.html">Executive summary</a><a href="research.html">Research</a><a href="audit.html">Audit</a><a href="sources.html">Sources</a><a href="business-logic.html">Business logic</a><a href="design.html">Design</a><a href="build-log.html">Build log</a><a href="gate.html">Gate</a><a href="client-asks.html">Client asks</a><a href="ssot.html">SSOT</a><a href="architecture.html">Architecture</a><a href="technical-design.html">Technical design</a><a href="implementation-plan.html">Implementation plan</a><a href="token-map.html">Token map</a><a href="index.html">Open the prototype →</a><a href="../index.html">Calvus Hub</a></div>
+<h1>DiscountDirect — project documentation</h1>
+<p>Everything next to the prototype: the idea and its evidence, the rules, the engineering
+package, and — added 2026-09-18 — the customer side that the standard Calvus structure
+requires. Files stay flat in this folder (every rendered URL is live and stays); this index
+maps the standard slots onto them and is the process log.</p>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>Slot</th>
+<th>File</th>
+<th>What it holds</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Presentation</td>
+<td><code>bemutato.html</code></td>
+<td><strong>A megrendelőnek szóló bemutató, magyarul</strong> — mi ez, mit nézzenek, mi valódi, mit kérünk, hogyan tovább</td>
+</tr>
+<tr>
+<td>00 brief</td>
+<td><a href="executive.html"><code>EXECUTIVE.md</code></a></td>
+<td>The executive summary: problem, service, the nine levers, benefits, phases</td>
+</tr>
+<tr>
+<td>01 research</td>
+<td><a href="research.html"><code>RESEARCH.md</code></a></td>
+<td>Sourced research on offers, targeting, price, and every lever beyond price (74 links)</td>
+</tr>
+<tr>
+<td>02 audit</td>
+<td><a href="audit.html"><code>AUDIT.md</code></a></td>
+<td>What exists: the prototype measured, the documents, the outside implementation, where prototype and decisions diverge</td>
+</tr>
+<tr>
+<td>03 sources and assets</td>
+<td><a href="sources.html"><code>SOURCES.md</code></a></td>
+<td>Where the sample data and the research come from; what is fictional</td>
+</tr>
+<tr>
+<td>04 decisions</td>
+<td><a href="business-logic.html"><code>BUSINESS-LOGIC.md</code></a> §10 (D1–D26) and <a href="ssot.html"><code>SSOT.md</code></a> §5</td>
+<td>The product owner's decisions with consequences</td>
+</tr>
+<tr>
+<td>05 design</td>
+<td><a href="design.html"><code>DESIGN.md</code></a> + <a href="token-map.html"><code>GDS-TOKEN-MAP.md</code></a></td>
+<td>Screens, components, tokens named after GDS 6.5.0 roles</td>
+</tr>
+<tr>
+<td>06 build log</td>
+<td><a href="build-log.html"><code>BUILD-LOG.md</code></a></td>
+<td>Every build round with what was measured</td>
+</tr>
+<tr>
+<td>07 gate</td>
+<td><a href="gate.html"><code>GATE.md</code></a></td>
+<td>What is checked, the 2026-09-18 pass, deviations</td>
+</tr>
+<tr>
+<td>08 client asks</td>
+<td><a href="client-asks.html"><code>CLIENT-ASKS.md</code></a></td>
+<td>What only the product owner can supply</td>
+</tr>
+<tr>
+<td>10 SSOT</td>
+<td><a href="ssot.html"><code>SSOT.md</code></a></td>
+<td>Glossary, enums, entities, settings, decisions, rules, metrics</td>
+</tr>
+<tr>
+<td>11 architecture</td>
+<td><a href="architecture.html"><code>ARCHITECTURE.md</code></a></td>
+<td>Context, containers, flows, NFRs, the decided stack (D26), ADRs</td>
+</tr>
+<tr>
+<td>12 technical design</td>
+<td><a href="technical-design.html"><code>TECHNICAL-DESIGN.md</code></a></td>
+<td>Schema, state machines, API, algorithms, integrations</td>
+</tr>
+<tr>
+<td>13 implementation plan</td>
+<td><a href="implementation-plan.html"><code>IMPLEMENTATION-PLAN.md</code></a></td>
+<td>Milestones, issues with DoD, blocked register, Release 1</td>
+</tr>
+<tr>
+<td>14 token map</td>
+<td><a href="token-map.html"><code>GDS-TOKEN-MAP.md</code></a></td>
+<td>Prototype tokens → GDS 6.5.0</td>
+</tr>
+</tbody>
+</table></div>
+<p>Rendered pages: <code>docs.html</code> (this file), <code>bemutato.html</code>, <code>executive.html</code>, <code>research.html</code>,
+<code>audit.html</code>, <code>sources.html</code>, <code>business-logic.html</code>, <code>design.html</code>, <code>build-log.html</code>,
+<code>gate.html</code>, <code>client-asks.html</code>, <code>ssot.html</code>, <code>architecture.html</code>, <code>technical-design.html</code>,
+<code>implementation-plan.html</code> — generated by <code>build-docs.py</code> (<code>python3 discountdirect/build-docs.py</code>,
+needs the <code>markdown</code> package). The prototype is <code>index.html</code>.</p>
+<h2>Process log</h2>
+<p><strong>2026-08-25 — the prototype, in one day.</strong> Ten commits: the seller–buyer thread with offer
+cards; channels, flash campaigns and automated lists; a full screen per function with
+targeting and preview; the buyer view with its own inbox and per-channel delivery samples;
+sample data grown to eight buyers, 26 products, multi-year histories; the channel-aware
+timeline; a build version in the top bar.</p>
+<p><strong>2026-08-27 — tokens named after GDS 6.5.0 roles</strong> (<a href="token-map.html"><code>GDS-TOKEN-MAP.md</code></a>) for a 1:1 dev
+hand-off, naming only.</p>
+<p><strong>2026-09-17 — the documents, in one day.</strong> Business logic broken down for development;
+executive summary and research; research extended beyond price to every buying lever;
+the product owner's decisions D1–D8, then D9–D11 with the platform-template principle,
+D12–D14 with the engineering package (SSOT, architecture, technical design,
+implementation plan); the remaining open items decided as D15–D25 and Release 1 fixed;
+the engineering docs rebased on the existing implementation stack (D26); the owner marked
+the stack verified.</p>
+<p><strong>2026-09-18 — standard structure.</strong> The customer side written: <code>bemutato.html</code> (HU),
+<a href="audit.html"><code>AUDIT.md</code></a>, <a href="sources.html"><code>SOURCES.md</code></a>, <a href="design.html"><code>DESIGN.md</code></a>, <a href="build-log.html"><code>BUILD-LOG.md</code></a>, <a href="gate.html"><code>GATE.md</code></a>, <a href="client-asks.html"><code>CLIENT-ASKS.md</code></a>, this
+index. The first measured pass of the prototype at 375 px found 103 px of horizontal
+overflow on the chat screen and 12–17 tap targets under 44 px on every screen; one
+phone-width rule fixed both (v16), desktop untouched. Recorded in <a href="build-log.html"><code>BUILD-LOG.md</code></a>.</p>
+<p><strong>Next.</strong> The product owner's items in <a href="client-asks.html"><code>CLIENT-ASKS.md</code></a>; DD-000 on the implementation
+repo (outside this one).</p>
+<footer>Source: <code>discountdirect/README.md</code>, rendered by <code>build-docs.py</code>. Token names follow GDS 6.5.0 roles (<code>GDS-TOKEN-MAP.md</code>).</footer>
+</div></body></html>

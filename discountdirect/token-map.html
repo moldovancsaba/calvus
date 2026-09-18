@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>DiscountDirect — GDS token alignment</title>
+<style>
+:root{--gds-bg-canvas:#f8fafc;--gds-bg-surface:#ffffff;--gds-bg-inverse:#111827;--gds-text-body:#111827;--gds-text-meta:#64748b;--gds-border-card:#e2e8f0;--gds-brand-accent:#3b5bdb;--gds-brand-accent-tint:#e7ecfb;--gds-radius-card:14px}
+*{box-sizing:border-box}
+body{margin:0;background:var(--gds-bg-canvas);color:var(--gds-text-body);font:15.5px/1.6 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;padding-block:0 64px;padding-inline:clamp(16px,4vw,40px)}
+.wrap{max-width:76ch;margin-inline:auto}
+.top{display:flex;flex-wrap:wrap;gap:8px 18px;align-items:center;padding:16px 0;border-bottom:1px solid var(--gds-border-card);font-size:13px;color:var(--gds-text-meta)}
+.top b{color:var(--gds-text-body)} .top a{color:var(--gds-brand-accent);text-decoration:none;min-height:44px;display:inline-flex;align-items:center} .top a.on{color:var(--gds-text-body);font-weight:600}
+h1{font-size:clamp(26px,5vw,38px);line-height:1.15;margin:32px 0 10px;letter-spacing:-.01em}
+h2{font-size:22px;margin:44px 0 10px;padding-top:18px;border-top:1px solid var(--gds-border-card)}
+h3{font-size:17px;margin:26px 0 8px}
+p{margin:0 0 12px} li{margin:4px 0} strong{font-weight:600}
+code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.86em;background:var(--gds-brand-accent-tint);padding:1px 5px;border-radius:5px}
+pre{background:var(--gds-bg-inverse);color:#f8fafc;padding:16px;border-radius:var(--gds-radius-card);overflow-x:auto;font-size:13px;line-height:1.5} pre code{background:none;color:inherit;padding:0;font-size:inherit}
+.tbl{overflow-x:auto;margin:12px 0 20px;border:1px solid var(--gds-border-card);border-radius:var(--gds-radius-card);background:var(--gds-bg-surface)}
+table{border-collapse:collapse;width:100%;font-size:13.5px;min-width:560px}
+th{text-align:left;font-weight:600;background:var(--gds-bg-canvas);padding:10px 12px;border-bottom:1px solid var(--gds-border-card);font-size:12px;letter-spacing:.04em;text-transform:uppercase;color:var(--gds-text-meta)}
+td{padding:10px 12px;border-top:1px solid var(--gds-border-card);vertical-align:top}
+a{color:var(--gds-brand-accent)}
+footer{margin-top:48px;padding-top:16px;border-top:1px solid var(--gds-border-card);font-size:12px;color:var(--gds-text-meta)}
+</style>
+</head>
+<body><div class="wrap">
+<div class="top"><b>DiscountDirect</b><a href="docs.html">Overview</a><a href="bemutato.html">Bemutató</a><a href="executive.html">Executive summary</a><a href="research.html">Research</a><a href="audit.html">Audit</a><a href="sources.html">Sources</a><a href="business-logic.html">Business logic</a><a href="design.html">Design</a><a href="build-log.html">Build log</a><a href="gate.html">Gate</a><a href="client-asks.html">Client asks</a><a href="ssot.html">SSOT</a><a href="architecture.html">Architecture</a><a href="technical-design.html">Technical design</a><a href="implementation-plan.html">Implementation plan</a><a href="token-map.html" class=on>Token map</a><a href="index.html">Open the prototype →</a><a href="../index.html">Calvus Hub</a></div>
+<h1>DiscountDirect — GDS token alignment</h1>
+<p><strong>What this is:</strong> the prototype's CSS custom properties are named after
+<a href="../../general-design-system">General Design System</a> <strong>6.5.0</strong> semantic roles, so the eventual
+production build maps 1:1 without a rename pass.</p>
+<p><strong>What this is not:</strong> DiscountDirect does <strong>not</strong> consume GDS. There is no npm dependency, no
+<code>@sovereignsquad/gds*</code> import, no React, no build step, and no <code>gds-adoption.json</code> — this repo's
+prototypes are deliberately dependency-free single HTML files (see the root <a href="docs.html"><code>README.md</code></a>). This is
+naming alignment only.</p>
+<h2>How the handoff works</h2>
+<p>The whole colour contract lives in one <code>:root</code> block in <code>index.html</code>. To move the markup onto real
+GDS, the dev build <strong>deletes that block</strong> and loads <code>@sovereignsquad/gds-theme/styles.css</code> instead;
+every <code>var(--gds-…)</code> reference in the file then resolves to the governed value. No selector, class
+or markup change is required for the token layer.</p>
+<h2>The mapping</h2>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>Prototype role (was)</th>
+<th>GDS 6.5.0 role</th>
+<th>Value here</th>
+<th>Source of the value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>--bg</code></td>
+<td><code>--gds-bg-canvas</code></td>
+<td><code>#f8fafc</code></td>
+<td>GDS canonical light</td>
+</tr>
+<tr>
+<td><code>--surface</code></td>
+<td><code>--gds-bg-surface</code></td>
+<td><code>#ffffff</code></td>
+<td>GDS canonical light</td>
+</tr>
+<tr>
+<td><em>(hardcoded <code>#141a2e</code>)</em></td>
+<td><code>--gds-bg-inverse</code></td>
+<td><code>#111827</code></td>
+<td>GDS canonical light</td>
+</tr>
+<tr>
+<td><code>--text</code></td>
+<td><code>--gds-text-body</code></td>
+<td><code>#111827</code></td>
+<td>GDS canonical light</td>
+</tr>
+<tr>
+<td><code>--muted</code></td>
+<td><code>--gds-text-meta</code></td>
+<td><code>#64748b</code></td>
+<td>GDS canonical light</td>
+</tr>
+<tr>
+<td><code>--line</code></td>
+<td><code>--gds-border-card</code></td>
+<td><code>#e2e8f0</code></td>
+<td>GDS canonical light</td>
+</tr>
+<tr>
+<td><em>(white on shell)</em></td>
+<td><code>--gds-text-on-inverse</code></td>
+<td><code>#f8fafc</code></td>
+<td>GDS canonical light</td>
+</tr>
+<tr>
+<td><code>--accent</code></td>
+<td><code>--gds-brand-accent</code></td>
+<td><code>#3b5bdb</code></td>
+<td>prototype-owned</td>
+</tr>
+<tr>
+<td><code>--accent-soft</code></td>
+<td><code>--gds-brand-accent-tint</code></td>
+<td><code>#e7ecfb</code></td>
+<td>prototype-owned</td>
+</tr>
+<tr>
+<td><code>--green</code></td>
+<td><code>--gds-state-success</code></td>
+<td><code>#2f9e6e</code></td>
+<td>prototype-owned</td>
+</tr>
+<tr>
+<td><code>--green-soft</code></td>
+<td><code>--gds-badge-soft-success</code></td>
+<td><code>#e3f5ec</code></td>
+<td>prototype-owned</td>
+</tr>
+<tr>
+<td><code>--red</code></td>
+<td><code>--gds-state-danger</code></td>
+<td><code>#d64545</code></td>
+<td>prototype-owned</td>
+</tr>
+<tr>
+<td><code>--red-soft</code></td>
+<td><code>--gds-badge-soft-danger</code></td>
+<td><code>#fbecec</code></td>
+<td>prototype-owned</td>
+</tr>
+<tr>
+<td><code>--amber</code></td>
+<td><code>--gds-state-warning</code></td>
+<td><code>#b07716</code></td>
+<td>prototype-owned</td>
+</tr>
+<tr>
+<td><code>--amber-soft</code></td>
+<td><code>--gds-badge-soft-warning</code></td>
+<td><code>#fdf3e0</code></td>
+<td>prototype-owned</td>
+</tr>
+<tr>
+<td><code>--radius</code></td>
+<td><code>--gds-radius-card</code></td>
+<td><code>14px</code></td>
+<td>prototype-owned</td>
+</tr>
+<tr>
+<td><code>--shadow</code></td>
+<td><code>--gds-elevation-card</code></td>
+<td><code>0 10px 30px rgba(28,35,51,.08)</code></td>
+<td>prototype-owned</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Why two sources.</strong> GDS 6.5.0 defines the <strong>structural</strong> roles (backgrounds, text, border,
+on-inverse) at <code>:root</code> as a governed default layer with a hard-gated contrast contract, so this
+prototype adopts those values verbatim — what you see here is what the dev build renders. GDS
+deliberately does <strong>not</strong> default the <strong>brand / state / accent</strong> roles when no preset is active,
+because their hue is a brand decision; those keep the prototype's own values until a brand theme or
+vibe preset is chosen. See <code>docs/SEMANTIC_ROLE_TOKENS.md</code> in the GDS repo.</p>
+<h2>Notes for the dev build</h2>
+<ul>
+<li><strong>Contrast is already GDS-gated</strong> for the structural pairs (<code>text-body</code> on <code>bg-surface</code> 17.74:1,
+  <code>text-meta</code> on <code>bg-surface</code> 4.76:1). The prototype-owned brand/state colours are <strong>not</strong> yet
+  checked against that bar — run <code>checkGdsContrast()</code> on them when a brand theme is picked.</li>
+<li>Roles used here that GDS also governs, if the components are adopted later:
+  <code>--gds-radius-pill</code> (the chips and toggles use <code>999px</code> literals), <code>--gds-space-*</code> (spacing is
+  still literal px), <code>--gds-focus-ring</code> (focus styling is currently the browser default).</li>
+<li>The Hungarian UI strings and all data are inline mock data — see the prototype note in the page
+  footer.</li>
+</ul>
+<footer>Source: <code>discountdirect/GDS-TOKEN-MAP.md</code>, rendered by <code>build-docs.py</code>. Token names follow GDS 6.5.0 roles (<code>GDS-TOKEN-MAP.md</code>).</footer>
+</div></body></html>
