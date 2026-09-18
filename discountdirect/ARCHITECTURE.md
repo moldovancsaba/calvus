@@ -1,6 +1,6 @@
 # DiscountDirect — architecture
 
-Version 1.0 · 2026-09-17. System context, containers, components, key flows, data and
+Version 1.1 · 2026-09-18. System context, containers, components, key flows, data and
 integration architecture, security, operations, the proposed stack and the architecture
 decision records. Definitions are in `ssot.html`; details in `technical-design.html`.
 
@@ -45,6 +45,11 @@ the outcome metrics every container serves (D12).
 
 ## 3. Containers (D26: the existing Next.js spine, extended)
 
+The diagram contains both current and target components. MongoDB, Resend, Cron, SSO,
+Socket.IO and Redis-backed frequency caps are implemented. Blob-backed artifacts,
+general Redis locks/counters, shop connectors, checkout hand-off and a separate
+reporting projection are planned.
+
 ```
 ┌──────────────────────────────────────────────────────────────┐
 │ Next.js 15 App Router on Vercel (Node 24)                     │
@@ -76,15 +81,15 @@ the outcome metrics every container serves (D12).
 |---|---|
 | Next.js app | seller console, buyer app, Server Actions, Route Handlers, webhook receivers, hand-off and coupon pages, cron entry points |
 | MongoDB Atlas | system of record: every platform-owned entity, the append-only `offer_events`, consent events, campaign reservations, the durable outbox |
-| Upstash Redis | frequency caps (R16), rate limits, flash counters (R10), idempotency locks, delivery throttling, worker coordination |
-| Vercel Blob | letter PDFs (R14), privacy exports, list PDFs, audit snapshots |
+| Upstash Redis | **Implemented:** frequency-cap acceleration. **Planned:** rate limits, flash counters, idempotency locks, delivery throttling and worker coordination. MongoDB remains authoritative. |
+| Vercel Blob | **Foundation only:** private key and signed-read contracts. Letter PDFs, privacy exports, list PDFs and audit snapshots remain planned. |
 | Resend | outbound e-mail, inbound reply-to-thread, status webhooks, unsubscribe handling |
 | Vercel Cron + outbox | scheduled and event-driven work: fan-out, scheduler, deliveries, write-backs, retention, rollups |
 | Socket.IO | live updates in open threads; never the source of truth |
 | DoneIsBetter SSO | authentication for seller staff and buyers |
 | Decision engine | relevance, reason codes, replenishment (rules in Release 1); uplift and discount depth later |
-| Reporting read model | SSOT §7 metrics, incrementality and margin analytics |
-| Shop connectors | modules per platform behind one interface, called from cron workers and webhook handlers |
+| Reporting read model | **Planned:** SSOT §7 rollups, incrementality and margin analytics. Current campaign measurement is derived on demand from MongoDB purchases. |
+| Shop connectors | **Planned:** modules per platform behind one interface, called from cron workers and webhook handlers. |
 
 ## 4. Core modules (inside the API)
 
@@ -143,9 +148,11 @@ and the seller marks it posted (R14).
 change is effective for the next send; objection stops all marketing under legitimate
 interest for that scope (R15).
 
-**F7 Measurement.** Every offer carries `holdout`, `model_version`, `template_id`,
-`override_version`, `reason_source`, `channel`, `trigger` → nightly rollups compute the
-SSOT §7 metrics → console dashboards read the rollups.
+**F7 Measurement.** Current flash campaigns freeze deterministic treatment and holdout
+membership. Seller reporting compares distinct customers with imported purchases of the
+same product during the campaign window and marks results comparable only when both
+groups have at least ten members. Per-offer model/template attribution, nightly metric
+rollups and incremental-margin dashboards are planned.
 
 ## 6. Data architecture
 
@@ -156,14 +163,14 @@ SSOT §7 metrics → console dashboards read the rollups.
 - **Outbox pattern**: state changes and their side effects are committed in one
   Mongoose transaction; Vercel Cron workers relay outbox rows. Consumers are idempotent
   by `event_id`, with short-lived Redis locks for concurrency.
-- **Counters** for flash limits and frequency caps live in Upstash Redis for speed;
-  campaign reservations and `accepted_total` in MongoDB are the truth on reconciliation
-  (§4 A5 of the technical design).
+- **Counters**: Redis accelerates frequency caps today; MongoDB sent-delivery history
+  rebuilds missing counters. Flash inventory is enforced by MongoDB campaign balances
+  and unique reservations. Redis flash counters remain planned.
 - **Retention**: per market (`Market.retention_days`); a nightly job anonymises
   relationships past retention with no consent and no order in the window.
-- **Reporting**: a read model separate from the transactional collections — MongoDB
-  materialised aggregates first, a Postgres projection (Neon) if analytics outgrow them;
-  the primary database does not change until the product model settles (D26).
+- **Reporting**: current campaign measurement is computed from transactional campaign
+  snapshots and purchases. A separate materialised read model is planned before any
+  primary-database change (D26–D27).
 
 ## 7. Integration architecture
 
@@ -215,8 +222,8 @@ business logic is complete.
 |---|---|---|
 | App and API | Next.js 15 App Router on Vercel, Node 24; Server Actions; Route Handlers | — |
 | Database | MongoDB Atlas via Mongoose: transactions, optimistic versions, idempotent imports, outbox, campaign reservations, consent and offer events | reporting read model (materialised aggregates or Neon projection) |
-| Cache and counters | — | **Upstash Redis**: caps, rate limits, flash counters, idempotency locks, throttling, worker coordination |
-| Object storage | — | **Vercel Blob**: letters, exports, PDFs, audit snapshots |
+| Cache and counters | Upstash Redis client/key policy; frequency caps wired with MongoDB authority | rate limits, flash counters, idempotency locks, throttling, worker coordination |
+| Object storage | Vercel Blob client, private-key policy and signed-read foundation | wire letters, exports, PDFs and audit snapshots |
 | E-mail | Resend: outbound, inbound replies, webhook verification, unsubscribe | keep; rotate the webhook secret |
 | Jobs | Vercel Cron + durable outbox | — |
 | Realtime | Socket.IO over Vercel with durable HTTP fallback | convenience layer only |
@@ -242,7 +249,7 @@ The earlier documents remain the business requirements; the stack is the one abo
 | ADR-7 | Consent scope is a seller setting (per seller or inbox) | accepted (D11) |
 | ADR-8 | Rules-based decision engine in milestone 1; model-based from milestone 2 behind the same interface | accepted |
 | ADR-9 | Greenfield stack (Fastify, Vite, PostgreSQL, BullMQ, SES) | superseded by ADR-14 |
-| ADR-14 | Extend the existing Next.js / Vercel / MongoDB / Resend / SSO implementation; add Upstash Redis and Vercel Blob; reporting read model before any primary-database change; realtime never authoritative | accepted (D26) |
+| ADR-14 | Extend the existing Next.js / Vercel / MongoDB / Resend / SSO implementation. Redis frequency caps are live; remaining Redis uses and Blob artifacts are incremental additions. Add a reporting read model before any primary-database change; realtime is never authoritative. | accepted, updated (D26–D27) |
 | ADR-11 | Release 1 is Hungary only; markets are configuration | accepted (D17) |
 | ADR-12 | Connectors in the order Shoprenter, UNAS, WooCommerce, Shopify | accepted (D18) |
 | ADR-13 | Seller print mode first; platform print service through a swappable partner | accepted (D15) |

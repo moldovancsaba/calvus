@@ -5,13 +5,13 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>DiscountDirect — architecture</title>
 <style>
-:root{--gds-bg-canvas:#f8fafc;--gds-bg-surface:#ffffff;--gds-bg-inverse:#111827;--gds-text-body:#111827;--gds-text-meta:#64748b;--gds-border-card:#e2e8f0;--gds-brand-accent:#3b5bdb;--gds-brand-accent-tint:#e7ecfb;--gds-radius-card:14px}
+:root{--gds-bg-canvas:#f8fafc;--gds-bg-surface:#ffffff;--gds-bg-inverse:#111827;--gds-text-body:#111827;--gds-text-meta:#64748b;--gds-border-card:#e2e8f0;--gds-brand-accent:#3b5bdb;--gds-brand-accent-tint:#e7ecfb;--gds-radius-card:8px}
 *{box-sizing:border-box}
-body{margin:0;background:var(--gds-bg-canvas);color:var(--gds-text-body);font:15.5px/1.6 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;padding-block:0 64px;padding-inline:clamp(16px,4vw,40px)}
+body{margin:0;background:var(--gds-bg-canvas);color:var(--gds-text-body);font:15.5px/1.6 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;padding:0 24px 64px}
 .wrap{max-width:76ch;margin-inline:auto}
 .top{display:flex;flex-wrap:wrap;gap:8px 18px;align-items:center;padding:16px 0;border-bottom:1px solid var(--gds-border-card);font-size:13px;color:var(--gds-text-meta)}
 .top b{color:var(--gds-text-body)} .top a{color:var(--gds-brand-accent);text-decoration:none;min-height:44px;display:inline-flex;align-items:center} .top a.on{color:var(--gds-text-body);font-weight:600}
-h1{font-size:clamp(26px,5vw,38px);line-height:1.15;margin:32px 0 10px;letter-spacing:-.01em}
+h1{font-size:38px;line-height:1.15;margin:32px 0 10px;letter-spacing:0}
 h2{font-size:22px;margin:44px 0 10px;padding-top:18px;border-top:1px solid var(--gds-border-card)}
 h3{font-size:17px;margin:26px 0 8px}
 p{margin:0 0 12px} li{margin:4px 0} strong{font-weight:600}
@@ -19,7 +19,7 @@ code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.86em;bac
 pre{background:var(--gds-bg-inverse);color:#f8fafc;padding:16px;border-radius:var(--gds-radius-card);overflow-x:auto;font-size:13px;line-height:1.5} pre code{background:none;color:inherit;padding:0;font-size:inherit}
 .tbl{overflow-x:auto;margin:12px 0 20px;border:1px solid var(--gds-border-card);border-radius:var(--gds-radius-card);background:var(--gds-bg-surface)}
 table{border-collapse:collapse;width:100%;font-size:13.5px;min-width:560px}
-th{text-align:left;font-weight:600;background:var(--gds-bg-canvas);padding:10px 12px;border-bottom:1px solid var(--gds-border-card);font-size:12px;letter-spacing:.04em;text-transform:uppercase;color:var(--gds-text-meta)}
+th{text-align:left;font-weight:600;background:var(--gds-bg-canvas);padding:10px 12px;border-bottom:1px solid var(--gds-border-card);font-size:12px;letter-spacing:0;text-transform:uppercase;color:var(--gds-text-meta)}
 td{padding:10px 12px;border-top:1px solid var(--gds-border-card);vertical-align:top}
 a{color:var(--gds-brand-accent)}
 footer{margin-top:48px;padding-top:16px;border-top:1px solid var(--gds-border-card);font-size:12px;color:var(--gds-text-meta)}
@@ -28,7 +28,7 @@ footer{margin-top:48px;padding-top:16px;border-top:1px solid var(--gds-border-ca
 <body><div class="wrap">
 <div class="top"><b>DiscountDirect</b><a href="docs.html">Overview</a><a href="bemutato.html">Bemutató</a><a href="executive.html">Executive summary</a><a href="research.html">Research</a><a href="audit.html">Audit</a><a href="sources.html">Sources</a><a href="business-logic.html">Business logic</a><a href="design.html">Design</a><a href="build-log.html">Build log</a><a href="gate.html">Gate</a><a href="client-asks.html">Client asks</a><a href="ssot.html">SSOT</a><a href="architecture.html" class=on>Architecture</a><a href="technical-design.html">Technical design</a><a href="implementation-plan.html">Implementation plan</a><a href="token-map.html">Token map</a><a href="index.html">Open the prototype →</a><a href="../index.html">Calvus Hub</a></div>
 <h1>DiscountDirect — architecture</h1>
-<p>Version 1.0 · 2026-09-17. System context, containers, components, key flows, data and
+<p>Version 1.1 · 2026-09-18. System context, containers, components, key flows, data and
 integration architecture, security, operations, the proposed stack and the architecture
 decision records. Definitions are in <code>ssot.html</code>; details in <code>technical-design.html</code>.</p>
 <h2>1. System context</h2>
@@ -105,6 +105,10 @@ the outcome metrics every container serves (D12).</p>
 </tbody>
 </table></div>
 <h2>3. Containers (D26: the existing Next.js spine, extended)</h2>
+<p>The diagram contains both current and target components. MongoDB, Resend, Cron, SSO,
+Socket.IO and Redis-backed frequency caps are implemented. Blob-backed artifacts,
+general Redis locks/counters, shop connectors, checkout hand-off and a separate
+reporting projection are planned.</p>
 <pre><code>┌──────────────────────────────────────────────────────────────┐
 │ Next.js 15 App Router on Vercel (Node 24)                     │
 │  • server-rendered seller console and buyer app (GDS/Mantine) │
@@ -148,11 +152,11 @@ the outcome metrics every container serves (D12).</p>
 </tr>
 <tr>
 <td>Upstash Redis</td>
-<td>frequency caps (R16), rate limits, flash counters (R10), idempotency locks, delivery throttling, worker coordination</td>
+<td><strong>Implemented:</strong> frequency-cap acceleration. <strong>Planned:</strong> rate limits, flash counters, idempotency locks, delivery throttling and worker coordination. MongoDB remains authoritative.</td>
 </tr>
 <tr>
 <td>Vercel Blob</td>
-<td>letter PDFs (R14), privacy exports, list PDFs, audit snapshots</td>
+<td><strong>Foundation only:</strong> private key and signed-read contracts. Letter PDFs, privacy exports, list PDFs and audit snapshots remain planned.</td>
 </tr>
 <tr>
 <td>Resend</td>
@@ -176,11 +180,11 @@ the outcome metrics every container serves (D12).</p>
 </tr>
 <tr>
 <td>Reporting read model</td>
-<td>SSOT §7 metrics, incrementality and margin analytics</td>
+<td><strong>Planned:</strong> SSOT §7 rollups, incrementality and margin analytics. Current campaign measurement is derived on demand from MongoDB purchases.</td>
 </tr>
 <tr>
 <td>Shop connectors</td>
-<td>modules per platform behind one interface, called from cron workers and webhook handlers</td>
+<td><strong>Planned:</strong> modules per platform behind one interface, called from cron workers and webhook handlers.</td>
 </tr>
 </tbody>
 </table></div>
@@ -293,9 +297,11 @@ and the seller marks it posted (R14).</p>
 <code>consent_scope</code>, D11) → changes channels, frequency, muted categories, or objects → the
 change is effective for the next send; objection stops all marketing under legitimate
 interest for that scope (R15).</p>
-<p><strong>F7 Measurement.</strong> Every offer carries <code>holdout</code>, <code>model_version</code>, <code>template_id</code>,
-<code>override_version</code>, <code>reason_source</code>, <code>channel</code>, <code>trigger</code> → nightly rollups compute the
-SSOT §7 metrics → console dashboards read the rollups.</p>
+<p><strong>F7 Measurement.</strong> Current flash campaigns freeze deterministic treatment and holdout
+membership. Seller reporting compares distinct customers with imported purchases of the
+same product during the campaign window and marks results comparable only when both
+groups have at least ten members. Per-offer model/template attribution, nightly metric
+rollups and incremental-margin dashboards are planned.</p>
 <h2>6. Data architecture</h2>
 <ul>
 <li><strong>System of record</strong> is MongoDB Atlas (D26). Shop-owned entities (<code>Product</code>,
@@ -305,14 +311,14 @@ SSOT §7 metrics → console dashboards read the rollups.</p>
 <li><strong>Outbox pattern</strong>: state changes and their side effects are committed in one
   Mongoose transaction; Vercel Cron workers relay outbox rows. Consumers are idempotent
   by <code>event_id</code>, with short-lived Redis locks for concurrency.</li>
-<li><strong>Counters</strong> for flash limits and frequency caps live in Upstash Redis for speed;
-  campaign reservations and <code>accepted_total</code> in MongoDB are the truth on reconciliation
-  (§4 A5 of the technical design).</li>
+<li><strong>Counters</strong>: Redis accelerates frequency caps today; MongoDB sent-delivery history
+  rebuilds missing counters. Flash inventory is enforced by MongoDB campaign balances
+  and unique reservations. Redis flash counters remain planned.</li>
 <li><strong>Retention</strong>: per market (<code>Market.retention_days</code>); a nightly job anonymises
   relationships past retention with no consent and no order in the window.</li>
-<li><strong>Reporting</strong>: a read model separate from the transactional collections — MongoDB
-  materialised aggregates first, a Postgres projection (Neon) if analytics outgrow them;
-  the primary database does not change until the product model settles (D26).</li>
+<li><strong>Reporting</strong>: current campaign measurement is computed from transactional campaign
+  snapshots and purchases. A separate materialised read model is planned before any
+  primary-database change (D26–D27).</li>
 </ul>
 <h2>7. Integration architecture</h2>
 <ul>
@@ -379,13 +385,13 @@ business logic is complete.</p>
 </tr>
 <tr>
 <td>Cache and counters</td>
-<td>—</td>
-<td><strong>Upstash Redis</strong>: caps, rate limits, flash counters, idempotency locks, throttling, worker coordination</td>
+<td>Upstash Redis client/key policy; frequency caps wired with MongoDB authority</td>
+<td>rate limits, flash counters, idempotency locks, throttling, worker coordination</td>
 </tr>
 <tr>
 <td>Object storage</td>
-<td>—</td>
-<td><strong>Vercel Blob</strong>: letters, exports, PDFs, audit snapshots</td>
+<td>Vercel Blob client, private-key policy and signed-read foundation</td>
+<td>wire letters, exports, PDFs and audit snapshots</td>
 </tr>
 <tr>
 <td>E-mail</td>
@@ -488,8 +494,8 @@ The earlier documents remain the business requirements; the stack is the one abo
 </tr>
 <tr>
 <td>ADR-14</td>
-<td>Extend the existing Next.js / Vercel / MongoDB / Resend / SSO implementation; add Upstash Redis and Vercel Blob; reporting read model before any primary-database change; realtime never authoritative</td>
-<td>accepted (D26)</td>
+<td>Extend the existing Next.js / Vercel / MongoDB / Resend / SSO implementation. Redis frequency caps are live; remaining Redis uses and Blob artifacts are incremental additions. Add a reporting read model before any primary-database change; realtime is never authoritative.</td>
+<td>accepted, updated (D26–D27)</td>
 </tr>
 <tr>
 <td>ADR-11</td>
@@ -508,5 +514,5 @@ The earlier documents remain the business requirements; the stack is the one abo
 </tr>
 </tbody>
 </table></div>
-<footer>Source: <code>discountdirect/ARCHITECTURE.md</code>, rendered by <code>build-docs.py</code>. Token names follow GDS 6.5.0 roles (<code>GDS-TOKEN-MAP.md</code>).</footer>
+<footer>Source: <code>discountdirect/ARCHITECTURE.md</code>, rendered by <code>build-docs.py</code>. Documentation tokens are mapped in <code>GDS-TOKEN-MAP.md</code>; the application implementation uses GDS 6.7.0.</footer>
 </div></body></html>

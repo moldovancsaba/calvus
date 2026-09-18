@@ -1,14 +1,20 @@
 # DiscountDirect — single source of truth (SSOT)
 
-Version 1.0 · 2026-09-17. This document is the canonical definition of every term,
+Version 1.1 · 2026-09-18. This document is the canonical definition of every term,
 entity, enumeration, setting, rule, decision and metric in DiscountDirect. When two
 documents disagree, this one wins; a change to a definition lands here first, with a
 version bump, and the other documents follow.
 
-**Precedence:** SSOT → `business-logic.html` (rules as implemented and decided) →
-`architecture.html` → `technical-design.html` → `implementation-plan.html` →
+**Precedence:** SSOT → the implementation repository's `docs/implementation-baseline.md`
+(evidence of deployed code) → `business-logic.html` → `architecture.html` →
+`technical-design.html` → `implementation-plan.html` →
 `executive.html` / `research.html` (context). The prototype at `index.html` is an
 illustration of the rules, never their definition.
+
+**Status vocabulary:** **implemented** means present in the production code path;
+**foundation** means a client, schema or contract exists but no complete user workflow
+depends on it; **planned** means target behavior only; **superseded** must not guide new
+work. Target-state definitions below never imply that a feature is implemented.
 
 ## 1. Glossary
 
@@ -50,9 +56,9 @@ serve that purpose.
 
 | Enum | Values | Notes |
 |---|---|---|
-| `OfferKind` | `standard`, `flash`, `list_item`, `reorder`, `reminder`, `progress`, `surprise`, `back_in_stock`, `price_drop`, `birthday`, `sold_out_notice` | The first three exist in the prototype; the rest are decided message types from the research. |
-| `OfferStatus` | `draft`, `pending`, `accepted`, `declined`, `expired`, `sold_out`, `redeemed`, `withdrawn` | `accepted`, `declined`, `expired`, `sold_out`, `redeemed`, `withdrawn` are terminal. |
-| `Channel` | `chat`, `email`, `mailing`, `newsletter`, `rcs`, `whatsapp` | Release 1: the first four (D20); `whatsapp` then `rcs` in Release 2. |
+| `OfferKind` | Implemented origins: personal offer, flash campaign, automated list. Planned kinds: `reorder`, `reminder`, `progress`, `surprise`, `back_in_stock`, `price_drop`, `birthday`, `sold_out_notice` | The current `Offer` model does not persist a general kind enum; origin is represented by campaign/list links and events. |
+| `OfferStatus` | Implemented: `pending`, `accepted`, `declined`, `expired`, `cancelled`. Planned: `draft`, `sold_out`, `withdrawn`, `redeemed` | Coupon redemption is currently a separate durable state, not an offer status. |
+| `Channel` | Implemented offer inputs: `email`, `postal`; implemented delivery transport also includes `in_app`. Planned: `whatsapp`, `rcs`; newsletter is a list/automation surface, not a transport enum. | `chat` is represented by durable conversation events rather than a marketing delivery channel. |
 | `Frequency` | `weekly`, `biweekly`, `monthly`, `event` | `event` = trigger-driven journey step. |
 | `DiscountMode` | `steps`, `free` | D5. Seller setting. |
 | `InboxMode` | `marketplace`, `per_seller` | D3. Seller setting. |
@@ -63,15 +69,17 @@ serve that purpose.
 | `LegalBasis` | `legitimate_interest`, `consent` | D8. Per market and channel. |
 | `TemplateKind` | `offer`, `campaign`, `list`, `journey`, `sold_out`, `compensation`, `timing`, `consent`, `discount` | D10. |
 | `OperatingMode` | `predefined`, `advanced` | D10, D13. `predefined` follows the platform rule set; `advanced` applies the seller's own values, above the legal floor. |
-| `DeliveryStatus` | `queued`, `sent`, `delivered`, `opened`, `clicked`, `failed`, `bounced`, `printed`, `posted` | The last two are for `mailing`. |
-| `Segment` | `new`, `returning`, `loyal` | new: 1 order; returning: 2–4; loyal: ≥5 or tenure ≥ 24 months with ≥3 orders. |
+| `DeliveryStatus` | Implemented: `queued`, `processing`, `sent`, `unsupported`, `suppressed`, `retryable_failed`, `cancelled`, `bounced`, `complained`. Planned provider/print states: `delivered`, `opened`, `clicked`, `printed`, `posted`. | MongoDB outbox state is authoritative. |
+| `Segment` | `new`, `returning`, `loyal` | Implemented v1: `new` ≤1 active order; `returning` ≥2; `loyal` ≥4 with at least 180 days between first and last active order. |
 | `ReasonSource` | `engine`, `seller` | D4. |
 | `Role` | `seller_admin`, `seller_agent`, `buyer`, `platform_ops` | |
 
 ## 3. Canonical entities and ownership
 
-"Owner" is the system of record. The shop connector mirrors the seller's shop data; the
-platform never edits it.
+"Owner" is the system of record. This table is the canonical target model. Fields not
+present in `technical-design.html` §1b are planned and must not be represented as live.
+Shop connectors and write-back are planned; current products and purchases arrive
+through seller-scoped application/import workflows.
 
 | Entity | Key fields | Owner |
 |---|---|---|
@@ -153,7 +161,8 @@ Buyer-level preferences: `frequency_pref` (per seller or inbox per `consent_scop
 | D23 | Salutation (recommended, applied) | Neutral formal salutation **"Tisztelt {teljes név}!"** on letters and e-mails; no inference of gender from names | BL §3.7, DD-052 |
 | D24 | Reason experiments (recommended, applied) | The reason is always present (D14); experiments compare **engine wording against seller wording** only, never reason against no reason | DD-091 |
 | D25 | Release 1 scope (recommended, applied) | The issue list in `implementation-plan.html` §7; everything else is Release 1.1 or later | plan §7 |
-| D26 | Stack: extend the existing implementation, do not rewrite (verified, 2026-09-17) | The product already has a working spine: **Next.js 15 App Router on Vercel (Node 24), MongoDB Atlas with Mongoose transactions, DoneIsBetter SSO (local password routes fail closed), Resend for outbound and inbound e-mail with webhook verification and unsubscribe, Vercel Cron with a durable outbox, Socket.IO realtime with a durable HTTP fallback, the SovereignSquad GDS with Mantine under it.** Target: add **Upstash Redis** (frequency caps, rate limits, flash counters, idempotency locks, throttling, worker coordination) and **Vercel Blob** (letters, exports, PDFs, audit snapshots); keep Resend; realtime is a convenience layer, the durable MongoDB event log is authoritative; add a **reporting read model** (MongoDB materialised aggregates, or a Postgres projection) before any primary-database change. The greenfield stack of the first proposal (Fastify, Vite, PostgreSQL, BullMQ, SES) is withdrawn. | ADR-14; architecture §3, §10; TD §1b, §3 |
+| D26 | Stack: extend the existing implementation, do not rewrite (verified, 2026-09-18) | The working spine is **Next.js 15 App Router on Vercel (Node 24), MongoDB Atlas with Mongoose transactions, DoneIsBetter SSO, Resend, Vercel Cron with a durable outbox, Socket.IO with durable HTTP fallback, and GDS 6.7.0**. Upstash Redis and Vercel Blob foundations now exist; Redis frequency caps are implemented with MongoDB delivery history authoritative, while general Redis locks/counters and Blob-backed artifacts remain planned. A separate reporting read model remains planned. | ADR-14; architecture §3, §10; TD §1b, §3 |
+| D27 | Implementation alignment (verified, 2026-09-18) | Live business capabilities include tenant-safe SSO workspaces, catalog and purchase imports, consent/privacy, deterministic recommendations and segments, personal offers, flash reservations, automations/lists, Resend delivery and inbound replies, coupons, HU market settings, frequency caps, pricing guardrails, 30-day reference-price evidence and deterministic campaign holdout reporting. Connectors, checkout hand-off, postal PDF/partner delivery, richer journeys/channels, membership perks, incremental-margin analytics and a separate reporting projection remain planned. | implementation baseline; architecture §3; TD §1b |
 
 ### Open questions
 
@@ -161,7 +170,7 @@ None for Release 1. O1 → D13, O2 → D15, O3 → D14, A1 → D16 → D26. D15�
 recommended and applied on 2026-09-17 so that Release 1 is fully specified; the product
 owner may overrule any of them, in which case this register changes first.
 
-**Verification note (D26).** D26 was verified on 2026-09-17 against the implementation
+**Verification note (D26–D27).** Verified on 2026-09-18 against the implementation
 repository at `/Users/Shared/Projects/discountdirect`. The check covered `package.json`,
 `src/lib/database-core.ts`, `vercel.json`, `docs/architecture.md`, the App Router route
 tree and the domain model/service folders. DD-000 keeps that implementation inventory
@@ -175,7 +184,7 @@ current and keeps this SSOT plus the technical design aligned with the code.
 | R2 | An offer is made once: sending removes the recommendation | `Recommendation.state := sent` | BL §3.1 |
 | R3 | Buyer sees `reason_seller ?? reason_engine`; audit keeps both | | D4 |
 | R4 | Discount validity | `steps`: `pct ∈ discount_steps`; `free`: `floor ≤ pct ≤ max`; both: `price ≥ cost × (1 + margin_floor)` when cost known; `pct ≤ per_segment_max[segment]` | D5 |
-| R5 | Price | `price = round(orig × (1 − pct/100))` in the market currency's minor unit | BL §3.1 |
+| R5 | Price | `discount_base = min(current_price, lowest_price_in_preceding_30_days)`; `price = round(discount_base × (1 − pct/100))` in the market currency's minor unit. Legacy records may use their frozen original-price fallback. | BL §3.1, D27 |
 | R6 | Only the buyer, only on seller-sent offers, only while pending, may accept or decline | | BL §3.3 |
 | R7 | Accept → hand-off | `checkout_url = sign({offer_id, price, expires: now + price_lock_minutes})`; `order_ref` set by write-back; offer stays `accepted` until write-back or lock expiry | D1 |
 | R8 | Expiry | `flash`: `expires_at = sent_at + limit_hours`; a pending offer past `expires_at` becomes `expired` | BL §3.5 |
@@ -189,14 +198,18 @@ current and keeps this SSOT plus the technical design aligned with the code.
 | R16 | Frequency cap | counted per `(buyer, seller, channel)` if `consent_scope = per_seller`, else per `(buyer, channel)`; a send that would exceed the cap is deferred to the next window, never dropped silently, and logged | D11, research §6 |
 | R17 | Per-buyer list split | `items(buyer) = {p ∈ automation.product_ids : buyer ∈ Relevance(p)}`; buyers with `items = ∅` are skipped | BL §3.6 |
 | R18 | Reference price | any struck-through price must be the lowest price of the previous `Market.reference_price_days` (30) | research §5 |
-| R19 | Holdout | `holdout = hash(buyer_id, campaign_id\|automation_id) mod 100 < holdout_pct`; holdout buyers get no offer and are excluded from R16 counting | research §4 |
+| R19 | Holdout | `bucket = uint32(SHA-256(buyer_id + ":" + scope)[0..3]) mod 10000`; holdout when `bucket < holdout_pct × 100`. Scope is `"pool"` for pooled mode or the campaign key for per-campaign mode. Holdout buyers receive no offer, event or delivery and are excluded from R16 counting. | implementation, D21, D27 |
 | R21 | Transparency | every rendering of an offer (chat card, e-mail, letter, newsletter, sold-out notice) includes a rules block listing: expiry, quantity limits (total and per buyer), first-come-first-served, compensation if configured, reference price basis, the reason | D14 |
 | R20 | Consumable replenishment | `next_runout = last_order_at + median(interval of last n orders of the product, n ≥ 2) ?? product.replenish_days`; reminder at `next_runout − 6 days` | research §2.2 |
 
 ## 7. Metric definitions
 
+Only **campaign purchase-rate difference** is implemented today. Metrics requiring
+cost, connector write-back, membership or a reporting projection are planned.
+
 | Metric | Definition |
 |---|---|
+| Campaign purchase-rate difference (implemented) | For the same campaign product and campaign window: distinct purchasing customers / frozen group size for treatment minus the same rate for holdout. Display as comparable only when both frozen groups contain at least 10 members; this is measured association, not a causal or margin claim. |
 | Incremental contribution margin | `Σ margin(orders, treated) / |treated| − Σ margin(orders, holdout) / |holdout|`, per campaign or automation, over the attribution window (14 days) |
 | Take rate | `accepted / (pending + accepted + declined + expired + sold_out)` per kind, moment and channel |
 | No-discount repeat share | `orders from reorder/reminder offers with pct = 0 / all orders attributed to the platform` |
@@ -213,7 +226,7 @@ current and keeps this SSOT plus the technical design aligned with the code.
 | Document | Purpose | Changes when |
 |---|---|---|
 | `ssot.html` | definitions, enums, settings, decisions, rules, metrics | any definition changes |
-| `business-logic.html` | rules as implemented in the prototype and as decided | a rule or decision changes |
+| `business-logic.html` | deployed business logic, target rules and the explicit gap register | a rule, implementation status or decision changes |
 | `architecture.html` | system context, containers, flows, NFRs, stack, ADRs | an architectural decision changes |
 | `technical-design.html` | schema, state machines, API, algorithms, integrations | a design detail changes |
 | `implementation-plan.html` | milestones, issues, DoD | scope or sequencing changes |

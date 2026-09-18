@@ -1,7 +1,19 @@
 # DiscountDirect — business logic breakdown
 
-Derived from the prototype at `discountdirect/index.html` (v15) on 2026-09-17, function by
-function and data structure by data structure. Everything below is what the prototype
+Version 1.1 · 2026-09-18. Originally derived from the prototype at
+`discountdirect/index.html` (v15), function by function and data structure by data
+structure. Everything below describes either deployed behavior or an explicitly marked
+target. The implementation baseline, not the prototype, is evidence of what is live.
+
+**Implemented now:** SSO-only scoped workspaces; catalog and purchase imports; privacy
+and consent; recommendation previews; durable conversations and realtime fallback;
+personal offers; flash reservations; automations/lists; Resend delivery and replies;
+coupons; HU policy; frequency caps; deterministic segments; pricing guardrails; frozen
+30-day reference-price evidence; and deterministic campaign holdout reporting.
+
+**Planned:** shop connectors and checkout hand-off, postal PDF/partner fulfillment,
+richer offer states/channels/journeys, membership perks, incremental-margin analytics
+and a separate reporting projection.
 *does*; §8 lists what it *implies* but does not do, which is the development backlog.
 Sample data (one seller, eight buyers, 26 catalogue products, one running automation) is
 in-memory and resets on reload.
@@ -218,33 +230,33 @@ the demo shows. Every state change re-renders everything (`renderAll`).
 - Segment labels (*Törzsvásárló* etc.), order counts and "since" years as text.
 - Dates and times as display strings.
 
-## 8. What development has to build (implied, not implemented)
+## 8. Delivery gap register
 
-1. **Persistence and identity**: users, sellers, buyers, conversations, messages, offers,
+1. **Implemented core; marketplace mode planned — Persistence and identity**: users, sellers, buyers, conversations, messages, offers,
    automations; roles and authentication for the two actors; a buyer with **many sellers**
    (the prototype has one). Decided (D3): a seller chooses whether its buyers see it in a
    **shared marketplace inbox** or in a **per-seller app**; both modes ship.
-2. **Recommendation engine** (or its integration): purchase history → per-buyer product
+2. **Implemented v1 — Recommendation engine** (or its integration): purchase history → per-buyer product
    scores with human-readable reasons; segment derivation (loyal / returning / new, order
    count, tenure).
-3. **Channel delivery**: chat push, transactional e-mail (with the CTA deep link and
+3. **Partial — Channel delivery**: durable chat/realtime and transactional e-mail are live; printed DM, postal fulfillment and broader newsletter delivery remain planned. Target includes e-mail with the CTA deep link and
    reply-to-thread), printed DM with coupon (print/post integration), newsletter compose
    and send; per-message delivery events written to the timeline.
-4. **Offer lifecycle**: accept → **hand-off to the shop's checkout** with the price
+4. **Partial — Offer lifecycle**: accept/decline/expiry, flash reservations and coupons are live; accept → **hand-off to the shop's checkout** with the price
    locked (a signed link or cart token), order confirmation written back to the thread;
    decline; expiry by `limitH`; per-campaign and per-buyer `limitQty` decrement and
    sold-out state; first-come handling for flash campaigns; sold-out notice with optional
    compensation; single-use coupon issuance and redemption mapped to the offer (D1, D2,
    D6).
-5. **Scheduler** for automations: frequency → next run, per-run content freeze, per-buyer
+5. **Implemented core — Scheduler** for automations: frequency → next run, per-run content freeze, per-buyer
    send, skip buyers with no relevant items, stop/pause.
-6. **Consent and preferences**: unsubscribe per channel, frequency preference, legal
+6. **Implemented core; broader scopes planned — Consent and preferences**: unsubscribe per channel, frequency preference, legal
    basis for history-driven marketing **configured per market and channel — legitimate
    interest with soft opt-in where the market allows it, consent elsewhere** — with
    retention periods per market, and an audit of why each offer was sent (the reason is
    already first-class) (D8). In marketplace mode the buyer's consent and frequency cap
    apply **per seller or across the inbox — both scopes exist and are a setting** (D11).
-7. **Pricing guardrails**: per seller, **either fixed steps or free entry**, both under
+7. **Implemented — Pricing guardrails**: per seller, **either fixed steps or free entry**, both under
    guardrails (floor, margin, per-segment limits); the mode is a seller setting (D5).
 8. **Timestamps, time zones, locale**: real datetimes; HUF and `hu-HU` today, others later.
 9. **Metrics**: sent / opened / accepted / declined / expired per offer, campaign and
@@ -323,13 +335,14 @@ tag *Decided (Dn)*.
 | D12 | (mission) | The platform is a **well-designed retention system** to avoid churn and improve customer lifetime value | Stated in §1; churn and LTV become the north-star metrics (SSOT §7). |
 | D13 | Who may change legal or consent defaults? Where do incentives come from? | **Platform owns legal and consent defaults; the seller keeps additional options within limits.** Percentages, vouchers, freebies and compensation come from **predefined rule sets** or from the seller in **advanced mode** — the system-wide term for the seller's own business decisions | `OperatingMode {predefined, advanced}` per area replaces follow/modify/overwrite; legal templates carry a floor (§1, §8.12, §9). |
 | D14 | Compensation promised before sold-out or issued after? | **Everything clearly communicated**: compensation if available, first-come-first-served, limited quantities and every other rule on every communication | Rules block on every rendering (§3.5, §3.7); SSOT R21. |
-| D26 | Stack (product owner, 2026-09-17) | **Extend the existing implementation, do not rewrite**: Next.js 15 App Router on Vercel, MongoDB Atlas with Mongoose, DoneIsBetter SSO, Resend, Vercel Cron with a durable outbox, Socket.IO as a convenience layer; add Upstash Redis and Vercel Blob; reporting read model before any primary-database change | `architecture.html` §3, §10; `technical-design.html` §1b. The greenfield stack in D16 is withdrawn. |
+| D26 | Stack (product owner, verified 2026-09-18) | **Extend the existing implementation, do not rewrite**: Next.js 15 App Router on Vercel, MongoDB Atlas with Mongoose, DoneIsBetter SSO, Resend, Vercel Cron with a durable outbox, Socket.IO as a convenience layer. Redis frequency caps are live; other Redis uses and Blob-backed artifacts are incremental work; a reporting read model precedes any primary-database change. | `architecture.html` §3, §10; `technical-design.html` §1b. The greenfield stack in D16 is withdrawn. |
 | D15–D25 | Remaining items, recommended and applied for Release 1 (2026-09-17) | Print partner: seller mode first, Pingen candidate for the platform service; stack adopted (later replaced by D26); Hungary only; Shoprenter and UNAS connectors first; SES and hosting in eu-central-1; channels chat, e-mail, letter, newsletter; holdout 10 % pooled for small sellers; membership per seller with free delivery and early access; neutral salutation; reason-wording experiments only; Release 1 scope fixed | Full text in `ssot.html` §5; scope in `implementation-plan.html` §7. |
 
 ## 11. Still open
 
-Nothing for Release 1. The print partner question became D15; every later item is a
-Release 1.1+ scope question, tracked in `implementation-plan.html` §7.
+No unresolved definition question blocks the current implementation. Delivery gaps are
+listed in §8 and tracked by status in `implementation-plan.html`; they must not be
+described as shipped merely because their target behavior is decided.
 
 1. Which print partner to integrate for the print-and-post service (D9); the commercial
    rules for it follow D13 (predefined rule set or advanced mode).

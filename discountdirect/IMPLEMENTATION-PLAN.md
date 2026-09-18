@@ -1,10 +1,26 @@
 # DiscountDirect — implementation plan
 
-Version 1.0 · 2026-09-17. Milestones, epics and issues for milestone 1 (Foundation),
+Version 1.1 · 2026-09-18. Milestones, epics and issues for milestone 1 (Foundation),
 each issue with story, scope, design reference, pseudo code where the logic is not
 trivial, acceptance criteria, Definition of Done, dependencies and what blocks it.
 Milestones 2 and 3 are outlined at epic level. Definitions per `ssot.html`; design per
 `technical-design.html` (TD); rules per `business-logic.html` (BL).
+
+## Current implementation status
+
+This is a target backlog, not evidence that every issue is open. The implementation
+baseline verified through commit `0eb5d55` shows these groups:
+
+| Status | Capabilities |
+|---|---|
+| Implemented | SSO roles and tenant guards; fixtures; markets/settings; product and purchase imports; recommendations and v1 segments; conversations with Socket.IO plus durable replay; personal offers; flash campaigns and MongoDB reservations; automations and buyer lists; durable delivery outbox; Resend outbound/inbound and suppressions; consent/privacy; frequency caps; coupons; pricing guardrails; 30-day reference-price evidence; campaign holdout and purchase-rate reporting |
+| Foundation | Upstash client/key/TTL/Lua policy beyond the live frequency-cap counter; Vercel Blob private-key and signed-read contracts |
+| Partial | Campaign reporting is on demand and not an incremental-margin read model; buyer/seller workflows exist but the marketplace inbox, reason editing and broader lifecycle remain incomplete |
+| Planned | Checkout hand-off and connectors; postal PDF/partner flow; template override library and richer journeys; membership perks; WhatsApp/RCS; generalized Redis counters/locks; Blob-backed artifacts; materialized reporting and incremental margin |
+
+The detailed issues below retain their acceptance criteria as target contracts. Where
+an issue names a superseded technology or route shape, this status section plus D26–D27
+and the technical design control implementation.
 
 ## 0. Conventions
 
@@ -126,15 +142,15 @@ Acceptance: badge equals pending offers; timeline shows chat bubbles for chat of
 full-width events for other channels; 390 px and 1440 px layouts pass the sweep.
 
 **DD-011 Chat messages** · S · area:relationships · depends DD-010
-Scope: `POST /relationships/{id}/messages`, both roles, real timestamps, push to the
-other side (server-sent events).
+Scope: durable conversation messages for both roles with real timestamps; Socket.IO
+signals the other side and the durable HTTP timeline/replay remains authoritative.
 Acceptance: message appears on the other role's open thread within 1 s on staging.
 
 **DD-012 Rules-based decision engine v1** · L · area:decision · depends DD-004
 Story: recommendations and relevance come from an engine, not fixtures.
-Scope: TD A2 and A3 as a Python service with `POST /relevance/{relationship}` and a
-nightly batch; reason codes `REPLENISH`, `ACCESSORY`, `UPGRADE`, `CO_PURCHASE` with
-localised texts; `model_version` stamped.
+Scope: TD A2 and A3 as a replaceable TypeScript rules module inside the Next.js app;
+reason codes `REPLENISHMENT`, `COMPATIBLE_ACCESSORY`, `SAME_CATEGORY` with localised
+texts and a stamped `model_version`. A separate service is a later scaling option.
 Pseudo code: TD A2, A3.
 Acceptance: on the seed data Anna's HEPA filter is `REPLENISH` with a run-out date;
 Gábor's dashcam is `ACCESSORY`; a product with no basis is absent; reason texts are
@@ -388,7 +404,7 @@ is visible to the buyer; leaving is one tap.
 ### E9 Measurement (M7)
 
 **DD-090 Holdout assignment** · S · area:measurement · depends DD-002
-Pseudo code: TD A9; `holdout_mode` pooled under 1 000 active relationships (D21).
+Pseudo code: TD A9; SHA-256 bucket assignment with pooled or per-campaign scope (D21).
 Acceptance: the same buyer is consistently held out within one campaign; distribution
 within 1 point of `holdout_pct` over 100 000 buyers.
 

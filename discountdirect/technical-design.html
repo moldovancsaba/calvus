@@ -5,13 +5,13 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>DiscountDirect — low-level technical design</title>
 <style>
-:root{--gds-bg-canvas:#f8fafc;--gds-bg-surface:#ffffff;--gds-bg-inverse:#111827;--gds-text-body:#111827;--gds-text-meta:#64748b;--gds-border-card:#e2e8f0;--gds-brand-accent:#3b5bdb;--gds-brand-accent-tint:#e7ecfb;--gds-radius-card:14px}
+:root{--gds-bg-canvas:#f8fafc;--gds-bg-surface:#ffffff;--gds-bg-inverse:#111827;--gds-text-body:#111827;--gds-text-meta:#64748b;--gds-border-card:#e2e8f0;--gds-brand-accent:#3b5bdb;--gds-brand-accent-tint:#e7ecfb;--gds-radius-card:8px}
 *{box-sizing:border-box}
-body{margin:0;background:var(--gds-bg-canvas);color:var(--gds-text-body);font:15.5px/1.6 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;padding-block:0 64px;padding-inline:clamp(16px,4vw,40px)}
+body{margin:0;background:var(--gds-bg-canvas);color:var(--gds-text-body);font:15.5px/1.6 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;padding:0 24px 64px}
 .wrap{max-width:76ch;margin-inline:auto}
 .top{display:flex;flex-wrap:wrap;gap:8px 18px;align-items:center;padding:16px 0;border-bottom:1px solid var(--gds-border-card);font-size:13px;color:var(--gds-text-meta)}
 .top b{color:var(--gds-text-body)} .top a{color:var(--gds-brand-accent);text-decoration:none;min-height:44px;display:inline-flex;align-items:center} .top a.on{color:var(--gds-text-body);font-weight:600}
-h1{font-size:clamp(26px,5vw,38px);line-height:1.15;margin:32px 0 10px;letter-spacing:-.01em}
+h1{font-size:38px;line-height:1.15;margin:32px 0 10px;letter-spacing:0}
 h2{font-size:22px;margin:44px 0 10px;padding-top:18px;border-top:1px solid var(--gds-border-card)}
 h3{font-size:17px;margin:26px 0 8px}
 p{margin:0 0 12px} li{margin:4px 0} strong{font-weight:600}
@@ -19,7 +19,7 @@ code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.86em;bac
 pre{background:var(--gds-bg-inverse);color:#f8fafc;padding:16px;border-radius:var(--gds-radius-card);overflow-x:auto;font-size:13px;line-height:1.5} pre code{background:none;color:inherit;padding:0;font-size:inherit}
 .tbl{overflow-x:auto;margin:12px 0 20px;border:1px solid var(--gds-border-card);border-radius:var(--gds-radius-card);background:var(--gds-bg-surface)}
 table{border-collapse:collapse;width:100%;font-size:13.5px;min-width:560px}
-th{text-align:left;font-weight:600;background:var(--gds-bg-canvas);padding:10px 12px;border-bottom:1px solid var(--gds-border-card);font-size:12px;letter-spacing:.04em;text-transform:uppercase;color:var(--gds-text-meta)}
+th{text-align:left;font-weight:600;background:var(--gds-bg-canvas);padding:10px 12px;border-bottom:1px solid var(--gds-border-card);font-size:12px;letter-spacing:0;text-transform:uppercase;color:var(--gds-text-meta)}
 td{padding:10px 12px;border-top:1px solid var(--gds-border-card);vertical-align:top}
 a{color:var(--gds-brand-accent)}
 footer{margin-top:48px;padding-top:16px;border-top:1px solid var(--gds-border-card);font-size:12px;color:var(--gds-text-meta)}
@@ -28,7 +28,7 @@ footer{margin-top:48px;padding-top:16px;border-top:1px solid var(--gds-border-ca
 <body><div class="wrap">
 <div class="top"><b>DiscountDirect</b><a href="docs.html">Overview</a><a href="bemutato.html">Bemutató</a><a href="executive.html">Executive summary</a><a href="research.html">Research</a><a href="audit.html">Audit</a><a href="sources.html">Sources</a><a href="business-logic.html">Business logic</a><a href="design.html">Design</a><a href="build-log.html">Build log</a><a href="gate.html">Gate</a><a href="client-asks.html">Client asks</a><a href="ssot.html">SSOT</a><a href="architecture.html">Architecture</a><a href="technical-design.html" class=on>Technical design</a><a href="implementation-plan.html">Implementation plan</a><a href="token-map.html">Token map</a><a href="index.html">Open the prototype →</a><a href="../index.html">Calvus Hub</a></div>
 <h1>DiscountDirect — low-level technical design</h1>
-<p>Version 1.0 · 2026-09-17. Schema, state machines, API, algorithms with pseudo code,
+<p>Version 1.1 · 2026-09-18. Schema, state machines, API, algorithms with pseudo code,
 integration contracts, security details, observability and testing. Terms per
 <code>ssot.html</code>; structure per <code>architecture.html</code>.</p>
 <h2>1. Logical schema (relational notation)</h2>
@@ -144,6 +144,8 @@ create table metric_rollups (seller_id uuid, scope text, scope_id uuid, day date
 
 </code></pre>
 <h2>1b. Physical model on MongoDB (D26)</h2>
+<p>This section is the deployed model authority. Section 1 above is the target logical
+model and must not be read as proof that every table or field exists.</p>
 <div class="tbl"><table>
 <thead>
 <tr>
@@ -169,46 +171,46 @@ create table metric_rollups (seller_id uuid, scope text, scope_id uuid, day date
 <td>insert-only: the model exposes no update or delete; a database user without update/delete on these collections in production</td>
 </tr>
 <tr>
-<td><code>campaigns</code> + counters</td>
-<td><code>campaigns</code>, <code>campaign_reservations</code></td>
-<td>one reservation document per accepted unit <code>(campaign_id, buyer_id, seq)</code> with a unique index; <code>accepted_total</code> is the count of reservations on reconciliation (A5)</td>
+<td><code>campaigns</code> + reservations</td>
+<td><code>campaigns</code>, <code>campaign_previews</code>, <code>campaign_reservations</code>, <code>campaign_inventory_balances</code></td>
+<td>unique reservation per buyer/offer; atomic MongoDB balance update; frozen treatment/holdout snapshots and on-demand purchase-rate reporting</td>
 </tr>
 <tr>
-<td><code>outbox</code></td>
-<td><code>outbox</code></td>
-<td>written in the same transaction as the state change; relayed by Vercel Cron workers; <code>relayed_at</code> set idempotently</td>
+<td>delivery outbox</td>
+<td><code>delivery_outbox</code>, <code>delivery_events</code>, <code>delivery_suppressions</code>, <code>delivery_webhook_events</code></td>
+<td>state change and outbox work are durable; Cron claims retry-safe rows; provider webhooks are deduplicated</td>
 </tr>
 <tr>
-<td><code>coupons</code></td>
-<td><code>coupons</code></td>
-<td>unique index on <code>code</code> and on <code>offer_id</code>; redeem is a <code>findOneAndUpdate</code> with <code>redeemed_at: null</code> as the filter (A7)</td>
+<td>coupons</td>
+<td><code>redemption_coupons</code>, <code>redemption_events</code></td>
+<td>unique offer/code; transactional compare-and-set redemption</td>
 </tr>
 <tr>
-<td><code>orders</code>, <code>products</code></td>
-<td><code>orders</code>, <code>products</code></td>
-<td>unique <code>(seller_id, external_id)</code>; idempotent imports</td>
+<td>purchase ledger and catalog</td>
+<td><code>purchases</code>, <code>purchase_import_batches</code>, <code>products</code>, <code>product_revisions</code>, <code>import_batches</code></td>
+<td>seller-scoped uniqueness, optimistic imports, append-only price evidence</td>
 </tr>
 <tr>
-<td><code>price_history</code></td>
-<td><code>price_history</code></td>
-<td><code>(product_id, valid_from)</code> unique</td>
+<td>reporting read model</td>
+<td>planned</td>
+<td>current campaign rates derive on demand from campaign snapshots plus matching purchases</td>
 </tr>
 <tr>
-<td><code>metric_rollups</code></td>
-<td><code>metric_rollups</code> (read model)</td>
-<td>materialised by cron; or projected to Neon/Postgres later</td>
-</tr>
-<tr>
-<td><code>consents</code>, <code>objections</code></td>
-<td><code>consents</code>, <code>objections</code></td>
-<td>scope key <code>(buyer_id, seller_id|null, channel)</code> unique on active rows</td>
+<td>consent/privacy</td>
+<td><code>channel_preferences</code>, <code>consent_events</code>, <code>privacy_requests</code>, <code>privacy_exports</code></td>
+<td>unique scoped preferences, append-only consent events and expiring exports</td>
 </tr>
 </tbody>
 </table></div>
-<p>Transactions: Mongoose sessions on the Atlas replica set for every multi-document
-change (send, accept, sold-out, redeem, write-back). Files: Vercel Blob keys stored in
-<code>print_jobs.pdf_ref</code> and export records.</p>
+<p>Transactions: Mongoose sessions on the Atlas replica set protect multi-document offer,
+campaign, delivery, privacy and redemption changes. Checkout write-back and print jobs
+are planned. Vercel Blob key/read contracts exist, but no current business artifact is
+Blob-backed.</p>
 <h2>2. State machines</h2>
+<p>The diagrams below are target state machines. The deployed <code>Offer.status</code> values are
+<code>pending</code>, <code>accepted</code>, <code>declined</code>, <code>expired</code>, <code>cancelled</code>; coupon redemption is a
+separate state. Deployed delivery values are <code>queued</code>, <code>processing</code>, <code>sent</code>,
+<code>unsupported</code>, <code>suppressed</code>, <code>retryable_failed</code>, <code>cancelled</code>, <code>bounced</code>, <code>complained</code>.</p>
 <p><strong>Offer</strong></p>
 <pre><code>draft ──send──► pending ──accept──► accepted ──write-back──► (accepted, order_ref set)
                   │  │                  │
@@ -227,10 +229,13 @@ Guards: accept requires status = pending ∧ now &lt; expires_at ∧ R10 counter
 <strong>Coupon</strong>: <code>issued → redeemed</code>; a second redeem returns <code>already_redeemed</code>.
 <strong>PrintJob</strong>: <code>created → submitted → printed → posted | failed</code>.</p>
 <h2>3. API surface (Next.js App Router, D26)</h2>
-<p>UI mutations are <strong>Server Actions</strong>; APIs, webhooks, cron entry points, hand-off and
-coupon pages are <strong>Route Handlers</strong> under <code>/api/v1</code>. Auth: DoneIsBetter SSO session;
-seller routes require a seller role and set the tenant context; buyer routes require a
-buyer session. The table lists the logical operations; each maps to a Server Action
+<p>UI mutations are <strong>Server Actions</strong>; APIs, webhooks and cron entry points are <strong>Route
+Handlers</strong> under <code>/api</code> (there is no <code>/api/v1</code> prefix). Auth: DoneIsBetter SSO session;
+seller routes require a seller role and exact membership; buyer routes require an active
+relationship. The table below is the <strong>target logical API</strong>, not a literal deployed route
+list. Deployed route groups are auth/session, health/ops, seller resources under
+<code>/api/sellers/{sellerSlug}</code>, buyer resources under <code>/api/buyer</code>, conversations/offers,
+cron jobs and Resend inbound/unsubscribe. Each logical operation maps to a Server Action
 (console and buyer app) and, where external callers need it, a Route Handler. Errors: <code>{error: {code, message, details}}</code>;
 codes include <code>validation</code>, <code>not_pending</code>, <code>expired</code>, <code>sold_out</code>, <code>per_buyer_limit</code>,
 <code>consent_blocked</code>, <code>frequency_capped</code>, <code>guardrail</code>, <code>already_redeemed</code>.</p>
@@ -498,11 +503,11 @@ on send: redis.incr with expiry = window
 </code></pre>
 <p>Deferred sends are re-queued at the window boundary and logged as <code>deferred</code>.</p>
 <h3>A9 Holdout (R19, D21)</h3>
-<pre><code>scope = campaign_or_automation.id if seller.settings.holdout_mode == 'per_campaign' else seller.id   # pooled for small sellers
-holdout(buyer, scope) = (murmur3(buyer.id + scope) % 100) &lt; seller.settings.holdout_pct
+<pre><code>scope = campaign.key if seller.settings.holdout_mode == 'per_campaign' else 'pool'
+bucket = uint32_be(SHA256(buyer.id + ':' + scope)[0:4]) % 10000
+holdout(buyer, scope) = bucket &lt; seller.settings.holdout_pct * 100
 </code></pre>
-<p>Deterministic, so the same buyer is consistently held out within one campaign or
-automation and independently across them.</p>
+<p>Deterministic and implemented for flash campaigns. Automation holdout remains planned.</p>
 <h3>A10 Scheduler (F4)</h3>
 <pre><code>every minute: for a in automations where state='active' and next_run_at &lt;= now:
   lock a; run = create automation_run(content_freeze = snapshot(products, prices, relevance))
@@ -519,7 +524,8 @@ automation and independently across them.</p>
   else: assert g.floor_pct &lt;= pct &lt;= g.max_pct
   if segment_max := g.per_segment_max.get(relationship.segment): assert pct &lt;= segment_max
   if product.cost: assert round(product.price*(1-pct/100)) &gt;= product.cost*(1+g.margin_floor_pct/100)
-  if reference_price(product) &lt; product.price: raise guardrail('reference_price')   # R18
+  base = min(product.price, lowest_price_during_preceding_30_days(product))          # R18
+  assert offered_price == round(base * (1-pct/100))
 </code></pre>
 <h3>A12 Reason ownership (R3, D4)</h3>
 <pre><code>on send: offer.reason_engine = recommendation.reason_engine; offer.reason_seller = body.reason_seller (if settings.reason_editable)
@@ -614,5 +620,5 @@ write-back lag, deferred/blocked ratios, dead-letter depth.</p>
 </tr>
 </tbody>
 </table></div>
-<footer>Source: <code>discountdirect/TECHNICAL-DESIGN.md</code>, rendered by <code>build-docs.py</code>. Token names follow GDS 6.5.0 roles (<code>GDS-TOKEN-MAP.md</code>).</footer>
+<footer>Source: <code>discountdirect/TECHNICAL-DESIGN.md</code>, rendered by <code>build-docs.py</code>. Documentation tokens are mapped in <code>GDS-TOKEN-MAP.md</code>; the application implementation uses GDS 6.7.0.</footer>
 </div></body></html>

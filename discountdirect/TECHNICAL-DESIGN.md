@@ -1,6 +1,6 @@
 # DiscountDirect — low-level technical design
 
-Version 1.0 · 2026-09-17. Schema, state machines, API, algorithms with pseudo code,
+Version 1.1 · 2026-09-18. Schema, state machines, API, algorithms with pseudo code,
 integration contracts, security details, observability and testing. Terms per
 `ssot.html`; structure per `architecture.html`.
 
@@ -122,24 +122,32 @@ create table metric_rollups (seller_id uuid, scope text, scope_id uuid, day date
 
 ## 1b. Physical model on MongoDB (D26)
 
+This section is the deployed model authority. Section 1 above is the target logical
+model and must not be read as proof that every table or field exists.
+
 | Logical table | Collection | Enforcement on MongoDB |
 |---|---|---|
 | every seller-scoped table | same name, `seller_id` indexed first in every compound index | a Mongoose plugin adds `seller_id` to every query from the request's tenant context and throws when it is missing (replaces row-level security) |
 | `offers` | `offers` | `version` field for optimistic concurrency; status transitions in a transaction with `offer_events` |
 | `offer_events`, consent events | `offer_events`, `consent_events` | insert-only: the model exposes no update or delete; a database user without update/delete on these collections in production |
-| `campaigns` + counters | `campaigns`, `campaign_reservations` | one reservation document per accepted unit `(campaign_id, buyer_id, seq)` with a unique index; `accepted_total` is the count of reservations on reconciliation (A5) |
-| `outbox` | `outbox` | written in the same transaction as the state change; relayed by Vercel Cron workers; `relayed_at` set idempotently |
-| `coupons` | `coupons` | unique index on `code` and on `offer_id`; redeem is a `findOneAndUpdate` with `redeemed_at: null` as the filter (A7) |
-| `orders`, `products` | `orders`, `products` | unique `(seller_id, external_id)`; idempotent imports |
-| `price_history` | `price_history` | `(product_id, valid_from)` unique |
-| `metric_rollups` | `metric_rollups` (read model) | materialised by cron; or projected to Neon/Postgres later |
-| `consents`, `objections` | `consents`, `objections` | scope key `(buyer_id, seller_id|null, channel)` unique on active rows |
+| `campaigns` + reservations | `campaigns`, `campaign_previews`, `campaign_reservations`, `campaign_inventory_balances` | unique reservation per buyer/offer; atomic MongoDB balance update; frozen treatment/holdout snapshots and on-demand purchase-rate reporting |
+| delivery outbox | `delivery_outbox`, `delivery_events`, `delivery_suppressions`, `delivery_webhook_events` | state change and outbox work are durable; Cron claims retry-safe rows; provider webhooks are deduplicated |
+| coupons | `redemption_coupons`, `redemption_events` | unique offer/code; transactional compare-and-set redemption |
+| purchase ledger and catalog | `purchases`, `purchase_import_batches`, `products`, `product_revisions`, `import_batches` | seller-scoped uniqueness, optimistic imports, append-only price evidence |
+| reporting read model | planned | current campaign rates derive on demand from campaign snapshots plus matching purchases |
+| consent/privacy | `channel_preferences`, `consent_events`, `privacy_requests`, `privacy_exports` | unique scoped preferences, append-only consent events and expiring exports |
 
-Transactions: Mongoose sessions on the Atlas replica set for every multi-document
-change (send, accept, sold-out, redeem, write-back). Files: Vercel Blob keys stored in
-`print_jobs.pdf_ref` and export records.
+Transactions: Mongoose sessions on the Atlas replica set protect multi-document offer,
+campaign, delivery, privacy and redemption changes. Checkout write-back and print jobs
+are planned. Vercel Blob key/read contracts exist, but no current business artifact is
+Blob-backed.
 
 ## 2. State machines
+
+The diagrams below are target state machines. The deployed `Offer.status` values are
+`pending`, `accepted`, `declined`, `expired`, `cancelled`; coupon redemption is a
+separate state. Deployed delivery values are `queued`, `processing`, `sent`,
+`unsupported`, `suppressed`, `retryable_failed`, `cancelled`, `bounced`, `complained`.
 
 **Offer**
 ```
@@ -162,10 +170,13 @@ Guards: accept requires status = pending ∧ now < expires_at ∧ R10 counters o
 
 ## 3. API surface (Next.js App Router, D26)
 
-UI mutations are **Server Actions**; APIs, webhooks, cron entry points, hand-off and
-coupon pages are **Route Handlers** under `/api/v1`. Auth: DoneIsBetter SSO session;
-seller routes require a seller role and set the tenant context; buyer routes require a
-buyer session. The table lists the logical operations; each maps to a Server Action
+UI mutations are **Server Actions**; APIs, webhooks and cron entry points are **Route
+Handlers** under `/api` (there is no `/api/v1` prefix). Auth: DoneIsBetter SSO session;
+seller routes require a seller role and exact membership; buyer routes require an active
+relationship. The table below is the **target logical API**, not a literal deployed route
+list. Deployed route groups are auth/session, health/ops, seller resources under
+`/api/sellers/{sellerSlug}`, buyer resources under `/api/buyer`, conversations/offers,
+cron jobs and Resend inbound/unsubscribe. Each logical operation maps to a Server Action
 (console and buyer app) and, where external callers need it, a Route Handler. Errors: `{error: {code, message, details}}`;
 codes include `validation`, `not_pending`, `expired`, `sold_out`, `per_buyer_limit`,
 `consent_blocked`, `frequency_capped`, `guardrail`, `already_redeemed`.
@@ -352,11 +363,11 @@ Deferred sends are re-queued at the window boundary and logged as `deferred`.
 
 ### A9 Holdout (R19, D21)
 ```
-scope = campaign_or_automation.id if seller.settings.holdout_mode == 'per_campaign' else seller.id   # pooled for small sellers
-holdout(buyer, scope) = (murmur3(buyer.id + scope) % 100) < seller.settings.holdout_pct
+scope = campaign.key if seller.settings.holdout_mode == 'per_campaign' else 'pool'
+bucket = uint32_be(SHA256(buyer.id + ':' + scope)[0:4]) % 10000
+holdout(buyer, scope) = bucket < seller.settings.holdout_pct * 100
 ```
-Deterministic, so the same buyer is consistently held out within one campaign or
-automation and independently across them.
+Deterministic and implemented for flash campaigns. Automation holdout remains planned.
 
 ### A10 Scheduler (F4)
 ```
@@ -377,7 +388,8 @@ function validate_pct(seller, relationship, product, pct):
   else: assert g.floor_pct <= pct <= g.max_pct
   if segment_max := g.per_segment_max.get(relationship.segment): assert pct <= segment_max
   if product.cost: assert round(product.price*(1-pct/100)) >= product.cost*(1+g.margin_floor_pct/100)
-  if reference_price(product) < product.price: raise guardrail('reference_price')   # R18
+  base = min(product.price, lowest_price_during_preceding_30_days(product))          # R18
+  assert offered_price == round(base * (1-pct/100))
 ```
 
 ### A12 Reason ownership (R3, D4)

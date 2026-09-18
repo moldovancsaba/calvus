@@ -5,13 +5,13 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>DiscountDirect — single source of truth (SSOT)</title>
 <style>
-:root{--gds-bg-canvas:#f8fafc;--gds-bg-surface:#ffffff;--gds-bg-inverse:#111827;--gds-text-body:#111827;--gds-text-meta:#64748b;--gds-border-card:#e2e8f0;--gds-brand-accent:#3b5bdb;--gds-brand-accent-tint:#e7ecfb;--gds-radius-card:14px}
+:root{--gds-bg-canvas:#f8fafc;--gds-bg-surface:#ffffff;--gds-bg-inverse:#111827;--gds-text-body:#111827;--gds-text-meta:#64748b;--gds-border-card:#e2e8f0;--gds-brand-accent:#3b5bdb;--gds-brand-accent-tint:#e7ecfb;--gds-radius-card:8px}
 *{box-sizing:border-box}
-body{margin:0;background:var(--gds-bg-canvas);color:var(--gds-text-body);font:15.5px/1.6 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;padding-block:0 64px;padding-inline:clamp(16px,4vw,40px)}
+body{margin:0;background:var(--gds-bg-canvas);color:var(--gds-text-body);font:15.5px/1.6 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;padding:0 24px 64px}
 .wrap{max-width:76ch;margin-inline:auto}
 .top{display:flex;flex-wrap:wrap;gap:8px 18px;align-items:center;padding:16px 0;border-bottom:1px solid var(--gds-border-card);font-size:13px;color:var(--gds-text-meta)}
 .top b{color:var(--gds-text-body)} .top a{color:var(--gds-brand-accent);text-decoration:none;min-height:44px;display:inline-flex;align-items:center} .top a.on{color:var(--gds-text-body);font-weight:600}
-h1{font-size:clamp(26px,5vw,38px);line-height:1.15;margin:32px 0 10px;letter-spacing:-.01em}
+h1{font-size:38px;line-height:1.15;margin:32px 0 10px;letter-spacing:0}
 h2{font-size:22px;margin:44px 0 10px;padding-top:18px;border-top:1px solid var(--gds-border-card)}
 h3{font-size:17px;margin:26px 0 8px}
 p{margin:0 0 12px} li{margin:4px 0} strong{font-weight:600}
@@ -19,7 +19,7 @@ code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.86em;bac
 pre{background:var(--gds-bg-inverse);color:#f8fafc;padding:16px;border-radius:var(--gds-radius-card);overflow-x:auto;font-size:13px;line-height:1.5} pre code{background:none;color:inherit;padding:0;font-size:inherit}
 .tbl{overflow-x:auto;margin:12px 0 20px;border:1px solid var(--gds-border-card);border-radius:var(--gds-radius-card);background:var(--gds-bg-surface)}
 table{border-collapse:collapse;width:100%;font-size:13.5px;min-width:560px}
-th{text-align:left;font-weight:600;background:var(--gds-bg-canvas);padding:10px 12px;border-bottom:1px solid var(--gds-border-card);font-size:12px;letter-spacing:.04em;text-transform:uppercase;color:var(--gds-text-meta)}
+th{text-align:left;font-weight:600;background:var(--gds-bg-canvas);padding:10px 12px;border-bottom:1px solid var(--gds-border-card);font-size:12px;letter-spacing:0;text-transform:uppercase;color:var(--gds-text-meta)}
 td{padding:10px 12px;border-top:1px solid var(--gds-border-card);vertical-align:top}
 a{color:var(--gds-brand-accent)}
 footer{margin-top:48px;padding-top:16px;border-top:1px solid var(--gds-border-card);font-size:12px;color:var(--gds-text-meta)}
@@ -28,14 +28,19 @@ footer{margin-top:48px;padding-top:16px;border-top:1px solid var(--gds-border-ca
 <body><div class="wrap">
 <div class="top"><b>DiscountDirect</b><a href="docs.html">Overview</a><a href="bemutato.html">Bemutató</a><a href="executive.html">Executive summary</a><a href="research.html">Research</a><a href="audit.html">Audit</a><a href="sources.html">Sources</a><a href="business-logic.html">Business logic</a><a href="design.html">Design</a><a href="build-log.html">Build log</a><a href="gate.html">Gate</a><a href="client-asks.html">Client asks</a><a href="ssot.html" class=on>SSOT</a><a href="architecture.html">Architecture</a><a href="technical-design.html">Technical design</a><a href="implementation-plan.html">Implementation plan</a><a href="token-map.html">Token map</a><a href="index.html">Open the prototype →</a><a href="../index.html">Calvus Hub</a></div>
 <h1>DiscountDirect — single source of truth (SSOT)</h1>
-<p>Version 1.0 · 2026-09-17. This document is the canonical definition of every term,
+<p>Version 1.1 · 2026-09-18. This document is the canonical definition of every term,
 entity, enumeration, setting, rule, decision and metric in DiscountDirect. When two
 documents disagree, this one wins; a change to a definition lands here first, with a
 version bump, and the other documents follow.</p>
-<p><strong>Precedence:</strong> SSOT → <code>business-logic.html</code> (rules as implemented and decided) →
-<code>architecture.html</code> → <code>technical-design.html</code> → <code>implementation-plan.html</code> →
+<p><strong>Precedence:</strong> SSOT → the implementation repository's <code>docs/implementation-baseline.md</code>
+(evidence of deployed code) → <code>business-logic.html</code> → <code>architecture.html</code> →
+<code>technical-design.html</code> → <code>implementation-plan.html</code> →
 <code>executive.html</code> / <code>research.html</code> (context). The prototype at <code>index.html</code> is an
 illustration of the rules, never their definition.</p>
+<p><strong>Status vocabulary:</strong> <strong>implemented</strong> means present in the production code path;
+<strong>foundation</strong> means a client, schema or contract exists but no complete user workflow
+depends on it; <strong>planned</strong> means target behavior only; <strong>superseded</strong> must not guide new
+work. Target-state definitions below never imply that a feature is implemented.</p>
 <h2>1. Glossary</h2>
 <p><strong>Mission (product owner, D12).</strong> DiscountDirect is a <strong>retention system</strong>: its purpose
 is to avoid churn and raise customer lifetime value for the seller, and to make offers
@@ -167,18 +172,18 @@ serve that purpose.</p>
 <tbody>
 <tr>
 <td><code>OfferKind</code></td>
-<td><code>standard</code>, <code>flash</code>, <code>list_item</code>, <code>reorder</code>, <code>reminder</code>, <code>progress</code>, <code>surprise</code>, <code>back_in_stock</code>, <code>price_drop</code>, <code>birthday</code>, <code>sold_out_notice</code></td>
-<td>The first three exist in the prototype; the rest are decided message types from the research.</td>
+<td>Implemented origins: personal offer, flash campaign, automated list. Planned kinds: <code>reorder</code>, <code>reminder</code>, <code>progress</code>, <code>surprise</code>, <code>back_in_stock</code>, <code>price_drop</code>, <code>birthday</code>, <code>sold_out_notice</code></td>
+<td>The current <code>Offer</code> model does not persist a general kind enum; origin is represented by campaign/list links and events.</td>
 </tr>
 <tr>
 <td><code>OfferStatus</code></td>
-<td><code>draft</code>, <code>pending</code>, <code>accepted</code>, <code>declined</code>, <code>expired</code>, <code>sold_out</code>, <code>redeemed</code>, <code>withdrawn</code></td>
-<td><code>accepted</code>, <code>declined</code>, <code>expired</code>, <code>sold_out</code>, <code>redeemed</code>, <code>withdrawn</code> are terminal.</td>
+<td>Implemented: <code>pending</code>, <code>accepted</code>, <code>declined</code>, <code>expired</code>, <code>cancelled</code>. Planned: <code>draft</code>, <code>sold_out</code>, <code>withdrawn</code>, <code>redeemed</code></td>
+<td>Coupon redemption is currently a separate durable state, not an offer status.</td>
 </tr>
 <tr>
 <td><code>Channel</code></td>
-<td><code>chat</code>, <code>email</code>, <code>mailing</code>, <code>newsletter</code>, <code>rcs</code>, <code>whatsapp</code></td>
-<td>Release 1: the first four (D20); <code>whatsapp</code> then <code>rcs</code> in Release 2.</td>
+<td>Implemented offer inputs: <code>email</code>, <code>postal</code>; implemented delivery transport also includes <code>in_app</code>. Planned: <code>whatsapp</code>, <code>rcs</code>; newsletter is a list/automation surface, not a transport enum.</td>
+<td><code>chat</code> is represented by durable conversation events rather than a marketing delivery channel.</td>
 </tr>
 <tr>
 <td><code>Frequency</code></td>
@@ -232,13 +237,13 @@ serve that purpose.</p>
 </tr>
 <tr>
 <td><code>DeliveryStatus</code></td>
-<td><code>queued</code>, <code>sent</code>, <code>delivered</code>, <code>opened</code>, <code>clicked</code>, <code>failed</code>, <code>bounced</code>, <code>printed</code>, <code>posted</code></td>
-<td>The last two are for <code>mailing</code>.</td>
+<td>Implemented: <code>queued</code>, <code>processing</code>, <code>sent</code>, <code>unsupported</code>, <code>suppressed</code>, <code>retryable_failed</code>, <code>cancelled</code>, <code>bounced</code>, <code>complained</code>. Planned provider/print states: <code>delivered</code>, <code>opened</code>, <code>clicked</code>, <code>printed</code>, <code>posted</code>.</td>
+<td>MongoDB outbox state is authoritative.</td>
 </tr>
 <tr>
 <td><code>Segment</code></td>
 <td><code>new</code>, <code>returning</code>, <code>loyal</code></td>
-<td>new: 1 order; returning: 2–4; loyal: ≥5 or tenure ≥ 24 months with ≥3 orders.</td>
+<td>Implemented v1: <code>new</code> ≤1 active order; <code>returning</code> ≥2; <code>loyal</code> ≥4 with at least 180 days between first and last active order.</td>
 </tr>
 <tr>
 <td><code>ReasonSource</code></td>
@@ -253,8 +258,10 @@ serve that purpose.</p>
 </tbody>
 </table></div>
 <h2>3. Canonical entities and ownership</h2>
-<p>"Owner" is the system of record. The shop connector mirrors the seller's shop data; the
-platform never edits it.</p>
+<p>"Owner" is the system of record. This table is the canonical target model. Fields not
+present in <code>technical-design.html</code> §1b are planned and must not be represented as live.
+Shop connectors and write-back are planned; current products and purchases arrive
+through seller-scoped application/import workflows.</p>
 <div class="tbl"><table>
 <thead>
 <tr>
@@ -637,8 +644,13 @@ platform never edits it.</p>
 </tr>
 <tr>
 <td>D26</td>
-<td>Stack: extend the existing implementation, do not rewrite (verified, 2026-09-17)</td>
-<td>The product already has a working spine: <strong>Next.js 15 App Router on Vercel (Node 24), MongoDB Atlas with Mongoose transactions, DoneIsBetter SSO (local password routes fail closed), Resend for outbound and inbound e-mail with webhook verification and unsubscribe, Vercel Cron with a durable outbox, Socket.IO realtime with a durable HTTP fallback, the SovereignSquad GDS with Mantine under it.</strong> Target: add <strong>Upstash Redis</strong> (frequency caps, rate limits, flash counters, idempotency locks, throttling, worker coordination) and <strong>Vercel Blob</strong> (letters, exports, PDFs, audit snapshots); keep Resend; realtime is a convenience layer, the durable MongoDB event log is authoritative; add a <strong>reporting read model</strong> (MongoDB materialised aggregates, or a Postgres projection) before any primary-database change. The greenfield stack of the first proposal (Fastify, Vite, PostgreSQL, BullMQ, SES) is withdrawn.</td>
+<td>Stack: extend the existing implementation, do not rewrite (verified, 2026-09-18)</td>
+<td>The working spine is <strong>Next.js 15 App Router on Vercel (Node 24), MongoDB Atlas with Mongoose transactions, DoneIsBetter SSO, Resend, Vercel Cron with a durable outbox, Socket.IO with durable HTTP fallback, and GDS 6.7.0</strong>. Upstash Redis and Vercel Blob foundations now exist; Redis frequency caps are implemented with MongoDB delivery history authoritative, while general Redis locks/counters and Blob-backed artifacts remain planned. A separate reporting read model remains planned.</td>
+</tr>
+<tr>
+<td>D27</td>
+<td>Implementation alignment (verified, 2026-09-18)</td>
+<td>Live business capabilities include tenant-safe SSO workspaces, catalog and purchase imports, consent/privacy, deterministic recommendations and segments, personal offers, flash reservations, automations/lists, Resend delivery and inbound replies, coupons, HU market settings, frequency caps, pricing guardrails, 30-day reference-price evidence and deterministic campaign holdout reporting. Connectors, checkout hand-off, postal PDF/partner delivery, richer journeys/channels, membership perks, incremental-margin analytics and a separate reporting projection remain planned.</td>
 </tr>
 </tbody>
 </table></div>
@@ -646,7 +658,7 @@ platform never edits it.</p>
 <p>None for Release 1. O1 → D13, O2 → D15, O3 → D14, A1 → D16 → D26. D15–D25 were
 recommended and applied on 2026-09-17 so that Release 1 is fully specified; the product
 owner may overrule any of them, in which case this register changes first.</p>
-<p><strong>Verification note (D26).</strong> D26 was verified on 2026-09-17 against the implementation
+<p><strong>Verification note (D26–D27).</strong> Verified on 2026-09-18 against the implementation
 repository at <code>/Users/Shared/Projects/discountdirect</code>. The check covered <code>package.json</code>,
 <code>src/lib/database-core.ts</code>, <code>vercel.json</code>, <code>docs/architecture.md</code>, the App Router route
 tree and the domain model/service folders. DD-000 keeps that implementation inventory
@@ -689,8 +701,8 @@ current and keeps this SSOT plus the technical design aligned with the code.</p>
 <tr>
 <td>R5</td>
 <td>Price</td>
-<td><code>price = round(orig × (1 − pct/100))</code> in the market currency's minor unit</td>
-<td>BL §3.1</td>
+<td><code>discount_base = min(current_price, lowest_price_in_preceding_30_days)</code>; <code>price = round(discount_base × (1 − pct/100))</code> in the market currency's minor unit. Legacy records may use their frozen original-price fallback.</td>
+<td>BL §3.1, D27</td>
 </tr>
 <tr>
 <td>R6</td>
@@ -773,8 +785,8 @@ current and keeps this SSOT plus the technical design aligned with the code.</p>
 <tr>
 <td>R19</td>
 <td>Holdout</td>
-<td><code>holdout = hash(buyer_id, campaign_id\|automation_id) mod 100 &lt; holdout_pct</code>; holdout buyers get no offer and are excluded from R16 counting</td>
-<td>research §4</td>
+<td><code>bucket = uint32(SHA-256(buyer_id + ":" + scope)[0..3]) mod 10000</code>; holdout when <code>bucket &lt; holdout_pct × 100</code>. Scope is <code>"pool"</code> for pooled mode or the campaign key for per-campaign mode. Holdout buyers receive no offer, event or delivery and are excluded from R16 counting.</td>
+<td>implementation, D21, D27</td>
 </tr>
 <tr>
 <td>R21</td>
@@ -791,6 +803,8 @@ current and keeps this SSOT plus the technical design aligned with the code.</p>
 </tbody>
 </table></div>
 <h2>7. Metric definitions</h2>
+<p>Only <strong>campaign purchase-rate difference</strong> is implemented today. Metrics requiring
+cost, connector write-back, membership or a reporting projection are planned.</p>
 <div class="tbl"><table>
 <thead>
 <tr>
@@ -799,6 +813,10 @@ current and keeps this SSOT plus the technical design aligned with the code.</p>
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>Campaign purchase-rate difference (implemented)</td>
+<td>For the same campaign product and campaign window: distinct purchasing customers / frozen group size for treatment minus the same rate for holdout. Display as comparable only when both frozen groups contain at least 10 members; this is measured association, not a causal or margin claim.</td>
+</tr>
 <tr>
 <td>Incremental contribution margin</td>
 <td><code>Σ margin(orders, treated) / |treated| − Σ margin(orders, holdout) / |holdout|</code>, per campaign or automation, over the attribution window (14 days)</td>
@@ -858,8 +876,8 @@ current and keeps this SSOT plus the technical design aligned with the code.</p>
 </tr>
 <tr>
 <td><code>business-logic.html</code></td>
-<td>rules as implemented in the prototype and as decided</td>
-<td>a rule or decision changes</td>
+<td>deployed business logic, target rules and the explicit gap register</td>
+<td>a rule, implementation status or decision changes</td>
 </tr>
 <tr>
 <td><code>architecture.html</code></td>
@@ -898,5 +916,5 @@ current and keeps this SSOT plus the technical design aligned with the code.</p>
 </tr>
 </tbody>
 </table></div>
-<footer>Source: <code>discountdirect/SSOT.md</code>, rendered by <code>build-docs.py</code>. Token names follow GDS 6.5.0 roles (<code>GDS-TOKEN-MAP.md</code>).</footer>
+<footer>Source: <code>discountdirect/SSOT.md</code>, rendered by <code>build-docs.py</code>. Documentation tokens are mapped in <code>GDS-TOKEN-MAP.md</code>; the application implementation uses GDS 6.7.0.</footer>
 </div></body></html>
