@@ -79,5 +79,10 @@ brought current.
 2 made the sequence and reply editors real and measured the tablet widths (768 and 1024)
 against the layout specification — both as specified.
 
+**2026-09-19 — consistency pass.** Gate-2 wording that still read "PROPOSED · awaits the
+owner" on `layouts.html`, `05-layout-specs.md`, the design-system page's §14 and
+`components.css` brought to "approved (D16)". The repo rules (`CLAUDE.md`) now list
+business.direct's gate, renderer and converter; the standard notes the deep-link pattern.
+
 **Next.** Owner asks #2–8 (`08-client-asks.md`); an ADR the owner or client flips becomes
 D21; a pilot provider's real numbers would replace the last sample tiles.

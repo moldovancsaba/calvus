@@ -141,7 +141,7 @@ live), indexed by a `README.md` that is also the dated process log:
 
 | Slot | File | Must contain |
 |---|---|---|
-| Presentation | `bemutato.html` | client's language, client's brand tokens, standalone page: one sentence, three numbers, the pages in a recommended order with previews and open buttons, what is real, the asks, what comes next — no documentation chrome |
+| Presentation | `bemutato.html` | client's language, client's brand tokens, standalone page: one sentence, three numbers, the pages in a recommended order with previews and open buttons, what is real, the asks, what comes next — no documentation chrome. A one-page prototype with views takes `?view=&screen=` deep links so each preview and open button lands on the right screen (business.direct) |
 | 00 | `00-brief.md` | client, problem, what the prototype is, what is real / inert / placeholder / not built, where it stands, how to read the folder |
 | 01 | `01-research.md` | benchmarks with sources; or the honest sentence that none was done and what a next round would read |
 | 02 | `02-audit.md` | the client's current site, data or brand, **measured** (platform, plugins, weight, TTFB, page architecture, defects) |

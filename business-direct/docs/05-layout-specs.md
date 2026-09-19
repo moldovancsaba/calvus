@@ -2,7 +2,7 @@
 
 *Four frames composed only from the approved components (`assets/components.css`, D9) and
 the real providers (`data/providers.json`). Layout rules live in `docs/frames/frame.css`
-and nowhere else. PROPOSED 2026-09-19; the owner approves or corrects on `layouts.html`.*
+and nowhere else. Approved 2026-09-19 as gate 2 (D16); the prototype (`../index.html`) implements them — round 2 measured 768 and 1024 as specified.*
 
 ## Reference widths and the tablet resolution
 

@@ -7,13 +7,14 @@ the rules win; say so explicitly rather than silently overriding them.
 ## What this repo actually is
 
 Static HTML/CSS/JS wireframe and prototype pages (Lexodont dental site,
-IDBC Salary Guide, Holdvölgy, DiscountDirect), no package manager, no test runner.
+IDBC Salary Guide, Holdvölgy, DiscountDirect, business.direct), no package manager, no
+test runner.
 Generators exist and must be re-run after editing their sources: `python3 holdvolgy/build.py`
 (site pages, HU + EN, from `build.py` content and `data/catalogue.json`); the two IDBC data
 converters (`idbc-salary-guide/data/build-guide-data.py <workbook>`,
 `build-salary-data.py <bértábla> <talent-insight>`); and `python3 build-docs.py` at the
 root, which renders every project's documentation from markdown. `python3 check.py` at the
-root is the gate (it runs the three project gates and a repo-wide link audit).
+root is the gate (it runs the four project gates and a repo-wide link audit).
 Deployed to GitHub Pages straight from the `main` branch — there is no CI
 pipeline, no bundler, no linter. Don't assume npm scripts, a `package.json`,
 or a design-system engine exist here; they don't. Treat any instruction that
@@ -136,13 +137,21 @@ must actually happen before every push, not just be claimed:
   the change (a background curl-poll loop for a unique marker in the new
   content, per the established pattern) before reporting success.
 
-- **One command for everything: `python3 check.py`** runs the three project gates below plus
-  a repo-wide link audit over every HTML file, and `python3 build-docs.py` renders all four
-  projects' docs (added 2026-09-18). The per-project commands still work on their own.
+- **One command for everything: `python3 check.py`** runs the four project gates (Holdvölgy,
+  IDBC, Lexodont, business.direct) plus a repo-wide link audit over every HTML file, and
+  `python3 build-docs.py` renders every project's docs and `PROTOTYPING.md` (added
+  2026-09-18; business.direct joined 2026-09-19). The per-project commands still work on
+  their own.
 - For Lexodont changes run `python3 lexodont.hu/check.py` (links, anchors, docs cross-links,
   polished/sketch parity); docs render with `python3 lexodont.hu/docs/build.py`. For
   DiscountDirect, `holdvolgy/check.py` covers the folder; docs render with
   `python3 discountdirect/build-docs.py`.
+- For business.direct run `python3 business-direct/check.py` (links, anchors, docs
+  cross-links, `data/providers.json` shape, `assets/app.js` parses); docs render with
+  `python3 business-direct/docs/build.py`; the catalogue is refreshed only by
+  `python3 business-direct/data/fetch-yourfield.py` — never edit `providers.json` by hand.
+  Bump the `?v=` on `assets/app.js` / `app.css` in `index.html` when their behaviour
+  changes (a comment-only edit needs no bump).
 - For IDBC changes also run `python3 idbc-salary-guide/check.py` (links, anchors, docs
   cross-links, one chart-asset version everywhere, inert controls still marked) — must
   print `GATE: CLEAN`. Added 2026-09-18 with the standard documentation structure

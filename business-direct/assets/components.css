@@ -68,7 +68,7 @@ th{text-align:left;font-size:11px;letter-spacing:.06em;text-transform:uppercase;
 td{padding:10px 12px;border-top:1px solid var(--gds-border-card);vertical-align:top}
 @media (max-width:980px){.btn,.roles button,.field input,.field select{min-height:44px}}
 @media (max-width:760px){.approval{grid-template-columns:1fr}}
-/* D15 (PROPOSED with gate 2): social post card and pipeline stage strip */
+/* D15 (approved with gate 2, D16): social post card and pipeline stage strip */
 .post{display:grid;grid-template-columns:72px minmax(0,1fr);gap:12px;align-items:start}
 .post .media{width:72px;height:72px;border-radius:10px;background:var(--gds-bg-muted);display:grid;place-items:center;font-size:11px;font-weight:800;color:var(--gds-text-meta);text-align:center;overflow:hidden}
 .post .media img{width:100%;height:100%;object-fit:cover}
