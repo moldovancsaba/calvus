@@ -225,3 +225,23 @@ rail count 2, Hungarian instance 3 / 7; the gate line on the sequence; first app
 the gate toast, second → "130 providers over 3 days"; digest gate note in the inbox; the
 provider's received e-mail shows the missing-address footer; `scrollWidth` 390, every
 control ≥ 44 px, 0 errors. `python3 check.py` → `GATE: CLEAN`.
+
+## Round 9 — 2026-09-19 — two interfaces: Simple and Advanced (D33)
+
+**Built** (`assets/app.js?v=12`, `app.css?v=5`). `S.mode` with a top-bar switch and
+`?mode=`; `NAV_SIMPLE` / `NAV_ADV` behind a proxy; *Home* (Simple) with `recommend()` — the
+policy gate, real-footage clips, this week's posts, the invitation (safe only when the gate
+allows), replies, comments, the radar, the next dollar — each a card with the reason and a
+button, and `runSafe` for the safe ones (R29); `HELP` texts for every screen with a
+*What is this?* toggle injected under each title; *How to use* (routine, states, rules,
+screens, documentation); *Templates* with "Use" for knowledge files (copied into the right
+knowledge set), policy records (a new instance from a template, gate blocked until
+confirmed) and sequences (a new waiting sequence). Help links and list links ≥ 44 px.
+
+**Measured** (390 × 844 and 1440 × 900): Simple opens on Home with 5 recommendations, 2
+safe; the press ran them (posts approved, radar filed; the invitation stayed waiting because
+the gate blocks it); Advanced shows the overview and the full navigation; a knowledge
+template landed in the provider's FAQ, a policy template created "Sports directory · EU"
+at 3 / 7, a sequence template added a card; every control ≥ 44 px after two fixes (inline
+help links, list links); `scrollWidth` 390 / 1440; 0 errors on a fresh load.
+`python3 check.py` → `GATE: CLEAN`.

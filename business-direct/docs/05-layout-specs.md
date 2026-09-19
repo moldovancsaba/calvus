@@ -66,5 +66,9 @@ No new layout. *Conversations*, *Campaigns* and *Results* (provider) and *Intell
 frames' grids: approval cards in a single stack, tiles auto-fit / two-up, the two-column
 body for the recap at ≥ 1024. Measured at 390 and 1440 with the rest (`07-gate.md`).
 
+The mode switch (D33) is a second `.roles` segment in the top bar; on the phone the two
+segments wrap to two rows. *Home*, *Templates* and *How to use* reuse the approval stack,
+the card grid and the two-column body. No new layout.
+
 The provider's *Media* screen (D28) reuses the approval stack: one card for the recording,
 the post cards for the clips, a listing card for the photo. No new layout.

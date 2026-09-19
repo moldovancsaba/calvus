@@ -48,6 +48,7 @@ h1.page-title{margin:0;font-size:var(--gds-t-title);letter-spacing:-.02em;line-h
 .msg.mine{background:var(--gds-brand-accent-tint);justify-self:end}
 .msg .meta{display:block;margin-top:4px}
 .empty{padding:22px;text-align:center;color:var(--gds-text-meta);font-size:13px;border:1.5px dashed var(--gds-border-strong);border-radius:var(--gds-radius-card)}
+.dept-list li a,.helpbar a,.helpcard a{display:inline-flex;align-items:center;min-height:44px;padding:0 4px;font-weight:800}
 .toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%);background:var(--gds-bg-inverse);color:#fff;padding:10px 16px;border-radius:999px;font-size:13px;font-weight:800;z-index:40;opacity:0;transition:opacity .2s;pointer-events:none}
 .toast.on{opacity:1}
 .week{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:6px}

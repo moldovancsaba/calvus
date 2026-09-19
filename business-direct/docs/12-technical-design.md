@@ -8,7 +8,8 @@ developer can read the behaviour before the code exists.*
 
 | View | Screen | Template | Prototype function |
 |---|---|---|---|
-| Platform | Overview | title + tiles + two columns (flow queue · pipeline and departments) + providers | `platform.overview` |
+| Platform | Home (Simple) | recommendations ranked with reason and one button; the one safe press; the weekly routine | `platform.home`, `recommend`, `runSafe` |
+| Platform | Overview (Advanced) | title + tiles + two columns (flow queue · pipeline and departments) + providers | `platform.overview` |
 | Platform | Social publishing | week calendar + queue of post cards | `platform.social` |
 | Platform | Provider sales | pipeline strip + sequences · reply inbox + providers in stage | `platform.sales` |
 | Platform | Approvals | one list of every *waiting* draft | `platform.approvals` |
@@ -16,6 +17,9 @@ developer can read the behaviour before the code exists.*
 | Platform | Generated pages | table | `platform.pages`, `genPages` |
 | Platform | Integrations | card grid | `platform.integrations` |
 | Platform | Policy | instance switch · gate table · principles · the record as an onboarding checklist | `platform.policy`, `policyGate` |
+| Platform | Templates | sequences · posts · campaigns · knowledge files · policy records; "Use" copies into state | `platform.templates`, `TEMPLATES`, `data-tpl` |
+| Platform | How to use | routine · states · rules · screens · documentation | `platform.help`, `HELP` |
+| every screen | What is this? | a help panel per screen, from `HELP[role/screen]` | `helpBox()` |
 | Platform | Knowledge and rules | file editors | `platform.knowledge`, `kfiles` |
 | Platform | Intelligence | tiles + by department · radar and needs-you | `platform.intelligence` |
 | Platform | Economics | tiles + next-dollar table + funnel strip + 12-month plan · inputs | `platform.economics`, `econ()`, `S.econ` |
@@ -30,7 +34,7 @@ developer can read the behaviour before the code exists.*
 | Family | Saved | listing cards | `family.saved` |
 | Family | Preferences | toggles + stop | `family.prefs` |
 
-Navigation: rail ≥ 1024, bottom bar below (`app.css`), the role switch in the top bar;
+Navigation: rail ≥ 1024, bottom bar below (`app.css`), the role switch and the mode switch (Simple / Advanced, D33) in the top bar — `NAV_SIMPLE` / `NAV_ADV` and `BOTTOM_SIMPLE` / `BOTTOM_ADV` behind a proxy on `S.mode`;
 deep links `?view=&screen=&stage=` (`app.js`, bottom; `stage` pre-sets the persona's pipeline stage for previews). Layout rules: `05-layout-specs.md`.
 
 ## 2. Content model (MongoDB, `platform_id` on every document)

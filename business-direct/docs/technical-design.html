@@ -54,7 +54,13 @@ developer can read the behaviour before the code exists.</em></p>
 <tbody>
 <tr>
 <td>Platform</td>
-<td>Overview</td>
+<td>Home (Simple)</td>
+<td>recommendations ranked with reason and one button; the one safe press; the weekly routine</td>
+<td><code>platform.home</code>, <code>recommend</code>, <code>runSafe</code></td>
+</tr>
+<tr>
+<td>Platform</td>
+<td>Overview (Advanced)</td>
 <td>title + tiles + two columns (flow queue · pipeline and departments) + providers</td>
 <td><code>platform.overview</code></td>
 </tr>
@@ -99,6 +105,24 @@ developer can read the behaviour before the code exists.</em></p>
 <td>Policy</td>
 <td>instance switch · gate table · principles · the record as an onboarding checklist</td>
 <td><code>platform.policy</code>, <code>policyGate</code></td>
+</tr>
+<tr>
+<td>Platform</td>
+<td>Templates</td>
+<td>sequences · posts · campaigns · knowledge files · policy records; "Use" copies into state</td>
+<td><code>platform.templates</code>, <code>TEMPLATES</code>, <code>data-tpl</code></td>
+</tr>
+<tr>
+<td>Platform</td>
+<td>How to use</td>
+<td>routine · states · rules · screens · documentation</td>
+<td><code>platform.help</code>, <code>HELP</code></td>
+</tr>
+<tr>
+<td>every screen</td>
+<td>What is this?</td>
+<td>a help panel per screen, from <code>HELP[role/screen]</code></td>
+<td><code>helpBox()</code></td>
 </tr>
 <tr>
 <td>Platform</td>
@@ -180,7 +204,7 @@ developer can read the behaviour before the code exists.</em></p>
 </tr>
 </tbody>
 </table></div>
-<p>Navigation: rail ≥ 1024, bottom bar below (<code>app.css</code>), the role switch in the top bar;
+<p>Navigation: rail ≥ 1024, bottom bar below (<code>app.css</code>), the role switch and the mode switch (Simple / Advanced, D33) in the top bar — <code>NAV_SIMPLE</code> / <code>NAV_ADV</code> and <code>BOTTOM_SIMPLE</code> / <code>BOTTOM_ADV</code> behind a proxy on <code>S.mode</code>;
 deep links <code>?view=&amp;screen=&amp;stage=</code> (<code>app.js</code>, bottom; <code>stage</code> pre-sets the persona's pipeline stage for previews). Layout rules: <a href="05-layout-specs.html"><code>05-layout-specs.md</code></a>.</p>
 <h2>2. Content model (MongoDB, <code>platform_id</code> on every document)</h2>
 <pre><code>providers_cache  { _id: &lt;platform provider id&gt;, platform_id, ...Provider (SSOT §3), synced_at }

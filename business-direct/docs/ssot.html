@@ -203,6 +203,26 @@ implementation of the enumerations and state machines below.</em></p>
 <td>social anchors, economics</td>
 </tr>
 <tr>
+<td><strong>Mode</strong></td>
+<td><code>simple</code> (guided, semi-automatic: Home with recommendations and one safe press) or <code>advanced</code> (every screen and input); the rules are identical in both (D33)</td>
+<td>top bar, <code>?mode=</code></td>
+</tr>
+<tr>
+<td><strong>Recommendation</strong></td>
+<td>a ranked suggestion computed from state — what, why (with the figure), safe to run or needs judgement — shown on Home and run by one press when safe</td>
+<td><code>recommend()</code></td>
+</tr>
+<tr>
+<td><strong>Template</strong></td>
+<td>a starting point the operator copies into the machine: a sequence, a post or campaign pattern, a knowledge file, a policy record for another client type</td>
+<td><code>TEMPLATES</code>, the <em>Templates</em> screen</td>
+</tr>
+<tr>
+<td><strong>Help</strong></td>
+<td>the <em>What is this?</em> panel per screen and the <em>How to use</em> screen</td>
+<td><code>HELP</code></td>
+</tr>
+<tr>
 <td><strong>Recap</strong></td>
 <td>the weekly intelligence screen: what moved, by department, the market radar, what needs the operator (D23)</td>
 <td>intelligence</td>
@@ -496,7 +516,7 @@ implementation of the enumerations and state machines below.</em></p>
 </tbody>
 </table></div>
 <h2>5. Decision register</h2>
-<p><a href="decisions.html"><code>04-decisions.md</code></a> holds D1–D32. The ones the engineering documents rest on: D2 (three
+<p><a href="decisions.html"><code>04-decisions.md</code></a> holds D1–D33. The ones the engineering documents rest on: D2 (three
 views), D5 (DiscountDirect sibling), D6 (departments, knowledge layer, human-in-the-loop,
 optional AI, dashboard, integrations), D11 (Your Field first), D14 (two flows), D15
 (post card and pipeline strip), D17 (one page, in-memory state), D18 (sample generated
@@ -621,6 +641,11 @@ PROPOSED.</p>
 <td>R28</td>
 <td>High-privacy defaults on every instance: nothing that shares, locates or increases frequency is on until the person turns it on; push respects quiet hours where minors may be present</td>
 <td>policy <code>defaults</code>, <code>family.prefs</code></td>
+</tr>
+<tr>
+<td>R29</td>
+<td>The one-press run in Simple mode executes only recommendations the machine marks safe — approvals of drafts it wrote from real data, sends the policy gate allows, filing — never a reply to a person, never a purchase, never an override of a block; each action is logged as the operator's (D33)</td>
+<td><code>runSafe</code>, <code>recommend().auto</code></td>
 </tr>
 <tr>
 <td>R25</td>

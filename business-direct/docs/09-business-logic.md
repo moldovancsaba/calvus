@@ -30,6 +30,19 @@ The invitation sequence (one approval for the whole run) moves those with an e-m
 with neither get the website form. "Not my program" or unsubscribe stops everything for
 that address.
 
+## 2b. Two interfaces, one machine (D33)
+
+**Simple** is for the client's operator: *Home* shows what needs a person as ranked
+recommendations — each with the reason (the research figure behind it) and one button —
+and a single press runs every recommendation the machine judges safe: approving drafted
+posts and real-footage clips, sending the invitation when the policy gate allows, filing
+the radar note. It never answers a person, never moves money, never overrides a block: those
+stay "needs your judgement". **Advanced** is for a professional: every screen, every input,
+every rule. Both carry a *What is this?* panel per screen, a *How to use* screen, and
+*Templates* — sequences, posts, campaigns, knowledge files and policy records for other
+client types — that copy into the machine with one press. The same rules apply in both;
+Simple changes what is shown, not what may happen.
+
 ## 3. The departments (D6) and what each may do alone
 
 | Department | Runs alone | Needs a person |

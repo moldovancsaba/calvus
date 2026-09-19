@@ -39,6 +39,10 @@ implementation of the enumerations and state machines below.*
 | **Anchor** | the week's one piece per neighbourhood × activity, cut into a Reel, a carousel, a story, a digest item and a page update | social publishing |
 | **Media adapter** | one of video, image, audio, clips — a service behind one interface; clips (from real footage) is v1, the rest later | media department |
 | **Holdout** | a neighbourhood where the content engine is off for the experiment's weeks; the comparable treatment neighbourhood has it on | social anchors, economics |
+| **Mode** | `simple` (guided, semi-automatic: Home with recommendations and one safe press) or `advanced` (every screen and input); the rules are identical in both (D33) | top bar, `?mode=` |
+| **Recommendation** | a ranked suggestion computed from state — what, why (with the figure), safe to run or needs judgement — shown on Home and run by one press when safe | `recommend()` |
+| **Template** | a starting point the operator copies into the machine: a sequence, a post or campaign pattern, a knowledge file, a policy record for another client type | `TEMPLATES`, the *Templates* screen |
+| **Help** | the *What is this?* panel per screen and the *How to use* screen | `HELP` |
 | **Recap** | the weekly intelligence screen: what moved, by department, the market radar, what needs the operator (D23) | intelligence |
 | **Integration** | a connector that gives the machine hands: the platform API, social channels, e-mail, push, SMS, Google Business Profile, calendar | integrations |
 | **Real / sample** | real = from the platform's public API, never edited; sample = generated for the prototype from real providers and declared as such (D18) | every tile's third line |
@@ -108,7 +112,7 @@ implementation of the enumerations and state machines below.*
 
 ## 5. Decision register
 
-`04-decisions.md` holds D1–D32. The ones the engineering documents rest on: D2 (three
+`04-decisions.md` holds D1–D33. The ones the engineering documents rest on: D2 (three
 views), D5 (DiscountDirect sibling), D6 (departments, knowledge layer, human-in-the-loop,
 optional AI, dashboard, integrations), D11 (Your Field first), D14 (two flows), D15
 (post card and pipeline strip), D17 (one page, in-memory state), D18 (sample generated
@@ -141,6 +145,7 @@ PROPOSED.
 | R26 | **The policy gate**: a feature runs only when the instance's policy fields it needs are set — provider e-mail needs the postal address; the digest needs the published e-mail clause; audiences need the saves opt-in; SMS needs the consent text; generation needs the disclosure rule; a minor's data needs the audience model and a DPIA (D32) | `policyGate()`, `sending-guard`, the *Policy* screen |
 | R27 | No profiling and no targeted advertising on a minor's data, on any instance, with or without consent (DSA Art. 28, California, Oregon, Nebraska as the floor) | policy `minors` |
 | R28 | High-privacy defaults on every instance: nothing that shares, locates or increases frequency is on until the person turns it on; push respects quiet hours where minors may be present | policy `defaults`, `family.prefs` |
+| R29 | The one-press run in Simple mode executes only recommendations the machine marks safe — approvals of drafts it wrote from real data, sends the policy gate allows, filing — never a reply to a person, never a purchase, never an override of a block; each action is logged as the operator's (D33) | `runSafe`, `recommend().auto` |
 | R25 | Approvals may be batched (one decision for a week's real-footage clips) and a department may earn auto-approval after four clean weeks (no edits, no complaints); every auto-sent message is logged and the family can stop it (D30) | `approveClips`, `S.auto` |
 | R16 | The next-dollar ranking runs weekly on measured rates where they exist and on the documented assumption where they do not; the recap says which | `econ()`; `16-analytics…` §4 |
 | R17 | A sequence step is added or removed when its marginal reply rate per touch falls below the cost-per-touch breakeven for two consecutive weeks, inside the 4–7 benchmark | production |
