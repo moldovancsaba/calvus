@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>business.direct — single source of truth — business.direct docs</title>
+<link rel="stylesheet" href="../assets/tokens.css">
+<style>/* business.direct — documentation pages on the product tokens (GDS roles, teal accent). */
+:root{--ground:var(--gds-bg-canvas,#f8fafc);--card:var(--gds-bg-surface,#fff);--ink:var(--gds-text-body,#111827);--text:#1f2937;--muted:var(--gds-text-meta,#64748b);--accent:var(--gds-brand-accent,#0f766e);--accent-deep:var(--gds-brand-accent-strong,#115e59);--line:var(--gds-border-card,#e2e8f0);--line-soft:#eef2f7;--note:var(--gds-brand-accent-tint,#e6f4f2)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--ground);color:var(--text);font-family:var(--gds-font,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif);font-size:15.5px;line-height:1.6;padding-block:0 64px;padding-inline:clamp(16px,4vw,40px)}
+.wrap{max-width:74ch;margin-inline:auto}
+.docnav{display:flex;flex-wrap:wrap;gap:4px 18px;align-items:center;padding:16px 0;border-bottom:1px solid var(--line);font-size:12px;letter-spacing:.06em;text-transform:uppercase}
+.docnav a{color:var(--muted);text-decoration:none;min-height:44px;min-width:44px;display:inline-flex;align-items:center;border-bottom:2px solid transparent}
+.docnav a:hover,.docnav a[aria-current]{color:var(--ink);border-color:var(--accent)}
+.docnav-brand{color:var(--accent-deep);font-weight:800;margin-right:6px}
+.docnav-hub{margin-left:auto}
+header{padding-block:40px 24px;border-bottom:1px solid var(--line);margin-bottom:28px}
+.eyebrow{font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--accent-deep);margin:0 0 12px;font-weight:800}
+h1,h2,h3{color:var(--ink);line-height:1.1;text-wrap:balance;margin:0;letter-spacing:-.02em}
+h1{font-size:clamp(30px,6vw,46px);font-weight:900}
+h2{font-size:clamp(23px,4vw,30px);font-weight:900;margin:48px 0 14px;padding-top:20px;border-top:1px solid var(--line)}
+h3{font-size:18px;margin:30px 0 8px;font-weight:800}
+p{margin:0 0 14px} strong{color:var(--ink);font-weight:800}
+ul,ol{padding-left:22px;margin:0 0 16px} li{margin:5px 0} li>ul{margin:6px 0 0}
+code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.86em;background:var(--note);padding:1px 5px;border-radius:4px;color:var(--ink);overflow-wrap:anywhere}
+pre{overflow-x:auto;padding:14px 16px;border:1px solid var(--line);border-radius:10px;background:var(--card);font-size:12px;line-height:1.35}
+pre code{background:none;padding:0;font-size:inherit}
+a{color:var(--accent-deep)} :focus-visible{outline:2px solid var(--accent-deep);outline-offset:2px}
+.tbl{overflow-x:auto;margin:14px 0 22px;border:1px solid var(--line);border-radius:10px;background:var(--card)}
+table{border-collapse:collapse;width:100%;font-size:13.5px;min-width:560px}
+th{text-align:left;font-weight:800;color:var(--ink);background:var(--note);padding:10px 12px;border-bottom:1px solid var(--line);font-size:11.5px;letter-spacing:.06em;text-transform:uppercase}
+td{padding:10px 12px;border-top:1px solid var(--line-soft);vertical-align:top;background:var(--card)} td:first-child{color:var(--ink)}
+footer{margin-top:56px;padding-top:18px;border-top:1px solid var(--line);font-size:12px;color:var(--muted)}
+</style>
+</head>
+<body>
+<div class="wrap">
+<nav class="docnav" aria-label="Project documentation"><span class="docnav-brand">business.direct · docs</span><a href="index.html">Overview</a><a href="brief.html">Brief</a><a href="research.html">Research</a><a href="audit.html">Audit</a><a href="sources.html">Sources</a><a href="design-system.html">Design system</a><a href="layouts.html">Layouts</a><a href="05-layout-specs.html">Layout specs</a><a href="decisions.html">Decisions</a><a href="build-log.html">Build log</a><a href="gate.html">Gate</a><a href="client-asks.html">Owner asks</a><a href="ssot.html" aria-current=page>SSOT</a><a href="architecture.html">Architecture</a><a href="technical-design.html">Technical design</a><a href="implementation-plan.html">Plan</a><a href="token-map.html">Token map</a></nav>
+<header><p class="eyebrow">Calvus · business.direct · project documentation</p><h1>business.direct — single source of truth</h1></header>
+<p><em>Written 2026-09-19 after gate 2 and the first build round (D16–D18). Every term the
+other engineering documents use is defined here; where a term is DiscountDirect's, it
+says so (D5). The prototype (<code>../index.html</code>, <code>assets/app.js</code>) is the reference
+implementation of the enumerations and state machines below.</em></p>
+<h2>1. Glossary</h2>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>Term</th>
+<th>Meaning</th>
+<th>Where it shows</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Platform</strong></td>
+<td>the listing site that runs the machine — Your Field NYC first (D11); <em>Most én sportolok!</em> a reference instance</td>
+<td>the Platform view</td>
+</tr>
+<tr>
+<td><strong>Operator</strong></td>
+<td>the person at the platform who approves what leaves the machine; one person by design</td>
+<td>the approval queue</td>
+</tr>
+<tr>
+<td><strong>Provider</strong></td>
+<td>a listed business — the platform's own word for it (<code>/api/public/providers</code>). Reference instances may call it <em>listing</em></td>
+<td>everywhere</td>
+</tr>
+<tr>
+<td><strong>Family</strong></td>
+<td>the consumer on Your Field; a parent with children and saved providers. Reference instances: <em>user</em>, <em>visitor</em></td>
+<td>the Family view</td>
+</tr>
+<tr>
+<td><strong>Card</strong></td>
+<td>a provider's public page and record on the platform, built by the platform's enrichment from the provider's own website</td>
+<td>the drawer's "On the card (real)"</td>
+</tr>
+<tr>
+<td><strong>Claim</strong></td>
+<td>a provider taking over its card. The platform's <code>claimStatus</code> (<code>unclaimed</code> / unset today); business.direct's pipeline adds <em>applied</em> and <em>managing</em></td>
+<td>pipeline</td>
+</tr>
+<tr>
+<td><strong>Flow</strong></td>
+<td>one of the two front-door processes (D14): <strong>B2C social publishing</strong> and <strong>B2B provider sales</strong></td>
+<td>the rail's <em>Flows</em> group</td>
+</tr>
+<tr>
+<td><strong>Department</strong></td>
+<td>a bounded automation with its own approvals and an optional AI switch: social publishing, provider sales, weekly picks, generated pages, market radar; on the provider side: conversations and reputation, reminders, campaigns, page and visibility</td>
+<td>department cards</td>
+</tr>
+<tr>
+<td><strong>Draft</strong></td>
+<td>anything the machine wrote and has not sent: a post, a sequence step, a reply, a digest</td>
+<td>approval cards</td>
+</tr>
+<tr>
+<td><strong>Approval</strong></td>
+<td>the operator's (or provider's) decision on a draft: approve, edit-then-approve, skip</td>
+<td>the queue, the toast</td>
+</tr>
+<tr>
+<td><strong>Sequence</strong></td>
+<td>a multi-step outbound series to providers (invitation → reminder → call task) with one approval for the whole run</td>
+<td>provider sales</td>
+</tr>
+<tr>
+<td><strong>Pipeline stage</strong></td>
+<td>where a provider stands with the platform: see §2</td>
+<td>pipeline strip, drawer chips</td>
+</tr>
+<tr>
+<td><strong>Reply inbox</strong></td>
+<td>inbound messages from providers with a drafted answer each</td>
+<td>provider sales</td>
+</tr>
+<tr>
+<td><strong>Digest</strong></td>
+<td>the family's weekly "this week near you" e-mail from saved providers and nearby providers with a session</td>
+<td>family inbox</td>
+</tr>
+<tr>
+<td><strong>Alert</strong></td>
+<td>a push to a family when a saved provider adds a session</td>
+<td>preferences</td>
+</tr>
+<tr>
+<td><strong>Consent</strong></td>
+<td>a family's recorded permission per channel, and per provider for SMS (TCPA, research §8)</td>
+<td>preferences, the SMS's "why you got this"</td>
+</tr>
+<tr>
+<td><strong>Cap</strong></td>
+<td>the frequency cap across every channel: 4 messages per family per month (<code>rules/consent.md</code>) — DiscountDirect's term</td>
+<td>preferences</td>
+</tr>
+<tr>
+<td><strong>Knowledge file</strong></td>
+<td>a plain-text file the machine reads before writing: voice, offer, FAQ, consent rules, social rules</td>
+<td>knowledge screens</td>
+</tr>
+<tr>
+<td><strong>Generated page</strong></td>
+<td>an activity × neighbourhood landing page published only where ≥ 3 providers exist</td>
+<td>generated pages</td>
+</tr>
+<tr>
+<td><strong>Integration</strong></td>
+<td>a connector that gives the machine hands: the platform API, social channels, e-mail, push, SMS, Google Business Profile, calendar</td>
+<td>integrations</td>
+</tr>
+<tr>
+<td><strong>Real / sample</strong></td>
+<td>real = from the platform's public API, never edited; sample = generated for the prototype from real providers and declared as such (D18)</td>
+<td>every tile's third line</td>
+</tr>
+</tbody>
+</table></div>
+<h2>2. Enumerations</h2>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>Enumeration</th>
+<th>Values</th>
+<th>Source</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>role</code></td>
+<td><code>platform</code> · <code>provider</code> · <code>family</code></td>
+<td>D2; <code>app.js</code> <code>S.role</code></td>
+</tr>
+<tr>
+<td><code>pipelineStage</code></td>
+<td><code>identified</code> → <code>contacted</code> → <code>replied</code> → <code>applied</code> → <code>managing</code> → <code>upgraded</code></td>
+<td>D15; <code>STAGES</code></td>
+</tr>
+<tr>
+<td><code>draftState</code></td>
+<td><code>waiting</code> · <code>scheduled</code> · <code>published</code> · <code>skipped</code> (posts); <code>waiting</code> · <code>sent</code> · <code>filed</code> · <code>skipped</code> (sequences, replies)</td>
+<td><code>stateBadge</code></td>
+</tr>
+<tr>
+<td><code>channel</code> (B2C)</td>
+<td><code>Instagram</code> · <code>Facebook</code> · <code>TikTok</code> · <code>X</code> (posts); <code>email</code> · <code>push</code> · <code>sms</code> (families)</td>
+<td>D14; <code>post.channels</code>, <code>family.prefs</code></td>
+</tr>
+<tr>
+<td><code>channel</code> (B2B)</td>
+<td><code>email</code> · <code>phone</code> (from the card) · <code>website form</code> (neither on the card)</td>
+<td>providers table, "Contact on card"</td>
+</tr>
+<tr>
+<td><code>department</code> (platform)</td>
+<td><code>social</code> · <code>sales</code> · <code>picks</code> · <code>pages</code> · <code>radar</code></td>
+<td><code>S.ai</code> keys</td>
+</tr>
+<tr>
+<td><code>department</code> (provider)</td>
+<td><code>conversations</code> · <code>reminders</code> · <code>campaigns</code> · <code>page</code></td>
+<td>provider today</td>
+</tr>
+<tr>
+<td><code>integrationState</code></td>
+<td><code>ok</code> (connected) · <code>off</code> (not connected)</td>
+<td><code>S.integrations</code></td>
+</tr>
+<tr>
+<td><code>claimStatus</code> (platform's)</td>
+<td><code>unclaimed</code> · unset (237 of 252); the platform's own enumeration has more values we have not seen</td>
+<td><code>providers.json</code></td>
+</tr>
+<tr>
+<td><code>activityType</code></td>
+<td>20 values as the platform's <code>browse-facets</code> lists them (Martial Arts, Dance, Swimming, Soccer, …)</td>
+<td><code>platform.json</code></td>
+</tr>
+<tr>
+<td><code>borough</code></td>
+<td><code>Manhattan</code> · <code>Brooklyn</code> (today)</td>
+<td>facets</td>
+</tr>
+</tbody>
+</table></div>
+<h2>3. Canonical entities</h2>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>Entity</th>
+<th>Fields (prototype)</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Provider</strong></td>
+<td><code>id</code>, <code>name</code>, <code>category</code>, <code>borough</code>, <code>neighborhood</code>, <code>address</code>, <code>lat</code>, <code>lng</code>, <code>activityTypes[]</code>, <code>primaryActivityType</code>, <code>ageRanges[]</code>, <code>ageMinMonths</code>, <code>ageMaxMonths</code>, <code>shortDescription</code>, <code>longDescription</code>, <code>price{amount,currency,unit,evidence}</code>, <code>website</code>, <code>phone</code>, <code>email</code>, <code>image</code>, <code>dayTimeTags[]</code>, <code>venueModel</code>, <code>sessions[{id,title,registration}]</code>, <code>nextOccurrence</code>, <code>announcement{title,description,badge}</code>, <code>bookingEnabled</code>, <code>trial{available,free,text}</code>, <code>rating</code>, <code>reviewCount</code>, <code>badges[]</code>, <code>claimStatus</code>, <code>verifiedFields[]</code>, <code>updatedAt</code>, <code>publishedAt</code>, <code>sourceCount</code></td>
+<td>the platform owns it; business.direct reads it (<code>fetch-yourfield.py</code>). One of 252 has no neighbourhood; the borough stands in</td>
+</tr>
+<tr>
+<td><strong>ProviderState</strong> (ours)</td>
+<td><code>providerId</code>, <code>stage</code>, <code>stageChangedAt</code>, <code>stageChangedBy</code> (<code>sequence</code> / <code>reply</code> / <code>operator</code> / <code>provider</code>), <code>thread[]</code></td>
+<td>in memory today (<code>S.stage</code>, <code>S.threads</code>)</td>
+</tr>
+<tr>
+<td><strong>Draft</strong></td>
+<td><code>id</code>, <code>kind</code> (<code>post</code> / <code>sequence</code> / <code>reply</code> / <code>digest</code>), <code>providerId?</code>, <code>channels[]</code>, <code>copy</code>, <code>media?</code>, <code>state</code>, <code>ai</code> (bool: AI-drafted), <code>scheduledFor?</code>, <code>why?</code></td>
+<td><code>S.posts</code>, <code>S.sequences</code>, <code>S.replies</code></td>
+</tr>
+<tr>
+<td><strong>Sequence</strong></td>
+<td><code>id</code>, <code>name</code>, <code>to[providerId]</code>, <code>steps[]</code>, <code>subject</code>, <code>body</code> (merge fields <code>{name}</code>, <code>{first name}</code>, <code>{neighborhood}</code>, <code>{activity}</code>, <code>{link}</code>), <code>state</code>, <code>why</code></td>
+<td><code>S.sequences</code></td>
+</tr>
+<tr>
+<td><strong>Family</strong></td>
+<td><code>name</code>, <code>neighborhood</code>, <code>borough</code>, <code>kids[{name,age}]</code>, <code>saved[providerId]</code>, <code>prefs{picks,alerts,nearby,sms}</code>, <code>smsConsent[providerId]</code></td>
+<td>the platform owns the account; business.direct owns preferences and consent records</td>
+</tr>
+<tr>
+<td><strong>KnowledgeFile</strong></td>
+<td><code>path</code>, <code>text</code>, <code>owner</code> (<code>platform</code> / <code>providerId</code>)</td>
+<td><code>S.knowledge</code></td>
+</tr>
+<tr>
+<td><strong>Integration</strong></td>
+<td><code>id</code>, <code>name</code>, <code>what</code>, <code>state</code>, <code>label</code>, <code>note</code></td>
+<td><code>S.integrations</code></td>
+</tr>
+<tr>
+<td><strong>GeneratedPage</strong></td>
+<td><code>activity</code>, <code>area</code>, <code>n</code>, <code>slug</code></td>
+<td>computed (<code>genPages()</code>), threshold 3</td>
+</tr>
+</tbody>
+</table></div>
+<h2>4. Settings the prototype fixes</h2>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>Setting</th>
+<th>Value</th>
+<th>Why</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Family frequency cap</td>
+<td>4 messages / month across every channel</td>
+<td>research §4, <code>rules/consent.md</code></td>
+</tr>
+<tr>
+<td>Digest day and time</td>
+<td>Sunday 18:00</td>
+<td>research §4</td>
+</tr>
+<tr>
+<td>Generated-page threshold</td>
+<td>≥ 3 providers</td>
+<td>no thin pages, research §5</td>
+</tr>
+<tr>
+<td>Invitation sequence</td>
+<td>invitation → reminder after 5 days → call task for phone-only providers</td>
+<td>research §2–3</td>
+</tr>
+<tr>
+<td>Opt-out handling</td>
+<td>every provider e-mail carries an opt-out; honoured within 10 business days</td>
+<td>CAN-SPAM, research §8</td>
+</tr>
+<tr>
+<td>SMS to families</td>
+<td>only with written consent per provider</td>
+<td>TCPA, research §8</td>
+</tr>
+<tr>
+<td>AI drafts</td>
+<td>optional per department; default on for social, sales, radar, provider conversations; off for picks and pages</td>
+<td>D6</td>
+</tr>
+<tr>
+<td>AI-content marking</td>
+<td>drafts carry the ✦ AI badge internally; published content is marked per EU AI Act Art. 50 where it applies (from 2 Aug 2026)</td>
+<td>research §7</td>
+</tr>
+</tbody>
+</table></div>
+<h2>5. Decision register</h2>
+<p><a href="decisions.html"><code>04-decisions.md</code></a> holds D1–D18. The ones the engineering documents rest on: D2 (three
+views), D5 (DiscountDirect sibling), D6 (departments, knowledge layer, human-in-the-loop,
+optional AI, dashboard, integrations), D11 (Your Field first), D14 (two flows), D15
+(post card and pipeline strip), D17 (one page, in-memory state), D18 (sample generated
+from the real catalogue). Stack decisions are ADRs in <a href="architecture.html"><code>11-architecture.md</code></a> §11, all
+PROPOSED.</p>
+<h2>6. Rules register</h2>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>#</th>
+<th>Rule</th>
+<th>Where enforced</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>R1</td>
+<td>Nothing leaves the machine without a person's approval — a post, a sequence, a reply, a digest change</td>
+<td>approval queue; production: the outbox only takes <code>approved</code> drafts</td>
+</tr>
+<tr>
+<td>R2</td>
+<td>Every message names why it was sent and how to stop it</td>
+<td>post link, SMS "why you got this", e-mail footer</td>
+</tr>
+<tr>
+<td>R3</td>
+<td>A family receives at most the cap, across all channels and all providers</td>
+<td>production: Redis counter per family per month (ADR-3)</td>
+</tr>
+<tr>
+<td>R4</td>
+<td>SMS to a family only with written consent for that provider; e-mail and push by preference</td>
+<td><code>family.prefs</code>, <code>smsConsent</code></td>
+</tr>
+<tr>
+<td>R5</td>
+<td>Provider e-mail without prior consent is lawful in the US (CAN-SPAM) but every message carries a working opt-out; a "not my program" reply stops the sequence for that address</td>
+<td><code>notMine</code> action</td>
+</tr>
+<tr>
+<td>R6</td>
+<td>A generated page exists only where ≥ 3 providers exist</td>
+<td><code>genPages()</code></td>
+</tr>
+<tr>
+<td>R7</td>
+<td>Every non-catalogue figure is labelled sample until a real source feeds it</td>
+<td>tiles' third line</td>
+</tr>
+<tr>
+<td>R8</td>
+<td>The machine reads the knowledge files before every draft; the operator can read and edit them</td>
+<td>knowledge screens</td>
+</tr>
+<tr>
+<td>R9</td>
+<td>A pipeline stage moves forward automatically only on an event (e-mail sent, reply received, application submitted); backwards only by a person</td>
+<td><code>sendInvitation</code>, <code>approveReply</code>, drawer chips</td>
+</tr>
+<tr>
+<td>R10</td>
+<td>AI is optional per department; with it off, copy is the listing's own text</td>
+<td><code>S.ai</code>, <code>draftCopy</code></td>
+</tr>
+</tbody>
+</table></div>
+<h2>7. Metrics</h2>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>Metric</th>
+<th>Definition</th>
+<th>View</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Providers managing</td>
+<td>providers in <code>managing</code> or <code>upgraded</code> / all providers</td>
+<td>platform overview (real: 0 / 252 today)</td>
+</tr>
+<tr>
+<td>Contactable</td>
+<td>providers with e-mail / with phone</td>
+<td>overview (130 / 180)</td>
+</tr>
+<tr>
+<td>Families from social</td>
+<td>sign-ups whose first session had a social referrer</td>
+<td>overview (sample until a channel is connected)</td>
+</tr>
+<tr>
+<td>Posts scheduled</td>
+<td>approved posts this week / drafted</td>
+<td>overview, calendar</td>
+</tr>
+<tr>
+<td>Reply time</td>
+<td>median time from inbound to sent reply, per provider</td>
+<td>provider today (sample)</td>
+</tr>
+<tr>
+<td>Trials booked</td>
+<td>bookings with <code>trial</code> in the session, per provider per week</td>
+<td>provider today (sample)</td>
+</tr>
+<tr>
+<td>Opt-outs</td>
+<td>families who turned a channel off or stopped everything, per month</td>
+<td>production only</td>
+</tr>
+</tbody>
+</table></div>
+<h2>8. Document map</h2>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>Doc</th>
+<th>Holds</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="brief.html"><code>00-brief.md</code></a></td>
+<td>client, problem, views, flows, what is real</td>
+</tr>
+<tr>
+<td><a href="research.html"><code>01-research.md</code></a></td>
+<td>sourced evidence, legal by market</td>
+</tr>
+<tr>
+<td><a href="audit.html"><code>02-audit.md</code></a></td>
+<td>the platform measured, the catalogue's coverage, the videos, DiscountDirect's contribution</td>
+</tr>
+<tr>
+<td><a href="sources.html"><code>03-sources.md</code></a></td>
+<td>real vs sample</td>
+</tr>
+<tr>
+<td><a href="decisions.html"><code>04-decisions.md</code></a></td>
+<td>D1–D18</td>
+</tr>
+<tr>
+<td><a href="05-layout-specs.html"><code>05-layout-specs.md</code></a>, <code>design-system.html</code>, <code>layouts.html</code></td>
+<td>gates 1 and 2</td>
+</tr>
+<tr>
+<td><a href="build-log.html"><code>06-build-log.md</code></a>, <a href="gate.html"><code>07-gate.md</code></a></td>
+<td>rounds and the measured pass</td>
+</tr>
+<tr>
+<td><a href="client-asks.html"><code>08-client-asks.md</code></a></td>
+<td>open items</td>
+</tr>
+<tr>
+<td><a href="ssot.html"><code>10-ssot.md</code></a> (this)</td>
+<td>terms, enumerations, entities, rules, metrics</td>
+</tr>
+<tr>
+<td><a href="architecture.html"><code>11-architecture.md</code></a></td>
+<td>context, quality attributes, containers, flows, stack, ADRs</td>
+</tr>
+<tr>
+<td><a href="technical-design.html"><code>12-technical-design.md</code></a></td>
+<td>data model, state machines, connectors, jobs, operations</td>
+</tr>
+<tr>
+<td><a href="implementation-plan.html"><code>13-implementation-plan.md</code></a></td>
+<td>milestones, issues with DoD, blocked register, risks</td>
+</tr>
+<tr>
+<td><a href="token-map.html"><code>14-token-map.md</code></a></td>
+<td>prototype tokens and components → production</td>
+</tr>
+</tbody>
+</table></div>
+<footer>Source: <code>business-direct/docs/10-ssot.md</code> · rendered by <code>docs/build.py</code>.</footer>
+</div>
+</body>
+</html>

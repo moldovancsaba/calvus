@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>business.direct — implementation plan — business.direct docs</title>
+<link rel="stylesheet" href="../assets/tokens.css">
+<style>/* business.direct — documentation pages on the product tokens (GDS roles, teal accent). */
+:root{--ground:var(--gds-bg-canvas,#f8fafc);--card:var(--gds-bg-surface,#fff);--ink:var(--gds-text-body,#111827);--text:#1f2937;--muted:var(--gds-text-meta,#64748b);--accent:var(--gds-brand-accent,#0f766e);--accent-deep:var(--gds-brand-accent-strong,#115e59);--line:var(--gds-border-card,#e2e8f0);--line-soft:#eef2f7;--note:var(--gds-brand-accent-tint,#e6f4f2)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--ground);color:var(--text);font-family:var(--gds-font,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif);font-size:15.5px;line-height:1.6;padding-block:0 64px;padding-inline:clamp(16px,4vw,40px)}
+.wrap{max-width:74ch;margin-inline:auto}
+.docnav{display:flex;flex-wrap:wrap;gap:4px 18px;align-items:center;padding:16px 0;border-bottom:1px solid var(--line);font-size:12px;letter-spacing:.06em;text-transform:uppercase}
+.docnav a{color:var(--muted);text-decoration:none;min-height:44px;min-width:44px;display:inline-flex;align-items:center;border-bottom:2px solid transparent}
+.docnav a:hover,.docnav a[aria-current]{color:var(--ink);border-color:var(--accent)}
+.docnav-brand{color:var(--accent-deep);font-weight:800;margin-right:6px}
+.docnav-hub{margin-left:auto}
+header{padding-block:40px 24px;border-bottom:1px solid var(--line);margin-bottom:28px}
+.eyebrow{font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--accent-deep);margin:0 0 12px;font-weight:800}
+h1,h2,h3{color:var(--ink);line-height:1.1;text-wrap:balance;margin:0;letter-spacing:-.02em}
+h1{font-size:clamp(30px,6vw,46px);font-weight:900}
+h2{font-size:clamp(23px,4vw,30px);font-weight:900;margin:48px 0 14px;padding-top:20px;border-top:1px solid var(--line)}
+h3{font-size:18px;margin:30px 0 8px;font-weight:800}
+p{margin:0 0 14px} strong{color:var(--ink);font-weight:800}
+ul,ol{padding-left:22px;margin:0 0 16px} li{margin:5px 0} li>ul{margin:6px 0 0}
+code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.86em;background:var(--note);padding:1px 5px;border-radius:4px;color:var(--ink);overflow-wrap:anywhere}
+pre{overflow-x:auto;padding:14px 16px;border:1px solid var(--line);border-radius:10px;background:var(--card);font-size:12px;line-height:1.35}
+pre code{background:none;padding:0;font-size:inherit}
+a{color:var(--accent-deep)} :focus-visible{outline:2px solid var(--accent-deep);outline-offset:2px}
+.tbl{overflow-x:auto;margin:14px 0 22px;border:1px solid var(--line);border-radius:10px;background:var(--card)}
+table{border-collapse:collapse;width:100%;font-size:13.5px;min-width:560px}
+th{text-align:left;font-weight:800;color:var(--ink);background:var(--note);padding:10px 12px;border-bottom:1px solid var(--line);font-size:11.5px;letter-spacing:.06em;text-transform:uppercase}
+td{padding:10px 12px;border-top:1px solid var(--line-soft);vertical-align:top;background:var(--card)} td:first-child{color:var(--ink)}
+footer{margin-top:56px;padding-top:18px;border-top:1px solid var(--line);font-size:12px;color:var(--muted)}
+</style>
+</head>
+<body>
+<div class="wrap">
+<nav class="docnav" aria-label="Project documentation"><span class="docnav-brand">business.direct · docs</span><a href="index.html">Overview</a><a href="brief.html">Brief</a><a href="research.html">Research</a><a href="audit.html">Audit</a><a href="sources.html">Sources</a><a href="design-system.html">Design system</a><a href="layouts.html">Layouts</a><a href="05-layout-specs.html">Layout specs</a><a href="decisions.html">Decisions</a><a href="build-log.html">Build log</a><a href="gate.html">Gate</a><a href="client-asks.html">Owner asks</a><a href="ssot.html">SSOT</a><a href="architecture.html">Architecture</a><a href="technical-design.html">Technical design</a><a href="implementation-plan.html" aria-current=page>Plan</a><a href="token-map.html">Token map</a></nav>
+<header><p class="eyebrow">Calvus · business.direct · project documentation</p><h1>business.direct — implementation plan</h1></header>
+<p><em>Written 2026-09-19 on the PROPOSED architecture. Estimates are for a team of two
+developers and the owner as product lead; they assume ADR-1 to ADR-8 stand and the open
+asks in <a href="client-asks.html"><code>08-client-asks.md</code></a> close in the first two weeks. Every issue has a Definition of
+Done; the blocked register is honest about what waits on the client.</em></p>
+<h2>0. Conventions</h2>
+<p>Issue ids <code>BD-&lt;milestone&gt;-&lt;n&gt;</code>. A milestone ships to production behind a feature flag per
+instance (<code>platform_id</code>). "Measured" means a number in the build log, not a claim.</p>
+<h2>1. Global Definition of Done</h2>
+<ul>
+<li>The SSOT term is used in code, UI and docs; new terms are added to <a href="ssot.html"><code>10-ssot.md</code></a> first.</li>
+<li>No outbound path exists outside the outbox (ADR-4); a test proves a Server Action cannot send.</li>
+<li>Every message has a <code>messages</code> row, a <code>why</code>, and an opt-out or preference link.</li>
+<li>Cap and consent checks have tests for the race (enqueue and send).</li>
+<li>Accessibility: 44 px targets below 980, one <code>h1</code>, alt text, keyboard reachable.</li>
+<li>The gate is green: lint, unit, an end-to-end run of the flow the issue touches.</li>
+</ul>
+<h2>2. Milestones</h2>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>M</th>
+<th>Name</th>
+<th>Weeks</th>
+<th>Ships</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>M0</td>
+<td>Foundation</td>
+<td>1–2</td>
+<td>repo, SSO, MongoDB, connector for Your Field with sync, the operator console shell with the three views' navigation, feature flags</td>
+</tr>
+<tr>
+<td>M1</td>
+<td>Provider sales</td>
+<td>3–5</td>
+<td>sequences, Resend out + inbound, threads, drafted replies (AI optional), pipeline, apply-to-manage through <code>claim-requests</code>, provider view (today, knowledge)</td>
+</tr>
+<tr>
+<td>M2</td>
+<td>Social publishing</td>
+<td>6–8</td>
+<td>post drafts from the catalogue, approval queue, calendar, Meta adapter (IG + FB) publish, comments/DMs inbound, audit snapshots</td>
+</tr>
+<tr>
+<td>M3</td>
+<td>Families</td>
+<td>9–10</td>
+<td>preferences by signed link, consent capture, caps, Sunday digest, saved-provider alerts through platform push, Stop</td>
+</tr>
+<tr>
+<td>M4</td>
+<td>Intelligence and pages</td>
+<td>11–12</td>
+<td>overview tiles on real numbers, market radar note, generated pages written through the connector, operations dashboards</td>
+</tr>
+<tr>
+<td>M5</td>
+<td>Second instance</td>
+<td>13–14</td>
+<td>Sportolok connector, Hungarian dictionary, legal footers; proves ADR-2</td>
+</tr>
+</tbody>
+</table></div>
+<h2>3. Issues</h2>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>Id</th>
+<th>Issue</th>
+<th>Definition of Done</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>BD-0-1</td>
+<td>Repo, Next.js 15, Mantine + GDS tokens from <a href="token-map.html"><code>14-token-map.md</code></a></td>
+<td>tokens resolve; the design-system page renders from the same CSS</td>
+</tr>
+<tr>
+<td>BD-0-2</td>
+<td>DoneIsBetter SSO for operator and provider roles</td>
+<td>operator sees all; provider sees only its <code>provider_id</code> (test)</td>
+</tr>
+<tr>
+<td>BD-0-3</td>
+<td>MongoDB models per <a href="technical-design.html"><code>12-technical-design.md</code></a> §2 with <code>platform_id</code> and <code>version</code></td>
+<td>migrations; optimistic-concurrency test</td>
+</tr>
+<tr>
+<td>BD-0-4</td>
+<td><code>YourFieldConnector</code> + hourly <code>sync</code></td>
+<td>252 providers cached; a changed <code>updatedAt</code> produces a diff event (test with a fixture)</td>
+</tr>
+<tr>
+<td>BD-0-5</td>
+<td>Console shell: role switch, rail/bottom bar, deep links</td>
+<td>the prototype's 13 screens reachable, empty states</td>
+</tr>
+<tr>
+<td>BD-0-6</td>
+<td>Outbox + <code>send</code> worker + dead-letter</td>
+<td>a Server Action cannot send (test); retry with backoff; lag metric</td>
+</tr>
+<tr>
+<td>BD-1-1</td>
+<td>Sequence model and editor</td>
+<td>steps, merge fields, opt-out footer mandatory (validation)</td>
+</tr>
+<tr>
+<td>BD-1-2</td>
+<td><code>ResendAdapter</code> out + inbound webhook (signed)</td>
+<td>a reply lands in the right thread within 1 minute (measured)</td>
+</tr>
+<tr>
+<td>BD-1-3</td>
+<td>Drafted replies with the AI switch</td>
+<td>AI on: draft with <code>why</code>; AI off: template; both marked</td>
+</tr>
+<tr>
+<td>BD-1-4</td>
+<td>Pipeline stage machine</td>
+<td>only event-driven forward moves (test per row of §4); operator override logged</td>
+</tr>
+<tr>
+<td>BD-1-5</td>
+<td>Apply-to-manage → <code>claim-requests</code></td>
+<td>needs the platform key (blocked B1); stage <em>applied</em> on 2xx</td>
+</tr>
+<tr>
+<td>BD-1-6</td>
+<td>Provider view: invitation, today, knowledge</td>
+<td>a provider sees its thread, its drafts, edits its files</td>
+</tr>
+<tr>
+<td>BD-1-7</td>
+<td>"Not my program" and unsubscribe</td>
+<td>the address is excluded from every future sequence (test)</td>
+</tr>
+<tr>
+<td>BD-2-1</td>
+<td><code>draft-social</code> job from catalogue events</td>
+<td>drafts only for providers with news; no duplicate per week</td>
+</tr>
+<tr>
+<td>BD-2-2</td>
+<td>Approval queue with edit diff</td>
+<td>edited copy sets <code>ai=false</code>; the diff is stored</td>
+</tr>
+<tr>
+<td>BD-2-3</td>
+<td>Calendar and slots</td>
+<td>a scheduled post publishes at its slot ± 5 min (measured)</td>
+</tr>
+<tr>
+<td>BD-2-4</td>
+<td><code>MetaAdapter</code> publish + inbound comments/DMs</td>
+<td>OAuth per page; a publish writes <code>messages</code> + a Blob snapshot</td>
+</tr>
+<tr>
+<td>BD-2-5</td>
+<td>AI-content marking</td>
+<td>published AI content carries the mark where Art. 50 applies</td>
+</tr>
+<tr>
+<td>BD-3-1</td>
+<td>Signed preference links from the platform</td>
+<td>a family changes a channel without a password; link expiry</td>
+</tr>
+<tr>
+<td>BD-3-2</td>
+<td>Consent capture and log</td>
+<td>SMS toggle impossible without a consent row (test)</td>
+</tr>
+<tr>
+<td>BD-3-3</td>
+<td>Caps in Redis, double check</td>
+<td>a race of 2 sends against a cap of 1 delivers 1 (test)</td>
+</tr>
+<tr>
+<td>BD-3-4</td>
+<td>Sunday digest</td>
+<td>built from saved + nearby-with-session; sent 18:00; cap-aware</td>
+</tr>
+<tr>
+<td>BD-3-5</td>
+<td>Saved-provider alerts through platform push</td>
+<td>new session at a saved provider → push within 1 hour (measured)</td>
+</tr>
+<tr>
+<td>BD-3-6</td>
+<td>Stop</td>
+<td>every channel off and queued drafts cancelled in one transaction</td>
+</tr>
+<tr>
+<td>BD-4-1</td>
+<td>Overview tiles on real numbers</td>
+<td>every tile has a source; "sample" disappears</td>
+</tr>
+<tr>
+<td>BD-4-2</td>
+<td>Market radar weekly note</td>
+<td>from catalogue stats; filed by the operator</td>
+</tr>
+<tr>
+<td>BD-4-3</td>
+<td>Generated pages through the connector</td>
+<td>only ≥ 3 providers; JSON-LD; sitemap entry on the platform</td>
+</tr>
+<tr>
+<td>BD-4-4</td>
+<td>Operations dashboards and alerts</td>
+<td>the five alerts in architecture §9 fire in a drill</td>
+</tr>
+<tr>
+<td>BD-5-1</td>
+<td><code>SportolokConnector</code> incl. <code>ingest</code></td>
+<td>431 listings cached; one page published to the reference instance</td>
+</tr>
+<tr>
+<td>BD-5-2</td>
+<td>Hungarian dictionary and legal footers</td>
+<td>every string from the dictionary; footer per market</td>
+</tr>
+</tbody>
+</table></div>
+<h2>4. Blocked register</h2>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>#</th>
+<th>Blocked</th>
+<th>On</th>
+<th>Unblocks</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>B1</td>
+<td>Writes to the platform (claim requests, notifications, pages)</td>
+<td>ask #5: a key and the write contract</td>
+<td>BD-1-5, BD-3-5, BD-4-3</td>
+</tr>
+<tr>
+<td>B2</td>
+<td>Social publishing</td>
+<td>Meta app review for the platform's pages; ask #3</td>
+<td>BD-2-4</td>
+</tr>
+<tr>
+<td>B3</td>
+<td>SMS</td>
+<td>Twilio account, consent text approved by counsel; ask #3</td>
+<td>BD-3-2's SMS branch</td>
+</tr>
+<tr>
+<td>B4</td>
+<td>Real tiles</td>
+<td>ask #6: platform analytics</td>
+<td>BD-4-1</td>
+</tr>
+<tr>
+<td>B5</td>
+<td>Pilot provider</td>
+<td>ask #6: one provider's real numbers</td>
+<td>provider-view metrics</td>
+</tr>
+<tr>
+<td>B6</td>
+<td>Pricing and packaging</td>
+<td>ask #4: bundled vs self-serve</td>
+<td>the <em>upgraded</em> stage's product list</td>
+</tr>
+</tbody>
+</table></div>
+<h2>5. Risks</h2>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>Risk</th>
+<th>Effect</th>
+<th>Mitigation</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Meta review takes weeks</td>
+<td>M2 slips</td>
+<td>start the review in M0; publish to Facebook first if Instagram lags</td>
+</tr>
+<tr>
+<td>The public API changes without notice (no reference page)</td>
+<td>sync breaks</td>
+<td>contract tests against fixtures; alert on schema drift; ask the platform for a versioned endpoint</td>
+</tr>
+<tr>
+<td>A cap or consent bug</td>
+<td>TCPA exposure</td>
+<td>ADR-3 double check; consent-before-SMS test; zero-violation alert</td>
+</tr>
+<tr>
+<td>Providers see the invitation as spam</td>
+<td>pipeline stalls</td>
+<td>the copy names the provider's own page and the free claim; one reminder only; "not my program" honoured</td>
+</tr>
+<tr>
+<td>AI drafts off-brand</td>
+<td>operator trust</td>
+<td>knowledge files first; AI optional; every draft edited is a training signal for the prompt</td>
+</tr>
+<tr>
+<td>One operator is a bottleneck</td>
+<td>queue grows</td>
+<td>departments with AI on produce fewer, better drafts; the queue shows age; nothing sends unapproved anyway</td>
+</tr>
+</tbody>
+</table></div>
+<h2>6. Release scope</h2>
+<p><strong>Release 1 (M0–M3, ~10 weeks):</strong> Your Field NYC; provider sales end to end; Instagram and
+Facebook publishing with approval; family digest, alerts and preferences; caps and consent;
+the operator's approval queue as the one gate. <strong>Release 1.1 (M4):</strong> real intelligence,
+generated pages, dashboards. <strong>Release 2 (M5):</strong> the second instance. Out of scope until a
+decision: TikTok and X, Google Business Profile, calendars, provider campaigns as paid
+products.</p>
+<footer>Source: <code>business-direct/docs/13-implementation-plan.md</code> · rendered by <code>docs/build.py</code>.</footer>
+</div>
+</body>
+</html>

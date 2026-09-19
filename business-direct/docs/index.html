@@ -36,7 +36,7 @@ footer{margin-top:56px;padding-top:18px;border-top:1px solid var(--line);font-si
 </head>
 <body>
 <div class="wrap">
-<nav class="docnav" aria-label="Project documentation"><span class="docnav-brand">business.direct · docs</span><a href="index.html" aria-current=page>Overview</a><a href="brief.html">Brief</a><a href="research.html">Research</a><a href="audit.html">Audit</a><a href="sources.html">Sources</a><a href="design-system.html">Design system</a><a href="layouts.html">Layouts</a><a href="05-layout-specs.html">Layout specs</a><a href="decisions.html">Decisions</a><a href="build-log.html">Build log</a><a href="gate.html">Gate</a><a href="client-asks.html">Owner asks</a></nav>
+<nav class="docnav" aria-label="Project documentation"><span class="docnav-brand">business.direct · docs</span><a href="index.html" aria-current=page>Overview</a><a href="brief.html">Brief</a><a href="research.html">Research</a><a href="audit.html">Audit</a><a href="sources.html">Sources</a><a href="design-system.html">Design system</a><a href="layouts.html">Layouts</a><a href="05-layout-specs.html">Layout specs</a><a href="decisions.html">Decisions</a><a href="build-log.html">Build log</a><a href="gate.html">Gate</a><a href="client-asks.html">Owner asks</a><a href="ssot.html">SSOT</a><a href="architecture.html">Architecture</a><a href="technical-design.html">Technical design</a><a href="implementation-plan.html">Plan</a><a href="token-map.html">Token map</a></nav>
 <header><p class="eyebrow">Calvus · business.direct · project documentation</p><h1>business.direct — project documentation</h1></header>
 <p>An automated marketing machine for B2B2C listing platforms — the one-person sales and
 marketing team for a listed business, run by the platform, with the consumer as the
@@ -72,9 +72,14 @@ Built to the prototyping standard (<code>PROTOTYPING.md</code>); this index is t
 <td>What is real (the platform's public data), what is sample, what is inherited</td>
 </tr>
 <tr>
+<td>presentation</td>
+<td><code>bemutato.html</code></td>
+<td>Standalone, English, on the product's tokens: one sentence, three numbers, the four things to click with previews, what is real, the asks, what comes next</td>
+</tr>
+<tr>
 <td>04 decisions</td>
 <td><a href="decisions.html"><code>04-decisions.md</code></a></td>
-<td>D1–D18</td>
+<td>D1–D19</td>
 </tr>
 <tr>
 <td>05 design</td>
@@ -102,9 +107,29 @@ Built to the prototyping standard (<code>PROTOTYPING.md</code>); this index is t
 <td>Seven open items (gate 2 closed)</td>
 </tr>
 <tr>
-<td>10–14</td>
-<td>—</td>
-<td>technical package, written after the owner has clicked through the prototype</td>
+<td>10 SSOT</td>
+<td><a href="ssot.html"><code>10-ssot.md</code></a></td>
+<td>glossary, enumerations, entities, settings, rules, metrics, document map</td>
+</tr>
+<tr>
+<td>11 architecture</td>
+<td><a href="architecture.html"><code>11-architecture.md</code></a></td>
+<td>context, the platform measured, quality attributes, containers, flows, integrations, stack and ADR-1–8 — <strong>PROPOSED</strong> (D19)</td>
+</tr>
+<tr>
+<td>12 technical design</td>
+<td><a href="technical-design.html"><code>12-technical-design.md</code></a></td>
+<td>screens, content model, state machines, jobs, connector and adapter interfaces, drafting, i18n, operations</td>
+</tr>
+<tr>
+<td>13 plan</td>
+<td><a href="implementation-plan.html"><code>13-implementation-plan.md</code></a></td>
+<td>six milestones, 33 issues with a Definition of Done, blocked register, risks, release scope</td>
+</tr>
+<tr>
+<td>14 token map</td>
+<td><a href="token-map.html"><code>14-token-map.md</code></a></td>
+<td>tokens and components → GDS + Mantine; contrast computed</td>
 </tr>
 </tbody>
 </table></div>
@@ -143,8 +168,15 @@ post lands on the calendar and in the family's inbox; the approved invitation mo
 providers to <em>contacted</em> and three sample replies arrive; "Apply to manage" in the provider
 view moves the persona to <em>managing</em>. Measured at 390 and 1440 (<a href="build-log.html"><code>06-build-log.md</code></a>,
 <a href="gate.html"><code>07-gate.md</code></a>); gate clean.</p>
+<p><strong>2026-09-19 — presentation and technical package (D19).</strong> <code>bemutato.html</code> in English on
+the product's tokens, with the prototype previewed per view (deep links <code>?view=&amp;screen=</code>
+added to <code>app.js</code>). The technical package <code>10</code>–<code>14</code>: SSOT, architecture with eight PROPOSED
+ADRs on DiscountDirect's stack, technical design with the state machines the prototype
+already implements, a six-milestone plan with 33 issues and an honest blocked register,
+and the token map with computed contrast. The brief's status and <code>tokens.css</code>'s header
+brought current.</p>
 <p><strong>Next.</strong> The owner clicks through <code>../index.html</code> on the phone; corrections become round 2.
-Then the presentation page and the technical package (10–14, PROPOSED on D26's stack).</p>
+An ADR the owner or client flips becomes D20.</p>
 <footer>Source: <code>business-direct/docs/README.md</code> · rendered by <code>docs/build.py</code>.</footer>
 </div>
 </body>

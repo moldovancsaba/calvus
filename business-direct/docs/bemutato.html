@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>business.direct — presentation</title>
+<meta name="description" content="The business.direct prototype for Your Field NYC: what it is, what to click in which order, what is real, what we ask, what comes next.">
+<link rel="stylesheet" href="../assets/tokens.css">
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:var(--gds-bg-canvas);color:var(--gds-text-body);font:15.5px/1.55 var(--gds-font)}
+a{color:inherit}
+img{height:auto}
+.wrap{max-width:1040px;margin-inline:auto;padding-inline:clamp(16px,4vw,32px)}
+.hero{background:var(--gds-bg-inverse);color:#fff;padding:clamp(28px,5vw,56px) 0;border-bottom:6px solid var(--gds-brand-accent)}
+.eyebrow{margin:0 0 10px;font-size:12px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:#5eead4}
+.hero h1{margin:0 0 12px;max-width:20ch;font-size:clamp(30px,5.5vw,54px);line-height:1;letter-spacing:-1.2px}
+.hero p{margin:0;max-width:64ch;font-size:16px;font-weight:600;color:rgba(255,255,255,.82)}
+.nums{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px;margin:26px 0 0}
+.num{padding:18px 20px;border-radius:var(--gds-radius-card);background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.14)}
+.num b{display:block;font-size:30px;letter-spacing:-.8px;line-height:1;color:#fff}
+.num span{font-size:13px;font-weight:600;color:rgba(255,255,255,.75)}
+section{padding:44px 0 8px}
+h2{margin:0 0 8px;font-size:clamp(24px,3.6vw,34px);letter-spacing:-.6px;line-height:1.05}
+.lede{margin:0 0 22px;max-width:66ch;font-size:15px;font-weight:600;color:var(--gds-text-meta)}
+.steps{display:grid;gap:16px}
+.step{display:grid;grid-template-columns:minmax(0,1fr) 260px;gap:22px;align-items:start;padding:22px;border-radius:var(--gds-radius-card);background:var(--gds-bg-surface);border:1px solid var(--gds-border-card);box-shadow:var(--gds-elevation-card)}
+.step h3{margin:0 0 6px;font-size:20px;letter-spacing:-.3px}
+.step h3 small{display:block;font-size:12px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--gds-text-meta);margin-bottom:4px}
+.step p{margin:0 0 10px;font-size:14px;font-weight:500;line-height:1.55}
+.btns{display:flex;flex-wrap:wrap;gap:8px;margin-top:8px}
+.btn{display:inline-flex;align-items:center;min-height:44px;padding:8px 16px;border-radius:999px;background:var(--gds-brand-accent);color:#fff;text-decoration:none;font-size:13px;font-weight:800}
+.btn.alt{background:var(--gds-brand-accent-tint);color:var(--gds-brand-accent-strong)}
+.phone{width:100%;max-width:260px;justify-self:end;aspect-ratio:390/760;position:relative;overflow:hidden;border-radius:14px;border:1px solid var(--gds-border-card);background:var(--gds-bg-canvas)}
+.phone iframe{position:absolute;top:0;left:0;width:390px;height:1140px;border:0;transform-origin:0 0;transform:scale(calc(var(--pw,260) / 390));pointer-events:none}
+.desk{width:100%;aspect-ratio:1440/900;position:relative;overflow:hidden;border-radius:var(--gds-radius-card);border:1px solid var(--gds-border-card);background:var(--gds-bg-canvas);margin:0 0 8px}
+.desk iframe{position:absolute;top:0;left:0;width:1440px;height:900px;border:0;transform-origin:0 0;transform:scale(calc(var(--dw,1000) / 1440));pointer-events:none}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px}
+.card{padding:20px 22px;border-radius:var(--gds-radius-card);background:var(--gds-bg-surface);border:1px solid var(--gds-border-card)}
+.card h3{margin:0 0 8px;font-size:17px;letter-spacing:-.2px}
+.card p,.card li{margin:0;font-size:14px;font-weight:500;line-height:1.55}
+.card ul{margin:0;padding-left:18px}
+.asks{counter-reset:a;display:grid;gap:10px}
+.ask{display:grid;grid-template-columns:36px 1fr;gap:12px;align-items:start;padding:14px 16px;border-radius:12px;background:var(--gds-bg-surface);border:1px solid var(--gds-border-card);font-size:14px;font-weight:500}
+.ask::before{counter-increment:a;content:counter(a);width:32px;height:32px;border-radius:50%;display:grid;place-items:center;background:var(--gds-brand-accent-tint);color:var(--gds-brand-accent-strong);font-weight:800}
+.next{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px}
+.next .card b{display:block;font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--gds-text-meta);margin-bottom:6px}
+footer{margin:44px 0 24px;padding-top:18px;border-top:1px solid var(--gds-border-card);font-size:12px;font-weight:600;color:var(--gds-text-meta)}
+footer a{display:inline-flex;align-items:center;min-height:44px}
+@media (max-width:760px){.step{grid-template-columns:1fr}.phone{justify-self:start;max-width:100%}}
+</style>
+</head>
+<body>
+<header class="hero">
+  <div class="wrap">
+    <p class="eyebrow">business.direct · prototype for Your Field NYC</p>
+    <h1>The one-person marketing team, run by the platform</h1>
+    <p>A listing platform is three parties: the platform, the listed business, the family. business.direct markets the businesses to families on social channels, and markets the platform to the businesses — drafts everything, sends nothing until a person approves, and shows every result in one place.</p>
+    <div class="nums">
+      <div class="num"><b>252</b><span>real providers from getyourfield.com's public API — every screen runs on them; none has claimed its page</span></div>
+      <div class="num"><b>2</b><span>flows at the front door: B2C social publishing to acquire families, a B2B pipeline to bring providers to manage their own page</span></div>
+      <div class="num"><b>0</b><span>messages sent. Every approval changes the page's state only; nothing publishes, e-mails or connects</span></div>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+  <section>
+    <h2>What to click, in this order</h2>
+    <p class="lede">The prototype is one page. The three buttons in the top bar switch between the platform operator, a provider and a family; on a phone the bottom bar carries the sections. Real providers, sample activity; reload resets everything.</p>
+    <div class="desk"><iframe src="../index.html" title="Platform overview, desktop preview" loading="lazy" tabindex="-1"></iframe></div>
+    <div class="steps">
+      <article class="step">
+        <div>
+          <h3><small>1 · Platform</small>Overview — what the machine did since 09:00</h3>
+          <p>Six tiles (each says real or sample), this week's social posts waiting for approval, the provider sales pipeline across all 252 providers, the departments with their optional AI switch, and the providers table. Click <b>Approve and schedule</b> on a post: it lands on the calendar and, later, in the family's inbox.</p>
+          <div class="btns"><a class="btn" href="../index.html">Open the prototype</a><a class="btn alt" href="../index.html?view=platform&amp;screen=social">Social publishing</a></div>
+        </div>
+        <div class="phone"><iframe src="../index.html?view=platform" title="Platform overview, phone preview" loading="lazy" tabindex="-1"></iframe></div>
+      </article>
+      <article class="step">
+        <div>
+          <h3><small>2 · Platform</small>Provider sales — the invitation, then the replies</h3>
+          <p>The pipeline strip: identified → contacted → replied → applied → managing → upgraded. Approve the invitation sequence (130 providers have an e-mail on their card; commercial e-mail needs no prior consent in the US, every message carries the opt-out) and three sample replies arrive with drafted answers. Click any provider to open its card, thread and stage.</p>
+          <div class="btns"><a class="btn" href="../index.html?view=platform&amp;screen=sales">Open provider sales</a><a class="btn alt" href="../index.html?view=platform&amp;screen=providers">Providers</a></div>
+        </div>
+        <div class="phone"><iframe src="../index.html?view=platform&amp;screen=sales" title="Provider sales, phone preview" loading="lazy" tabindex="-1"></iframe></div>
+      </article>
+      <article class="step">
+        <div>
+          <h3><small>3 · Provider</small>Brooklyn Force Soccer — from invitation to managing its page</h3>
+          <p>Switch to <b>Provider</b>. Nothing has reached this coach until the platform approves the invitation; then the e-mail is here with <b>Apply to manage my page</b>. Apply, and the provider's own one-person team appears: today's numbers (sample), what waits for approval, four departments, the knowledge files it reads before every draft. The persona select lists other real providers.</p>
+          <div class="btns"><a class="btn" href="../index.html?view=provider">Open the provider view</a></div>
+        </div>
+        <div class="phone"><iframe src="../index.html?view=provider" title="Provider view, phone preview" loading="lazy" tabindex="-1"></iframe></div>
+      </article>
+      <article class="step">
+        <div>
+          <h3><small>4 · Family</small>Maya, Park Slope — what arrives and what she controls</h3>
+          <p>A published post as a new family meets it, the Sunday "this week near you" digest built from her saved providers and real Park Slope providers with a session this week, one provider text with the reason she received it and the consent behind it. Preferences: channel by channel, the monthly cap, and <b>Stop</b>.</p>
+          <div class="btns"><a class="btn" href="../index.html?view=family">Open the family view</a><a class="btn alt" href="../index.html?view=family&amp;screen=prefs">Preferences</a></div>
+        </div>
+        <div class="phone"><iframe src="../index.html?view=family" title="Family view, phone preview" loading="lazy" tabindex="-1"></iframe></div>
+      </article>
+    </div>
+  </section>
+
+  <section>
+    <h2>What is real, what is sample</h2>
+    <div class="grid">
+      <div class="card"><h3>Real: the catalogue</h3><p>252 providers pulled from Your Field's public API on 2026-09-19 and never edited by hand: name, activity, neighbourhood, website, 180 phones, 130 e-mails, 83 next sessions, 72 trial policies, 26 announcements, claim state. The tiles, chips, pipeline totals, generated-page list and digest rows are computed from it.</p></div>
+      <div class="card"><h3>Real: the evidence</h3><p>The research page cites its sources for every figure: what an unanswered enquiry costs, reply-time studies, reminder effects on no-shows, how listing platforms monetise the business side, US CAN-SPAM and TCPA rules, EU AI Act Article 50.</p></div>
+      <div class="card"><h3>Sample: the activity</h3><p>Post copy, the invitation, the three replies, the provider's numbers, Maya and her children, the SMS. Each is generated from real providers and labelled sample on the page. No provider or family was contacted.</p></div>
+      <div class="card"><h3>Inert, on purpose</h3><ul><li>Sending, publishing and connecting an integration</li><li>Editing a sequence or a reply (a toast says so)</li><li>Persistence: reload resets the state</li></ul></div>
+    </div>
+  </section>
+
+  <section>
+    <h2>What we ask of you</h2>
+    <div class="asks">
+      <div class="ask">Click through all three views on your phone; every correction becomes round 2 of the build log.</div>
+      <div class="ask">Confirm the provider persona (Brooklyn Force Soccer) and the family persona (a Park Slope parent, children 5 and 9), or name others.</div>
+      <div class="ask">Which integrations should be connectable first: e-mail (Resend), Instagram/Facebook, push, SMS with consent, Google Business Profile, a calendar?</div>
+      <div class="ask">Is business.direct offered by the platform (bundled with "List your program"), bought by the provider, or both?</div>
+      <div class="ask">May the prototype call the platform's write endpoints (claim requests, demand capture) with a key, or stay read-only?</div>
+      <div class="ask">Access to the platform's analytics (saves, plan usage, newsletter size) and, if a pilot provider agrees, its real numbers — today every non-catalogue figure is sample.</div>
+    </div>
+  </section>
+
+  <section>
+    <h2>What comes next</h2>
+    <div class="next">
+      <div class="card"><b>Round 2</b><p>Your corrections applied to the same page; the tablet width measured; the reply and sequence editors made real.</p></div>
+      <div class="card"><b>Release 1 (proposed)</b><p>On the platform's own stack: the provider sales flow end to end (invitation, inbox, apply-to-manage), social publishing to Instagram and Facebook with approval, the family digest — with the operator's approval queue as the one gate.</p></div>
+      <div class="card"><b>Measure</b><p>Providers managing their page; families arriving from social posts to a listing; reply time and trials booked for a pilot provider; opt-outs per family.</p></div>
+    </div>
+  </section>
+
+  <footer>Calvus · business.direct · <a href="index.html">Full project documentation</a> · <a href="design-system.html">Design system</a> · <a href="layouts.html">Layout frames</a></footer>
+</main>
+<script>(function(){function f(){document.querySelectorAll('.phone').forEach(function(e){e.style.setProperty('--pw',e.clientWidth)});document.querySelectorAll('.desk').forEach(function(e){e.style.setProperty('--dw',e.clientWidth)})}f();addEventListener('resize',f)})();</script>
+</body>
+</html>

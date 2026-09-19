@@ -11,13 +11,18 @@ Built to the prototyping standard (`PROTOTYPING.md`); this index is the process 
 | 01 research | `01-research.md` | Sourced: reputation and claiming, speed to lead, reminders, digests, generated pages, marketplace monetisation, AI adoption and human-in-the-loop, EU AI Act Art. 50, US CAN-SPAM and TCPA, the Hungarian reference market |
 | 02 audit | `02-audit.md` | Your Field measured: API, 252 providers, field coverage, site copy; the Hungarian reference instance; the two videos frame by frame; what DiscountDirect provides |
 | 03 sources | `03-sources.md` | What is real (the platform's public data), what is sample, what is inherited |
-| 04 decisions | `04-decisions.md` | D1–D18 |
+| presentation | `bemutato.html` | Standalone, English, on the product's tokens: one sentence, three numbers, the four things to click with previews, what is real, the asks, what comes next |
+| 04 decisions | `04-decisions.md` | D1–D19 |
 | 05 design | `design-system.html` + `../assets/tokens.css` + `../assets/components.css` | **Gate 1 approved (D9)**: tokens and components, one source |
 | 05 layouts | `05-layout-specs.md` + `layouts.html` + `frames/` | **Gate 2 approved (D16)**: platform 1440 / 390, provider 390, family 390 |
 | 06 build log | `06-build-log.md` | Round 1: the prototype — one page, three views, every screen from the frames, driven by the real catalogue |
 | 07 gate | `07-gate.md` + `../check.py` | Measured pass at 390 and 1440: overflow, tap targets, console, links |
 | 08 owner asks | `08-client-asks.md` | Seven open items (gate 2 closed) |
-| 10–14 | — | technical package, written after the owner has clicked through the prototype |
+| 10 SSOT | `10-ssot.md` | glossary, enumerations, entities, settings, rules, metrics, document map |
+| 11 architecture | `11-architecture.md` | context, the platform measured, quality attributes, containers, flows, integrations, stack and ADR-1–8 — **PROPOSED** (D19) |
+| 12 technical design | `12-technical-design.md` | screens, content model, state machines, jobs, connector and adapter interfaces, drafting, i18n, operations |
+| 13 plan | `13-implementation-plan.md` | six milestones, 33 issues with a Definition of Done, blocked register, risks, release scope |
+| 14 token map | `14-token-map.md` | tokens and components → GDS + Mantine; contrast computed |
 
 Rendered by `build.py` (`python3 business-direct/docs/build.py`); gate `python3 business-direct/check.py`
 (also run by the root `check.py`). Data: `python3 business-direct/data/fetch-yourfield.py`
@@ -62,5 +67,13 @@ providers to *contacted* and three sample replies arrive; "Apply to manage" in t
 view moves the persona to *managing*. Measured at 390 and 1440 (`06-build-log.md`,
 `07-gate.md`); gate clean.
 
+**2026-09-19 — presentation and technical package (D19).** `bemutato.html` in English on
+the product's tokens, with the prototype previewed per view (deep links `?view=&screen=`
+added to `app.js`). The technical package `10`–`14`: SSOT, architecture with eight PROPOSED
+ADRs on DiscountDirect's stack, technical design with the state machines the prototype
+already implements, a six-milestone plan with 33 issues and an honest blocked register,
+and the token map with computed contrast. The brief's status and `tokens.css`'s header
+brought current.
+
 **Next.** The owner clicks through `../index.html` on the phone; corrections become round 2.
-Then the presentation page and the technical package (10–14, PROPOSED on D26's stack).
+An ADR the owner or client flips becomes D20.

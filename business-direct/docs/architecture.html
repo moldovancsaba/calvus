@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>business.direct — architecture — business.direct docs</title>
+<link rel="stylesheet" href="../assets/tokens.css">
+<style>/* business.direct — documentation pages on the product tokens (GDS roles, teal accent). */
+:root{--ground:var(--gds-bg-canvas,#f8fafc);--card:var(--gds-bg-surface,#fff);--ink:var(--gds-text-body,#111827);--text:#1f2937;--muted:var(--gds-text-meta,#64748b);--accent:var(--gds-brand-accent,#0f766e);--accent-deep:var(--gds-brand-accent-strong,#115e59);--line:var(--gds-border-card,#e2e8f0);--line-soft:#eef2f7;--note:var(--gds-brand-accent-tint,#e6f4f2)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--ground);color:var(--text);font-family:var(--gds-font,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif);font-size:15.5px;line-height:1.6;padding-block:0 64px;padding-inline:clamp(16px,4vw,40px)}
+.wrap{max-width:74ch;margin-inline:auto}
+.docnav{display:flex;flex-wrap:wrap;gap:4px 18px;align-items:center;padding:16px 0;border-bottom:1px solid var(--line);font-size:12px;letter-spacing:.06em;text-transform:uppercase}
+.docnav a{color:var(--muted);text-decoration:none;min-height:44px;min-width:44px;display:inline-flex;align-items:center;border-bottom:2px solid transparent}
+.docnav a:hover,.docnav a[aria-current]{color:var(--ink);border-color:var(--accent)}
+.docnav-brand{color:var(--accent-deep);font-weight:800;margin-right:6px}
+.docnav-hub{margin-left:auto}
+header{padding-block:40px 24px;border-bottom:1px solid var(--line);margin-bottom:28px}
+.eyebrow{font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--accent-deep);margin:0 0 12px;font-weight:800}
+h1,h2,h3{color:var(--ink);line-height:1.1;text-wrap:balance;margin:0;letter-spacing:-.02em}
+h1{font-size:clamp(30px,6vw,46px);font-weight:900}
+h2{font-size:clamp(23px,4vw,30px);font-weight:900;margin:48px 0 14px;padding-top:20px;border-top:1px solid var(--line)}
+h3{font-size:18px;margin:30px 0 8px;font-weight:800}
+p{margin:0 0 14px} strong{color:var(--ink);font-weight:800}
+ul,ol{padding-left:22px;margin:0 0 16px} li{margin:5px 0} li>ul{margin:6px 0 0}
+code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.86em;background:var(--note);padding:1px 5px;border-radius:4px;color:var(--ink);overflow-wrap:anywhere}
+pre{overflow-x:auto;padding:14px 16px;border:1px solid var(--line);border-radius:10px;background:var(--card);font-size:12px;line-height:1.35}
+pre code{background:none;padding:0;font-size:inherit}
+a{color:var(--accent-deep)} :focus-visible{outline:2px solid var(--accent-deep);outline-offset:2px}
+.tbl{overflow-x:auto;margin:14px 0 22px;border:1px solid var(--line);border-radius:10px;background:var(--card)}
+table{border-collapse:collapse;width:100%;font-size:13.5px;min-width:560px}
+th{text-align:left;font-weight:800;color:var(--ink);background:var(--note);padding:10px 12px;border-bottom:1px solid var(--line);font-size:11.5px;letter-spacing:.06em;text-transform:uppercase}
+td{padding:10px 12px;border-top:1px solid var(--line-soft);vertical-align:top;background:var(--card)} td:first-child{color:var(--ink)}
+footer{margin-top:56px;padding-top:18px;border-top:1px solid var(--line);font-size:12px;color:var(--muted)}
+</style>
+</head>
+<body>
+<div class="wrap">
+<nav class="docnav" aria-label="Project documentation"><span class="docnav-brand">business.direct · docs</span><a href="index.html">Overview</a><a href="brief.html">Brief</a><a href="research.html">Research</a><a href="audit.html">Audit</a><a href="sources.html">Sources</a><a href="design-system.html">Design system</a><a href="layouts.html">Layouts</a><a href="05-layout-specs.html">Layout specs</a><a href="decisions.html">Decisions</a><a href="build-log.html">Build log</a><a href="gate.html">Gate</a><a href="client-asks.html">Owner asks</a><a href="ssot.html">SSOT</a><a href="architecture.html" aria-current=page>Architecture</a><a href="technical-design.html">Technical design</a><a href="implementation-plan.html">Plan</a><a href="token-map.html">Token map</a></nav>
+<header><p class="eyebrow">Calvus · business.direct · project documentation</p><h1>business.direct — architecture</h1></header>
+<p><em>Written 2026-09-19 for the first client, Your Field NYC (D11). The stack is PROPOSED
+(§10, ADRs in §11): it follows DiscountDirect's decided stack (D26 there) because the
+client platform runs on the same family (<a href="audit.html"><code>02-audit.md</code></a> §1), and the owner or client flips
+each ADR. Terms are the SSOT's (<a href="ssot.html"><code>10-ssot.md</code></a>).</em></p>
+<h2>1. System context</h2>
+<pre><code> Families (web, e-mail, push, SMS)        Social channels (Instagram, Facebook, TikTok, X)
+        ▲            ▲                              ▲
+        │            │                              │ posts, replies to comments
+        │            │                              │
+ ┌──────┴────────────┴──────────────────────────────┴───────────────┐
+ │  Your Field NYC (Next.js on Vercel) — the platform                │
+ │   public API · accounts · saved items · claim requests · notify   │
+ └──────────────────────────────▲───────────────────────────────────┘
+                                │ reads the catalogue; writes claim requests,
+                                │ notifications, generated pages (with a key)
+ ┌──────────────────────────────┴───────────────────────────────────┐
+ │  business.direct — the machine                                    │
+ │   departments · drafts · approval queue · pipeline · knowledge    │
+ │   intelligence · integrations                                     │
+ └───────▲──────────────────────────────────▲───────────────────────┘
+         │ approves, edits, reads             │ invitation, replies, apply-to-manage
+   Operator (platform)                 Providers (e-mail, phone, their own view)
+</code></pre>
+<p>Three actors, one gate: nothing reaches a family, a provider or a channel without an
+approval (R1). The platform stays the system of record for providers and families;
+business.direct owns drafts, approvals, pipeline state, knowledge files, consent records
+and the message log.</p>
+<h2>2. The target, measured (<a href="audit.html"><code>02-audit.md</code></a>, 2026-09-19)</h2>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>Measure</th>
+<th>Value</th>
+<th>Consequence</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Platform stack</td>
+<td>Next.js + Mantine on Vercel, v0.201.105</td>
+<td>the machine can be a module of the same deployment or a sibling app on the same stack (ADR-1)</td>
+</tr>
+<tr>
+<td>Public API</td>
+<td>12 endpoints found in the site's bundles; no reference page; read-only without a key</td>
+<td>connector first, own copy of the catalogue second (ADR-2)</td>
+</tr>
+<tr>
+<td>Home</td>
+<td>118 KB HTML, 24 scripts, TTFB 0.53 s</td>
+<td>no performance debt to inherit</td>
+</tr>
+<tr>
+<td>Providers</td>
+<td>252; 130 with e-mail, 180 with phone, 83 with a next session, 72 with a trial policy</td>
+<td>the sales flow's reach and the digest's input are known numbers</td>
+</tr>
+<tr>
+<td>Claims</td>
+<td>0 of 252 managing their page</td>
+<td>the pipeline starts with everyone at <em>identified</em></td>
+</tr>
+<tr>
+<td>Reference instance</td>
+<td>same stack, 431 listings, documented API incl. <code>POST /api/ingest</code></td>
+<td>the connector interface must fit two instances (ADR-2)</td>
+</tr>
+</tbody>
+</table></div>
+<h2>3. Quality attributes</h2>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>Attribute</th>
+<th>Target</th>
+<th>Why</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Human gate</td>
+<td>100 % of outbound content passes an approval; audit trail of who approved what, when</td>
+<td>R1, the videos' operating rule, EU AI Act Art. 50 marking</td>
+</tr>
+<tr>
+<td>Consent and caps</td>
+<td>0 messages beyond a family's cap or without the channel's consent; SMS never without written consent</td>
+<td>TCPA damages $500–1 500 per message (research §8)</td>
+</tr>
+<tr>
+<td>Opt-out latency</td>
+<td>&lt; 1 business day (law: 10)</td>
+<td>CAN-SPAM</td>
+</tr>
+<tr>
+<td>Freshness</td>
+<td>catalogue refreshed at least daily; a provider's new session reaches saved families within 1 hour</td>
+<td>alerts</td>
+</tr>
+<tr>
+<td>Scale (first year, sizing)</td>
+<td>1 000 providers, 50 000 families, 200 posts/week, 5 000 e-mails/day</td>
+<td>one city, then a second instance</td>
+</tr>
+<tr>
+<td>Availability</td>
+<td>99.5 % for the operator console; the outbox is durable, delivery may lag</td>
+<td>nobody logs in; the machine must not lose approved work</td>
+</tr>
+<tr>
+<td>Portability</td>
+<td>channel adapters and the platform connector behind interfaces; a second instance (Hungarian reference) is a configuration, not a fork</td>
+<td>D11's "reference ideas"</td>
+</tr>
+</tbody>
+</table></div>
+<h2>4. Containers (PROPOSED)</h2>
+<pre><code>┌────────────────────────────────────────────────────────────────┐
+│ business.direct app — Next.js 15 App Router on Vercel (Node 24) │
+│  • operator console, provider view, family preferences (GDS)    │
+│  • Server Actions for approvals, edits, stage moves             │
+│  • Route Handlers: webhooks (Resend inbound, Meta, Twilio),     │
+│    platform callbacks, cron entry points                        │
+└───────┬──────────────┬──────────────┬──────────────┬───────────┘
+        │              │              │              │
+  MongoDB Atlas   Upstash Redis   Vercel Blob    Providers:
+  (drafts,        (caps per       (media for     Resend (e-mail out + inbound)
+   approvals,      family,         posts,        Meta Graph (IG/FB) · TikTok · X
+   pipeline,       rate limits,    exports,      Twilio (SMS, consent proof)
+   consent log,    idempotency)    audit         platform push (Your Field API)
+   message log,                    snapshots)    LLM API (drafting, optional)
+   knowledge files)
+        │
+  Vercel Cron → outbox workers: catalogue sync, draft generation,
+                scheduled publishing, sequence steps, digest build,
+                alert fan-out, retention
+  Platform connector: YourFieldConnector | SportolokConnector (one interface)
+  DoneIsBetter SSO for operator and provider sign-in (ADR-5)
+</code></pre>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>Container</th>
+<th>Responsibility</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>App</td>
+<td>the three views; every mutation is a Server Action that writes an approval event</td>
+</tr>
+<tr>
+<td>MongoDB</td>
+<td>system of record for everything business.direct owns (SSOT §3)</td>
+</tr>
+<tr>
+<td>Redis</td>
+<td>frequency caps (R3), send rate limits, idempotency keys for webhooks</td>
+</tr>
+<tr>
+<td>Blob</td>
+<td>post media, exports, audit snapshots of what was published</td>
+</tr>
+<tr>
+<td>Outbox workers</td>
+<td>the only thing that sends; consumes <code>approved</code> drafts, writes the message log</td>
+</tr>
+<tr>
+<td>Platform connector</td>
+<td>read the catalogue; write claim requests, notifications, generated pages when keyed</td>
+</tr>
+<tr>
+<td>Channel adapters</td>
+<td>one per channel, same interface: <code>draft → preview</code>, <code>publish</code>, <code>inbound webhook → thread</code></td>
+</tr>
+<tr>
+<td>LLM</td>
+<td>drafting only, behind the department's AI switch (R10); the knowledge files are the prompt context</td>
+</tr>
+</tbody>
+</table></div>
+<h2>5. Key flows</h2>
+<p><strong>B2C social publishing.</strong> Cron: catalogue sync → for each provider with news (announcement,
+new session, trial) build a draft from the knowledge files → queue <em>waiting</em> → operator
+approves / edits / skips → scheduled → worker publishes through the adapter at the slot →
+message log + audit snapshot → comments and DMs arrive by webhook → drafted replies → queue.</p>
+<p><strong>B2B provider sales.</strong> Sequence approved once for a recipient set → worker sends step 1 by
+Resend with the opt-out → stage <em>contacted</em> → inbound reply by webhook → thread + drafted
+answer → queue → sent → stage <em>replied</em> → provider clicks apply → platform <code>claim-requests</code>
+→ stage <em>applied</em> → platform confirms → <em>managing</em> → provider view unlocks → later
+upgrades → <em>upgraded</em>. Reminder after 5 days to non-repliers; call task for phone-only.</p>
+<p><strong>Family digest and alerts.</strong> Sunday 17:00: for every family with <code>picks</code> on, build the
+digest from saved providers + nearby providers with a session next week → cap check →
+outbox → Resend at 18:00. Alerts: catalogue sync diff (new session at a saved provider) →
+cap check → platform push.</p>
+<p><strong>Preferences and stop.</strong> A family's change is written first, then the caps; <em>Stop</em> sets
+every channel off and cancels queued messages for that family in the same transaction.</p>
+<h2>6. Data architecture</h2>
+<p>MongoDB collections: <code>providers_cache</code> (the catalogue copy, refreshed by sync, never
+edited), <code>provider_state</code>, <code>drafts</code>, <code>approvals</code> (append-only), <code>sequences</code>, <code>threads</code>,
+<code>families_prefs</code>, <code>consents</code> (append-only, with the proof text), <code>messages</code> (append-only
+log of everything sent), <code>knowledge_files</code>, <code>integrations</code>, <code>generated_pages</code>. Every
+document carries <code>platform_id</code> (Your Field, Sportolok) — one deployment, several
+instances (ADR-2). Retention: message log 24 months; consent log for the life of the
+account plus 5 years; drafts 90 days after their final state.</p>
+<h2>7. Integration architecture</h2>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>Integration</th>
+<th>Direction</th>
+<th>Auth</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Your Field API</td>
+<td>read catalogue, facets, site; write claim requests, demand capture, notifications, generated pages</td>
+<td>none for reads; key for writes (ask #5)</td>
+<td>polled daily + on demand; ETag/<code>updatedAt</code> diff</td>
+</tr>
+<tr>
+<td>Resend</td>
+<td>out + inbound webhook</td>
+<td>API key; signed webhooks</td>
+<td>provider e-mail, family digest; unsubscribe link per message</td>
+</tr>
+<tr>
+<td>Meta Graph (Instagram, Facebook)</td>
+<td>publish, read comments/DMs</td>
+<td>OAuth per page</td>
+<td>approval required by the platform; publish only from the outbox</td>
+</tr>
+<tr>
+<td>TikTok, X</td>
+<td>publish</td>
+<td>OAuth</td>
+<td>same adapter interface; second release</td>
+</tr>
+<tr>
+<td>Twilio</td>
+<td>SMS out, inbound STOP</td>
+<td>API key</td>
+<td>consent proof stored before the first send (R4)</td>
+</tr>
+<tr>
+<td>Platform push</td>
+<td>out</td>
+<td>via the platform's notifications endpoint</td>
+<td>the platform owns the device tokens</td>
+</tr>
+<tr>
+<td>Google Business Profile, calendar</td>
+<td>provider-side, read reviews / write bookings</td>
+<td>OAuth per provider</td>
+<td>third release</td>
+</tr>
+<tr>
+<td>LLM API</td>
+<td>drafting</td>
+<td>API key</td>
+<td>optional per department; prompts are the knowledge files; outputs marked as AI drafts</td>
+</tr>
+</tbody>
+</table></div>
+<h2>8. Security and privacy</h2>
+<p>Operator and provider sign-in through DoneIsBetter SSO (ADR-5); provider access is scoped
+to its own <code>provider_id</code>. Families never sign in to business.direct — preferences are
+reached through signed links from the platform's account or through the platform's own
+UI (ADR-6). Secrets in Vercel environment; webhooks verified by signature; idempotency
+keys on every inbound event. Personal data: families' names, children's first names and
+ages, saved providers, preferences, consent — minimised, exportable, deletable on the
+platform's account deletion via a webhook. No data leaves the region the platform uses.</p>
+<h2>9. Deployment and operations</h2>
+<p>Vercel preview per branch, production on <code>main</code>; MongoDB Atlas with daily backups;
+Upstash and Blob in the same region. Cron schedules: sync hourly, drafting 08:00 daily,
+digest Sunday 17:00/18:00, sequences 09:00 weekdays, retention nightly. Alerting on:
+outbox lag &gt; 30 min, webhook signature failures, cap violations (must be zero), send
+errors per channel. Runbooks for: a channel's token expiry, a provider's "not my program",
+a family's deletion request.</p>
+<h2>10. Stack (PROPOSED)</h2>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>Layer</th>
+<th>Choice</th>
+<th>Reason</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>App</td>
+<td>Next.js 15, React, Mantine with GDS tokens</td>
+<td>the client platform's stack; one design system across the family (D5, <a href="token-map.html"><code>14-token-map.md</code></a>)</td>
+</tr>
+<tr>
+<td>Data</td>
+<td>MongoDB Atlas (Mongoose)</td>
+<td>DiscountDirect D26; document shapes match the platform's JSON</td>
+</tr>
+<tr>
+<td>Cache/limits</td>
+<td>Upstash Redis</td>
+<td>caps and idempotency</td>
+</tr>
+<tr>
+<td>Files</td>
+<td>Vercel Blob</td>
+<td>post media, audit snapshots</td>
+</tr>
+<tr>
+<td>Jobs</td>
+<td>Vercel Cron + durable outbox in MongoDB</td>
+<td>proven in DiscountDirect; no separate queue to run</td>
+</tr>
+<tr>
+<td>E-mail</td>
+<td>Resend</td>
+<td>D26; inbound parsing for replies</td>
+</tr>
+<tr>
+<td>Social</td>
+<td>Meta Graph API first; TikTok and X second</td>
+<td>reach on the family side (research §4)</td>
+</tr>
+<tr>
+<td>SMS</td>
+<td>Twilio</td>
+<td>consent tooling, STOP handling</td>
+</tr>
+<tr>
+<td>Auth</td>
+<td>DoneIsBetter SSO</td>
+<td>the family's existing identity provider</td>
+</tr>
+<tr>
+<td>AI</td>
+<td>one LLM provider behind an interface; Claude or equivalent, configurable</td>
+<td>drafting quality; optional (R10)</td>
+</tr>
+</tbody>
+</table></div>
+<h2>11. Architecture decision records (all PROPOSED)</h2>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>ADR</th>
+<th>Decision</th>
+<th>Options considered</th>
+<th>Reason</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ADR-1</td>
+<td>business.direct is a <strong>sibling app</strong> on the platform's stack, not a module inside Your Field</td>
+<td>(a) module in the platform repo; (b) sibling app; (c) separate stack</td>
+<td>(b): a second instance (Sportolok) must run from the same code; the platform's release cadence stays its own</td>
+</tr>
+<tr>
+<td>ADR-2</td>
+<td><strong>One platform connector interface</strong>, two implementations; the catalogue is cached in MongoDB with <code>platform_id</code></td>
+<td>(a) read the API live per request; (b) cached copy with sync; (c) database access to the platform</td>
+<td>(b): the public API has no reference page and no rate contract; diffs drive alerts</td>
+</tr>
+<tr>
+<td>ADR-3</td>
+<td><strong>Frequency caps in Redis</strong>, checked at enqueue and again at send</td>
+<td>(a) count in MongoDB; (b) Redis counters; (c) trust the schedule</td>
+<td>(b): atomic and fast; the double check makes a cap violation impossible in a race</td>
+</tr>
+<tr>
+<td>ADR-4</td>
+<td><strong>The outbox is the only sender</strong>; UI actions never call a channel</td>
+<td>(a) send from the Server Action; (b) outbox</td>
+<td>(b): R1 audit trail, retries, a cancel on <em>Stop</em></td>
+</tr>
+<tr>
+<td>ADR-5</td>
+<td><strong>DoneIsBetter SSO</strong> for operators and providers</td>
+<td>(a) own auth; (b) SSO; (c) platform's sessions</td>
+<td>(b): the family's identity provider; one account for a provider across the platform and the machine</td>
+</tr>
+<tr>
+<td>ADR-6</td>
+<td><strong>Families do not sign in to business.direct</strong>; preferences by signed link or through the platform's UI</td>
+<td>(a) family accounts here; (b) signed links + platform UI</td>
+<td>(b): no second account, no second password; data minimisation</td>
+</tr>
+<tr>
+<td>ADR-7</td>
+<td><strong>AI drafting behind an interface, optional per department</strong>, outputs marked</td>
+<td>(a) AI always on; (b) optional per department; (c) none</td>
+<td>(b): D6; EU AI Act Art. 50 marking; the provider with AI off still gets the listing's own text</td>
+</tr>
+<tr>
+<td>ADR-8</td>
+<td><strong>Generated pages are written to the platform</strong> through its API, not hosted by business.direct</td>
+<td>(a) host here; (b) write to the platform</td>
+<td>(b): search authority belongs to the platform's domain (research §5)</td>
+</tr>
+</tbody>
+</table></div>
+<footer>Source: <code>business-direct/docs/11-architecture.md</code> · rendered by <code>docs/build.py</code>.</footer>
+</div>
+</body>
+</html>

@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>business.direct — technical design — business.direct docs</title>
+<link rel="stylesheet" href="../assets/tokens.css">
+<style>/* business.direct — documentation pages on the product tokens (GDS roles, teal accent). */
+:root{--ground:var(--gds-bg-canvas,#f8fafc);--card:var(--gds-bg-surface,#fff);--ink:var(--gds-text-body,#111827);--text:#1f2937;--muted:var(--gds-text-meta,#64748b);--accent:var(--gds-brand-accent,#0f766e);--accent-deep:var(--gds-brand-accent-strong,#115e59);--line:var(--gds-border-card,#e2e8f0);--line-soft:#eef2f7;--note:var(--gds-brand-accent-tint,#e6f4f2)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--ground);color:var(--text);font-family:var(--gds-font,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif);font-size:15.5px;line-height:1.6;padding-block:0 64px;padding-inline:clamp(16px,4vw,40px)}
+.wrap{max-width:74ch;margin-inline:auto}
+.docnav{display:flex;flex-wrap:wrap;gap:4px 18px;align-items:center;padding:16px 0;border-bottom:1px solid var(--line);font-size:12px;letter-spacing:.06em;text-transform:uppercase}
+.docnav a{color:var(--muted);text-decoration:none;min-height:44px;min-width:44px;display:inline-flex;align-items:center;border-bottom:2px solid transparent}
+.docnav a:hover,.docnav a[aria-current]{color:var(--ink);border-color:var(--accent)}
+.docnav-brand{color:var(--accent-deep);font-weight:800;margin-right:6px}
+.docnav-hub{margin-left:auto}
+header{padding-block:40px 24px;border-bottom:1px solid var(--line);margin-bottom:28px}
+.eyebrow{font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--accent-deep);margin:0 0 12px;font-weight:800}
+h1,h2,h3{color:var(--ink);line-height:1.1;text-wrap:balance;margin:0;letter-spacing:-.02em}
+h1{font-size:clamp(30px,6vw,46px);font-weight:900}
+h2{font-size:clamp(23px,4vw,30px);font-weight:900;margin:48px 0 14px;padding-top:20px;border-top:1px solid var(--line)}
+h3{font-size:18px;margin:30px 0 8px;font-weight:800}
+p{margin:0 0 14px} strong{color:var(--ink);font-weight:800}
+ul,ol{padding-left:22px;margin:0 0 16px} li{margin:5px 0} li>ul{margin:6px 0 0}
+code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.86em;background:var(--note);padding:1px 5px;border-radius:4px;color:var(--ink);overflow-wrap:anywhere}
+pre{overflow-x:auto;padding:14px 16px;border:1px solid var(--line);border-radius:10px;background:var(--card);font-size:12px;line-height:1.35}
+pre code{background:none;padding:0;font-size:inherit}
+a{color:var(--accent-deep)} :focus-visible{outline:2px solid var(--accent-deep);outline-offset:2px}
+.tbl{overflow-x:auto;margin:14px 0 22px;border:1px solid var(--line);border-radius:10px;background:var(--card)}
+table{border-collapse:collapse;width:100%;font-size:13.5px;min-width:560px}
+th{text-align:left;font-weight:800;color:var(--ink);background:var(--note);padding:10px 12px;border-bottom:1px solid var(--line);font-size:11.5px;letter-spacing:.06em;text-transform:uppercase}
+td{padding:10px 12px;border-top:1px solid var(--line-soft);vertical-align:top;background:var(--card)} td:first-child{color:var(--ink)}
+footer{margin-top:56px;padding-top:18px;border-top:1px solid var(--line);font-size:12px;color:var(--muted)}
+</style>
+</head>
+<body>
+<div class="wrap">
+<nav class="docnav" aria-label="Project documentation"><span class="docnav-brand">business.direct · docs</span><a href="index.html">Overview</a><a href="brief.html">Brief</a><a href="research.html">Research</a><a href="audit.html">Audit</a><a href="sources.html">Sources</a><a href="design-system.html">Design system</a><a href="layouts.html">Layouts</a><a href="05-layout-specs.html">Layout specs</a><a href="decisions.html">Decisions</a><a href="build-log.html">Build log</a><a href="gate.html">Gate</a><a href="client-asks.html">Owner asks</a><a href="ssot.html">SSOT</a><a href="architecture.html">Architecture</a><a href="technical-design.html" aria-current=page>Technical design</a><a href="implementation-plan.html">Plan</a><a href="token-map.html">Token map</a></nav>
+<header><p class="eyebrow">Calvus · business.direct · project documentation</p><h1>business.direct — technical design</h1></header>
+<p><em>Written 2026-09-19 on <a href="architecture.html"><code>11-architecture.md</code></a>'s PROPOSED containers. Where the prototype
+already implements a rule, the section names the function in <code>assets/app.js</code> so a
+developer can read the behaviour before the code exists.</em></p>
+<h2>1. Screens and templates</h2>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>View</th>
+<th>Screen</th>
+<th>Template</th>
+<th>Prototype function</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Platform</td>
+<td>Overview</td>
+<td>title + tiles + two columns (flow queue · pipeline and departments) + providers</td>
+<td><code>platform.overview</code></td>
+</tr>
+<tr>
+<td>Platform</td>
+<td>Social publishing</td>
+<td>week calendar + queue of post cards</td>
+<td><code>platform.social</code></td>
+</tr>
+<tr>
+<td>Platform</td>
+<td>Provider sales</td>
+<td>pipeline strip + sequences · reply inbox + providers in stage</td>
+<td><code>platform.sales</code></td>
+</tr>
+<tr>
+<td>Platform</td>
+<td>Approvals</td>
+<td>one list of every <em>waiting</em> draft</td>
+<td><code>platform.approvals</code></td>
+</tr>
+<tr>
+<td>Platform</td>
+<td>Providers</td>
+<td>search + chips + table + drawer</td>
+<td><code>platform.providers</code>, <code>openDrawer</code></td>
+</tr>
+<tr>
+<td>Platform</td>
+<td>Generated pages</td>
+<td>table</td>
+<td><code>platform.pages</code>, <code>genPages</code></td>
+</tr>
+<tr>
+<td>Platform</td>
+<td>Integrations</td>
+<td>card grid</td>
+<td><code>platform.integrations</code></td>
+</tr>
+<tr>
+<td>Platform</td>
+<td>Knowledge and rules</td>
+<td>file editors</td>
+<td><code>platform.knowledge</code>, <code>kfiles</code></td>
+</tr>
+<tr>
+<td>Provider</td>
+<td>Today</td>
+<td>hero card + (invitation · or · tiles, waiting, team, knowledge)</td>
+<td><code>provider.today</code></td>
+</tr>
+<tr>
+<td>Provider</td>
+<td>Knowledge</td>
+<td>file editors</td>
+<td><code>SCREENS.provider.knowledge</code></td>
+</tr>
+<tr>
+<td>Family</td>
+<td>Inbox</td>
+<td>published post · digest · provider SMS</td>
+<td><code>family.inbox</code></td>
+</tr>
+<tr>
+<td>Family</td>
+<td>Saved</td>
+<td>listing cards</td>
+<td><code>family.saved</code></td>
+</tr>
+<tr>
+<td>Family</td>
+<td>Preferences</td>
+<td>toggles + stop</td>
+<td><code>family.prefs</code></td>
+</tr>
+</tbody>
+</table></div>
+<p>Navigation: rail ≥ 1024, bottom bar below (<code>app.css</code>), the role switch in the top bar;
+deep links <code>?view=&amp;screen=</code> (<code>app.js</code>, bottom). Layout rules: <a href="05-layout-specs.html"><code>05-layout-specs.md</code></a>.</p>
+<h2>2. Content model (MongoDB, <code>platform_id</code> on every document)</h2>
+<pre><code>providers_cache  { _id: &lt;platform provider id&gt;, platform_id, ...Provider (SSOT §3), synced_at }
+provider_state   { provider_id, platform_id, stage, stage_changed_at, stage_changed_by, version }
+drafts           { _id, platform_id, kind, provider_id?, family_id?, channels[], copy, media_blob?,
+                   state, ai, scheduled_for?, why?, created_by: 'machine'|'person', version }
+approvals        { draft_id, action: 'approve'|'edit'|'skip', by, at, diff? }         # append-only
+sequences        { _id, platform_id, name, steps[{n, delay_days, subject, body, kind}], recipients[],
+                   state, approved_by?, approved_at?, why }
+threads          { provider_id, messages[{from:'them'|'us', channel, text, at, draft_id?}] }
+families_prefs   { family_id (platform's), platform_id, prefs{picks,alerts,nearby,sms}, saved[] (mirror),
+                   stopped_at?, version }
+consents         { family_id, channel, provider_id?, text, captured_at, source, revoked_at? }   # append-only
+messages         { _id, platform_id, to{family_id|provider_id|channel_account}, channel, draft_id,
+                   sent_at, provider_message_id, status, opened_at?, clicked_at?, failed_reason? }  # append-only
+knowledge_files  { owner: 'platform'|provider_id, path, text, updated_by, updated_at, version }
+integrations     { platform_id, id, state, account_ref, token_ref, connected_by, connected_at }
+generated_pages  { platform_id, activity, area, slug, provider_ids[], state, published_at? }
+</code></pre>
+<p>Indexes: <code>provider_state (platform_id, stage)</code>, <code>drafts (platform_id, state, scheduled_for)</code>,
+<code>messages (family_id, sent_at)</code> for the cap query, <code>consents (family_id, channel, provider_id)</code>.</p>
+<h2>3. Data mapping — platform → cache</h2>
+<p><code>data/fetch-yourfield.py</code> is the mapping (one function, <code>full(card)</code>), reproduced in the
+sync worker: the list endpoint gives the card and <code>claimStatus</code>; the single record gives
+sessions, announcement, trial policy, geo, verified fields. Missing neighbourhood → borough
+(<code>app.js</code>, load). Diff on <code>updatedAt</code>; a new <code>sessions[]</code> id at a provider a family has
+saved raises an <em>alert</em> draft.</p>
+<h2>4. State machines</h2>
+<p><strong>Draft (post)</strong> — <code>waiting → scheduled → published</code>; <code>waiting → skipped</code>; <code>waiting → (edit) →
+scheduled</code> with <code>ai=false</code> and an <code>approvals</code> row carrying the diff. Prototype:
+<code>approve</code>, <code>edit</code>/<code>save</code>, <code>skip</code> actions.</p>
+<p><strong>Draft (sequence, reply)</strong> — <code>waiting → sent</code> (sequence: all steps enqueued; reply: one
+message); <code>waiting → skipped</code>; radar notes <code>waiting → filed</code>. Prototype: <code>approveSeq</code>,
+<code>approveReply</code>.</p>
+<p><strong>Pipeline stage</strong> — forward on events only (R9):</p>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>From</th>
+<th>To</th>
+<th>Event</th>
+<th>Prototype</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>identified</td>
+<td>contacted</td>
+<td>first sequence message sent</td>
+<td><code>sendInvitation</code></td>
+</tr>
+<tr>
+<td>contacted</td>
+<td>replied</td>
+<td>inbound message from the provider</td>
+<td><code>sendInvitation</code> (sample replies)</td>
+</tr>
+<tr>
+<td>replied</td>
+<td>applied</td>
+<td>claim request submitted (platform <code>claim-requests</code>) or a "yes" reply confirmed by the operator</td>
+<td><code>approveReply</code></td>
+</tr>
+<tr>
+<td>applied</td>
+<td>managing</td>
+<td>platform confirms the claim</td>
+<td><code>apply</code> (provider view)</td>
+</tr>
+<tr>
+<td>managing</td>
+<td>upgraded</td>
+<td>a paid product on the platform</td>
+<td>drawer chip only</td>
+</tr>
+<tr>
+<td>any</td>
+<td>any</td>
+<td>operator moves by hand; logged with <code>stage_changed_by: 'operator'</code></td>
+<td><code>data-setstage</code></td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Family channel</strong> — <code>on ↔ off</code> per channel; <em>Stop</em> → every channel off + cancel queued
+drafts for that family. Consent for SMS is a separate append-only record; the toggle
+cannot turn SMS on without a consent row.</p>
+<h2>5. Jobs (Vercel Cron → outbox workers)</h2>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>Job</th>
+<th>Schedule</th>
+<th>Does</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>sync</code></td>
+<td>hourly</td>
+<td>pull the catalogue, diff, write <code>providers_cache</code>, raise alert drafts</td>
+</tr>
+<tr>
+<td><code>draft-social</code></td>
+<td>08:00 daily</td>
+<td>for providers with news and no draft this week: build a post draft from the knowledge files (AI if the department's switch is on, else the listing's own text — <code>draftCopy</code>)</td>
+</tr>
+<tr>
+<td><code>sequence-step</code></td>
+<td>09:00 weekdays</td>
+<td>for every approved sequence: enqueue the due step per recipient not yet replied; skip addresses with <code>not my program</code> or unsubscribe</td>
+</tr>
+<tr>
+<td><code>digest</code></td>
+<td>Sunday 17:00 build, 18:00 send</td>
+<td>per family with <code>picks</code> on: saved + nearby-with-session rows; cap check; outbox</td>
+</tr>
+<tr>
+<td><code>publish</code></td>
+<td>every 5 min</td>
+<td>send due <code>scheduled</code> posts through the adapter; write <code>messages</code>, snapshot to Blob</td>
+</tr>
+<tr>
+<td><code>send</code></td>
+<td>every minute</td>
+<td>drain the outbox: cap check again (R3), send, log; retry with backoff; dead-letter after 5</td>
+</tr>
+<tr>
+<td><code>retention</code></td>
+<td>nightly</td>
+<td>drafts 90 days after final state; messages 24 months</td>
+</tr>
+</tbody>
+</table></div>
+<h2>6. Connectors and adapters</h2>
+<pre><code class="language-ts">interface PlatformConnector {
+  listProviders(): Promise&lt;ProviderCard[]&gt;;      getProvider(id): Promise&lt;Provider&gt;;
+  facets(): Promise&lt;Facets&gt;;                     siteCopy(): Promise&lt;SiteCopy&gt;;
+  createClaimRequest(providerId, contact): Promise&lt;void&gt;;   // keyed
+  notifyFamily(familyId, payload): Promise&lt;void&gt;;           // keyed
+  publishPage(page): Promise&lt;{url}&gt;;                        // keyed (Sportolok: POST /api/ingest)
+}
+interface ChannelAdapter {
+  preview(draft): Rendered;   publish(draft): Promise&lt;{providerMessageId}&gt;;
+  onInbound(webhook): InboundMessage | null;   verify(webhook): boolean;
+}
+</code></pre>
+<p><code>YourFieldConnector</code> maps <code>/api/public/*</code>; <code>SportolokConnector</code> maps <code>/api/*</code> incl.
+<code>ingest</code>. Adapters: <code>ResendAdapter</code>, <code>MetaAdapter</code> (Instagram + Facebook), <code>TikTokAdapter</code>,
+<code>XAdapter</code>, <code>TwilioAdapter</code>, <code>PlatformPushAdapter</code>.</p>
+<h2>7. Drafting (optional AI)</h2>
+<p>Prompt = the department's knowledge files (<code>rules/voice.md</code>, <code>rules/consent.md</code>,
+<code>rules/social.md</code>; provider: <code>knowledge/*.md</code>) + the provider record + the event. Output is
+a draft with <code>ai=true</code> and a <code>why</code> line the operator reads. With AI off: templates over the
+listing's own text (the prototype's <code>draftCopy</code>, the sequence template with merge fields).
+Published AI content is marked where Art. 50 applies; internal drafts carry the ✦ badge.</p>
+<h2>8. Forms and inputs</h2>
+<p>Operator: approve/edit/skip (Server Actions, optimistic UI, <code>version</code> check); knowledge
+file editor (textarea, saved on blur, versioned); sequence editor (subject, body, steps);
+integration connect (OAuth redirect, callback stores <code>token_ref</code>). Provider: apply-to-manage
+(one button → platform claim request), knowledge editor. Family: toggles, stop, consent
+capture (checkbox + text stored verbatim as proof).</p>
+<h2>9. i18n</h2>
+<p>Copy in English; the reference instance needs Hungarian. Strings in a per-instance
+dictionary; dates and times in the instance's locale; legal footers per market (CAN-SPAM
+address vs Hungarian Act XLVIII wording).</p>
+<h2>10. URLs and SEO</h2>
+<p>business.direct's own URLs are private (console). Generated pages are the platform's
+(<code>getyourfield.com/nyc/&lt;activity&gt;-&lt;area&gt;</code>), written through the connector with the
+platform's template, <code>LocalBusiness</code> JSON-LD per provider (the reference instance already
+does this), and only where R6 holds.</p>
+<h2>11. Media</h2>
+<p>Post media: the provider's card image (from the platform) or an upload to Blob; alt text
+required; conversion keeps alpha; served resized (1080 × 1350 IG, 1200 × 630 FB).</p>
+<h2>12. Performance</h2>
+<p>Console: server-rendered lists, paginated at 50 providers; the providers table filters on
+the server. Digest build is a job, never a request. Caps in Redis, O(1) per check.</p>
+<h2>13. Operations</h2>
+<p>Dashboards: outbox lag, sends per channel per day, cap checks (0 violations), stage
+transitions per day, opt-outs. Runbooks in §9 of the architecture. Backups: Atlas daily,
+Blob versioned. Data deletion: platform webhook → delete <code>families_prefs</code>, anonymise
+<code>messages</code>, keep <code>consents</code> (legal hold) with the id hashed.</p>
+<footer>Source: <code>business-direct/docs/12-technical-design.md</code> · rendered by <code>docs/build.py</code>.</footer>
+</div>
+</body>
+</html>

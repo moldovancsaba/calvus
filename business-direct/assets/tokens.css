@@ -1,7 +1,7 @@
 /* business.direct — design tokens. Sibling of DiscountDirect: the same GDS 6.5.0 role names
    (discountdirect/GDS-TOKEN-MAP.md) so both products hand off to the same design system; the
    values are GDS canonical light where a role exists. Product-owned: the accent.
-   PROPOSED 2026-09-19 — gate 1 (docs/design-system.html) awaits the owner's approval. */
+   Approved 2026-09-19 as gate 1 (D9, docs/design-system.html); production mapping in docs/14-token-map.md. */
 :root {
   --gds-bg-canvas: #f8fafc;
   --gds-bg-surface: #ffffff;

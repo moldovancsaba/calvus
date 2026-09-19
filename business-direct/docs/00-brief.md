@@ -81,6 +81,9 @@ connecting an integration with a key. Each is shown in place, visibly inert, wit
 
 ## Where it stands
 
-Stage 0–2 done 2026-09-19. **Gate 1 (design system) approved (D9)**; re-issued in English
-on the client's data the same day, tokens and components unchanged. **Gate 2 — the layout
-frames (`layouts.html`) — awaits the owner.**
+Stages 0–5 done 2026-09-19. **Gate 1 (design system) approved (D9)**, re-issued in
+English on the client's data the same day; **gate 2 (layout frames) approved (D16)**; the
+prototype built as one page with three views (`../index.html`, D17–D18) and measured at 390
+and 1440 (`06-build-log.md`, `07-gate.md`); the presentation (`bemutato.html`) and the
+technical package (`10`–`14`, stack PROPOSED) written. **Next: the owner's click-through →
+round 2.**

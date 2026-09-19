@@ -37,3 +37,18 @@ actions, both widths). Two findings fixed on the way: the digest's meta line inh
 **Not built, on purpose.** Sequence and reply editing show a toast instead of an editor (the
 copy lives in the knowledge files); tablet 1024 is the phone layout with wider cards
 (`05-layout-specs.md`); no persistence (D17).
+
+## Round 1b — 2026-09-19 — presentation, deep links, technical package (D19)
+
+**Built.** `docs/bemutato.html` (English, the product's tokens, standalone, four steps with
+phone previews and a desktop preview of the prototype, what is real, six asks, what comes
+next). `app.js`: `?view=platform|provider|family&screen=<id>` deep links so the previews
+and the docs open the right screen (`assets/app.js?v=3`). Docs `10`–`14` rendered by
+`build.py`; the two hand-written docs pages gained the package links.
+
+**Measured** (app browser pane, 2026-09-19): presentation at 1440 — five iframes load the
+intended screens (overview, overview, provider sales, Brooklyn Force Soccer, What arrives),
+`scrollWidth` 1440; at 390 — `scrollWidth` 390, every link ≥ 44 px, 0 console errors.
+`architecture.html` at 390: the two ASCII diagrams scroll inside their `pre` (682 and
+610 px content in a 358 px box), page width 390. `python3 check.py` → `GATE: CLEAN`
+(216 files, 5,827 references).
