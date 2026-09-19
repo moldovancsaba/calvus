@@ -132,8 +132,14 @@ developer can read the behaviour before the code exists.</em></p>
 </tr>
 <tr>
 <td>Provider</td>
+<td>Media</td>
+<td>recording upload (inert) → clips into the platform's queue; the card photo</td>
+<td><code>provider.media</code>, <code>upload</code> action</td>
+</tr>
+<tr>
+<td>Provider</td>
 <td>Results</td>
-<td>tiles + what went out + plan ladder</td>
+<td>tiles + your return + what went out + plan ladder</td>
 <td><code>provider.results</code>, <code>ladder</code></td>
 </tr>
 <tr>
@@ -172,7 +178,7 @@ developer can read the behaviour before the code exists.</em></p>
 deep links <code>?view=&amp;screen=&amp;stage=</code> (<code>app.js</code>, bottom; <code>stage</code> pre-sets the persona's pipeline stage for previews). Layout rules: <a href="05-layout-specs.html"><code>05-layout-specs.md</code></a>.</p>
 <h2>2. Content model (MongoDB, <code>platform_id</code> on every document)</h2>
 <pre><code>providers_cache  { _id: &lt;platform provider id&gt;, platform_id, ...Provider (SSOT §3), synced_at }
-provider_state   { provider_id, platform_id, stage, stage_changed_at, stage_changed_by, version }
+provider_state   { provider_id, platform_id, stage, stage_changed_at, stage_changed_by, score, score_at, version }
 drafts           { _id, platform_id, kind, provider_id?, family_id?, channels[], copy, media_blob?,
                    state, ai, scheduled_for?, why?, created_by: 'machine'|'person', version }
 approvals        { draft_id, action: 'approve'|'edit'|'skip', by, at, diff? }         # append-only
@@ -197,6 +203,9 @@ comments         { _id, platform_id, post_id, provider_id, channel, external_id,
 events           { _id, platform_id, at, name, provider_id?, family_id?, draft_id?, campaign_id?, props{} }   # append-only, ADR-11
 metrics_daily    { platform_id, day, cac_managing, cac_upgraded, ltv, payback, avid_families, avid_value, content_cpa, next_dollar[], rates{} }
 assumptions      { platform_id, key, value, source: 'measured'|'benchmark'|'assumption', updated_by, updated_at }
+sending          { platform_id, domain, warm_day, warm_days, daily_cap, bounce_rate, reply_sla_hours }
+experiments      { platform_id, name, treat_area, control_area, weeks, started_at, state, readout? }
+media_assets     { _id, platform_id, provider_id?, adapter, generated: bool, credential: C2PA, blob_url, used_in[] }
 </code></pre>
 <p>Indexes: <code>provider_state (platform_id, stage)</code>, <code>drafts (platform_id, state, scheduled_for)</code>,
 <code>messages (family_id, sent_at)</code> for the cap query, <code>consents (family_id, channel, provider_id)</code>.</p>
@@ -334,6 +343,21 @@ cannot turn SMS on without a consent row.</p>
 <td>Stripe events → entitlements → stage → card flag through the connector</td>
 </tr>
 <tr>
+<td><code>clips</code></td>
+<td>on upload</td>
+<td>run <code>MediaAdapter.clips</code>; each clip becomes a post draft with <code>media.kind = 'real'</code></td>
+</tr>
+<tr>
+<td><code>score</code></td>
+<td>nightly 02:30</td>
+<td>propensity per provider → <code>provider_state.score</code>; the sequence and call-list jobs read it (ADR-13)</td>
+</tr>
+<tr>
+<td><code>sending-guard</code></td>
+<td>before every send</td>
+<td>refuse when past the warm-up cap or the bounce limit; alert</td>
+</tr>
+<tr>
 <td><code>metrics</code></td>
 <td>nightly 02:00</td>
 <td>roll <code>events</code> into <code>metrics_daily</code>; replace an assumption with a measured rate once ≥ 100 observations exist (R16)</td>
@@ -355,6 +379,13 @@ cannot turn SMS on without a consent row.</p>
   savesFor(providerId): Promise&lt;FamilyRef[]&gt;;               // keyed — campaign audience (ADR-10)
   familiesNear(geo, ageRange): Promise&lt;FamilyRef[]&gt;;        // keyed — nearby audience
   setCardFlag(providerId, flag: 'featured'|'camp'|'profile', on): Promise&lt;void&gt;;  // keyed — upgrades
+}
+interface MediaAdapter {   // D28, ADR-12
+  clips(recording, listing): Promise&lt;Clip[]&gt;;          // v1: captions, listing link, C2PA on each clip
+  video(still, brief): Promise&lt;Asset&gt;;                  // later: still-to-motion on the provider's real photo
+  image(brief): Promise&lt;Asset&gt;;                         // later: tiles, headers; never a person (R15)
+  audio(text, voice): Promise&lt;Asset&gt;;                   // later: voice-over
+  // every Asset: { url, credential: C2PA, generated: boolean, label: per platform at publish }
 }
 interface ChannelAdapter {
   preview(draft): Rendered;   publish(draft): Promise&lt;{providerMessageId}&gt;;

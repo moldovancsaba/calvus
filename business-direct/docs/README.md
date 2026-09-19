@@ -14,10 +14,10 @@ Built to the prototyping standard (`PROTOTYPING.md`); this index is the process 
 | 02 audit | `02-audit.md` | Your Field measured: API, 252 providers, field coverage, site copy; the Hungarian reference instance; the two videos frame by frame; what DiscountDirect provides |
 | 03 sources | `03-sources.md` | What is real (the platform's public data), what is sample, what is inherited |
 | presentation | `bemutato.html` | Standalone, English, on the product's tokens: one sentence, three numbers, the four things to click with previews, what is real, the asks, what comes next |
-| 04 decisions | `04-decisions.md` | D1–D27 |
+| 04 decisions | `04-decisions.md` | D1–D28 |
 | 05 design | `design-system.html` + `../assets/tokens.css` + `../assets/components.css` | **Gate 1 approved (D9)**: tokens and components, one source |
 | 05 layouts | `05-layout-specs.md` + `layouts.html` + `frames/` | **Gate 2 approved (D16)**: platform 1440 / 390, provider 390, family 390 |
-| 06 build log | `06-build-log.md` | Round 1: the prototype; 1b: presentation and package; 2: editors real, tablet measured; 3: phase 2 — campaigns, upgrades, recap; 4: phase 3 — conversations; 5: economics |
+| 06 build log | `06-build-log.md` | Round 1: the prototype; 1b: presentation and package; 2: editors real, tablet measured; 3: phase 2 — campaigns, upgrades, recap; 4: phase 3 — conversations; 5: economics; 6: the research implemented |
 | 07 gate | `07-gate.md` + `../check.py` | Measured pass at 390, 768, 1024 and 1440: overflow, tap targets, navigation, console, links |
 | 08 owner asks | `08-client-asks.md` | Seven open items (#1 closed by D20; #4–6 assumed by D21 until answered) |
 | 09 business logic | `09-business-logic.md` | The rules end to end: parties, flows, departments, campaigns, money, families, law, recap, what the machine never does (D24) |
@@ -128,4 +128,13 @@ Airbnb's cluster-randomised experiments, Google Meridian); each finding mapped t
 business.direct service; P10–P12 added. The presentation gained the decision flow —
 events → metrics → next dollar → approval → measure — as its own section.
 
-**Next.** The owner's decisions on P1–P12 and asks #2–10.
+**2026-09-19 — the research implemented (D28).** "Implement the results of the research
+into our business logics and prototyping." Media department with the clip engine as v1 and
+generation later, real/generated labels with C2PA, the weekly anchor plan, AI-citation
+readiness per page, the public neighbourhood newsletter, sending infrastructure and the
+three-touch sequence ordered by a propensity score, the upgrade card gated by delivered
+value, a neighbourhood holdout running, cohorts by channel — in the prototype and in
+business logic §8c, the SSOT (R15, R20–R22), the architecture (ADR-12, ADR-13), the
+technical design, the plan and the presentation. Asks #9 and #11 closed.
+
+**Next.** The owner's answers to asks #2–8 and #10; a pilot provider.

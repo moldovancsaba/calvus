@@ -54,6 +54,7 @@ it appears in body text.
 | `.kfile` | `Textarea` in a `Code`-styled `Paper` with a path label | versioned saves |
 | `.listing`, `.pin`, `.ladder` | `Card` with an avatar; the ladder is the provider's plan (products, `done` = active entitlement) | family saved, provider results, drawer |
 | campaign card (= `.approval` + `.preview` + `.why`) | product component `CampaignCard` — the approval card with the audience line | provider campaigns, family inbox (read-only) |
+| media adapter card, sending card, experiment card (= `.card` + `.dept-list` / `.foot`) | `Card` with status badges | social publishing, sales, economics |
 | enquiry card, comment card (= `.approval` + `.why` + `.preview`) | product component `ReplyCard` — "they wrote" + the drafted answer + approve / edit / skip | provider conversations, platform social, approvals |
 | product card (= `.card` + `.foot`) | `Card` with price and a `Button` → Stripe Checkout | provider today |
 | `.push`, `.digest`, `.sms` | preview renderers for the three family channels | used by `ChannelAdapter.preview` |

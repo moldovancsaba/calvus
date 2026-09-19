@@ -180,6 +180,16 @@ instance (<code>platform_id</code>). "Measured" means a number in the build log,
 <td>a provider sees its thread, its drafts, edits its files</td>
 </tr>
 <tr>
+<td>BD-1-10</td>
+<td>Sending domain per instance with warm-up, cap, bounce guard</td>
+<td>the outbox refuses a send past the limits (test); the sales screen shows the state</td>
+</tr>
+<tr>
+<td>BD-1-11</td>
+<td>Three-touch sequence ordered by the propensity score</td>
+<td>step 2 sends only where a save exists; recipients in score order (test)</td>
+</tr>
+<tr>
 <td>BD-1-8</td>
 <td>Provider conversations: inbound (platform message, Resend inbound, Twilio missed call) → <code>enquiries</code> → drafted answer → approve / edit → same channel</td>
 <td>reply time logged; the family's thread updated (phase 3)</td>
@@ -213,6 +223,21 @@ instance (<code>platform_id</code>). "Measured" means a number in the build log,
 <td>BD-2-4</td>
 <td><code>MetaAdapter</code> publish + inbound comments/DMs</td>
 <td>OAuth per page; a publish writes <code>messages</code> + a Blob snapshot</td>
+</tr>
+<tr>
+<td>BD-2-7</td>
+<td>Clip engine (<code>MediaAdapter.clips</code>) and the provider's Media screen</td>
+<td>a recording becomes captioned clips with the listing link in the queue, each <code>media.kind = real</code></td>
+</tr>
+<tr>
+<td>BD-2-8</td>
+<td>Media labels and credentials</td>
+<td>every generated asset has a C2PA credential and the platform label at publish (test per channel); a person-detection check blocks generation (R15)</td>
+</tr>
+<tr>
+<td>BD-2-9</td>
+<td>Weekly anchor plan per neighbourhood × activity</td>
+<td>the calendar shows the anchor and its cuts; <code>rules/social.md</code> keywords enforced in the draft</td>
 </tr>
 <tr>
 <td>BD-2-6</td>
@@ -273,6 +298,26 @@ instance (<code>platform_id</code>). "Measured" means a number in the build log,
 <td>BD-4-4</td>
 <td>Operations dashboards and alerts</td>
 <td>the five alerts in architecture §9 fire in a drill</td>
+</tr>
+<tr>
+<td>BD-4-9</td>
+<td>Propensity score job (ADR-13)</td>
+<td>nightly; the sequence and call-list jobs read it; an audit row per change</td>
+</tr>
+<tr>
+<td>BD-4-10</td>
+<td>Neighbourhood holdout experiment</td>
+<td>two comparable neighbourhoods; read-out replaces "families per post" with a measured rate</td>
+</tr>
+<tr>
+<td>BD-4-11</td>
+<td>Cohort LTV by channel; generated-page readiness</td>
+<td>assumption → measured at 100 observations; a page publishes only at readiness ≥ 3 of 4</td>
+</tr>
+<tr>
+<td>BD-3-8</td>
+<td>Public neighbourhood newsletter</td>
+<td>joinable without an account; cross-recommendation between neighbourhoods; counts in the cap</td>
 </tr>
 <tr>
 <td>BD-4-6</td>

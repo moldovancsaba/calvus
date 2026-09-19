@@ -214,6 +214,14 @@ and the message log.</p>
 <td>one per channel, same interface: <code>draft → preview</code>, <code>publish</code>, <code>inbound webhook → thread</code></td>
 </tr>
 <tr>
+<td>Media adapters (D28)</td>
+<td><code>MediaAdapter.clips</code> (v1: a recording → captioned clips), <code>.video</code>, <code>.image</code>, <code>.audio</code> (later) behind one interface; every output carries a C2PA credential (R20); never a person (R15)</td>
+</tr>
+<tr>
+<td>Sending domain per instance</td>
+<td>warm-up schedule, daily cap, bounce monitor; the outbox refuses sends past the limits</td>
+</tr>
+<tr>
 <td>LLM</td>
 <td>drafting only, behind the department's AI switch (R10); the knowledge files are the prompt context</td>
 </tr>
@@ -470,6 +478,18 @@ a family's deletion request.</p>
 <td><strong>Upgrades billed by Stripe on the platform's account</strong>; business.direct stores only the entitlement</td>
 <td>(a) business.direct as merchant; (b) the platform as merchant via Stripe; (c) invoices by hand</td>
 <td>(b): the platform already sells "List your program"; one merchant, one tax position; the machine never holds card data</td>
+</tr>
+<tr>
+<td>ADR-12</td>
+<td><strong>Media generation behind one <code>MediaAdapter</code> interface with the clip engine as the only v1 service</strong>; vendors are configuration (a Higgsfield-class aggregator or Runway for video, Ideogram / Nano Banana / Firefly for image, ElevenLabs for audio)</td>
+<td>(a) one vendor SDK in the app; (b) one interface, vendors as config; (c) no generation</td>
+<td>(b): Sora's shutdown in 2026 showed vendors churn; human-first evidence puts the clip engine first; credentials and labels are the interface's job, not each vendor's</td>
+</tr>
+<tr>
+<td>ADR-13</td>
+<td><strong>Propensity score computed in the nightly metrics job</strong>, stored on <code>provider_state</code>, read by the sequence and call-list jobs</td>
+<td>(a) score at send time; (b) nightly, stored; (c) a third-party lead-scoring service</td>
+<td>(b): one number everyone reads, auditable, cheap; matches the events already logged</td>
 </tr>
 <tr>
 <td>ADR-11</td>

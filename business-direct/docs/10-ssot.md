@@ -34,6 +34,10 @@ implementation of the enumerations and state machines below.*
 | **Upgrade** | a provider buying a product; moves the stage to *upgraded* | pipeline |
 | **Enquiry** | a family's message to a provider — platform message, e-mail or missed call — with an answer drafted from the provider's knowledge files (D25) | provider conversations, family inbox |
 | **Comment** | a comment or DM on a published post, with a drafted reply that links to the listing (D25) | social publishing, approvals |
+| **Propensity score** | 0–100 per provider from the card (e-mail, phone, trial, session, announcement, image, verified fields, unclaimed flag) and events (replied, applied, thread); orders the sequence and the call list (R22) | providers table, sequences |
+| **Anchor** | the week's one piece per neighbourhood × activity, cut into a Reel, a carousel, a story, a digest item and a page update | social publishing |
+| **Media adapter** | one of video, image, audio, clips — a service behind one interface; clips (from real footage) is v1, the rest later | media department |
+| **Holdout** | a neighbourhood where the content engine is off for the experiment's weeks; the comparable treatment neighbourhood has it on | social anchors, economics |
 | **Recap** | the weekly intelligence screen: what moved, by department, the market radar, what needs the operator (D23) | intelligence |
 | **Integration** | a connector that gives the machine hands: the platform API, social channels, e-mail, push, SMS, Google Business Profile, calendar | integrations |
 | **Real / sample** | real = from the platform's public API, never edited; sample = generated for the prototype from real providers and declared as such (D18) | every tile's third line |
@@ -74,6 +78,9 @@ implementation of the enumerations and state machines below.*
 | **Product** | `id`, `name`, `what`, `price` | `S.products` — the platform's list; prices sample |
 | **Enquiry** | `id`, `providerId`, `from{name,kid,area}`, `channel`, `at`, `text`, `draft`, `state`, `ai`, `sentIn?` | `S.enquiries[pid]`; a family's ask is unshifted with `from.name` = the family |
 | **Comment** | `id`, `postId`, `providerId`, `channel`, `from`, `text`, `draft`, `state`, `ai` | `S.comments`, created when a post is approved |
+| **MediaAdapter** | `id`, `name`, `vendor`, `state` (`v1` / `later`), `use` | `S.media.adapters` |
+| **Sending** | `domain`, `warmDay`, `warmDays`, `dailyCap`, `bounce`, `replySla` | `S.sending`; per `platform_id` in production |
+| **Experiment** | `name`, `treat`, `control`, `weeks`, `week`, `state` | `S.experiment` |
 | **Entitlement** | `providerId`, `productId`, `since`, `billingRef?` | `S.bought` |
 
 ## 4. Settings the prototype fixes
@@ -94,7 +101,7 @@ implementation of the enumerations and state machines below.*
 
 ## 5. Decision register
 
-`04-decisions.md` holds D1–D27. The ones the engineering documents rest on: D2 (three
+`04-decisions.md` holds D1–D28. The ones the engineering documents rest on: D2 (three
 views), D5 (DiscountDirect sibling), D6 (departments, knowledge layer, human-in-the-loop,
 optional AI, dashboard, integrations), D11 (Your Field first), D14 (two flows), D15
 (post card and pipeline strip), D17 (one page, in-memory state), D18 (sample generated
@@ -118,6 +125,10 @@ PROPOSED.
 | R11 | A campaign reaches only families who saved the provider or are nearby with a child in the age range, by their preferences, under the cap; the provider approves the copy, never the list | `campaignsFor`, `campaignCard` |
 | R12 | An upgrade never changes what a family receives — it changes where the provider appears | products |
 | R14 | Every enquiry gets a drafted answer within a minute and a sent answer only after the provider's approval; reply time is measured from the enquiry, not from the draft | `enquiriesFor`, `approveEnquiry` |
+| R15 | The machine never generates a person or a child; it edits the provider's real photos and generates places, objects, type and motion only | media department |
+| R20 | Every generated asset carries a C2PA credential at creation and the platform's disclosure at publish; the credential is kept in the audit snapshot | post card labels; outbox |
+| R21 | A provider's real recording beats any generation; the clip engine is the v1 media service; generation fills gaps only | provider media, social queue |
+| R22 | A propensity score per provider orders every sequence and the call list; it is recomputed nightly from the card and the events | `score()`, providers table |
 | R16 | The next-dollar ranking runs weekly on measured rates where they exist and on the documented assumption where they do not; the recap says which | `econ()`; `16-analytics…` §4 |
 | R17 | A sequence step is added or removed when its marginal reply rate per touch falls below the cost-per-touch breakeven for two consecutive weeks, inside the 4–7 benchmark | production |
 | R18 | Content slots go to the neighbourhood × activity pairs with the highest families-per-post over four weeks; a new pair gets one slot a week to be measured | production |

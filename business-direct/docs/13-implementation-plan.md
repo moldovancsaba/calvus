@@ -47,6 +47,8 @@ instance (`platform_id`). "Measured" means a number in the build log, not a clai
 | BD-1-4 | Pipeline stage machine | only event-driven forward moves (test per row of §4); operator override logged |
 | BD-1-5 | Apply-to-manage → `claim-requests` | needs the platform key (blocked B1); stage *applied* on 2xx |
 | BD-1-6 | Provider view: invitation, today, knowledge | a provider sees its thread, its drafts, edits its files |
+| BD-1-10 | Sending domain per instance with warm-up, cap, bounce guard | the outbox refuses a send past the limits (test); the sales screen shows the state |
+| BD-1-11 | Three-touch sequence ordered by the propensity score | step 2 sends only where a save exists; recipients in score order (test) |
 | BD-1-8 | Provider conversations: inbound (platform message, Resend inbound, Twilio missed call) → `enquiries` → drafted answer → approve / edit → same channel | reply time logged; the family's thread updated (phase 3) |
 | BD-1-9 | Family "ask about a trial" from a saved provider | creates an enquiry as a platform message; visible in the provider's inbox within a minute |
 | BD-1-7 | "Not my program" and unsubscribe | the address is excluded from every future sequence (test) |
@@ -54,6 +56,9 @@ instance (`platform_id`). "Measured" means a number in the build log, not a clai
 | BD-2-2 | Approval queue with edit diff | edited copy sets `ai=false`; the diff is stored |
 | BD-2-3 | Calendar and slots | a scheduled post publishes at its slot ± 5 min (measured) |
 | BD-2-4 | `MetaAdapter` publish + inbound comments/DMs | OAuth per page; a publish writes `messages` + a Blob snapshot |
+| BD-2-7 | Clip engine (`MediaAdapter.clips`) and the provider's Media screen | a recording becomes captioned clips with the listing link in the queue, each `media.kind = real` |
+| BD-2-8 | Media labels and credentials | every generated asset has a C2PA credential and the platform label at publish (test per channel); a person-detection check blocks generation (R15) |
+| BD-2-9 | Weekly anchor plan per neighbourhood × activity | the calendar shows the anchor and its cuts; `rules/social.md` keywords enforced in the draft |
 | BD-2-6 | Drafted replies to comments and DMs with the listing link | operator approves; reply sent through the adapter; comments-answered metric |
 | BD-2-5 | AI-content marking | published AI content carries the mark where Art. 50 applies |
 | BD-3-1 | Signed preference links from the platform | a family changes a channel without a password; link expiry |
@@ -66,6 +71,10 @@ instance (`platform_id`). "Measured" means a number in the build log, not a clai
 | BD-4-2 | Market radar weekly note | from catalogue stats; filed by the operator |
 | BD-4-3 | Generated pages through the connector | only ≥ 3 providers; JSON-LD; sitemap entry on the platform |
 | BD-4-4 | Operations dashboards and alerts | the five alerts in architecture §9 fire in a drill |
+| BD-4-9 | Propensity score job (ADR-13) | nightly; the sequence and call-list jobs read it; an audit row per change |
+| BD-4-10 | Neighbourhood holdout experiment | two comparable neighbourhoods; read-out replaces "families per post" with a measured rate |
+| BD-4-11 | Cohort LTV by channel; generated-page readiness | assumption → measured at 100 observations; a page publishes only at readiness ≥ 3 of 4 |
+| BD-3-8 | Public neighbourhood newsletter | joinable without an account; cross-recommendation between neighbourhoods; counts in the cap |
 | BD-4-6 | Event log and nightly metrics (`events`, `metrics_daily`, `assumptions`) | every leaf of the metrics tree has an event; a rate flips from assumption to measured at 100 observations (test) |
 | BD-4-7 | Economics screen on real metrics | the prototype's 23 inputs read from `assumptions`; measured ones are read-only and labelled |
 | BD-4-8 | Next-dollar ranking in the recap; R17–R19 as jobs | cadence, content slots and the upgrade card follow the rules (tests per rule) |

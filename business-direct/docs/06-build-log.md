@@ -141,3 +141,30 @@ number is now the loop. `01c-research-data-driven-marketing.md` rendered as
 **Measured** (app browser pane, 2026-09-19): presentation at 390 — five sections, six
 flow cards, `scrollWidth` 390, every link ≥ 44 px, 0 console errors.
 `python3 check.py` → `GATE: CLEAN` (exit 0).
+
+## Round 6 — 2026-09-19 — the research implemented (D28)
+
+**Built** (`assets/app.js?v=8`). Platform: providers table gains a **propensity score**
+column and sorts by it; the invitation sequence lists its **four steps** (three touches then
+the call task) with recipients in score order; a **sending infrastructure** card (domain,
+warm-up day 31 of 42, cap 60/day, bounce 0.8 %, reply within one business day); generated
+pages show **readiness for AI citation** (verified · sessions · reviews, x of 4); social
+publishing gains **this week's anchors** (three neighbourhoods by provider count — the
+experiment's treatment and holdout first — each with its cuts) and the **media department**
+(four adapters, clips v1, rules R15 / R20 / R21); every post card carries a **real media /
+generated** label; the overview counts neighbourhood letters; economics shows the
+**running holdout** and **cohorts by channel** with assumption / measured basis. Provider:
+a **Media** screen — upload a recording (sample) → three clips into the platform's queue
+marked real media; the product cards on Today appear only when delivered value exceeds
+the cheapest product (R19). Family: the public neighbourhood newsletter in preferences.
+`rules/social.md` carries the anchor, keyword and media rules.
+
+**Measured** (app browser pane, 2026-09-19): at 390 — providers (7 columns, first score
+100), sales (4 steps, sending card), pages (readiness 3 of 4), social (five sections, 7
+real-media badges, holdout and treatment badges), economics (five sections, cohort rows),
+today (R19 line), media (upload → 3 clips; queue shows 3, approvals 14), prefs (six rows):
+`scrollWidth` 390 everywhere, every control ≥ 44 px, 0 errors in a fresh load (the tab's
+console kept one error from a load before the fix — `score` used before its definition —
+which moved the definition up). At 1440 — social anchors "Swimming in Upper West Side ·
+Gymnastics in Upper East Side · Soccer in Brooklyn", provider media: `scrollWidth` 1440.
+`python3 check.py` → `GATE: CLEAN` (exit 0).

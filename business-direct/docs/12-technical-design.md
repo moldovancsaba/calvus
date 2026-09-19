@@ -21,7 +21,8 @@ developer can read the behaviour before the code exists.*
 | Provider | Today | hero card + (invitation · or · tiles, waiting, team, knowledge) | `provider.today` |
 | Provider | Conversations | tiles + enquiry cards with drafted answers | `provider.conversations`, `enquiriesFor`, `enquiryCard` |
 | Provider | Campaigns | approval cards built from the card | `provider.campaigns`, `campaignsFor`, `campaignCard` |
-| Provider | Results | tiles + what went out + plan ladder | `provider.results`, `ladder` |
+| Provider | Media | recording upload (inert) → clips into the platform's queue; the card photo | `provider.media`, `upload` action |
+| Provider | Results | tiles + your return + what went out + plan ladder | `provider.results`, `ladder` |
 | Provider | Knowledge | file editors | `SCREENS.provider.knowledge` |
 | Family | Inbox | published post · digest · her conversations · campaigns from saved providers · provider SMS | `family.inbox` |
 | Family | Saved | listing cards with *Ask about a trial* | `family.saved`, `data-ask` |
@@ -35,7 +36,7 @@ deep links `?view=&screen=&stage=` (`app.js`, bottom; `stage` pre-sets the perso
 
 ```
 providers_cache  { _id: <platform provider id>, platform_id, ...Provider (SSOT §3), synced_at }
-provider_state   { provider_id, platform_id, stage, stage_changed_at, stage_changed_by, version }
+provider_state   { provider_id, platform_id, stage, stage_changed_at, stage_changed_by, score, score_at, version }
 drafts           { _id, platform_id, kind, provider_id?, family_id?, channels[], copy, media_blob?,
                    state, ai, scheduled_for?, why?, created_by: 'machine'|'person', version }
 approvals        { draft_id, action: 'approve'|'edit'|'skip', by, at, diff? }         # append-only
@@ -60,6 +61,9 @@ comments         { _id, platform_id, post_id, provider_id, channel, external_id,
 events           { _id, platform_id, at, name, provider_id?, family_id?, draft_id?, campaign_id?, props{} }   # append-only, ADR-11
 metrics_daily    { platform_id, day, cac_managing, cac_upgraded, ltv, payback, avid_families, avid_value, content_cpa, next_dollar[], rates{} }
 assumptions      { platform_id, key, value, source: 'measured'|'benchmark'|'assumption', updated_by, updated_at }
+sending          { platform_id, domain, warm_day, warm_days, daily_cap, bounce_rate, reply_sla_hours }
+experiments      { platform_id, name, treat_area, control_area, weeks, started_at, state, readout? }
+media_assets     { _id, platform_id, provider_id?, adapter, generated: bool, credential: C2PA, blob_url, used_in[] }
 ```
 
 Indexes: `provider_state (platform_id, stage)`, `drafts (platform_id, state, scheduled_for)`,
@@ -123,6 +127,9 @@ cannot turn SMS on without a consent row.
 | `send-campaigns` | every 5 min | approved campaigns: resolve audience, preference + cap per family, outbox |
 | `draft-answers` | on inbound webhook | enquiry or comment → draft from the knowledge files and the card within a minute (R14) |
 | `entitlements` | webhook-driven | Stripe events → entitlements → stage → card flag through the connector |
+| `clips` | on upload | run `MediaAdapter.clips`; each clip becomes a post draft with `media.kind = 'real'` |
+| `score` | nightly 02:30 | propensity per provider → `provider_state.score`; the sequence and call-list jobs read it (ADR-13) |
+| `sending-guard` | before every send | refuse when past the warm-up cap or the bounce limit; alert |
 | `metrics` | nightly 02:00 | roll `events` into `metrics_daily`; replace an assumption with a measured rate once ≥ 100 observations exist (R16) |
 | `retention` | nightly | drafts 90 days after final state; messages 24 months |
 
@@ -138,6 +145,13 @@ interface PlatformConnector {
   savesFor(providerId): Promise<FamilyRef[]>;               // keyed — campaign audience (ADR-10)
   familiesNear(geo, ageRange): Promise<FamilyRef[]>;        // keyed — nearby audience
   setCardFlag(providerId, flag: 'featured'|'camp'|'profile', on): Promise<void>;  // keyed — upgrades
+}
+interface MediaAdapter {   // D28, ADR-12
+  clips(recording, listing): Promise<Clip[]>;          // v1: captions, listing link, C2PA on each clip
+  video(still, brief): Promise<Asset>;                  // later: still-to-motion on the provider's real photo
+  image(brief): Promise<Asset>;                         // later: tiles, headers; never a person (R15)
+  audio(text, voice): Promise<Asset>;                   // later: voice-over
+  // every Asset: { url, credential: C2PA, generated: boolean, label: per platform at publish }
 }
 interface ChannelAdapter {
   preview(draft): Rendered;   publish(draft): Promise<{providerMessageId}>;

@@ -90,6 +90,8 @@ and the message log.
 | Outbox workers | the only thing that sends; consumes `approved` drafts, writes the message log |
 | Platform connector | read the catalogue; write claim requests, notifications, generated pages when keyed |
 | Channel adapters | one per channel, same interface: `draft → preview`, `publish`, `inbound webhook → thread` |
+| Media adapters (D28) | `MediaAdapter.clips` (v1: a recording → captioned clips), `.video`, `.image`, `.audio` (later) behind one interface; every output carries a C2PA credential (R20); never a person (R15) |
+| Sending domain per instance | warm-up schedule, daily cap, bounce monitor; the outbox refuses sends past the limits |
 | LLM | drafting only, behind the department's AI switch (R10); the knowledge files are the prompt context |
 
 ## 5. Key flows
@@ -202,5 +204,7 @@ a family's deletion request.
 | ADR-7 | **AI drafting behind an interface, optional per department**, outputs marked | (a) AI always on; (b) optional per department; (c) none | (b): D6; EU AI Act Art. 50 marking; the provider with AI off still gets the listing's own text |
 | ADR-8 | **Generated pages are written to the platform** through its API, not hosted by business.direct | (a) host here; (b) write to the platform | (b): search authority belongs to the platform's domain (research §5) |
 | ADR-9 | **Upgrades billed by Stripe on the platform's account**; business.direct stores only the entitlement | (a) business.direct as merchant; (b) the platform as merchant via Stripe; (c) invoices by hand | (b): the platform already sells "List your program"; one merchant, one tax position; the machine never holds card data |
+| ADR-12 | **Media generation behind one `MediaAdapter` interface with the clip engine as the only v1 service**; vendors are configuration (a Higgsfield-class aggregator or Runway for video, Ideogram / Nano Banana / Firefly for image, ElevenLabs for audio) | (a) one vendor SDK in the app; (b) one interface, vendors as config; (c) no generation | (b): Sora's shutdown in 2026 showed vendors churn; human-first evidence puts the clip engine first; credentials and labels are the interface's job, not each vendor's |
+| ADR-13 | **Propensity score computed in the nightly metrics job**, stored on `provider_state`, read by the sequence and call-list jobs | (a) score at send time; (b) nightly, stored; (c) a third-party lead-scoring service | (b): one number everyone reads, auditable, cheap; matches the events already logged |
 | ADR-11 | **Analytics as an append-only event log in MongoDB with nightly materialised metrics per `platform_id`**; no third-party analytics SaaS holds family data | (a) product-analytics SaaS (Amplitude / Mixpanel); (b) own event log + materialised views; (c) warehouse + BI | (b): the events already exist as collections; the metrics tree is small and known; family data stays in the platform's region (§8); a warehouse can be added when a second instance needs cross-instance reporting |
 | ADR-10 | **Campaign audiences are resolved by the platform's saves and location, never uploaded lists** | (a) providers upload contacts; (b) audiences from the platform's data only | (b): consent lives on the platform (R4, R11); no provider list ever enters the machine |

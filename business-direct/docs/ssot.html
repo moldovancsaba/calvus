@@ -178,6 +178,26 @@ implementation of the enumerations and state machines below.</em></p>
 <td>social publishing, approvals</td>
 </tr>
 <tr>
+<td><strong>Propensity score</strong></td>
+<td>0–100 per provider from the card (e-mail, phone, trial, session, announcement, image, verified fields, unclaimed flag) and events (replied, applied, thread); orders the sequence and the call list (R22)</td>
+<td>providers table, sequences</td>
+</tr>
+<tr>
+<td><strong>Anchor</strong></td>
+<td>the week's one piece per neighbourhood × activity, cut into a Reel, a carousel, a story, a digest item and a page update</td>
+<td>social publishing</td>
+</tr>
+<tr>
+<td><strong>Media adapter</strong></td>
+<td>one of video, image, audio, clips — a service behind one interface; clips (from real footage) is v1, the rest later</td>
+<td>media department</td>
+</tr>
+<tr>
+<td><strong>Holdout</strong></td>
+<td>a neighbourhood where the content engine is off for the experiment's weeks; the comparable treatment neighbourhood has it on</td>
+<td>social anchors, economics</td>
+</tr>
+<tr>
 <td><strong>Recap</strong></td>
 <td>the weekly intelligence screen: what moved, by department, the market radar, what needs the operator (D23)</td>
 <td>intelligence</td>
@@ -352,6 +372,21 @@ implementation of the enumerations and state machines below.</em></p>
 <td><code>S.comments</code>, created when a post is approved</td>
 </tr>
 <tr>
+<td><strong>MediaAdapter</strong></td>
+<td><code>id</code>, <code>name</code>, <code>vendor</code>, <code>state</code> (<code>v1</code> / <code>later</code>), <code>use</code></td>
+<td><code>S.media.adapters</code></td>
+</tr>
+<tr>
+<td><strong>Sending</strong></td>
+<td><code>domain</code>, <code>warmDay</code>, <code>warmDays</code>, <code>dailyCap</code>, <code>bounce</code>, <code>replySla</code></td>
+<td><code>S.sending</code>; per <code>platform_id</code> in production</td>
+</tr>
+<tr>
+<td><strong>Experiment</strong></td>
+<td><code>name</code>, <code>treat</code>, <code>control</code>, <code>weeks</code>, <code>week</code>, <code>state</code></td>
+<td><code>S.experiment</code></td>
+</tr>
+<tr>
 <td><strong>Entitlement</strong></td>
 <td><code>providerId</code>, <code>productId</code>, <code>since</code>, <code>billingRef?</code></td>
 <td><code>S.bought</code></td>
@@ -426,7 +461,7 @@ implementation of the enumerations and state machines below.</em></p>
 </tbody>
 </table></div>
 <h2>5. Decision register</h2>
-<p><a href="decisions.html"><code>04-decisions.md</code></a> holds D1–D27. The ones the engineering documents rest on: D2 (three
+<p><a href="decisions.html"><code>04-decisions.md</code></a> holds D1–D28. The ones the engineering documents rest on: D2 (three
 views), D5 (DiscountDirect sibling), D6 (departments, knowledge layer, human-in-the-loop,
 optional AI, dashboard, integrations), D11 (Your Field first), D14 (two flows), D15
 (post card and pipeline strip), D17 (one page, in-memory state), D18 (sample generated
@@ -506,6 +541,26 @@ PROPOSED.</p>
 <td>R14</td>
 <td>Every enquiry gets a drafted answer within a minute and a sent answer only after the provider's approval; reply time is measured from the enquiry, not from the draft</td>
 <td><code>enquiriesFor</code>, <code>approveEnquiry</code></td>
+</tr>
+<tr>
+<td>R15</td>
+<td>The machine never generates a person or a child; it edits the provider's real photos and generates places, objects, type and motion only</td>
+<td>media department</td>
+</tr>
+<tr>
+<td>R20</td>
+<td>Every generated asset carries a C2PA credential at creation and the platform's disclosure at publish; the credential is kept in the audit snapshot</td>
+<td>post card labels; outbox</td>
+</tr>
+<tr>
+<td>R21</td>
+<td>A provider's real recording beats any generation; the clip engine is the v1 media service; generation fills gaps only</td>
+<td>provider media, social queue</td>
+</tr>
+<tr>
+<td>R22</td>
+<td>A propensity score per provider orders every sequence and the call list; it is recomputed nightly from the card and the events</td>
+<td><code>score()</code>, providers table</td>
 </tr>
 <tr>
 <td>R16</td>
