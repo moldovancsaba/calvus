@@ -47,6 +47,9 @@ instance (`platform_id`). "Measured" means a number in the build log, not a clai
 | BD-1-4 | Pipeline stage machine | only event-driven forward moves (test per row of §4); operator override logged |
 | BD-1-5 | Apply-to-manage → `claim-requests` | needs the platform key (blocked B1); stage *applied* on 2xx |
 | BD-1-6 | Provider view: invitation, today, knowledge | a provider sees its thread, its drafts, edits its files |
+| BD-1-12 | Postal address merge field and template gate; opt-out register; bounce pause | a template without `{postal_address}` cannot be approved (test); bounce ≥ 2 % pauses (test) |
+| BD-1-13 | A family's ask to an unclaimed provider → sales step 2; the family told | stage *contacted* with `by: 'family ask'`; the family's thread shows the notice |
+| BD-1-14 | Stage history in the drawer; `contactKind` on the connector | last three changes with who and why; EU `person` addresses skipped without consent |
 | BD-1-10 | Sending domain per instance with warm-up, cap, bounce guard | the outbox refuses a send past the limits (test); the sales screen shows the state |
 | BD-1-11 | Three-touch sequence ordered by the propensity score | step 2 sends only where a save exists; recipients in score order (test) |
 | BD-1-8 | Provider conversations: inbound (platform message, Resend inbound, Twilio missed call) → `enquiries` → drafted answer → approve / edit → same channel | reply time logged; the family's thread updated (phase 3) |
@@ -74,6 +77,9 @@ instance (`platform_id`). "Measured" means a number in the build log, not a clai
 | BD-4-9 | Propensity score job (ADR-13) | nightly; the sequence and call-list jobs read it; an audit row per change |
 | BD-4-10 | Neighbourhood holdout experiment | two comparable neighbourhoods; read-out replaces "families per post" with a measured rate |
 | BD-4-11 | Cohort LTV by channel; generated-page readiness | assumption → measured at 100 observations; a page publishes only at readiness ≥ 3 of 4 |
+| BD-3-9 | Cap semantics: provider-originated only; consent proof on the row; age band in provider-facing text | digest and alerts do not count (test); the row shows when and where consent was given; no child's name reaches a provider (test) |
+| BD-4-12 | Operator hours, batch approval, earned auto-approval | hours tile from events; one decision approves a week's clips; a department earns auto-approval after four clean weeks and loses it on an edit or a complaint (tests) |
+| BD-4-13 | Capture measured; conversations line in the model | upgrades attributed to a delivered result within 30 days; the plan's MRR follows the conversations price |
 | BD-3-8 | Public neighbourhood newsletter | joinable without an account; cross-recommendation between neighbourhoods; counts in the cap |
 | BD-4-6 | Event log and nightly metrics (`events`, `metrics_daily`, `assumptions`) | every leaf of the metrics tree has an event; a rate flips from assumption to measured at 100 observations (test) |
 | BD-4-7 | Economics screen on real metrics | the prototype's 23 inputs read from `assumptions`; measured ones are read-only and labelled |
@@ -115,7 +121,9 @@ instance (`platform_id`). "Measured" means a number in the build log, not a clai
 
 ## 6. Release scope
 
-**Release 1 (M0–M3, ~10 weeks):** Your Field NYC; provider sales end to end; Instagram and
+**Release 1 (M0–M3, ~10 weeks), re-cut by the audit (Q10) into two halves:** **1a, read-only against the platform** — the sales sequence with the sending guard and postal address, the reply inbox, the provider view (today, conversations, media, knowledge), the content queue with labels, economics on assumptions, the family's preferences by signed link; **1b, when the platform's key and events arrive** — claim requests, campaign audiences from saves, notifications, card flags, sign-up sources, bookings. The presentation says which half is which.
+
+**Release 1 as first planned:** Your Field NYC; provider sales end to end; Instagram and
 Facebook publishing with approval; family digest, alerts and preferences; caps and consent;
 the operator's approval queue as the one gate. **Release 1.1 (M4):** real intelligence,
 the recap, generated pages, dashboards. **Release 2 (M5):** provider campaigns, results,

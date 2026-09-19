@@ -382,6 +382,16 @@ implementation of the enumerations and state machines below.</em></p>
 <td><code>S.sending</code>; per <code>platform_id</code> in production</td>
 </tr>
 <tr>
+<td><strong>OptOut</strong></td>
+<td><code>providerId</code>, <code>kind</code> (<code>not mine</code> / <code>unsubscribed</code> / <code>bounced</code>), <code>at</code></td>
+<td><code>S.optOut</code>; excluded from every sequence</td>
+</tr>
+<tr>
+<td><strong>StageChange</strong></td>
+<td><code>providerId</code>, <code>from</code>, <code>to</code>, <code>by</code> (<code>sequence</code> / <code>reply</code> / <code>family ask</code> / <code>provider</code> / <code>operator</code>), <code>at</code>, <code>reason?</code></td>
+<td><code>S.history</code>; production: <code>events</code></td>
+</tr>
+<tr>
 <td><strong>Experiment</strong></td>
 <td><code>name</code>, <code>treat</code>, <code>control</code>, <code>weeks</code>, <code>week</code>, <code>state</code></td>
 <td><code>S.experiment</code></td>
@@ -405,8 +415,23 @@ implementation of the enumerations and state machines below.</em></p>
 <tbody>
 <tr>
 <td>Family frequency cap</td>
-<td>4 messages / month across every channel</td>
-<td>research §4, <code>rules/consent.md</code></td>
+<td>4 provider-originated messages / month; digest and alerts on preference</td>
+<td>research §4, D30, <code>rules/consent.md</code></td>
+</tr>
+<tr>
+<td>Postal address</td>
+<td><code>{postal_address}</code> merge field per <code>platform_id</code>, required in every provider e-mail; the gate blocks a template without it</td>
+<td>CAN-SPAM, D30, ask #15</td>
+</tr>
+<tr>
+<td>Earned auto-approval</td>
+<td>four clean weeks per department; reminders earned by default (the booking is the consent)</td>
+<td>D30</td>
+</tr>
+<tr>
+<td>Conversations line</td>
+<td>economics input; 0 = bundled</td>
+<td>D21, D30</td>
 </tr>
 <tr>
 <td>Digest day and time</td>
@@ -461,7 +486,7 @@ implementation of the enumerations and state machines below.</em></p>
 </tbody>
 </table></div>
 <h2>5. Decision register</h2>
-<p><a href="decisions.html"><code>04-decisions.md</code></a> holds D1–D29. The ones the engineering documents rest on: D2 (three
+<p><a href="decisions.html"><code>04-decisions.md</code></a> holds D1–D30. The ones the engineering documents rest on: D2 (three
 views), D5 (DiscountDirect sibling), D6 (departments, knowledge layer, human-in-the-loop,
 optional AI, dashboard, integrations), D11 (Your Field first), D14 (two flows), D15
 (post card and pipeline strip), D17 (one page, in-memory state), D18 (sample generated
@@ -489,7 +514,7 @@ PROPOSED.</p>
 </tr>
 <tr>
 <td>R3</td>
-<td>A family receives at most the cap, across all channels and all providers</td>
+<td>A family receives at most 4 provider-originated messages a month (campaigns, texts) across all providers; the platform's digest and alerts follow her switches and do not count (D30)</td>
 <td>production: Redis counter per family per month (ADR-3)</td>
 </tr>
 <tr>
@@ -519,8 +544,8 @@ PROPOSED.</p>
 </tr>
 <tr>
 <td>R9</td>
-<td>A pipeline stage moves forward automatically only on an event (e-mail sent, reply received, application submitted); backwards only by a person</td>
-<td><code>sendInvitation</code>, <code>approveReply</code>, drawer chips</td>
+<td>A pipeline stage moves forward automatically only on an event (e-mail sent, reply received, application submitted, a family's ask); a person may move any stage in either direction and every move is logged with who and why (D30)</td>
+<td><code>setStage</code>, <code>S.history</code>, drawer chips</td>
 </tr>
 <tr>
 <td>R10</td>
@@ -529,7 +554,7 @@ PROPOSED.</p>
 </tr>
 <tr>
 <td>R11</td>
-<td>A campaign reaches only families who saved the provider or are nearby with a child in the age range, by their preferences, under the cap; the provider approves the copy, never the list</td>
+<td>A campaign reaches only families who saved the provider, or who are nearby with a child in the age range <strong>and</strong> turned "new provider nearby" on, by their preferences, under the cap; the card shows the reachable count; the provider approves the copy, never the list (D30)</td>
 <td><code>campaignsFor</code>, <code>campaignCard</code></td>
 </tr>
 <tr>
@@ -549,8 +574,8 @@ PROPOSED.</p>
 </tr>
 <tr>
 <td>R20</td>
-<td>Every generated asset carries a C2PA credential at creation and the platform's disclosure at publish; the credential is kept in the audit snapshot</td>
-<td>post card labels; outbox</td>
+<td>Every generated asset carries a C2PA credential at creation and the platform's disclosure at publish; the credential is kept in the audit snapshot. An AI-drafted message a person did not edit carries the market's disclosure line where required and is logged either way (D30)</td>
+<td>post card labels; enquiry sent line; outbox</td>
 </tr>
 <tr>
 <td>R21</td>
@@ -559,8 +584,23 @@ PROPOSED.</p>
 </tr>
 <tr>
 <td>R22</td>
-<td>A propensity score per provider orders every sequence and the call list; it is recomputed nightly from the card and the events</td>
-<td><code>score()</code>, providers table</td>
+<td>A propensity score per provider orders every sequence and the call list; recomputed nightly from the card and the events: +15 when a family saved or asked, −40 after "not my program", −20 after a bounce, 0 and excluded after unsubscribe (D30)</td>
+<td><code>score()</code>, <code>S.optOut</code></td>
+</tr>
+<tr>
+<td>R23</td>
+<td>The outbox refuses any send past the sending domain's warm-up cap; a bounce rate ≥ 2 % pauses the sequence and alerts; recipients are paced at the daily cap (D30)</td>
+<td><code>sendInvitation</code>, <code>S.sending</code></td>
+</tr>
+<tr>
+<td>R24</td>
+<td>A child appears to a provider as an age band ("a child of 6"); the name is shown only in the family's own view; enquiry and campaign texts to providers never carry a child's name (D30; counsel ask #13)</td>
+<td><code>enquiryCard</code></td>
+</tr>
+<tr>
+<td>R25</td>
+<td>Approvals may be batched (one decision for a week's real-footage clips) and a department may earn auto-approval after four clean weeks (no edits, no complaints); every auto-sent message is logged and the family can stop it (D30)</td>
+<td><code>approveClips</code>, <code>S.auto</code></td>
 </tr>
 <tr>
 <td>R16</td>
@@ -579,8 +619,8 @@ PROPOSED.</p>
 </tr>
 <tr>
 <td>R19</td>
-<td>The upgrade card appears only when a provider's delivered value exceeds the product's annual price</td>
-<td>provider results (P8)</td>
+<td>The upgrade card appears when a provider's delivered value exceeds the cheapest product's annual price, or after 60 days managing with the honest delivered number (D30)</td>
+<td>provider today</td>
 </tr>
 <tr>
 <td>R13</td>

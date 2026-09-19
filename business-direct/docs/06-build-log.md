@@ -168,3 +168,30 @@ console kept one error from a load before the fix — `score` used before its de
 which moved the definition up). At 1440 — social anchors "Swimming in Upper West Side ·
 Gymnastics in Upper East Side · Soccer in Brooklyn", provider media: `scrollWidth` 1440.
 `python3 check.py` → `GATE: CLEAN` (exit 0).
+
+## Round 7 — 2026-09-19 — the audit implemented (D30)
+
+**Built** (`assets/app.js?v=9`). Q1 cap copy and rule (`rules/consent.md`, preferences,
+campaign cards); Q2 `{postal_address}` in the invitation footer, the provider's received
+e-mail, and a gate line on the sequence card (address · opt-out · recipients after
+opt-outs); Q3 reachable nearby = 30 % opted in; Q4 an ask to an unclaimed provider creates
+the "a family asked" sales card, moves the provider to *contacted* by `family ask`, and the
+family's thread says the provider was told; Q5 R23 in `sendInvitation` (bounce ≥ 2 % blocks,
+recipients paced at the daily cap, opt-outs excluded), the R19 60-day floor line, the
+disclosure line on an unedited AI answer; Q6 score signals and `S.optOut` ("not my program"
+excludes); Q7 `S.approvalsMade` → an operator-hours tile, *Approve all clips from real
+footage* batch button, the FAQ department's "week 1 of 4" earned auto-approval and reminders
+marked earned; Q8 capture measured on the avid-family tile; Q9 providers see "a child of 6";
+Q11 `setStage` writes `S.history`, the drawer lists the last three moves and any opt-out,
+the SMS row shows the consent proof; Q12 the `convPrice` input feeds the plan's MRR.
+
+**Measured** (app browser pane, 2026-09-19, 390 × 844): sales card shows the three gate
+badges; the family's ask to an unclaimed provider produced the sales card, the *contacted*
+stage with `family ask` in the drawer history and the notice in her thread; the invitation
+went to "130 providers over 3 days"; enquiry heads read "Priya · a child of 6"; the sent
+line carries the disclosure; batch approval scheduled 3 clips in one click; a purchase after
+a campaign showed "capture measured: 1 of 1"; the conversations input at 99 changed the
+plan's note; 24 inputs; `scrollWidth` 390 on every screen, every control ≥ 44 px, 0 errors
+on a fresh load. Two slips caught by the browser before commit: a line comment that
+swallowed the rest of a statement (`list is not defined`) and a signed shift that made a
+sample audience negative (−20 nearby) — both fixed. `python3 check.py` → `GATE: CLEAN`.

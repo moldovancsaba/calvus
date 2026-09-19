@@ -117,13 +117,18 @@ from its own events, every week:</p>
 <p><code>cost = e-mailed × touches × cost per touch + phone-only × cost per call + approvals ×
 operator minutes ÷ 60 × operator rate + tooling × 3 months</code></p>
 <p>Defaults: 3 touches at $0.05, $5 per call task, 2 operator minutes per approval at $40/h,
-$150/month tooling (sending domain, warm-up, enrichment). <strong>CAC (managing)</strong> = cost ÷ new
+$150/month tooling (sending domain, warm-up, enrichment). <strong>Operator hours</strong> are the
+dominant cost (audit A10): the screen counts every approval and shows the hours; batch
+approval and earned auto-approval (R25) are the levers that bring them down. <strong>CAC (managing)</strong> = cost ÷ new
 managing providers; <strong>CAC (upgraded)</strong> = cost ÷ new paying providers.</p>
 <h3>2.3 Lifetime value</h3>
 <p><code>contribution = ARPA × gross margin</code> · <code>LTV = contribution ÷ monthly churn</code> ·
 <code>payback = CAC ÷ contribution</code> · <strong>healthy when LTV : CAC ≥ 3 and payback ≤ 12 months</strong>.</p>
 <p>Defaults: ARPA $49/month (the platform's three products at sample prices: $49, $29,
-$149/season), margin 80 %, churn 5 %/month (SMB SaaS range 3–7 %, research II §2.2).</p>
+$149/season), margin 80 %, churn 5 %/month (SMB SaaS range 3–7 %, research II §2.2).
+A <strong>conversations line</strong> input (default 0 = bundled per D21; Yelp Receptionist sells the
+same thing at $99) adds revenue per <em>managing</em> provider to the plan's MRR (Q12) — the
+owner's pricing decision is one number on the screen.</p>
 <h3>2.4 What the defaults say (the first data-driven finding)</h3>
 <p>With the defaults, one quarter of outbound to the current catalogue yields about 2 managing
 and 0.6 upgraded providers for ~$720 — <strong>CAC (upgraded) ≈ $1,200 against an LTV of $784:
@@ -149,7 +154,9 @@ ways, and the plan should say which:</p>
   enrolment rate × provider revenue per enrolment. Defaults 2 × 40 % × <strong>$1,016</strong> (US
   families' average spend per child per sport, 2024 — <a href="https://projectplay.org/news/2025/2/24/project-play-survey-family-spending-on-youth-sports-rises-46-over-five-years">Project Play</a>) ≈ <strong>$813/year</strong>.</li>
 <li><strong>Marketing value of an avid family to the platform</strong> = the platform's capture of that
-  value (upgrades bought because the machine delivered families; 5 % assumed) + the
+  value — <strong>capture is measured</strong> as upgrades bought within 30 days of a delivered result
+  (a campaign sent, an enquiry answered) ÷ all upgrades (audit A11, Q8); 5 % assumed until
+  measured + the
   referral value (0.3 new families per avid family per year × the share who become avid ×
   their capture). Defaults ≈ <strong>$42/year</strong>.</li>
 <li><strong>Expected value of a new family</strong> = P(avid) × avid value ≈ $6 at the defaults — the

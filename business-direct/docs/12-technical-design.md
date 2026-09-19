@@ -61,7 +61,9 @@ comments         { _id, platform_id, post_id, provider_id, channel, external_id,
 events           { _id, platform_id, at, name, provider_id?, family_id?, draft_id?, campaign_id?, props{} }   # append-only, ADR-11
 metrics_daily    { platform_id, day, cac_managing, cac_upgraded, ltv, payback, avid_families, avid_value, content_cpa, next_dollar[], rates{} }
 assumptions      { platform_id, key, value, source: 'measured'|'benchmark'|'assumption', updated_by, updated_at }
-sending          { platform_id, domain, warm_day, warm_days, daily_cap, bounce_rate, reply_sla_hours }
+sending          { platform_id, domain, warm_day, warm_days, daily_cap, bounce_rate, reply_sla_hours, postal_address }
+opt_outs         { platform_id, provider_id, kind: 'not_mine'|'unsubscribed'|'bounced', at, source }   # append-only
+auto_approval    { platform_id, owner, department, clean_weeks, earned_at?, revoked_at? }
 experiments      { platform_id, name, treat_area, control_area, weeks, started_at, state, readout? }
 media_assets     { _id, platform_id, provider_id?, adapter, generated: bool, credential: C2PA, blob_url, used_in[] }
 ```
@@ -87,11 +89,12 @@ scheduled` with `ai=false` and an `approvals` row carrying the diff. Prototype:
 message); `waiting → skipped`; radar notes `waiting → filed`. Prototype: `approveSeq`,
 `approveReply`.
 
-**Pipeline stage** — forward on events only (R9):
+**Pipeline stage** — forward automatically on events; any move by a person is allowed and logged (R9, D30). Every change writes `stage.changed` with `by` and `reason`; the drawer shows the last three:
 
 | From | To | Event | Prototype |
 |---|---|---|---|
 | identified | contacted | first sequence message sent | `sendInvitation` |
+| identified | contacted | a family's ask to an unclaimed provider becomes sales step 2 (Q4) | `data-ask` |
 | contacted | replied | inbound message from the provider | `sendInvitation` (sample replies) |
 | replied | applied | claim request submitted (platform `claim-requests`) or a "yes" reply confirmed by the operator | `approveReply` |
 | applied | managing | platform confirms the claim | `apply` (provider view) |
@@ -129,7 +132,8 @@ cannot turn SMS on without a consent row.
 | `entitlements` | webhook-driven | Stripe events → entitlements → stage → card flag through the connector |
 | `clips` | on upload | run `MediaAdapter.clips`; each clip becomes a post draft with `media.kind = 'real'` |
 | `score` | nightly 02:30 | propensity per provider → `provider_state.score`; the sequence and call-list jobs read it (ADR-13) |
-| `sending-guard` | before every send | refuse when past the warm-up cap or the bounce limit; alert |
+| `sending-guard` | before every send | refuse when past the warm-up cap; pause the sequence at bounce ≥ 2 %; pace at the daily cap; block a provider template without `{postal_address}` (R23, Q2) |
+| `auto-approve` | on draft | a department with four clean weeks sends without a person (R25); logged; the family's Stop cancels |
 | `metrics` | nightly 02:00 | roll `events` into `metrics_daily`; replace an assumption with a measured rate once ≥ 100 observations exist (R16) |
 | `retention` | nightly | drafts 90 days after final state; messages 24 months |
 
@@ -145,6 +149,7 @@ interface PlatformConnector {
   savesFor(providerId): Promise<FamilyRef[]>;               // keyed — campaign audience (ADR-10)
   familiesNear(geo, ageRange): Promise<FamilyRef[]>;        // keyed — nearby audience
   setCardFlag(providerId, flag: 'featured'|'camp'|'profile', on): Promise<void>;  // keyed — upgrades
+  // provider records carry contactKind: 'role' | 'person' (Q11); EU instances skip 'person' addresses without consent
 }
 interface MediaAdapter {   // D28, ADR-12
   clips(recording, listing): Promise<Clip[]>;          // v1: captions, listing link, C2PA on each clip

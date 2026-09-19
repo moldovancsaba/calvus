@@ -54,7 +54,7 @@ A campaign is a provider's message to families, built from the provider's own ca
 
 | Kind | Built when | Default audience | Default channels |
 |---|---|---|---|
-| Trial class | the card has a trial policy | families who saved the provider + nearby families with a child in the age range | e-mail + push; SMS only to families who consented for this provider |
+| Trial class | the card has a trial policy | families who saved the provider + nearby families with a child in the age range **who turned "new provider nearby" on** (Q3) | e-mail + push; SMS only to families who consented for this provider |
 | Open spots | the card has a next session | families who saved the provider | push |
 | Announcement | the card has an announcement | saved + nearby | e-mail |
 | Registration | a session's registration is open | saved | e-mail + push |
@@ -73,7 +73,11 @@ session, trial policy, ages); the provider approves, edits or skips; the answer 
 the same channel and into the family's inbox thread. Reply time is measured from the
 enquiry to the sent answer — the metric the provider sees first. A family asks from her
 saved providers; the machine never lets a provider message a family who has not written
-first or saved it (R11). On the platform side, a **comment or DM** on a published post gets
+first or saved it (R11). **An enquiry to a provider that has not claimed its page** does
+not vanish: it becomes the sales sequence's strongest touch — "a family asked about you,
+claim your page and answer her in one click" — the provider moves to *contacted*, and the
+family is told the provider has been notified (Q4). Providers see a child as an age band
+("a child of 6"); the name appears only in the family's own view (R24). On the platform side, a **comment or DM** on a published post gets
 a drafted reply that links to the listing; the operator approves it.
 
 ## 5. Upgrades and money (D21: bundled base, provider-bought upgrades)
@@ -99,17 +103,22 @@ records the entitlement. No discounting logic — that is DiscountDirect's domai
   provider nearby (push), texts from providers (SMS). Default: picks and alerts on.
 - **Consent**: SMS only with written consent per provider, stored verbatim with its time
   and source (TCPA). E-mail and push run on preference.
-- **Cap**: 4 messages a month per family across everything — digest, alerts, campaigns,
-  texts. Checked when a message is queued and again when it is sent; the digest counts as
-  one.
+- **Cap**: 4 **provider-originated** messages a month per family — campaigns and texts,
+  across all providers. The platform's own digest and alerts run on the family's switches
+  and do not count (D30; the audit found the earlier wording was consumed by the digest
+  alone). Checked when a message is queued and again when it is sent.
 - **Stop**: one tap turns every channel off and cancels what is queued, in one transaction.
 - **Why you got this** on every message: the provider she saved, the channel, the count.
 
 ## 7. Providers: the law on the sales side
 
 US (first market): commercial e-mail to a business needs no prior consent (CAN-SPAM);
-every message carries a physical address and a working opt-out honoured within 10 business
-days — the machine honours it within one. Hungary (reference): corporate addresses without
+every message carries the platform's **registered postal address** (a merge field, checked
+by the gate — Q2; ask #15 for the address itself) and a working opt-out honoured within 10
+business days — the machine honours it within one. A "not my program" or an unsubscribe
+excludes the address from every sequence; a bounce lowers its score (Q6). The sending
+domain is paced and guarded: warm-up, a daily cap, and a bounce rate above 2 % pauses the
+sequence (R23). Hungary (reference): corporate addresses without
 consent; a named person's address needs consent — the reference connector flags which is
 which. SMS to providers is not used.
 
@@ -132,6 +141,28 @@ where they exist and on documented assumptions where they do not, saying which (
 sequence cadence, the content slots and the upgrade pitch follow the numbers (R17–R19).
 The model and its events are `16-analytics-and-unit-economics.md`.
 
+## 8d. What the audit changed (D30)
+
+| Audit finding | Rule / behaviour now |
+|---|---|
+| A2 the cap consumed by the digest | cap = 4 provider-originated messages; digest and alerts on preference (§6) |
+| A3 no postal address | `{postal_address}` in every provider e-mail; the sequence card shows the gate check |
+| A4 nearby audience vs preference | reachable nearby = opted in; the card shows the reachable count (§4) |
+| A5 enquiries to unclaimed providers lost | the ask becomes sales step 2 and moves the provider to *contacted* (§4b) |
+| A6 R9 wording | forward automatically on events; a person may move any stage, logged with who and why |
+| A7 R19 on sample trials | R19 keeps the pitch rule with a 60-day floor and the honest number |
+| A8 score signals | +15 saved or asked, −40 not my program, −20 bounce, unsubscribed excluded |
+| A9 no sending-guard rule | R23 |
+| A10 operator time undercounted | operator hours tile; batch approval of real-footage clips; earned auto-approval per department after four clean weeks (reminders earned; FAQ answers week 1 of 4) — every auto-sent message still logged and stoppable |
+| A11 capture undefined | capture = upgrades within 30 days of a delivered result ÷ upgrades; measured on the economics screen |
+| A12 consent proof invisible | the preference row shows when and where consent was given |
+| A13 children's data | R24 age band in provider-facing text; counsel question ask #13 |
+| A14 disclosure on drafted messages | R20 extended: an AI-drafted, unedited answer carries the market's disclosure and is logged |
+| A17 EU named addresses | connector `contactKind`; EU instances skip `person` addresses without consent |
+| A18 stage history | logged per change; the drawer shows the last three |
+| S1/T1 Sawyer | positioning: families, not software — a Sawyer connector is a later adapter, never a competing booking tool |
+| W1/O4 the conversations line | an economics input: 0 = bundled (D21), 99 = the incumbent's price; the plan's MRR follows it |
+
 ## 8c. What the research changed (D28)
 
 | Research finding | Rule / behaviour now in the system |
@@ -149,7 +180,7 @@ The model and its events are `16-analytics-and-unit-economics.md`.
 
 ## 9. What the machine never does
 
-Sends without an approval or a preference; answers a family without the provider's approval; texts without consent; sends past the domain's warm-up cap or bounce limit; publishes generated media unlabelled; generates a person or a child; exceeds the cap; deletes
+Sends without an approval or a preference; answers a family without the provider's approval; texts without consent; sends past the domain's warm-up cap or bounce limit (R23); sends a provider e-mail without the postal address; shows a child's name to a provider (R24); publishes generated media unlabelled; generates a person or a child; exceeds the cap; deletes
 a provider's stage history; discounts; publishes a generated page with fewer than three
 providers; speaks as an AI to a family or a provider — the product speaks as the platform
 or the provider.

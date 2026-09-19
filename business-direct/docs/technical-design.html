@@ -203,7 +203,9 @@ comments         { _id, platform_id, post_id, provider_id, channel, external_id,
 events           { _id, platform_id, at, name, provider_id?, family_id?, draft_id?, campaign_id?, props{} }   # append-only, ADR-11
 metrics_daily    { platform_id, day, cac_managing, cac_upgraded, ltv, payback, avid_families, avid_value, content_cpa, next_dollar[], rates{} }
 assumptions      { platform_id, key, value, source: 'measured'|'benchmark'|'assumption', updated_by, updated_at }
-sending          { platform_id, domain, warm_day, warm_days, daily_cap, bounce_rate, reply_sla_hours }
+sending          { platform_id, domain, warm_day, warm_days, daily_cap, bounce_rate, reply_sla_hours, postal_address }
+opt_outs         { platform_id, provider_id, kind: 'not_mine'|'unsubscribed'|'bounced', at, source }   # append-only
+auto_approval    { platform_id, owner, department, clean_weeks, earned_at?, revoked_at? }
 experiments      { platform_id, name, treat_area, control_area, weeks, started_at, state, readout? }
 media_assets     { _id, platform_id, provider_id?, adapter, generated: bool, credential: C2PA, blob_url, used_in[] }
 </code></pre>
@@ -222,7 +224,7 @@ scheduled</code> with <code>ai=false</code> and an <code>approvals</code> row ca
 <p><strong>Draft (sequence, reply)</strong> — <code>waiting → sent</code> (sequence: all steps enqueued; reply: one
 message); <code>waiting → skipped</code>; radar notes <code>waiting → filed</code>. Prototype: <code>approveSeq</code>,
 <code>approveReply</code>.</p>
-<p><strong>Pipeline stage</strong> — forward on events only (R9):</p>
+<p><strong>Pipeline stage</strong> — forward automatically on events; any move by a person is allowed and logged (R9, D30). Every change writes <code>stage.changed</code> with <code>by</code> and <code>reason</code>; the drawer shows the last three:</p>
 <div class="tbl"><table>
 <thead>
 <tr>
@@ -238,6 +240,12 @@ message); <code>waiting → skipped</code>; radar notes <code>waiting → filed<
 <td>contacted</td>
 <td>first sequence message sent</td>
 <td><code>sendInvitation</code></td>
+</tr>
+<tr>
+<td>identified</td>
+<td>contacted</td>
+<td>a family's ask to an unclaimed provider becomes sales step 2 (Q4)</td>
+<td><code>data-ask</code></td>
 </tr>
 <tr>
 <td>contacted</td>
@@ -355,7 +363,12 @@ cannot turn SMS on without a consent row.</p>
 <tr>
 <td><code>sending-guard</code></td>
 <td>before every send</td>
-<td>refuse when past the warm-up cap or the bounce limit; alert</td>
+<td>refuse when past the warm-up cap; pause the sequence at bounce ≥ 2 %; pace at the daily cap; block a provider template without <code>{postal_address}</code> (R23, Q2)</td>
+</tr>
+<tr>
+<td><code>auto-approve</code></td>
+<td>on draft</td>
+<td>a department with four clean weeks sends without a person (R25); logged; the family's Stop cancels</td>
 </tr>
 <tr>
 <td><code>metrics</code></td>
@@ -379,6 +392,7 @@ cannot turn SMS on without a consent row.</p>
   savesFor(providerId): Promise&lt;FamilyRef[]&gt;;               // keyed — campaign audience (ADR-10)
   familiesNear(geo, ageRange): Promise&lt;FamilyRef[]&gt;;        // keyed — nearby audience
   setCardFlag(providerId, flag: 'featured'|'camp'|'profile', on): Promise&lt;void&gt;;  // keyed — upgrades
+  // provider records carry contactKind: 'role' | 'person' (Q11); EU instances skip 'person' addresses without consent
 }
 interface MediaAdapter {   // D28, ADR-12
   clips(recording, listing): Promise&lt;Clip[]&gt;;          // v1: captions, listing link, C2PA on each clip

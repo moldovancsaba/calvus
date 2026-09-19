@@ -41,7 +41,9 @@ from its own events, every week:
 operator minutes ÷ 60 × operator rate + tooling × 3 months`
 
 Defaults: 3 touches at $0.05, $5 per call task, 2 operator minutes per approval at $40/h,
-$150/month tooling (sending domain, warm-up, enrichment). **CAC (managing)** = cost ÷ new
+$150/month tooling (sending domain, warm-up, enrichment). **Operator hours** are the
+dominant cost (audit A10): the screen counts every approval and shows the hours; batch
+approval and earned auto-approval (R25) are the levers that bring them down. **CAC (managing)** = cost ÷ new
 managing providers; **CAC (upgraded)** = cost ÷ new paying providers.
 
 ### 2.3 Lifetime value
@@ -51,6 +53,9 @@ managing providers; **CAC (upgraded)** = cost ÷ new paying providers.
 
 Defaults: ARPA $49/month (the platform's three products at sample prices: $49, $29,
 $149/season), margin 80 %, churn 5 %/month (SMB SaaS range 3–7 %, research II §2.2).
+A **conversations line** input (default 0 = bundled per D21; Yelp Receptionist sells the
+same thing at $99) adds revenue per *managing* provider to the plan's MRR (Q12) — the
+owner's pricing decision is one number on the screen.
 
 ### 2.4 What the defaults say (the first data-driven finding)
 
@@ -80,7 +85,9 @@ The screen makes each of these one input away.
   enrolment rate × provider revenue per enrolment. Defaults 2 × 40 % × **$1,016** (US
   families' average spend per child per sport, 2024 — [Project Play](https://projectplay.org/news/2025/2/24/project-play-survey-family-spending-on-youth-sports-rises-46-over-five-years)) ≈ **$813/year**.
 - **Marketing value of an avid family to the platform** = the platform's capture of that
-  value (upgrades bought because the machine delivered families; 5 % assumed) + the
+  value — **capture is measured** as upgrades bought within 30 days of a delivered result
+  (a campaign sent, an enquiry answered) ÷ all upgrades (audit A11, Q8); 5 % assumed until
+  measured + the
   referral value (0.3 new families per avid family per year × the share who become avid ×
   their capture). Defaults ≈ **$42/year**.
 - **Expected value of a new family** = P(avid) × avid value ≈ $6 at the defaults — the

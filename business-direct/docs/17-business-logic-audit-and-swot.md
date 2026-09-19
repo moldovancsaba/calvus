@@ -123,7 +123,13 @@ upgrade business at today's catalogue size.
 - **T2 + A9 → the sending guard is a rule, not a card** (R23).
 - **T3 + A2 + A3 + A13 → a legal pass before the first send**: address, cap semantics, children's data, per-market disclosure.
 
-## 4. Recommendations (PROPOSED; each becomes a D-number)
+## 4. Recommendations — adopted and implemented as D30 (2026-09-19)
+
+The owner adopted all twelve. Each row's implementation is in the prototype (`app.js?v=9`),
+business logic §8d, the SSOT (R3, R9, R11, R19, R20, R22 revised; R23–R25 new), the
+technical design and the plan (BD-1-12–14, BD-3-9, BD-4-12–13). Two halves stay with the
+platform: A15 (reviews and prices on the cards — ask #12) and A16's keyed endpoints (ask
+#5); the postal address itself is ask #15.
 
 | # | Recommendation | Closes |
 |---|---|---|

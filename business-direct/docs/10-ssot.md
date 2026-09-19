@@ -80,6 +80,8 @@ implementation of the enumerations and state machines below.*
 | **Comment** | `id`, `postId`, `providerId`, `channel`, `from`, `text`, `draft`, `state`, `ai` | `S.comments`, created when a post is approved |
 | **MediaAdapter** | `id`, `name`, `vendor`, `state` (`v1` / `later`), `use` | `S.media.adapters` |
 | **Sending** | `domain`, `warmDay`, `warmDays`, `dailyCap`, `bounce`, `replySla` | `S.sending`; per `platform_id` in production |
+| **OptOut** | `providerId`, `kind` (`not mine` / `unsubscribed` / `bounced`), `at` | `S.optOut`; excluded from every sequence |
+| **StageChange** | `providerId`, `from`, `to`, `by` (`sequence` / `reply` / `family ask` / `provider` / `operator`), `at`, `reason?` | `S.history`; production: `events` |
 | **Experiment** | `name`, `treat`, `control`, `weeks`, `week`, `state` | `S.experiment` |
 | **Entitlement** | `providerId`, `productId`, `since`, `billingRef?` | `S.bought` |
 
@@ -87,7 +89,10 @@ implementation of the enumerations and state machines below.*
 
 | Setting | Value | Why |
 |---|---|---|
-| Family frequency cap | 4 messages / month across every channel | research §4, `rules/consent.md` |
+| Family frequency cap | 4 provider-originated messages / month; digest and alerts on preference | research §4, D30, `rules/consent.md` |
+| Postal address | `{postal_address}` merge field per `platform_id`, required in every provider e-mail; the gate blocks a template without it | CAN-SPAM, D30, ask #15 |
+| Earned auto-approval | four clean weeks per department; reminders earned by default (the booking is the consent) | D30 |
+| Conversations line | economics input; 0 = bundled | D21, D30 |
 | Digest day and time | Sunday 18:00 | research §4 |
 | Generated-page threshold | ≥ 3 providers | no thin pages, research §5 |
 | Invitation sequence | three touches 3–4 days apart (invitation → "a family saved you" → reminder), then the call task for phone-only providers (D28) | research II §5.1 |
@@ -101,7 +106,7 @@ implementation of the enumerations and state machines below.*
 
 ## 5. Decision register
 
-`04-decisions.md` holds D1–D29. The ones the engineering documents rest on: D2 (three
+`04-decisions.md` holds D1–D30. The ones the engineering documents rest on: D2 (three
 views), D5 (DiscountDirect sibling), D6 (departments, knowledge layer, human-in-the-loop,
 optional AI, dashboard, integrations), D11 (Your Field first), D14 (two flows), D15
 (post card and pipeline strip), D17 (one page, in-memory state), D18 (sample generated
@@ -114,25 +119,28 @@ PROPOSED.
 |---|---|---|
 | R1 | Nothing leaves the machine without a person's approval — a post, a sequence, a reply, a digest change | approval queue; production: the outbox only takes `approved` drafts |
 | R2 | Every message names why it was sent and how to stop it | post link, SMS "why you got this", e-mail footer |
-| R3 | A family receives at most the cap, across all channels and all providers | production: Redis counter per family per month (ADR-3) |
+| R3 | A family receives at most 4 provider-originated messages a month (campaigns, texts) across all providers; the platform's digest and alerts follow her switches and do not count (D30) | production: Redis counter per family per month (ADR-3) |
 | R4 | SMS to a family only with written consent for that provider; e-mail and push by preference | `family.prefs`, `smsConsent` |
 | R5 | Provider e-mail without prior consent is lawful in the US (CAN-SPAM) but every message carries a working opt-out; a "not my program" reply stops the sequence for that address | `notMine` action |
 | R6 | A generated page exists only where ≥ 3 providers exist | `genPages()` |
 | R7 | Every non-catalogue figure is labelled sample until a real source feeds it | tiles' third line |
 | R8 | The machine reads the knowledge files before every draft; the operator can read and edit them | knowledge screens |
-| R9 | A pipeline stage moves forward automatically only on an event (e-mail sent, reply received, application submitted); backwards only by a person | `sendInvitation`, `approveReply`, drawer chips |
+| R9 | A pipeline stage moves forward automatically only on an event (e-mail sent, reply received, application submitted, a family's ask); a person may move any stage in either direction and every move is logged with who and why (D30) | `setStage`, `S.history`, drawer chips |
 | R10 | AI is optional per department; with it off, copy is the listing's own text | `S.ai`, `draftCopy` |
-| R11 | A campaign reaches only families who saved the provider or are nearby with a child in the age range, by their preferences, under the cap; the provider approves the copy, never the list | `campaignsFor`, `campaignCard` |
+| R11 | A campaign reaches only families who saved the provider, or who are nearby with a child in the age range **and** turned "new provider nearby" on, by their preferences, under the cap; the card shows the reachable count; the provider approves the copy, never the list (D30) | `campaignsFor`, `campaignCard` |
 | R12 | An upgrade never changes what a family receives — it changes where the provider appears | products |
 | R14 | Every enquiry gets a drafted answer within a minute and a sent answer only after the provider's approval; reply time is measured from the enquiry, not from the draft | `enquiriesFor`, `approveEnquiry` |
 | R15 | The machine never generates a person or a child; it edits the provider's real photos and generates places, objects, type and motion only | media department |
-| R20 | Every generated asset carries a C2PA credential at creation and the platform's disclosure at publish; the credential is kept in the audit snapshot | post card labels; outbox |
+| R20 | Every generated asset carries a C2PA credential at creation and the platform's disclosure at publish; the credential is kept in the audit snapshot. An AI-drafted message a person did not edit carries the market's disclosure line where required and is logged either way (D30) | post card labels; enquiry sent line; outbox |
 | R21 | A provider's real recording beats any generation; the clip engine is the v1 media service; generation fills gaps only | provider media, social queue |
-| R22 | A propensity score per provider orders every sequence and the call list; it is recomputed nightly from the card and the events | `score()`, providers table |
+| R22 | A propensity score per provider orders every sequence and the call list; recomputed nightly from the card and the events: +15 when a family saved or asked, −40 after "not my program", −20 after a bounce, 0 and excluded after unsubscribe (D30) | `score()`, `S.optOut` |
+| R23 | The outbox refuses any send past the sending domain's warm-up cap; a bounce rate ≥ 2 % pauses the sequence and alerts; recipients are paced at the daily cap (D30) | `sendInvitation`, `S.sending` |
+| R24 | A child appears to a provider as an age band ("a child of 6"); the name is shown only in the family's own view; enquiry and campaign texts to providers never carry a child's name (D30; counsel ask #13) | `enquiryCard` |
+| R25 | Approvals may be batched (one decision for a week's real-footage clips) and a department may earn auto-approval after four clean weeks (no edits, no complaints); every auto-sent message is logged and the family can stop it (D30) | `approveClips`, `S.auto` |
 | R16 | The next-dollar ranking runs weekly on measured rates where they exist and on the documented assumption where they do not; the recap says which | `econ()`; `16-analytics…` §4 |
 | R17 | A sequence step is added or removed when its marginal reply rate per touch falls below the cost-per-touch breakeven for two consecutive weeks, inside the 4–7 benchmark | production |
 | R18 | Content slots go to the neighbourhood × activity pairs with the highest families-per-post over four weeks; a new pair gets one slot a week to be measured | production |
-| R19 | The upgrade card appears only when a provider's delivered value exceeds the product's annual price | provider results (P8) |
+| R19 | The upgrade card appears when a provider's delivered value exceeds the cheapest product's annual price, or after 60 days managing with the honest delivered number (D30) | provider today |
 | R13 | The machine never discounts; offers with a price cut are DiscountDirect's domain (D5) | — |
 
 ## 7. Metrics
