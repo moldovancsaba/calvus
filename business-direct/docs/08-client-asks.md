@@ -11,6 +11,7 @@
 | 7 | Access to the platform's own analytics (saves, plan usage, newsletter list size) for the intelligence tiles | today every non-catalogue number is sample |
 | 12 | Does the platform plan review capture and price capture on the cards? (0 reviews, 28 prices on 252 today — the AI-citation lever and the content engine depend on them; audit A15) | generated pages, anchors |
 | 13 | Counsel: which of New York's Child Data Protection Act and COPPA applies to a parent's account describing a child, and what consent the enquiry and campaign texts need (audit A13) | family entity, provider-facing copy |
+| 18 | The policy record for Your Field NYC to be confirmed by ClassScout: audience model (adults per the policy), retention periods, AI disclosure choice, quiet hours — the *Policy* screen lists every field | policy gate |
 | 16 | The platform's privacy policy must describe the digest and alerts before they launch ("we do not yet offer email alerts; if we add them, the preferences you set will be described here") | family digest, alerts |
 | 17 | Campaign audiences and the avid-family definition depend on the account-activity opt-in (saves recorded "only after you explicitly opt in, off by default"): the opted-in share is the real audience — a number only the platform has | campaign cards, economics |
 | 15 | The platform's registered postal address for the provider e-mail footer (CAN-SPAM; the template carries a merge field and the gate blocks a template without it). Not on the site — the published contact is info@classscout.ai | every provider e-mail |

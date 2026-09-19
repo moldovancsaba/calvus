@@ -206,3 +206,22 @@ the platform's policy and terms added.
 **Measured** (390 × 844): inbox header "a child of 5, a child of 9", SMS "your 5-year-old's
 trial", ask "is there a trial for my 5-year-old?", no child's name anywhere in the page
 text (regex check), 0 errors. `python3 check.py` → `GATE: CLEAN`.
+
+## Round 8 — 2026-09-19 — responsible data for every client (D32)
+
+**Built** (`assets/app.js?v=11`). `S.policies` with two instance records (Your Field NYC /
+ClassScout, the Hungarian reference) and `S.instance`; `policyGate()` with seven rows;
+Platform → System → *Policy*: four tiles, the gate table, the ten principles, the record as
+a six-card onboarding checklist with set / missing / placeholder badges, an instance switch;
+the rail shows the number of blocked features; the invitation stops at the gate once with
+the reason and continues as a sample on the second approval; the sequence card's gate line
+reads "postal address missing — blocked in production (ask #15)"; the family inbox shows the
+digest's policy gate; the recap's "needs you" counts blocked features; the top bar names the
+client (ClassScout). The placeholder postal address was removed — the field is empty and
+the gate says so.
+
+**Measured** (390 × 844): policy screen 5 / 7 (provider e-mail and the digest blocked),
+rail count 2, Hungarian instance 3 / 7; the gate line on the sequence; first approval →
+the gate toast, second → "130 providers over 3 days"; digest gate note in the inbox; the
+provider's received e-mail shows the missing-address footer; `scrollWidth` 390, every
+control ≥ 44 px, 0 errors. `python3 check.py` → `GATE: CLEAN`.

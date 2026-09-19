@@ -2,7 +2,8 @@
 
 An automated marketing machine for B2B2C listing platforms — the one-person sales and
 marketing team for a listed business, run by the platform, with the consumer as the
-third role. First client: **Your Field NYC** (getyourfield.com). Sibling of DiscountDirect.
+third role. First client: **ClassScout**, operator of **Your Field NYC** (getyourfield.com);
+built for any client, each with its own responsible-data policy record. Sibling of DiscountDirect.
 Built to the prototyping standard (`PROTOTYPING.md`); this index is the process log.
 
 | Slot | File | What it holds |
@@ -14,7 +15,7 @@ Built to the prototyping standard (`PROTOTYPING.md`); this index is the process 
 | 02 audit | `02-audit.md` | Your Field measured: API, 252 providers, field coverage, site copy; the Hungarian reference instance; the two videos frame by frame; what DiscountDirect provides |
 | 03 sources | `03-sources.md` | What is real (the platform's public data), what is sample, what is inherited |
 | presentation | `bemutato.html` | Standalone, English, on the product's tokens: one sentence, three numbers, the four things to click with previews, what is real, the asks, what comes next |
-| 04 decisions | `04-decisions.md` | D1–D31 |
+| 04 decisions | `04-decisions.md` | D1–D32 |
 | 05 design | `design-system.html` + `../assets/tokens.css` + `../assets/components.css` | **Gate 1 approved (D9)**: tokens and components, one source |
 | 05 layouts | `05-layout-specs.md` + `layouts.html` + `frames/` | **Gate 2 approved (D16)**: platform 1440 / 390, provider 390, family 390 |
 | 06 build log | `06-build-log.md` | Round 1: the prototype; 1b: presentation and package; 2: editors real, tablet measured; 3: phase 2 — campaigns, upgrades, recap; 4: phase 3 — conversations; 5: economics; 6: the research implemented; 7: the audit implemented |
@@ -27,6 +28,8 @@ Built to the prototyping standard (`PROTOTYPING.md`); this index is the process 
 | 13 plan | `13-implementation-plan.md` | seven milestones, 40 issues with a Definition of Done, blocked register, risks, release scope |
 | 14 token map | `14-token-map.md` | tokens and components → GDS + Mantine; contrast computed |
 | 17 audit · SWOT | `17-business-logic-audit-and-swot.md` | Deep audit of the business logic against the rules, the prototype, the catalogue and the research: 18 findings (2 critical, 8 major, 8 minor) with fixes; the SWOT with evidence per item and the cross-reads; twelve PROPOSED recommendations Q1–Q12 |
+| 01e research IV | `01e-research-responsible-data.md` | Responsible data and children's rights: the law by market (COPPA 2025, NY CDPA, California and the states, GDPR Art. 8, DSA Art. 28, the UK Children's Code), the enforcement record, the frameworks (privacy by design, ICO, ISO 27701, NIST, LEGO), the business value of doing it properly |
+| 18 policy framework | `18-responsible-data-policy-framework.md` | Ten principles, the policy record per instance, the gate, onboarding, the client's value, two worked instances, how it generalises to any client (D32) |
 | 16 analytics | `16-analytics-and-unit-economics.md` | CAC / LTV / payback for providers, the marketing value of an avid family, content ROI, the next-dollar rule, the metrics tree, events and attribution, rules R16–R19; what is real vs assumed (D26) |
 
 Rendered by `build.py` (`python3 business-direct/docs/build.py`); gate `python3 business-direct/check.py`
@@ -162,5 +165,14 @@ revision before the digest, ask #16), saves recorded only after an opt-in that i
 default (audiences from opted-in accounts, ask #17), claims an existing feature, no postal
 address published (ask #15 stays open). Audit A19 recorded.
 
-**Next.** Asks #2–8, #10, #12–13, #15–17 — the postal address and the policy revision
-before any send; a pilot provider.
+**2026-09-19 — responsible data for every client (D32).** The owner's directive: the first
+client is ClassScout, the system must serve any client, and children's rights are respected
+whatever the client. Research IV read the law by market, the enforcement record, the
+regulators' and LEGO's frameworks, and the evidence that responsible practice pays. The
+framework: ten principles, one policy record per instance, a gate in the outbox and the
+jobs (R26–R28, ADR-14). Built as the platform's *Policy* screen with two instances (Your
+Field NYC / ClassScout and the Hungarian reference) — the gate today blocks provider e-mail
+(no postal address) and the digest (policy clause), and the sample invitation stops at the
+gate once and explains. Client naming corrected throughout.
+
+**Next.** ClassScout confirms the policy record (ask #18) and closes #15–17; a pilot provider.

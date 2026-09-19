@@ -36,7 +36,7 @@ footer{margin-top:56px;padding-top:18px;border-top:1px solid var(--line);font-si
 </head>
 <body>
 <div class="wrap">
-<nav class="docnav" aria-label="Project documentation"><span class="docnav-brand">business.direct · docs</span><a href="index.html">Overview</a><a href="brief.html">Brief</a><a href="research.html">Research</a><a href="research-2.html">Research II</a><a href="research-3.html">Research III</a><a href="audit.html">Audit</a><a href="sources.html">Sources</a><a href="design-system.html">Design system</a><a href="layouts.html">Layouts</a><a href="05-layout-specs.html">Layout specs</a><a href="decisions.html">Decisions</a><a href="build-log.html">Build log</a><a href="gate.html">Gate</a><a href="client-asks.html">Owner asks</a><a href="business-logic.html">Business logic</a><a href="ssot.html" aria-current=page>SSOT</a><a href="architecture.html">Architecture</a><a href="technical-design.html">Technical design</a><a href="implementation-plan.html">Plan</a><a href="token-map.html">Token map</a><a href="analytics.html">Analytics</a><a href="audit-swot.html">Audit · SWOT</a></nav>
+<nav class="docnav" aria-label="Project documentation"><span class="docnav-brand">business.direct · docs</span><a href="index.html">Overview</a><a href="brief.html">Brief</a><a href="research.html">Research</a><a href="research-2.html">Research II</a><a href="research-3.html">Research III</a><a href="research-4.html">Research IV</a><a href="audit.html">Audit</a><a href="sources.html">Sources</a><a href="design-system.html">Design system</a><a href="layouts.html">Layouts</a><a href="05-layout-specs.html">Layout specs</a><a href="decisions.html">Decisions</a><a href="build-log.html">Build log</a><a href="gate.html">Gate</a><a href="client-asks.html">Owner asks</a><a href="business-logic.html">Business logic</a><a href="ssot.html" aria-current=page>SSOT</a><a href="architecture.html">Architecture</a><a href="technical-design.html">Technical design</a><a href="implementation-plan.html">Plan</a><a href="token-map.html">Token map</a><a href="analytics.html">Analytics</a><a href="audit-swot.html">Audit · SWOT</a><a href="policy-framework.html">Policy framework</a></nav>
 <header><p class="eyebrow">Calvus · business.direct · project documentation</p><h1>business.direct — single source of truth</h1></header>
 <p><em>Written 2026-09-19 after gate 2 and the first build round (D16–D18). Every term the
 other engineering documents use is defined here; where a term is DiscountDirect's, it
@@ -53,8 +53,13 @@ implementation of the enumerations and state machines below.</em></p>
 </thead>
 <tbody>
 <tr>
-<td><strong>Platform</strong></td>
-<td>the listing site that runs the machine — Your Field NYC first (D11); <em>Most én sportolok!</em> a reference instance</td>
+<td><strong>Client</strong></td>
+<td>the company that buys business.direct — <strong>ClassScout</strong> first, operator of Your Field NYC</td>
+<td>policy record</td>
+</tr>
+<tr>
+<td><strong>Platform / instance</strong></td>
+<td>the listing site the machine runs on — Your Field NYC first (D11); <em>Most én sportolok!</em> a reference instance; each instance has its own policy record (D32)</td>
 <td>the Platform view</td>
 </tr>
 <tr>
@@ -392,6 +397,11 @@ implementation of the enumerations and state machines below.</em></p>
 <td><code>S.history</code>; production: <code>events</code></td>
 </tr>
 <tr>
+<td><strong>Policy</strong></td>
+<td><code>platform_id</code>, <code>client</code>, <code>instance</code>, <code>contact</code>, <code>postalAddress</code>, <code>jurisdictions[]</code>, <code>laws[]</code>, <code>audienceModel</code>, <code>ageOfConsent</code>, <code>childData</code>, <code>minors{profiling,targetedAds,quietHours}</code>, <code>channels{}</code>, <code>consentText{}</code>, <code>defaults</code>, <code>cap</code>, <code>optOutSla</code>, <code>aiDisclosure</code>, <code>retention</code>, <code>privacyPolicy{url,lastUpdated,emailAlerts,savesOptIn,childrenNone}</code>, <code>dpia</code></td>
+<td><code>S.policies[instance]</code>; one per instance (D32)</td>
+</tr>
+<tr>
 <td><strong>Experiment</strong></td>
 <td><code>name</code>, <code>treat</code>, <code>control</code>, <code>weeks</code>, <code>week</code>, <code>state</code></td>
 <td><code>S.experiment</code></td>
@@ -486,7 +496,7 @@ implementation of the enumerations and state machines below.</em></p>
 </tbody>
 </table></div>
 <h2>5. Decision register</h2>
-<p><a href="decisions.html"><code>04-decisions.md</code></a> holds D1–D31. The ones the engineering documents rest on: D2 (three
+<p><a href="decisions.html"><code>04-decisions.md</code></a> holds D1–D32. The ones the engineering documents rest on: D2 (three
 views), D5 (DiscountDirect sibling), D6 (departments, knowledge layer, human-in-the-loop,
 optional AI, dashboard, integrations), D11 (Your Field first), D14 (two flows), D15
 (post card and pipeline strip), D17 (one page, in-memory state), D18 (sample generated
@@ -596,6 +606,21 @@ PROPOSED.</p>
 <td>R24</td>
 <td>The machine stores no child's name; a child is an age ("a child of 6") to every party, the family included — the platform's policy does not collect children's data (D30, D31; counsel ask #13)</td>
 <td><code>S.family.kids</code>, <code>enquiryCard</code></td>
+</tr>
+<tr>
+<td>R26</td>
+<td><strong>The policy gate</strong>: a feature runs only when the instance's policy fields it needs are set — provider e-mail needs the postal address; the digest needs the published e-mail clause; audiences need the saves opt-in; SMS needs the consent text; generation needs the disclosure rule; a minor's data needs the audience model and a DPIA (D32)</td>
+<td><code>policyGate()</code>, <code>sending-guard</code>, the <em>Policy</em> screen</td>
+</tr>
+<tr>
+<td>R27</td>
+<td>No profiling and no targeted advertising on a minor's data, on any instance, with or without consent (DSA Art. 28, California, Oregon, Nebraska as the floor)</td>
+<td>policy <code>minors</code></td>
+</tr>
+<tr>
+<td>R28</td>
+<td>High-privacy defaults on every instance: nothing that shares, locates or increases frequency is on until the person turns it on; push respects quiet hours where minors may be present</td>
+<td>policy <code>defaults</code>, <code>family.prefs</code></td>
 </tr>
 <tr>
 <td>R25</td>
@@ -774,6 +799,10 @@ PROPOSED.</p>
 <tr>
 <td><a href="analytics.html"><code>16-analytics-and-unit-economics.md</code></a></td>
 <td>CAC, LTV, avid value, content ROI, next dollar, metrics tree, events, attribution</td>
+</tr>
+<tr>
+<td><a href="policy-framework.html"><code>18-responsible-data-policy-framework.md</code></a></td>
+<td>principles, the policy record, the gate, onboarding, the client's value, worked instances</td>
 </tr>
 <tr>
 <td><a href="ssot.html"><code>10-ssot.md</code></a> (this)</td>

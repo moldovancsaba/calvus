@@ -111,6 +111,23 @@ records the entitlement. No discounting logic — that is DiscountDirect's domai
 - **Stop**: one tap turns every channel off and cancels what is queued, in one transaction.
 - **Why you got this** on every message: the provider she saved, the channel, the count.
 
+## 6b. Responsible data — for every client (D32)
+
+The machine carries one **policy record per instance** and a **gate** that reads it before
+every send and every draft (`18-responsible-data-policy-framework.md`). Ten principles hold
+whatever the client: know who the service is for; a child is an age, never a name (R24); no
+profiling or targeted advertising on a minor's data, not even with consent (R27);
+high-privacy defaults that the person turns on (R28); consent that names channel and sender,
+stored verbatim (R4); zero-party over inferred (R11); who sent it, why, how to stop, and the
+postal address (R2, R23); disclosure when a machine wrote or made it (R20); retention with an
+end date; and the gate is code (R26) — provider e-mail needs the postal address, the digest
+needs the client's policy to describe e-mail alerts, audiences need the saves opt-in, SMS
+needs the consent text, generation needs the disclosure rule, a minor's data needs the
+audience model and a DPIA. The client's value is lower exposure, a better-converting
+audience, trust as the acquisition channel, and auditability: every send carries its policy
+basis. For Your Field NYC (ClassScout) the gate today blocks provider e-mail (no postal
+address, ask #15) and the digest (the policy does not yet describe e-mail alerts, ask #16).
+
 ## 7. Providers: the law on the sales side
 
 US (first market): commercial e-mail to a business needs no prior consent (CAN-SPAM);
@@ -181,7 +198,7 @@ The model and its events are `16-analytics-and-unit-economics.md`.
 
 ## 9. What the machine never does
 
-Sends without an approval or a preference; answers a family without the provider's approval; texts without consent; sends past the domain's warm-up cap or bounce limit (R23); sends a provider e-mail without the postal address; shows a child's name to a provider (R24); publishes generated media unlabelled; generates a person or a child; exceeds the cap; deletes
+Sends without an approval or a preference; answers a family without the provider's approval; texts without consent; sends past the domain's warm-up cap or bounce limit (R23); sends a provider e-mail without the postal address; shows a child's name to anyone (R24); profiles or targets a minor (R27); runs a feature its policy record does not allow (R26); publishes generated media unlabelled; generates a person or a child; exceeds the cap; deletes
 a provider's stage history; discounts; publishes a generated page with fewer than three
 providers; speaks as an AI to a family or a provider — the product speaks as the platform
 or the provider.

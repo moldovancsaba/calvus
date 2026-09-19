@@ -36,7 +36,7 @@ footer{margin-top:56px;padding-top:18px;border-top:1px solid var(--line);font-si
 </head>
 <body>
 <div class="wrap">
-<nav class="docnav" aria-label="Project documentation"><span class="docnav-brand">business.direct · docs</span><a href="index.html">Overview</a><a href="brief.html">Brief</a><a href="research.html">Research</a><a href="research-2.html">Research II</a><a href="research-3.html">Research III</a><a href="audit.html">Audit</a><a href="sources.html">Sources</a><a href="design-system.html">Design system</a><a href="layouts.html">Layouts</a><a href="05-layout-specs.html">Layout specs</a><a href="decisions.html">Decisions</a><a href="build-log.html" aria-current=page>Build log</a><a href="gate.html">Gate</a><a href="client-asks.html">Owner asks</a><a href="business-logic.html">Business logic</a><a href="ssot.html">SSOT</a><a href="architecture.html">Architecture</a><a href="technical-design.html">Technical design</a><a href="implementation-plan.html">Plan</a><a href="token-map.html">Token map</a><a href="analytics.html">Analytics</a><a href="audit-swot.html">Audit · SWOT</a></nav>
+<nav class="docnav" aria-label="Project documentation"><span class="docnav-brand">business.direct · docs</span><a href="index.html">Overview</a><a href="brief.html">Brief</a><a href="research.html">Research</a><a href="research-2.html">Research II</a><a href="research-3.html">Research III</a><a href="research-4.html">Research IV</a><a href="audit.html">Audit</a><a href="sources.html">Sources</a><a href="design-system.html">Design system</a><a href="layouts.html">Layouts</a><a href="05-layout-specs.html">Layout specs</a><a href="decisions.html">Decisions</a><a href="build-log.html" aria-current=page>Build log</a><a href="gate.html">Gate</a><a href="client-asks.html">Owner asks</a><a href="business-logic.html">Business logic</a><a href="ssot.html">SSOT</a><a href="architecture.html">Architecture</a><a href="technical-design.html">Technical design</a><a href="implementation-plan.html">Plan</a><a href="token-map.html">Token map</a><a href="analytics.html">Analytics</a><a href="audit-swot.html">Audit · SWOT</a><a href="policy-framework.html">Policy framework</a></nav>
 <header><p class="eyebrow">Calvus · business.direct · project documentation</p><h1>business.direct — build log</h1></header>
 <p>Every round: what was built, from which decision, what was measured. The gate is
 <a href="gate.html"><code>07-gate.md</code></a>; the standard is <code>PROTOTYPING.md</code> §5–6.</p>
@@ -231,6 +231,22 @@ the platform's policy and terms added.</p>
 <p><strong>Measured</strong> (390 × 844): inbox header "a child of 5, a child of 9", SMS "your 5-year-old's
 trial", ask "is there a trial for my 5-year-old?", no child's name anywhere in the page
 text (regex check), 0 errors. <code>python3 check.py</code> → <code>GATE: CLEAN</code>.</p>
+<h2>Round 8 — 2026-09-19 — responsible data for every client (D32)</h2>
+<p><strong>Built</strong> (<code>assets/app.js?v=11</code>). <code>S.policies</code> with two instance records (Your Field NYC /
+ClassScout, the Hungarian reference) and <code>S.instance</code>; <code>policyGate()</code> with seven rows;
+Platform → System → <em>Policy</em>: four tiles, the gate table, the ten principles, the record as
+a six-card onboarding checklist with set / missing / placeholder badges, an instance switch;
+the rail shows the number of blocked features; the invitation stops at the gate once with
+the reason and continues as a sample on the second approval; the sequence card's gate line
+reads "postal address missing — blocked in production (ask #15)"; the family inbox shows the
+digest's policy gate; the recap's "needs you" counts blocked features; the top bar names the
+client (ClassScout). The placeholder postal address was removed — the field is empty and
+the gate says so.</p>
+<p><strong>Measured</strong> (390 × 844): policy screen 5 / 7 (provider e-mail and the digest blocked),
+rail count 2, Hungarian instance 3 / 7; the gate line on the sequence; first approval →
+the gate toast, second → "130 providers over 3 days"; digest gate note in the inbox; the
+provider's received e-mail shows the missing-address footer; <code>scrollWidth</code> 390, every
+control ≥ 44 px, 0 errors. <code>python3 check.py</code> → <code>GATE: CLEAN</code>.</p>
 <footer>Source: <code>business-direct/docs/06-build-log.md</code> · rendered by <code>docs/build.py</code>.</footer>
 </div>
 </body>

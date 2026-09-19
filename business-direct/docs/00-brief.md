@@ -6,12 +6,13 @@ client platform exposes, and what the two reference videos show — nothing else
 
 ## The client
 
-**Your Field NYC** (getyourfield.com) — "youth sports discovery, starting with your
-neighborhood": 252 providers of kids' classes, camps and drop-in activities across
+**ClassScout**, operator of **Your Field NYC** (getyourfield.com; contact info@classscout.ai)
+— "youth sports discovery, starting with your neighborhood": 252 providers of kids' classes, camps and drop-in activities across
 Manhattan (107) and Brooklyn (145), 84 neighbourhoods, 20 activity types, saved items, a
 family plan with cost estimates, a newsletter, and a "List your program" pitch to
 providers. It is the owner's own product (Next.js + Mantine on Vercel), the **first
-platform business.direct will run on** (D11). *Most én sportolok!* (sport.doneisbetter.com,
+platform business.direct will run on** (D11); the system is built for any later client —
+every instance carries its own responsible-data policy record (D32). *Most én sportolok!* (sport.doneisbetter.com,
 Hungary) and job portals / classifieds are reference ideas: the same pattern, other
 instances.
 

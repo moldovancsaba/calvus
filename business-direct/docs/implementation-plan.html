@@ -36,7 +36,7 @@ footer{margin-top:56px;padding-top:18px;border-top:1px solid var(--line);font-si
 </head>
 <body>
 <div class="wrap">
-<nav class="docnav" aria-label="Project documentation"><span class="docnav-brand">business.direct · docs</span><a href="index.html">Overview</a><a href="brief.html">Brief</a><a href="research.html">Research</a><a href="research-2.html">Research II</a><a href="research-3.html">Research III</a><a href="audit.html">Audit</a><a href="sources.html">Sources</a><a href="design-system.html">Design system</a><a href="layouts.html">Layouts</a><a href="05-layout-specs.html">Layout specs</a><a href="decisions.html">Decisions</a><a href="build-log.html">Build log</a><a href="gate.html">Gate</a><a href="client-asks.html">Owner asks</a><a href="business-logic.html">Business logic</a><a href="ssot.html">SSOT</a><a href="architecture.html">Architecture</a><a href="technical-design.html">Technical design</a><a href="implementation-plan.html" aria-current=page>Plan</a><a href="token-map.html">Token map</a><a href="analytics.html">Analytics</a><a href="audit-swot.html">Audit · SWOT</a></nav>
+<nav class="docnav" aria-label="Project documentation"><span class="docnav-brand">business.direct · docs</span><a href="index.html">Overview</a><a href="brief.html">Brief</a><a href="research.html">Research</a><a href="research-2.html">Research II</a><a href="research-3.html">Research III</a><a href="research-4.html">Research IV</a><a href="audit.html">Audit</a><a href="sources.html">Sources</a><a href="design-system.html">Design system</a><a href="layouts.html">Layouts</a><a href="05-layout-specs.html">Layout specs</a><a href="decisions.html">Decisions</a><a href="build-log.html">Build log</a><a href="gate.html">Gate</a><a href="client-asks.html">Owner asks</a><a href="business-logic.html">Business logic</a><a href="ssot.html">SSOT</a><a href="architecture.html">Architecture</a><a href="technical-design.html">Technical design</a><a href="implementation-plan.html" aria-current=page>Plan</a><a href="token-map.html">Token map</a><a href="analytics.html">Analytics</a><a href="audit-swot.html">Audit · SWOT</a><a href="policy-framework.html">Policy framework</a></nav>
 <header><p class="eyebrow">Calvus · business.direct · project documentation</p><h1>business.direct — implementation plan</h1></header>
 <p><em>Written 2026-09-19 on the PROPOSED architecture; phase 2 (M5) added the same day. Estimates are for a team of two
 developers and the owner as product lead; they assume ADR-1 to ADR-8 stand and the open
@@ -69,7 +69,7 @@ instance (<code>platform_id</code>). "Measured" means a number in the build log,
 <td>M0</td>
 <td>Foundation</td>
 <td>1–2</td>
-<td>repo, SSO, MongoDB, connector for Your Field with sync, the operator console shell with the three views' navigation, feature flags</td>
+<td>repo, SSO, MongoDB, connector for Your Field with sync, the operator console shell with the three views' navigation, feature flags, <strong>the policy record and gate</strong></td>
 </tr>
 <tr>
 <td>M1</td>
@@ -143,6 +143,16 @@ instance (<code>platform_id</code>). "Measured" means a number in the build log,
 <td>BD-0-5</td>
 <td>Console shell: role switch, rail/bottom bar, deep links</td>
 <td>the prototype's 13 screens reachable, empty states</td>
+</tr>
+<tr>
+<td>BD-0-7</td>
+<td>Policy record and gate (ADR-14)</td>
+<td>a feature whose policy fields are missing does not run (test per row of framework §3); every message carries its policy basis</td>
+</tr>
+<tr>
+<td>BD-0-8</td>
+<td>Policy screen as onboarding checklist</td>
+<td>the operator sees set / missing / placeholder per field and what each blocks</td>
 </tr>
 <tr>
 <td>BD-0-6</td>

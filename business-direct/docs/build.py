@@ -14,6 +14,7 @@ PAGES = [  # (source, output, nav label)
     ("01-research.md", "research.html", "Research"),
     ("01b-research-acquisition-content-sales.md", "research-2.html", "Research II"),
     ("01c-research-data-driven-marketing.md", "research-3.html", "Research III"),
+    ("01e-research-responsible-data.md", "research-4.html", "Research IV"),
     ("02-audit.md", "audit.html", "Audit"),
     ("03-sources.md", "sources.html", "Sources"),
     ("05-layout-specs.md", "05-layout-specs.html", "Layout specs"),
@@ -29,6 +30,7 @@ PAGES = [  # (source, output, nav label)
     ("14-token-map.md", "token-map.html", "Token map"),
     ("16-analytics-and-unit-economics.md", "analytics.html", "Analytics"),
     ("17-business-logic-audit-and-swot.md", "audit-swot.html", "Audit · SWOT"),
+    ("18-responsible-data-policy-framework.md", "policy-framework.html", "Policy framework"),
 ]
 CSS = (HERE / "docs.css").read_text(encoding="utf-8")
 

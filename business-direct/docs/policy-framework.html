@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>business.direct — responsible data and marketing policy framework (for every client) — business.direct docs</title>
+<link rel="stylesheet" href="../assets/tokens.css">
+<style>/* business.direct — documentation pages on the product tokens (GDS roles, teal accent). */
+:root{--ground:var(--gds-bg-canvas,#f8fafc);--card:var(--gds-bg-surface,#fff);--ink:var(--gds-text-body,#111827);--text:#1f2937;--muted:var(--gds-text-meta,#64748b);--accent:var(--gds-brand-accent,#0f766e);--accent-deep:var(--gds-brand-accent-strong,#115e59);--line:var(--gds-border-card,#e2e8f0);--line-soft:#eef2f7;--note:var(--gds-brand-accent-tint,#e6f4f2)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--ground);color:var(--text);font-family:var(--gds-font,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif);font-size:15.5px;line-height:1.6;padding-block:0 64px;padding-inline:clamp(16px,4vw,40px)}
+.wrap{max-width:74ch;margin-inline:auto}
+.docnav{display:flex;flex-wrap:wrap;gap:4px 18px;align-items:center;padding:16px 0;border-bottom:1px solid var(--line);font-size:12px;letter-spacing:.06em;text-transform:uppercase}
+.docnav a{color:var(--muted);text-decoration:none;min-height:44px;min-width:44px;display:inline-flex;align-items:center;border-bottom:2px solid transparent}
+.docnav a:hover,.docnav a[aria-current]{color:var(--ink);border-color:var(--accent)}
+.docnav-brand{color:var(--accent-deep);font-weight:800;margin-right:6px}
+.docnav-hub{margin-left:auto}
+header{padding-block:40px 24px;border-bottom:1px solid var(--line);margin-bottom:28px}
+.eyebrow{font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--accent-deep);margin:0 0 12px;font-weight:800}
+h1,h2,h3{color:var(--ink);line-height:1.1;text-wrap:balance;margin:0;letter-spacing:-.02em}
+h1{font-size:clamp(30px,6vw,46px);font-weight:900}
+h2{font-size:clamp(23px,4vw,30px);font-weight:900;margin:48px 0 14px;padding-top:20px;border-top:1px solid var(--line)}
+h3{font-size:18px;margin:30px 0 8px;font-weight:800}
+p{margin:0 0 14px} strong{color:var(--ink);font-weight:800}
+ul,ol{padding-left:22px;margin:0 0 16px} li{margin:5px 0} li>ul{margin:6px 0 0}
+code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.86em;background:var(--note);padding:1px 5px;border-radius:4px;color:var(--ink);overflow-wrap:anywhere}
+pre{overflow-x:auto;padding:14px 16px;border:1px solid var(--line);border-radius:10px;background:var(--card);font-size:12px;line-height:1.35}
+pre code{background:none;padding:0;font-size:inherit}
+a{color:var(--accent-deep)} :focus-visible{outline:2px solid var(--accent-deep);outline-offset:2px}
+.tbl{overflow-x:auto;margin:14px 0 22px;border:1px solid var(--line);border-radius:10px;background:var(--card)}
+table{border-collapse:collapse;width:100%;font-size:13.5px;min-width:560px}
+th{text-align:left;font-weight:800;color:var(--ink);background:var(--note);padding:10px 12px;border-bottom:1px solid var(--line);font-size:11.5px;letter-spacing:.06em;text-transform:uppercase}
+td{padding:10px 12px;border-top:1px solid var(--line-soft);vertical-align:top;background:var(--card)} td:first-child{color:var(--ink)}
+footer{margin-top:56px;padding-top:18px;border-top:1px solid var(--line);font-size:12px;color:var(--muted)}
+</style>
+</head>
+<body>
+<div class="wrap">
+<nav class="docnav" aria-label="Project documentation"><span class="docnav-brand">business.direct · docs</span><a href="index.html">Overview</a><a href="brief.html">Brief</a><a href="research.html">Research</a><a href="research-2.html">Research II</a><a href="research-3.html">Research III</a><a href="research-4.html">Research IV</a><a href="audit.html">Audit</a><a href="sources.html">Sources</a><a href="design-system.html">Design system</a><a href="layouts.html">Layouts</a><a href="05-layout-specs.html">Layout specs</a><a href="decisions.html">Decisions</a><a href="build-log.html">Build log</a><a href="gate.html">Gate</a><a href="client-asks.html">Owner asks</a><a href="business-logic.html">Business logic</a><a href="ssot.html">SSOT</a><a href="architecture.html">Architecture</a><a href="technical-design.html">Technical design</a><a href="implementation-plan.html">Plan</a><a href="token-map.html">Token map</a><a href="analytics.html">Analytics</a><a href="audit-swot.html">Audit · SWOT</a><a href="policy-framework.html" aria-current=page>Policy framework</a></nav>
+<header><p class="eyebrow">Calvus · business.direct · project documentation</p><h1>business.direct — responsible data and marketing policy framework (for every client)</h1></header>
+<p><em>Written 2026-09-19 (D32). The first client is ClassScout, operator of Your Field NYC; the
+framework is written so that the second, third and any later client — a sports directory, a
+job portal, a classifieds site — gets the same protection by configuration, not by a new
+build. The research behind it is <a href="research-4.html"><code>01e-research-responsible-data.md</code></a>; the reference
+implementation is the platform's </em>Policy<em> screen (<code>../index.html?view=platform&amp;screen=policy</code>)
+and the policy gate in the outbox. The owner's directive: respect children's rights whatever
+the client, care for customers' data, use it commercially but properly, and deliver business
+value for the client.</em></p>
+<h2>1. Principles (the machine's own, for any instance)</h2>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>#</th>
+<th>Principle</th>
+<th>Where it lives</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td><strong>Know who the service is for.</strong> Every instance declares its audience model: adults only, mixed, or child-directed. Nothing else is decided before this.</td>
+<td>policy <code>audienceModel</code></td>
+</tr>
+<tr>
+<td>2</td>
+<td><strong>A child is an age, never a name.</strong> Minimum by default: no name, no photo, no location of a child anywhere in the machine; an age or an age band at most, and only where the client's own policy allows it.</td>
+<td>R24, policy <code>childData</code></td>
+</tr>
+<tr>
+<td>3</td>
+<td><strong>No profiling or targeting on a minor's data, ever</strong> — not with consent, not with a parent's consent (the California and Oregon bans and DSA Art. 28 are the floor).</td>
+<td>R27</td>
+</tr>
+<tr>
+<td>4</td>
+<td><strong>High-privacy defaults.</strong> Every switch that shares, locates or increases frequency starts off; the family, the candidate, the buyer turns it on.</td>
+<td>R28, <code>family.prefs</code></td>
+</tr>
+<tr>
+<td>5</td>
+<td><strong>Consent names the channel and the sender</strong> and is stored verbatim with time and source; preference is enough for the platform's own service messages where the law allows, never for a third party's.</td>
+<td>R4, <code>consents</code></td>
+</tr>
+<tr>
+<td>6</td>
+<td><strong>Zero-party over inferred.</strong> The machine acts on what the person told it — saves, asks, preferences — not on what it guesses.</td>
+<td>R11, avid definition</td>
+</tr>
+<tr>
+<td>7</td>
+<td><strong>Every commercial message says who sent it, why, and how to stop</strong> — and carries the sender's postal address where the market requires it; opt-outs honoured within one business day.</td>
+<td>R2, R23, <code>postalAddress</code></td>
+</tr>
+<tr>
+<td>8</td>
+<td><strong>Disclosure when a machine wrote or made it</strong>, per market's rule.</td>
+<td>R20</td>
+</tr>
+<tr>
+<td>9</td>
+<td><strong>Retention with an end date</strong>, per data class, per instance.</td>
+<td>policy <code>retention</code></td>
+</tr>
+<tr>
+<td>10</td>
+<td><strong>The gate is code.</strong> A feature does not run until the policy fields it needs are set; the operator sees what is blocked and why.</td>
+<td>R26, the policy gate</td>
+</tr>
+</tbody>
+</table></div>
+<h2>2. The policy — one record per instance</h2>
+<pre><code>policy {
+  platform_id, client, instance, operator_contact, postal_address,          # identity; the address CAN-SPAM needs
+  jurisdictions: ['US-NY', 'US'] | ['HU', 'EU'] | …,                          # the laws in force
+  laws: [...derived from jurisdictions],                                       # CAN-SPAM, TCPA, COPPA, NY CDPA, GDPR, DSA 28, Act XLVIII, AI Act 50
+  audienceModel: 'adults' | 'mixed' | 'child-directed',                        # principle 1
+  ageOfDigitalConsent: 13 | 16 | …,                                            # GDPR Art. 8 per member state; COPPA 13
+  childData: 'none' | 'age-band' | 'age' | 'with-parental-consent',           # principle 2
+  minorsMarketing: { profiling: false, targetedAds: false, pushQuietHours: [21, 7] },   # principle 3; Nebraska-style hours
+  channels: { email: 'preference' | 'consent', push: ..., sms: 'consent', social: 'public' },
+  consentText: { sms: '...', email: '...' },                                   # stored verbatim per consent
+  defaults: { picks: on/off, alerts: ..., nearby: off, sms: off },            # principle 4
+  cap: { providerMessagesPerMonth: 4, countsPlatformDigest: false },
+  optOutSlaHours: 24,
+  aiDisclosure: 'none' | 'label' | 'label+text',                               # principle 8, per market
+  retention: { messages: '24m', consents: 'account+5y', drafts: '90d', events: '24m' },
+  privacyPolicy: { url, lastUpdated, clauses: { emailAlerts: bool, savesOptIn: bool, childrenNone: bool } },
+  dpia: { done: bool, at? }                                                    # required for a mixed or child-directed instance
+}
+</code></pre>
+<h2>3. The policy gate (R26) — what runs only when what is set</h2>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>Feature</th>
+<th>Needs</th>
+<th>Blocked otherwise</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Any provider e-mail (sequences, replies)</td>
+<td><code>postal_address</code>, opt-out footer, <code>jurisdictions</code></td>
+<td>the outbox refuses; the sequence card shows why</td>
+</tr>
+<tr>
+<td>Family digest and alerts</td>
+<td><code>privacyPolicy.clauses.emailAlerts = true</code>, <code>channels.email</code> set</td>
+<td>the digest job does not run; the family sees "coming when the policy is published"</td>
+</tr>
+<tr>
+<td>Campaign audiences from saves / nearby</td>
+<td><code>privacyPolicy.clauses.savesOptIn = true</code>, the platform's opt-in signal available</td>
+<td>audiences are 0; the campaign card says so</td>
+</tr>
+<tr>
+<td>SMS to families</td>
+<td><code>channels.sms = 'consent'</code>, <code>consentText.sms</code></td>
+<td>the SMS toggle cannot turn on</td>
+</tr>
+<tr>
+<td>Generated media, AI-drafted messages</td>
+<td><code>aiDisclosure</code> set</td>
+<td>generation and unedited AI sends are blocked</td>
+</tr>
+<tr>
+<td>Any minor's data</td>
+<td><code>audienceModel</code>, <code>childData</code>, <code>dpia.done</code> for mixed / child-directed</td>
+<td>the family entity accepts no child field beyond what <code>childData</code> allows</td>
+</tr>
+<tr>
+<td>Push notifications</td>
+<td><code>minorsMarketing.pushQuietHours</code></td>
+<td>no push in quiet hours on a mixed instance</td>
+</tr>
+</tbody>
+</table></div>
+<p>The gate runs before every send (<code>sending-guard</code>), on every draft (<code>draft-*</code> jobs) and at
+schema level (the family entity). The <em>Policy</em> screen lists every field, its state (set /
+missing / placeholder) and every feature it blocks.</p>
+<h2>4. Client onboarding — the checklist the screen shows</h2>
+<ol>
+<li>Identity: client, instance, operator contact, <strong>postal address</strong>.</li>
+<li>Jurisdictions → the laws (derived, shown).</li>
+<li>Audience model; age of digital consent; child-data rule; DPIA if mixed or child-directed.</li>
+<li>Channels and their consent basis; consent texts; defaults (all high-privacy).</li>
+<li>The client's published privacy policy: URL, date, the three clauses the machine needs
+   (e-mail alerts described, saves opt-in described, children's data stance).</li>
+<li>Cap, opt-out SLA, retention, AI disclosure.</li>
+<li>The gate report: what is blocked until which field is set.</li>
+</ol>
+<h2>5. What the client gets (the business value, in their words)</h2>
+<ul>
+<li><strong>Lower exposure</strong>: the enforcement record (research IV §2) is a list of defaults, labels
+  and nudges; the gate makes the wrong default impossible to ship.</li>
+<li><strong>A better audience</strong>: every message goes to a person who saved, asked or opted in —
+  zero-party data converts better than inferred data (research IV §4) and needs no profiling.</li>
+<li><strong>Trust as acquisition</strong>: in a category where half of privacy-aware consumers have
+  switched a company over data practices and 83 % of small businesses grow on referrals,
+  the trusted platform is the one parents recommend.</li>
+<li><strong>Auditability</strong>: every send carries its policy basis (which clause, which consent, which
+  cap) in the message log; a regulator's question is a query, not a search.</li>
+<li><strong>Portability</strong>: the second instance is a policy record and a connector, not a rebuild.</li>
+</ul>
+<h2>6. Two instances, one framework (worked examples)</h2>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Your Field NYC (ClassScout)</th>
+<th>Most én sportolok! (reference, Hungary)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>jurisdictions</td>
+<td>US-NY, US</td>
+<td>HU, EU</td>
+</tr>
+<tr>
+<td>laws</td>
+<td>CAN-SPAM, TCPA, COPPA (2025 rule), NY CDPA, EU AI Act 50 where EU users</td>
+<td>GDPR (Art. 8 at 16 in Hungary), Act XLVIII/2008, DSA Art. 28, EU AI Act 50</td>
+</tr>
+<tr>
+<td>audienceModel</td>
+<td>adults (the policy says 18+)</td>
+<td>adults (athletes' guardians) — to confirm</td>
+</tr>
+<tr>
+<td>childData</td>
+<td>none — ages only in the family's own preferences</td>
+<td>none</td>
+</tr>
+<tr>
+<td>channels</td>
+<td>e-mail preference, push preference, SMS consent, social public</td>
+<td>e-mail consent for B2C, role addresses for B2B without consent, no SMS</td>
+</tr>
+<tr>
+<td>postal address</td>
+<td><strong>missing</strong> (ask #15)</td>
+<td>to obtain</td>
+</tr>
+<tr>
+<td>privacyPolicy clauses</td>
+<td>e-mail alerts <strong>not yet described</strong>; saves opt-in <strong>described (off by default)</strong>; children <strong>none</strong></td>
+<td>to read</td>
+</tr>
+<tr>
+<td>aiDisclosure</td>
+<td>label (platform rules)</td>
+<td>label + text (Art. 50)</td>
+</tr>
+<tr>
+<td>gate today</td>
+<td>sequences blocked in production (address); digest blocked (clause); audiences from opted-in accounts only</td>
+<td>everything blocked until the policy is filled</td>
+</tr>
+</tbody>
+</table></div>
+<h2>7. How the framework generalises</h2>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>Client type</th>
+<th>What changes</th>
+<th>What does not</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Kids' activities (Your Field)</td>
+<td>audience adults, child data none, parents consent for SMS</td>
+<td>the gate, the cap, the address, the disclosure</td>
+</tr>
+<tr>
+<td>Sports directory (Sportolok)</td>
+<td>athletes may be minors — <code>audienceModel: mixed</code>, DPIA, quiet hours, no profiling</td>
+<td>same</td>
+</tr>
+<tr>
+<td>Job portal</td>
+<td>candidates' data is sensitive; apprentices 16–18 are minors under some laws; consent for B2C, role addresses for employers</td>
+<td>same</td>
+</tr>
+<tr>
+<td>Classifieds</td>
+<td>sellers' addresses and phone numbers are personal data; buyers' locations off by default</td>
+<td>same</td>
+</tr>
+</tbody>
+</table></div>
+<p>The record changes values; the rules and the gate do not.</p>
+<footer>Source: <code>business-direct/docs/18-responsible-data-policy-framework.md</code> · rendered by <code>docs/build.py</code>.</footer>
+</div>
+</body>
+</html>

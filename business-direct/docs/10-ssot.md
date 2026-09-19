@@ -9,7 +9,8 @@ implementation of the enumerations and state machines below.*
 
 | Term | Meaning | Where it shows |
 |---|---|---|
-| **Platform** | the listing site that runs the machine — Your Field NYC first (D11); *Most én sportolok!* a reference instance | the Platform view |
+| **Client** | the company that buys business.direct — **ClassScout** first, operator of Your Field NYC | policy record |
+| **Platform / instance** | the listing site the machine runs on — Your Field NYC first (D11); *Most én sportolok!* a reference instance; each instance has its own policy record (D32) | the Platform view |
 | **Operator** | the person at the platform who approves what leaves the machine; one person by design | the approval queue |
 | **Provider** | a listed business — the platform's own word for it (`/api/public/providers`). Reference instances may call it *listing* | everywhere |
 | **Family** | the consumer on Your Field; a parent with children and saved providers. Reference instances: *user*, *visitor* | the Family view |
@@ -82,6 +83,7 @@ implementation of the enumerations and state machines below.*
 | **Sending** | `domain`, `warmDay`, `warmDays`, `dailyCap`, `bounce`, `replySla` | `S.sending`; per `platform_id` in production |
 | **OptOut** | `providerId`, `kind` (`not mine` / `unsubscribed` / `bounced`), `at` | `S.optOut`; excluded from every sequence |
 | **StageChange** | `providerId`, `from`, `to`, `by` (`sequence` / `reply` / `family ask` / `provider` / `operator`), `at`, `reason?` | `S.history`; production: `events` |
+| **Policy** | `platform_id`, `client`, `instance`, `contact`, `postalAddress`, `jurisdictions[]`, `laws[]`, `audienceModel`, `ageOfConsent`, `childData`, `minors{profiling,targetedAds,quietHours}`, `channels{}`, `consentText{}`, `defaults`, `cap`, `optOutSla`, `aiDisclosure`, `retention`, `privacyPolicy{url,lastUpdated,emailAlerts,savesOptIn,childrenNone}`, `dpia` | `S.policies[instance]`; one per instance (D32) |
 | **Experiment** | `name`, `treat`, `control`, `weeks`, `week`, `state` | `S.experiment` |
 | **Entitlement** | `providerId`, `productId`, `since`, `billingRef?` | `S.bought` |
 
@@ -106,7 +108,7 @@ implementation of the enumerations and state machines below.*
 
 ## 5. Decision register
 
-`04-decisions.md` holds D1–D31. The ones the engineering documents rest on: D2 (three
+`04-decisions.md` holds D1–D32. The ones the engineering documents rest on: D2 (three
 views), D5 (DiscountDirect sibling), D6 (departments, knowledge layer, human-in-the-loop,
 optional AI, dashboard, integrations), D11 (Your Field first), D14 (two flows), D15
 (post card and pipeline strip), D17 (one page, in-memory state), D18 (sample generated
@@ -136,6 +138,9 @@ PROPOSED.
 | R22 | A propensity score per provider orders every sequence and the call list; recomputed nightly from the card and the events: +15 when a family saved or asked, −40 after "not my program", −20 after a bounce, 0 and excluded after unsubscribe (D30) | `score()`, `S.optOut` |
 | R23 | The outbox refuses any send past the sending domain's warm-up cap; a bounce rate ≥ 2 % pauses the sequence and alerts; recipients are paced at the daily cap (D30) | `sendInvitation`, `S.sending` |
 | R24 | The machine stores no child's name; a child is an age ("a child of 6") to every party, the family included — the platform's policy does not collect children's data (D30, D31; counsel ask #13) | `S.family.kids`, `enquiryCard` |
+| R26 | **The policy gate**: a feature runs only when the instance's policy fields it needs are set — provider e-mail needs the postal address; the digest needs the published e-mail clause; audiences need the saves opt-in; SMS needs the consent text; generation needs the disclosure rule; a minor's data needs the audience model and a DPIA (D32) | `policyGate()`, `sending-guard`, the *Policy* screen |
+| R27 | No profiling and no targeted advertising on a minor's data, on any instance, with or without consent (DSA Art. 28, California, Oregon, Nebraska as the floor) | policy `minors` |
+| R28 | High-privacy defaults on every instance: nothing that shares, locates or increases frequency is on until the person turns it on; push respects quiet hours where minors may be present | policy `defaults`, `family.prefs` |
 | R25 | Approvals may be batched (one decision for a week's real-footage clips) and a department may earn auto-approval after four clean weeks (no edits, no complaints); every auto-sent message is logged and the family can stop it (D30) | `approveClips`, `S.auto` |
 | R16 | The next-dollar ranking runs weekly on measured rates where they exist and on the documented assumption where they do not; the recap says which | `econ()`; `16-analytics…` §4 |
 | R17 | A sequence step is added or removed when its marginal reply rate per touch falls below the cost-per-touch breakeven for two consecutive weeks, inside the 4–7 benchmark | production |
@@ -179,6 +184,7 @@ PROPOSED.
 | `08-client-asks.md` | open items |
 | `09-business-logic.md` | the rules end to end: parties, flows, departments, campaigns, money, families, law, recap |
 | `16-analytics-and-unit-economics.md` | CAC, LTV, avid value, content ROI, next dollar, metrics tree, events, attribution |
+| `18-responsible-data-policy-framework.md` | principles, the policy record, the gate, onboarding, the client's value, worked instances |
 | `10-ssot.md` (this) | terms, enumerations, entities, rules, metrics |
 | `11-architecture.md` | context, quality attributes, containers, flows, stack, ADRs |
 | `12-technical-design.md` | data model, state machines, connectors, jobs, operations |

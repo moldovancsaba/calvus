@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>business.direct — research IV: responsible data, children's rights, and the business value of doing it properly — business.direct docs</title>
+<link rel="stylesheet" href="../assets/tokens.css">
+<style>/* business.direct — documentation pages on the product tokens (GDS roles, teal accent). */
+:root{--ground:var(--gds-bg-canvas,#f8fafc);--card:var(--gds-bg-surface,#fff);--ink:var(--gds-text-body,#111827);--text:#1f2937;--muted:var(--gds-text-meta,#64748b);--accent:var(--gds-brand-accent,#0f766e);--accent-deep:var(--gds-brand-accent-strong,#115e59);--line:var(--gds-border-card,#e2e8f0);--line-soft:#eef2f7;--note:var(--gds-brand-accent-tint,#e6f4f2)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--ground);color:var(--text);font-family:var(--gds-font,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif);font-size:15.5px;line-height:1.6;padding-block:0 64px;padding-inline:clamp(16px,4vw,40px)}
+.wrap{max-width:74ch;margin-inline:auto}
+.docnav{display:flex;flex-wrap:wrap;gap:4px 18px;align-items:center;padding:16px 0;border-bottom:1px solid var(--line);font-size:12px;letter-spacing:.06em;text-transform:uppercase}
+.docnav a{color:var(--muted);text-decoration:none;min-height:44px;min-width:44px;display:inline-flex;align-items:center;border-bottom:2px solid transparent}
+.docnav a:hover,.docnav a[aria-current]{color:var(--ink);border-color:var(--accent)}
+.docnav-brand{color:var(--accent-deep);font-weight:800;margin-right:6px}
+.docnav-hub{margin-left:auto}
+header{padding-block:40px 24px;border-bottom:1px solid var(--line);margin-bottom:28px}
+.eyebrow{font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--accent-deep);margin:0 0 12px;font-weight:800}
+h1,h2,h3{color:var(--ink);line-height:1.1;text-wrap:balance;margin:0;letter-spacing:-.02em}
+h1{font-size:clamp(30px,6vw,46px);font-weight:900}
+h2{font-size:clamp(23px,4vw,30px);font-weight:900;margin:48px 0 14px;padding-top:20px;border-top:1px solid var(--line)}
+h3{font-size:18px;margin:30px 0 8px;font-weight:800}
+p{margin:0 0 14px} strong{color:var(--ink);font-weight:800}
+ul,ol{padding-left:22px;margin:0 0 16px} li{margin:5px 0} li>ul{margin:6px 0 0}
+code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.86em;background:var(--note);padding:1px 5px;border-radius:4px;color:var(--ink);overflow-wrap:anywhere}
+pre{overflow-x:auto;padding:14px 16px;border:1px solid var(--line);border-radius:10px;background:var(--card);font-size:12px;line-height:1.35}
+pre code{background:none;padding:0;font-size:inherit}
+a{color:var(--accent-deep)} :focus-visible{outline:2px solid var(--accent-deep);outline-offset:2px}
+.tbl{overflow-x:auto;margin:14px 0 22px;border:1px solid var(--line);border-radius:10px;background:var(--card)}
+table{border-collapse:collapse;width:100%;font-size:13.5px;min-width:560px}
+th{text-align:left;font-weight:800;color:var(--ink);background:var(--note);padding:10px 12px;border-bottom:1px solid var(--line);font-size:11.5px;letter-spacing:.06em;text-transform:uppercase}
+td{padding:10px 12px;border-top:1px solid var(--line-soft);vertical-align:top;background:var(--card)} td:first-child{color:var(--ink)}
+footer{margin-top:56px;padding-top:18px;border-top:1px solid var(--line);font-size:12px;color:var(--muted)}
+</style>
+</head>
+<body>
+<div class="wrap">
+<nav class="docnav" aria-label="Project documentation"><span class="docnav-brand">business.direct · docs</span><a href="index.html">Overview</a><a href="brief.html">Brief</a><a href="research.html">Research</a><a href="research-2.html">Research II</a><a href="research-3.html">Research III</a><a href="research-4.html" aria-current=page>Research IV</a><a href="audit.html">Audit</a><a href="sources.html">Sources</a><a href="design-system.html">Design system</a><a href="layouts.html">Layouts</a><a href="05-layout-specs.html">Layout specs</a><a href="decisions.html">Decisions</a><a href="build-log.html">Build log</a><a href="gate.html">Gate</a><a href="client-asks.html">Owner asks</a><a href="business-logic.html">Business logic</a><a href="ssot.html">SSOT</a><a href="architecture.html">Architecture</a><a href="technical-design.html">Technical design</a><a href="implementation-plan.html">Plan</a><a href="token-map.html">Token map</a><a href="analytics.html">Analytics</a><a href="audit-swot.html">Audit · SWOT</a><a href="policy-framework.html">Policy framework</a></nav>
+<header><p class="eyebrow">Calvus · business.direct · project documentation</p><h1>business.direct — research IV: responsible data, children's rights, and the business value of doing it properly</h1></header>
+<p><em>Fourth research round, 2026-09-19, on the owner's directive: the first client is ClassScout
+(the operator of Your Field NYC), but the system must serve any client; the machine must
+respect children's rights "in general, whatever clients we work for"; and it must "care about
+our customers' data and use it commercially but properly, and deliver benefits and business
+value for the clients". This round reads the law by market, the enforcement record, the
+design frameworks the regulators themselves publish, and the evidence that responsible data
+practice pays. </em><em>P</em><em> = primary (regulator, statute, the company's own document, the study
+itself), </em><em>A</em><em> = law-firm or trade summary. The framework that comes out of it is
+<a href="policy-framework.html"><code>18-responsible-data-policy-framework.md</code></a>; the policy screen in the prototype is its
+reference implementation.</em></p>
+<h2>1. The law by market — what any client instance must encode</h2>
+<h3>1.1 United States (first client)</h3>
+<ul>
+<li><strong>COPPA, amended rule effective 23 June 2025, full compliance by 22 April 2026</strong>: personal
+  information now includes biometrics, government identifiers, phone numbers, audio and
+  certain geolocation; separate verifiable parental consent for third-party disclosures;
+  prescriptive security; new consent methods (text message, knowledge-based authentication).
+  Applies to operators directed to children under 13 or with actual knowledge of a child
+  user. <strong>A</strong> <a href="https://www.lw.com/en/insights/ftc-publishes-updates-to-coppa-rule">Latham &amp; Watkins</a>,
+  <a href="https://www.hunton.com/privacy-and-cybersecurity-law-blog/coppa-rule-amendment-compliance-deadline-approaches">Hunton</a>,
+  <a href="https://www.davispolk.com/insights/client-update/ftc-prioritizes-coppa-enforcement-new-compliance-obligations-take-effect">Davis Polk</a></li>
+<li><strong>New York Child Data Protection Act, effective 20 June 2025</strong>: processing of personal data
+  of users under 18 only where strictly necessary or with informed consent (parental under
+  13, the teen's own 13–17); covers services accessible in New York. <strong>P</strong> <a href="https://ag.ny.gov/child-data-protection-act-guidance">NY Attorney General guidance</a></li>
+<li><strong>California</strong>: CCPA regulations treat data of known under-16s as sensitive, willful
+  disregard of age counts as knowledge; the 2026 session added bans on "addictive features"
+  for under-16s (algorithmic feeds, autoplay, push notifications designed to maximise
+  engagement). <strong>A</strong> <a href="https://www.paulweiss.com/insights/client-memos/california-privacy-updates-q1-2026">Paul, Weiss Q1 2026</a>,
+  <a href="https://www.kelleydrye.com/viewpoints/blogs/ad-law-access/californias-2026-legislative-session-wraps-a-wave-of-privacy-and-ai-bills-reaches-the-governor-with-key-child-safety-and-ai-measures-signed-into-law">Kelley Drye</a></li>
+<li><strong>Other states, 2025–2026</strong>: Maryland, Minnesota, Colorado (October 2025), Oregon
+  (1 January 2026: no sale or targeted advertising on known under-16 data), Nebraska's
+  Age-Appropriate Online Design Code (1 July 2026: high-privacy defaults, no targeted ads
+  to minors, restricted push-notification hours). <strong>A</strong> <a href="https://www.venable.com/insights/publications/2025/11/states-shine-spotlight-on-child-and-teen-privacy">Venable</a>,
+  <a href="https://www.insideprivacy.com/childrens-privacy/state-and-federal-developments-in-minors-privacy-in-2026/">Inside Privacy</a></li>
+<li><strong>CAN-SPAM</strong> (postal address, opt-out within 10 business days) and <strong>TCPA</strong> (written
+  consent for marketing SMS; $500–1,500 per message) — research I §8.</li>
+</ul>
+<h3>1.2 European Union and the United Kingdom (the reference instance and any EU client)</h3>
+<ul>
+<li><strong>GDPR Article 8</strong>: a child's own consent to an information-society service is valid from
+  16 (member states may lower to 13); below that, the holder of parental responsibility.
+  <strong>P</strong> <a href="https://gdpr-info.eu/art-8-gdpr/">Art. 8 GDPR</a></li>
+<li><strong>DSA Article 28</strong>: platforms accessible to minors must ensure a high level of privacy,
+  safety and security for them and <strong>may not show advertising based on profiling when they
+  know with reasonable certainty the user is a minor</strong>; in April 2026 the Commission's
+  preliminary finding against Meta made self-declared age insufficient. <strong>A</strong> <a href="https://www.hlc.com/en/publications/the-longawaited-eu-guidelines-on-article-281-dsa-what-online-platforms-must-know">HLC on the Art. 28 guidelines</a>,
+  <a href="https://xident.io/blog/dsa-article-28-minimum-age-enforcement-meta-breach-age-assurance-2026/">Xident on the Meta finding</a></li>
+<li><strong>UK Age Appropriate Design Code (the Children's Code)</strong>: 15 standards — high-privacy
+  defaults, data minimisation, no sharing of children's data by default, geolocation off by
+  default, profiling off by default, no nudge techniques, privacy information a child can
+  follow; since 5 February 2026 the "higher protection of children" is written into UK GDPR
+  Article 25. <strong>P</strong> <a href="https://ico.org.uk/for-organisations/uk-gdpr-guidance-and-resources/childrens-information/childrens-code-guidance-and-resources/age-appropriate-design-a-code-of-practice-for-online-services/">ICO: the code</a>,
+  <a href="https://ico.org.uk/for-organisations/uk-gdpr-guidance-and-resources/designing-products-that-protect-privacy/childrens-code-design-guidance/">ICO design guidance</a>;
+  <strong>A</strong> <a href="https://5rightsfoundation.com/new-uk-data-law-what-does-it-mean-for-childrens-privacy/">5Rights</a></li>
+<li><strong>EU AI Act Article 50</strong> (disclosure of AI content, live since 2 August 2026) — research II §4.3.</li>
+<li><strong>Hungary</strong>: B2B e-mail to corporate addresses without consent; named-person addresses and
+  B2C require consent (Act XLVIII of 2008) — research I §8b.</li>
+</ul>
+<h3>1.3 What is common to every market</h3>
+<p>Read together, the laws converge on eight rules any instance can encode: (1) know whether
+the service is for adults, mixed, or child-directed; (2) collect the minimum about a child —
+by default nothing, at most an age band; (3) never profile or target advertising on a
+minor's data; (4) high-privacy defaults, nothing on by default that shares or locates;
+(5) consent that names the channel and the sender, stored verbatim with time and source;
+(6) an opt-out honoured in one business day and a physical address on every commercial
+e-mail; (7) disclosure when AI wrote or made something; (8) retention with an end date.</p>
+<h2>2. The cost of getting it wrong (the enforcement record)</h2>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>Case</th>
+<th>What</th>
+<th>Cost</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Epic Games (FTC, December 2022)</td>
+<td>COPPA violations, default settings that exposed children, dark patterns in billing; internal employee warnings raised the penalty</td>
+<td><strong>$275 M</strong> civil penalty + $245 M refunds = $520 M <strong>A</strong> <a href="https://www.orrick.com/en/Insights/2023/02/6-Top-Takeaways-from-FTCs-Landmark-Epic-Games-Settlements">Orrick</a>, <a href="https://www.wilmerhale.com/en/insights/blogs/wilmerhale-privacy-and-cybersecurity-law/20221227-settlement-with-epic-games-highlights-continued-focus-by-regulators-on-unfair-privacy-practices-teens-and-user-interface-design">WilmerHale</a></td>
+</tr>
+<tr>
+<td>YouTube / Google (FTC, 2019)</td>
+<td>data collected from child-directed channels</td>
+<td>$170 M <strong>A</strong> <a href="https://securiti.ai/blog/ftc-epic-games-settlement/">Securiti</a></td>
+</tr>
+<tr>
+<td>Disney (FTC, court-approved late 2025)</td>
+<td>videos not labelled "made for kids", no parental notice</td>
+<td>$10 M <strong>A</strong> <a href="https://www.hunton.com/privacy-and-cybersecurity-law-blog/court-approves-disneys-10-million-ftc-settlement-resolving-coppa-enforcement-action">Hunton</a></td>
+</tr>
+<tr>
+<td>Amazon Alexa, Microsoft Xbox (2023)</td>
+<td>children's voice and account data</td>
+<td>$25 M, $20 M <strong>A</strong> <a href="https://securiti.ai/blog/ftc-epic-games-settlement/">Securiti</a></td>
+</tr>
+<tr>
+<td>Meta (EU Commission, April 2026, preliminary)</td>
+<td>under-13s on Facebook and Instagram — self-declared age not enough</td>
+<td>DSA breach finding <strong>A</strong> <a href="https://xident.io/blog/dsa-article-28-minimum-age-enforcement-meta-breach-age-assurance-2026/">Xident</a></td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Reading.</strong> Every case is a marketing or engagement design decision, not a data breach: a
+default, a label, a nudge, an unverified age. The lesson for a marketing machine is that the
+rules must live in the product's defaults and gates, not in a policy document.</p>
+<h2>3. The frameworks the regulators and the best brands publish</h2>
+<ul>
+<li><strong>Privacy by Design (Cavoukian, 2009; adopted by the data-protection commissioners 2010)</strong>:
+  proactive not reactive; privacy as the default; embedded in design; full functionality
+  (not privacy <em>or</em> value); end-to-end security; visibility and transparency; respect for
+  the user. <strong>A</strong> <a href="https://en.wikipedia.org/wiki/Privacy_by_design">Wikipedia summary</a></li>
+<li><strong>The ICO Children's Code's 15 standards</strong> (§1.2) are the most concrete design checklist a
+  regulator has published; UNICEF's 2025 review treats such codes as the model for other
+  jurisdictions. <strong>P</strong> <a href="https://www.unicef.org/innocenti/media/11096/file/UNICEF-Innocenti-Childrens-Codes-Case-Study-2025.pdf">UNICEF Innocenti case study</a>;
+  5Rights' <strong>Child Rights by Design</strong> principles (privacy is principle 7). <strong>P</strong> <a href="https://childrightsbydesign.5rightsfoundation.com/principles/7-privacy/">5Rights</a></li>
+<li><strong>ISO/IEC 27701</strong> (a privacy information management system on top of ISO 27001) and the
+  <strong>NIST Privacy Framework</strong> (2020; 1.1 in progress) — the two management frameworks a client
+  may ask an operator to align with. <strong>A</strong> <a href="https://iapp.org/resources/article/web-conference-iso-27701-vs-nist-privacy-framework-choosing-the-right-one-for-you/">IAPP comparison</a></li>
+<li><strong>The LEGO Group's Responsible Marketing to Children policy</strong> — the best-known brand
+  standard: parental permission for under-13s, anonymous usernames, no real photos of
+  children, privacy by design and by default named as principles; age-appropriate,
+  safe-by-design experiences. <strong>P</strong> <a href="https://education.theiet.org/media/6534/lego-mandatory-polices-responsible-marketing-to-children-policy.pdf">LEGO policy (PDF)</a>,
+  <a href="https://www.lego.com/en-us/sustainability/children/responsible-enagement-with-children">LEGO: responsible engagement with children</a></li>
+</ul>
+<p><strong>Reading.</strong> The machine's rules R15 (never generate a child), R24 (no child's name), R3
+(the cap), R4 (consent per channel per provider), R20 (disclosure) are already these
+standards. What is missing is the <em>instance-level</em> policy that says which of them apply
+where, and a gate that will not run a feature until its policy fields are set.</p>
+<h2>4. The business value of doing it properly</h2>
+<ul>
+<li><strong>Privacy investment returns</strong>: 96 % of organisations say the returns from privacy
+  investment outweigh the cost; 86 % say privacy law has a positive effect on their
+  business; measurable value named: customer trust, faster sales cycles, reduced risk.
+  <strong>P</strong> <a href="https://www.cisco.com/c/dam/en_us/about/doing_business/trust-center/docs/cisco-privacy-benchmark-study-2025.pdf">Cisco 2025 Data Privacy Benchmark</a>,
+  <a href="https://www.cisco.com/c/en/us/about/trust-center/data-privacy-benchmark-study.html">Cisco 2026 study</a></li>
+<li><strong>Consumers switch over data practices</strong>: 51 % of "privacy actives" have switched a
+  company over its data practices; 49 % of 25–34-year-olds — the parents of young
+  children. <strong>P</strong> <a href="https://newsroom.cisco.com/c/r/newsroom/en/us/a/y2024/m10/how-safe-is-our-data-consumers-want-to-know.html">Cisco 2024 Consumer Privacy Survey</a></li>
+<li><strong>Volunteered (zero-party) data outperforms inferred data</strong>: campaigns that ask the
+  customer what they want report conversion lifts of 31 % to several hundred per cent and
+  average collection-campaign conversion around 61 %; 82 % of marketers now collect it.
+  <strong>A</strong> <a href="https://www.demandlocal.com/blog/zero-party-data-collection-statistics/">Demand Local statistics</a>,
+  <a href="https://www.salesforce.com/marketing/personalization/zero-party-data/">Salesforce</a>
+  <em>Our family preferences, saves and asks are zero-party data — the family tells the machine
+  what to send. That is why the model needs no profiling.</em></li>
+<li><strong>Referrals are the SMB's best channel</strong> (83 %) and parents choose the programme that
+  shows up in their world (80 %) — trust is the acquisition channel in this category.
+  Research II §2.1, §3.</li>
+</ul>
+<p><strong>Reading.</strong> "Commercially but properly" is not a trade-off in this category: the family who
+opts in, saves and asks converts better than any inferred audience, and the parent who
+trusts the platform refers the next family. The responsible design <em>is</em> the growth design.</p>
+<h2>5. What it means for business.direct — the framework (built as <code>18-…</code> and the Policy screen)</h2>
+<ol>
+<li><strong>A policy per instance</strong> (<code>platform_id</code>): jurisdictions, audience model, child-data rule,
+   consent model per channel, marketing rules for minors, defaults, retention, AI
+   disclosure, postal address, opt-out SLA, the published privacy policy's clauses.</li>
+<li><strong>A policy gate</strong>: a feature runs only when the policy fields it depends on are set —
+   sequences need the postal address; the digest needs the published e-mail clause;
+   campaigns need the audience opt-in; SMS needs the consent text; generation needs the
+   disclosure rule.</li>
+<li><strong>Client onboarding as a checklist</strong> the policy screen shows: what is set, what is
+   missing, what is blocked.</li>
+<li><strong>The same for every client</strong>: a job portal (candidates, apprenticeships at 16–18), a
+   classifieds site (sellers' addresses, buyers' locations), a sports directory (players'
+   ages) — the fields change values, not shape.</li>
+<li><strong>The value statement to the client</strong>: lower legal exposure (the enforcement record), a
+   higher-converting audience (zero-party), a trusted brand in a category where parents
+   switch over data practices, and a machine that can be audited (every send logged with its
+   policy basis).</li>
+</ol>
+<h2>6. What was not found</h2>
+<ul>
+<li>No published enforcement case yet under New York's Child Data Protection Act.</li>
+<li>The FTC's own amended-rule text was read through law-firm summaries (the Federal Register
+  page is long); the dates are consistent across four sources.</li>
+<li>No public benchmark on the conversion effect of <em>responsible</em> marketing to parents
+  specifically; the zero-party and trust figures are the nearest evidence.</li>
+<li><strong>Link check</strong> (<code>curl</code>, 2026-09-19): four sources refuse scripted fetches (Cisco's two
+  study pages, UNICEF's PDF, Demand Local) — each was read through the search tool and is
+  kept; open them in a browser. Every other source resolved.</li>
+</ul>
+<footer>Source: <code>business-direct/docs/01e-research-responsible-data.md</code> · rendered by <code>docs/build.py</code>.</footer>
+</div>
+</body>
+</html>

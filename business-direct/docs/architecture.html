@@ -36,7 +36,7 @@ footer{margin-top:56px;padding-top:18px;border-top:1px solid var(--line);font-si
 </head>
 <body>
 <div class="wrap">
-<nav class="docnav" aria-label="Project documentation"><span class="docnav-brand">business.direct · docs</span><a href="index.html">Overview</a><a href="brief.html">Brief</a><a href="research.html">Research</a><a href="research-2.html">Research II</a><a href="research-3.html">Research III</a><a href="audit.html">Audit</a><a href="sources.html">Sources</a><a href="design-system.html">Design system</a><a href="layouts.html">Layouts</a><a href="05-layout-specs.html">Layout specs</a><a href="decisions.html">Decisions</a><a href="build-log.html">Build log</a><a href="gate.html">Gate</a><a href="client-asks.html">Owner asks</a><a href="business-logic.html">Business logic</a><a href="ssot.html">SSOT</a><a href="architecture.html" aria-current=page>Architecture</a><a href="technical-design.html">Technical design</a><a href="implementation-plan.html">Plan</a><a href="token-map.html">Token map</a><a href="analytics.html">Analytics</a><a href="audit-swot.html">Audit · SWOT</a></nav>
+<nav class="docnav" aria-label="Project documentation"><span class="docnav-brand">business.direct · docs</span><a href="index.html">Overview</a><a href="brief.html">Brief</a><a href="research.html">Research</a><a href="research-2.html">Research II</a><a href="research-3.html">Research III</a><a href="research-4.html">Research IV</a><a href="audit.html">Audit</a><a href="sources.html">Sources</a><a href="design-system.html">Design system</a><a href="layouts.html">Layouts</a><a href="05-layout-specs.html">Layout specs</a><a href="decisions.html">Decisions</a><a href="build-log.html">Build log</a><a href="gate.html">Gate</a><a href="client-asks.html">Owner asks</a><a href="business-logic.html">Business logic</a><a href="ssot.html">SSOT</a><a href="architecture.html" aria-current=page>Architecture</a><a href="technical-design.html">Technical design</a><a href="implementation-plan.html">Plan</a><a href="token-map.html">Token map</a><a href="analytics.html">Analytics</a><a href="audit-swot.html">Audit · SWOT</a><a href="policy-framework.html">Policy framework</a></nav>
 <header><p class="eyebrow">Calvus · business.direct · project documentation</p><h1>business.direct — architecture</h1></header>
 <p><em>Written 2026-09-19 for the first client, Your Field NYC (D11); phase 2 (campaigns, upgrades, recap — D21–D23) added the same day. The stack is PROPOSED
 (§10, ADRs in §11): it follows DiscountDirect's decided stack (D26 there) because the
@@ -220,6 +220,10 @@ and the message log.</p>
 <tr>
 <td>Sending domain per instance</td>
 <td>warm-up schedule, daily cap, bounce monitor; the outbox refuses sends past the limits</td>
+</tr>
+<tr>
+<td>Policy gate (D32)</td>
+<td>reads the instance's policy record before every send and draft; blocks and explains</td>
 </tr>
 <tr>
 <td>LLM</td>
@@ -490,6 +494,12 @@ a family's deletion request.</p>
 <td><strong>Propensity score computed in the nightly metrics job</strong>, stored on <code>provider_state</code>, read by the sequence and call-list jobs</td>
 <td>(a) score at send time; (b) nightly, stored; (c) a third-party lead-scoring service</td>
 <td>(b): one number everyone reads, auditable, cheap; matches the events already logged</td>
+</tr>
+<tr>
+<td>ADR-14</td>
+<td><strong>One policy record per instance, enforced by a gate in the outbox, the draft jobs and the schema</strong> (D32)</td>
+<td>(a) policy as documentation; (b) policy as configuration read by the code; (c) a third-party consent-management platform</td>
+<td>(b): the enforcement record is a list of defaults and labels, not breaches — the rules must be code; a CMP handles cookies, not sequences, digests and audiences</td>
 </tr>
 <tr>
 <td>ADR-11</td>

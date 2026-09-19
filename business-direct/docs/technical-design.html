@@ -36,7 +36,7 @@ footer{margin-top:56px;padding-top:18px;border-top:1px solid var(--line);font-si
 </head>
 <body>
 <div class="wrap">
-<nav class="docnav" aria-label="Project documentation"><span class="docnav-brand">business.direct · docs</span><a href="index.html">Overview</a><a href="brief.html">Brief</a><a href="research.html">Research</a><a href="research-2.html">Research II</a><a href="research-3.html">Research III</a><a href="audit.html">Audit</a><a href="sources.html">Sources</a><a href="design-system.html">Design system</a><a href="layouts.html">Layouts</a><a href="05-layout-specs.html">Layout specs</a><a href="decisions.html">Decisions</a><a href="build-log.html">Build log</a><a href="gate.html">Gate</a><a href="client-asks.html">Owner asks</a><a href="business-logic.html">Business logic</a><a href="ssot.html">SSOT</a><a href="architecture.html">Architecture</a><a href="technical-design.html" aria-current=page>Technical design</a><a href="implementation-plan.html">Plan</a><a href="token-map.html">Token map</a><a href="analytics.html">Analytics</a><a href="audit-swot.html">Audit · SWOT</a></nav>
+<nav class="docnav" aria-label="Project documentation"><span class="docnav-brand">business.direct · docs</span><a href="index.html">Overview</a><a href="brief.html">Brief</a><a href="research.html">Research</a><a href="research-2.html">Research II</a><a href="research-3.html">Research III</a><a href="research-4.html">Research IV</a><a href="audit.html">Audit</a><a href="sources.html">Sources</a><a href="design-system.html">Design system</a><a href="layouts.html">Layouts</a><a href="05-layout-specs.html">Layout specs</a><a href="decisions.html">Decisions</a><a href="build-log.html">Build log</a><a href="gate.html">Gate</a><a href="client-asks.html">Owner asks</a><a href="business-logic.html">Business logic</a><a href="ssot.html">SSOT</a><a href="architecture.html">Architecture</a><a href="technical-design.html" aria-current=page>Technical design</a><a href="implementation-plan.html">Plan</a><a href="token-map.html">Token map</a><a href="analytics.html">Analytics</a><a href="audit-swot.html">Audit · SWOT</a><a href="policy-framework.html">Policy framework</a></nav>
 <header><p class="eyebrow">Calvus · business.direct · project documentation</p><h1>business.direct — technical design</h1></header>
 <p><em>Written 2026-09-19 on <a href="architecture.html"><code>11-architecture.md</code></a>'s PROPOSED containers. Where the prototype
 already implements a rule, the section names the function in <code>assets/app.js</code> so a
@@ -93,6 +93,12 @@ developer can read the behaviour before the code exists.</em></p>
 <td>Integrations</td>
 <td>card grid</td>
 <td><code>platform.integrations</code></td>
+</tr>
+<tr>
+<td>Platform</td>
+<td>Policy</td>
+<td>instance switch · gate table · principles · the record as an onboarding checklist</td>
+<td><code>platform.policy</code>, <code>policyGate</code></td>
 </tr>
 <tr>
 <td>Platform</td>
@@ -206,6 +212,7 @@ assumptions      { platform_id, key, value, source: 'measured'|'benchmark'|'assu
 sending          { platform_id, domain, warm_day, warm_days, daily_cap, bounce_rate, reply_sla_hours, postal_address }
 opt_outs         { platform_id, provider_id, kind: 'not_mine'|'unsubscribed'|'bounced', at, source }   # append-only
 auto_approval    { platform_id, owner, department, clean_weeks, earned_at?, revoked_at? }
+policies         { platform_id, ...Policy (SSOT §3), version, updated_by, updated_at }   # D32; the gate reads it
 experiments      { platform_id, name, treat_area, control_area, weeks, started_at, state, readout? }
 media_assets     { _id, platform_id, provider_id?, adapter, generated: bool, credential: C2PA, blob_url, used_in[] }
 </code></pre>
@@ -359,6 +366,11 @@ cannot turn SMS on without a consent row.</p>
 <td><code>score</code></td>
 <td>nightly 02:30</td>
 <td>propensity per provider → <code>provider_state.score</code>; the sequence and call-list jobs read it (ADR-13)</td>
+</tr>
+<tr>
+<td><code>policy-gate</code></td>
+<td>before every send and draft; at schema validation</td>
+<td>refuse a feature whose policy fields are missing; write the policy basis (clause, consent, cap) on every message (R26)</td>
 </tr>
 <tr>
 <td><code>sending-guard</code></td>

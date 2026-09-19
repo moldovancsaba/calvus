@@ -23,7 +23,7 @@ instance (`platform_id`). "Measured" means a number in the build log, not a clai
 
 | M | Name | Weeks | Ships |
 |---|---|---|---|
-| M0 | Foundation | 1–2 | repo, SSO, MongoDB, connector for Your Field with sync, the operator console shell with the three views' navigation, feature flags |
+| M0 | Foundation | 1–2 | repo, SSO, MongoDB, connector for Your Field with sync, the operator console shell with the three views' navigation, feature flags, **the policy record and gate** |
 | M1 | Provider sales and conversations | 3–5 | sequences, Resend out + inbound, threads, drafted replies (AI optional), pipeline, apply-to-manage through `claim-requests`, provider view (today, conversations, knowledge), the family's ask |
 | M2 | Social publishing | 6–8 | post drafts from the catalogue, approval queue, calendar, Meta adapter (IG + FB) publish, comments/DMs inbound, audit snapshots |
 | M3 | Families | 9–10 | preferences by signed link, consent capture, caps, Sunday digest, saved-provider alerts through platform push, Stop |
@@ -40,6 +40,8 @@ instance (`platform_id`). "Measured" means a number in the build log, not a clai
 | BD-0-3 | MongoDB models per `12-technical-design.md` §2 with `platform_id` and `version` | migrations; optimistic-concurrency test |
 | BD-0-4 | `YourFieldConnector` + hourly `sync` | 252 providers cached; a changed `updatedAt` produces a diff event (test with a fixture) |
 | BD-0-5 | Console shell: role switch, rail/bottom bar, deep links | the prototype's 13 screens reachable, empty states |
+| BD-0-7 | Policy record and gate (ADR-14) | a feature whose policy fields are missing does not run (test per row of framework §3); every message carries its policy basis |
+| BD-0-8 | Policy screen as onboarding checklist | the operator sees set / missing / placeholder per field and what each blocks |
 | BD-0-6 | Outbox + `send` worker + dead-letter | a Server Action cannot send (test); retry with backoff; lag metric |
 | BD-1-1 | Sequence model and editor | steps, merge fields, opt-out footer mandatory (validation) |
 | BD-1-2 | `ResendAdapter` out + inbound webhook (signed) | a reply lands in the right thread within 1 minute (measured) |

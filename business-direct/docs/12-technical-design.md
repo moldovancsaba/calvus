@@ -15,6 +15,7 @@ developer can read the behaviour before the code exists.*
 | Platform | Providers | search + chips + table + drawer | `platform.providers`, `openDrawer` |
 | Platform | Generated pages | table | `platform.pages`, `genPages` |
 | Platform | Integrations | card grid | `platform.integrations` |
+| Platform | Policy | instance switch · gate table · principles · the record as an onboarding checklist | `platform.policy`, `policyGate` |
 | Platform | Knowledge and rules | file editors | `platform.knowledge`, `kfiles` |
 | Platform | Intelligence | tiles + by department · radar and needs-you | `platform.intelligence` |
 | Platform | Economics | tiles + next-dollar table + funnel strip + 12-month plan · inputs | `platform.economics`, `econ()`, `S.econ` |
@@ -64,6 +65,7 @@ assumptions      { platform_id, key, value, source: 'measured'|'benchmark'|'assu
 sending          { platform_id, domain, warm_day, warm_days, daily_cap, bounce_rate, reply_sla_hours, postal_address }
 opt_outs         { platform_id, provider_id, kind: 'not_mine'|'unsubscribed'|'bounced', at, source }   # append-only
 auto_approval    { platform_id, owner, department, clean_weeks, earned_at?, revoked_at? }
+policies         { platform_id, ...Policy (SSOT §3), version, updated_by, updated_at }   # D32; the gate reads it
 experiments      { platform_id, name, treat_area, control_area, weeks, started_at, state, readout? }
 media_assets     { _id, platform_id, provider_id?, adapter, generated: bool, credential: C2PA, blob_url, used_in[] }
 ```
@@ -132,6 +134,7 @@ cannot turn SMS on without a consent row.
 | `entitlements` | webhook-driven | Stripe events → entitlements → stage → card flag through the connector |
 | `clips` | on upload | run `MediaAdapter.clips`; each clip becomes a post draft with `media.kind = 'real'` |
 | `score` | nightly 02:30 | propensity per provider → `provider_state.score`; the sequence and call-list jobs read it (ADR-13) |
+| `policy-gate` | before every send and draft; at schema validation | refuse a feature whose policy fields are missing; write the policy basis (clause, consent, cap) on every message (R26) |
 | `sending-guard` | before every send | refuse when past the warm-up cap; pause the sequence at bounce ≥ 2 %; pace at the daily cap; block a provider template without `{postal_address}` (R23, Q2) |
 | `auto-approve` | on draft | a department with four clean weeks sends without a person (R25); logged; the family's Stop cancels |
 | `metrics` | nightly 02:00 | roll `events` into `metrics_daily`; replace an assumption with a measured rate once ≥ 100 observations exist (R16) |
