@@ -1,6 +1,6 @@
 # business.direct — implementation plan
 
-*Written 2026-09-19 on the PROPOSED architecture. Estimates are for a team of two
+*Written 2026-09-19 on the PROPOSED architecture; phase 2 (M5) added the same day. Estimates are for a team of two
 developers and the owner as product lead; they assume ADR-1 to ADR-8 stand and the open
 asks in `08-client-asks.md` close in the first two weeks. Every issue has a Definition of
 Done; the blocked register is honest about what waits on the client.*
@@ -27,8 +27,9 @@ instance (`platform_id`). "Measured" means a number in the build log, not a clai
 | M1 | Provider sales | 3–5 | sequences, Resend out + inbound, threads, drafted replies (AI optional), pipeline, apply-to-manage through `claim-requests`, provider view (today, knowledge) |
 | M2 | Social publishing | 6–8 | post drafts from the catalogue, approval queue, calendar, Meta adapter (IG + FB) publish, comments/DMs inbound, audit snapshots |
 | M3 | Families | 9–10 | preferences by signed link, consent capture, caps, Sunday digest, saved-provider alerts through platform push, Stop |
-| M4 | Intelligence and pages | 11–12 | overview tiles on real numbers, market radar note, generated pages written through the connector, operations dashboards |
-| M5 | Second instance | 13–14 | Sportolok connector, Hungarian dictionary, legal footers; proves ADR-2 |
+| M4 | Intelligence and pages | 11–12 | overview tiles on real numbers, the intelligence recap screen, market radar note, generated pages written through the connector, operations dashboards |
+| M5 | Campaigns and upgrades (phase 2) | 13–15 | provider campaigns from the card with audiences from the platform's saves, results screen, products and Stripe entitlements, the family inbox's reason line |
+| M6 | Second instance | 16–17 | Sportolok connector, Hungarian dictionary, legal footers; proves ADR-2 |
 
 ## 3. Issues
 
@@ -62,8 +63,15 @@ instance (`platform_id`). "Measured" means a number in the build log, not a clai
 | BD-4-2 | Market radar weekly note | from catalogue stats; filed by the operator |
 | BD-4-3 | Generated pages through the connector | only ≥ 3 providers; JSON-LD; sitemap entry on the platform |
 | BD-4-4 | Operations dashboards and alerts | the five alerts in architecture §9 fire in a drill |
-| BD-5-1 | `SportolokConnector` incl. `ingest` | 431 listings cached; one page published to the reference instance |
-| BD-5-2 | Hungarian dictionary and legal footers | every string from the dictionary; footer per market |
+| BD-4-5 | Intelligence recap screen | every tile names its source; "needs you" lists approvals, replied-not-applied, v1 integrations to connect |
+| BD-5-1 | `draft-campaigns` job and the campaign model | one draft per kind per card event; kinds per `09-business-logic.md` §4 |
+| BD-5-2 | Provider campaigns screen | approve / edit / skip; edit drops the AI badge; audience shown before approval |
+| BD-5-3 | Audience resolution through the connector (`savesFor`, `familiesNear`) | no uploaded lists possible (test); counts logged |
+| BD-5-4 | `send-campaigns` with preference and cap | a family at the cap receives nothing (test); the reason line on every message |
+| BD-5-5 | Products, Stripe Checkout, entitlements webhook | first `active` → *upgraded* → card flag set through the connector |
+| BD-5-6 | Provider results screen | what went out from the message log; plan ladder from entitlements |
+| BD-6-1 | `SportolokConnector` incl. `ingest` | 431 listings cached; one page published to the reference instance |
+| BD-6-2 | Hungarian dictionary and legal footers | every string from the dictionary; footer per market |
 
 ## 4. Blocked register
 
@@ -74,7 +82,9 @@ instance (`platform_id`). "Measured" means a number in the build log, not a clai
 | B3 | SMS | Twilio account, consent text approved by counsel; ask #3 | BD-3-2's SMS branch |
 | B4 | Real tiles | ask #6: platform analytics | BD-4-1 |
 | B5 | Pilot provider | ask #6: one provider's real numbers | provider-view metrics |
-| B6 | Pricing and packaging | ask #4: bundled vs self-serve | the *upgraded* stage's product list |
+| B6 | Product prices | ask #4: the platform's real prices (assumed bundled base + provider-bought reach, D21) | BD-5-5 |
+| B7 | Audience data | the platform's saves and family locations through keyed endpoints | BD-5-3 |
+| B8 | Stripe account | the platform's merchant account and tax setup | BD-5-5 |
 
 ## 5. Risks
 
@@ -92,6 +102,6 @@ instance (`platform_id`). "Measured" means a number in the build log, not a clai
 **Release 1 (M0–M3, ~10 weeks):** Your Field NYC; provider sales end to end; Instagram and
 Facebook publishing with approval; family digest, alerts and preferences; caps and consent;
 the operator's approval queue as the one gate. **Release 1.1 (M4):** real intelligence,
-generated pages, dashboards. **Release 2 (M5):** the second instance. Out of scope until a
-decision: TikTok and X, Google Business Profile, calendars, provider campaigns as paid
-products.
+the recap, generated pages, dashboards. **Release 2 (M5):** provider campaigns, results,
+products and Stripe upgrades. **Release 3 (M6):** the second instance. Out of scope until a
+decision: TikTok and X, Google Business Profile, calendars.

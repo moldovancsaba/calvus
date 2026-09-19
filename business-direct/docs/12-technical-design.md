@@ -16,14 +16,17 @@ developer can read the behaviour before the code exists.*
 | Platform | Generated pages | table | `platform.pages`, `genPages` |
 | Platform | Integrations | card grid | `platform.integrations` |
 | Platform | Knowledge and rules | file editors | `platform.knowledge`, `kfiles` |
+| Platform | Intelligence | tiles + by department · radar and needs-you | `platform.intelligence` |
 | Provider | Today | hero card + (invitation · or · tiles, waiting, team, knowledge) | `provider.today` |
+| Provider | Campaigns | approval cards built from the card | `provider.campaigns`, `campaignsFor`, `campaignCard` |
+| Provider | Results | tiles + what went out + plan ladder | `provider.results`, `ladder` |
 | Provider | Knowledge | file editors | `SCREENS.provider.knowledge` |
-| Family | Inbox | published post · digest · provider SMS | `family.inbox` |
+| Family | Inbox | published post · digest · campaigns from saved providers · provider SMS | `family.inbox` |
 | Family | Saved | listing cards | `family.saved` |
 | Family | Preferences | toggles + stop | `family.prefs` |
 
 Navigation: rail ≥ 1024, bottom bar below (`app.css`), the role switch in the top bar;
-deep links `?view=&screen=` (`app.js`, bottom). Layout rules: `05-layout-specs.md`.
+deep links `?view=&screen=&stage=` (`app.js`, bottom; `stage` pre-sets the persona's pipeline stage for previews). Layout rules: `05-layout-specs.md`.
 
 ## 2. Content model (MongoDB, `platform_id` on every document)
 
@@ -44,6 +47,10 @@ messages         { _id, platform_id, to{family_id|provider_id|channel_account}, 
 knowledge_files  { owner: 'platform'|provider_id, path, text, updated_by, updated_at, version }
 integrations     { platform_id, id, state, account_ref, token_ref, connected_by, connected_at }
 generated_pages  { platform_id, activity, area, slug, provider_ids[], state, published_at? }
+campaigns        { _id, platform_id, provider_id, kind, title, copy, channels[], state, ai, scheduled_for?,
+                   audience_rule: 'saved'|'saved+nearby', audience_count?, approved_by?, approved_at?, version }
+products         { platform_id, id, name, what, price_cents, interval: 'month'|'season', card_flag }
+entitlements     { provider_id, platform_id, product_id, since, until?, stripe_subscription_id }
 ```
 
 Indexes: `provider_state (platform_id, stage)`, `drafts (platform_id, state, scheduled_for)`,
@@ -78,6 +85,13 @@ message); `waiting → skipped`; radar notes `waiting → filed`. Prototype: `ap
 | managing | upgraded | a paid product on the platform | drawer chip only |
 | any | any | operator moves by hand; logged with `stage_changed_by: 'operator'` | `data-setstage` |
 
+**Campaign** — `waiting → scheduled → published`; `waiting → skipped`; edit sets `ai=false`
+(prototype: `approveCampaign`, `saveCampaign`, `skipCampaign`). Sending resolves the audience
+at send time (ADR-10), then the per-family preference and cap checks.
+
+**Entitlement** — `none → active` on the Stripe webhook; `active → ended` on cancellation;
+the first `active` moves the provider to *upgraded* (prototype: `data-buy`).
+
 **Family channel** — `on ↔ off` per channel; *Stop* → every channel off + cancel queued
 drafts for that family. Consent for SMS is a separate append-only record; the toggle
 cannot turn SMS on without a consent row.
@@ -92,6 +106,9 @@ cannot turn SMS on without a consent row.
 | `digest` | Sunday 17:00 build, 18:00 send | per family with `picks` on: saved + nearby-with-session rows; cap check; outbox |
 | `publish` | every 5 min | send due `scheduled` posts through the adapter; write `messages`, snapshot to Blob |
 | `send` | every minute | drain the outbox: cap check again (R3), send, log; retry with backoff; dead-letter after 5 |
+| `draft-campaigns` | daily 08:30 | for managing providers: one draft per kind per card event, none if one is waiting |
+| `send-campaigns` | every 5 min | approved campaigns: resolve audience, preference + cap per family, outbox |
+| `entitlements` | webhook-driven | Stripe events → entitlements → stage → card flag through the connector |
 | `retention` | nightly | drafts 90 days after final state; messages 24 months |
 
 ## 6. Connectors and adapters
@@ -103,6 +120,9 @@ interface PlatformConnector {
   createClaimRequest(providerId, contact): Promise<void>;   // keyed
   notifyFamily(familyId, payload): Promise<void>;           // keyed
   publishPage(page): Promise<{url}>;                        // keyed (Sportolok: POST /api/ingest)
+  savesFor(providerId): Promise<FamilyRef[]>;               // keyed — campaign audience (ADR-10)
+  familiesNear(geo, ageRange): Promise<FamilyRef[]>;        // keyed — nearby audience
+  setCardFlag(providerId, flag: 'featured'|'camp'|'profile', on): Promise<void>;  // keyed — upgrades
 }
 interface ChannelAdapter {
   preview(draft): Rendered;   publish(draft): Promise<{providerMessageId}>;
@@ -127,8 +147,8 @@ Published AI content is marked where Art. 50 applies; internal drafts carry the 
 Operator: approve/edit/skip (Server Actions, optimistic UI, `version` check); knowledge
 file editor (textarea, saved on blur, versioned); sequence editor (subject, body, steps);
 integration connect (OAuth redirect, callback stores `token_ref`). Provider: apply-to-manage
-(one button → platform claim request), knowledge editor. Family: toggles, stop, consent
-capture (checkbox + text stored verbatim as proof).
+(one button → platform claim request), knowledge editor. Provider, phase 2: campaign approve / edit / skip; product choose → Stripe Checkout redirect.
+Family: toggles, stop, consent capture (checkbox + text stored verbatim as proof).
 
 ## 9. i18n
 

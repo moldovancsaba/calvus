@@ -36,9 +36,9 @@ footer{margin-top:56px;padding-top:18px;border-top:1px solid var(--line);font-si
 </head>
 <body>
 <div class="wrap">
-<nav class="docnav" aria-label="Project documentation"><span class="docnav-brand">business.direct · docs</span><a href="index.html">Overview</a><a href="brief.html">Brief</a><a href="research.html">Research</a><a href="audit.html">Audit</a><a href="sources.html">Sources</a><a href="design-system.html">Design system</a><a href="layouts.html">Layouts</a><a href="05-layout-specs.html">Layout specs</a><a href="decisions.html">Decisions</a><a href="build-log.html">Build log</a><a href="gate.html">Gate</a><a href="client-asks.html">Owner asks</a><a href="ssot.html">SSOT</a><a href="architecture.html" aria-current=page>Architecture</a><a href="technical-design.html">Technical design</a><a href="implementation-plan.html">Plan</a><a href="token-map.html">Token map</a></nav>
+<nav class="docnav" aria-label="Project documentation"><span class="docnav-brand">business.direct · docs</span><a href="index.html">Overview</a><a href="brief.html">Brief</a><a href="research.html">Research</a><a href="audit.html">Audit</a><a href="sources.html">Sources</a><a href="design-system.html">Design system</a><a href="layouts.html">Layouts</a><a href="05-layout-specs.html">Layout specs</a><a href="decisions.html">Decisions</a><a href="build-log.html">Build log</a><a href="gate.html">Gate</a><a href="client-asks.html">Owner asks</a><a href="business-logic.html">Business logic</a><a href="ssot.html">SSOT</a><a href="architecture.html" aria-current=page>Architecture</a><a href="technical-design.html">Technical design</a><a href="implementation-plan.html">Plan</a><a href="token-map.html">Token map</a></nav>
 <header><p class="eyebrow">Calvus · business.direct · project documentation</p><h1>business.direct — architecture</h1></header>
-<p><em>Written 2026-09-19 for the first client, Your Field NYC (D11). The stack is PROPOSED
+<p><em>Written 2026-09-19 for the first client, Your Field NYC (D11); phase 2 (campaigns, upgrades, recap — D21–D23) added the same day. The stack is PROPOSED
 (§10, ADRs in §11): it follows DiscountDirect's decided stack (D26 there) because the
 client platform runs on the same family (<a href="audit.html"><code>02-audit.md</code></a> §1), and the owner or client flips
 each ADR. Terms are the SSOT's (<a href="ssot.html"><code>10-ssot.md</code></a>).</em></p>
@@ -233,13 +233,21 @@ upgrades → <em>upgraded</em>. Reminder after 5 days to non-repliers; call task
 digest from saved providers + nearby providers with a session next week → cap check →
 outbox → Resend at 18:00. Alerts: catalogue sync diff (new session at a saved provider) →
 cap check → platform push.</p>
+<p><strong>Provider campaigns (phase 2).</strong> Catalogue sync → for a managing provider with a trial
+policy, next session, announcement or open registration: build a campaign draft → the
+provider approves / edits / skips in its view → audience resolved (saved families + nearby
+in the age range, from the platform's saves) → per family: preference and cap check →
+outbox → channel adapter → message log with the reason line.</p>
+<p><strong>Upgrades.</strong> Provider chooses a product → Stripe Checkout (the platform's account) →
+webhook → <code>entitlements</code> row → stage <em>upgraded</em> → the platform connector sets the
+featured / camp / profile flag on the card.</p>
 <p><strong>Preferences and stop.</strong> A family's change is written first, then the caps; <em>Stop</em> sets
 every channel off and cancels queued messages for that family in the same transaction.</p>
 <h2>6. Data architecture</h2>
 <p>MongoDB collections: <code>providers_cache</code> (the catalogue copy, refreshed by sync, never
 edited), <code>provider_state</code>, <code>drafts</code>, <code>approvals</code> (append-only), <code>sequences</code>, <code>threads</code>,
 <code>families_prefs</code>, <code>consents</code> (append-only, with the proof text), <code>messages</code> (append-only
-log of everything sent), <code>knowledge_files</code>, <code>integrations</code>, <code>generated_pages</code>. Every
+log of everything sent), <code>knowledge_files</code>, <code>integrations</code>, <code>generated_pages</code>, <code>campaigns</code>, <code>products</code>, <code>entitlements</code>. Every
 document carries <code>platform_id</code> (Your Field, Sportolok) — one deployment, several
 instances (ADR-2). Retention: message log 24 months; consent log for the life of the
 account plus 5 years; drafts 90 days after their final state.</p>
@@ -301,6 +309,12 @@ account plus 5 years; drafts 90 days after their final state.</p>
 <td>drafting</td>
 <td>API key</td>
 <td>optional per department; prompts are the knowledge files; outputs marked as AI drafts</td>
+</tr>
+<tr>
+<td>Stripe (ADR-9)</td>
+<td>provider upgrades: checkout, subscription, webhook → entitlement</td>
+<td>API key; signed webhooks</td>
+<td>the platform is the merchant; business.direct records the entitlement and the stage</td>
 </tr>
 </tbody>
 </table></div>
@@ -376,8 +390,13 @@ a family's deletion request.</p>
 </tr>
 <tr>
 <td>AI</td>
-<td>one LLM provider behind an interface; Claude or equivalent, configurable</td>
+<td>one LLM provider behind an interface, configurable</td>
 <td>drafting quality; optional (R10)</td>
+</tr>
+<tr>
+<td>Billing</td>
+<td>Stripe (Checkout + Billing, the platform's account)</td>
+<td>upgrades (ADR-9)</td>
 </tr>
 </tbody>
 </table></div>
@@ -439,6 +458,18 @@ a family's deletion request.</p>
 <td><strong>Generated pages are written to the platform</strong> through its API, not hosted by business.direct</td>
 <td>(a) host here; (b) write to the platform</td>
 <td>(b): search authority belongs to the platform's domain (research §5)</td>
+</tr>
+<tr>
+<td>ADR-9</td>
+<td><strong>Upgrades billed by Stripe on the platform's account</strong>; business.direct stores only the entitlement</td>
+<td>(a) business.direct as merchant; (b) the platform as merchant via Stripe; (c) invoices by hand</td>
+<td>(b): the platform already sells "List your program"; one merchant, one tax position; the machine never holds card data</td>
+</tr>
+<tr>
+<td>ADR-10</td>
+<td><strong>Campaign audiences are resolved by the platform's saves and location, never uploaded lists</strong></td>
+<td>(a) providers upload contacts; (b) audiences from the platform's data only</td>
+<td>(b): consent lives on the platform (R4, R11); no provider list ever enters the machine</td>
 </tr>
 </tbody>
 </table></div>

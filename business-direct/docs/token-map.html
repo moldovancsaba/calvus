@@ -36,7 +36,7 @@ footer{margin-top:56px;padding-top:18px;border-top:1px solid var(--line);font-si
 </head>
 <body>
 <div class="wrap">
-<nav class="docnav" aria-label="Project documentation"><span class="docnav-brand">business.direct · docs</span><a href="index.html">Overview</a><a href="brief.html">Brief</a><a href="research.html">Research</a><a href="audit.html">Audit</a><a href="sources.html">Sources</a><a href="design-system.html">Design system</a><a href="layouts.html">Layouts</a><a href="05-layout-specs.html">Layout specs</a><a href="decisions.html">Decisions</a><a href="build-log.html">Build log</a><a href="gate.html">Gate</a><a href="client-asks.html">Owner asks</a><a href="ssot.html">SSOT</a><a href="architecture.html">Architecture</a><a href="technical-design.html">Technical design</a><a href="implementation-plan.html">Plan</a><a href="token-map.html" aria-current=page>Token map</a></nav>
+<nav class="docnav" aria-label="Project documentation"><span class="docnav-brand">business.direct · docs</span><a href="index.html">Overview</a><a href="brief.html">Brief</a><a href="research.html">Research</a><a href="audit.html">Audit</a><a href="sources.html">Sources</a><a href="design-system.html">Design system</a><a href="layouts.html">Layouts</a><a href="05-layout-specs.html">Layout specs</a><a href="decisions.html">Decisions</a><a href="build-log.html">Build log</a><a href="gate.html">Gate</a><a href="client-asks.html">Owner asks</a><a href="business-logic.html">Business logic</a><a href="ssot.html">SSOT</a><a href="architecture.html">Architecture</a><a href="technical-design.html">Technical design</a><a href="implementation-plan.html">Plan</a><a href="token-map.html" aria-current=page>Token map</a></nav>
 <header><p class="eyebrow">Calvus · business.direct · project documentation</p><h1>business.direct — token and component map</h1></header>
 <p><em>Written 2026-09-19. What the prototype's CSS becomes in production. The prototype does not
 consume a design-system package — it is dependency-free HTML — but its custom properties
@@ -216,8 +216,18 @@ it appears in body text.</p>
 </tr>
 <tr>
 <td><code>.listing</code>, <code>.pin</code>, <code>.ladder</code></td>
-<td><code>Card</code> with an avatar; the ladder is the platform's product list</td>
-<td>family view</td>
+<td><code>Card</code> with an avatar; the ladder is the provider's plan (products, <code>done</code> = active entitlement)</td>
+<td>family saved, provider results, drawer</td>
+</tr>
+<tr>
+<td>campaign card (= <code>.approval</code> + <code>.preview</code> + <code>.why</code>)</td>
+<td>product component <code>CampaignCard</code> — the approval card with the audience line</td>
+<td>provider campaigns, family inbox (read-only)</td>
+</tr>
+<tr>
+<td>product card (= <code>.card</code> + <code>.foot</code>)</td>
+<td><code>Card</code> with price and a <code>Button</code> → Stripe Checkout</td>
+<td>provider today</td>
 </tr>
 <tr>
 <td><code>.push</code>, <code>.digest</code>, <code>.sms</code></td>

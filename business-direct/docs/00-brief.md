@@ -55,9 +55,10 @@ Two flows are the front door (D14), and four automations sit behind them (D3):
 | **B2B sales** | Works every listed provider through a pipeline — identified → contacted → replied → applied → managing → upgraded — with e-mail and phone from the card, sequences with human sign-off, the reply inbox, and the upsell ("and more": featured listing, camp placement, campaigns). Goal: providers who manage their own listing and buy more. | platform operator; the provider on their side |
 
 Behind them: **family digests and alerts**, **generated landing pages and SEO** (activity ×
-neighbourhood × age), **provider campaigns** (trial classes, open spots, camp registration,
-announcements — DiscountDirect's offer cards on listing data), and **activation** as the
-pipeline's first stages. Optional AI support is a layer the operator or provider switches
+neighbourhood × age), **provider campaigns** (trial classes, open spots, announcements,
+registration — built from the card, approved by the provider, sent by the family's
+preferences under the cap; phase 2, D22), **upgrades** (the platform's own products, D21)
+and **activation** as the pipeline's first stages. Optional AI support is a layer the operator or provider switches
 on per department, never a requirement (D6). An **intelligence dashboard** and an
 **integrations** screen (the platform's own API first, then the social channels, e-mail,
 phone/SMS) are part of the first build.
@@ -85,4 +86,6 @@ Stages 0–5 done 2026-09-19. **Gate 1 (design system) approved (D9)**, re-issue
 English on the client's data the same day; **gate 2 (layout frames) approved (D16)**; the
 prototype built as one page with three views (`../index.html`, D17–D18) and measured at 390
 and 1440 (`06-build-log.md`, `07-gate.md`); the presentation (`bemutato.html`) and the
-technical package (`10`–`14`, stack PROPOSED) written. Tested by the owner and accepted (D20); round 2 shipped. **Next: the open asks.**
+technical package (`10`–`14`, stack PROPOSED) written. Tested by the owner and accepted (D20); round 2 shipped. **Phase 2 (D21–D24)**: provider
+campaigns and results, upgrades, the intelligence recap, the business-logic document — asks
+#4–6 assumed (D21) until answered. **Next: the owner's answers, or a flipped ADR.**

@@ -36,7 +36,7 @@ footer{margin-top:56px;padding-top:18px;border-top:1px solid var(--line);font-si
 </head>
 <body>
 <div class="wrap">
-<nav class="docnav" aria-label="Project documentation"><span class="docnav-brand">business.direct · docs</span><a href="index.html">Overview</a><a href="brief.html" aria-current=page>Brief</a><a href="research.html">Research</a><a href="audit.html">Audit</a><a href="sources.html">Sources</a><a href="design-system.html">Design system</a><a href="layouts.html">Layouts</a><a href="05-layout-specs.html">Layout specs</a><a href="decisions.html">Decisions</a><a href="build-log.html">Build log</a><a href="gate.html">Gate</a><a href="client-asks.html">Owner asks</a><a href="ssot.html">SSOT</a><a href="architecture.html">Architecture</a><a href="technical-design.html">Technical design</a><a href="implementation-plan.html">Plan</a><a href="token-map.html">Token map</a></nav>
+<nav class="docnav" aria-label="Project documentation"><span class="docnav-brand">business.direct · docs</span><a href="index.html">Overview</a><a href="brief.html" aria-current=page>Brief</a><a href="research.html">Research</a><a href="audit.html">Audit</a><a href="sources.html">Sources</a><a href="design-system.html">Design system</a><a href="layouts.html">Layouts</a><a href="05-layout-specs.html">Layout specs</a><a href="decisions.html">Decisions</a><a href="build-log.html">Build log</a><a href="gate.html">Gate</a><a href="client-asks.html">Owner asks</a><a href="business-logic.html">Business logic</a><a href="ssot.html">SSOT</a><a href="architecture.html">Architecture</a><a href="technical-design.html">Technical design</a><a href="implementation-plan.html">Plan</a><a href="token-map.html">Token map</a></nav>
 <header><p class="eyebrow">Calvus · business.direct · project documentation</p><h1>business.direct — brief</h1></header>
 <p><em>Stage 0 of the prototyping standard (<code>PROTOTYPING.md</code>). Written 2026-09-19, revised the same
 day when the owner named the first client. Everything here is what the owner said, what the
@@ -119,9 +119,10 @@ that make the machine run while "nobody logs in".</p>
 </tbody>
 </table></div>
 <p>Behind them: <strong>family digests and alerts</strong>, <strong>generated landing pages and SEO</strong> (activity ×
-neighbourhood × age), <strong>provider campaigns</strong> (trial classes, open spots, camp registration,
-announcements — DiscountDirect's offer cards on listing data), and <strong>activation</strong> as the
-pipeline's first stages. Optional AI support is a layer the operator or provider switches
+neighbourhood × age), <strong>provider campaigns</strong> (trial classes, open spots, announcements,
+registration — built from the card, approved by the provider, sent by the family's
+preferences under the cap; phase 2, D22), <strong>upgrades</strong> (the platform's own products, D21)
+and <strong>activation</strong> as the pipeline's first stages. Optional AI support is a layer the operator or provider switches
 on per department, never a requirement (D6). An <strong>intelligence dashboard</strong> and an
 <strong>integrations</strong> screen (the platform's own API first, then the social channels, e-mail,
 phone/SMS) are part of the first build.</p>
@@ -143,7 +144,9 @@ connecting an integration with a key. Each is shown in place, visibly inert, wit
 English on the client's data the same day; <strong>gate 2 (layout frames) approved (D16)</strong>; the
 prototype built as one page with three views (<code>../index.html</code>, D17–D18) and measured at 390
 and 1440 (<a href="build-log.html"><code>06-build-log.md</code></a>, <a href="gate.html"><code>07-gate.md</code></a>); the presentation (<code>bemutato.html</code>) and the
-technical package (<code>10</code>–<code>14</code>, stack PROPOSED) written. Tested by the owner and accepted (D20); round 2 shipped. <strong>Next: the open asks.</strong></p>
+technical package (<code>10</code>–<code>14</code>, stack PROPOSED) written. Tested by the owner and accepted (D20); round 2 shipped. <strong>Phase 2 (D21–D24)</strong>: provider
+campaigns and results, upgrades, the intelligence recap, the business-logic document — asks</p>
+<h1>4–6 assumed (D21) until answered. <strong>Next: the owner's answers, or a flipped ADR.</strong></h1>
 <footer>Source: <code>business-direct/docs/00-brief.md</code> · rendered by <code>docs/build.py</code>.</footer>
 </div>
 </body>

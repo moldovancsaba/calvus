@@ -26,4 +26,5 @@ DOM script; read the console. Pass conditions and the 2026-09-19 result:
 | one `h1` per screen; every `img` has `alt` | pass | pass | pass | pass |
 | 0 console errors through the full click path | pass | pass | pass | pass |
 
-The round's findings and fixes are in `06-build-log.md`.
+The round's findings and fixes are in `06-build-log.md`. Round 3 (phase 2 screens) was
+measured at 390 and 1440; 768 and 1024 inherit the same grids (`05-layout-specs.md`).

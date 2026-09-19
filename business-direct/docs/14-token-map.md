@@ -52,7 +52,9 @@ it appears in body text.
 | `.tiles`, `.tile`, `.bars` | `SimpleGrid` of `Paper` with a sparkline (`@mantine/charts`) | every tile shows its source (R7) |
 | `.tbl` | `Table` with `ScrollArea`, server pagination | 50 per page |
 | `.kfile` | `Textarea` in a `Code`-styled `Paper` with a path label | versioned saves |
-| `.listing`, `.pin`, `.ladder` | `Card` with an avatar; the ladder is the platform's product list | family view |
+| `.listing`, `.pin`, `.ladder` | `Card` with an avatar; the ladder is the provider's plan (products, `done` = active entitlement) | family saved, provider results, drawer |
+| campaign card (= `.approval` + `.preview` + `.why`) | product component `CampaignCard` — the approval card with the audience line | provider campaigns, family inbox (read-only) |
+| product card (= `.card` + `.foot`) | `Card` with price and a `Button` → Stripe Checkout | provider today |
 | `.push`, `.digest`, `.sms` | preview renderers for the three family channels | used by `ChannelAdapter.preview` |
 | `.field`, `.search`, `.chip` (`app.css`) | `TextInput`, `Chip.Group` | |
 | `.drawer`, `.thread`, `.msg` (`app.css`) | `Drawer` + a `ThreadView` product component | |

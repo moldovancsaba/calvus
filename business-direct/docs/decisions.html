@@ -36,7 +36,7 @@ footer{margin-top:56px;padding-top:18px;border-top:1px solid var(--line);font-si
 </head>
 <body>
 <div class="wrap">
-<nav class="docnav" aria-label="Project documentation"><span class="docnav-brand">business.direct · docs</span><a href="index.html">Overview</a><a href="brief.html">Brief</a><a href="research.html">Research</a><a href="audit.html">Audit</a><a href="sources.html">Sources</a><a href="design-system.html">Design system</a><a href="layouts.html">Layouts</a><a href="05-layout-specs.html">Layout specs</a><a href="decisions.html" aria-current=page>Decisions</a><a href="build-log.html">Build log</a><a href="gate.html">Gate</a><a href="client-asks.html">Owner asks</a><a href="ssot.html">SSOT</a><a href="architecture.html">Architecture</a><a href="technical-design.html">Technical design</a><a href="implementation-plan.html">Plan</a><a href="token-map.html">Token map</a></nav>
+<nav class="docnav" aria-label="Project documentation"><span class="docnav-brand">business.direct · docs</span><a href="index.html">Overview</a><a href="brief.html">Brief</a><a href="research.html">Research</a><a href="audit.html">Audit</a><a href="sources.html">Sources</a><a href="design-system.html">Design system</a><a href="layouts.html">Layouts</a><a href="05-layout-specs.html">Layout specs</a><a href="decisions.html" aria-current=page>Decisions</a><a href="build-log.html">Build log</a><a href="gate.html">Gate</a><a href="client-asks.html">Owner asks</a><a href="business-logic.html">Business logic</a><a href="ssot.html">SSOT</a><a href="architecture.html">Architecture</a><a href="technical-design.html">Technical design</a><a href="implementation-plan.html">Plan</a><a href="token-map.html">Token map</a></nav>
 <header><p class="eyebrow">Calvus · business.direct · project documentation</p><h1>business.direct — decision register</h1></header>
 <div class="tbl"><table>
 <thead>
@@ -188,6 +188,34 @@ footer{margin-top:56px;padding-top:18px;border-top:1px solid var(--line);font-si
 <td><strong>Round 1 accepted as tested</strong> — the owner clicked through the prototype and the presentation with no correction ("Great tested"); round 2 closes the two items the build log left inert on purpose: the sequence and reply editors, and the tablet width measured</td>
 <td>owner</td>
 <td>ask #1 closes; the next build round waits on a new ask or a flipped ADR</td>
+</tr>
+<tr>
+<td>D21</td>
+<td>2026-09-19</td>
+<td><strong>Assumed until the owner answers asks #4–6</strong>: v1 integrations are the platform API, e-mail (Resend), Instagram + Facebook and platform push — TikTok, X, SMS, Google Business Profile and calendars come later; the base machine is <strong>bundled by the platform</strong>, the provider <strong>buys reach</strong> (the platform's own products: featured listing, camp placement, local discovery profile — sample prices); the prototype stays <strong>read-only</strong> against the platform</td>
+<td>Calvus, assumed</td>
+<td>the owner said continue with no answers; each assumption is one line to flip</td>
+</tr>
+<tr>
+<td>D22</td>
+<td>2026-09-19</td>
+<td><strong>Phase 2 — provider campaigns and upgrades</strong>: the provider view gains <em>Campaigns</em> (trial, open spots, announcement, registration — built from the card, audiences sample, approve / edit / skip, sent by the family's preferences under the cap) and <em>Results</em>; upgrades move a provider to <em>upgraded</em>; the family inbox shows campaigns from saved providers with the reason</td>
+<td>owner: "continue with the next phase"</td>
+<td>completes D3's fourth automation (provider campaigns) and the pipeline's last stage</td>
+</tr>
+<tr>
+<td>D23</td>
+<td>2026-09-19</td>
+<td><strong>The intelligence recap is its own screen</strong> on the platform (week, by department, market radar from the catalogue, needs-you), computed from real data and this session's approvals; the overview keeps the tiles</td>
+<td>Calvus</td>
+<td>D6's "intelligence dashboard" was only tiles on the overview</td>
+</tr>
+<tr>
+<td>D24</td>
+<td>2026-09-19</td>
+<td><strong><a href="business-logic.html"><code>09-business-logic.md</code></a></strong> joins the set as the one narrative of the rules (parties, flows, departments, campaigns, money, families, law, recap, what the machine never does); the SSOT stays the term register</td>
+<td>owner: "business logic … everything"</td>
+<td>DiscountDirect has the same document; the standard's slot 09 was free</td>
 </tr>
 </tbody>
 </table></div>

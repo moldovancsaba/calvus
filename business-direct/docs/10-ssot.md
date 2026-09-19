@@ -28,6 +28,11 @@ implementation of the enumerations and state machines below.*
 | **Cap** | the frequency cap across every channel: 4 messages per family per month (`rules/consent.md`) — DiscountDirect's term | preferences |
 | **Knowledge file** | a plain-text file the machine reads before writing: voice, offer, FAQ, consent rules, social rules | knowledge screens |
 | **Generated page** | an activity × neighbourhood landing page published only where ≥ 3 providers exist | generated pages |
+| **Campaign** | a provider's message to families built from its card — trial class, open spots, announcement, registration — approved by the provider, sent by each family's preferences under the cap (D22) | provider campaigns, family inbox |
+| **Audience** | the families a campaign may reach: those who saved the provider, plus nearby families with a child in the age range; sample counts today | campaign card |
+| **Product** | one of the platform's paid reach products — featured listing, camp placement, local discovery profile (D21); prices sample | provider today, drawer, results |
+| **Upgrade** | a provider buying a product; moves the stage to *upgraded* | pipeline |
+| **Recap** | the weekly intelligence screen: what moved, by department, the market radar, what needs the operator (D23) | intelligence |
 | **Integration** | a connector that gives the machine hands: the platform API, social channels, e-mail, push, SMS, Google Business Profile, calendar | integrations |
 | **Real / sample** | real = from the platform's public API, never edited; sample = generated for the prototype from real providers and declared as such (D18) | every tile's third line |
 
@@ -37,7 +42,10 @@ implementation of the enumerations and state machines below.*
 |---|---|---|
 | `role` | `platform` · `provider` · `family` | D2; `app.js` `S.role` |
 | `pipelineStage` | `identified` → `contacted` → `replied` → `applied` → `managing` → `upgraded` | D15; `STAGES` |
-| `draftState` | `waiting` · `scheduled` · `published` · `skipped` (posts); `waiting` · `sent` · `filed` · `skipped` (sequences, replies) | `stateBadge` |
+| `draftState` | `waiting` · `scheduled` · `published` · `skipped` (posts, campaigns); `waiting` · `sent` · `filed` · `skipped` (sequences, replies) | `stateBadge` |
+| `campaignKind` | `Trial class` · `Open spots` · `Announcement` · `Registration` · `Hello` (fallback when the card has none of the four) | `campaignsFor` |
+| `product` | `featured` · `camp` · `profile` | `S.products` |
+| `integrationTier` | `v1` · `later` (D21) | `S.integrations[].v1` |
 | `channel` (B2C) | `Instagram` · `Facebook` · `TikTok` · `X` (posts); `email` · `push` · `sms` (families) | D14; `post.channels`, `family.prefs` |
 | `channel` (B2B) | `email` · `phone` (from the card) · `website form` (neither on the card) | providers table, "Contact on card" |
 | `department` (platform) | `social` · `sales` · `picks` · `pages` · `radar` | `S.ai` keys |
@@ -59,6 +67,9 @@ implementation of the enumerations and state machines below.*
 | **KnowledgeFile** | `path`, `text`, `owner` (`platform` / `providerId`) | `S.knowledge` |
 | **Integration** | `id`, `name`, `what`, `state`, `label`, `note` | `S.integrations` |
 | **GeneratedPage** | `activity`, `area`, `n`, `slug` | computed (`genPages()`), threshold 3 |
+| **Campaign** | `id`, `providerId`, `kind`, `title`, `copy`, `audience{saved,nearby}`, `channels[]`, `state`, `ai`, `scheduledFor?` | `S.campaigns[pid]`, built on first visit from the card |
+| **Product** | `id`, `name`, `what`, `price` | `S.products` — the platform's list; prices sample |
+| **Entitlement** | `providerId`, `productId`, `since`, `billingRef?` | `S.bought` |
 
 ## 4. Settings the prototype fixes
 
@@ -70,12 +81,15 @@ implementation of the enumerations and state machines below.*
 | Invitation sequence | invitation → reminder after 5 days → call task for phone-only providers | research §2–3 |
 | Opt-out handling | every provider e-mail carries an opt-out; honoured within 10 business days | CAN-SPAM, research §8 |
 | SMS to families | only with written consent per provider | TCPA, research §8 |
-| AI drafts | optional per department; default on for social, sales, radar, provider conversations; off for picks and pages | D6 |
+| AI drafts | optional per department; default on for social, sales, radar, provider conversations (and so campaigns); off for picks and pages | D6 |
+| Campaign audience | saved families + nearby families in the age range; the provider cannot widen it | D22 |
+| Products and prices | the platform's three products; prices sample until the platform sets them | D21 |
+| v1 integrations | platform API, Resend, Instagram + Facebook, platform push | D21 |
 | AI-content marking | drafts carry the ✦ AI badge internally; published content is marked per EU AI Act Art. 50 where it applies (from 2 Aug 2026) | research §7 |
 
 ## 5. Decision register
 
-`04-decisions.md` holds D1–D18. The ones the engineering documents rest on: D2 (three
+`04-decisions.md` holds D1–D24. The ones the engineering documents rest on: D2 (three
 views), D5 (DiscountDirect sibling), D6 (departments, knowledge layer, human-in-the-loop,
 optional AI, dashboard, integrations), D11 (Your Field first), D14 (two flows), D15
 (post card and pipeline strip), D17 (one page, in-memory state), D18 (sample generated
@@ -96,6 +110,9 @@ PROPOSED.
 | R8 | The machine reads the knowledge files before every draft; the operator can read and edit them | knowledge screens |
 | R9 | A pipeline stage moves forward automatically only on an event (e-mail sent, reply received, application submitted); backwards only by a person | `sendInvitation`, `approveReply`, drawer chips |
 | R10 | AI is optional per department; with it off, copy is the listing's own text | `S.ai`, `draftCopy` |
+| R11 | A campaign reaches only families who saved the provider or are nearby with a child in the age range, by their preferences, under the cap; the provider approves the copy, never the list | `campaignsFor`, `campaignCard` |
+| R12 | An upgrade never changes what a family receives — it changes where the provider appears | products |
+| R13 | The machine never discounts; offers with a price cut are DiscountDirect's domain (D5) | — |
 
 ## 7. Metrics
 
@@ -108,6 +125,8 @@ PROPOSED.
 | Reply time | median time from inbound to sent reply, per provider | provider today (sample) |
 | Trials booked | bookings with `trial` in the session, per provider per week | provider today (sample) |
 | Opt-outs | families who turned a channel off or stopped everything, per month | production only |
+| Families reached by campaigns | sum of approved campaigns' audiences after the cap | intelligence (sample audiences) |
+| Upgrade revenue | sum of active entitlements' prices per month | intelligence (sample prices) |
 
 ## 8. Document map
 
@@ -121,6 +140,7 @@ PROPOSED.
 | `05-layout-specs.md`, `design-system.html`, `layouts.html` | gates 1 and 2 |
 | `06-build-log.md`, `07-gate.md` | rounds and the measured pass |
 | `08-client-asks.md` | open items |
+| `09-business-logic.md` | the rules end to end: parties, flows, departments, campaigns, money, families, law, recap |
 | `10-ssot.md` (this) | terms, enumerations, entities, rules, metrics |
 | `11-architecture.md` | context, quality attributes, containers, flows, stack, ADRs |
 | `12-technical-design.md` | data model, state machines, connectors, jobs, operations |

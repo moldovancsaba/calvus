@@ -36,7 +36,7 @@ footer{margin-top:56px;padding-top:18px;border-top:1px solid var(--line);font-si
 </head>
 <body>
 <div class="wrap">
-<nav class="docnav" aria-label="Project documentation"><span class="docnav-brand">business.direct · docs</span><a href="index.html">Overview</a><a href="brief.html">Brief</a><a href="research.html">Research</a><a href="audit.html">Audit</a><a href="sources.html">Sources</a><a href="design-system.html">Design system</a><a href="layouts.html">Layouts</a><a href="05-layout-specs.html">Layout specs</a><a href="decisions.html">Decisions</a><a href="build-log.html">Build log</a><a href="gate.html">Gate</a><a href="client-asks.html">Owner asks</a><a href="ssot.html">SSOT</a><a href="architecture.html">Architecture</a><a href="technical-design.html" aria-current=page>Technical design</a><a href="implementation-plan.html">Plan</a><a href="token-map.html">Token map</a></nav>
+<nav class="docnav" aria-label="Project documentation"><span class="docnav-brand">business.direct · docs</span><a href="index.html">Overview</a><a href="brief.html">Brief</a><a href="research.html">Research</a><a href="audit.html">Audit</a><a href="sources.html">Sources</a><a href="design-system.html">Design system</a><a href="layouts.html">Layouts</a><a href="05-layout-specs.html">Layout specs</a><a href="decisions.html">Decisions</a><a href="build-log.html">Build log</a><a href="gate.html">Gate</a><a href="client-asks.html">Owner asks</a><a href="business-logic.html">Business logic</a><a href="ssot.html">SSOT</a><a href="architecture.html">Architecture</a><a href="technical-design.html" aria-current=page>Technical design</a><a href="implementation-plan.html">Plan</a><a href="token-map.html">Token map</a></nav>
 <header><p class="eyebrow">Calvus · business.direct · project documentation</p><h1>business.direct — technical design</h1></header>
 <p><em>Written 2026-09-19 on <a href="architecture.html"><code>11-architecture.md</code></a>'s PROPOSED containers. Where the prototype
 already implements a rule, the section names the function in <code>assets/app.js</code> so a
@@ -101,10 +101,28 @@ developer can read the behaviour before the code exists.</em></p>
 <td><code>platform.knowledge</code>, <code>kfiles</code></td>
 </tr>
 <tr>
+<td>Platform</td>
+<td>Intelligence</td>
+<td>tiles + by department · radar and needs-you</td>
+<td><code>platform.intelligence</code></td>
+</tr>
+<tr>
 <td>Provider</td>
 <td>Today</td>
 <td>hero card + (invitation · or · tiles, waiting, team, knowledge)</td>
 <td><code>provider.today</code></td>
+</tr>
+<tr>
+<td>Provider</td>
+<td>Campaigns</td>
+<td>approval cards built from the card</td>
+<td><code>provider.campaigns</code>, <code>campaignsFor</code>, <code>campaignCard</code></td>
+</tr>
+<tr>
+<td>Provider</td>
+<td>Results</td>
+<td>tiles + what went out + plan ladder</td>
+<td><code>provider.results</code>, <code>ladder</code></td>
 </tr>
 <tr>
 <td>Provider</td>
@@ -115,7 +133,7 @@ developer can read the behaviour before the code exists.</em></p>
 <tr>
 <td>Family</td>
 <td>Inbox</td>
-<td>published post · digest · provider SMS</td>
+<td>published post · digest · campaigns from saved providers · provider SMS</td>
 <td><code>family.inbox</code></td>
 </tr>
 <tr>
@@ -133,7 +151,7 @@ developer can read the behaviour before the code exists.</em></p>
 </tbody>
 </table></div>
 <p>Navigation: rail ≥ 1024, bottom bar below (<code>app.css</code>), the role switch in the top bar;
-deep links <code>?view=&amp;screen=</code> (<code>app.js</code>, bottom). Layout rules: <a href="05-layout-specs.html"><code>05-layout-specs.md</code></a>.</p>
+deep links <code>?view=&amp;screen=&amp;stage=</code> (<code>app.js</code>, bottom; <code>stage</code> pre-sets the persona's pipeline stage for previews). Layout rules: <a href="05-layout-specs.html"><code>05-layout-specs.md</code></a>.</p>
 <h2>2. Content model (MongoDB, <code>platform_id</code> on every document)</h2>
 <pre><code>providers_cache  { _id: &lt;platform provider id&gt;, platform_id, ...Provider (SSOT §3), synced_at }
 provider_state   { provider_id, platform_id, stage, stage_changed_at, stage_changed_by, version }
@@ -151,6 +169,10 @@ messages         { _id, platform_id, to{family_id|provider_id|channel_account}, 
 knowledge_files  { owner: 'platform'|provider_id, path, text, updated_by, updated_at, version }
 integrations     { platform_id, id, state, account_ref, token_ref, connected_by, connected_at }
 generated_pages  { platform_id, activity, area, slug, provider_ids[], state, published_at? }
+campaigns        { _id, platform_id, provider_id, kind, title, copy, channels[], state, ai, scheduled_for?,
+                   audience_rule: 'saved'|'saved+nearby', audience_count?, approved_by?, approved_at?, version }
+products         { platform_id, id, name, what, price_cents, interval: 'month'|'season', card_flag }
+entitlements     { provider_id, platform_id, product_id, since, until?, stripe_subscription_id }
 </code></pre>
 <p>Indexes: <code>provider_state (platform_id, stage)</code>, <code>drafts (platform_id, state, scheduled_for)</code>,
 <code>messages (family_id, sent_at)</code> for the cap query, <code>consents (family_id, channel, provider_id)</code>.</p>
@@ -216,6 +238,11 @@ message); <code>waiting → skipped</code>; radar notes <code>waiting → filed<
 </tr>
 </tbody>
 </table></div>
+<p><strong>Campaign</strong> — <code>waiting → scheduled → published</code>; <code>waiting → skipped</code>; edit sets <code>ai=false</code>
+(prototype: <code>approveCampaign</code>, <code>saveCampaign</code>, <code>skipCampaign</code>). Sending resolves the audience
+at send time (ADR-10), then the per-family preference and cap checks.</p>
+<p><strong>Entitlement</strong> — <code>none → active</code> on the Stripe webhook; <code>active → ended</code> on cancellation;
+the first <code>active</code> moves the provider to <em>upgraded</em> (prototype: <code>data-buy</code>).</p>
 <p><strong>Family channel</strong> — <code>on ↔ off</code> per channel; <em>Stop</em> → every channel off + cancel queued
 drafts for that family. Consent for SMS is a separate append-only record; the toggle
 cannot turn SMS on without a consent row.</p>
@@ -260,6 +287,21 @@ cannot turn SMS on without a consent row.</p>
 <td>drain the outbox: cap check again (R3), send, log; retry with backoff; dead-letter after 5</td>
 </tr>
 <tr>
+<td><code>draft-campaigns</code></td>
+<td>daily 08:30</td>
+<td>for managing providers: one draft per kind per card event, none if one is waiting</td>
+</tr>
+<tr>
+<td><code>send-campaigns</code></td>
+<td>every 5 min</td>
+<td>approved campaigns: resolve audience, preference + cap per family, outbox</td>
+</tr>
+<tr>
+<td><code>entitlements</code></td>
+<td>webhook-driven</td>
+<td>Stripe events → entitlements → stage → card flag through the connector</td>
+</tr>
+<tr>
 <td><code>retention</code></td>
 <td>nightly</td>
 <td>drafts 90 days after final state; messages 24 months</td>
@@ -273,6 +315,9 @@ cannot turn SMS on without a consent row.</p>
   createClaimRequest(providerId, contact): Promise&lt;void&gt;;   // keyed
   notifyFamily(familyId, payload): Promise&lt;void&gt;;           // keyed
   publishPage(page): Promise&lt;{url}&gt;;                        // keyed (Sportolok: POST /api/ingest)
+  savesFor(providerId): Promise&lt;FamilyRef[]&gt;;               // keyed — campaign audience (ADR-10)
+  familiesNear(geo, ageRange): Promise&lt;FamilyRef[]&gt;;        // keyed — nearby audience
+  setCardFlag(providerId, flag: 'featured'|'camp'|'profile', on): Promise&lt;void&gt;;  // keyed — upgrades
 }
 interface ChannelAdapter {
   preview(draft): Rendered;   publish(draft): Promise&lt;{providerMessageId}&gt;;
@@ -292,8 +337,8 @@ Published AI content is marked where Art. 50 applies; internal drafts carry the 
 <p>Operator: approve/edit/skip (Server Actions, optimistic UI, <code>version</code> check); knowledge
 file editor (textarea, saved on blur, versioned); sequence editor (subject, body, steps);
 integration connect (OAuth redirect, callback stores <code>token_ref</code>). Provider: apply-to-manage
-(one button → platform claim request), knowledge editor. Family: toggles, stop, consent
-capture (checkbox + text stored verbatim as proof).</p>
+(one button → platform claim request), knowledge editor. Provider, phase 2: campaign approve / edit / skip; product choose → Stripe Checkout redirect.
+Family: toggles, stop, consent capture (checkbox + text stored verbatim as proof).</p>
 <h2>9. i18n</h2>
 <p>Copy in English; the reference instance needs Hungarian. Strings in a per-instance
 dictionary; dates and times in the instance's locale; legal footers per market (CAN-SPAM

@@ -36,7 +36,7 @@ footer{margin-top:56px;padding-top:18px;border-top:1px solid var(--line);font-si
 </head>
 <body>
 <div class="wrap">
-<nav class="docnav" aria-label="Project documentation"><span class="docnav-brand">business.direct · docs</span><a href="index.html">Overview</a><a href="brief.html">Brief</a><a href="research.html">Research</a><a href="audit.html">Audit</a><a href="sources.html">Sources</a><a href="design-system.html">Design system</a><a href="layouts.html">Layouts</a><a href="05-layout-specs.html" aria-current=page>Layout specs</a><a href="decisions.html">Decisions</a><a href="build-log.html">Build log</a><a href="gate.html">Gate</a><a href="client-asks.html">Owner asks</a><a href="ssot.html">SSOT</a><a href="architecture.html">Architecture</a><a href="technical-design.html">Technical design</a><a href="implementation-plan.html">Plan</a><a href="token-map.html">Token map</a></nav>
+<nav class="docnav" aria-label="Project documentation"><span class="docnav-brand">business.direct · docs</span><a href="index.html">Overview</a><a href="brief.html">Brief</a><a href="research.html">Research</a><a href="audit.html">Audit</a><a href="sources.html">Sources</a><a href="design-system.html">Design system</a><a href="layouts.html">Layouts</a><a href="05-layout-specs.html" aria-current=page>Layout specs</a><a href="decisions.html">Decisions</a><a href="build-log.html">Build log</a><a href="gate.html">Gate</a><a href="client-asks.html">Owner asks</a><a href="business-logic.html">Business logic</a><a href="ssot.html">SSOT</a><a href="architecture.html">Architecture</a><a href="technical-design.html">Technical design</a><a href="implementation-plan.html">Plan</a><a href="token-map.html">Token map</a></nav>
 <header><p class="eyebrow">Calvus · business.direct · project documentation</p><h1>business.direct — layout specifications (gate 2)</h1></header>
 <p><em>Four frames composed only from the approved components (<code>assets/components.css</code>, D9) and
 the real providers (<code>data/providers.json</code>). Layout rules live in <code>docs/frames/frame.css</code>
@@ -106,6 +106,10 @@ with a one-tap stop. Bottom bar: Find · Saved · Inbox · Account.</p>
 <p>Section order per view, the two-column desktop body, the phone bottom bars, the tile
 set, the post card and pipeline strip (D15) in place. It does not fix copy — every
 sentence in the frames is sample except the provider data and the site's own phrases.</p>
+<h2>Phase 2 screens (D22–D23, 2026-09-19)</h2>
+<p>No new layout. <em>Campaigns</em> and <em>Results</em> (provider) and <em>Intelligence</em> (platform) reuse the
+frames' grids: approval cards in a single stack, tiles auto-fit / two-up, the two-column
+body for the recap at ≥ 1024. Measured at 390 and 1440 with the rest (<a href="gate.html"><code>07-gate.md</code></a>).</p>
 <footer>Source: <code>business-direct/docs/05-layout-specs.md</code> · rendered by <code>docs/build.py</code>.</footer>
 </div>
 </body>

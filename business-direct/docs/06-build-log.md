@@ -66,3 +66,25 @@ navigation (bottom bar, no rail) as `05-layout-specs.md` specifies, tiles two-up
 overview, every control ≥ 44 px, `scrollWidth` 768 on every screen and view; edited
 sequence shows the new subject and loses the AI badge; edited reply appears in the
 provider's drawer thread; 0 console errors. `python3 check.py` → `GATE: CLEAN`.
+
+## Round 3 — 2026-09-19 — phase 2: campaigns, upgrades, recap (D21–D24)
+
+**Built** (`assets/app.js?v=5`). Provider view: *Campaigns* — drafts built from the card
+(trial class, open spots, announcement, registration; the fallback "hello" when the card
+has none), audience line (sample counts), approve / edit / skip; *Results* — six tiles,
+"what went out" from this session's approvals, the plan ladder; *Today* — the campaigns
+department reads from state, "Reach more families" with the platform's three products
+(sample prices), *Choose* → *upgraded*. Platform: *Intelligence* screen (six tiles, by
+department, market radar from the catalogue, needs-you); the drawer shows a managing
+provider's plan; integrations carry v1 / later (D21). Family inbox: "From providers" shows
+approved campaigns from saved providers with the reason line, by preference. New doc
+`09-business-logic.md`; SSOT, architecture (ADR-9, ADR-10), technical design, plan (M5,
+seven issues, B6–B8), token map, layout spec, brief and presentation updated.
+
+**Measured** (app browser pane, 2026-09-19): at 390 — intelligence, integrations, provider
+today (locked and managing), campaigns, results, family inbox: `scrollWidth` 390, every
+control ≥ 44 px; the campaign path (edit → save and approve → approve) leaves states
+Scheduled · Scheduled · Awaiting; results lists 2 items; *Choose* moves the stage to
+Upgraded (drawer badge) and the recap sums $49 / month; the family inbox shows 2 campaigns
+with the reason line; 0 console errors. At 1440 — intelligence, campaigns, results, today:
+`scrollWidth` 1440, one `h1`, 0 console errors. `python3 check.py` → `GATE: CLEAN`.

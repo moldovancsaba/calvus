@@ -36,7 +36,7 @@ footer{margin-top:56px;padding-top:18px;border-top:1px solid var(--line);font-si
 </head>
 <body>
 <div class="wrap">
-<nav class="docnav" aria-label="Project documentation"><span class="docnav-brand">business.direct · docs</span><a href="index.html">Overview</a><a href="brief.html">Brief</a><a href="research.html">Research</a><a href="audit.html">Audit</a><a href="sources.html">Sources</a><a href="design-system.html">Design system</a><a href="layouts.html">Layouts</a><a href="05-layout-specs.html">Layout specs</a><a href="decisions.html">Decisions</a><a href="build-log.html">Build log</a><a href="gate.html">Gate</a><a href="client-asks.html">Owner asks</a><a href="ssot.html" aria-current=page>SSOT</a><a href="architecture.html">Architecture</a><a href="technical-design.html">Technical design</a><a href="implementation-plan.html">Plan</a><a href="token-map.html">Token map</a></nav>
+<nav class="docnav" aria-label="Project documentation"><span class="docnav-brand">business.direct · docs</span><a href="index.html">Overview</a><a href="brief.html">Brief</a><a href="research.html">Research</a><a href="audit.html">Audit</a><a href="sources.html">Sources</a><a href="design-system.html">Design system</a><a href="layouts.html">Layouts</a><a href="05-layout-specs.html">Layout specs</a><a href="decisions.html">Decisions</a><a href="build-log.html">Build log</a><a href="gate.html">Gate</a><a href="client-asks.html">Owner asks</a><a href="business-logic.html">Business logic</a><a href="ssot.html" aria-current=page>SSOT</a><a href="architecture.html">Architecture</a><a href="technical-design.html">Technical design</a><a href="implementation-plan.html">Plan</a><a href="token-map.html">Token map</a></nav>
 <header><p class="eyebrow">Calvus · business.direct · project documentation</p><h1>business.direct — single source of truth</h1></header>
 <p><em>Written 2026-09-19 after gate 2 and the first build round (D16–D18). Every term the
 other engineering documents use is defined here; where a term is DiscountDirect's, it
@@ -148,6 +148,31 @@ implementation of the enumerations and state machines below.</em></p>
 <td>generated pages</td>
 </tr>
 <tr>
+<td><strong>Campaign</strong></td>
+<td>a provider's message to families built from its card — trial class, open spots, announcement, registration — approved by the provider, sent by each family's preferences under the cap (D22)</td>
+<td>provider campaigns, family inbox</td>
+</tr>
+<tr>
+<td><strong>Audience</strong></td>
+<td>the families a campaign may reach: those who saved the provider, plus nearby families with a child in the age range; sample counts today</td>
+<td>campaign card</td>
+</tr>
+<tr>
+<td><strong>Product</strong></td>
+<td>one of the platform's paid reach products — featured listing, camp placement, local discovery profile (D21); prices sample</td>
+<td>provider today, drawer, results</td>
+</tr>
+<tr>
+<td><strong>Upgrade</strong></td>
+<td>a provider buying a product; moves the stage to <em>upgraded</em></td>
+<td>pipeline</td>
+</tr>
+<tr>
+<td><strong>Recap</strong></td>
+<td>the weekly intelligence screen: what moved, by department, the market radar, what needs the operator (D23)</td>
+<td>intelligence</td>
+</tr>
+<tr>
 <td><strong>Integration</strong></td>
 <td>a connector that gives the machine hands: the platform API, social channels, e-mail, push, SMS, Google Business Profile, calendar</td>
 <td>integrations</td>
@@ -181,8 +206,23 @@ implementation of the enumerations and state machines below.</em></p>
 </tr>
 <tr>
 <td><code>draftState</code></td>
-<td><code>waiting</code> · <code>scheduled</code> · <code>published</code> · <code>skipped</code> (posts); <code>waiting</code> · <code>sent</code> · <code>filed</code> · <code>skipped</code> (sequences, replies)</td>
+<td><code>waiting</code> · <code>scheduled</code> · <code>published</code> · <code>skipped</code> (posts, campaigns); <code>waiting</code> · <code>sent</code> · <code>filed</code> · <code>skipped</code> (sequences, replies)</td>
 <td><code>stateBadge</code></td>
+</tr>
+<tr>
+<td><code>campaignKind</code></td>
+<td><code>Trial class</code> · <code>Open spots</code> · <code>Announcement</code> · <code>Registration</code> · <code>Hello</code> (fallback when the card has none of the four)</td>
+<td><code>campaignsFor</code></td>
+</tr>
+<tr>
+<td><code>product</code></td>
+<td><code>featured</code> · <code>camp</code> · <code>profile</code></td>
+<td><code>S.products</code></td>
+</tr>
+<tr>
+<td><code>integrationTier</code></td>
+<td><code>v1</code> · <code>later</code> (D21)</td>
+<td><code>S.integrations[].v1</code></td>
 </tr>
 <tr>
 <td><code>channel</code> (B2C)</td>
@@ -276,6 +316,21 @@ implementation of the enumerations and state machines below.</em></p>
 <td><code>activity</code>, <code>area</code>, <code>n</code>, <code>slug</code></td>
 <td>computed (<code>genPages()</code>), threshold 3</td>
 </tr>
+<tr>
+<td><strong>Campaign</strong></td>
+<td><code>id</code>, <code>providerId</code>, <code>kind</code>, <code>title</code>, <code>copy</code>, <code>audience{saved,nearby}</code>, <code>channels[]</code>, <code>state</code>, <code>ai</code>, <code>scheduledFor?</code></td>
+<td><code>S.campaigns[pid]</code>, built on first visit from the card</td>
+</tr>
+<tr>
+<td><strong>Product</strong></td>
+<td><code>id</code>, <code>name</code>, <code>what</code>, <code>price</code></td>
+<td><code>S.products</code> — the platform's list; prices sample</td>
+</tr>
+<tr>
+<td><strong>Entitlement</strong></td>
+<td><code>providerId</code>, <code>productId</code>, <code>since</code>, <code>billingRef?</code></td>
+<td><code>S.bought</code></td>
+</tr>
 </tbody>
 </table></div>
 <h2>4. Settings the prototype fixes</h2>
@@ -320,8 +375,23 @@ implementation of the enumerations and state machines below.</em></p>
 </tr>
 <tr>
 <td>AI drafts</td>
-<td>optional per department; default on for social, sales, radar, provider conversations; off for picks and pages</td>
+<td>optional per department; default on for social, sales, radar, provider conversations (and so campaigns); off for picks and pages</td>
 <td>D6</td>
+</tr>
+<tr>
+<td>Campaign audience</td>
+<td>saved families + nearby families in the age range; the provider cannot widen it</td>
+<td>D22</td>
+</tr>
+<tr>
+<td>Products and prices</td>
+<td>the platform's three products; prices sample until the platform sets them</td>
+<td>D21</td>
+</tr>
+<tr>
+<td>v1 integrations</td>
+<td>platform API, Resend, Instagram + Facebook, platform push</td>
+<td>D21</td>
 </tr>
 <tr>
 <td>AI-content marking</td>
@@ -331,7 +401,7 @@ implementation of the enumerations and state machines below.</em></p>
 </tbody>
 </table></div>
 <h2>5. Decision register</h2>
-<p><a href="decisions.html"><code>04-decisions.md</code></a> holds D1–D18. The ones the engineering documents rest on: D2 (three
+<p><a href="decisions.html"><code>04-decisions.md</code></a> holds D1–D24. The ones the engineering documents rest on: D2 (three
 views), D5 (DiscountDirect sibling), D6 (departments, knowledge layer, human-in-the-loop,
 optional AI, dashboard, integrations), D11 (Your Field first), D14 (two flows), D15
 (post card and pipeline strip), D17 (one page, in-memory state), D18 (sample generated
@@ -397,6 +467,21 @@ PROPOSED.</p>
 <td>AI is optional per department; with it off, copy is the listing's own text</td>
 <td><code>S.ai</code>, <code>draftCopy</code></td>
 </tr>
+<tr>
+<td>R11</td>
+<td>A campaign reaches only families who saved the provider or are nearby with a child in the age range, by their preferences, under the cap; the provider approves the copy, never the list</td>
+<td><code>campaignsFor</code>, <code>campaignCard</code></td>
+</tr>
+<tr>
+<td>R12</td>
+<td>An upgrade never changes what a family receives — it changes where the provider appears</td>
+<td>products</td>
+</tr>
+<tr>
+<td>R13</td>
+<td>The machine never discounts; offers with a price cut are DiscountDirect's domain (D5)</td>
+<td>—</td>
+</tr>
 </tbody>
 </table></div>
 <h2>7. Metrics</h2>
@@ -444,6 +529,16 @@ PROPOSED.</p>
 <td>families who turned a channel off or stopped everything, per month</td>
 <td>production only</td>
 </tr>
+<tr>
+<td>Families reached by campaigns</td>
+<td>sum of approved campaigns' audiences after the cap</td>
+<td>intelligence (sample audiences)</td>
+</tr>
+<tr>
+<td>Upgrade revenue</td>
+<td>sum of active entitlements' prices per month</td>
+<td>intelligence (sample prices)</td>
+</tr>
 </tbody>
 </table></div>
 <h2>8. Document map</h2>
@@ -486,6 +581,10 @@ PROPOSED.</p>
 <tr>
 <td><a href="client-asks.html"><code>08-client-asks.md</code></a></td>
 <td>open items</td>
+</tr>
+<tr>
+<td><a href="business-logic.html"><code>09-business-logic.md</code></a></td>
+<td>the rules end to end: parties, flows, departments, campaigns, money, families, law, recap</td>
 </tr>
 <tr>
 <td><a href="ssot.html"><code>10-ssot.md</code></a> (this)</td>

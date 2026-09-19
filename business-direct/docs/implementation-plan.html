@@ -36,9 +36,9 @@ footer{margin-top:56px;padding-top:18px;border-top:1px solid var(--line);font-si
 </head>
 <body>
 <div class="wrap">
-<nav class="docnav" aria-label="Project documentation"><span class="docnav-brand">business.direct · docs</span><a href="index.html">Overview</a><a href="brief.html">Brief</a><a href="research.html">Research</a><a href="audit.html">Audit</a><a href="sources.html">Sources</a><a href="design-system.html">Design system</a><a href="layouts.html">Layouts</a><a href="05-layout-specs.html">Layout specs</a><a href="decisions.html">Decisions</a><a href="build-log.html">Build log</a><a href="gate.html">Gate</a><a href="client-asks.html">Owner asks</a><a href="ssot.html">SSOT</a><a href="architecture.html">Architecture</a><a href="technical-design.html">Technical design</a><a href="implementation-plan.html" aria-current=page>Plan</a><a href="token-map.html">Token map</a></nav>
+<nav class="docnav" aria-label="Project documentation"><span class="docnav-brand">business.direct · docs</span><a href="index.html">Overview</a><a href="brief.html">Brief</a><a href="research.html">Research</a><a href="audit.html">Audit</a><a href="sources.html">Sources</a><a href="design-system.html">Design system</a><a href="layouts.html">Layouts</a><a href="05-layout-specs.html">Layout specs</a><a href="decisions.html">Decisions</a><a href="build-log.html">Build log</a><a href="gate.html">Gate</a><a href="client-asks.html">Owner asks</a><a href="business-logic.html">Business logic</a><a href="ssot.html">SSOT</a><a href="architecture.html">Architecture</a><a href="technical-design.html">Technical design</a><a href="implementation-plan.html" aria-current=page>Plan</a><a href="token-map.html">Token map</a></nav>
 <header><p class="eyebrow">Calvus · business.direct · project documentation</p><h1>business.direct — implementation plan</h1></header>
-<p><em>Written 2026-09-19 on the PROPOSED architecture. Estimates are for a team of two
+<p><em>Written 2026-09-19 on the PROPOSED architecture; phase 2 (M5) added the same day. Estimates are for a team of two
 developers and the owner as product lead; they assume ADR-1 to ADR-8 stand and the open
 asks in <a href="client-asks.html"><code>08-client-asks.md</code></a> close in the first two weeks. Every issue has a Definition of
 Done; the blocked register is honest about what waits on the client.</em></p>
@@ -93,12 +93,18 @@ instance (<code>platform_id</code>). "Measured" means a number in the build log,
 <td>M4</td>
 <td>Intelligence and pages</td>
 <td>11–12</td>
-<td>overview tiles on real numbers, market radar note, generated pages written through the connector, operations dashboards</td>
+<td>overview tiles on real numbers, the intelligence recap screen, market radar note, generated pages written through the connector, operations dashboards</td>
 </tr>
 <tr>
 <td>M5</td>
+<td>Campaigns and upgrades (phase 2)</td>
+<td>13–15</td>
+<td>provider campaigns from the card with audiences from the platform's saves, results screen, products and Stripe entitlements, the family inbox's reason line</td>
+</tr>
+<tr>
+<td>M6</td>
 <td>Second instance</td>
-<td>13–14</td>
+<td>16–17</td>
 <td>Sportolok connector, Hungarian dictionary, legal footers; proves ADR-2</td>
 </tr>
 </tbody>
@@ -254,12 +260,47 @@ instance (<code>platform_id</code>). "Measured" means a number in the build log,
 <td>the five alerts in architecture §9 fire in a drill</td>
 </tr>
 <tr>
+<td>BD-4-5</td>
+<td>Intelligence recap screen</td>
+<td>every tile names its source; "needs you" lists approvals, replied-not-applied, v1 integrations to connect</td>
+</tr>
+<tr>
 <td>BD-5-1</td>
+<td><code>draft-campaigns</code> job and the campaign model</td>
+<td>one draft per kind per card event; kinds per <a href="business-logic.html"><code>09-business-logic.md</code></a> §4</td>
+</tr>
+<tr>
+<td>BD-5-2</td>
+<td>Provider campaigns screen</td>
+<td>approve / edit / skip; edit drops the AI badge; audience shown before approval</td>
+</tr>
+<tr>
+<td>BD-5-3</td>
+<td>Audience resolution through the connector (<code>savesFor</code>, <code>familiesNear</code>)</td>
+<td>no uploaded lists possible (test); counts logged</td>
+</tr>
+<tr>
+<td>BD-5-4</td>
+<td><code>send-campaigns</code> with preference and cap</td>
+<td>a family at the cap receives nothing (test); the reason line on every message</td>
+</tr>
+<tr>
+<td>BD-5-5</td>
+<td>Products, Stripe Checkout, entitlements webhook</td>
+<td>first <code>active</code> → <em>upgraded</em> → card flag set through the connector</td>
+</tr>
+<tr>
+<td>BD-5-6</td>
+<td>Provider results screen</td>
+<td>what went out from the message log; plan ladder from entitlements</td>
+</tr>
+<tr>
+<td>BD-6-1</td>
 <td><code>SportolokConnector</code> incl. <code>ingest</code></td>
 <td>431 listings cached; one page published to the reference instance</td>
 </tr>
 <tr>
-<td>BD-5-2</td>
+<td>BD-6-2</td>
 <td>Hungarian dictionary and legal footers</td>
 <td>every string from the dictionary; footer per market</td>
 </tr>
@@ -308,9 +349,21 @@ instance (<code>platform_id</code>). "Measured" means a number in the build log,
 </tr>
 <tr>
 <td>B6</td>
-<td>Pricing and packaging</td>
-<td>ask #4: bundled vs self-serve</td>
-<td>the <em>upgraded</em> stage's product list</td>
+<td>Product prices</td>
+<td>ask #4: the platform's real prices (assumed bundled base + provider-bought reach, D21)</td>
+<td>BD-5-5</td>
+</tr>
+<tr>
+<td>B7</td>
+<td>Audience data</td>
+<td>the platform's saves and family locations through keyed endpoints</td>
+<td>BD-5-3</td>
+</tr>
+<tr>
+<td>B8</td>
+<td>Stripe account</td>
+<td>the platform's merchant account and tax setup</td>
+<td>BD-5-5</td>
 </tr>
 </tbody>
 </table></div>
@@ -360,9 +413,9 @@ instance (<code>platform_id</code>). "Measured" means a number in the build log,
 <p><strong>Release 1 (M0–M3, ~10 weeks):</strong> Your Field NYC; provider sales end to end; Instagram and
 Facebook publishing with approval; family digest, alerts and preferences; caps and consent;
 the operator's approval queue as the one gate. <strong>Release 1.1 (M4):</strong> real intelligence,
-generated pages, dashboards. <strong>Release 2 (M5):</strong> the second instance. Out of scope until a
-decision: TikTok and X, Google Business Profile, calendars, provider campaigns as paid
-products.</p>
+the recap, generated pages, dashboards. <strong>Release 2 (M5):</strong> provider campaigns, results,
+products and Stripe upgrades. <strong>Release 3 (M6):</strong> the second instance. Out of scope until a
+decision: TikTok and X, Google Business Profile, calendars.</p>
 <footer>Source: <code>business-direct/docs/13-implementation-plan.md</code> · rendered by <code>docs/build.py</code>.</footer>
 </div>
 </body>

@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>business.direct — business logic — business.direct docs</title>
+<link rel="stylesheet" href="../assets/tokens.css">
+<style>/* business.direct — documentation pages on the product tokens (GDS roles, teal accent). */
+:root{--ground:var(--gds-bg-canvas,#f8fafc);--card:var(--gds-bg-surface,#fff);--ink:var(--gds-text-body,#111827);--text:#1f2937;--muted:var(--gds-text-meta,#64748b);--accent:var(--gds-brand-accent,#0f766e);--accent-deep:var(--gds-brand-accent-strong,#115e59);--line:var(--gds-border-card,#e2e8f0);--line-soft:#eef2f7;--note:var(--gds-brand-accent-tint,#e6f4f2)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--ground);color:var(--text);font-family:var(--gds-font,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif);font-size:15.5px;line-height:1.6;padding-block:0 64px;padding-inline:clamp(16px,4vw,40px)}
+.wrap{max-width:74ch;margin-inline:auto}
+.docnav{display:flex;flex-wrap:wrap;gap:4px 18px;align-items:center;padding:16px 0;border-bottom:1px solid var(--line);font-size:12px;letter-spacing:.06em;text-transform:uppercase}
+.docnav a{color:var(--muted);text-decoration:none;min-height:44px;min-width:44px;display:inline-flex;align-items:center;border-bottom:2px solid transparent}
+.docnav a:hover,.docnav a[aria-current]{color:var(--ink);border-color:var(--accent)}
+.docnav-brand{color:var(--accent-deep);font-weight:800;margin-right:6px}
+.docnav-hub{margin-left:auto}
+header{padding-block:40px 24px;border-bottom:1px solid var(--line);margin-bottom:28px}
+.eyebrow{font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--accent-deep);margin:0 0 12px;font-weight:800}
+h1,h2,h3{color:var(--ink);line-height:1.1;text-wrap:balance;margin:0;letter-spacing:-.02em}
+h1{font-size:clamp(30px,6vw,46px);font-weight:900}
+h2{font-size:clamp(23px,4vw,30px);font-weight:900;margin:48px 0 14px;padding-top:20px;border-top:1px solid var(--line)}
+h3{font-size:18px;margin:30px 0 8px;font-weight:800}
+p{margin:0 0 14px} strong{color:var(--ink);font-weight:800}
+ul,ol{padding-left:22px;margin:0 0 16px} li{margin:5px 0} li>ul{margin:6px 0 0}
+code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.86em;background:var(--note);padding:1px 5px;border-radius:4px;color:var(--ink);overflow-wrap:anywhere}
+pre{overflow-x:auto;padding:14px 16px;border:1px solid var(--line);border-radius:10px;background:var(--card);font-size:12px;line-height:1.35}
+pre code{background:none;padding:0;font-size:inherit}
+a{color:var(--accent-deep)} :focus-visible{outline:2px solid var(--accent-deep);outline-offset:2px}
+.tbl{overflow-x:auto;margin:14px 0 22px;border:1px solid var(--line);border-radius:10px;background:var(--card)}
+table{border-collapse:collapse;width:100%;font-size:13.5px;min-width:560px}
+th{text-align:left;font-weight:800;color:var(--ink);background:var(--note);padding:10px 12px;border-bottom:1px solid var(--line);font-size:11.5px;letter-spacing:.06em;text-transform:uppercase}
+td{padding:10px 12px;border-top:1px solid var(--line-soft);vertical-align:top;background:var(--card)} td:first-child{color:var(--ink)}
+footer{margin-top:56px;padding-top:18px;border-top:1px solid var(--line);font-size:12px;color:var(--muted)}
+</style>
+</head>
+<body>
+<div class="wrap">
+<nav class="docnav" aria-label="Project documentation"><span class="docnav-brand">business.direct · docs</span><a href="index.html">Overview</a><a href="brief.html">Brief</a><a href="research.html">Research</a><a href="audit.html">Audit</a><a href="sources.html">Sources</a><a href="design-system.html">Design system</a><a href="layouts.html">Layouts</a><a href="05-layout-specs.html">Layout specs</a><a href="decisions.html">Decisions</a><a href="build-log.html">Build log</a><a href="gate.html">Gate</a><a href="client-asks.html">Owner asks</a><a href="business-logic.html" aria-current=page>Business logic</a><a href="ssot.html">SSOT</a><a href="architecture.html">Architecture</a><a href="technical-design.html">Technical design</a><a href="implementation-plan.html">Plan</a><a href="token-map.html">Token map</a></nav>
+<header><p class="eyebrow">Calvus · business.direct · project documentation</p><h1>business.direct — business logic</h1></header>
+<p><em>Written 2026-09-19 with phase 2 (D21–D23). The machine's rules end to end, in the order
+money and messages move: who the parties are, what each department does, what leaves, who
+approves, what it costs, what stops it. Terms are the SSOT's (<a href="ssot.html"><code>10-ssot.md</code></a>); the decisions
+behind each rule are in <a href="decisions.html"><code>04-decisions.md</code></a>; the prototype (<code>../index.html</code>) implements every
+rule below in memory.</em></p>
+<h2>1. The three parties and what each gets</h2>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>Party</th>
+<th>Gets</th>
+<th>Gives</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Platform</strong> (Your Field NYC)</td>
+<td>more families (B2C social), providers who manage their page and buy upgrades (B2B sales), a machine that runs while nobody logs in, one approval queue</td>
+<td>the catalogue, the family accounts and preferences, the channels' authority, the operator's approvals</td>
+</tr>
+<tr>
+<td><strong>Provider</strong> (a listed business)</td>
+<td>its own one-person team the day it manages its page: replies, reminders, campaigns to families who saved it, results; a free page and paid reach</td>
+<td>a claim, its knowledge files, its approvals, and — if it upgrades — a monthly or seasonal fee</td>
+</tr>
+<tr>
+<td><strong>Family</strong></td>
+<td>what starts near them this week, alerts from providers they saved, offers only from providers they chose, one cap, one Stop</td>
+<td>preferences, and consent where the law requires it</td>
+</tr>
+</tbody>
+</table></div>
+<h2>2. The two flows at the front door (D14)</h2>
+<p><strong>B2C social publishing → families.</strong> Every provider with news (announcement, trial, next
+session) becomes a post draft with the link back to its page. The operator approves,
+edits or skips; approved posts publish at their calendar slot through the platform's
+channels. Families arrive on the listing page; the platform's sign-up captures them.
+<em>Nothing publishes unapproved.</em></p>
+<p><strong>B2B provider sales → providers.</strong> Every provider enters the pipeline at <em>identified</em>.
+The invitation sequence (one approval for the whole run) moves those with an e-mail to
+<em>contacted</em>; a reply moves to <em>replied</em> and lands in the inbox with a drafted answer;
+"Apply to manage" (or a confirmed yes) → <em>applied</em>; the platform's confirmation →
+<em>managing</em>; a paid product → <em>upgraded</em>. Phone-only providers get a call task; providers
+with neither get the website form. "Not my program" or unsubscribe stops everything for
+that address.</p>
+<h2>3. The departments (D6) and what each may do alone</h2>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>Department</th>
+<th>Runs alone</th>
+<th>Needs a person</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Social publishing (platform)</td>
+<td>draft, schedule slots, read comments</td>
+<td>publish, reply</td>
+</tr>
+<tr>
+<td>Provider sales (platform)</td>
+<td>draft the sequence and the reply, move stages on events, build the call list</td>
+<td>send, override a stage</td>
+</tr>
+<tr>
+<td>Weekly picks (platform → families)</td>
+<td>build the Sunday digest and saved-provider alerts within the cap</td>
+<td>nothing — the family's preferences are the approval (R2, R3)</td>
+</tr>
+<tr>
+<td>Generated pages (platform)</td>
+<td>compute activity × neighbourhood pages with ≥ 3 providers</td>
+<td>publish through the platform</td>
+</tr>
+<tr>
+<td>Market radar (platform)</td>
+<td>the weekly note from the catalogue</td>
+<td>read and file</td>
+</tr>
+<tr>
+<td>Conversations and reputation (provider)</td>
+<td>draft replies, text back a missed call</td>
+<td>send</td>
+</tr>
+<tr>
+<td>Reminders (provider)</td>
+<td>3-day and 1-day session reminders to booked families</td>
+<td>nothing — the booking is the consent</td>
+</tr>
+<tr>
+<td>Campaigns (provider)</td>
+<td>draft trial, open-spots, announcement and registration campaigns from the card; size the audience</td>
+<td>approve, edit, skip</td>
+</tr>
+<tr>
+<td>Page and visibility (provider)</td>
+<td>keep sessions, trial and photos on the card current</td>
+<td>choose an upgrade</td>
+</tr>
+</tbody>
+</table></div>
+<p>AI is optional per department (R10). With it off, every draft is the listing's own text or
+a template with merge fields; with it on, the knowledge files are the prompt and the draft
+carries the ✦ badge until a person edits it.</p>
+<h2>4. Provider campaigns (phase 2, D22)</h2>
+<p>A campaign is a provider's message to families, built from the provider's own card:</p>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>Kind</th>
+<th>Built when</th>
+<th>Default audience</th>
+<th>Default channels</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Trial class</td>
+<td>the card has a trial policy</td>
+<td>families who saved the provider + nearby families with a child in the age range</td>
+<td>e-mail + push; SMS only to families who consented for this provider</td>
+</tr>
+<tr>
+<td>Open spots</td>
+<td>the card has a next session</td>
+<td>families who saved the provider</td>
+<td>push</td>
+</tr>
+<tr>
+<td>Announcement</td>
+<td>the card has an announcement</td>
+<td>saved + nearby</td>
+<td>e-mail</td>
+</tr>
+<tr>
+<td>Registration</td>
+<td>a session's registration is open</td>
+<td>saved</td>
+<td>e-mail + push</td>
+</tr>
+</tbody>
+</table></div>
+<p>The provider approves, edits or skips; the platform sends by each family's preferences
+and never past the cap (R3). A family sees why she received it (she saved the provider),
+on which channel, and that it counts toward her monthly four. Audience sizes are sample in
+the prototype (ask #6 — the platform's saves data).</p>
+<h2>5. Upgrades and money (D21: bundled base, provider-bought upgrades)</h2>
+<p>The base machine is <strong>bundled by the platform</strong> for every listing — the invitation, the
+replies, the reminders, the campaigns — because its job is the platform's own growth. The
+<strong>provider buys reach</strong>, and the products are the platform's own, from its "List your
+program" copy:</p>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>Product</th>
+<th>What the provider gets</th>
+<th>Price (sample — the platform publishes none)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Featured listing</td>
+<td>top of the neighbourhood and activity lists; the spotlight post every month</td>
+<td>$49 / month</td>
+</tr>
+<tr>
+<td>Camp placement</td>
+<td>the camps guide and the March "camps near you" digest</td>
+<td>$149 / season</td>
+</tr>
+<tr>
+<td>Local discovery profile</td>
+<td>photos, coach bio, reviews, booking on the card</td>
+<td>$29 / month</td>
+</tr>
+</tbody>
+</table></div>
+<p>Choosing one moves the provider to <em>upgraded</em>; the platform's intelligence screen sums the
+sample revenue. Billing is Stripe (ADR-9, PROPOSED); the platform invoices, business.direct
+records the entitlement. No discounting logic — that is DiscountDirect's domain (D5).</p>
+<h2>6. Families: preferences, consent, cap, stop</h2>
+<ul>
+<li><strong>Preferences</strong> per channel: weekly picks (e-mail), saved-provider alerts (push), new
+  provider nearby (push), texts from providers (SMS). Default: picks and alerts on.</li>
+<li><strong>Consent</strong>: SMS only with written consent per provider, stored verbatim with its time
+  and source (TCPA). E-mail and push run on preference.</li>
+<li><strong>Cap</strong>: 4 messages a month per family across everything — digest, alerts, campaigns,
+  texts. Checked when a message is queued and again when it is sent; the digest counts as
+  one.</li>
+<li><strong>Stop</strong>: one tap turns every channel off and cancels what is queued, in one transaction.</li>
+<li><strong>Why you got this</strong> on every message: the provider she saved, the channel, the count.</li>
+</ul>
+<h2>7. Providers: the law on the sales side</h2>
+<p>US (first market): commercial e-mail to a business needs no prior consent (CAN-SPAM);
+every message carries a physical address and a working opt-out honoured within 10 business
+days — the machine honours it within one. Hungary (reference): corporate addresses without
+consent; a named person's address needs consent — the reference connector flags which is
+which. SMS to providers is not used.</p>
+<h2>8. The intelligence recap (D23)</h2>
+<p>Every Monday the operator reads one screen: providers contacted, replies answered, applied
+· managing · upgraded, posts published, families reached by campaigns, upgrade revenue; by
+department; the market radar from the catalogue (largest activity, free trials, unknown
+prices, page opportunities, unreachable providers); and "needs you" — approvals waiting,
+providers who replied but did not apply, integrations still to connect. Real where the
+catalogue is the source; sample until the platform's analytics and a pilot provider's
+numbers arrive (asks #6–7).</p>
+<h2>9. What the machine never does</h2>
+<p>Sends without an approval or a preference; texts without consent; exceeds the cap; deletes
+a provider's stage history; discounts; publishes a generated page with fewer than three
+providers; speaks as an AI to a family or a provider — the product speaks as the platform
+or the provider.</p>
+<footer>Source: <code>business-direct/docs/09-business-logic.md</code> · rendered by <code>docs/build.py</code>.</footer>
+</div>
+</body>
+</html>

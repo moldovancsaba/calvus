@@ -1,6 +1,6 @@
 # business.direct — architecture
 
-*Written 2026-09-19 for the first client, Your Field NYC (D11). The stack is PROPOSED
+*Written 2026-09-19 for the first client, Your Field NYC (D11); phase 2 (campaigns, upgrades, recap — D21–D23) added the same day. The stack is PROPOSED
 (§10, ADRs in §11): it follows DiscountDirect's decided stack (D26 there) because the
 client platform runs on the same family (`02-audit.md` §1), and the owner or client flips
 each ADR. Terms are the SSOT's (`10-ssot.md`).*
@@ -110,6 +110,16 @@ digest from saved providers + nearby providers with a session next week → cap 
 outbox → Resend at 18:00. Alerts: catalogue sync diff (new session at a saved provider) →
 cap check → platform push.
 
+**Provider campaigns (phase 2).** Catalogue sync → for a managing provider with a trial
+policy, next session, announcement or open registration: build a campaign draft → the
+provider approves / edits / skips in its view → audience resolved (saved families + nearby
+in the age range, from the platform's saves) → per family: preference and cap check →
+outbox → channel adapter → message log with the reason line.
+
+**Upgrades.** Provider chooses a product → Stripe Checkout (the platform's account) →
+webhook → `entitlements` row → stage *upgraded* → the platform connector sets the
+featured / camp / profile flag on the card.
+
 **Preferences and stop.** A family's change is written first, then the caps; *Stop* sets
 every channel off and cancels queued messages for that family in the same transaction.
 
@@ -118,7 +128,7 @@ every channel off and cancels queued messages for that family in the same transa
 MongoDB collections: `providers_cache` (the catalogue copy, refreshed by sync, never
 edited), `provider_state`, `drafts`, `approvals` (append-only), `sequences`, `threads`,
 `families_prefs`, `consents` (append-only, with the proof text), `messages` (append-only
-log of everything sent), `knowledge_files`, `integrations`, `generated_pages`. Every
+log of everything sent), `knowledge_files`, `integrations`, `generated_pages`, `campaigns`, `products`, `entitlements`. Every
 document carries `platform_id` (Your Field, Sportolok) — one deployment, several
 instances (ADR-2). Retention: message log 24 months; consent log for the life of the
 account plus 5 years; drafts 90 days after their final state.
@@ -135,6 +145,7 @@ account plus 5 years; drafts 90 days after their final state.
 | Platform push | out | via the platform's notifications endpoint | the platform owns the device tokens |
 | Google Business Profile, calendar | provider-side, read reviews / write bookings | OAuth per provider | third release |
 | LLM API | drafting | API key | optional per department; prompts are the knowledge files; outputs marked as AI drafts |
+| Stripe (ADR-9) | provider upgrades: checkout, subscription, webhook → entitlement | API key; signed webhooks | the platform is the merchant; business.direct records the entitlement and the stage |
 
 ## 8. Security and privacy
 
@@ -168,7 +179,8 @@ a family's deletion request.
 | Social | Meta Graph API first; TikTok and X second | reach on the family side (research §4) |
 | SMS | Twilio | consent tooling, STOP handling |
 | Auth | DoneIsBetter SSO | the family's existing identity provider |
-| AI | one LLM provider behind an interface; Claude or equivalent, configurable | drafting quality; optional (R10) |
+| AI | one LLM provider behind an interface, configurable | drafting quality; optional (R10) |
+| Billing | Stripe (Checkout + Billing, the platform's account) | upgrades (ADR-9) |
 
 ## 11. Architecture decision records (all PROPOSED)
 
@@ -182,3 +194,5 @@ a family's deletion request.
 | ADR-6 | **Families do not sign in to business.direct**; preferences by signed link or through the platform's UI | (a) family accounts here; (b) signed links + platform UI | (b): no second account, no second password; data minimisation |
 | ADR-7 | **AI drafting behind an interface, optional per department**, outputs marked | (a) AI always on; (b) optional per department; (c) none | (b): D6; EU AI Act Art. 50 marking; the provider with AI off still gets the listing's own text |
 | ADR-8 | **Generated pages are written to the platform** through its API, not hosted by business.direct | (a) host here; (b) write to the platform | (b): search authority belongs to the platform's domain (research §5) |
+| ADR-9 | **Upgrades billed by Stripe on the platform's account**; business.direct stores only the entitlement | (a) business.direct as merchant; (b) the platform as merchant via Stripe; (c) invoices by hand | (b): the platform already sells "List your program"; one merchant, one tax position; the machine never holds card data |
+| ADR-10 | **Campaign audiences are resolved by the platform's saves and location, never uploaded lists** | (a) providers upload contacts; (b) audiences from the platform's data only | (b): consent lives on the platform (R4, R11); no provider list ever enters the machine |
