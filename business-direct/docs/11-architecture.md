@@ -109,9 +109,10 @@ answer → queue → sent → stage *replied* → provider clicks apply → plat
 upgrades → *upgraded*. Three touches 3–4 days apart in propensity order (D28); call task for phone-only.
 
 **Family digest and alerts.** Sunday 17:00: for every family with `picks` on, build the
-digest from saved providers + nearby providers with a session next week → cap check →
-outbox → Resend at 18:00. Alerts: catalogue sync diff (new session at a saved provider) →
-cap check → platform push.
+digest from saved providers + nearby providers with a session next week → preference check
+(the digest and alerts are the platform's own and do not count toward the provider cap, R3)
+→ outbox → Resend at 18:00. Alerts: catalogue sync diff (new session at a saved provider) →
+preference check → platform push.
 
 **Provider campaigns (phase 2).** Catalogue sync → for a managing provider with a trial
 policy, next session, announcement or open registration: build a campaign draft → the
@@ -147,7 +148,7 @@ account plus 5 years; drafts 90 days after their final state.
 
 | Integration | Direction | Auth | Notes |
 |---|---|---|---|
-| Your Field API | read catalogue, facets, site; write claim requests, demand capture, notifications, generated pages | none for reads; key for writes (ask #5) | polled daily + on demand; ETag/`updatedAt` diff |
+| Your Field API | read catalogue, facets, site; write claim requests, demand capture, notifications, generated pages | none for reads; key for writes (prerequisite P-7) | polled daily + on demand; ETag/`updatedAt` diff |
 | Resend | out + inbound webhook | API key; signed webhooks | provider e-mail, family digest; unsubscribe link per message |
 | Meta Graph (Instagram, Facebook) | publish, read comments/DMs | OAuth per page | approval required by the platform; publish only from the outbox |
 | TikTok, X | publish | OAuth | same adapter interface; second release |

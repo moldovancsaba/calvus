@@ -9,6 +9,8 @@ Exit 1 on any finding. Covers the pages and the docs:
 6. stale-state phrases in the docs and pages (things that were true once): "awaits the owner",
    "for approval" outside the approval UI wording, "coming soon", "not yet built", "inert here",
    "will be built", a "PROPOSED" gate — the register and the build log may keep history
+7. consistency: the decision range in README and the SSOT equals the register's last D-number; the
+   README's issue count equals the plan's; no doc still cites "ask #n" after D34 (cite P-n)
 """
 import re, sys, json, shutil, subprocess, pathlib
 HERE = pathlib.Path(__file__).resolve().parent
@@ -53,6 +55,22 @@ for f in sorted((HERE / "docs").glob("*.md")) + ALL + [HERE / "assets/app.js"]:
     t = f.read_text(encoding="utf-8").lower()
     for ph in STALE:
         if ph in t: findings.append(f"stale phrase  {f.relative_to(ROOT)}: \"{ph}\"")
+# 7. consistency: the decision range, the issue count and the ask numbering must agree across the docs
+docs = HERE / "docs"
+import re as _re
+last_d = max(int(m) for m in _re.findall(r"^\| D(\d+) \|", (docs / "04-decisions.md").read_text(encoding="utf-8"), _re.M))
+for f, pat in (("README.md", r"D1–D(\d+) \|"), ("10-ssot.md", r"`04-decisions.md` holds D1–D(\d+)\."), ("10-ssot.md", r"\| `04-decisions.md` \| D1–D(\d+) \|")):
+    for m in _re.finditer(pat, (docs / f).read_text(encoding="utf-8")):
+        if int(m.group(1)) != last_d: findings.append(f"stale count  docs/{f}: says D1–D{m.group(1)}, the register ends at D{last_d}")
+issues = len(_re.findall(r"^\| BD-", (docs / "13-implementation-plan.md").read_text(encoding="utf-8"), _re.M))
+m = _re.search(r"(\d+) issues with a Definition of Done", (docs / "README.md").read_text(encoding="utf-8"))
+if m and int(m.group(1)) != issues: findings.append(f"stale count  docs/README.md: says {m.group(1)} issues, the plan has {issues}")
+for f in sorted(docs.glob("*.md")) + [HERE / "assets/app.js"]:
+    if f.name in ("08-client-asks.md", "04-decisions.md", "06-build-log.md", "17-business-logic-audit-and-swot.md", "19-implementation-prerequisites.md", "README.md"): continue
+    for m in _re.finditer(r"\basks? #\d", f.read_text(encoding="utf-8")):
+        findings.append(f"stale reference  {f.relative_to(ROOT)}: \"{m.group(0)}…\" — asks moved to the prerequisites (D34); cite P-n")
+        break
+
 if shutil.which("node"):
     r = subprocess.run(["node", "--check", str(HERE / "assets/app.js")], capture_output=True, text=True)
     if r.returncode: findings.append("script  app.js: " + r.stderr.strip().splitlines()[-1])

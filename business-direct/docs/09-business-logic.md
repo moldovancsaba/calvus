@@ -75,7 +75,7 @@ A campaign is a provider's message to families, built from the provider's own ca
 The provider approves, edits or skips; the platform sends by each family's preferences
 and never past the cap (R3). A family sees why she received it (she saved the provider),
 on which channel, and that it counts toward her monthly four. Audience sizes are sample in
-the prototype (ask #6 — the platform's saves data).
+the prototype (prerequisite P-5 — the platform's saves data).
 
 ## 4b. Conversations (phase 3, D25)
 
@@ -139,13 +139,13 @@ needs the consent text, generation needs the disclosure rule, a minor's data nee
 audience model and a DPIA. The client's value is lower exposure, a better-converting
 audience, trust as the acquisition channel, and auditability: every send carries its policy
 basis. For Your Field NYC (ClassScout) the gate today blocks provider e-mail (no postal
-address, ask #15) and the digest (the policy does not yet describe e-mail alerts, ask #16).
+address, prerequisite P-1) and the digest (the policy does not yet describe e-mail alerts, prerequisite P-2).
 
 ## 7. Providers: the law on the sales side
 
 US (first market): commercial e-mail to a business needs no prior consent (CAN-SPAM);
 every message carries the platform's **registered postal address** (a merge field, checked
-by the gate — Q2; ask #15 for the address itself) and a working opt-out honoured within 10
+by the gate — Q2; prerequisite P-1 for the address itself) and a working opt-out honoured within 10
 business days — the machine honours it within one. A "not my program" or an unsubscribe
 excludes the address from every sequence; a bounce lowers its score (Q6). The sending
 domain is paced and guarded: warm-up, a daily cap, and a bounce rate above 2 % pauses the
@@ -161,7 +161,7 @@ department; the market radar from the catalogue (largest activity, free trials, 
 prices, page opportunities, unreachable providers); and "needs you" — approvals waiting,
 providers who replied but did not apply, integrations still to connect. Real where the
 catalogue is the source; sample until the platform's analytics and a pilot provider's
-numbers arrive (asks #6–7).
+numbers arrive (prerequisites P-6 and P-9).
 
 ## 8b. Data-driven decisions (D26)
 
@@ -187,7 +187,7 @@ The model and its events are `16-analytics-and-unit-economics.md`.
 | A10 operator time undercounted | operator hours tile; batch approval of real-footage clips; earned auto-approval per department after four clean weeks (reminders earned; FAQ answers week 1 of 4) — every auto-sent message still logged and stoppable |
 | A11 capture undefined | capture = upgrades within 30 days of a delivered result ÷ upgrades; measured on the economics screen |
 | A12 consent proof invisible | the preference row shows when and where consent was given |
-| A13 children's data | R24 age band in provider-facing text; counsel question ask #13 |
+| A13 children's data | R24 age band in provider-facing text; counsel question prerequisite P-4 |
 | A14 disclosure on drafted messages | R20 extended: an AI-drafted, unedited answer carries the market's disclosure and is logged |
 | A17 EU named addresses | connector `contactKind`; EU instances skip `person` addresses without consent |
 | A18 stage history | logged per change; the drawer shows the last three |
@@ -207,7 +207,7 @@ The model and its events are `16-analytics-and-unit-economics.md`.
 | Sell the upgrade at the activation moment; Angi and Yelp report revenue per lead / location (research III §1, §5) | R19 in force: the product cards appear only when delivered value exceeds the cheapest product's annual price; the provider's results carry "your return" |
 | Marketplace experiments must be clustered; MMM waits under $1 M spend (research III §3) | the first experiment is a neighbourhood holdout (content on in one neighbourhood, off in a comparable one, four weeks); attribution stays last-touch until then |
 | Cohorts, not averages (research III §2) | cohort LTV per acquisition channel shown as *assumption* until 100 observations, then *measured* (R16) |
-| Voice agents pay back fastest on inbound, after-hours and follow-ups; Yelp Receptionist at $99 (research II §5.1, III §1) | missed-call text-back stays in v1; voice remains "later" until Twilio and consent (asks #4–5) |
+| Voice agents pay back fastest on inbound, after-hours and follow-ups; Yelp Receptionist at $99 (research II §5.1, III §1) | missed-call text-back stays in v1; voice remains "later" until Twilio and consent (prerequisites P-11 and P-12) |
 
 ## 9. What the machine never does
 

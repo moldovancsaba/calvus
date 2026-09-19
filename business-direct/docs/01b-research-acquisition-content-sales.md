@@ -10,9 +10,9 @@ links to where it was read; **P** = primary (the platform, vendor or report itse
 Where a claim could not be verified, §7 says so. The first research round
 (`01-research.md`) stands; this one does not repeat it.*
 
-## 1. What we have now
+## 1. What we had when this was written (round 4; the gaps below were closed by D28–D33 — see business logic §8c–§8d)
 
-The prototype (`../index.html`, rounds 1–4) already runs the shape the market below
+The prototype (`../index.html`, rounds 1–4) already ran the shape the market below
 describes: **B2C social publishing** (posts drafted from listing data, approved, scheduled,
 with the link back to the listing page), a **B2B provider sales pipeline** (invitation
 sequence → reply inbox → apply-to-manage → managing → upgraded), **provider campaigns**
@@ -276,7 +276,7 @@ provider's conversations department; voice is "later" until consent and Twilio a
 | P6 | **Owned audience as a channel**: the digest becomes a public neighbourhood newsletter families can join without an account, with cross-recommendation as the growth loop | family view, digest job | §2.1 |
 | P7 | **Sending infrastructure**: a dedicated sending domain per platform instance, 4–6-week warm-up, bounce < 2 %, three touches (invitation → "a family saved you" → reminder), then the call task; reply within one business day | sequences, outbox, `rules/consent.md` | §5.1 |
 | P8 | **Upgrade at the activation moment**: the product card appears on the first campaign result or the first answered enquiry; sales-assist only after 30 days of activity without a purchase | provider results, drawer | §5.2 |
-| P9 | **Voice, later**: missed-call text-back stays; an inbound voice agent for providers and an outbound verification call for phone-only providers wait on Twilio and consent (asks #4/#5) | integrations | §5.1, §5.3 |
+| P9 | **Voice, later**: missed-call text-back stays; an inbound voice agent for providers and an outbound verification call for phone-only providers wait on Twilio and consent (prerequisites P-11 and P-7) | integrations | §5.1, §5.3 |
 
 None of these changes the approved design system or layouts; P2 adds one provider screen
 on the existing grids.

@@ -242,9 +242,10 @@ answer → queue → sent → stage <em>replied</em> → provider clicks apply �
 → stage <em>applied</em> → platform confirms → <em>managing</em> → provider view unlocks → later
 upgrades → <em>upgraded</em>. Three touches 3–4 days apart in propensity order (D28); call task for phone-only.</p>
 <p><strong>Family digest and alerts.</strong> Sunday 17:00: for every family with <code>picks</code> on, build the
-digest from saved providers + nearby providers with a session next week → cap check →
-outbox → Resend at 18:00. Alerts: catalogue sync diff (new session at a saved provider) →
-cap check → platform push.</p>
+digest from saved providers + nearby providers with a session next week → preference check
+(the digest and alerts are the platform's own and do not count toward the provider cap, R3)
+→ outbox → Resend at 18:00. Alerts: catalogue sync diff (new session at a saved provider) →
+preference check → platform push.</p>
 <p><strong>Provider campaigns (phase 2).</strong> Catalogue sync → for a managing provider with a trial
 policy, next session, announcement or open registration: build a campaign draft → the
 provider approves / edits / skips in its view → audience resolved (saved families + nearby
@@ -283,7 +284,7 @@ account plus 5 years; drafts 90 days after their final state.</p>
 <tr>
 <td>Your Field API</td>
 <td>read catalogue, facets, site; write claim requests, demand capture, notifications, generated pages</td>
-<td>none for reads; key for writes (ask #5)</td>
+<td>none for reads; key for writes (prerequisite P-7)</td>
 <td>polled daily + on demand; ETag/<code>updatedAt</code> diff</td>
 </tr>
 <tr>

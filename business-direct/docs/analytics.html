@@ -147,7 +147,7 @@ ways, and the plan should say which:</p>
 <h2>3. The B2C model: families and the value of an avid user</h2>
 <h3>3.1 Definitions</h3>
 <ul>
-<li><strong>Family</strong>: an account on the platform (count is the platform's — ask #6; 5,000 assumed).</li>
+<li><strong>Family</strong>: an account on the platform (count is the platform's — prerequisite P-6; 5,000 assumed).</li>
 <li><strong>Avid family</strong>: saved ≥ 3 providers, opened the last two digests, asked a provider at
   least once — the behaviour the machine can observe. Assumed 15 % of families.</li>
 <li><strong>Value delivered to providers per avid family per year</strong> = trials per year × trial →
@@ -215,7 +215,7 @@ Cost
 </code></pre>
 <p>Every leaf is an event the machine already writes (<code>messages</code>, <code>approvals</code>,
 <code>provider_state</code>, <code>entitlements</code>, <code>campaigns</code>, <code>enquiries</code>) or one the platform must expose
-(saves, sign-ups with source, bookings — asks #6–7). Metrics are materialised nightly per
+(saves, sign-ups with source, bookings — prerequisites P-6 and P-9). Metrics are materialised nightly per
 <code>platform_id</code> (architecture ADR-11).</p>
 <h2>6. Events and attribution (what to log)</h2>
 <div class="tbl"><table>
@@ -311,7 +311,7 @@ purchase (P8) — both recorded, neither double-counted in revenue.</p>
 (Project Play). Assumptions: every conversion rate after reply, ARPA, margin, cost per
 touch and call, operator minutes, tooling, family count, avid share, trials, enrolment,
 capture, referral, families per post, content cost. Each is one input on the screen and
-one line here; the platform's analytics (ask #6) and a pilot provider (ask #7) replace them
+one line here; the platform's analytics (prerequisite P-6) and a pilot provider (prerequisite P-6) replace them
 in that order.</p>
 <footer>Source: <code>business-direct/docs/16-analytics-and-unit-economics.md</code> · rendered by <code>docs/build.py</code>.</footer>
 </div>

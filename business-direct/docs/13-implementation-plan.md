@@ -71,7 +71,7 @@ instance (`platform_id`). "Measured" means a number in the build log, not a clai
 | BD-3-1 | Signed preference links from the platform | a family changes a channel without a password; link expiry |
 | BD-3-2 | Consent capture and log | SMS toggle impossible without a consent row (test) |
 | BD-3-3 | Caps in Redis, double check | a race of 2 sends against a cap of 1 delivers 1 (test) |
-| BD-3-4 | Sunday digest | built from saved + nearby-with-session; sent 18:00; cap-aware |
+| BD-3-4 | Sunday digest | built from saved + nearby-with-session; sent 18:00 by preference; not counted toward the provider cap (R3) |
 | BD-3-5 | Saved-provider alerts through platform push | new session at a saved provider → push within 1 hour (measured) |
 | BD-3-6 | Stop | every channel off and queued drafts cancelled in one transaction |
 | BD-4-1 | Overview tiles on real numbers | every tile has a source; "sample" disappears |
@@ -104,14 +104,14 @@ Every row below is an implementation prerequisite (`19-implementation-prerequisi
 
 | # | Blocked | On | Unblocks |
 |---|---|---|---|
-| B1 | Writes to the platform (claim requests, notifications, pages) | ask #5: a key and the write contract | BD-1-5, BD-3-5, BD-4-3 |
-| B2 | Social publishing | Meta app review for the platform's pages; ask #3 | BD-2-4 |
-| B3 | SMS | Twilio account, consent text approved by counsel; ask #3 | BD-3-2's SMS branch |
-| B4 | Real tiles | ask #6: platform analytics | BD-4-1 |
-| B5 | Pilot provider | ask #6: one provider's real numbers | provider-view metrics |
-| B6 | Product prices | ask #4: the platform's real prices (assumed bundled base + provider-bought reach, D21) | BD-5-5 |
+| B1 | Writes to the platform (claim requests, notifications, pages) | prerequisite P-7: a key and the write contract | BD-1-5, BD-3-5, BD-4-3 |
+| B2 | Social publishing | Meta app review for the platform's pages; prerequisite P-11 | BD-2-4 |
+| B3 | SMS | Twilio account, consent text approved by counsel; prerequisite P-11 | BD-3-2's SMS branch |
+| B4 | Real tiles | prerequisite P-6: platform analytics | BD-4-1 |
+| B5 | Pilot provider | prerequisite P-9: one provider's real numbers | provider-view metrics |
+| B6 | Product prices | prerequisites P-6 and P-12: the platform's real prices (assumed bundled base + provider-bought reach, D21) | BD-5-5 |
 | B7 | Audience data | the platform's saves and family locations through keyed endpoints | BD-5-3 |
-| B9 | Family, sign-up-source and booking events | the platform's analytics (ask #6) | BD-4-6's family leaves; the avid-family value |
+| B9 | Family, sign-up-source and booking events | the platform's analytics (prerequisite P-6) | BD-4-6's family leaves; the avid-family value |
 | B8 | Stripe account | the platform's merchant account and tax setup | BD-5-5 |
 
 ## 5. Risks

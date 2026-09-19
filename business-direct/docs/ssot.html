@@ -139,7 +139,7 @@ implementation of the enumerations and state machines below.</em></p>
 </tr>
 <tr>
 <td><strong>Cap</strong></td>
-<td>the frequency cap across every channel: 4 messages per family per month (<code>rules/consent.md</code>) — DiscountDirect's term</td>
+<td>4 provider-originated messages per family per month — campaigns and texts across all providers; the platform's digest and alerts follow the family's switches and do not count (D30; <code>rules/consent.md</code>) — DiscountDirect's term</td>
 <td>preferences</td>
 </tr>
 <tr>
@@ -451,7 +451,7 @@ implementation of the enumerations and state machines below.</em></p>
 <tr>
 <td>Postal address</td>
 <td><code>{postal_address}</code> merge field per <code>platform_id</code>, required in every provider e-mail; the gate blocks a template without it</td>
-<td>CAN-SPAM, D30, ask #15</td>
+<td>CAN-SPAM, D30, prerequisite P-1</td>
 </tr>
 <tr>
 <td>Earned auto-approval</td>
@@ -624,7 +624,7 @@ PROPOSED.</p>
 </tr>
 <tr>
 <td>R24</td>
-<td>The machine stores no child's name; a child is an age ("a child of 6") to every party, the family included — the platform's policy does not collect children's data (D30, D31; counsel ask #13)</td>
+<td>The machine stores no child's name; a child is an age ("a child of 6") to every party, the family included — the platform's policy does not collect children's data (D30, D31; counsel prerequisite P-4)</td>
 <td><code>S.family.kids</code>, <code>enquiryCard</code></td>
 </tr>
 <tr>
@@ -803,7 +803,7 @@ PROPOSED.</p>
 </tr>
 <tr>
 <td><a href="decisions.html"><code>04-decisions.md</code></a></td>
-<td>D1–D18</td>
+<td>D1–D34</td>
 </tr>
 <tr>
 <td><a href="05-layout-specs.html"><code>05-layout-specs.md</code></a>, <code>design-system.html</code>, <code>layouts.html</code></td>

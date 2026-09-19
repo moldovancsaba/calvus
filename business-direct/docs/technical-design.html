@@ -349,7 +349,7 @@ cannot turn SMS on without a consent row.</p>
 <tr>
 <td><code>digest</code></td>
 <td>Sunday 17:00 build, 18:00 send</td>
-<td>per family with <code>picks</code> on: saved + nearby-with-session rows; cap check; outbox</td>
+<td>per family with <code>picks</code> on: saved + nearby-with-session rows; preference check (not counted toward the provider cap, R3); outbox</td>
 </tr>
 <tr>
 <td><code>publish</code></td>
@@ -359,7 +359,7 @@ cannot turn SMS on without a consent row.</p>
 <tr>
 <td><code>send</code></td>
 <td>every minute</td>
-<td>drain the outbox: cap check again (R3), send, log; retry with backoff; dead-letter after 5</td>
+<td>drain the outbox: for provider-originated messages the cap check again (R3), send, log; retry with backoff; dead-letter after 5</td>
 </tr>
 <tr>
 <td><code>draft-campaigns</code></td>

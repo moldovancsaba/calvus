@@ -96,7 +96,7 @@ missing / placeholder) and every feature it blocks.
 | audienceModel | adults (the policy says 18+) | adults (athletes' guardians) — to confirm |
 | childData | none — ages only in the family's own preferences | none |
 | channels | e-mail preference, push preference, SMS consent, social public | e-mail consent for B2C, role addresses for B2B without consent, no SMS |
-| postal address | **missing** (ask #15) | to obtain |
+| postal address | **missing** (prerequisite P-1) | to obtain |
 | privacyPolicy clauses | e-mail alerts **not yet described**; saves opt-in **described (off by default)**; children **none** | to read |
 | aiDisclosure | label (platform rules) | label + text (Art. 50) |
 | gate today | sequences blocked in production (address); digest blocked (clause); audiences from opted-in accounts only | everything blocked until the policy is filled |

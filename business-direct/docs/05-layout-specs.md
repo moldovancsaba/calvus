@@ -72,3 +72,6 @@ the card grid and the two-column body. No new layout.
 
 The provider's *Media* screen (D28) reuses the approval stack: one card for the recording,
 the post cards for the clips, a listing card for the photo. No new layout.
+
+The frames and the design-system page were re-issued 2026-09-19 with age bands in place of
+children's names (R24, D31); layouts unchanged.

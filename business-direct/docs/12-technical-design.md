@@ -129,9 +129,9 @@ cannot turn SMS on without a consent row.
 | `sync` | hourly | pull the catalogue, diff, write `providers_cache`, raise alert drafts |
 | `draft-social` | 08:00 daily | for providers with news and no draft this week: build a post draft from the knowledge files (AI if the department's switch is on, else the listing's own text — `draftCopy`) |
 | `sequence-step` | 09:00 weekdays | for every approved sequence: enqueue the due step per recipient not yet replied; skip addresses with `not my program` or unsubscribe |
-| `digest` | Sunday 17:00 build, 18:00 send | per family with `picks` on: saved + nearby-with-session rows; cap check; outbox |
+| `digest` | Sunday 17:00 build, 18:00 send | per family with `picks` on: saved + nearby-with-session rows; preference check (not counted toward the provider cap, R3); outbox |
 | `publish` | every 5 min | send due `scheduled` posts through the adapter; write `messages`, snapshot to Blob |
-| `send` | every minute | drain the outbox: cap check again (R3), send, log; retry with backoff; dead-letter after 5 |
+| `send` | every minute | drain the outbox: for provider-originated messages the cap check again (R3), send, log; retry with backoff; dead-letter after 5 |
 | `draft-campaigns` | daily 08:30 | for managing providers: one draft per kind per card event, none if one is waiting |
 | `send-campaigns` | every 5 min | approved campaigns: resolve audience, preference + cap per family, outbox |
 | `draft-answers` | on inbound webhook | enquiry or comment → draft from the knowledge files and the card within a minute (R14) |

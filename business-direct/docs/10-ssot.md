@@ -26,7 +26,7 @@ implementation of the enumerations and state machines below.*
 | **Digest** | the family's weekly "this week near you" e-mail from saved providers and nearby providers with a session | family inbox |
 | **Alert** | a push to a family when a saved provider adds a session | preferences |
 | **Consent** | a family's recorded permission per channel, and per provider for SMS (TCPA, research §8) | preferences, the SMS's "why you got this" |
-| **Cap** | the frequency cap across every channel: 4 messages per family per month (`rules/consent.md`) — DiscountDirect's term | preferences |
+| **Cap** | 4 provider-originated messages per family per month — campaigns and texts across all providers; the platform's digest and alerts follow the family's switches and do not count (D30; `rules/consent.md`) — DiscountDirect's term | preferences |
 | **Knowledge file** | a plain-text file the machine reads before writing: voice, offer, FAQ, consent rules, social rules | knowledge screens |
 | **Generated page** | an activity × neighbourhood landing page published only where ≥ 3 providers exist | generated pages |
 | **Campaign** | a provider's message to families built from its card — trial class, open spots, announcement, registration — approved by the provider, sent by each family's preferences under the cap (D22) | provider campaigns, family inbox |
@@ -96,7 +96,7 @@ implementation of the enumerations and state machines below.*
 | Setting | Value | Why |
 |---|---|---|
 | Family frequency cap | 4 provider-originated messages / month; digest and alerts on preference | research §4, D30, `rules/consent.md` |
-| Postal address | `{postal_address}` merge field per `platform_id`, required in every provider e-mail; the gate blocks a template without it | CAN-SPAM, D30, ask #15 |
+| Postal address | `{postal_address}` merge field per `platform_id`, required in every provider e-mail; the gate blocks a template without it | CAN-SPAM, D30, prerequisite P-1 |
 | Earned auto-approval | four clean weeks per department; reminders earned by default (the booking is the consent) | D30 |
 | Conversations line | economics input; 0 = bundled | D21, D30 |
 | Digest day and time | Sunday 18:00 | research §4 |
@@ -141,7 +141,7 @@ PROPOSED.
 | R21 | A provider's real recording beats any generation; the clip engine is the v1 media service; generation fills gaps only | provider media, social queue |
 | R22 | A propensity score per provider orders every sequence and the call list; recomputed nightly from the card and the events: +15 when a family saved or asked, −40 after "not my program", −20 after a bounce, 0 and excluded after unsubscribe (D30) | `score()`, `S.optOut` |
 | R23 | The outbox refuses any send past the sending domain's warm-up cap; a bounce rate ≥ 2 % pauses the sequence and alerts; recipients are paced at the daily cap (D30) | `sendInvitation`, `S.sending` |
-| R24 | The machine stores no child's name; a child is an age ("a child of 6") to every party, the family included — the platform's policy does not collect children's data (D30, D31; counsel ask #13) | `S.family.kids`, `enquiryCard` |
+| R24 | The machine stores no child's name; a child is an age ("a child of 6") to every party, the family included — the platform's policy does not collect children's data (D30, D31; counsel prerequisite P-4) | `S.family.kids`, `enquiryCard` |
 | R26 | **The policy gate**: a feature runs only when the instance's policy fields it needs are set — provider e-mail needs the postal address; the digest needs the published e-mail clause; audiences need the saves opt-in; SMS needs the consent text; generation needs the disclosure rule; a minor's data needs the audience model and a DPIA (D32) | `policyGate()`, `sending-guard`, the *Policy* screen |
 | R27 | No profiling and no targeted advertising on a minor's data, on any instance, with or without consent (DSA Art. 28, California, Oregon, Nebraska as the floor) | policy `minors` |
 | R28 | High-privacy defaults on every instance: nothing that shares, locates or increases frequency is on until the person turns it on; push respects quiet hours where minors may be present | policy `defaults`, `family.prefs` |
@@ -183,7 +183,7 @@ PROPOSED.
 | `01-research.md` | sourced evidence, legal by market |
 | `02-audit.md` | the platform measured, the catalogue's coverage, the videos, DiscountDirect's contribution |
 | `03-sources.md` | real vs sample |
-| `04-decisions.md` | D1–D18 |
+| `04-decisions.md` | D1–D34 |
 | `05-layout-specs.md`, `design-system.html`, `layouts.html` | gates 1 and 2 |
 | `06-build-log.md`, `07-gate.md` | rounds and the measured pass |
 | `08-client-asks.md` | the register of asks, with states |

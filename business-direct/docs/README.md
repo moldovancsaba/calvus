@@ -8,30 +8,30 @@ Built to the prototyping standard (`PROTOTYPING.md`); this index is the process 
 
 | Slot | File | What it holds |
 |---|---|---|
-| 00 brief | `00-brief.md` | Client, problem, the three views and four automations, what is real, what is inert |
+| presentation | `bemutato.html` | Standalone, English, on the product's tokens: one sentence, three numbers, five things to click with previews, how the machine decides, responsible by design, what is real, what we ask today (one decision) and what the implementation will need, what comes next |
+| 00 brief | `00-brief.md` | Client (ClassScout · Your Field NYC), problem, the three views and the flows, what is real, where it stands |
 | 01 research | `01-research.md` | Sourced: reputation and claiming, speed to lead, reminders, digests, generated pages, marketplace monetisation, AI adoption and human-in-the-loop, EU AI Act Art. 50, US CAN-SPAM and TCPA, the Hungarian reference market |
-| 01b research II | `01b-research-acquisition-content-sales.md` | Owner's ask 2026-09-19: acquiring customers for classified media (demand and supply side), content strategies, the AI creation services to add (Higgsfield and the video / image / audio / design / scheduling landscape with prices and the labelling rules), the sales processes with benchmarks — and nine proposals P1–P9 |
-| 01c research III | `01c-research-data-driven-marketing.md` | Case studies and best practices behind the data-driven decision flow: Yelp (Receptionist, Hatch $270 M, revenue per location), Angi (revenue per lead), Thumbtack, Rover; LTV : CAC and payback lines; attribution → incrementality → MMM; Booking.com and next-best-action; the map from each finding to our services; P10–P12 |
-| 02 audit | `02-audit.md` | Your Field measured: API, 252 providers, field coverage, site copy; the Hungarian reference instance; the two videos frame by frame; what DiscountDirect provides |
-| 03 sources | `03-sources.md` | What is real (the platform's public data), what is sample, what is inherited |
-| presentation | `bemutato.html` | Standalone, English, on the product's tokens: one sentence, three numbers, the four things to click with previews, what is real, the asks, what comes next |
+| 01b research II | `01b-research-acquisition-content-sales.md` | Acquiring customers for classified media (demand and supply side), content strategies, the AI creation services (Higgsfield and the video / image / audio / design / scheduling landscape with prices and the labelling rules), the sales processes with benchmarks; P1–P9 (implemented, D28) |
+| 01c research III | `01c-research-data-driven-marketing.md` | Case studies and practices behind the data-driven decision flow: Yelp (Receptionist, Hatch, revenue per location), Angi, Thumbtack, Rover; LTV : CAC and payback lines; attribution → incrementality → MMM; Booking.com; next-best-action; P10–P12 (implemented, D28) |
+| 01e research IV | `01e-research-responsible-data.md` | Responsible data and children's rights: the law by market (COPPA 2025, NY CDPA, California and the states, GDPR Art. 8, DSA Art. 28, the UK Children's Code), the enforcement record, the frameworks (privacy by design, ICO, ISO 27701, NIST, LEGO), the business value of doing it properly |
+| 02 audit | `02-audit.md` | Your Field measured: API, 252 providers, field coverage, site copy, the platform's own policy and terms; the Hungarian reference instance; the two videos frame by frame; what DiscountDirect provides |
+| 03 sources | `03-sources.md` | What is real (the platform's public data), what is sample (generated from real cards), what is inherited |
 | 04 decisions | `04-decisions.md` | D1–D34 |
 | 05 design | `design-system.html` + `../assets/tokens.css` + `../assets/components.css` | **Gate 1 approved (D9)**: tokens and components, one source |
-| 05 layouts | `05-layout-specs.md` + `layouts.html` + `frames/` | **Gate 2 approved (D16)**: platform 1440 / 390, provider 390, family 390 |
-| 06 build log | `06-build-log.md` | Round 1: the prototype; 1b: presentation and package; 2: editors real, tablet measured; 3: phase 2 — campaigns, upgrades, recap; 4: phase 3 — conversations; 5: economics; 6: the research implemented; 7: the audit implemented; 8: policy; 9: two interfaces |
-| 07 gate | `07-gate.md` + `../check.py` | Measured pass at 390, 768, 1024 and 1440: overflow, tap targets, navigation, console, links |
-| 08 register of asks | `08-client-asks.md` | Every item that once needed the owner, with its state: none open for the presentation; the rest moved to the prerequisites; four closed |
-| 19 prerequisites | `19-implementation-prerequisites.md` | What the implementation needs from ClassScout once the client accepts — before the first send, before Release 1b, to confirm at acceptance — not required for the presentation or the planning (D34) |
-| 09 business logic | `09-business-logic.md` | The rules end to end: parties, flows, departments, campaigns, money, families, law, recap, what the machine never does (D24) |
-| 10 SSOT | `10-ssot.md` | glossary, enumerations, entities, settings, rules, metrics, document map |
-| 11 architecture | `11-architecture.md` | context, the platform measured, quality attributes, containers, flows, integrations, stack and ADR-1–10 — **PROPOSED** (D19) |
-| 12 technical design | `12-technical-design.md` | screens, content model, state machines, jobs, connector and adapter interfaces, drafting, i18n, operations |
-| 13 plan | `13-implementation-plan.md` | seven milestones, 40 issues with a Definition of Done, blocked register, risks, release scope |
+| 05 layouts | `05-layout-specs.md` + `layouts.html` + `frames/` | **Gate 2 approved (D16)**: platform 1440 / 390, provider 390, family 390; the later screens reuse the same grids |
+| 06 build log | `06-build-log.md` | Nine rounds: the prototype; presentation and package; editors and tablet; campaigns, upgrades, recap; conversations; economics; the research implemented; the audit implemented; the policy screen; the two interfaces |
+| 07 gate | `07-gate.md` + `../check.py` | What the script checks (links, anchors, docs cross-links, data, script, stale phrases); the measured pass at 390, 768, 1024 and 1440 |
+| 08 register of asks | `08-client-asks.md` | Every item that once needed the owner, with its state: none open for the presentation; the rest are prerequisites; four closed |
+| 09 business logic | `09-business-logic.md` | The rules end to end: parties, the two flows, the two interfaces, departments, campaigns, conversations, money, families, responsible data for every client, law, the recap, data-driven decisions, what the research and the audit changed, what the machine never does |
+| 10 SSOT | `10-ssot.md` | glossary, enumerations, entities, settings, rules R1–R29, metrics, document map |
+| 11 architecture | `11-architecture.md` | context, the platform measured, quality attributes, containers, flows, integrations, stack and ADR-1–14 — **PROPOSED** (D19) |
+| 12 technical design | `12-technical-design.md` | screens, content model, state machines, jobs, connector, media and channel adapter interfaces, drafting, i18n, operations |
+| 13 plan | `13-implementation-plan.md` | seven milestones, 62 issues with a Definition of Done, blocked register (the prerequisites), risks, release scope in two halves |
 | 14 token map | `14-token-map.md` | tokens and components → GDS + Mantine; contrast computed |
-| 17 audit · SWOT | `17-business-logic-audit-and-swot.md` | Deep audit of the business logic against the rules, the prototype, the catalogue and the research: 18 findings (2 critical, 8 major, 8 minor) with fixes; the SWOT with evidence per item and the cross-reads; twelve PROPOSED recommendations Q1–Q12 |
-| 01e research IV | `01e-research-responsible-data.md` | Responsible data and children's rights: the law by market (COPPA 2025, NY CDPA, California and the states, GDPR Art. 8, DSA Art. 28, the UK Children's Code), the enforcement record, the frameworks (privacy by design, ICO, ISO 27701, NIST, LEGO), the business value of doing it properly |
-| 18 policy framework | `18-responsible-data-policy-framework.md` | Ten principles, the policy record per instance, the gate, onboarding, the client's value, two worked instances, how it generalises to any client (D32) |
 | 16 analytics | `16-analytics-and-unit-economics.md` | CAC / LTV / payback for providers, the marketing value of an avid family, content ROI, the next-dollar rule, the metrics tree, events and attribution, rules R16–R19; what is real vs assumed (D26) |
+| 17 audit · SWOT | `17-business-logic-audit-and-swot.md` | Audit of the business logic: 19 findings with fixes; the SWOT with evidence; the recommendations Q1–Q12 (adopted and implemented, D30) |
+| 18 policy framework | `18-responsible-data-policy-framework.md` | Ten principles, the policy record per instance, the gate, onboarding, the client's value, two worked instances, how it generalises (D32) |
+| 19 prerequisites | `19-implementation-prerequisites.md` | What the implementation needs from ClassScout after acceptance — before the first send, before Release 1b, to confirm at acceptance — not required for the presentation or the planning (D34) |
 
 Rendered by `build.py` (`python3 business-direct/docs/build.py`); gate `python3 business-direct/check.py`
 (also run by the root `check.py`). Data: `python3 business-direct/data/fetch-yourfield.py`
@@ -188,5 +188,14 @@ the client accepts, not for the presentation or the planning. They now live in
 Release 1b, to confirm at acceptance — and the register records that nothing is open for
 the presentation. The presentation's asks section now reads "What we ask of you today: one
 decision — go ahead", followed by what the implementation will need.
+
+**2026-09-19 — consistency sweep.** The owner found inconsistent and deprecated statements.
+Fixed: the brief's status (stopped at phase 3), the SSOT's cap definition and document map
+(D1–D18), the digest's cap wording in the architecture, the technical design and the plan,
+the index's plan count (40 → 62 issues) and ADR range (10 → 14), the presentation's round
+count, children's names in the gate-2 frames and the design-system sample, the root README
+and hub summaries, and every "ask #n" reference outside the register — now the
+prerequisite code. The gate gained a consistency check (decision range, issue count, ask
+references) and was proved to fire on planted drift.
 
 **Next.** Present. After acceptance, the prerequisites checklist.

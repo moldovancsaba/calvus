@@ -78,7 +78,7 @@ The screen makes each of these one input away.
 
 ### 3.1 Definitions
 
-- **Family**: an account on the platform (count is the platform's — ask #6; 5,000 assumed).
+- **Family**: an account on the platform (count is the platform's — prerequisite P-6; 5,000 assumed).
 - **Avid family**: saved ≥ 3 providers, opened the last two digests, asked a provider at
   least once — the behaviour the machine can observe. Assumed 15 % of families.
 - **Value delivered to providers per avid family per year** = trials per year × trial →
@@ -134,7 +134,7 @@ Cost
 
 Every leaf is an event the machine already writes (`messages`, `approvals`,
 `provider_state`, `entitlements`, `campaigns`, `enquiries`) or one the platform must expose
-(saves, sign-ups with source, bookings — asks #6–7). Metrics are materialised nightly per
+(saves, sign-ups with source, bookings — prerequisites P-6 and P-9). Metrics are materialised nightly per
 `platform_id` (architecture ADR-11).
 
 ## 6. Events and attribution (what to log)
@@ -171,5 +171,5 @@ Real: 252 · 130 · 72 · 50 (catalogue — e-mail · phone only · neither; cor
 (Project Play). Assumptions: every conversion rate after reply, ARPA, margin, cost per
 touch and call, operator minutes, tooling, family count, avid share, trials, enrolment,
 capture, referral, families per post, content cost. Each is one input on the screen and
-one line here; the platform's analytics (ask #6) and a pilot provider (ask #7) replace them
+one line here; the platform's analytics (prerequisite P-6) and a pilot provider (prerequisite P-6) replace them
 in that order.

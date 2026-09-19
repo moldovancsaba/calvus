@@ -22,11 +22,11 @@ Your Field NYC is the client (D11); the Hungarian instance is the reference.*
 | Clause | What it says | Consequence for business.direct |
 |---|---|---|
 | Audience | "intended for adults (18+)"; "we do not knowingly collect personal information from children"; telemetry contains "no child data" | no child's name anywhere in the machine; ages only (R24, D31) |
-| E-mail | "we do not yet offer email alerts; if we add them, the preferences you set will be described here"; a "notify me" e-mail is opt-in only | the digest and alerts require a policy revision before launch (ask #16) |
-| Account activity | views, saves and contacts are recorded for suggestions "only after you explicitly opt in", off by default | campaign audiences and the avid-family definition come only from opted-in accounts (ask #17) |
+| E-mail | "we do not yet offer email alerts; if we add them, the preferences you set will be described here"; a "notify me" e-mail is opt-in only | the digest and alerts require a policy revision before launch (prerequisite P-2) |
+| Account activity | views, saves and contacts are recorded for suggestions "only after you explicitly opt in", off by default | campaign audiences and the avid-family definition come only from opted-in accounts (prerequisite P-5) |
 | Claims | "claim and update requests" are a platform feature (§e-1) | apply-to-manage rides on it |
 | Sign-in | doneisbetter provides name and e-mail; no passwords | ADR-5 confirmed |
-| Contact | info@classscout.ai; no postal address on the site | ask #15 stays open — CAN-SPAM needs one |
+| Contact | info@classscout.ai; no postal address on the site | prerequisite P-1 — CAN-SPAM needs one |
 | Provenance | listings "aggregated from public directories, civic sources, activity providers, and the Google Places API" | the card's `verifiedFields` and `sourceCount` are the provenance we cite |
 
 ## 2. The catalogue as pulled (`data/providers.json`, 252 rows)

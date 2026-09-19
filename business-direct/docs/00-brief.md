@@ -83,12 +83,11 @@ connecting an integration with a key. Each is shown in place, visibly inert, wit
 
 ## Where it stands
 
-Stages 0–5 done 2026-09-19. **Gate 1 (design system) approved (D9)**, re-issued in
-English on the client's data the same day; **gate 2 (layout frames) approved (D16)**; the
-prototype built as one page with three views (`../index.html`, D17–D18) and measured at 390
-and 1440 (`06-build-log.md`, `07-gate.md`); the presentation (`bemutato.html`) and the
-technical package (`10`–`14`, stack PROPOSED) written. Tested by the owner and accepted (D20); round 2 shipped. **Phase 2 (D21–D24)**: provider
-campaigns and results, upgrades, the intelligence recap, the business-logic document — asks
-#4–6 assumed (D21) until answered. **Phase 3 (D25)**: conversations — family enquiries with
-drafted answers in the provider's inbox, the family's "ask about a trial", comments on
-published posts. **Next: the owner's answers, or a flipped ADR.**
+Every stage of the standard is done (2026-09-19). Gates 1 and 2 approved (D9, D16); the
+prototype built in nine rounds (`06-build-log.md`) — the two flows, campaigns and upgrades,
+conversations, economics, the research implemented, the audit implemented, the
+responsible-data policy record and gate, the Simple and Advanced interfaces — and measured
+(`07-gate.md`); the presentation, the business logic, the technical package (stack
+PROPOSED), the audit and SWOT, and the policy framework written. Nothing is open for the
+presentation; what the implementation needs after acceptance is
+`19-implementation-prerequisites.md`. **Next: present.**
