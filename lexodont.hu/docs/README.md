@@ -11,11 +11,11 @@ The wireframe of Lexodont Dental Studio's website (March–April 2026), and — 
 | 01 research | `01-research.md` | None was done — said plainly; what was read; what a second iteration would read |
 | 02 audit | `02-audit.md` | **Start here**: the live lexodont.hu measured, wireframe → live page by page, the wireframe's own measurements |
 | 03 sources | `03-sources.md` | What is real, what is placeholder, what is fictional; the removed `public/` set |
-| 04 decisions | `04-decisions.md` | D1–D14 reconstructed from the commits; what the live site decided without this repo |
+| 04 decisions | `04-decisions.md` | D1–D16 (the first fourteen reconstructed from the commits, the last two recorded as made); what the live site decided without this repo |
 | 05 design | `05-design.md` | Two fidelities, tokens, layout; what the built site chose instead |
 | 06 build log | `06-build-log.md` | The two build days and the 2026-09-18 measurement |
 | 07 gate | `07-gate.md` + `../check.py` | Links, anchors, docs cross-links, fidelity parity; findings left open and why |
-| 08 client asks | `08-client-asks.md` | Six questions, the first of which decides everything |
+| 08 client asks | `08-client-asks.md` | The register of asks — none open for the delivered wireframe; the second iteration's prerequisites are in `19-implementation-prerequisites.md` |
 | 10 SSOT | `10-ssot.md` | Glossary, page kinds, entities, rules, metrics |
 | 11 architecture | `11-architecture.md` | As built, measured; five PROPOSED ADRs for a second iteration, none a rebuild |
 | 12 technical design | `12-technical-design.md` | Wireframe page → live template; content model; booking; the checks a second iteration runs |

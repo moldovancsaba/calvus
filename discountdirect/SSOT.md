@@ -163,6 +163,7 @@ Buyer-level preferences: `frequency_pref` (per seller or inbox per `consent_scop
 | D25 | Release 1 scope (recommended, applied) | The issue list in `implementation-plan.html` §7; everything else is Release 1.1 or later | plan §7 |
 | D26 | Stack: extend the existing implementation, do not rewrite (verified, 2026-09-18) | The working spine is **Next.js 15 App Router on Vercel (Node 24), MongoDB Atlas with Mongoose transactions, DoneIsBetter SSO, Resend, Vercel Cron with a durable outbox, Socket.IO with durable HTTP fallback, and GDS 6.7.0**. Upstash Redis and Vercel Blob foundations now exist; Redis frequency caps are implemented with MongoDB delivery history authoritative, while general Redis locks/counters and Blob-backed artifacts remain planned. A separate reporting read model remains planned. | ADR-14; architecture §3, §10; TD §1b, §3 |
 | D27 | Implementation alignment (verified, 2026-09-18) | Live business capabilities include tenant-safe SSO workspaces, catalog and purchase imports, consent/privacy, deterministic recommendations and segments, personal offers, flash reservations, automations/lists, Resend delivery and inbound replies, coupons, HU market settings, frequency caps, pricing guardrails, 30-day reference-price evidence and deterministic campaign holdout reporting. Connectors, checkout hand-off, postal PDF/partner delivery, richer journeys/channels, membership perks, incremental-margin analytics and a separate reporting projection remain planned. | implementation baseline; architecture §3; TD §1b |
+| D28 | A responsible-data policy record per seller instance (§6b, PROPOSED): unknown age = no profiled offer, no Article 9 inference, a vulnerability pause, literally true flash limits, the postal address on letters, the seller's policy naming the processor — rules R21–R24 | §6b; hub audit 2026-09-20 |
 
 ### Open questions
 
@@ -201,6 +202,36 @@ current and keeps this SSOT plus the technical design aligned with the code.
 | R19 | Holdout | `bucket = uint32(SHA-256(buyer_id + ":" + scope)[0..3]) mod 10000`; holdout when `bucket < holdout_pct × 100`. Scope is `"pool"` for pooled mode or the campaign key for per-campaign mode. Holdout buyers receive no offer, event or delivery and are excluded from R16 counting. | implementation, D21, D27 |
 | R21 | Transparency | every rendering of an offer (chat card, e-mail, letter, newsletter, sold-out notice) includes a rules block listing: expiry, quantity limits (total and per buyer), first-come-first-served, compensation if configured, reference price basis, the reason | D14 |
 | R20 | Consumable replenishment | `next_runout = last_order_at + median(interval of last n orders of the product, n ≥ 2) ?? product.replenish_days`; reminder at `next_runout − 6 days` | research §2.2 |
+| R21 | A buyer whose age is unknown gets no profiled offer; a mixed-audience shop disables profiled offers for minors (§6b) | `audienceModel`, DSA Art. 28 | §6b |
+| R22 | No inference of a special category from purchase history; no segment on health, religion, orientation or hardship (§6b) | GDPR Art. 9 | §6b |
+| R23 | "Can't afford", "not now", "bereavement" pauses offers and opens a human reply; cooling-off on every accept; a flash limit is literally true (§6b) | UCPD; D11 | §6b |
+| R24 | A channel runs only with its consent basis set; letters carry the postal address and an opt-out; the seller's policy names the processor (the gate, §6b) | GDPR Art. 21 | §6b |
+
+## 6b. Responsible-data policy record (PROPOSED, 2026-09-20)
+
+*One record per seller instance, per the framework in `business-direct/docs/18-responsible-data-policy-framework.md` (owner directive 2026-09-19: responsible data for every client; hub audit 2026-09-20, action 1). DiscountDirect already carries the strongest
+consent model on the hub (consent per channel, frequency caps, the right to object); this
+record adds what the framework found missing: minors, vulnerable buyers, dark patterns and
+AI disclosure. Every value is a proposal until the product owner confirms it.*
+
+| Field | Value (PROPOSED) | Why |
+|---|---|---|
+| client · instance | a web shop (seller) · DiscountDirect, first market Hungary | — |
+| jurisdictions · laws | HU, EU — GDPR, Infotv., Act XLVIII/2008 (B2C marketing by consent), UCPD (unfair practices, vulnerable consumers), DSA Art. 25 (no deceptive interfaces), EU AI Act Art. 5 (no manipulation) and Art. 50 (disclosure) | timed, limited offers are exactly what these laws watch |
+| audienceModel | adults; **a buyer whose age is unknown is treated as possibly a minor for profiling purposes** — no profiled offer until the shop confirms age | DSA Art. 28 as the floor |
+| childData | none; a shop selling to minors (toys, games) sets `audienceModel: mixed` and disables profiled offers for them | R27 |
+| sensitiveCategories | purchase history is not used to infer health, religion, sexual orientation or hardship (a pharmacy, a religious bookshop and a pawnshop are Article 9 by product); no offer segment on such inferences | GDPR Art. 9; FTC v. GoodRx |
+| vulnerability | a buyer who writes "can't afford", "not now" or "bereavement" gets a pause on offers and a human reply; no offer to a buyer in a documented hardship; cooling-off on every accept | UCPD, R32 |
+| darkPatterns | a flash offer's limit is literally true (the two limits, D11); no countdown that resets; no pre-ticked consent; one-tap object and unsubscribe; no hidden cost at hand-off | FTC 2022, DSA Art. 25, R36 |
+| channels · consent | as the SSOT's consent per channel (§3 Relationship) — plus: letters carry the seller's postal address and an opt-out; SMS/RCS only by written consent | CAN-SPAM-equivalent duties in HU; R23 |
+| aiDisclosure | an engine-written reason (`reason_engine`) shown to a buyer is labelled as such where the market requires; `reason_seller` is human | Art. 50, R20 |
+| retention | relationship history 24 months after the last order; consents until withdrawn; offer events 24 months | to confirm |
+| privacyPolicy | the seller's policy must name DiscountDirect as a processor, the channels, the profiling basis and the right to object | GDPR Art. 21 |
+| dpia | required (profiling of consumers at scale) | GDPR Art. 35 |
+
+**Gate rows:** a seller's channel runs only with its consent basis set; profiled offers
+run only on age-confirmed accounts; letters need the postal address; the seller's privacy
+policy must name the processor. Rules R21–R24.
 
 ## 7. Metric definitions
 

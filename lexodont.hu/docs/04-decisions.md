@@ -20,6 +20,7 @@ else was recorded at the time. "Client" is Lexodont; "owner" is the Calvus side.
 | D13 | 2026-04-09 | Orphan links fixed; three missing treatment pages (gyerekfogászat, gyökérkezelés, parodontológia) added to the polished set only | owner | `eaa8a66` |
 | D14 | 2026-09-18 | The wireframe is superseded by the live lexodont.hu; it is kept as the record, its remaining defects recorded rather than fixed; the standard documentation set written | owner | this folder |
 | D15 | 2026-09-18 | The three treatment pages missing from the sketch set are mirrored from the sketch template so both fidelities carry the same page set again and the gate's parity check is clean | owner | `lexodont.hu_balsamic/{parodontologia,gyokerkezeles,gyerekfogaszat}.html` |
+| D16 | 2026-09-20 | A **responsible-data policy record** for the practice (SSOT §4b, PROPOSED): health data as a special category, children as patients through parents, the booking processor named, media consent, no marketing without consent — with rules R8–R10 and the gate rows for the production site | Calvus, on the owner's directive (responsible data for every client) and the hub audit | the wireframe stores nothing; the record binds the built site |
 
 ## What the live site decided without this repo
 

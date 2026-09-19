@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>IDBC Salary Guide — prerequisites (the client's pending deliveries and the decisions for publication; nothing blocks presenting the current state) — IDBC Salary Guide docs</title>
+<style>/* IDBC Salary Guide — documentation pages, on the guide's own tokens (dark green, light ground, Inter). */
+:root{--ground:#eef5ec;--card:#ffffff;--ink:#101818;--text:#2a3333;--muted:rgba(16,24,24,.66);--accent:#a5df8f;--accent-deep:#245d54;--line:rgba(19,35,35,.18);--line-soft:rgba(19,35,35,.08);--note:#e3efdf}
+*{box-sizing:border-box}
+body{margin:0;background:var(--ground);color:var(--text);font-family:"Inter","Montserrat","Segoe UI",Arial,sans-serif;font-size:15.5px;line-height:1.6;padding-block:0 64px;padding-inline:clamp(16px,4vw,40px)}
+.wrap{max-width:74ch;margin-inline:auto}
+.docnav{display:flex;flex-wrap:wrap;gap:4px 18px;align-items:center;padding:16px 0;border-bottom:1px solid var(--line);font-size:12px;letter-spacing:.06em;text-transform:uppercase}
+.docnav a{color:var(--muted);text-decoration:none;min-height:44px;min-width:44px;display:inline-flex;align-items:center;border-bottom:2px solid transparent}
+.docnav a:hover,.docnav a[aria-current]{color:var(--ink);border-color:var(--accent)}
+.docnav-brand{color:var(--accent-deep);font-weight:800;margin-right:6px}
+.docnav-hub{margin-left:auto}
+header{padding-block:40px 24px;border-bottom:1px solid var(--line);margin-bottom:28px}
+.eyebrow{font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--accent-deep);margin:0 0 12px;font-weight:800}
+h1,h2,h3{color:var(--ink);line-height:1.1;text-wrap:balance;margin:0;letter-spacing:-.02em}
+h1{font-size:clamp(30px,6vw,46px);font-weight:900}
+h2{font-size:clamp(23px,4vw,30px);font-weight:900;margin:48px 0 14px;padding-top:20px;border-top:1px solid var(--line)}
+h3{font-size:18px;margin:30px 0 8px;font-weight:800}
+p{margin:0 0 14px} strong{color:var(--ink);font-weight:800}
+ul,ol{padding-left:22px;margin:0 0 16px} li{margin:5px 0} li>ul{margin:6px 0 0}
+code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.86em;background:var(--note);padding:1px 5px;border-radius:4px;color:var(--ink);overflow-wrap:anywhere}
+pre{overflow-x:auto;padding:14px 16px;border:1px solid var(--line);border-radius:10px;background:var(--card);font-size:12px;line-height:1.35}
+pre code{background:none;padding:0;font-size:inherit}
+a{color:var(--accent-deep)} :focus-visible{outline:2px solid var(--accent-deep);outline-offset:2px}
+.tbl{overflow-x:auto;margin:14px 0 22px;border:1px solid var(--line);border-radius:10px;background:var(--card)}
+table{border-collapse:collapse;width:100%;font-size:13.5px;min-width:560px}
+th{text-align:left;font-weight:800;color:var(--ink);background:var(--note);padding:10px 12px;border-bottom:1px solid var(--line);font-size:11.5px;letter-spacing:.06em;text-transform:uppercase}
+td{padding:10px 12px;border-top:1px solid var(--line-soft);vertical-align:top;background:var(--card)} td:first-child{color:var(--ink)}
+footer{margin-top:56px;padding-top:18px;border-top:1px solid var(--line);font-size:12px;color:var(--muted)}
+</style>
+</head>
+<body>
+<div class="wrap">
+<nav class="docnav" aria-label="Project documentation"><span class="docnav-brand">IDBC Salary Guide · docs</span><a href="index.html">Overview</a><a href="bemutato.html">Bemutató</a><a href="brief.html">Brief</a><a href="research.html">Research</a><a href="audit.html">Audit</a><a href="sources.html">Sources & gaps</a><a href="decisions.html">Decisions</a><a href="design.html">Design</a><a href="gate.html">Gate</a><a href="client-asks.html">Register of asks</a><a href="prerequisites.html" aria-current=page>Prerequisites</a><a href="ssot.html">SSOT</a><a href="architecture.html">Architecture</a><a href="technical-design.html">Technical design</a><a href="implementation-plan.html">Implementation plan</a><a href="token-map.html">Token map</a></nav>
+<header><p class="eyebrow">Calvus · IDBC Salary Guide · project documentation</p><h1>IDBC Salary Guide — prerequisites (the client's pending deliveries and the decisions for publication; nothing blocks presenting the current state)</h1></header>
+<p><em>Written 2026-09-20 on the owner's rule (business.direct D34, hub audit action 3): an ask is
+never a presentation blocker. The guide stands and is presentable as it is — every missing
+piece has a declared placeholder on the page. The client's content deliveries land where
+the table says when they arrive; the decisions are needed before publication or the
+production build, not before the next review.</em></p>
+<h2>1. Content the client has promised (lands in place when it arrives)</h2>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>#</th>
+<th>Delivery</th>
+<th>Lands in</th>
+<th>Until then</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>C-1 (ask #1)</td>
+<td>The home page's structure demo (copy already received: intro signed Dohos Ágnes and Illés József, methodology, six chamber logos, podcast playlist, sample sizes)</td>
+<td>a new home page</td>
+<td>the trends page is the home</td>
+</tr>
+<tr>
+<td>C-2 (ask #2)</td>
+<td>The Bérek and Expert Pool structure demos</td>
+<td>layout adjustments, if any</td>
+<td>the current pages</td>
+</tr>
+<tr>
+<td>C-3 (asks #3–4)</td>
+<td>Four LinkedIn Talent Insight counts (two Építőipar, two Expert Community)</td>
+<td>TOP3 pills on Bérek; tile market lines</td>
+<td>the pill / line is absent, by rule (no figure invented)</td>
+</tr>
+<tr>
+<td>C-4 (asks #5–7)</td>
+<td>Seven area videos, four area key thoughts, two case-study videos</td>
+<td><code>terulet/</code> media slot and highlight box; <code>esettanulmanyok/</code></td>
+<td>labelled placeholders</td>
+</tr>
+<tr>
+<td>C-5 (ask #12)</td>
+<td>Chamber logos, podcast embed</td>
+<td>the home page (with C-1)</td>
+<td>—</td>
+</tr>
+<tr>
+<td>C-6 (ask #15)</td>
+<td>IDBC's own hero photographs, or confirmation that the stock photographs stay</td>
+<td>every page hero</td>
+<td>stock (Unsplash) and one idbc.hu image</td>
+</tr>
+</tbody>
+</table></div>
+<h2>2. Decisions before publication</h2>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>#</th>
+<th>Decision</th>
+<th>Why</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>P-1 (ask #13)</td>
+<td><strong>The bértábla banner</strong>: the sheet says the figures are sample values awaiting professional approval; the pages say "valós piaci adatok" — which is true</td>
+<td>nothing publishes with a contradiction between the source and the page</td>
+</tr>
+<tr>
+<td>P-2 (ask #9)</td>
+<td>The area display names for the bértábla codes (<code>CP</code> → Építőipar, ingatlan; Office Support &amp; Ügyfélszolgálat; the Sales and Marketing split)</td>
+<td>the Bérek filter labels</td>
+</tr>
+<tr>
+<td>P-3 (ask #8)</td>
+<td>The Ajánlatkérés target (<code>idbc.hu/ajanlatkeres/</code> or the in-guide form)</td>
+<td>the header link on every page</td>
+</tr>
+<tr>
+<td>P-4 (ask #10)</td>
+<td>Excel export: the file, or confirmation it is generated from the same data at build</td>
+<td>the inert CTA on three pages</td>
+</tr>
+<tr>
+<td>P-5 (ask #11)</td>
+<td>Whether an English edition is wanted (there is no EN copy)</td>
+<td>the inert EN switch</td>
+</tr>
+</tbody>
+</table></div>
+<h2>3. Decisions for the production build (the technical package, <a href="architecture.html"><code>11-architecture.md</code></a> §11)</h2>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>#</th>
+<th>Decision</th>
+<th>Why</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>T-1 (ask #14)</td>
+<td>Stack, paywall, hosting — the ADRs are PROPOSED</td>
+<td>everything after the prototype</td>
+</tr>
+<tr>
+<td>T-2 (SSOT §6b)</td>
+<td>The responsible-data policy record confirmed: the real privacy notice behind the registration form, a separate marketing consent, retention, the Expert Pool DPIA decision</td>
+<td>registration and marketing e-mail are gated on it</td>
+</tr>
+</tbody>
+</table></div>
+<h2>4. What the next review needs from the client</h2>
+<p>Nothing. The guide is reviewed as it stands; the deliveries above improve it as they arrive.</p>
+<footer>Source: <code>idbc-salary-guide/docs/19-implementation-prerequisites.md</code> · rendered by <code>docs/build.py</code>.</footer>
+</div>
+</body>
+</html>

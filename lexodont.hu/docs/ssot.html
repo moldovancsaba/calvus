@@ -35,7 +35,7 @@ footer{margin-top:56px;padding-top:18px;border-top:1px solid var(--line);font-si
 </head>
 <body>
 <div class="wrap">
-<nav class="docnav" aria-label="Project documentation"><span class="docnav-brand">Lexodont · docs</span><a href="index.html">Overview</a><a href="bemutato.html">Bemutató</a><a href="brief.html">Brief</a><a href="research.html">Research</a><a href="audit.html">Audit</a><a href="sources.html">Sources</a><a href="decisions.html">Decisions</a><a href="design.html">Design</a><a href="build-log.html">Build log</a><a href="gate.html">Gate</a><a href="client-asks.html">Client asks</a><a href="ssot.html" aria-current=page>SSOT</a><a href="architecture.html">Architecture</a><a href="technical-design.html">Technical design</a><a href="implementation-plan.html">Implementation plan</a><a href="token-map.html">Token map</a></nav>
+<nav class="docnav" aria-label="Project documentation"><span class="docnav-brand">Lexodont · docs</span><a href="index.html">Overview</a><a href="bemutato.html">Bemutató</a><a href="brief.html">Brief</a><a href="research.html">Research</a><a href="audit.html">Audit</a><a href="sources.html">Sources</a><a href="decisions.html">Decisions</a><a href="design.html">Design</a><a href="build-log.html">Build log</a><a href="gate.html">Gate</a><a href="client-asks.html">Register of asks</a><a href="prerequisites.html">Prerequisites</a><a href="ssot.html" aria-current=page>SSOT</a><a href="architecture.html">Architecture</a><a href="technical-design.html">Technical design</a><a href="implementation-plan.html">Implementation plan</a><a href="token-map.html">Token map</a></nav>
 <header><p class="eyebrow">Calvus · Lexodont · project documentation</p><h1>Lexodont — single source of truth (SSOT)</h1></header>
 <p><em>The content model of the practice's site as the wireframe fixed it and the live site
 confirmed it. Written 2026-09-18 from the wireframe pages and the 2026-09-18 measurement of
@@ -216,8 +216,111 @@ custom theme. No structured data file exists in this repo for Lexodont.</p>
 <td>Every published URL stays (repo rule).</td>
 <td>repo</td>
 </tr>
+<tr>
+<td>R8</td>
+<td>Health data never leaves the practice system into marketing: no segment, no reminder copy, no newsletter on treatment history (§4b).</td>
+<td>GDPR Art. 9</td>
+</tr>
+<tr>
+<td>R9</td>
+<td>A child's data only through the parent, with consent; no child's face on the site; case photos only with written consent.</td>
+<td>§4b</td>
+</tr>
+<tr>
+<td>R10</td>
+<td>The newsletter, the booking embed and case photos run only when the policy record's fields for them are set (the gate).</td>
+<td>§4b</td>
+</tr>
 </tbody>
 </table></div>
+<h2>4b. Responsible-data policy record (PROPOSED, 2026-09-20)</h2>
+<p><em>One record per instance, per the framework in <code>business-direct/docs/18-responsible-data-policy-framework.md</code> (owner directive 2026-09-19: responsible data for every client; hub audit 2026-09-20, action 1). Filled for a dental practice in Hungary; every value
+is a proposal until the client confirms it. The wireframe stores nothing; the record binds
+the site that is built from it.</em></p>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Value (PROPOSED)</th>
+<th>Why</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>client · instance</td>
+<td>Lexodont · lexodont.hu (HU, EN)</td>
+<td>—</td>
+</tr>
+<tr>
+<td>jurisdictions · laws</td>
+<td>HU, EU — GDPR (Art. 9: <strong>health data is a special category</strong>), Hungarian Act CXII/2011 (Infotv.), Act XLVIII/2008 (advertising; no health-claim advertising beyond what the law allows), EU AI Act Art. 50 for any generated media</td>
+<td>a dental practice processes health data the moment a patient describes a complaint</td>
+</tr>
+<tr>
+<td>audienceModel</td>
+<td>adults and <strong>children as patients</strong> (gyerekfogászat): a child's data only through the parent, with the parent's consent</td>
+<td>Art. 8 GDPR, Infotv.</td>
+</tr>
+<tr>
+<td>childData</td>
+<td>none on the site; the booking and case data live in the practice system (Flexi-Dent), never in marketing</td>
+<td>R24 of the framework</td>
+</tr>
+<tr>
+<td>processors</td>
+<td>Flexi-Dent booking embed (<code>publicapi.flexi-dent.hu</code>) — a processor agreement and a privacy notice naming it</td>
+<td>the audit found the embed; the docs mention the privacy page once</td>
+</tr>
+<tr>
+<td>sensitiveCategories</td>
+<td>health: an enquiry that describes a condition is answered and not stored outside the practice system; no marketing segment on treatment history</td>
+<td>Art. 9; FTC v. BetterHelp as the cautionary case</td>
+</tr>
+<tr>
+<td>mediaConsent</td>
+<td>before/after case photos only with the patient's written consent; no child's face on the site; no generated faces</td>
+<td>R15, R30</td>
+</tr>
+<tr>
+<td>channels · consent</td>
+<td>e-mail newsletter only by consent; no SMS marketing; appointment reminders are service messages</td>
+<td>Act XLVIII/2008</td>
+</tr>
+<tr>
+<td>defaults · cap · optOutSla</td>
+<td>nothing on by default; one newsletter a month at most; opt-out within one business day</td>
+<td>R28</td>
+</tr>
+<tr>
+<td>aiDisclosure</td>
+<td>label + text for any generated image or text (EU)</td>
+<td>Art. 50</td>
+</tr>
+<tr>
+<td>retention</td>
+<td>enquiries 12 months; newsletter consent until withdrawn; case photos while consent stands</td>
+<td>to confirm with counsel</td>
+</tr>
+<tr>
+<td>privacyPolicy</td>
+<td><code>/adatkezelesi-tajekoztato/</code> — must name the booking processor, the newsletter, cookies, and children's data through parents</td>
+<td>the gate blocks the newsletter until it does</td>
+</tr>
+<tr>
+<td>dpia</td>
+<td>recommended (health data at scale)</td>
+<td>GDPR Art. 35</td>
+</tr>
+<tr>
+<td>vulnerability · darkPatterns · accessibility</td>
+<td>no pressure ("last appointment today" only if true); no pre-ticked consent; WCAG 2.2 AA (a health service)</td>
+<td>R32, R36, R34</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Gate rows for the production site:</strong> newsletter needs the privacy-policy clause and the
+consent text; case photos need the written consent on file; the booking embed needs the
+processor agreement named in the policy. Rules R8–R10 below.</p>
 <h2>5. Metrics</h2>
 <div class="tbl"><table>
 <thead>

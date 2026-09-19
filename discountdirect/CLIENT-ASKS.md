@@ -1,15 +1,17 @@
-# DiscountDirect — what needs the product owner
+# DiscountDirect — the register of asks
 
-*Open items only the product owner can close, 2026-09-18.*
+*Since 2026-09-20 (owner's rule: an ask is never a presentation blocker) the open items are
+implementation prerequisites, listed in `IMPLEMENTATION-PREREQUISITES.md` by when they
+block. Nothing is open for the presentation.*
 
-| # | Item | Why it matters |
+| # | Item | Now |
 |---|---|---|
-| 1 | Update the prototype to D1–D26 (hand-off on accept, sold-out notice, rules block, advanced mode, print mode) or freeze it as the pre-decision reference? | today the clickable demo and the rules disagree (`AUDIT.md`) |
-| 2 | Real sample data from one real shop (products, a few anonymised histories) for the demo | every name and price is fictional; a pitch on invented data is weaker than one on a real catalogue |
-| 3 | Access to, or an inventory of, the existing implementation (DD-000) | the whole plan builds on a codebase this repo cannot see |
-| 4 | Print partner for the platform print service (D9/D15: Pingen candidate) | Release 1.1 |
-| 5 | Confirm the connector order Shoprenter → UNAS → WooCommerce → Shopify (D18) | E7 sequencing |
-| 6 | Legal review of the consent templates and the legitimate-interest assessment per market (D8, D13) | E6 |
-| 7 | A product name and brand for the buyer-facing app, or confirmation that "DiscountDirect" is it | the wordmark is text; the buyer app has no identity |
-| 8 | The membership perk list and tier names (D22) | E8, Release 1.1 |
-| 9 | Who designs Release 1's undesigned screens (`DESIGN.md` §"never designed") | before E1 |
+| 1 | Update the prototype to the decisions, or freeze it as the pre-decision reference | P-4 — before Release 1's first sprint |
+| 2 | Real sample data from one shop | P-8 — for the pitch |
+| 3 | Access to, or an inventory of, the existing implementation | P-1 — before Release 1 |
+| 4 | Print partner | P-5 — before Release 1.1 |
+| 5 | Connector order | P-7 — before Release 1.1 |
+| 6 | Legal review of consent templates and legitimate interest; the policy record | P-3 — before Release 1 |
+| 7 | Buyer-app name and brand | P-9 — for the brand |
+| 8 | Membership perks and tier names | P-6 — before Release 1.1 |
+| 9 | Who designs the undesigned screens | P-2 — before Release 1 |

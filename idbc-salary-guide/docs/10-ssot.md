@@ -77,7 +77,7 @@ case study).
 
 ## 5. Decision register
 
-`04-decisions.md` (D1–D27). Technical decisions in this package are ADRs in
+`04-decisions.md` (D1–D28). Technical decisions in this package are ADRs in
 `11-architecture.md` §11, PROPOSED until flipped; the flip is the next D-number.
 
 ## 6. Rules register
@@ -94,7 +94,34 @@ case study).
 | R8 | The band labels (D5) and the "valós piaci adatok" note (D14) ship as the client's wording; the divergence from the sheet is documented, not hidden. | gap 6 |
 | R9 | One template per repeated thing: area page, tile, chart. | D11 |
 | R10 | Tables are complete: TOP3 rows are listed in the table as well as charted. | D24 |
+| R12 | The registration checkbox acknowledges the privacy notice; marketing needs its own unticked consent; role addresses by legitimate interest with opt-out, named persons by consent (§6b). | Act XLVIII/2008 |
+| R13 | Salary data stays aggregated; no registrant's own salary is asked or stored; no Article 9 field exists (§6b). | GDPR |
+| R14 | Registration, marketing e-mail and candidate matching run only when the policy record's fields for them are set (the gate). | §6b |
 | R11 | In fine-tuning, only the reported item changes. | owner, 2026-09-18 |
+
+## 6b. Responsible-data policy record (PROPOSED, 2026-09-20)
+
+*One record per instance, per the framework in `business-direct/docs/18-responsible-data-policy-framework.md` (owner directive 2026-09-19: responsible data for every client; hub audit 2026-09-20, action 1). Filled for a B2B research guide with a registration
+paywall in Hungary; every value is a proposal until the client confirms it.*
+
+| Field | Value (PROPOSED) | Why |
+|---|---|---|
+| client · instance | IDBC · the Salary Guide (HU) | — |
+| jurisdictions · laws | HU, EU — GDPR, Infotv., Act XLVIII/2008 (B2B: corporate addresses without consent; a named person's address needs consent), EU AI Act Art. 50 for generated media | research and the registration form |
+| audienceModel | adults — company representatives and candidates (`type: cég / jelölt`) | the paywall's account types |
+| childData | none | — |
+| sensitiveCategories | salary figures are the survey's, anonymised and aggregated (R1: every number traces to a client file); a registrant's own salary is never asked; no Article 9 field on the form | GDPR Art. 9 |
+| channels · consent | the registration checkbox is a **privacy-notice acknowledgement, not marketing consent** — a separate, unticked consent is needed before any marketing e-mail; candidates (individuals) and named company contacts by consent; role addresses (`info@`) by legitimate interest with opt-out | Act XLVIII/2008 |
+| defaults · cap · optOutSla | nothing on by default; at most one guide-related mail a month; opt-out within one business day | R28 |
+| aiDisclosure | label (any generated image on the trends pages) | Art. 50 |
+| retention | registration accounts while the guide edition is live + 12 months; marketing consent until withdrawn; download logs 12 months | to confirm with counsel |
+| privacyPolicy | the `Adatkezelési tájékoztató` linked from the form must name the guide, the account, the Excel download, cookies, and any marketing use — today the link is `#` | the gate blocks registration until the notice is real |
+| dpia | not required (B2B) — recommended if candidate profiles are matched to jobs (Expert Pool) | GDPR Art. 35 |
+| vulnerability · darkPatterns · accessibility | no pressure; no pre-ticked box (the form's box is unticked — keep it); WCAG 2.2 AA | R32, R36, R34 |
+
+**Gate rows for the production guide:** registration needs the real privacy notice;
+marketing e-mail needs a separate consent; the Expert Pool's candidate matching needs the
+DPIA decision. Rules R12–R14.
 
 ## 7. Metrics
 

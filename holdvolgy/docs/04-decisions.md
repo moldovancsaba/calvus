@@ -114,3 +114,5 @@ technical side was written the same day. Stack recommendations are ADRs in
 `11-architecture.md` and stay PROPOSED until the owner or the client flips one — the
 flip is recorded here as the next D-number. Replaces: nothing; before this the project
 had no technical package at all.
+
+**D20 — A responsible-data policy record for the estate (SSOT §6b, PROPOSED).** Calvus, 2026-09-20, on the owner's directive (responsible data for every client) and the hub audit. Alcohol: adults only with the age gate on every entry (built) and age confirmation at checkout and delivery (the gap); no minor in any image; newsletter and club by consent; retention per the accounting law; rules R12–R14 and the gate rows for the production site. Replaces nothing; documents what the built site must keep.

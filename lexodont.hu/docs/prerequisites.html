@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Lexodont — the register of asks — Lexodont docs</title>
+<title>Lexodont — prerequisites for a second iteration (nothing is open for the delivered wireframe) — Lexodont docs</title>
 <style>/* Lexodont — documentation pages, on the wireframe's neutral grey and the hub's Inter. */
 :root{--ground:#f4f4f4;--card:#ffffff;--ink:#1e1e1e;--text:#333333;--muted:#626262;--accent:#4a4a4a;--accent-deep:#2e2e2e;--line:#d9d9d9;--line-soft:#ececec;--note:#e9e9e9}
 *{box-sizing:border-box}
@@ -35,54 +35,68 @@ footer{margin-top:56px;padding-top:18px;border-top:1px solid var(--line);font-si
 </head>
 <body>
 <div class="wrap">
-<nav class="docnav" aria-label="Project documentation"><span class="docnav-brand">Lexodont · docs</span><a href="index.html">Overview</a><a href="bemutato.html">Bemutató</a><a href="brief.html">Brief</a><a href="research.html">Research</a><a href="audit.html">Audit</a><a href="sources.html">Sources</a><a href="decisions.html">Decisions</a><a href="design.html">Design</a><a href="build-log.html">Build log</a><a href="gate.html">Gate</a><a href="client-asks.html" aria-current=page>Register of asks</a><a href="prerequisites.html">Prerequisites</a><a href="ssot.html">SSOT</a><a href="architecture.html">Architecture</a><a href="technical-design.html">Technical design</a><a href="implementation-plan.html">Implementation plan</a><a href="token-map.html">Token map</a></nav>
-<header><p class="eyebrow">Calvus · Lexodont · project documentation</p><h1>Lexodont — the register of asks</h1></header>
-<p><em>Since 2026-09-20 (owner's rule: an ask is never a presentation blocker) the six questions
-that decide whether the engagement continues are prerequisites for a second iteration,
-listed in <a href="prerequisites.html"><code>19-implementation-prerequisites.md</code></a> (P-1–P-6, plus P-7 for the policy record).
-Nothing is open for the delivered wireframe.</em></p>
+<nav class="docnav" aria-label="Project documentation"><span class="docnav-brand">Lexodont · docs</span><a href="index.html">Overview</a><a href="bemutato.html">Bemutató</a><a href="brief.html">Brief</a><a href="research.html">Research</a><a href="audit.html">Audit</a><a href="sources.html">Sources</a><a href="decisions.html">Decisions</a><a href="design.html">Design</a><a href="build-log.html">Build log</a><a href="gate.html">Gate</a><a href="client-asks.html">Register of asks</a><a href="prerequisites.html" aria-current=page>Prerequisites</a><a href="ssot.html">SSOT</a><a href="architecture.html">Architecture</a><a href="technical-design.html">Technical design</a><a href="implementation-plan.html">Implementation plan</a><a href="token-map.html">Token map</a></nav>
+<header><p class="eyebrow">Calvus · Lexodont · project documentation</p><h1>Lexodont — prerequisites for a second iteration (nothing is open for the delivered wireframe)</h1></header>
+<p><em>Written 2026-09-20 on the owner's rule (business.direct D34, hub audit action 3). The
+wireframe was delivered; the client's site is live, built by their own developer. This
+folder is the record. If a second iteration is commissioned, these are its prerequisites.</em></p>
 <div class="tbl"><table>
 <thead>
 <tr>
 <th>#</th>
-<th>Question</th>
-<th>Now</th>
+<th>Prerequisite</th>
+<th>Who</th>
+<th>Why</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>1</td>
-<td>Second iteration, or complete?</td>
-<td>P-1</td>
+<td>P-1 (ask #1)</td>
+<td>The decision that there is a second iteration</td>
+<td>Lexodont</td>
+<td>everything below depends on it; if not, this folder is the closing record</td>
 </tr>
 <tr>
-<td>2</td>
-<td>Archive the wireframe, keep the URLs</td>
-<td>P-2</td>
+<td>P-2 (ask #2)</td>
+<td>Permission to mark the wireframe "delivered" on the hub (URLs stay live)</td>
+<td>Lexodont</td>
+<td>the hub presents it as a live project</td>
 </tr>
 <tr>
-<td>3</td>
-<td>GA4 and Flexi-Dent numbers</td>
-<td>P-3</td>
+<td>P-3 (ask #3)</td>
+<td>GA4 access and Flexi-Dent booking numbers</td>
+<td>Lexodont</td>
+<td>to prioritise by what visitors do</td>
 </tr>
 <tr>
-<td>4</td>
-<td>Dropped elements on purpose?</td>
-<td>P-4</td>
+<td>P-4 (ask #4)</td>
+<td>Whether the dropped elements (WhatsApp CTA, per-doctor facts, OSM map) were dropped on purpose</td>
+<td>Lexodont</td>
+<td>closes D3/D6/D8 either way</td>
 </tr>
 <tr>
-<td>5</td>
-<td>Is this record the spec for the live site's additions?</td>
-<td>P-5</td>
+<td>P-5 (ask #5)</td>
+<td>Whether this record is also the spec for the live site's additions (Technológiák, e-max, EMS, EN)</td>
+<td>Lexodont</td>
+<td>scope of the SSOT</td>
 </tr>
 <tr>
-<td>6</td>
-<td>Photography rights</td>
-<td>P-6</td>
+<td>P-6 (ask #6)</td>
+<td>Photography rights for anything shown again</td>
+<td>Lexodont</td>
+<td>every wireframe image is a placeholder</td>
+</tr>
+<tr>
+<td>P-7 (SSOT §4b)</td>
+<td>The responsible-data policy record confirmed: the booking processor named in the privacy notice, case-photo consents, the newsletter's consent text</td>
+<td>Lexodont, counsel</td>
+<td>health data; children as patients</td>
 </tr>
 </tbody>
 </table></div>
-<footer>Source: <code>lexodont.hu/docs/08-client-asks.md</code> · rendered by <code>docs/build.py</code>.</footer>
+<h2>What the presentation needs today</h2>
+<p>Nothing. The wireframe and its record are complete as delivered.</p>
+<footer>Source: <code>lexodont.hu/docs/19-implementation-prerequisites.md</code> · rendered by <code>docs/build.py</code>.</footer>
 </div>
 </body>
 </html>

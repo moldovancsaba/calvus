@@ -55,6 +55,36 @@ custom theme. No structured data file exists in this repo for Lexodont.
 | R5 | Featured specialties are the four named above, two columns (D12). | client |
 | R6 | Both fidelities carry the same page set (D10); the gate's parity check enforces it (D15). | owner |
 | R7 | Every published URL stays (repo rule). | repo |
+| R8 | Health data never leaves the practice system into marketing: no segment, no reminder copy, no newsletter on treatment history (§4b). | GDPR Art. 9 |
+| R9 | A child's data only through the parent, with consent; no child's face on the site; case photos only with written consent. | §4b |
+| R10 | The newsletter, the booking embed and case photos run only when the policy record's fields for them are set (the gate). | §4b |
+
+## 4b. Responsible-data policy record (PROPOSED, 2026-09-20)
+
+*One record per instance, per the framework in `business-direct/docs/18-responsible-data-policy-framework.md` (owner directive 2026-09-19: responsible data for every client; hub audit 2026-09-20, action 1). Filled for a dental practice in Hungary; every value
+is a proposal until the client confirms it. The wireframe stores nothing; the record binds
+the site that is built from it.*
+
+| Field | Value (PROPOSED) | Why |
+|---|---|---|
+| client · instance | Lexodont · lexodont.hu (HU, EN) | — |
+| jurisdictions · laws | HU, EU — GDPR (Art. 9: **health data is a special category**), Hungarian Act CXII/2011 (Infotv.), Act XLVIII/2008 (advertising; no health-claim advertising beyond what the law allows), EU AI Act Art. 50 for any generated media | a dental practice processes health data the moment a patient describes a complaint |
+| audienceModel | adults and **children as patients** (gyerekfogászat): a child's data only through the parent, with the parent's consent | Art. 8 GDPR, Infotv. |
+| childData | none on the site; the booking and case data live in the practice system (Flexi-Dent), never in marketing | R24 of the framework |
+| processors | Flexi-Dent booking embed (`publicapi.flexi-dent.hu`) — a processor agreement and a privacy notice naming it | the audit found the embed; the docs mention the privacy page once |
+| sensitiveCategories | health: an enquiry that describes a condition is answered and not stored outside the practice system; no marketing segment on treatment history | Art. 9; FTC v. BetterHelp as the cautionary case |
+| mediaConsent | before/after case photos only with the patient's written consent; no child's face on the site; no generated faces | R15, R30 |
+| channels · consent | e-mail newsletter only by consent; no SMS marketing; appointment reminders are service messages | Act XLVIII/2008 |
+| defaults · cap · optOutSla | nothing on by default; one newsletter a month at most; opt-out within one business day | R28 |
+| aiDisclosure | label + text for any generated image or text (EU) | Art. 50 |
+| retention | enquiries 12 months; newsletter consent until withdrawn; case photos while consent stands | to confirm with counsel |
+| privacyPolicy | `/adatkezelesi-tajekoztato/` — must name the booking processor, the newsletter, cookies, and children's data through parents | the gate blocks the newsletter until it does |
+| dpia | recommended (health data at scale) | GDPR Art. 35 |
+| vulnerability · darkPatterns · accessibility | no pressure ("last appointment today" only if true); no pre-ticked consent; WCAG 2.2 AA (a health service) | R32, R36, R34 |
+
+**Gate rows for the production site:** newsletter needs the privacy-policy clause and the
+consent text; case photos need the written consent on file; the booking embed needs the
+processor agreement named in the policy. Rules R8–R10 below.
 
 ## 5. Metrics
 

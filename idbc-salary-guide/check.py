@@ -7,6 +7,7 @@ described in docs/07-gate.md:
 3. every docs page links every other docs page
 4. the shared chart assets carry the same ?v= on every page that loads them
 5. every inert control still carries is-unavailable
+6. stale-state phrases in the docs; the decision range in the docs index and the SSOT equals the register (ported 2026-09-20)
 """
 import re, sys, pathlib
 ROOT = pathlib.Path(__file__).resolve().parent
@@ -55,6 +56,26 @@ for f in PAGES:
     for label, what in INERT.items():
         for m in re.finditer(r'<(?:a|button|span)\b[^>]*>[^<]*' + re.escape(label), t):
             if "is-unavailable" not in m.group(0): findings.append(f"inert control live  {f.relative_to(ROOT)}: {what}")
+
+
+# stale-state phrases and consistency (ported from business.direct's gate, hub audit 2026-09-20)
+docs_md = sorted((ROOT / "docs").glob("*.md")) if (ROOT / "docs").exists() else []
+STALE = ["awaits the owner", "coming soon", "not yet built", "inert here", "will be built", "for approval", "awaiting approval of", "várja a jóváhagyást", "hamarosan"]
+EXEMPT = ("04-decisions.md", "06-build-log.md", "07-gate.md", "README.md", "decisions.html", "build-log.html", "gate.html", "index.html", "bemutato.html")
+for f in docs_md + DOCS:
+    if f.name in EXEMPT: continue
+    t = f.read_text(encoding="utf-8").lower()
+    for ph in STALE:
+        if ph in t: findings.append(f"stale phrase  {f.relative_to(ROOT)}: \"{ph}\"")
+dec = ROOT / "docs" / "04-decisions.md"
+if dec.exists():
+    nums = [int(x) for x in re.findall(r"^\| D(\d+) \|", dec.read_text(encoding="utf-8"), re.M)]
+    if nums:
+        last = max(nums)
+        for f in (ROOT / "docs" / "README.md", ROOT / "docs" / "10-ssot.md"):
+            if f.exists():
+                for m in re.finditer(r"D1–D(\d+)", f.read_text(encoding="utf-8")):
+                    if int(m.group(1)) != last: findings.append(f"stale count  {f.relative_to(ROOT)}: says D1–D{m.group(1)}, the register ends at D{last}")
 
 print(f"checked {len(ALL)} files, {refs} references, {len(DOCS)} docs pages, {sum(len(v) for v in versions.values())} asset versions")
 if findings:

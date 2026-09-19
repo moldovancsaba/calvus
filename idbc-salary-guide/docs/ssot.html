@@ -35,7 +35,7 @@ footer{margin-top:56px;padding-top:18px;border-top:1px solid var(--line);font-si
 </head>
 <body>
 <div class="wrap">
-<nav class="docnav" aria-label="Project documentation"><span class="docnav-brand">IDBC Salary Guide · docs</span><a href="index.html">Overview</a><a href="bemutato.html">Bemutató</a><a href="brief.html">Brief</a><a href="research.html">Research</a><a href="audit.html">Audit</a><a href="sources.html">Sources & gaps</a><a href="decisions.html">Decisions</a><a href="design.html">Design</a><a href="gate.html">Gate</a><a href="client-asks.html">Client asks</a><a href="ssot.html" aria-current=page>SSOT</a><a href="architecture.html">Architecture</a><a href="technical-design.html">Technical design</a><a href="implementation-plan.html">Implementation plan</a><a href="token-map.html">Token map</a></nav>
+<nav class="docnav" aria-label="Project documentation"><span class="docnav-brand">IDBC Salary Guide · docs</span><a href="index.html">Overview</a><a href="bemutato.html">Bemutató</a><a href="brief.html">Brief</a><a href="research.html">Research</a><a href="audit.html">Audit</a><a href="sources.html">Sources & gaps</a><a href="decisions.html">Decisions</a><a href="design.html">Design</a><a href="gate.html">Gate</a><a href="client-asks.html">Register of asks</a><a href="prerequisites.html">Prerequisites</a><a href="ssot.html" aria-current=page>SSOT</a><a href="architecture.html">Architecture</a><a href="technical-design.html">Technical design</a><a href="implementation-plan.html">Implementation plan</a><a href="token-map.html">Token map</a></nav>
 <header><p class="eyebrow">Calvus · IDBC Salary Guide · project documentation</p><h1>IDBC Salary Guide — single source of truth (SSOT)</h1></header>
 <p><em>Definitions the technical documents (<code>11</code>–<code>14</code>) use without redefining. Everything is read
 from what the prototype holds (<code>data/guide-data.json</code>, <code>data/areas.json</code>, the two converters,
@@ -284,7 +284,7 @@ case study).</p>
 </tbody>
 </table></div>
 <h2>5. Decision register</h2>
-<p><a href="decisions.html"><code>04-decisions.md</code></a> (D1–D27). Technical decisions in this package are ADRs in
+<p><a href="decisions.html"><code>04-decisions.md</code></a> (D1–D28). Technical decisions in this package are ADRs in
 <a href="architecture.html"><code>11-architecture.md</code></a> §11, PROPOSED until flipped; the flip is the next D-number.</p>
 <h2>6. Rules register</h2>
 <div class="tbl"><table>
@@ -347,12 +347,104 @@ case study).</p>
 <td>D24</td>
 </tr>
 <tr>
+<td>R12</td>
+<td>The registration checkbox acknowledges the privacy notice; marketing needs its own unticked consent; role addresses by legitimate interest with opt-out, named persons by consent (§6b).</td>
+<td>Act XLVIII/2008</td>
+</tr>
+<tr>
+<td>R13</td>
+<td>Salary data stays aggregated; no registrant's own salary is asked or stored; no Article 9 field exists (§6b).</td>
+<td>GDPR</td>
+</tr>
+<tr>
+<td>R14</td>
+<td>Registration, marketing e-mail and candidate matching run only when the policy record's fields for them are set (the gate).</td>
+<td>§6b</td>
+</tr>
+<tr>
 <td>R11</td>
 <td>In fine-tuning, only the reported item changes.</td>
 <td>owner, 2026-09-18</td>
 </tr>
 </tbody>
 </table></div>
+<h2>6b. Responsible-data policy record (PROPOSED, 2026-09-20)</h2>
+<p><em>One record per instance, per the framework in <code>business-direct/docs/18-responsible-data-policy-framework.md</code> (owner directive 2026-09-19: responsible data for every client; hub audit 2026-09-20, action 1). Filled for a B2B research guide with a registration
+paywall in Hungary; every value is a proposal until the client confirms it.</em></p>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Value (PROPOSED)</th>
+<th>Why</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>client · instance</td>
+<td>IDBC · the Salary Guide (HU)</td>
+<td>—</td>
+</tr>
+<tr>
+<td>jurisdictions · laws</td>
+<td>HU, EU — GDPR, Infotv., Act XLVIII/2008 (B2B: corporate addresses without consent; a named person's address needs consent), EU AI Act Art. 50 for generated media</td>
+<td>research and the registration form</td>
+</tr>
+<tr>
+<td>audienceModel</td>
+<td>adults — company representatives and candidates (<code>type: cég / jelölt</code>)</td>
+<td>the paywall's account types</td>
+</tr>
+<tr>
+<td>childData</td>
+<td>none</td>
+<td>—</td>
+</tr>
+<tr>
+<td>sensitiveCategories</td>
+<td>salary figures are the survey's, anonymised and aggregated (R1: every number traces to a client file); a registrant's own salary is never asked; no Article 9 field on the form</td>
+<td>GDPR Art. 9</td>
+</tr>
+<tr>
+<td>channels · consent</td>
+<td>the registration checkbox is a <strong>privacy-notice acknowledgement, not marketing consent</strong> — a separate, unticked consent is needed before any marketing e-mail; candidates (individuals) and named company contacts by consent; role addresses (<code>info@</code>) by legitimate interest with opt-out</td>
+<td>Act XLVIII/2008</td>
+</tr>
+<tr>
+<td>defaults · cap · optOutSla</td>
+<td>nothing on by default; at most one guide-related mail a month; opt-out within one business day</td>
+<td>R28</td>
+</tr>
+<tr>
+<td>aiDisclosure</td>
+<td>label (any generated image on the trends pages)</td>
+<td>Art. 50</td>
+</tr>
+<tr>
+<td>retention</td>
+<td>registration accounts while the guide edition is live + 12 months; marketing consent until withdrawn; download logs 12 months</td>
+<td>to confirm with counsel</td>
+</tr>
+<tr>
+<td>privacyPolicy</td>
+<td>the <code>Adatkezelési tájékoztató</code> linked from the form must name the guide, the account, the Excel download, cookies, and any marketing use — today the link is <code>#</code></td>
+<td>the gate blocks registration until the notice is real</td>
+</tr>
+<tr>
+<td>dpia</td>
+<td>not required (B2B) — recommended if candidate profiles are matched to jobs (Expert Pool)</td>
+<td>GDPR Art. 35</td>
+</tr>
+<tr>
+<td>vulnerability · darkPatterns · accessibility</td>
+<td>no pressure; no pre-ticked box (the form's box is unticked — keep it); WCAG 2.2 AA</td>
+<td>R32, R36, R34</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Gate rows for the production guide:</strong> registration needs the real privacy notice;
+marketing e-mail needs a separate consent; the Expert Pool's candidate matching needs the
+DPIA decision. Rules R12–R14.</p>
 <h2>7. Metrics</h2>
 <div class="tbl"><table>
 <thead>

@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>DiscountDirect — what needs the product owner</title>
+<title>DiscountDirect — the register of asks</title>
 <style>
 :root{--gds-bg-canvas:#f8fafc;--gds-bg-surface:#ffffff;--gds-bg-inverse:#111827;--gds-text-body:#111827;--gds-text-meta:#64748b;--gds-border-card:#e2e8f0;--gds-brand-accent:#3b5bdb;--gds-brand-accent-tint:#e7ecfb;--gds-radius-card:8px}
 *{box-sizing:border-box}
@@ -26,62 +26,64 @@ footer{margin-top:48px;padding-top:16px;border-top:1px solid var(--gds-border-ca
 </style>
 </head>
 <body><div class="wrap">
-<div class="top"><b>DiscountDirect</b><a href="docs.html">Overview</a><a href="bemutato.html">Bemutató</a><a href="executive.html">Executive summary</a><a href="research.html">Research</a><a href="audit.html">Audit</a><a href="sources.html">Sources</a><a href="business-logic.html">Business logic</a><a href="design.html">Design</a><a href="build-log.html">Build log</a><a href="gate.html">Gate</a><a href="client-asks.html" class=on>Client asks</a><a href="ssot.html">SSOT</a><a href="architecture.html">Architecture</a><a href="technical-design.html">Technical design</a><a href="implementation-plan.html">Implementation plan</a><a href="token-map.html">Token map</a><a href="index.html">Open the prototype →</a></div>
-<h1>DiscountDirect — what needs the product owner</h1>
-<p><em>Open items only the product owner can close, 2026-09-18.</em></p>
+<div class="top"><b>DiscountDirect</b><a href="docs.html">Overview</a><a href="bemutato.html">Bemutató</a><a href="executive.html">Executive summary</a><a href="research.html">Research</a><a href="audit.html">Audit</a><a href="sources.html">Sources</a><a href="business-logic.html">Business logic</a><a href="design.html">Design</a><a href="build-log.html">Build log</a><a href="gate.html">Gate</a><a href="client-asks.html" class=on>Register of asks</a><a href="prerequisites.html">Prerequisites</a><a href="ssot.html">SSOT</a><a href="architecture.html">Architecture</a><a href="technical-design.html">Technical design</a><a href="implementation-plan.html">Implementation plan</a><a href="token-map.html">Token map</a><a href="index.html">Open the prototype →</a></div>
+<h1>DiscountDirect — the register of asks</h1>
+<p><em>Since 2026-09-20 (owner's rule: an ask is never a presentation blocker) the open items are
+implementation prerequisites, listed in <a href="prerequisites.html"><code>IMPLEMENTATION-PREREQUISITES.md</code></a> by when they
+block. Nothing is open for the presentation.</em></p>
 <div class="tbl"><table>
 <thead>
 <tr>
 <th>#</th>
 <th>Item</th>
-<th>Why it matters</th>
+<th>Now</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td>1</td>
-<td>Update the prototype to D1–D26 (hand-off on accept, sold-out notice, rules block, advanced mode, print mode) or freeze it as the pre-decision reference?</td>
-<td>today the clickable demo and the rules disagree (<a href="audit.html"><code>AUDIT.md</code></a>)</td>
+<td>Update the prototype to the decisions, or freeze it as the pre-decision reference</td>
+<td>P-4 — before Release 1's first sprint</td>
 </tr>
 <tr>
 <td>2</td>
-<td>Real sample data from one real shop (products, a few anonymised histories) for the demo</td>
-<td>every name and price is fictional; a pitch on invented data is weaker than one on a real catalogue</td>
+<td>Real sample data from one shop</td>
+<td>P-8 — for the pitch</td>
 </tr>
 <tr>
 <td>3</td>
-<td>Access to, or an inventory of, the existing implementation (DD-000)</td>
-<td>the whole plan builds on a codebase this repo cannot see</td>
+<td>Access to, or an inventory of, the existing implementation</td>
+<td>P-1 — before Release 1</td>
 </tr>
 <tr>
 <td>4</td>
-<td>Print partner for the platform print service (D9/D15: Pingen candidate)</td>
-<td>Release 1.1</td>
+<td>Print partner</td>
+<td>P-5 — before Release 1.1</td>
 </tr>
 <tr>
 <td>5</td>
-<td>Confirm the connector order Shoprenter → UNAS → WooCommerce → Shopify (D18)</td>
-<td>E7 sequencing</td>
+<td>Connector order</td>
+<td>P-7 — before Release 1.1</td>
 </tr>
 <tr>
 <td>6</td>
-<td>Legal review of the consent templates and the legitimate-interest assessment per market (D8, D13)</td>
-<td>E6</td>
+<td>Legal review of consent templates and legitimate interest; the policy record</td>
+<td>P-3 — before Release 1</td>
 </tr>
 <tr>
 <td>7</td>
-<td>A product name and brand for the buyer-facing app, or confirmation that "DiscountDirect" is it</td>
-<td>the wordmark is text; the buyer app has no identity</td>
+<td>Buyer-app name and brand</td>
+<td>P-9 — for the brand</td>
 </tr>
 <tr>
 <td>8</td>
-<td>The membership perk list and tier names (D22)</td>
-<td>E8, Release 1.1</td>
+<td>Membership perks and tier names</td>
+<td>P-6 — before Release 1.1</td>
 </tr>
 <tr>
 <td>9</td>
-<td>Who designs Release 1's undesigned screens (<a href="design.html"><code>DESIGN.md</code></a> §"never designed")</td>
-<td>before E1</td>
+<td>Who designs the undesigned screens</td>
+<td>P-2 — before Release 1</td>
 </tr>
 </tbody>
 </table></div>

@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>DiscountDirect — implementation prerequisites (after the product owner's go; nothing blocks the presentation)</title>
+<style>
+:root{--gds-bg-canvas:#f8fafc;--gds-bg-surface:#ffffff;--gds-bg-inverse:#111827;--gds-text-body:#111827;--gds-text-meta:#64748b;--gds-border-card:#e2e8f0;--gds-brand-accent:#3b5bdb;--gds-brand-accent-tint:#e7ecfb;--gds-radius-card:8px}
+*{box-sizing:border-box}
+body{margin:0;background:var(--gds-bg-canvas);color:var(--gds-text-body);font:15.5px/1.6 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;padding:0 24px 64px}
+.wrap{max-width:76ch;margin-inline:auto}
+.top{display:flex;flex-wrap:wrap;gap:8px 18px;align-items:center;padding:16px 0;border-bottom:1px solid var(--gds-border-card);font-size:13px;color:var(--gds-text-meta)}
+.top b{color:var(--gds-text-body)} .top a{color:var(--gds-brand-accent);text-decoration:none;min-height:44px;display:inline-flex;align-items:center} .top a.on{color:var(--gds-text-body);font-weight:600}
+h1{font-size:38px;line-height:1.15;margin:32px 0 10px;letter-spacing:0}
+h2{font-size:22px;margin:44px 0 10px;padding-top:18px;border-top:1px solid var(--gds-border-card)}
+h3{font-size:17px;margin:26px 0 8px}
+p{margin:0 0 12px} li{margin:4px 0} strong{font-weight:600}
+code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.86em;background:var(--gds-brand-accent-tint);padding:1px 5px;border-radius:5px}
+pre{background:var(--gds-bg-inverse);color:#f8fafc;padding:16px;border-radius:var(--gds-radius-card);overflow-x:auto;font-size:13px;line-height:1.5} pre code{background:none;color:inherit;padding:0;font-size:inherit}
+.tbl{overflow-x:auto;margin:12px 0 20px;border:1px solid var(--gds-border-card);border-radius:var(--gds-radius-card);background:var(--gds-bg-surface)}
+table{border-collapse:collapse;width:100%;font-size:13.5px;min-width:560px}
+th{text-align:left;font-weight:600;background:var(--gds-bg-canvas);padding:10px 12px;border-bottom:1px solid var(--gds-border-card);font-size:12px;letter-spacing:0;text-transform:uppercase;color:var(--gds-text-meta)}
+td{padding:10px 12px;border-top:1px solid var(--gds-border-card);vertical-align:top}
+a{color:var(--gds-brand-accent)}
+footer{margin-top:48px;padding-top:16px;border-top:1px solid var(--gds-border-card);font-size:12px;color:var(--gds-text-meta)}
+</style>
+</head>
+<body><div class="wrap">
+<div class="top"><b>DiscountDirect</b><a href="docs.html">Overview</a><a href="bemutato.html">Bemutató</a><a href="executive.html">Executive summary</a><a href="research.html">Research</a><a href="audit.html">Audit</a><a href="sources.html">Sources</a><a href="business-logic.html">Business logic</a><a href="design.html">Design</a><a href="build-log.html">Build log</a><a href="gate.html">Gate</a><a href="client-asks.html">Register of asks</a><a href="prerequisites.html" class=on>Prerequisites</a><a href="ssot.html">SSOT</a><a href="architecture.html">Architecture</a><a href="technical-design.html">Technical design</a><a href="implementation-plan.html">Implementation plan</a><a href="token-map.html">Token map</a><a href="index.html">Open the prototype →</a></div>
+<h1>DiscountDirect — implementation prerequisites (after the product owner's go; nothing blocks the presentation)</h1>
+<p><em>Written 2026-09-20 on the owner's rule (business.direct D34, hub audit action 3). The
+prototype is the pre-decision reference and is presented as such; the engineering package
+is written on D1–D28. These are the items the implementation needs, grouped by when they
+block.</em></p>
+<h2>1. Before Release 1's first sprint</h2>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>#</th>
+<th>Prerequisite</th>
+<th>Who</th>
+<th>Why</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>P-1 (ask #3)</td>
+<td>Access to, or an inventory of, the existing implementation (DD-000)</td>
+<td>product owner</td>
+<td>the whole plan builds on a codebase this repo cannot see</td>
+</tr>
+<tr>
+<td>P-2 (ask #9)</td>
+<td>Who designs Release 1's undesigned screens (<a href="design.html"><code>DESIGN.md</code></a> §"never designed")</td>
+<td>product owner</td>
+<td>before E1</td>
+</tr>
+<tr>
+<td>P-3 (ask #6)</td>
+<td>Legal review of the consent templates and the legitimate-interest assessment per market (D8, D13) — and the policy record (SSOT §6b) confirmed: unknown age = no profiled offer, the vulnerability pause, the postal address on letters, the seller's policy naming the processor</td>
+<td>product owner, counsel</td>
+<td>E6; the gate reads the record</td>
+</tr>
+<tr>
+<td>P-4 (ask #1)</td>
+<td>Whether the prototype is updated to D1–D26 or frozen as the pre-decision reference</td>
+<td>product owner</td>
+<td>the demo and the engineering docs differ on hand-off, sold-out and advanced mode</td>
+</tr>
+</tbody>
+</table></div>
+<h2>2. Before Release 1.1</h2>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>#</th>
+<th>Prerequisite</th>
+<th>Who</th>
+<th>Why</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>P-5 (ask #4)</td>
+<td>The print partner for the platform print service (Pingen candidate, D9/D15)</td>
+<td>product owner</td>
+<td>Release 1.1</td>
+</tr>
+<tr>
+<td>P-6 (ask #8)</td>
+<td>The membership perk list and tier names (D22)</td>
+<td>product owner</td>
+<td>E8</td>
+</tr>
+<tr>
+<td>P-7 (ask #5)</td>
+<td>Confirmation of the connector order Shoprenter → UNAS → WooCommerce → Shopify (D18)</td>
+<td>product owner</td>
+<td>E7 sequencing</td>
+</tr>
+</tbody>
+</table></div>
+<h2>3. For the pitch and the brand</h2>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>#</th>
+<th>Prerequisite</th>
+<th>Who</th>
+<th>Why</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>P-8 (ask #2)</td>
+<td>Real sample data from one shop (products, a few anonymised histories)</td>
+<td>a pilot shop</td>
+<td>a pitch on a real catalogue</td>
+</tr>
+<tr>
+<td>P-9 (ask #7)</td>
+<td>A product name and brand for the buyer-facing app, or confirmation that "DiscountDirect" is it</td>
+<td>product owner</td>
+<td>the wordmark is text</td>
+</tr>
+</tbody>
+</table></div>
+<h2>4. What the presentation needs today</h2>
+<p>Nothing. The prototype is the pre-decision reference; the executive summary and the
+engineering package say where they differ.</p>
+<footer>Source: <code>discountdirect/IMPLEMENTATION-PREREQUISITES.md</code>, rendered by <code>build-docs.py</code>. Documentation tokens are mapped in <code>GDS-TOKEN-MAP.md</code>; the application implementation uses GDS 6.7.0.</footer>
+</div></body></html>

@@ -35,7 +35,7 @@ footer{margin-top:56px;padding-top:18px;border-top:1px solid var(--line);font-si
 </head>
 <body>
 <div class="wrap">
-<nav class="docnav" aria-label="Project documentation"><span class="docnav-brand">Lexodont · docs</span><a href="index.html">Overview</a><a href="bemutato.html">Bemutató</a><a href="brief.html">Brief</a><a href="research.html">Research</a><a href="audit.html">Audit</a><a href="sources.html">Sources</a><a href="decisions.html" aria-current=page>Decisions</a><a href="design.html">Design</a><a href="build-log.html">Build log</a><a href="gate.html">Gate</a><a href="client-asks.html">Client asks</a><a href="ssot.html">SSOT</a><a href="architecture.html">Architecture</a><a href="technical-design.html">Technical design</a><a href="implementation-plan.html">Implementation plan</a><a href="token-map.html">Token map</a></nav>
+<nav class="docnav" aria-label="Project documentation"><span class="docnav-brand">Lexodont · docs</span><a href="index.html">Overview</a><a href="bemutato.html">Bemutató</a><a href="brief.html">Brief</a><a href="research.html">Research</a><a href="audit.html">Audit</a><a href="sources.html">Sources</a><a href="decisions.html" aria-current=page>Decisions</a><a href="design.html">Design</a><a href="build-log.html">Build log</a><a href="gate.html">Gate</a><a href="client-asks.html">Register of asks</a><a href="prerequisites.html">Prerequisites</a><a href="ssot.html">SSOT</a><a href="architecture.html">Architecture</a><a href="technical-design.html">Technical design</a><a href="implementation-plan.html">Implementation plan</a><a href="token-map.html">Token map</a></nav>
 <header><p class="eyebrow">Calvus · Lexodont · project documentation</p><h1>Lexodont — decision register</h1></header>
 <p><em>Reconstructed on 2026-09-18 from the 24 commits of 2026-03-31 and 2026-04-09; nothing
 else was recorded at the time. "Client" is Lexodont; "owner" is the Calvus side.</em></p>
@@ -154,6 +154,13 @@ else was recorded at the time. "Client" is Lexodont; "owner" is the Calvus side.
 <td>The three treatment pages missing from the sketch set are mirrored from the sketch template so both fidelities carry the same page set again and the gate's parity check is clean</td>
 <td>owner</td>
 <td><code>lexodont.hu_balsamic/{parodontologia,gyokerkezeles,gyerekfogaszat}.html</code></td>
+</tr>
+<tr>
+<td>D16</td>
+<td>2026-09-20</td>
+<td>A <strong>responsible-data policy record</strong> for the practice (SSOT §4b, PROPOSED): health data as a special category, children as patients through parents, the booking processor named, media consent, no marketing without consent — with rules R8–R10 and the gate rows for the production site</td>
+<td>Calvus, on the owner's directive (responsible data for every client) and the hub audit</td>
+<td>the wireframe stores nothing; the record binds the built site</td>
 </tr>
 </tbody>
 </table></div>

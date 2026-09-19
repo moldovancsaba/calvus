@@ -12,11 +12,12 @@ every Calvus project.
 | 01 research | `01-research.md` | What was read (the client's specs, mockups, data, copy), the one external measurement, what was not researched and why |
 | 02 audit | `02-audit.md` | idbc.hu measured; the spec vs. the data; the client's data as it stands; defects found in the material |
 | 03 sources and assets | `../data/SOURCES-AND-GAPS.md` | Every source file and what it contributed, every gap, every change round with measurements — the running record since July |
-| 04 decisions | `04-decisions.md` | D1–D27, dated, with who and why |
+| 04 decisions | `04-decisions.md` | D1–D28, dated, with who and why |
 | 05 design | `05-design.md` | Where the look comes from (the client's mockups), tokens, layout |
 | 06 build log | `../data/SOURCES-AND-GAPS.md` | the dated change notes are the build log |
 | 07 gate | `07-gate.md` + `../check.py` | The one-command gate, the measured pass, deliberate deviations |
-| 08 client asks | `08-client-asks.md` | Fifteen open items only the client can close |
+| 19 prerequisites | `19-implementation-prerequisites.md` | The client's pending content deliveries, the decisions before publication (the bértábla banner first), the production-build decisions; nothing is needed for the next review (2026-09-20) |
+| 08 client asks | `08-client-asks.md` | The register of asks with states — none open for the next review; the rest are prerequisites |
 | 10 SSOT | `10-ssot.md` | Glossary, enumerations, entities, settings, rules, metrics |
 | 11 architecture | `11-architecture.md` | idbc.hu measured; the client's Sheets-API assumption examined; containers; **PROPOSED** stack; ADR-1..8 |
 | 12 technical design | `12-technical-design.md` | Templates, content model, data pipeline, JSON slices, registration and gate, forms, media, analytics, performance, operations |

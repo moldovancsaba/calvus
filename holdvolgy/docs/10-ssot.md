@@ -101,7 +101,36 @@ Standing rules the prototype obeys and the production build must keep.
 | R8 | 18+ gate before any content; "Nem" leaves the site. | live site, kept |
 | R9 | Component class names are namespaced; the gate checks for collisions. | D18 |
 | R10 | No stale-state phrase on any page; the prototype banner says only what is inert. | check.py |
+| R12 | Adults only: the age gate on every entry, age confirmed again at checkout and at delivery; no minor in any image; no marketing a minor could read as aimed at them (§6b). | Act XLVIII/2008 §18 |
+| R13 | Newsletter and club mail by consent only; nothing pre-ticked; at most two mails a month; opt-out within one business day (§6b). | GDPR; R28 |
+| R14 | Checkout, delivery, the club and the newsletter run only when the policy record's fields for them are set (the gate). | §6b |
 | R11 | Navigation and document indexes are single-sourced. | D15 |
+
+## 6b. Responsible-data policy record (PROPOSED, 2026-09-20)
+
+*One record per instance, per the framework in `business-direct/docs/18-responsible-data-policy-framework.md` (owner directive 2026-09-19: responsible data for every client; hub audit 2026-09-20, action 1). Filled for a winery selling alcohol online in Hungary
+with a loyalty club; every value is a proposal until the estate confirms it.*
+
+| Field | Value (PROPOSED) | Why |
+|---|---|---|
+| client · instance | Holdvölgy · holdvolgy.com (HU, EN) | — |
+| jurisdictions · laws | HU, EU — GDPR, Infotv., **Act XLVIII/2008 §18 (alcohol advertising: not aimed at minors, no minors depicted, no claim of performance or social success)**, the excise and distance-selling rules for alcohol delivery, EU AI Act Art. 50 | the product is alcohol |
+| audienceModel | **adults only (18+)** — the age gate on every entry (HU and EN, built) and the age confirmation again at checkout and at delivery | Act XLVIII/2008; the age gate exists, the checkout and delivery checks are the gap |
+| childData | none; no minor in any image or clip (the vineyard-visit pages show families — no child's face) | §18, R15, R30 |
+| sensitiveCategories | none collected; club spend tiers are not a profile of anything else | — |
+| channels · consent | newsletter and club mail by consent; booking confirmations are service messages; no SMS | Act XLVIII/2008 |
+| defaults · cap · optOutSla | nothing on by default; at most two mails a month (newsletter + club); opt-out within one business day | R28 |
+| minorsMarketing | no profiling, no targeted ad, no social post that a minor could read as aimed at them; no discount framed as "party" or "performance" | §18 |
+| vulnerability · darkPatterns | no urgency on wine ("last bottles" only if literally true — R2 already bans fake availability); no pre-ticked club or newsletter box; one-tap unsubscribe | UCPD, R2, R36 |
+| aiDisclosure | label + text for any generated image (EU) | Art. 50 |
+| retention | orders as the accounting law requires (8 years in HU); club membership while active + 12 months; newsletter consent until withdrawn | to confirm |
+| privacyPolicy | must name the shop, the club tiers, the newsletter, the booking, cookies, and the age-verification data | the gate blocks the club and the newsletter until it does |
+| dpia | not required — recommended for the club (spend history) | GDPR Art. 35 |
+| accessibility | WCAG 2.2 AA; the age gate keyboard- and screen-reader-operable | R34 |
+
+**Gate rows for the production site:** shop checkout needs the age confirmation; delivery
+needs the age check at hand-over; the club and the newsletter need the policy clauses and
+consent texts; every image needs the no-minor check. Rules R12–R14.
 
 ## 7. Metrics
 

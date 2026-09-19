@@ -16,7 +16,7 @@ maps the standard slots onto them and is the process log.
 | 05 design | `DESIGN.md` + `GDS-TOKEN-MAP.md` | Screens, components, tokens named after GDS 6.5.0 roles |
 | 06 build log | `BUILD-LOG.md` | Every build round with what was measured |
 | 07 gate | `GATE.md` | What is checked, the 2026-09-18 pass, deviations |
-| 08 client asks | `CLIENT-ASKS.md` | What only the product owner can supply |
+| 08 client asks | `CLIENT-ASKS.md` | The register of asks — none open for the presentation; prerequisites in `IMPLEMENTATION-PREREQUISITES.md` |
 | 10 SSOT | `SSOT.md` | Glossary, enums, entities, settings, decisions, rules, metrics |
 | 11 architecture | `ARCHITECTURE.md` | Context, containers, flows, NFRs, the decided stack (D26), ADRs |
 | 12 technical design | `TECHNICAL-DESIGN.md` | Schema, state machines, API, algorithms, integrations |
