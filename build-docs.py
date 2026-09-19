@@ -6,7 +6,7 @@ Follow with `python3 check.py`.
 """
 import subprocess, sys, pathlib
 ROOT = pathlib.Path(__file__).resolve().parent
-for r in ["holdvolgy/docs/build.py", "idbc-salary-guide/docs/build.py", "discountdirect/build-docs.py", "lexodont.hu/docs/build.py"]:
+for r in ["holdvolgy/docs/build.py", "idbc-salary-guide/docs/build.py", "discountdirect/build-docs.py", "lexodont.hu/docs/build.py", "business-direct/docs/build.py"]:
     print(f"== {r}")
     subprocess.run([sys.executable, str(ROOT / r)], check=True)
 

@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>business.direct — brief — business.direct docs</title>
+<link rel="stylesheet" href="../assets/tokens.css">
+<style>/* business.direct — documentation pages on the product tokens (GDS roles, teal accent). */
+:root{--ground:var(--gds-bg-canvas,#f8fafc);--card:var(--gds-bg-surface,#fff);--ink:var(--gds-text-body,#111827);--text:#1f2937;--muted:var(--gds-text-meta,#64748b);--accent:var(--gds-brand-accent,#0f766e);--accent-deep:var(--gds-brand-accent-strong,#115e59);--line:var(--gds-border-card,#e2e8f0);--line-soft:#eef2f7;--note:var(--gds-brand-accent-tint,#e6f4f2)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--ground);color:var(--text);font-family:var(--gds-font,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif);font-size:15.5px;line-height:1.6;padding-block:0 64px;padding-inline:clamp(16px,4vw,40px)}
+.wrap{max-width:74ch;margin-inline:auto}
+.docnav{display:flex;flex-wrap:wrap;gap:4px 18px;align-items:center;padding:16px 0;border-bottom:1px solid var(--line);font-size:12px;letter-spacing:.06em;text-transform:uppercase}
+.docnav a{color:var(--muted);text-decoration:none;min-height:44px;min-width:44px;display:inline-flex;align-items:center;border-bottom:2px solid transparent}
+.docnav a:hover,.docnav a[aria-current]{color:var(--ink);border-color:var(--accent)}
+.docnav-brand{color:var(--accent-deep);font-weight:800;margin-right:6px}
+.docnav-hub{margin-left:auto}
+header{padding-block:40px 24px;border-bottom:1px solid var(--line);margin-bottom:28px}
+.eyebrow{font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--accent-deep);margin:0 0 12px;font-weight:800}
+h1,h2,h3{color:var(--ink);line-height:1.1;text-wrap:balance;margin:0;letter-spacing:-.02em}
+h1{font-size:clamp(30px,6vw,46px);font-weight:900}
+h2{font-size:clamp(23px,4vw,30px);font-weight:900;margin:48px 0 14px;padding-top:20px;border-top:1px solid var(--line)}
+h3{font-size:18px;margin:30px 0 8px;font-weight:800}
+p{margin:0 0 14px} strong{color:var(--ink);font-weight:800}
+ul,ol{padding-left:22px;margin:0 0 16px} li{margin:5px 0} li>ul{margin:6px 0 0}
+code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.86em;background:var(--note);padding:1px 5px;border-radius:4px;color:var(--ink);overflow-wrap:anywhere}
+pre{overflow-x:auto;padding:14px 16px;border:1px solid var(--line);border-radius:10px;background:var(--card);font-size:12px;line-height:1.35}
+pre code{background:none;padding:0;font-size:inherit}
+a{color:var(--accent-deep)} :focus-visible{outline:2px solid var(--accent-deep);outline-offset:2px}
+.tbl{overflow-x:auto;margin:14px 0 22px;border:1px solid var(--line);border-radius:10px;background:var(--card)}
+table{border-collapse:collapse;width:100%;font-size:13.5px;min-width:560px}
+th{text-align:left;font-weight:800;color:var(--ink);background:var(--note);padding:10px 12px;border-bottom:1px solid var(--line);font-size:11.5px;letter-spacing:.06em;text-transform:uppercase}
+td{padding:10px 12px;border-top:1px solid var(--line-soft);vertical-align:top;background:var(--card)} td:first-child{color:var(--ink)}
+footer{margin-top:56px;padding-top:18px;border-top:1px solid var(--line);font-size:12px;color:var(--muted)}
+</style>
+</head>
+<body>
+<div class="wrap">
+<nav class="docnav" aria-label="Project documentation"><span class="docnav-brand">business.direct · docs</span><a href="index.html">Overview</a><a href="brief.html" aria-current=page>Brief</a><a href="research.html">Research</a><a href="audit.html">Audit</a><a href="sources.html">Sources</a><a href="design-system.html">Design system</a><a href="decisions.html">Decisions</a><a href="client-asks.html">Owner asks</a><a class="docnav-hub" href="../../index.html">Calvus Hub</a></nav>
+<header><p class="eyebrow">Calvus · business.direct · project documentation</p><h1>business.direct — brief</h1></header>
+<p><em>Stage 0 of the prototyping standard (<code>PROTOTYPING.md</code>). Written 2026-09-19, before any
+page exists. Everything here is what the owner said, what the two reference platforms
+expose, and what the two reference videos show — nothing else.</em></p>
+<h2>The client</h2>
+<p>The owner's own product family. The reference platforms are DoneIsBetter listing sites —
+<em>Most én sportolok!</em> (sport.doneisbetter.com, a Hungarian sports-opportunity directory) and
+<em>Your Field NYC</em> (getyourfield.com, kids' activities by borough) — and the pattern
+generalises to job portals, classifieds and any listing site. <strong>business.direct is a
+sibling of DiscountDirect</strong> (D5): DiscountDirect retains a web shop's customers;
+business.direct markets a <em>listed business</em>.</p>
+<h2>The problem</h2>
+<p>A listing platform is B2B2C: <strong>platform → listed business → consumer</strong>. On the sport
+platform 431 businesses are listed, ingested by a crawler from their own websites; none has
+claimed its card ("Az enyém ez a sportolási lehetőség" appears on every one). The
+businesses are one-person or few-person operations — a gym, a physio, a climbing wall, a
+squash club — that do no marketing, answer no reviews, send no reminders, and do not know
+they are listed. The consumer side has facets, ages, a map and saved items, but nobody
+tells a consumer what is on near them this week.</p>
+<p>The two videos the owner shared show the target shape: <strong>the one-person sales and
+marketing team</strong> — an orchestrator over departments (research and intelligence, content,
+distribution, creative, leads and conversations, reviews and reputation, results), a
+<strong>brand knowledge layer</strong> kept as plain files, <strong>human-in-the-loop</strong> ("it drafts, it can't
+post, it stops and asks, the owner still owns"), an intelligence recap, and integrations
+that make the machine run while "nobody logs in".</p>
+<h2>What will be built</h2>
+<p>A clickable prototype with <strong>three views</strong> (D2):</p>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>View</th>
+<th>Who</th>
+<th>What they see</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Platform</td>
+<td>the operator of a listing site</td>
+<td>the machine across every listing: automations, audiences, approval queue, the intelligence dashboard, integrations</td>
+</tr>
+<tr>
+<td>Business</td>
+<td>a listed business after claiming its card</td>
+<td>its own one-person team: knowledge layer, departments, what is waiting for approval, what went out, results</td>
+</tr>
+<tr>
+<td>Consumer</td>
+<td>a person using the listing site</td>
+<td>what arrives: the weekly "near you" digest, saved-item alerts, a business's offer or event, and the controls over channel and frequency</td>
+</tr>
+</tbody>
+</table></div>
+<p>Four automations are clickable (D3): <strong>consumer digests and alerts</strong>, <strong>business
+activation</strong> (you are listed — claim, verify, add), <strong>generated landing pages and SEO</strong>
+(category × place × age), <strong>business campaigns</strong> (offers, open slots, course starts,
+events — DiscountDirect's offer cards on listing data). Optional AI support is a layer
+the owner can switch on per department, never a requirement (D6). An <strong>intelligence
+dashboard</strong> and an <strong>integrations</strong> screen (the platform's own API first) are part of
+the first build (D6).</p>
+<h2>What will be real</h2>
+<p>The data: <strong>431 real listings</strong> from the sport platform's public API and pages (8
+categories, 20 counties, 147 localities, 395 websites, 385 descriptions, 21 with a next
+session), pulled by <code>data/fetch-sportolok.py</code> and never edited by hand (D4). The site copy
+and facets are the platform's own. Everything that is not on the platform — a business's
+brand voice, its offers, the results of a campaign — is <strong>sample</strong> and is declared as
+sample in the page. No listed business is contacted by the prototype.</p>
+<h2>What will be inert</h2>
+<p>Sending (e-mail, push, SMS, social posts), publishing generated pages to the platform,
+claiming a card, connecting an integration with a key. Each is shown in place, visibly
+inert, with the reason.</p>
+<h2>Where it stands</h2>
+<p>Stage 0–2 done 2026-09-19 (this brief, <a href="research.html"><code>01-research.md</code></a>, <a href="audit.html"><code>02-audit.md</code></a>, <a href="sources.html"><code>03-sources.md</code></a>,
+the data converter). <strong>Gate 1 — the design system (<code>design-system.html</code>) — awaits the
+owner's approval.</strong> No layout, no page before that (standard §2).</p>
+<footer>Source: <code>business-direct/docs/00-brief.md</code> · rendered by <code>docs/build.py</code>.</footer>
+</div>
+</body>
+</html>

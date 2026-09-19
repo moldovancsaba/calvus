@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>business.direct — design system (gate 1)</title>
+<link rel="stylesheet" href="../assets/tokens.css">
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:var(--gds-bg-canvas);color:var(--gds-text-body);font:var(--gds-t-body)/1.55 var(--gds-font);padding:0 clamp(16px,4vw,40px) 64px}
+.wrap{max-width:1100px;margin:0 auto}
+.docnav{display:flex;flex-wrap:wrap;gap:4px 18px;align-items:center;padding:16px 0;border-bottom:1px solid var(--gds-border-card);font-size:12px;letter-spacing:.06em;text-transform:uppercase}
+.docnav a{color:var(--gds-text-meta);text-decoration:none;min-height:44px;min-width:44px;display:inline-flex;align-items:center;border-bottom:2px solid transparent}
+.docnav a:hover,.docnav a[aria-current]{color:var(--gds-text-body);border-color:var(--gds-brand-accent)}
+.docnav-brand{color:var(--gds-brand-accent-strong);font-weight:800;margin-right:6px}
+.docnav-hub{margin-left:auto}
+header.page{padding:36px 0 22px;border-bottom:1px solid var(--gds-border-card);margin-bottom:8px}
+.eyebrow{font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--gds-brand-accent-strong);margin:0 0 10px;font-weight:800}
+h1{font-size:clamp(28px,5vw,40px);margin:0 0 10px;letter-spacing:-.02em;line-height:1.1}
+h2{font-size:22px;margin:44px 0 12px;padding-top:18px;border-top:1px solid var(--gds-border-card);letter-spacing:-.01em}
+h3{font-size:15px;margin:22px 0 8px}
+p{margin:0 0 12px} .meta{color:var(--gds-text-meta);font-size:var(--gds-t-meta)}
+.note{background:var(--gds-brand-accent-tint);border-left:4px solid var(--gds-brand-accent);padding:12px 16px;border-radius:0 var(--gds-radius-control) var(--gds-radius-control) 0;margin:0 0 16px}
+code{font-family:var(--gds-font-mono);font-size:.86em;background:var(--gds-bg-muted);padding:1px 5px;border-radius:5px}
+/* swatches */
+.swatches{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px}
+.sw{border:1px solid var(--gds-border-card);border-radius:var(--gds-radius-control);overflow:hidden;background:var(--gds-bg-surface)}
+.sw div{height:52px} .sw p{margin:0;padding:8px 10px;font-size:11.5px;line-height:1.35} .sw p b{display:block;font-family:var(--gds-font-mono);font-size:11px}
+/* type */
+.type p{margin:0 0 6px}.t-title{font-size:var(--gds-t-title);font-weight:800;letter-spacing:-.02em;line-height:1.1}.t-h2{font-size:var(--gds-t-h2);font-weight:800}.t-body{font-size:var(--gds-t-body)}.t-meta{font-size:var(--gds-t-meta);color:var(--gds-text-meta)}
+/* buttons */
+.row{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+.btn{display:inline-flex;align-items:center;gap:8px;min-height:38px;padding:8px 16px;border-radius:var(--gds-radius-pill);border:1.5px solid transparent;font:inherit;font-weight:800;font-size:13px;cursor:pointer;background:var(--gds-brand-accent);color:#fff}
+.btn.sec{background:var(--gds-bg-surface);border-color:var(--gds-border-strong);color:var(--gds-text-body)}
+.btn.ghost{background:transparent;color:var(--gds-brand-accent-strong)}
+.btn.danger{background:var(--gds-status-danger);color:#fff}
+.btn.inert{opacity:.45;cursor:not-allowed}
+.badge{display:inline-flex;align-items:center;gap:6px;padding:3px 10px;border-radius:var(--gds-radius-pill);font-size:11.5px;font-weight:800;letter-spacing:.02em}
+.badge::before{content:"";width:7px;height:7px;border-radius:50%;background:currentColor}
+.b-ok{background:var(--gds-status-ok-tint);color:var(--gds-status-ok)}.b-wait{background:var(--gds-status-wait-tint);color:var(--gds-status-wait)}.b-off{background:var(--gds-status-off-tint);color:var(--gds-status-off)}.b-danger{background:var(--gds-status-danger-tint);color:var(--gds-status-danger)}.b-ai{background:var(--gds-brand-accent-tint);color:var(--gds-brand-accent-strong)}.b-ai::before{display:none}
+/* topbar + role switch */
+.topbar{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px 18px;background:var(--gds-bg-inverse);color:var(--gds-text-on-inverse);border-radius:var(--gds-radius-card);flex-wrap:wrap}
+.brand{font-weight:900;font-size:17px;letter-spacing:-.3px}.brand span{color:#5eead4}
+.roles{display:flex;background:rgba(255,255,255,.12);border-radius:var(--gds-radius-pill);padding:3px}
+.roles button{border:0;background:transparent;color:rgba(255,255,255,.75);padding:7px 14px;border-radius:var(--gds-radius-pill);font:inherit;font-weight:800;font-size:13px;min-height:32px}
+.roles button.on{background:#fff;color:var(--gds-bg-inverse)}
+.topnote{font-size:11px;font-weight:700;color:rgba(255,255,255,.55)}
+/* cards */
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px}
+.card{background:var(--gds-bg-surface);border:1px solid var(--gds-border-card);border-radius:var(--gds-radius-card);box-shadow:var(--gds-elevation-card);padding:16px 18px}
+.card h4{margin:0 0 4px;font-size:15px}.card .meta{margin:0 0 10px}
+.card .foot{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-top:12px;flex-wrap:wrap}
+.toggle{display:inline-flex;align-items:center;gap:8px;font-size:12px;font-weight:800;color:var(--gds-text-meta)}
+.toggle i{width:36px;height:20px;border-radius:999px;background:var(--gds-status-off-tint);position:relative;display:inline-block}
+.toggle i::after{content:"";position:absolute;top:2px;left:2px;width:16px;height:16px;border-radius:50%;background:#fff;box-shadow:0 1px 2px rgba(0,0,0,.2)}
+.toggle.on i{background:var(--gds-brand-accent)}.toggle.on i::after{left:18px}
+.dept-list{display:grid;gap:6px;margin:0;padding:0;list-style:none;font-size:13px}
+.dept-list li{display:flex;justify-content:space-between;gap:10px;padding:6px 0;border-top:1px solid var(--gds-border-card)}
+/* approval */
+.approval{display:grid;grid-template-columns:minmax(0,1fr) 300px;gap:16px;align-items:start}
+.preview{background:var(--gds-bg-muted);border-radius:var(--gds-radius-control);padding:14px 16px;font-size:13.5px}
+.preview b{display:block;margin-bottom:6px}
+.why{font-size:12.5px;color:var(--gds-text-meta);margin:8px 0 0}
+/* knowledge */
+.kfile{font-family:var(--gds-font-mono);font-size:12.5px;background:var(--gds-bg-inverse);color:var(--gds-text-on-inverse);border-radius:var(--gds-radius-card);padding:14px 16px;white-space:pre-wrap;line-height:1.5}
+.kfile .k{color:#5eead4}
+/* tiles */
+.tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:12px}
+.tile{background:var(--gds-bg-surface);border:1px solid var(--gds-border-card);border-radius:var(--gds-radius-card);padding:14px 16px}
+.tile .k{font-size:12px;font-weight:800;color:var(--gds-text-meta);text-transform:uppercase;letter-spacing:.06em}
+.tile .v{font-size:28px;font-weight:900;letter-spacing:-.8px;line-height:1.1;margin:4px 0}
+.tile .d{font-size:12px;font-weight:800}.d.up{color:var(--gds-status-ok)}.d.down{color:var(--gds-status-danger)}
+.bars{display:flex;gap:3px;align-items:flex-end;height:28px;margin-top:8px}.bars i{flex:1;background:var(--gds-brand-accent-tint);border-radius:2px}.bars i.hi{background:var(--gds-brand-accent)}
+/* listing */
+.listing{display:grid;grid-template-columns:auto 1fr;gap:12px;align-items:start}
+.pin{width:40px;height:40px;border-radius:12px;background:var(--gds-brand-accent-tint);color:var(--gds-brand-accent-strong);display:grid;place-items:center;font-weight:900;font-size:13px}
+.ladder{display:flex;flex-wrap:wrap;gap:6px;margin:8px 0 0;padding:0;list-style:none;font-size:11.5px;font-weight:800}
+.ladder li{padding:3px 9px;border-radius:999px;background:var(--gds-bg-muted);color:var(--gds-text-meta)}.ladder li.on{background:var(--gds-brand-accent);color:#fff}.ladder li.done{background:var(--gds-status-ok-tint);color:var(--gds-status-ok)}
+/* messages */
+.push{display:flex;gap:10px;align-items:flex-start;background:var(--gds-bg-surface);border:1px solid var(--gds-border-card);border-radius:14px;padding:10px 12px;max-width:380px;box-shadow:var(--gds-elevation-card)}
+.push .app{width:34px;height:34px;border-radius:9px;background:var(--gds-brand-accent);color:#fff;display:grid;place-items:center;font-weight:900}
+.push b{display:block;font-size:13px}.push span{font-size:12.5px;color:var(--gds-text-body)}
+.digest{background:var(--gds-bg-surface);border:1px solid var(--gds-border-card);border-radius:var(--gds-radius-card);padding:16px 18px;max-width:560px}
+.digest h4{margin:0 0 4px}.digest ul{margin:8px 0 0;padding:0;list-style:none}.digest li{display:flex;justify-content:space-between;gap:10px;padding:8px 0;border-top:1px solid var(--gds-border-card);font-size:13.5px}
+.digest li span{color:var(--gds-text-meta);white-space:nowrap}
+.sms{background:#e5f5e0;border-radius:16px 16px 16px 4px;padding:10px 14px;max-width:340px;font-size:13.5px}
+/* forms, table */
+.field{display:grid;gap:5px;font-size:12px;font-weight:800;max-width:360px}
+.field input,.field select,.field textarea{font:inherit;font-size:14px;font-weight:500;padding:10px 12px;min-height:40px;border:1.5px solid var(--gds-border-strong);border-radius:var(--gds-radius-control);background:var(--gds-bg-surface)}
+.tbl{overflow-x:auto;border:1px solid var(--gds-border-card);border-radius:var(--gds-radius-card);background:var(--gds-bg-surface)}
+table{border-collapse:collapse;width:100%;font-size:13px;min-width:560px}
+th{text-align:left;font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--gds-text-meta);padding:10px 12px;border-bottom:1px solid var(--gds-border-card)}
+td{padding:10px 12px;border-top:1px solid var(--gds-border-card);vertical-align:top}
+footer{margin-top:56px;padding-top:18px;border-top:1px solid var(--gds-border-card);font-size:12px;color:var(--gds-text-meta)}
+@media (max-width:760px){.approval{grid-template-columns:1fr}}
+@media (max-width:980px){.btn,.roles button,.field input,.field select{min-height:44px}}
+</style>
+</head>
+<body><div class="wrap">
+<nav class="docnav" aria-label="Project documentation"><span class="docnav-brand">business.direct · docs</span><a href="index.html">Overview</a><a href="brief.html">Brief</a><a href="research.html">Research</a><a href="audit.html">Audit</a><a href="sources.html">Sources</a><a href="design-system.html" aria-current="page">Design system</a><a href="decisions.html">Decisions</a><a href="client-asks.html">Owner asks</a><a class="docnav-hub" href="../../index.html">Calvus Hub</a></nav>
+<header class="page">
+  <p class="eyebrow">Gate 1 · PROPOSED 2026-09-19 · awaits the owner</p>
+  <h1>business.direct — design system</h1>
+  <p>Every value on this page is read live from <code>assets/tokens.css</code>. The role names are DiscountDirect's GDS 6.5.0 names (D5); the product owns one accent, teal, where DiscountDirect is indigo (D8). The components below are the ones the three views are composed from. Approval of this page fixes colour, type, spacing and these components; layouts come after, as two frames.</p>
+  <p class="note">What approval means: nothing arranged here is a layout. It says "these are the parts, in these colours, at these sizes". Say what to change and the page changes before any frame is drawn.</p>
+</header>
+
+<h2>1 · Colour</h2>
+<div class="swatches" id="swatches"></div>
+<p class="meta" style="margin-top:10px">Four status colours carry the machine's states everywhere: ok (sent, live, connected), wait (awaiting the owner), off (paused, not connected), danger. The accent is used for one thing: what business.direct itself does.</p>
+
+<h2>2 · Type</h2>
+<div class="type">
+  <p class="t-title">Az egyszemélyes marketingcsapat — title</p>
+  <p class="t-h2">Szekciócím — h2, 18px, 800</p>
+  <p class="t-body">Törzsszöveg — 14px, a rendszer betűje (Inter, ha van; különben a platformé). A prototípus és a produkció ugyanazt a betűkészletet használja, mint a listázó platform.</p>
+  <p class="t-meta">Meta — 12px, szürke: időpont, forrás, indoklás.</p>
+</div>
+
+<h2>3 · Buttons and states</h2>
+<div class="row">
+  <button class="btn">Jóváhagyás</button>
+  <button class="btn sec">Szerkesztés</button>
+  <button class="btn ghost">Kihagyás</button>
+  <button class="btn danger">Leállítás</button>
+  <button class="btn inert" aria-disabled="true" title="A prototípusban a küldés nem működik">Küldés (inert)</button>
+</div>
+<div class="row" style="margin-top:12px">
+  <span class="badge b-ok">Elküldve</span><span class="badge b-ok">Kapcsolva</span><span class="badge b-wait">Jóváhagyásra vár</span><span class="badge b-off">Szünetel</span><span class="badge b-off">Nincs kapcsolva</span><span class="badge b-danger">Hiba</span><span class="badge b-ai">✦ AI-vázlat</span>
+</div>
+<p class="meta" style="margin-top:8px">The "AI-vázlat" badge is not decoration: EU AI Act Art. 50 requires generated content to be marked (research §7). It appears on every draft the AI layer wrote, and disappears when the owner edits it into their own words.</p>
+
+<h2>4 · Top bar and the three roles</h2>
+<div class="topbar">
+  <div class="brand">business<span>.direct</span></div>
+  <div class="roles" role="tablist" aria-label="Nézet"><button class="on" role="tab" aria-selected="true">Platform</button><button role="tab" aria-selected="false">Vállalkozás</button><button role="tab" aria-selected="false">Vevő</button></div>
+  <span class="topnote">Kattintható prototípus — valós listaadatok, mintakampányok · v0</span>
+</div>
+
+<h2>5 · Department card</h2>
+<p class="meta">One card per department of the one-person team. Each has what runs, its state, an optional AI switch, and its last activity. The set of departments is the SSOT's; here three of them.</p>
+<div class="grid">
+  <article class="card"><h4>Hírnév és válaszok</h4><p class="meta">Értékelések, üzenetek, nem fogadott hívások — elsőként, nem sorban.</p>
+    <ul class="dept-list"><li>Új értékelésre válasz <span class="badge b-wait">Jóváhagyásra vár</span></li><li>Nem fogadott hívás → SMS <span class="badge b-ok">Fut</span></li><li>Google-profil frissítés <span class="badge b-off">Nincs kapcsolva</span></li></ul>
+    <div class="foot"><span class="toggle on"><i></i>AI-vázlatok</span><span class="meta">utoljára: ma 09:12</span></div></article>
+  <article class="card"><h4>Heti ajánló</h4><p class="meta">A hét alkalmai a környéken — a vevő mentései, helye és korosztálya szerint.</p>
+    <ul class="dept-list"><li>Vasárnap 18:00 kiküldés <span class="badge b-ok">Fut</span></li><li>Új alkalom riasztás <span class="badge b-ok">Fut</span></li></ul>
+    <div class="foot"><span class="toggle"><i></i>AI-vázlatok</span><span class="meta">3 106 címzett</span></div></article>
+  <article class="card"><h4>Piaci radar</h4><p class="meta">Új szereplők, árváltozások, a kategória keresései — stratégiai jegyzet a tulajdonosnak.</p>
+    <ul class="dept-list"><li>Heti jegyzet <span class="badge b-wait">Jóváhagyásra vár</span></li></ul>
+    <div class="foot"><span class="toggle on"><i></i>AI-vázlatok</span><span class="meta">forrás: 431 listázás</span></div></article>
+</div>
+
+<h2>6 · Approval item — the human in the loop</h2>
+<p class="meta">Everything that would leave the machine passes through this. What, to whom, why, the preview, and three choices. The owner still owns.</p>
+<article class="card approval">
+  <div>
+    <div class="row" style="margin-bottom:8px"><span class="badge b-wait">Jóváhagyásra vár</span><span class="badge b-ai">✦ AI-vázlat</span><span class="meta">Hírnév és válaszok · ma 09:12</span></div>
+    <h4>Válasz egy 4 csillagos értékelésre</h4>
+    <p class="why">Miért: a válaszoló vállalkozások 12 %-kal több értékelést kapnak és 0,12 csillaggal jobbat (kutatás §1). A vázlat a <code>voice-guide.md</code> hangján készült.</p>
+    <div class="preview"><b>Köszönjük, Anna!</b>Örülünk, hogy a reggeli edzések bejöttek — a kardió gépek cseréje jövő héten készül el, jelezzük, ha megvan. Találkozunk a teremben!</div>
+  </div>
+  <div class="row" style="flex-direction:column;align-items:stretch"><button class="btn">Jóváhagyás és küldés</button><button class="btn sec">Szerkesztés</button><button class="btn ghost">Kihagyás</button></div>
+</article>
+
+<h2>7 · Knowledge layer — files the owner can read</h2>
+<p class="meta">The business's brain is plain text the owner can open, edit and understand. No settings screens for what a sentence can say.</p>
+<div class="grid">
+  <div class="kfile"><span class="k">/tudas/hangnem.md</span>
+Tegeződünk. Rövid mondatok. Soha nem ígérünk eredményt, mindig meghívunk egy próbaalkalomra.
+Amit nem írunk: "akció", "csak ma", felkiáltójel a cím végén.</div>
+  <div class="kfile"><span class="k">/tudas/ajanlat.md</span>
+Próbaalkalom: ingyenes, előzetes bejelentkezéssel.
+Bérlet: 10 alkalmas, 60 napig érvényes.
+Kedvezmény csak visszatérő tagnak, és csak ha kérdez.</div>
+</div>
+
+<h2>8 · Intelligence tiles</h2>
+<div class="tiles">
+  <div class="tile"><div class="k">Válaszidő</div><div class="v">4 perc</div><div class="d up">▼ 3 óráról</div><div class="bars"><i style="height:100%"></i><i style="height:80%"></i><i style="height:55%"></i><i style="height:30%"></i><i style="height:14%"></i><i class="hi" style="height:10%"></i></div></div>
+  <div class="tile"><div class="k">Heti ajánló kattintás</div><div class="v">3,4 %</div><div class="d up">▲ 0,6 pont</div><div class="bars"><i style="height:40%"></i><i style="height:50%"></i><i style="height:45%"></i><i style="height:60%"></i><i style="height:70%"></i><i class="hi" style="height:85%"></i></div></div>
+  <div class="tile"><div class="k">Igényelt listázások</div><div class="v">0 / 431</div><div class="d">— ma</div><div class="bars"><i style="height:8%"></i><i style="height:8%"></i><i style="height:8%"></i><i style="height:8%"></i><i style="height:8%"></i><i class="hi" style="height:8%"></i></div></div>
+  <div class="tile"><div class="k">Jóváhagyásra vár</div><div class="v">7</div><div class="d down">▲ 2 tegnap óta</div></div>
+</div>
+<p class="meta" style="margin-top:8px">Numbers on this page are sample except the third tile, which is real: none of the 431 listings is claimed today (audit §1).</p>
+
+<h2>9 · Listing card and the activation ladder — real data</h2>
+<p class="meta">Four listings from <code>data/listings.json</code>, loaded live. The ladder is the marketplace pattern from research §6: unclaimed → contacted → claimed → verified → campaigning.</p>
+<div class="grid" id="listings"><p class="meta">Betöltés…</p></div>
+
+<h2>10 · What the consumer receives</h2>
+<div class="grid">
+  <div><h3>Push</h3><div class="push"><div class="app">M</div><div><b>Ezen a héten a közeledben</b><span>3 új alkalom Újbudán: szombat reggeli úszás, kedd esti jóga, csütörtök falmászás.</span></div></div>
+    <h3>SMS (vállalkozástól)</h3><div class="sms">Szia Anna! Holnap 9:00 a próbaalkalom az LT-Gymben. Ha nem jó, válaszolj egy „később”-bel és keresünk mást. — Peti</div></div>
+  <div><h3>E-mail digest</h3><div class="digest"><h4>A hét Újbudán · szeptember 21–27.</h4><p class="meta">Mentéseid és korosztályod alapján. Heti egy levél; a gyakoriságot te állítod.</p>
+    <ul><li>Reggeli úszás — Császár-Komjádi <span>szo 8:00</span></li><li>Kezdő jóga — Fügefa Virága Jógaház <span>k 18:30</span></li><li>Falmászás nyílt nap — Spirit Boulder <span>cs 17:00</span></li></ul>
+    <div class="foot" style="margin-top:12px"><a class="btn ghost" href="#" style="padding-left:0">Csatorna és gyakoriság</a></div></div></div>
+</div>
+
+<h2>11 · Integration connector</h2>
+<div class="grid">
+  <article class="card"><h4>Most én sportolok! API</h4><p class="meta">browse-facets · map-pins · site · scout · ingest</p><div class="foot"><span class="badge b-ok">Kapcsolva (nyilvános)</span><span class="meta">ingest: kulcs kell</span></div></article>
+  <article class="card"><h4>E-mail (Resend)</h4><p class="meta">Digest, válaszok, kampányok.</p><div class="foot"><span class="badge b-off">Nincs kapcsolva</span><button class="btn sec inert" aria-disabled="true" title="A prototípusban nem kapcsolható">Kapcsolás</button></div></article>
+  <article class="card"><h4>Google Business Profile</h4><p class="meta">Értékelések, fotók, bejegyzések.</p><div class="foot"><span class="badge b-off">Nincs kapcsolva</span><button class="btn sec inert" aria-disabled="true" title="A prototípusban nem kapcsolható">Kapcsolás</button></div></article>
+</div>
+
+<h2>12 · Form field and table</h2>
+<div class="row" style="align-items:flex-start;gap:24px">
+  <label class="field">Kiküldés napja<select><option>Vasárnap 18:00</option><option>Hétfő 7:00</option></select></label>
+  <label class="field">Havi üzenetkorlát vevőnként<input type="number" value="4"></label>
+</div>
+<div class="tbl" style="margin-top:14px"><table><thead><tr><th>Kampány</th><th>Címzett</th><th>Kattintás</th><th>Foglalás</th><th>Állapot</th></tr></thead>
+<tbody><tr><td>Heti ajánló · 37. hét</td><td>3 106</td><td>3,4 %</td><td>41</td><td><span class="badge b-ok">Elküldve</span></td></tr><tr><td>Próbaalkalom · LT-Gym</td><td>212</td><td>—</td><td>—</td><td><span class="badge b-wait">Jóváhagyásra vár</span></td></tr></tbody></table></div>
+
+<h2>13 · Spacing, corners, targets</h2>
+<p>Gutter 16px; card radius 14px, control radius 10px, pills 999px; elevation one soft shadow on cards only; content max 1400px (the platform view is a control room, wider than the docs); tap targets 44px below 980px, denser on desktop — the same rule as every project here.</p>
+
+<footer>Source: <code>business-direct/docs/design-system.html</code>, hand-written against <code>assets/tokens.css</code>. Listings from <code>data/listings.json</code> (sport.doneisbetter.com public data, 2026-09-19). All other figures sample.</footer>
+</div>
+<script>
+(function(){
+  const css=getComputedStyle(document.documentElement);
+  const names=['--gds-bg-canvas','--gds-bg-surface','--gds-bg-muted','--gds-bg-inverse','--gds-text-body','--gds-text-meta','--gds-border-card','--gds-border-strong','--gds-brand-accent','--gds-brand-accent-tint','--gds-brand-accent-strong','--gds-status-ok','--gds-status-ok-tint','--gds-status-wait','--gds-status-wait-tint','--gds-status-off','--gds-status-off-tint','--gds-status-danger','--gds-status-danger-tint'];
+  document.getElementById('swatches').innerHTML=names.map(n=>{const v=css.getPropertyValue(n).trim();return `<div class="sw"><div style="background:${v}"></div><p><b>${n}</b>${v}</p></div>`}).join('');
+  fetch('../data/listings.json').then(r=>r.json()).then(d=>{
+    const pick=['l-openclaw-ltgymfitnessclub-ltgym.lttech.hu','l-openclaw-spiritboulder-spiritboulder.hu','l-openclaw-fiziogyogytornakozpontesmaganrendelo-fizioplus.hu','l-openclaw-mannheimsquashclub-mannheimsquash.hu'];
+    const rows=pick.map(id=>d.listings.find(l=>l.id===id)).filter(Boolean);
+    const steps=['Nem igényelt','Felkeresve','Igényelt','Ellenőrzött','Kampányol'];
+    document.getElementById('listings').innerHTML=rows.map((l,i)=>`<article class="card listing"><div class="pin">${l.categoryLabel.slice(0,2)}</div><div><h4>${l.name}</h4><p class="meta">${l.categoryLabel} · ${l.locality}${l.county&&l.county!==l.locality?' · '+l.county:''} · ellenőrizve ${l.checkedAt}</p><p style="font-size:13px;margin:0">${(l.description||'—').slice(0,110)}${l.description&&l.description.length>110?'…':''}</p><ul class="ladder">${steps.map((s,j)=>`<li class="${j<i?'done':j===i?'on':''}">${s}</li>`).join('')}</ul><p class="meta" style="margin-top:6px">${l.website?'weboldal: '+l.website.replace(/^https?:\/\/(www\.)?/,'').replace(/\/$/,''):'nincs weboldal'} · a létra állapota itt minta; valójában mind a 431 „Nem igényelt”</p></div></article>`).join('');
+  }).catch(()=>{document.getElementById('listings').innerHTML='<p class="meta">A listaadat nem tölthető be (fájlrendszerről nyitva?). Szolgáld ki a mappát HTTP-n.</p>'});
+})();
+</script>
+</body>
+</html>

@@ -7,10 +7,11 @@ project gate covers (the hub, `public/`-free). Exit 1 if any of them finds somet
                               docs cross-links, stale-phrase scan, prototype banner
   idbc-salary-guide/check.py  links, anchors, docs cross-links, one chart-asset version, inert controls
   lexodont.hu/check.py        both fidelities + docs: links, anchors, docs cross-links, parity
+  business-direct/check.py    pages + docs: links, anchors, docs cross-links
 """
 import re, subprocess, sys, pathlib
 ROOT = pathlib.Path(__file__).resolve().parent
-GATES = ["holdvolgy/check.py", "idbc-salary-guide/check.py", "lexodont.hu/check.py"]
+GATES = ["holdvolgy/check.py", "idbc-salary-guide/check.py", "lexodont.hu/check.py", "business-direct/check.py"]
 failed = []
 for g in GATES:
     r = subprocess.run([sys.executable, str(ROOT / g)], capture_output=True, text=True)

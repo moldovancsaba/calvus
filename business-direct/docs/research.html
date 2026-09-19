@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>business.direct — research — business.direct docs</title>
+<link rel="stylesheet" href="../assets/tokens.css">
+<style>/* business.direct — documentation pages on the product tokens (GDS roles, teal accent). */
+:root{--ground:var(--gds-bg-canvas,#f8fafc);--card:var(--gds-bg-surface,#fff);--ink:var(--gds-text-body,#111827);--text:#1f2937;--muted:var(--gds-text-meta,#64748b);--accent:var(--gds-brand-accent,#0f766e);--accent-deep:var(--gds-brand-accent-strong,#115e59);--line:var(--gds-border-card,#e2e8f0);--line-soft:#eef2f7;--note:var(--gds-brand-accent-tint,#e6f4f2)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--ground);color:var(--text);font-family:var(--gds-font,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif);font-size:15.5px;line-height:1.6;padding-block:0 64px;padding-inline:clamp(16px,4vw,40px)}
+.wrap{max-width:74ch;margin-inline:auto}
+.docnav{display:flex;flex-wrap:wrap;gap:4px 18px;align-items:center;padding:16px 0;border-bottom:1px solid var(--line);font-size:12px;letter-spacing:.06em;text-transform:uppercase}
+.docnav a{color:var(--muted);text-decoration:none;min-height:44px;min-width:44px;display:inline-flex;align-items:center;border-bottom:2px solid transparent}
+.docnav a:hover,.docnav a[aria-current]{color:var(--ink);border-color:var(--accent)}
+.docnav-brand{color:var(--accent-deep);font-weight:800;margin-right:6px}
+.docnav-hub{margin-left:auto}
+header{padding-block:40px 24px;border-bottom:1px solid var(--line);margin-bottom:28px}
+.eyebrow{font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--accent-deep);margin:0 0 12px;font-weight:800}
+h1,h2,h3{color:var(--ink);line-height:1.1;text-wrap:balance;margin:0;letter-spacing:-.02em}
+h1{font-size:clamp(30px,6vw,46px);font-weight:900}
+h2{font-size:clamp(23px,4vw,30px);font-weight:900;margin:48px 0 14px;padding-top:20px;border-top:1px solid var(--line)}
+h3{font-size:18px;margin:30px 0 8px;font-weight:800}
+p{margin:0 0 14px} strong{color:var(--ink);font-weight:800}
+ul,ol{padding-left:22px;margin:0 0 16px} li{margin:5px 0} li>ul{margin:6px 0 0}
+code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.86em;background:var(--note);padding:1px 5px;border-radius:4px;color:var(--ink);overflow-wrap:anywhere}
+pre{overflow-x:auto;padding:14px 16px;border:1px solid var(--line);border-radius:10px;background:var(--card);font-size:12px;line-height:1.35}
+pre code{background:none;padding:0;font-size:inherit}
+a{color:var(--accent-deep)} :focus-visible{outline:2px solid var(--accent-deep);outline-offset:2px}
+.tbl{overflow-x:auto;margin:14px 0 22px;border:1px solid var(--line);border-radius:10px;background:var(--card)}
+table{border-collapse:collapse;width:100%;font-size:13.5px;min-width:560px}
+th{text-align:left;font-weight:800;color:var(--ink);background:var(--note);padding:10px 12px;border-bottom:1px solid var(--line);font-size:11.5px;letter-spacing:.06em;text-transform:uppercase}
+td{padding:10px 12px;border-top:1px solid var(--line-soft);vertical-align:top;background:var(--card)} td:first-child{color:var(--ink)}
+footer{margin-top:56px;padding-top:18px;border-top:1px solid var(--line);font-size:12px;color:var(--muted)}
+</style>
+</head>
+<body>
+<div class="wrap">
+<nav class="docnav" aria-label="Project documentation"><span class="docnav-brand">business.direct · docs</span><a href="index.html">Overview</a><a href="brief.html">Brief</a><a href="research.html" aria-current=page>Research</a><a href="audit.html">Audit</a><a href="sources.html">Sources</a><a href="design-system.html">Design system</a><a href="decisions.html">Decisions</a><a href="client-asks.html">Owner asks</a><a class="docnav-hub" href="../../index.html">Calvus Hub</a></nav>
+<header><p class="eyebrow">Calvus · business.direct · project documentation</p><h1>business.direct — research</h1></header>
+<p><em>What the evidence says about the four automations and the one-person machine, with the
+source behind every figure. Searched 2026-09-19. Primary sources (studies, platform
+disclosures, regulators) are marked </em><em>P</em><em>; industry aggregators are marked </em><em>A</em><em> and carry
+less weight — several repeat each other and cite older data. Nothing here was measured by
+us except the two reference platforms (<a href="audit.html"><code>02-audit.md</code></a>).</em></p>
+<h2>1. The listed business that does nothing loses to the one that does</h2>
+<ul>
+<li>A one-star increase in a Yelp rating raises an independent restaurant's revenue by
+  <strong>5–9 %</strong>; chains see almost no effect — reputation matters most where nobody knows the
+  brand. <strong>P</strong> <a href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=1928601">Luca, HBS working paper</a>, <a href="https://www.harvardmagazine.com/2011/10/hbs-study-finds-positive-yelp-reviews-lead-to-increased-business">Harvard Magazine summary</a></li>
+<li>Hotels that start <strong>responding to reviews</strong> receive <strong>12 % more reviews</strong> and their
+  rating rises <strong>0.12 stars</strong> — because unhappy guests post fewer baseless complaints
+  when they see the business answers. <strong>P</strong> <a href="https://hbr.org/2018/02/study-replying-to-customer-reviews-results-in-better-ratings">HBR / INFORMS study</a>, <a href="https://www.informs.org/News-Room/INFORMS-Releases/News-Releases/Want-to-improve-your-business-s-online-ratings-Make-sure-to-respond-to-reviews">INFORMS release</a></li>
+<li>Businesses with photos on their Google profile get <strong>42 % more direction requests and
+  35 % more website clicks</strong> (Google's own figure, widely quoted); profiles with 100+
+  photos get several times more calls and clicks (BrightLocal, 15 191 listings). <strong>A</strong>
+  <a href="https://respondelligent.com/en/google-my-business-photos/">BrightLocal / Google via re:spondelligent</a>, <a href="https://thestacc.com/blog/gbp-photos-guide/">thestacc</a></li>
+<li>Claimed and complete profiles: claimed Google listings are quoted at <strong>+37 % local
+  visibility</strong>; complete profiles at <strong>2.7× more likely to be seen as reputable, 70 %
+  more visits</strong>; about <strong>41 % of small local businesses</strong> still run incomplete profiles.
+  <strong>A</strong> <a href="https://newmedia.com/blog/google-business-profile-statistics">newmedia</a>, <a href="https://sqmagazine.co.uk/google-my-business-statistics/">sqmagazine</a>, <a href="https://localiq.com/blog/online-review-stats/">LocaliQ review stats</a></li>
+<li><strong>88 % of consumers who search locally on a phone visit or call within 24 hours</strong>
+  (Think with Google, quoted); "near me" searches have grown more than 900 % since 2018.
+  <strong>A</strong> <a href="https://www.brightlocal.com/research/local-consumer-review-survey-2025/">BrightLocal Local Consumer Review Survey 2025</a> (1 026 US adults), <a href="https://k2zdigital.com/Best-Practices-for-Google-Business-Profile-Photos">via K2Z</a></li>
+</ul>
+<p><strong>Reading for business.direct.</strong> The activation automation is not a courtesy: an
+unclaimed, photo-less, unanswered card is measurably worth less to the business than a
+claimed one, and the platform can show the business exactly that.</p>
+<h2>2. Speed: the machine answers first</h2>
+<ul>
+<li><strong>MIT / InsideSales lead-response study</strong> (2007; 6 companies, 15 000+ leads, 100 000+
+  call attempts): the odds of <em>qualifying</em> a lead are <strong>21× higher</strong> when contacted within
+  5 minutes than after 30; the odds of <em>contacting</em> at all drop <strong>100×</strong> between 5 and 30
+  minutes. <strong>P</strong> <a href="https://25649.fs1.hubspotusercontent-na2.net/hub/25649/file-13535879-pdf/docs/mit_study.pdf">the study PDF</a></li>
+<li><strong>HBR</strong> (2.24 million leads): firms that respond within an hour are <strong>~7× more likely
+  to qualify</strong> the lead than those waiting an hour more; waiting 24 hours makes it <strong>60×
+  less likely</strong>. <strong>P</strong> via <a href="https://www.kixie.com/sales-blog/speed-to-lead-response-time-statistics-that-drive-conversions/">Kixie</a>, <a href="https://www.leadangel.com/blog/operations/lead-response-time/">LeadAngel</a></li>
+<li><strong>62 % of calls to small businesses go unanswered</strong> (411 Locals, 2016: 85 businesses,
+  58 industries, 30 days: 37.8 % answered, 37.8 % voicemail, 24.3 % no response); <strong>85 %
+  of missed callers do not call back</strong>; automated missed-call text-back is quoted to
+  recover most of them. <strong>A</strong> <a href="https://skipcalls.com/blog/percentage-business-calls-unanswered-statistics-2026">SkipCalls on the 411 Locals study</a>, <a href="https://www.getaira.io/blog/missed-business-calls-statistics">getaira</a></li>
+<li><strong>78 % of customers buy from the business that responds first</strong>; SMS open rates ~98 %.
+  <strong>A</strong> <a href="https://schedulingkit.com/statistics/missed-call-statistics">SchedulingKit</a></li>
+</ul>
+<p><strong>Reading.</strong> "Someone tags you — first, not a queue" (video 1) has numbers behind it.
+Reviews, messages, missed calls and booking requests are the department the business
+sees value from in the first week.</p>
+<h2>3. Reminders and rhythm: the cheapest revenue</h2>
+<ul>
+<li>A review of <strong>29 studies</strong>: automated reminders improve non-attendance by <strong>29 %</strong>;
+  studios report no-shows falling from 20–30 % to <strong>8–12 %</strong> with SMS sequences; a
+  reminder three days <em>and</em> one day before beats a single one. <strong>P/A</strong> <a href="https://www.glofox.com/blog/gym-no-show-rate/">Glofox on the PubMed review</a>, <a href="https://www.dailystory.com/blog/sms-marketing-for-gyms-how-to-drive-membership-and-engagement-with-text-campaigns/">DailyStory</a></li>
+<li>Trial-to-member conversion is quoted to improve <strong>15–20 points</strong> when the first reply
+  arrives within 5 minutes. <strong>A</strong> <a href="https://ustechautomations.com/resources/blog/best-lead-management-software-gyms-fitness-studios-2026">US Tech Automations</a></li>
+<li>The European fitness market: <strong>75.5 million members</strong> at end-2025 (+4.1 million),
+  revenue <strong>€39.1 bn (+9.1 %)</strong> — the category the sport platform lists most (148 gyms of
+  431) is growing. <strong>A</strong> <a href="https://athletechnews.com/european-fitness-market-2025-more-members-more-revenue-room-to-grow-report-finds/">Athletech on the EuropeActive report</a></li>
+</ul>
+<p><strong>Reading.</strong> DiscountDirect's research already established the replenishment-reminder
+lever for products; for listed businesses the equivalent is the session reminder and the
+"this week near you" rhythm.</p>
+<h2>4. Digests and alerts to consumers</h2>
+<ul>
+<li>Email benchmarks 2025: open rates <strong>35–45 %</strong> by industry (inflated by Apple Mail
+  Privacy Protection — <strong>click rate is the honest metric</strong>, 1.9–3.4 %); location-specific
+  subject lines gave <strong>18 % more opens</strong>. <strong>A/P</strong> <a href="https://mailchimp.com/resources/email-marketing-benchmarks/">Mailchimp benchmarks</a>, <a href="https://blog.hubspot.com/sales/average-email-open-rate-benchmark">HubSpot</a>, <a href="https://www.mailerlite.com/blog/compare-your-email-performance-metrics-industry-benchmarks">MailerLite</a></li>
+<li>App push opt-in: <strong>~61 % overall</strong> (Android 67 %, iOS 56 %, falling); web push
+  <strong>5–10 %</strong>. <strong>A</strong> <a href="https://www.businessofapps.com/marketplace/push-notifications/research/push-notifications-statistics/">Business of Apps</a>, <a href="https://www.mobiloud.com/blog/push-notification-opt-in-rate">MobiLoud</a>, <a href="https://grow.urbanairship.com/rs/313-QPJ-195/images/WP_Push_Notification_Opt_In_Rates.pdf">Airship benchmark PDF</a></li>
+<li>Local intent exists: <strong>71 % of adults want to meet more people in their neighbourhood</strong>
+  (Harris Poll for Nextdoor); <strong>54 % are more likely to attend a locally trending event</strong>.
+  <strong>A</strong> <a href="https://business.nextdoor.com/en-us/blog/from-strangers-to-neighbors-unveiling-new-harris-poll-data-on-community-connectivity">Nextdoor / Harris</a>, <a href="https://www.eventbrite.com/blog/event-statistics-ds00/">Eventbrite statistics</a></li>
+<li>Frequency: DiscountDirect's research (already in this repo) found <strong>four messages a
+  month</strong> is where most people unsubscribe — the cap applies here unchanged.</li>
+</ul>
+<p><strong>Reading.</strong> One weekly digest per consumer, built from saved items, location, age band
+and the week's sessions, with click rate as the metric — not opens.</p>
+<h2>5. Generated pages: how listing sites earn search traffic</h2>
+<ul>
+<li>Zillow: <strong>~5.2 million indexed pages</strong>, the vast majority generated per city,
+  neighbourhood and property type; Tripadvisor's programmatic pages carry <strong>~226 million
+  organic visits a month</strong>; the pattern is one page tree: country › region › city ›
+  neighbourhood › category. <strong>A</strong> <a href="https://gracker.ai/case-studies/zillow">GrackerAI on Zillow</a>, <a href="https://practicalprogrammatic.com/examples/tripadvisor">Practical Programmatic on Tripadvisor</a>, <a href="https://backlinko.com/programmatic-seo">Backlinko</a></li>
+<li>The sport platform already has the tree: 8 categories × 20 counties × 147 localities × 7
+  age bands, with counts per facet from <code>/api/public/browse-facets</code> (<a href="audit.html"><code>02-audit.md</code></a>).</li>
+</ul>
+<p><strong>Reading.</strong> The generated-pages automation is the platform's own SEO department; every
+page must have real listings behind it (no empty category × place pages — a thin-content
+risk the audit's facet counts prevent).</p>
+<h2>6. How listing platforms monetise the business side</h2>
+<ul>
+<li><strong>Indeed</strong>: sponsored jobs get <strong>up to 5× more clicks</strong> and are <strong>65 % more likely to
+  report a hire</strong> than free posts; three free posts a month direct on Indeed. <strong>P</strong>
+  <a href="https://www.indeed.com/hire/resources/howtohub/free-vs-sponsored-jobs-on-indeed">Indeed: free vs sponsored</a>, <a href="https://www.indeed.com/hire/cs/pricing">Indeed pricing</a></li>
+<li><strong>Mindbody marketplace</strong>: pay <strong>20 % (capped at $30) only on the first purchase of a
+  new client</strong> the app delivered; intro offers get premium placement. <strong>P</strong> <a href="https://support.mindbodyonline.com/s/article/List-your-Business-in-the-Mindbody-Marketplace?language=en_US">Mindbody app listing</a></li>
+<li><strong>Booksy</strong>: subscription including messaging, free marketplace listing, a paid "Boost"
+  for visibility. <strong>P</strong> <a href="https://biz.booksy.com/pricing">Booksy pricing</a>. <strong>Treatwell</strong>:
+  10–20 % commission on completed bookings plus premium listings. <strong>A</strong> <a href="https://www.sharetribe.com/create/how-to-build-website-like-treatwell/">Sharetribe</a></li>
+<li><strong>Yelp</strong>: claiming is free and separate from advertising; the free tools are answering
+  reviews and messages and seeing views and leads. <strong>P</strong> <a href="https://www.yelp-support.com/article/What-is-a-claimed-business?l=en_US">Yelp: what is a claimed business</a>, <a href="https://business.yelp.com/products/business-page/">Yelp for Business</a></li>
+</ul>
+<p><strong>Reading.</strong> The activation ladder every marketplace uses: free claim → free tools that
+show value (reviews, messages, views) → paid visibility or pay-per-new-customer.
+business.direct's platform view should show the ladder as states of a listing.</p>
+<h2>7. AI in the small business's marketing — adoption and the human in the loop</h2>
+<ul>
+<li>Adoption: <strong>54 % of US small businesses use AI marketing tools, 27 % more plan to</strong>
+  (US Chamber, Aug 2025); other 2026 surveys quote 73–87 %; primary uses content creation
+  (48 %), customer-service automation (42 %), lead scoring (31 %). <strong>A</strong> <a href="https://capsulecrm.com/blog/small-business-ai-adoption-statistics/">Capsule</a>, <a href="https://www.forbes.com/sites/rogerdooley/2026/02/11/by-years-end-4-in-5-small-businesses-will-use-ai-marketing-tools/">Forbes</a>, <a href="https://thestacc.com/blog/small-business-ai-adoption-statistics/">theStacc</a></li>
+<li>Human-in-the-loop as the 2026 norm: agents <strong>generate and stage, humans approve before
+  publication</strong>; approval stays mandatory for budget changes, sensitive copy and
+  client-facing conclusions; Gartner: 40 % of enterprise apps will include task-specific
+  agents by end-2026. <strong>A</strong> <a href="https://improvado.io/blog/human-in-the-loop-ai">Improvado</a>, <a href="https://birdeye.com/blog/human-in-the-loop-ai-marketing/">Birdeye</a>, <a href="https://getclaw.sh/blog/human-in-the-loop-ai-agents-approvals-2026">getclaw</a></li>
+<li><strong>EU AI Act, Article 50</strong> (applies from 2 August 2026; machine-readable marking of
+  generated text/images by 2 December 2026 for systems already on the market): AI
+  chatbots must disclose they are AI; generated content must be marked. <strong>P</strong>
+  <a href="https://digital-strategy.ec.europa.eu/en/policies/guidelines-ai-transparency-obligations">European Commission guidelines</a>, <a href="https://www.orrick.com/en/Insights/2026/08/EU-AI-Act-Transparency-Obligations-for-AI-Generated-Content-Article-50">Orrick summary</a></li>
+</ul>
+<p><strong>Reading.</strong> "Optional AI support" (D6) is right on the evidence: the machine is rules
+and integrations first; AI drafts where switched on, is labelled as AI where the law
+requires, and never sends without the owner. The videos' rule and the regulation agree.</p>
+<h2>8. Hungary specifics</h2>
+<ul>
+<li><strong>B2B e-mail to corporate addresses does not require prior consent</strong> in Hungary under
+  Act XLVIII of 2008 — unless the address contains personal data (a named person's
+  address does); B2C requires express prior consent. <strong>P</strong> <a href="https://www.dlapiperdataprotection.com/index.html?t=electronic-marketing&amp;c=HU">DLA Piper: electronic marketing, Hungary</a>, <a href="https://cms.law/en/int/expert-guides/cms-expert-guide-to-data-protection-and-cyber-security-laws/hungary">CMS guide</a></li>
+<li><strong>57.4 % of Hungarian SMEs</strong> have at least basic digital intensity (EU 72.9 %); AI use
+  lags "in particular for SMEs, due to a lack of digital skills". <strong>P</strong> <a href="https://digital-strategy.ec.europa.eu/en/factpages/hungary-2025-digital-decade-country-report">Digital Decade 2025 country report, Hungary</a></li>
+</ul>
+<p><strong>Reading.</strong> Activation outreach to <code>info@</code>-type addresses found on the listed
+businesses' own sites is lawful in Hungary; outreach to a named owner needs consent or
+another lawful basis — the prototype shows the distinction as a state on the listing.
+The digital-skills gap is the reason the machine must run with "nobody logs in".</p>
+<h2>9. What the two reference videos add (owner-supplied, 2026-09-19)</h2>
+<p>Not evidence — a target shape, read from 42 extracted frames (<a href="audit.html"><code>02-audit.md</code></a> §3):
+departments as the unit of automation; a brand knowledge layer as plain files
+(<code>voice-guide.md</code>, <code>positioning.md</code>, <code>offer.md</code>, <code>leads.md</code>); an orchestrator; an access
+control plane; reviews and reputation answered first; a market radar that turns a
+competitor's launch into a strategist's note; a daily recap; and the operating rule the
+whole system obeys — <em>it drafts, it can't post, it stops and asks, the owner still owns,
+everything else runs.</em></p>
+<h2>10. What was not found</h2>
+<p>No public figure on <strong>claimed-to-paid conversion</strong> for any listing platform (Yelp's
+annual reports do not break it out); no Hungarian fitness-membership statistics beyond the
+European total; no independent study of AI-agent marketing outcomes for one-person
+businesses — the ROI figures circulating are vendor claims and are not used here.</p>
+<footer>Source: <code>business-direct/docs/01-research.md</code> · rendered by <code>docs/build.py</code>.</footer>
+</div>
+</body>
+</html>

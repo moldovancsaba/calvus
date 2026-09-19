@@ -1,0 +1,214 @@
+{
+ "source": "https://sport.doneisbetter.com",
+ "fetched": "2026-09-19",
+ "facets": [
+  {
+   "slug": "sportegyesulet",
+   "label": "Sportegyesületek",
+   "count": 50
+  },
+  {
+   "slug": "tanfolyam",
+   "label": "Tanfolyamok",
+   "count": 29
+  },
+  {
+   "slug": "edzoterem",
+   "label": "Edzőtermek",
+   "count": 148
+  },
+  {
+   "slug": "berelheto-palya",
+   "label": "Bérelhető pályák",
+   "count": 68
+  },
+  {
+   "slug": "szabadidosport",
+   "label": "Szabadidősport",
+   "count": 27
+  },
+  {
+   "slug": "verseny",
+   "label": "Versenyek",
+   "count": 22
+  },
+  {
+   "slug": "gyogytorna",
+   "label": "Gyógytorna",
+   "count": 60
+  },
+  {
+   "slug": "sportbolt",
+   "label": "Sportboltok",
+   "count": 95
+  }
+ ],
+ "territory": {
+  "levels": [
+   {
+    "level": "region",
+    "label": "Vármegye",
+    "values": [
+     {
+      "value": "Budapest",
+      "label": "Budapest",
+      "count": 198
+     },
+     {
+      "value": "Pest vármegye",
+      "label": "Pest vármegye",
+      "count": 58
+     },
+     {
+      "value": "Csongrád-Csanád vármegye",
+      "label": "Csongrád-Csanád vármegye",
+      "count": 22
+     },
+     {
+      "value": "Veszprém vármegye",
+      "label": "Veszprém vármegye",
+      "count": 19
+     },
+     {
+      "value": "Bács-Kiskun vármegye",
+      "label": "Bács-Kiskun vármegye",
+      "count": 16
+     },
+     {
+      "value": "Baranya vármegye",
+      "label": "Baranya vármegye",
+      "count": 14
+     },
+     {
+      "value": "Hajdú-Bihar vármegye",
+      "label": "Hajdú-Bihar vármegye",
+      "count": 14
+     },
+     {
+      "value": "Borsod-Abaúj-Zemplén vármegye",
+      "label": "Borsod-Abaúj-Zemplén vármegye",
+      "count": 12
+     },
+     {
+      "value": "Fejér vármegye",
+      "label": "Fejér vármegye",
+      "count": 11
+     },
+     {
+      "value": "Somogy vármegye",
+      "label": "Somogy vármegye",
+      "count": 11
+     },
+     {
+      "value": "Zala vármegye",
+      "label": "Zala vármegye",
+      "count": 8
+     },
+     {
+      "value": "Jász-Nagykun-Szolnok vármegye",
+      "label": "Jász-Nagykun-Szolnok vármegye",
+      "count": 7
+     },
+     {
+      "value": "Szabolcs-Szatmár-Bereg vármegye",
+      "label": "Szabolcs-Szatmár-Bereg vármegye",
+      "count": 7
+     },
+     {
+      "value": "Vas vármegye",
+      "label": "Vas vármegye",
+      "count": 7
+     },
+     {
+      "value": "Győr-Moson-Sopron vármegye",
+      "label": "Győr-Moson-Sopron vármegye",
+      "count": 6
+     },
+     {
+      "value": "Heves vármegye",
+      "label": "Heves vármegye",
+      "count": 6
+     },
+     {
+      "value": "Komárom-Esztergom vármegye",
+      "label": "Komárom-Esztergom vármegye",
+      "count": 6
+     },
+     {
+      "value": "Tolna vármegye",
+      "label": "Tolna vármegye",
+      "count": 5
+     },
+     {
+      "value": "Békés vármegye",
+      "label": "Békés vármegye",
+      "count": 3
+     },
+     {
+      "value": "Nógrád vármegye",
+      "label": "Nógrád vármegye",
+      "count": 1
+     }
+    ]
+   },
+   {
+    "level": "district",
+    "label": "Kerület",
+    "values": []
+   },
+   {
+    "level": "quarter",
+    "label": "Városrész",
+    "values": []
+   }
+  ]
+ },
+ "ages": [
+  {
+   "key": "baba",
+   "label": "Baba és kisgyermek, 0–3 év",
+   "count": 431
+  },
+  {
+   "key": "ovodas",
+   "label": "Óvodás, 3–6 év",
+   "count": 431
+  },
+  {
+   "key": "also-tagozat",
+   "label": "Alsó tagozatos, 6–10 év",
+   "count": 431
+  },
+  {
+   "key": "felso-tagozat",
+   "label": "Felső tagozatos, 10–14 év",
+   "count": 431
+  },
+  {
+   "key": "kozepiskolas",
+   "label": "Középiskolás, 14–18 év",
+   "count": 431
+  },
+  {
+   "key": "felnott",
+   "label": "Felnőtt, 18–60 év",
+   "count": 431
+  },
+  {
+   "key": "60-felett",
+   "label": "60 év felett",
+   "count": 431
+  }
+ ],
+ "siteCopy": {
+  "heroTitle": "Most én sportolok!",
+  "heroSubtitle": "A közeledben: sportolási lehetőségek.",
+  "heroPrimaryCta": {
+   "label": "Böngészés: sportolási lehetőségek",
+   "href": "/browse"
+  },
+  "heroSecondaryCta": null,
+  "footerTagline": "Minden korosztálynak, egész Magyarországon.",
+  "metaDescription": "Most én sportolok! — sportolási lehetőségek a közeledben: böngéssz hely és kategória szerint, nézd meg, mi lesz ezen a héten, és mentsd el, ami tetszik."
+ }
+}

@@ -1,0 +1,39 @@
+/* business.direct — design tokens. Sibling of DiscountDirect: the same GDS 6.5.0 role names
+   (discountdirect/GDS-TOKEN-MAP.md) so both products hand off to the same design system; the
+   values are GDS canonical light where a role exists. Product-owned: the accent.
+   PROPOSED 2026-09-19 — gate 1 (docs/design-system.html) awaits the owner's approval. */
+:root {
+  --gds-bg-canvas: #f8fafc;
+  --gds-bg-surface: #ffffff;
+  --gds-bg-inverse: #111827;
+  --gds-bg-muted: #f1f5f9;
+  --gds-text-body: #111827;
+  --gds-text-meta: #64748b;
+  --gds-text-on-inverse: #f8fafc;
+  --gds-border-card: #e2e8f0;
+  --gds-border-strong: #cbd5e1;
+  --gds-brand-accent: #0f766e;        /* product-owned: business.direct teal (DiscountDirect is indigo #3b5bdb) */
+  --gds-brand-accent-tint: #e6f4f2;
+  --gds-brand-accent-strong: #115e59;
+  --gds-status-ok: #15803d;           /* sent / connected / live */
+  --gds-status-ok-tint: #dcfce7;
+  --gds-status-wait: #b45309;         /* awaiting approval */
+  --gds-status-wait-tint: #fef3c7;
+  --gds-status-off: #64748b;          /* paused / not connected */
+  --gds-status-off-tint: #e2e8f0;
+  --gds-status-danger: #b91c1c;
+  --gds-status-danger-tint: #fee2e2;
+  --gds-radius-card: 14px;
+  --gds-radius-control: 10px;
+  --gds-radius-pill: 999px;
+  --gds-elevation-card: 0 1px 2px rgba(15,23,42,.06), 0 8px 24px rgba(15,23,42,.06);
+  --gds-font: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  --gds-font-mono: ui-monospace, SFMono-Regular, Menlo, monospace;
+  --gds-t-title: clamp(22px, 3vw, 30px);
+  --gds-t-h2: 18px;
+  --gds-t-body: 14px;
+  --gds-t-meta: 12px;
+  --gds-tap: 44px;
+  --gds-gutter: 16px;
+  --gds-content-max: 1400px;
+}

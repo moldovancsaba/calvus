@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>business.direct — sources and assets — business.direct docs</title>
+<link rel="stylesheet" href="../assets/tokens.css">
+<style>/* business.direct — documentation pages on the product tokens (GDS roles, teal accent). */
+:root{--ground:var(--gds-bg-canvas,#f8fafc);--card:var(--gds-bg-surface,#fff);--ink:var(--gds-text-body,#111827);--text:#1f2937;--muted:var(--gds-text-meta,#64748b);--accent:var(--gds-brand-accent,#0f766e);--accent-deep:var(--gds-brand-accent-strong,#115e59);--line:var(--gds-border-card,#e2e8f0);--line-soft:#eef2f7;--note:var(--gds-brand-accent-tint,#e6f4f2)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--ground);color:var(--text);font-family:var(--gds-font,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif);font-size:15.5px;line-height:1.6;padding-block:0 64px;padding-inline:clamp(16px,4vw,40px)}
+.wrap{max-width:74ch;margin-inline:auto}
+.docnav{display:flex;flex-wrap:wrap;gap:4px 18px;align-items:center;padding:16px 0;border-bottom:1px solid var(--line);font-size:12px;letter-spacing:.06em;text-transform:uppercase}
+.docnav a{color:var(--muted);text-decoration:none;min-height:44px;min-width:44px;display:inline-flex;align-items:center;border-bottom:2px solid transparent}
+.docnav a:hover,.docnav a[aria-current]{color:var(--ink);border-color:var(--accent)}
+.docnav-brand{color:var(--accent-deep);font-weight:800;margin-right:6px}
+.docnav-hub{margin-left:auto}
+header{padding-block:40px 24px;border-bottom:1px solid var(--line);margin-bottom:28px}
+.eyebrow{font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--accent-deep);margin:0 0 12px;font-weight:800}
+h1,h2,h3{color:var(--ink);line-height:1.1;text-wrap:balance;margin:0;letter-spacing:-.02em}
+h1{font-size:clamp(30px,6vw,46px);font-weight:900}
+h2{font-size:clamp(23px,4vw,30px);font-weight:900;margin:48px 0 14px;padding-top:20px;border-top:1px solid var(--line)}
+h3{font-size:18px;margin:30px 0 8px;font-weight:800}
+p{margin:0 0 14px} strong{color:var(--ink);font-weight:800}
+ul,ol{padding-left:22px;margin:0 0 16px} li{margin:5px 0} li>ul{margin:6px 0 0}
+code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.86em;background:var(--note);padding:1px 5px;border-radius:4px;color:var(--ink);overflow-wrap:anywhere}
+pre{overflow-x:auto;padding:14px 16px;border:1px solid var(--line);border-radius:10px;background:var(--card);font-size:12px;line-height:1.35}
+pre code{background:none;padding:0;font-size:inherit}
+a{color:var(--accent-deep)} :focus-visible{outline:2px solid var(--accent-deep);outline-offset:2px}
+.tbl{overflow-x:auto;margin:14px 0 22px;border:1px solid var(--line);border-radius:10px;background:var(--card)}
+table{border-collapse:collapse;width:100%;font-size:13.5px;min-width:560px}
+th{text-align:left;font-weight:800;color:var(--ink);background:var(--note);padding:10px 12px;border-bottom:1px solid var(--line);font-size:11.5px;letter-spacing:.06em;text-transform:uppercase}
+td{padding:10px 12px;border-top:1px solid var(--line-soft);vertical-align:top;background:var(--card)} td:first-child{color:var(--ink)}
+footer{margin-top:56px;padding-top:18px;border-top:1px solid var(--line);font-size:12px;color:var(--muted)}
+</style>
+</head>
+<body>
+<div class="wrap">
+<nav class="docnav" aria-label="Project documentation"><span class="docnav-brand">business.direct · docs</span><a href="index.html">Overview</a><a href="brief.html">Brief</a><a href="research.html">Research</a><a href="audit.html">Audit</a><a href="sources.html" aria-current=page>Sources</a><a href="design-system.html">Design system</a><a href="decisions.html">Decisions</a><a href="client-asks.html">Owner asks</a><a class="docnav-hub" href="../../index.html">Calvus Hub</a></nav>
+<header><p class="eyebrow">Calvus · business.direct · project documentation</p><h1>business.direct — sources and assets</h1></header>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>Content</th>
+<th>Source</th>
+<th>Real or sample</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>431 listings: name, category, locality, county, address, coordinates, website, description, verified/checked date, when, hours, next session</td>
+<td><code>data/fetch-sportolok.py</code> → <code>data/listings.json</code>, from sport.doneisbetter.com's public API and listing pages' JSON-LD, 2026-09-19</td>
+<td><strong>real</strong> — public data only; re-run to refresh</td>
+</tr>
+<tr>
+<td>Facets, territory levels, age bands, site copy</td>
+<td>same → <code>data/platform.json</code></td>
+<td>real</td>
+</tr>
+<tr>
+<td>Claim state</td>
+<td>inferred: the claim prompt appears on every listing</td>
+<td>real (none claimed)</td>
+</tr>
+<tr>
+<td>A claimed business's brand voice, offers, sessions, campaign results, approval items, integration states</td>
+<td>written for the prototype</td>
+<td><strong>sample</strong>, declared on the page</td>
+</tr>
+<tr>
+<td>Consumer personas (saved items, location, age band, channel preferences)</td>
+<td>written for the prototype</td>
+<td>sample</td>
+</tr>
+<tr>
+<td>Research figures</td>
+<td><a href="research.html"><code>01-research.md</code></a>, each with its link; primary vs aggregator marked</td>
+<td>real, cited</td>
+</tr>
+<tr>
+<td>The target shape</td>
+<td>two owner-supplied videos (<a href="audit.html"><code>02-audit.md</code></a> §3), 42 frames extracted with a Swift/AVFoundation script — the videos themselves are not in the repo</td>
+<td>owner input</td>
+</tr>
+<tr>
+<td>Terms, tokens, stack</td>
+<td>DiscountDirect's SSOT, GDS token map, ARCHITECTURE (D26)</td>
+<td>inherited (D5)</td>
+</tr>
+</tbody>
+</table></div>
+<p>No listed business, consumer or platform account is contacted or written to by the
+prototype. <code>POST /api/ingest</code> is documented but never called.</p>
+<footer>Source: <code>business-direct/docs/03-sources.md</code> · rendered by <code>docs/build.py</code>.</footer>
+</div>
+</body>
+</html>
