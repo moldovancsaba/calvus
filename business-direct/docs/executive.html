@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>business.direct — executive summary — business.direct docs</title>
+<link rel="stylesheet" href="../assets/tokens.css">
+<style>/* business.direct — documentation pages on the product tokens (GDS roles, teal accent). */
+:root{--ground:var(--gds-bg-canvas,#f8fafc);--card:var(--gds-bg-surface,#fff);--ink:var(--gds-text-body,#111827);--text:#1f2937;--muted:var(--gds-text-meta,#64748b);--accent:var(--gds-brand-accent,#0f766e);--accent-deep:var(--gds-brand-accent-strong,#115e59);--line:var(--gds-border-card,#e2e8f0);--line-soft:#eef2f7;--note:var(--gds-brand-accent-tint,#e6f4f2)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--ground);color:var(--text);font-family:var(--gds-font,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif);font-size:15.5px;line-height:1.6;padding-block:0 64px;padding-inline:clamp(16px,4vw,40px)}
+.wrap{max-width:74ch;margin-inline:auto}
+.docnav{display:flex;flex-wrap:wrap;gap:4px 18px;align-items:center;padding:16px 0;border-bottom:1px solid var(--line);font-size:12px;letter-spacing:.06em;text-transform:uppercase}
+.docnav a{color:var(--muted);text-decoration:none;min-height:44px;min-width:44px;display:inline-flex;align-items:center;border-bottom:2px solid transparent}
+.docnav a:hover,.docnav a[aria-current]{color:var(--ink);border-color:var(--accent)}
+.docnav-brand{color:var(--accent-deep);font-weight:800;margin-right:6px}
+.docnav-hub{margin-left:auto}
+header{padding-block:40px 24px;border-bottom:1px solid var(--line);margin-bottom:28px}
+.eyebrow{font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--accent-deep);margin:0 0 12px;font-weight:800}
+h1,h2,h3{color:var(--ink);line-height:1.1;text-wrap:balance;margin:0;letter-spacing:-.02em}
+h1{font-size:clamp(30px,6vw,46px);font-weight:900}
+h2{font-size:clamp(23px,4vw,30px);font-weight:900;margin:48px 0 14px;padding-top:20px;border-top:1px solid var(--line)}
+h3{font-size:18px;margin:30px 0 8px;font-weight:800}
+p{margin:0 0 14px} strong{color:var(--ink);font-weight:800}
+ul,ol{padding-left:22px;margin:0 0 16px} li{margin:5px 0} li>ul{margin:6px 0 0}
+code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.86em;background:var(--note);padding:1px 5px;border-radius:4px;color:var(--ink);overflow-wrap:anywhere}
+pre{overflow-x:auto;padding:14px 16px;border:1px solid var(--line);border-radius:10px;background:var(--card);font-size:12px;line-height:1.35}
+pre code{background:none;padding:0;font-size:inherit}
+a{color:var(--accent-deep)} :focus-visible{outline:2px solid var(--accent-deep);outline-offset:2px}
+.tbl{overflow-x:auto;margin:14px 0 22px;border:1px solid var(--line);border-radius:10px;background:var(--card)}
+table{border-collapse:collapse;width:100%;font-size:13.5px;min-width:560px}
+th{text-align:left;font-weight:800;color:var(--ink);background:var(--note);padding:10px 12px;border-bottom:1px solid var(--line);font-size:11.5px;letter-spacing:.06em;text-transform:uppercase}
+td{padding:10px 12px;border-top:1px solid var(--line-soft);vertical-align:top;background:var(--card)} td:first-child{color:var(--ink)}
+footer{margin-top:56px;padding-top:18px;border-top:1px solid var(--line);font-size:12px;color:var(--muted)}
+</style>
+</head>
+<body>
+<div class="wrap">
+<nav class="docnav" aria-label="Project documentation"><span class="docnav-brand">business.direct · docs</span><a href="index.html">Overview</a><a href="brief.html">Brief</a><a href="research.html">Research</a><a href="research-2.html">Research II</a><a href="research-3.html">Research III</a><a href="research-4.html">Research IV</a><a href="research-5.html">Research V</a><a href="audit.html">Audit</a><a href="sources.html">Sources</a><a href="design-system.html">Design system</a><a href="layouts.html">Layouts</a><a href="05-layout-specs.html">Layout specs</a><a href="decisions.html">Decisions</a><a href="build-log.html">Build log</a><a href="gate.html">Gate</a><a href="client-asks.html">Register of asks</a><a href="implementation-prerequisites.html">Prerequisites</a><a href="business-logic.html">Business logic</a><a href="ssot.html">SSOT</a><a href="architecture.html">Architecture</a><a href="technical-design.html">Technical design</a><a href="implementation-plan.html">Plan</a><a href="token-map.html">Token map</a><a href="executive.html" aria-current=page>Executive summary</a><a href="analytics.html">Analytics</a><a href="audit-swot.html">Audit · SWOT</a><a href="policy-framework.html">Policy framework</a></nav>
+<header><p class="eyebrow">Calvus · business.direct · project documentation</p><h1>business.direct — executive summary</h1></header>
+<p><em>One page, 2026-09-20, for a reader who wants the argument in prose rather than the
+presentation's screens. Every figure is sourced in the research (<code>01</code>–<code>01f</code>) or measured in
+the audit (<code>02</code>); every rule is in the SSOT; every decision is numbered.</em></p>
+<h2>The thesis</h2>
+<p>A listing platform has three parties — the platform, the listed business, the consumer —
+and two flows it never had a machine for: <strong>B2C social publishing</strong> that turns listings,
+updates and news into posts that bring consumers to the listing page, and a <strong>B2B sales
+flow</strong> that works every listed business through a pipeline — contacted → replied →
+applied → managing → upgraded — until it manages its own page and buys more. business.direct
+is that machine: departments as automations, a knowledge layer of plain files, optional AI
+per department, an intelligence recap, integrations as the machine's hands, and one gate —
+<strong>nothing leaves without a person</strong>.</p>
+<h2>The evidence</h2>
+<ul>
+<li>The incumbents bought the thesis: Yelp acquired Hatch (AI lead management and scoring)
+  for $270 million in January 2026 and sells "Receptionist" at $99 a month; Thumbtack now
+  lives inside ChatGPT and Claude (research III).</li>
+<li>Discovery moved: Google organic sends 19 % fewer clicks to the same rankings; AI answers
+  cite the structured, reviewed source (Yelp: 512,680 citations in one quarter); nearly half
+  of Gen Z searches social before Google (research II).</li>
+<li>The category pays: US families spend $1,016 per child per sport, up 46 % in five years;
+  83 % of small businesses say referrals are their best channel (research I, II).</li>
+<li>Responsible practice pays: 96 % of organisations say privacy investment returns more than
+  it costs; half of privacy-aware consumers have switched over data practices (research IV).</li>
+</ul>
+<h2>The first client</h2>
+<p><strong>ClassScout</strong>, operator of <strong>Your Field NYC</strong>: 253 providers pulled from its public API,
+none managing its page, 130 reachable by e-mail, 181 by phone. The prototype runs on that
+catalogue; every activity figure is declared sample until the platform's analytics replace
+it (prerequisites).</p>
+<h2>What the machine already found</h2>
+<p>At the defaults, outbound e-mail to a 253-provider catalogue <strong>does not pay for $49
+upgrades</strong> — LTV : CAC 0.7, payback 31 months. The model says the base machine is the
+platform's growth engine, or the catalogue grows, or the price rises; each is one input on
+the Economics screen. The presentation says this rather than hiding it.</p>
+<h2>What is different about it</h2>
+<ul>
+<li><strong>Responsible by design, for every client</strong>: one policy record per instance and a gate in
+  the code; a child is an age, never a name; no profiling of minors; real footage of
+  children only with written parental consent; no dark patterns; disclosure when a machine
+  wrote or made something (rules R24–R36).</li>
+<li><strong>Two interfaces, one machine</strong>: Simple shows what needs a person with the reason and one
+  button; Advanced shows everything.</li>
+<li><strong>Honest data</strong>: 253 real providers, every tile labelled real / sample / assumption, an
+  audit that found its own two critical contradictions and fixed them.</li>
+</ul>
+<h2>What we ask today</h2>
+<p>One decision: go ahead. What the implementation needs after acceptance — the postal
+address, the privacy-policy paragraph, the policy record confirmed, the platform's events
+and a pilot provider — is a checklist, not a condition (<a href="implementation-prerequisites.html"><code>19-implementation-prerequisites.md</code></a>).</p>
+<h2>What comes next</h2>
+<p>Release 1a, read-only against the platform: the sales sequence with its sending guard, the
+reply inbox, the provider's team, the content queue with labels, economics on assumptions,
+family preferences by signed link. Release 1b, with the platform's key: claim requests,
+audiences from saves, notifications, card flags, sign-up sources, bookings. Then real
+intelligence and generated pages; then campaigns, results and upgrades billed by Stripe.</p>
+<footer>Source: <code>business-direct/docs/15-executive-summary.md</code> · rendered by <code>docs/build.py</code>.</footer>
+</div>
+</body>
+</html>

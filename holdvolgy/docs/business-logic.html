@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Holdvölgy — business logic — Holdvölgy 2026 docs</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:opsz,wght@6..96,400;6..96,500&family=Archivo:wdth,wght@112.5,400;112.5,500;112.5,600&display=swap">
+<link rel="stylesheet" href="../assets/tokens.css">
+<style>:root{--ground:var(--hv-ground);--card:var(--hv-card);--ink:var(--hv-ink);--text:var(--hv-text);--muted:var(--hv-muted);--accent:var(--hv-accent);--accent-deep:var(--hv-accent-deep);--line:var(--hv-line);--line-soft:var(--hv-line-soft);--note:var(--hv-band)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--ground);color:var(--text);font-family:"Archivo","Helvetica Neue",Arial,sans-serif;font-stretch:112.5%;font-size:15.5px;line-height:1.6;padding-block:0 64px;padding-inline:clamp(16px,4vw,40px)}
+.wrap{max-width:72ch;margin-inline:auto}
+.docnav{display:flex;flex-wrap:wrap;gap:4px 18px;align-items:center;padding:16px 0;border-bottom:1px solid var(--line);font-size:12px;letter-spacing:.06em;text-transform:uppercase}
+.docnav a{color:var(--muted);text-decoration:none;min-height:44px;min-width:44px;display:inline-flex;align-items:center;border-bottom:2px solid transparent}
+.docnav a:hover,.docnav a[aria-current]{color:var(--ink);border-color:var(--accent)}
+.docnav-brand{color:var(--accent-deep);font-weight:600;margin-right:6px}
+.docnav-hub{margin-left:auto}
+header{padding-block:40px 24px;border-bottom:1px solid var(--line);margin-bottom:28px}
+.eyebrow{font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--accent-deep);margin:0 0 12px}
+h1,h2,h3{font-family:"Bodoni Moda",Didot,"Bodoni 72",serif;font-weight:400;color:var(--ink);line-height:1.1;text-wrap:balance;margin:0}
+h1{font-size:clamp(32px,6.5vw,50px);font-optical-sizing:auto}
+h2{font-size:clamp(25px,4.5vw,32px);margin:48px 0 14px;padding-top:20px;border-top:1px solid var(--line)}
+h3{font-size:19px;margin:30px 0 8px;font-weight:500}
+p{margin:0 0 14px} strong{color:var(--ink);font-weight:600}
+ul,ol{padding-left:22px;margin:0 0 16px} li{margin:5px 0} li>ul{margin:6px 0 0}
+code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.86em;background:var(--note);padding:1px 5px;border-radius:2px;color:var(--ink)}
+a{color:var(--accent-deep)} :focus-visible{outline:2px solid var(--accent-deep);outline-offset:2px}
+.tbl{overflow-x:auto;margin:14px 0 22px;border:1px solid var(--line)}
+table{border-collapse:collapse;width:100%;font-size:13.5px;min-width:560px}
+th{text-align:left;font-weight:600;color:var(--ink);background:var(--note);padding:10px 12px;border-bottom:1px solid var(--line);font-size:11.5px;letter-spacing:.06em;text-transform:uppercase}
+td{padding:10px 12px;border-top:1px solid var(--line-soft);vertical-align:top;background:var(--card)} td:first-child{color:var(--ink)}
+footer{margin-top:56px;padding-top:18px;border-top:1px solid var(--line);font-size:12px;color:var(--muted)}
+
+/* embedded gate-2 frames */
+.frames{display:grid;gap:28px;margin:18px 0 30px}
+.frames figure{margin:0} .frames figcaption{font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);margin-bottom:8px}
+.scale-d{width:100%;aspect-ratio:1440/2900;position:relative;overflow:hidden;border:1px solid var(--line);background:#FAFAFA}
+.scale-d iframe{position:absolute;top:0;left:0;width:1440px;height:2900px;border:0;transform-origin:0 0;transform:scale(calc(var(--w,720) / 1440))}
+.scale-p{width:390px;max-width:100%;aspect-ratio:390/2100;position:relative;overflow:hidden;border:1px solid var(--line);background:#FAFAFA}
+.scale-p iframe{position:absolute;top:0;left:0;width:390px;height:2100px;border:0;transform-origin:0 0;transform:scale(calc(var(--pw,390) / 390))}
+
+pre{overflow-x:auto;padding:14px 16px;border:1px solid var(--hv-line);border-radius:2px;background:var(--hv-card);font-size:12px;line-height:1.35}
+pre code{background:none;padding:0;font-size:inherit}
+</style>
+</head>
+<body>
+<div class="wrap">
+<nav class="docnav" aria-label="Project documentation"><span class="docnav-brand">Holdvölgy 2026 · docs</span><a href="index.html">Overview</a><a href="brief.html">Brief</a><a href="bemutato.html">Bemutató</a><a href="plan.html">Plan</a><a href="benchmarks.html">Benchmarks</a><a href="audit.html">Brand & site audit</a><a href="assets.html">Assets</a><a href="decisions.html">Decisions</a><a href="design-system.html">Design system</a><a href="layouts.html">Layouts</a><a href="home-build.html">Home build</a><a href="birtok-build.html">Birtok build</a><a href="aszu-build.html">Aszú build</a><a href="latogatas-build.html">Látogatás build</a><a href="shop-build.html">Shop build</a><a href="gate-sweep.html">Gate sweep</a><a href="business-logic.html" aria-current=page>Business logic</a><a href="ssot.html">SSOT</a><a href="architecture.html">Architecture</a><a href="technical-design.html">Technical design</a><a href="implementation-plan.html">Implementation plan</a><a href="token-map.html">Token map</a></nav>
+<header><p class="eyebrow">Calvus · Holdvölgy · project documentation</p><h1>Holdvölgy — business logic</h1></header>
+<p><em>Written 2026-09-20 (hub audit action 7). The rules of the built site end to end, in the
+order a visitor and the estate meet them: who the parties are, what the site sells and
+what it only presents, the age gate, the shop, the club, the visit, the two languages, the
+data, and what the site never does. Terms are the SSOT's (<a href="ssot.html"><code>10-ssot.md</code></a>); the decisions
+behind each rule are in <a href="decisions.html"><code>04-decisions.md</code></a>; every rule below is stated where the generator
+(<code>build.py</code>) or the pages implement it.</em></p>
+<h2>1. The parties</h2>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>Party</th>
+<th>Gets</th>
+<th>Gives</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>The estate</strong> (Holdvölgy, Mád)</td>
+<td>a site that tells the estate first and sells second (R1), in HU and EN from one source (R3); booking requests; club members; orders (when the shop is live)</td>
+<td>the catalogue, the prices, the photography, the visit programmes, the club terms</td>
+</tr>
+<tr>
+<td><strong>The visitor</strong> (18+, R8/R12)</td>
+<td>the story of the estate, the wines with the estate's own prices, a visit to request, a club to join, a shop</td>
+<td>an age confirmation; a booking request with contact details; consent for the newsletter and the club</td>
+</tr>
+<tr>
+<td><strong>Calvus</strong></td>
+<td>—</td>
+<td>the generator, the pages, the documentation</td>
+</tr>
+</tbody>
+</table></div>
+<h2>2. What the site sells, and what it only presents (R2)</h2>
+<ul>
+<li><strong>Wines</strong> — the catalogue (<code>data/catalogue.json</code>) is the only source of names, lines,
+  types, vintages and prices; product pages are generated, never hand-edited (R3). Prices
+  are the estate's. Stock is never shown; nothing claims availability it cannot know.</li>
+<li><strong>PreCulture</strong> — listed as a pre-order product; not purchasable in the prototype.</li>
+<li><strong>Visits</strong> — four ticketed programmes on Látogatás with a price and a duration; <strong>booking
+  is a request</strong> (name, e-mail, phone, programme, date, guests, message, GDPR), not a
+  purchase: no availability, no payment.</li>
+<li><strong>The Trezor programme</strong> — a section and a ticket, not a product.</li>
+<li><strong>Borklub</strong> — four discount tiers earned by 12-month spend (5 % at 50 000 Ft, 10 % at
+  150 000 Ft, 15 % at 300 000 Ft, 20 % at 600 000 Ft); presented, joined by consent.</li>
+</ul>
+<p>Hospitality comes before the shop in every CTA pair (R1): the estate is a place first.</p>
+<h2>3. The age gate (R8, R12)</h2>
+<p>Alcohol. The 18+ dialog shows before any content on every page, in both languages; "Nem"
+leaves the site; acceptance is kept for the session only. For the built shop the age is
+confirmed again at checkout and at delivery (SSOT §6b). No minor appears in any image; no
+message, post or discount is framed so a minor could read it as aimed at them.</p>
+<h2>4. The shop (when it is built)</h2>
+<p>Cart and checkout are inert in the prototype and the banner says so (R10). In production:
+the catalogue drives the cart; prices are the estate's; excise and distance-selling rules
+for alcohol apply to delivery; orders are kept as the accounting law requires; the club
+discount applies by tier at checkout; no fake scarcity ("last bottles" only if literally
+true — R2). The responsible-data record (SSOT §6b) gates checkout on the age confirmation
+and the privacy policy's shop clause.</p>
+<h2>5. The club and the newsletter (R13)</h2>
+<p>Both by consent, nothing pre-ticked, at most two mails a month across the two, opt-out
+within one business day. The club's spend history is a tier calculation and nothing else —
+no profile, no segment beyond the tier. Membership data is kept while active plus twelve
+months.</p>
+<h2>6. The visit</h2>
+<p>A booking request is a message to the estate. The estate answers; the site promises no
+slot. The GDPR box on the form is an acknowledgement of the privacy notice; it is not a
+marketing consent (the newsletter has its own).</p>
+<h2>7. Two languages, one source (R3, R5)</h2>
+<p>HU at the root, EN under <code>/en/</code>; every page generated from one content source and one
+catalogue; <code>hreflang</code> hu / en / x-default on every page; one <code>h1</code>, every image with <code>alt</code>;
+a published URL is never deleted, it redirects (R6). No AI-generated imagery (R7): every
+photograph is the estate's.</p>
+<h2>8. The data</h2>
+<p>The site stores nothing by itself. A booking request, a club application and a newsletter
+sign-up go to the estate; the policy record (SSOT §6b) names retention, the privacy
+policy's clauses and the gate rows for checkout, delivery, the club and the newsletter.</p>
+<h2>9. The rules, mapped</h2>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>Rule</th>
+<th>Where</th>
+<th>Rule</th>
+<th>Where</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>R1 hospitality before shop</td>
+<td>§2</td>
+<td>R8 the age gate</td>
+<td>§3</td>
+</tr>
+<tr>
+<td>R2 no fake availability</td>
+<td>§2, §4</td>
+<td>R9 namespaced components</td>
+<td><code>build.py</code>, the gate</td>
+</tr>
+<tr>
+<td>R3 one catalogue, two languages</td>
+<td>§2, §7</td>
+<td>R10 no stale phrase; the banner says only what is inert</td>
+<td>§4</td>
+</tr>
+<tr>
+<td>R4 images keep alpha, <code>height: auto</code></td>
+<td>§7</td>
+<td>R11 navigation single-sourced</td>
+<td><code>build.py</code></td>
+</tr>
+<tr>
+<td>R5 one <code>h1</code>, <code>alt</code>, <code>hreflang</code></td>
+<td>§7</td>
+<td>R12 adults only, age at checkout and delivery, no minor in images</td>
+<td>§3</td>
+</tr>
+<tr>
+<td>R6 a URL is never deleted</td>
+<td>§7</td>
+<td>R13 club and newsletter by consent, two mails a month</td>
+<td>§5</td>
+</tr>
+<tr>
+<td>R7 no AI imagery</td>
+<td>§7</td>
+<td>R14 the gate on checkout, delivery, club, newsletter</td>
+<td>§4, §5, §8</td>
+</tr>
+</tbody>
+</table></div>
+<h2>10. What the site never does</h2>
+<p>Shows content before the age gate; claims availability or stock; changes a price outside
+the catalogue; hand-edits a generated page; deletes a published URL; shows a minor; uses
+a generated image; pre-ticks a consent; sends more than two mails a month; frames a wine
+as a party or a performance.</p>
+<script>(function(){function f(){document.querySelectorAll('.scale-d').forEach(function(e){e.style.setProperty('--w',e.clientWidth)});document.querySelectorAll('.scale-p').forEach(function(e){e.style.setProperty('--pw',e.clientWidth)})}f();addEventListener('resize',f)})();</script>
+<footer>Source: <code>holdvolgy/docs/09-business-logic.md</code> · rendered by <code>docs/build.py</code>. Set in Bodoni Moda and Archivo (Google Fonts, SIL OFL) on Holdvölgy's measured palette — decision D3.</footer>
+</div>
+</body>
+</html>

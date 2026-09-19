@@ -17,6 +17,7 @@ maps the standard slots onto them and is the process log.
 | 06 build log | `BUILD-LOG.md` | Every build round with what was measured |
 | 07 gate | `GATE.md` | What is checked, the 2026-09-18 pass, deviations |
 | 08 client asks | `CLIENT-ASKS.md` | The register of asks — none open for the presentation; prerequisites in `IMPLEMENTATION-PREREQUISITES.md` |
+| logic audit | `LOGIC-AUDIT.md` | The business logic audited against the SSOT, the technical design and the prototype (2026-09-20): eight findings — the e-mail legal basis in Hungary, two holdout mechanisms, no cross-channel cap — with fixes PROPOSED |
 | 10 SSOT | `SSOT.md` | Glossary, enums, entities, settings, decisions, rules, metrics |
 | 11 architecture | `ARCHITECTURE.md` | Context, containers, flows, NFRs, the decided stack (D26), ADRs |
 | 12 technical design | `TECHNICAL-DESIGN.md` | Schema, state machines, API, algorithms, integrations |

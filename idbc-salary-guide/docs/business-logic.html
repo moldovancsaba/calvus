@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>IDBC Salary Guide — business logic — IDBC Salary Guide docs</title>
+<style>/* IDBC Salary Guide — documentation pages, on the guide's own tokens (dark green, light ground, Inter). */
+:root{--ground:#eef5ec;--card:#ffffff;--ink:#101818;--text:#2a3333;--muted:rgba(16,24,24,.66);--accent:#a5df8f;--accent-deep:#245d54;--line:rgba(19,35,35,.18);--line-soft:rgba(19,35,35,.08);--note:#e3efdf}
+*{box-sizing:border-box}
+body{margin:0;background:var(--ground);color:var(--text);font-family:"Inter","Montserrat","Segoe UI",Arial,sans-serif;font-size:15.5px;line-height:1.6;padding-block:0 64px;padding-inline:clamp(16px,4vw,40px)}
+.wrap{max-width:74ch;margin-inline:auto}
+.docnav{display:flex;flex-wrap:wrap;gap:4px 18px;align-items:center;padding:16px 0;border-bottom:1px solid var(--line);font-size:12px;letter-spacing:.06em;text-transform:uppercase}
+.docnav a{color:var(--muted);text-decoration:none;min-height:44px;min-width:44px;display:inline-flex;align-items:center;border-bottom:2px solid transparent}
+.docnav a:hover,.docnav a[aria-current]{color:var(--ink);border-color:var(--accent)}
+.docnav-brand{color:var(--accent-deep);font-weight:800;margin-right:6px}
+.docnav-hub{margin-left:auto}
+header{padding-block:40px 24px;border-bottom:1px solid var(--line);margin-bottom:28px}
+.eyebrow{font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--accent-deep);margin:0 0 12px;font-weight:800}
+h1,h2,h3{color:var(--ink);line-height:1.1;text-wrap:balance;margin:0;letter-spacing:-.02em}
+h1{font-size:clamp(30px,6vw,46px);font-weight:900}
+h2{font-size:clamp(23px,4vw,30px);font-weight:900;margin:48px 0 14px;padding-top:20px;border-top:1px solid var(--line)}
+h3{font-size:18px;margin:30px 0 8px;font-weight:800}
+p{margin:0 0 14px} strong{color:var(--ink);font-weight:800}
+ul,ol{padding-left:22px;margin:0 0 16px} li{margin:5px 0} li>ul{margin:6px 0 0}
+code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.86em;background:var(--note);padding:1px 5px;border-radius:4px;color:var(--ink);overflow-wrap:anywhere}
+pre{overflow-x:auto;padding:14px 16px;border:1px solid var(--line);border-radius:10px;background:var(--card);font-size:12px;line-height:1.35}
+pre code{background:none;padding:0;font-size:inherit}
+a{color:var(--accent-deep)} :focus-visible{outline:2px solid var(--accent-deep);outline-offset:2px}
+.tbl{overflow-x:auto;margin:14px 0 22px;border:1px solid var(--line);border-radius:10px;background:var(--card)}
+table{border-collapse:collapse;width:100%;font-size:13.5px;min-width:560px}
+th{text-align:left;font-weight:800;color:var(--ink);background:var(--note);padding:10px 12px;border-bottom:1px solid var(--line);font-size:11.5px;letter-spacing:.06em;text-transform:uppercase}
+td{padding:10px 12px;border-top:1px solid var(--line-soft);vertical-align:top;background:var(--card)} td:first-child{color:var(--ink)}
+footer{margin-top:56px;padding-top:18px;border-top:1px solid var(--line);font-size:12px;color:var(--muted)}
+</style>
+</head>
+<body>
+<div class="wrap">
+<nav class="docnav" aria-label="Project documentation"><span class="docnav-brand">IDBC Salary Guide · docs</span><a href="index.html">Overview</a><a href="bemutato.html">Bemutató</a><a href="brief.html">Brief</a><a href="research.html">Research</a><a href="audit.html">Audit</a><a href="sources.html">Sources & gaps</a><a href="decisions.html">Decisions</a><a href="design.html">Design</a><a href="gate.html">Gate</a><a href="client-asks.html">Register of asks</a><a href="prerequisites.html">Prerequisites</a><a href="business-logic.html" aria-current=page>Business logic</a><a href="ssot.html">SSOT</a><a href="architecture.html">Architecture</a><a href="technical-design.html">Technical design</a><a href="implementation-plan.html">Implementation plan</a><a href="token-map.html">Token map</a></nav>
+<header><p class="eyebrow">Calvus · IDBC Salary Guide · project documentation</p><h1>IDBC Salary Guide — business logic</h1></header>
+<p><em>Written 2026-09-20 (hub audit action 7). The rules of the guide end to end: who reads it
+and who pays for it, what the data is and is not, how a figure reaches a page, the paywall
+and the registration, the inert controls, fine-tuning, the data, and what the guide never
+does. Terms are the SSOT's (<a href="ssot.html"><code>10-ssot.md</code></a>); the decisions are in <a href="decisions.html"><code>04-decisions.md</code></a>.</em></p>
+<h2>1. The parties</h2>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>Party</th>
+<th>Gets</th>
+<th>Gives</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>IDBC</strong> (the client)</td>
+<td>a research guide that presents its 2026 survey and its bértábla as a product: market trends by area, salary bands, the SAP guide, the Expert Community, case studies; leads through registration</td>
+<td>the survey workbook, the bértábla sheet, the Talent Insight counts, the copy, the design demos</td>
+</tr>
+<tr>
+<td><strong>A reader</strong> — a company representative or a candidate</td>
+<td>the trends and the bands behind a registration</td>
+<td>an account (company / candidate), a privacy-notice acknowledgement; marketing consent only separately (R12)</td>
+</tr>
+<tr>
+<td><strong>Calvus</strong></td>
+<td>—</td>
+<td>the converters, the pages, the documentation</td>
+</tr>
+</tbody>
+</table></div>
+<h2>2. The data — what is real, and how a figure reaches a page (R1, R6, R10)</h2>
+<ul>
+<li><strong>No figure is invented.</strong> Every number traces to a client file: the survey workbook
+  (<code>build-guide-data.py</code>), the bértábla and the Talent Insight workbook
+  (<code>build-salary-data.py</code>). A re-run is byte-identical; a renamed position fails the build
+  rather than guessing (R6).</li>
+<li><strong>The survey</strong> is tabulated as twelve datasets: the whole sample (<em>Összesített adatok</em>,
+  first and default — R2) and eleven areas, each with employee and employer sides and
+  their crosstabs (experience band; company size). A question with no data under a chosen
+  segment is hidden, never substituted (R3); the two 1–4-scale questions show the weighted
+  average only (R4).</li>
+<li><strong>The bértábla</strong> gives one row per area + position + level, with min–max bands and, on
+  TOP3 rows, IDBC's recommendation and the Talent Insight count. TOP3 rows are charted
+  <em>and</em> listed in the table (R10). The band labels and the "valós piaci adatok" note ship as
+  the client's wording; the divergence from the sheet's own banner is documented, not
+  hidden (R8) — and is the first decision before publication (prerequisite P-1).</li>
+<li><strong>The Expert Community</strong> shows a count per industry + position from the pool sheet and
+  the market count from Talent Insight, always with the source printed.</li>
+</ul>
+<h2>3. The pages</h2>
+<p>Seven pages from one template set (R9): trends (home), eleven area pages from one
+template, Bérek, SAP, Expert Pool, Esettanulmányok, Regisztráció. The client's header
+menu on every page; footer navigation matches. Videos and highlights sit in labelled slots
+until the client's files arrive (prerequisites C-4).</p>
+<h2>4. The paywall and the registration (R12–R14)</h2>
+<p>The guide is meant to sit behind a registration: an account with a type (company or
+candidate). The form is an inert mock with the client's field list; its checkbox
+acknowledges the privacy notice — <strong>it is not marketing consent</strong>. Production: the privacy
+notice is real before registration runs; marketing e-mail needs its own unticked consent;
+role addresses (<code>info@</code>) may be reached by legitimate interest with opt-out, named persons
+and candidates only by consent (Act XLVIII/2008); no registrant's own salary is asked;
+candidate matching in the Expert Pool needs the DPIA decision first (SSOT §6b).</p>
+<h2>5. Inert controls (R5)</h2>
+<p>Excel export, the EN switch, Kijelentkezés and every form submit are shown in place with
+<code>is-unavailable</code>, <code>aria-disabled</code> and a <code>title</code> that says why; the gate checks every one.
+Nothing pretends to work.</p>
+<h2>6. Fine-tuning (R11)</h2>
+<p>Since 2026-09-18 the guide is in fine-tuning: only the reported item changes; nothing is
+restructured, hidden or removed unasked; working pages are the baseline. Every change is
+measured (<a href="gate.html"><code>07-gate.md</code></a>) and every push reports the live URL.</p>
+<h2>7. The data the guide holds about people</h2>
+<p>Nothing today. In production the account (e-mail, company, position, type, the notice
+acknowledgement, the separate consent, created-at), the download log and the marketing
+consent — with the retention and the gate rows of SSOT §6b.</p>
+<h2>8. The rules, mapped</h2>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>Rule</th>
+<th>Where</th>
+<th>Rule</th>
+<th>Where</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>R1 no figure invented</td>
+<td>§2</td>
+<td>R8 the client's wording, divergence documented</td>
+<td>§2</td>
+</tr>
+<tr>
+<td>R2 the aggregate first</td>
+<td>§2</td>
+<td>R9 one template per repeated thing</td>
+<td>§3</td>
+</tr>
+<tr>
+<td>R3 no data → hidden, never substituted</td>
+<td>§2</td>
+<td>R10 TOP3 in chart and table</td>
+<td>§2</td>
+</tr>
+<tr>
+<td>R4 weighted average only</td>
+<td>§2</td>
+<td>R11 fine-tuning: only the reported item</td>
+<td>§6</td>
+</tr>
+<tr>
+<td>R5 inert controls marked</td>
+<td>§5</td>
+<td>R12 notice acknowledgement ≠ marketing consent</td>
+<td>§4</td>
+</tr>
+<tr>
+<td>R6 explicit mapping, fail loudly</td>
+<td>§2</td>
+<td>R13 salary data aggregated, no Article 9 field</td>
+<td>§2, §4</td>
+</tr>
+<tr>
+<td>R7 versioned shared assets</td>
+<td>the gate</td>
+<td>R14 the gate on registration, marketing, matching</td>
+<td>§4, §7</td>
+</tr>
+</tbody>
+</table></div>
+<h2>9. What the guide never does</h2>
+<p>Invents or estimates a figure; substitutes the aggregate for a missing segment; asks a
+reader's salary; treats the notice checkbox as marketing consent; pretends a control
+works; restructures a working page unasked; publishes with the sheet's banner and the
+page's note contradicting each other.</p>
+<footer>Source: <code>idbc-salary-guide/docs/09-business-logic.md</code> · rendered by <code>docs/build.py</code>.</footer>
+</div>
+</body>
+</html>

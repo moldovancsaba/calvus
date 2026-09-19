@@ -26,7 +26,7 @@ footer{margin-top:48px;padding-top:16px;border-top:1px solid var(--gds-border-ca
 </style>
 </head>
 <body><div class="wrap">
-<div class="top"><b>DiscountDirect</b><a href="docs.html">Overview</a><a href="bemutato.html">Bemutató</a><a href="executive.html">Executive summary</a><a href="research.html">Research</a><a href="audit.html">Audit</a><a href="sources.html">Sources</a><a href="business-logic.html">Business logic</a><a href="design.html">Design</a><a href="build-log.html">Build log</a><a href="gate.html">Gate</a><a href="client-asks.html">Register of asks</a><a href="prerequisites.html">Prerequisites</a><a href="ssot.html" class=on>SSOT</a><a href="architecture.html">Architecture</a><a href="technical-design.html">Technical design</a><a href="implementation-plan.html">Implementation plan</a><a href="token-map.html">Token map</a><a href="index.html">Open the prototype →</a></div>
+<div class="top"><b>DiscountDirect</b><a href="docs.html">Overview</a><a href="bemutato.html">Bemutató</a><a href="executive.html">Executive summary</a><a href="research.html">Research</a><a href="audit.html">Audit</a><a href="sources.html">Sources</a><a href="business-logic.html">Business logic</a><a href="design.html">Design</a><a href="build-log.html">Build log</a><a href="gate.html">Gate</a><a href="logic-audit.html">Logic audit</a><a href="client-asks.html">Register of asks</a><a href="prerequisites.html">Prerequisites</a><a href="ssot.html" class=on>SSOT</a><a href="architecture.html">Architecture</a><a href="technical-design.html">Technical design</a><a href="implementation-plan.html">Implementation plan</a><a href="token-map.html">Token map</a><a href="index.html">Open the prototype →</a></div>
 <h1>DiscountDirect — single source of truth (SSOT)</h1>
 <p>Version 1.1 · 2026-09-18. This document is the canonical definition of every term,
 entity, enumeration, setting, rule, decision and metric in DiscountDirect. When two
@@ -654,7 +654,7 @@ through seller-scoped application/import workflows.</p>
 </tr>
 <tr>
 <td>D28</td>
-<td>A responsible-data policy record per seller instance (§6b, PROPOSED): unknown age = no profiled offer, no Article 9 inference, a vulnerability pause, literally true flash limits, the postal address on letters, the seller's policy naming the processor — rules R21–R24</td>
+<td>A responsible-data policy record per seller instance (§6b, PROPOSED): unknown age = no profiled offer, no Article 9 inference, a vulnerability pause, literally true flash limits, the postal address on letters, the seller's policy naming the processor — rules R22–R25</td>
 <td>§6b; hub audit 2026-09-20</td>
 </tr>
 </tbody>
@@ -794,12 +794,6 @@ current and keeps this SSOT plus the technical design aligned with the code.</p>
 <td>implementation, D21, D27</td>
 </tr>
 <tr>
-<td>R21</td>
-<td>Transparency</td>
-<td>every rendering of an offer (chat card, e-mail, letter, newsletter, sold-out notice) includes a rules block listing: expiry, quantity limits (total and per buyer), first-come-first-served, compensation if configured, reference price basis, the reason</td>
-<td>D14</td>
-</tr>
-<tr>
 <td>R20</td>
 <td>Consumable replenishment</td>
 <td><code>next_runout = last_order_at + median(interval of last n orders of the product, n ≥ 2) ?? product.replenish_days</code>; reminder at <code>next_runout − 6 days</code></td>
@@ -807,24 +801,30 @@ current and keeps this SSOT plus the technical design aligned with the code.</p>
 </tr>
 <tr>
 <td>R21</td>
+<td>Transparency</td>
+<td>every rendering of an offer (chat card, e-mail, letter, newsletter, sold-out notice) includes a rules block listing: expiry, quantity limits (total and per buyer), first-come-first-served, compensation if configured, reference price basis, the reason</td>
+<td>D14</td>
+</tr>
+<tr>
+<td>R22</td>
 <td>A buyer whose age is unknown gets no profiled offer; a mixed-audience shop disables profiled offers for minors (§6b)</td>
 <td><code>audienceModel</code>, DSA Art. 28</td>
 <td>§6b</td>
 </tr>
 <tr>
-<td>R22</td>
+<td>R23</td>
 <td>No inference of a special category from purchase history; no segment on health, religion, orientation or hardship (§6b)</td>
 <td>GDPR Art. 9</td>
 <td>§6b</td>
 </tr>
 <tr>
-<td>R23</td>
+<td>R24</td>
 <td>"Can't afford", "not now", "bereavement" pauses offers and opens a human reply; cooling-off on every accept; a flash limit is literally true (§6b)</td>
 <td>UCPD; D11</td>
 <td>§6b</td>
 </tr>
 <tr>
-<td>R24</td>
+<td>R25</td>
 <td>A channel runs only with its consent basis set; letters carry the postal address and an opt-out; the seller's policy names the processor (the gate, §6b)</td>
 <td>GDPR Art. 21</td>
 <td>§6b</td>
@@ -909,7 +909,7 @@ AI disclosure. Every value is a proposal until the product owner confirms it.</e
 </table></div>
 <p><strong>Gate rows:</strong> a seller's channel runs only with its consent basis set; profiled offers
 run only on age-confirmed accounts; letters need the postal address; the seller's privacy
-policy must name the processor. Rules R21–R24.</p>
+policy must name the processor. Rules R22–R25 (R21 is the existing transparency rule).</p>
 <h2>7. Metric definitions</h2>
 <p>Only <strong>campaign purchase-rate difference</strong> is implemented today. Metrics requiring
 cost, connector write-back, membership or a reporting projection are planned.</p>

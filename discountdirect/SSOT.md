@@ -163,7 +163,7 @@ Buyer-level preferences: `frequency_pref` (per seller or inbox per `consent_scop
 | D25 | Release 1 scope (recommended, applied) | The issue list in `implementation-plan.html` §7; everything else is Release 1.1 or later | plan §7 |
 | D26 | Stack: extend the existing implementation, do not rewrite (verified, 2026-09-18) | The working spine is **Next.js 15 App Router on Vercel (Node 24), MongoDB Atlas with Mongoose transactions, DoneIsBetter SSO, Resend, Vercel Cron with a durable outbox, Socket.IO with durable HTTP fallback, and GDS 6.7.0**. Upstash Redis and Vercel Blob foundations now exist; Redis frequency caps are implemented with MongoDB delivery history authoritative, while general Redis locks/counters and Blob-backed artifacts remain planned. A separate reporting read model remains planned. | ADR-14; architecture §3, §10; TD §1b, §3 |
 | D27 | Implementation alignment (verified, 2026-09-18) | Live business capabilities include tenant-safe SSO workspaces, catalog and purchase imports, consent/privacy, deterministic recommendations and segments, personal offers, flash reservations, automations/lists, Resend delivery and inbound replies, coupons, HU market settings, frequency caps, pricing guardrails, 30-day reference-price evidence and deterministic campaign holdout reporting. Connectors, checkout hand-off, postal PDF/partner delivery, richer journeys/channels, membership perks, incremental-margin analytics and a separate reporting projection remain planned. | implementation baseline; architecture §3; TD §1b |
-| D28 | A responsible-data policy record per seller instance (§6b, PROPOSED): unknown age = no profiled offer, no Article 9 inference, a vulnerability pause, literally true flash limits, the postal address on letters, the seller's policy naming the processor — rules R21–R24 | §6b; hub audit 2026-09-20 |
+| D28 | A responsible-data policy record per seller instance (§6b, PROPOSED): unknown age = no profiled offer, no Article 9 inference, a vulnerability pause, literally true flash limits, the postal address on letters, the seller's policy naming the processor — rules R22–R25 | §6b; hub audit 2026-09-20 |
 
 ### Open questions
 
@@ -200,12 +200,12 @@ current and keeps this SSOT plus the technical design aligned with the code.
 | R17 | Per-buyer list split | `items(buyer) = {p ∈ automation.product_ids : buyer ∈ Relevance(p)}`; buyers with `items = ∅` are skipped | BL §3.6 |
 | R18 | Reference price | any struck-through price must be the lowest price of the previous `Market.reference_price_days` (30) | research §5 |
 | R19 | Holdout | `bucket = uint32(SHA-256(buyer_id + ":" + scope)[0..3]) mod 10000`; holdout when `bucket < holdout_pct × 100`. Scope is `"pool"` for pooled mode or the campaign key for per-campaign mode. Holdout buyers receive no offer, event or delivery and are excluded from R16 counting. | implementation, D21, D27 |
-| R21 | Transparency | every rendering of an offer (chat card, e-mail, letter, newsletter, sold-out notice) includes a rules block listing: expiry, quantity limits (total and per buyer), first-come-first-served, compensation if configured, reference price basis, the reason | D14 |
 | R20 | Consumable replenishment | `next_runout = last_order_at + median(interval of last n orders of the product, n ≥ 2) ?? product.replenish_days`; reminder at `next_runout − 6 days` | research §2.2 |
-| R21 | A buyer whose age is unknown gets no profiled offer; a mixed-audience shop disables profiled offers for minors (§6b) | `audienceModel`, DSA Art. 28 | §6b |
-| R22 | No inference of a special category from purchase history; no segment on health, religion, orientation or hardship (§6b) | GDPR Art. 9 | §6b |
-| R23 | "Can't afford", "not now", "bereavement" pauses offers and opens a human reply; cooling-off on every accept; a flash limit is literally true (§6b) | UCPD; D11 | §6b |
-| R24 | A channel runs only with its consent basis set; letters carry the postal address and an opt-out; the seller's policy names the processor (the gate, §6b) | GDPR Art. 21 | §6b |
+| R21 | Transparency | every rendering of an offer (chat card, e-mail, letter, newsletter, sold-out notice) includes a rules block listing: expiry, quantity limits (total and per buyer), first-come-first-served, compensation if configured, reference price basis, the reason | D14 |
+| R22 | A buyer whose age is unknown gets no profiled offer; a mixed-audience shop disables profiled offers for minors (§6b) | `audienceModel`, DSA Art. 28 | §6b |
+| R23 | No inference of a special category from purchase history; no segment on health, religion, orientation or hardship (§6b) | GDPR Art. 9 | §6b |
+| R24 | "Can't afford", "not now", "bereavement" pauses offers and opens a human reply; cooling-off on every accept; a flash limit is literally true (§6b) | UCPD; D11 | §6b |
+| R25 | A channel runs only with its consent basis set; letters carry the postal address and an opt-out; the seller's policy names the processor (the gate, §6b) | GDPR Art. 21 | §6b |
 
 ## 6b. Responsible-data policy record (PROPOSED, 2026-09-20)
 
@@ -231,7 +231,7 @@ AI disclosure. Every value is a proposal until the product owner confirms it.*
 
 **Gate rows:** a seller's channel runs only with its consent basis set; profiled offers
 run only on age-confirmed accounts; letters need the postal address; the seller's privacy
-policy must name the processor. Rules R21–R24.
+policy must name the processor. Rules R22–R25 (R21 is the existing transparency rule).
 
 ## 7. Metric definitions
 

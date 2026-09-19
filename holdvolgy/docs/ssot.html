@@ -46,7 +46,7 @@ pre code{background:none;padding:0;font-size:inherit}
 </head>
 <body>
 <div class="wrap">
-<nav class="docnav" aria-label="Project documentation"><span class="docnav-brand">Holdvölgy 2026 · docs</span><a href="index.html">Overview</a><a href="brief.html">Brief</a><a href="bemutato.html">Bemutató</a><a href="plan.html">Plan</a><a href="benchmarks.html">Benchmarks</a><a href="audit.html">Brand & site audit</a><a href="assets.html">Assets</a><a href="decisions.html">Decisions</a><a href="design-system.html">Design system</a><a href="layouts.html">Layouts</a><a href="home-build.html">Home build</a><a href="birtok-build.html">Birtok build</a><a href="aszu-build.html">Aszú build</a><a href="latogatas-build.html">Látogatás build</a><a href="shop-build.html">Shop build</a><a href="gate-sweep.html">Gate sweep</a><a href="ssot.html" aria-current=page>SSOT</a><a href="architecture.html">Architecture</a><a href="technical-design.html">Technical design</a><a href="implementation-plan.html">Implementation plan</a><a href="token-map.html">Token map</a></nav>
+<nav class="docnav" aria-label="Project documentation"><span class="docnav-brand">Holdvölgy 2026 · docs</span><a href="index.html">Overview</a><a href="brief.html">Brief</a><a href="bemutato.html">Bemutató</a><a href="plan.html">Plan</a><a href="benchmarks.html">Benchmarks</a><a href="audit.html">Brand & site audit</a><a href="assets.html">Assets</a><a href="decisions.html">Decisions</a><a href="design-system.html">Design system</a><a href="layouts.html">Layouts</a><a href="home-build.html">Home build</a><a href="birtok-build.html">Birtok build</a><a href="aszu-build.html">Aszú build</a><a href="latogatas-build.html">Látogatás build</a><a href="shop-build.html">Shop build</a><a href="gate-sweep.html">Gate sweep</a><a href="business-logic.html">Business logic</a><a href="ssot.html" aria-current=page>SSOT</a><a href="architecture.html">Architecture</a><a href="technical-design.html">Technical design</a><a href="implementation-plan.html">Implementation plan</a><a href="token-map.html">Token map</a></nav>
 <header><p class="eyebrow">Calvus · Holdvölgy · project documentation</p><h1>Holdvölgy 2026 — single source of truth (SSOT)</h1></header>
 <p><em>Definitions the other technical documents (<code>11</code>–<code>14</code>) use without redefining. Every entity
 and enumeration below is read from what the prototype actually holds (<code>data/catalogue.json</code>,
@@ -359,6 +359,11 @@ to <a href="decisions.html"><code>04-decisions.md</code></a> as the next D-numbe
 <td>check.py</td>
 </tr>
 <tr>
+<td>R11</td>
+<td>Navigation and document indexes are single-sourced.</td>
+<td>D15</td>
+</tr>
+<tr>
 <td>R12</td>
 <td>Adults only: the age gate on every entry, age confirmed again at checkout and at delivery; no minor in any image; no marketing a minor could read as aimed at them (§6b).</td>
 <td>Act XLVIII/2008 §18</td>
@@ -372,11 +377,6 @@ to <a href="decisions.html"><code>04-decisions.md</code></a> as the next D-numbe
 <td>R14</td>
 <td>Checkout, delivery, the club and the newsletter run only when the policy record's fields for them are set (the gate).</td>
 <td>§6b</td>
-</tr>
-<tr>
-<td>R11</td>
-<td>Navigation and document indexes are single-sourced.</td>
-<td>D15</td>
 </tr>
 </tbody>
 </table></div>
@@ -538,6 +538,11 @@ consent texts; every image needs the no-minor check. Rules R12–R14.</p>
 <td><a href="brief.html"><code>00-brief.md</code></a></td>
 <td>what it is, what is real, where it stands</td>
 <td>status changes</td>
+</tr>
+<tr>
+<td><a href="business-logic.html"><code>09-business-logic.md</code></a></td>
+<td>the rules end to end, mapped to the SSOT's rules</td>
+<td></td>
 </tr>
 <tr>
 <td><a href="ssot.html"><code>10-ssot.md</code></a></td>

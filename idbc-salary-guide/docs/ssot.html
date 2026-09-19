@@ -35,7 +35,7 @@ footer{margin-top:56px;padding-top:18px;border-top:1px solid var(--line);font-si
 </head>
 <body>
 <div class="wrap">
-<nav class="docnav" aria-label="Project documentation"><span class="docnav-brand">IDBC Salary Guide · docs</span><a href="index.html">Overview</a><a href="bemutato.html">Bemutató</a><a href="brief.html">Brief</a><a href="research.html">Research</a><a href="audit.html">Audit</a><a href="sources.html">Sources & gaps</a><a href="decisions.html">Decisions</a><a href="design.html">Design</a><a href="gate.html">Gate</a><a href="client-asks.html">Register of asks</a><a href="prerequisites.html">Prerequisites</a><a href="ssot.html" aria-current=page>SSOT</a><a href="architecture.html">Architecture</a><a href="technical-design.html">Technical design</a><a href="implementation-plan.html">Implementation plan</a><a href="token-map.html">Token map</a></nav>
+<nav class="docnav" aria-label="Project documentation"><span class="docnav-brand">IDBC Salary Guide · docs</span><a href="index.html">Overview</a><a href="bemutato.html">Bemutató</a><a href="brief.html">Brief</a><a href="research.html">Research</a><a href="audit.html">Audit</a><a href="sources.html">Sources & gaps</a><a href="decisions.html">Decisions</a><a href="design.html">Design</a><a href="gate.html">Gate</a><a href="client-asks.html">Register of asks</a><a href="prerequisites.html">Prerequisites</a><a href="business-logic.html">Business logic</a><a href="ssot.html" aria-current=page>SSOT</a><a href="architecture.html">Architecture</a><a href="technical-design.html">Technical design</a><a href="implementation-plan.html">Implementation plan</a><a href="token-map.html">Token map</a></nav>
 <header><p class="eyebrow">Calvus · IDBC Salary Guide · project documentation</p><h1>IDBC Salary Guide — single source of truth (SSOT)</h1></header>
 <p><em>Definitions the technical documents (<code>11</code>–<code>14</code>) use without redefining. Everything is read
 from what the prototype holds (<code>data/guide-data.json</code>, <code>data/areas.json</code>, the two converters,
@@ -347,6 +347,11 @@ case study).</p>
 <td>D24</td>
 </tr>
 <tr>
+<td>R11</td>
+<td>In fine-tuning, only the reported item changes.</td>
+<td>owner, 2026-09-18</td>
+</tr>
+<tr>
 <td>R12</td>
 <td>The registration checkbox acknowledges the privacy notice; marketing needs its own unticked consent; role addresses by legitimate interest with opt-out, named persons by consent (§6b).</td>
 <td>Act XLVIII/2008</td>
@@ -360,11 +365,6 @@ case study).</p>
 <td>R14</td>
 <td>Registration, marketing e-mail and candidate matching run only when the policy record's fields for them are set (the gate).</td>
 <td>§6b</td>
-</tr>
-<tr>
-<td>R11</td>
-<td>In fine-tuning, only the reported item changes.</td>
-<td>owner, 2026-09-18</td>
 </tr>
 </tbody>
 </table></div>
@@ -506,6 +506,11 @@ DPIA decision. Rules R12–R14.</p>
 <td><a href="decisions.html"><code>04-decisions.md</code></a></td>
 <td>the register</td>
 <td>a decision is made</td>
+</tr>
+<tr>
+<td><a href="business-logic.html"><code>09-business-logic.md</code></a></td>
+<td>the rules end to end, mapped to the SSOT's rules</td>
+<td></td>
 </tr>
 <tr>
 <td><a href="ssot.html"><code>10-ssot.md</code></a></td>

@@ -23,6 +23,7 @@ record. Each file is dated inside; this index is the process log.
 | `07-birtok-build.md` | Phase 2: the Birtok page — content sources, sections, measurements at 390/768/1440, and the navigation fixes made in the same round |
 | `06-home-build.md` | Gate 3: the built home page — what was built, and the measured results at 390, 768 and 1440 |
 | `05-layout-specs.md` | Phase 1: the desktop-1440 and phone-390 layout specifications with schematics, tablet resolution and the home weight budget |
+| `09-business-logic.md` | **Business logic** — the rules end to end: parties, what is sold and what is only presented, the age gate, the shop, the club, the visit, two languages, the data, the rules mapped, what the site never does (2026-09-20) |
 | `10-ssot.md` | **Technical package** — glossary, enumerations, the product entity, settings, rules register, metrics, document map |
 | `11-architecture.md` | The live site measured (platform, 23 plugins, weight, TTFB), quality attributes, target containers, the **PROPOSED** stack and nine ADRs |
 | `12-technical-design.md` | Page kinds → theme templates, content model, `catalogue.json` → WooCommerce mapping, forms, club tiers, languages, URLs and redirects, images, performance, operations |

@@ -18,6 +18,7 @@ every Calvus project.
 | 07 gate | `07-gate.md` + `../check.py` | The one-command gate, the measured pass, deliberate deviations |
 | 19 prerequisites | `19-implementation-prerequisites.md` | The client's pending content deliveries, the decisions before publication (the bértábla banner first), the production-build decisions; nothing is needed for the next review (2026-09-20) |
 | 08 client asks | `08-client-asks.md` | The register of asks with states — none open for the next review; the rest are prerequisites |
+| 09 business logic | `09-business-logic.md` | The rules end to end — parties, the data and how a figure reaches a page, the paywall and registration, inert controls, fine-tuning, the rules mapped, what the guide never does (2026-09-20) |
 | 10 SSOT | `10-ssot.md` | Glossary, enumerations, entities, settings, rules, metrics |
 | 11 architecture | `11-architecture.md` | idbc.hu measured; the client's Sheets-API assumption examined; containers; **PROPOSED** stack; ADR-1..8 |
 | 12 technical design | `12-technical-design.md` | Templates, content model, data pipeline, JSON slices, registration and gate, forms, media, analytics, performance, operations |

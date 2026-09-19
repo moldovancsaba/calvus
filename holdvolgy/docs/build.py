@@ -24,6 +24,7 @@ PAGES = [  # (source, output, nav label)
     ("09-latogatas-build.md", "latogatas-build.html", "Látogatás build"),
     ("10-shop-build.md", "shop-build.html", "Shop build"),
     ("11-gate-sweep.md", "gate-sweep.html", "Gate sweep"),
+    ("09-business-logic.md", "business-logic.html", "Business logic"),
     ("10-ssot.md", "ssot.html", "SSOT"),
     ("11-architecture.md", "architecture.html", "Architecture"),
     ("12-technical-design.md", "technical-design.html", "Technical design"),

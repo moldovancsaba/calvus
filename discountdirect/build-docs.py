@@ -8,7 +8,7 @@ PAGES = [
   ("EXECUTIVE.md", "executive.html", "Executive summary"), ("RESEARCH.md", "research.html", "Research"),
   ("AUDIT.md", "audit.html", "Audit"), ("SOURCES.md", "sources.html", "Sources"),
   ("BUSINESS-LOGIC.md", "business-logic.html", "Business logic"), ("DESIGN.md", "design.html", "Design"),
-  ("BUILD-LOG.md", "build-log.html", "Build log"), ("GATE.md", "gate.html", "Gate"), ("CLIENT-ASKS.md", "client-asks.html", "Register of asks"), ("IMPLEMENTATION-PREREQUISITES.md", "prerequisites.html", "Prerequisites"),
+  ("BUILD-LOG.md", "build-log.html", "Build log"), ("GATE.md", "gate.html", "Gate"), ("LOGIC-AUDIT.md", "logic-audit.html", "Logic audit"), ("CLIENT-ASKS.md", "client-asks.html", "Register of asks"), ("IMPLEMENTATION-PREREQUISITES.md", "prerequisites.html", "Prerequisites"),
   ("SSOT.md", "ssot.html", "SSOT"), ("ARCHITECTURE.md", "architecture.html", "Architecture"),
   ("TECHNICAL-DESIGN.md", "technical-design.html", "Technical design"), ("IMPLEMENTATION-PLAN.md", "implementation-plan.html", "Implementation plan"),
   ("GDS-TOKEN-MAP.md", "token-map.html", "Token map"),

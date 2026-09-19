@@ -94,10 +94,10 @@ case study).
 | R8 | The band labels (D5) and the "valós piaci adatok" note (D14) ship as the client's wording; the divergence from the sheet is documented, not hidden. | gap 6 |
 | R9 | One template per repeated thing: area page, tile, chart. | D11 |
 | R10 | Tables are complete: TOP3 rows are listed in the table as well as charted. | D24 |
+| R11 | In fine-tuning, only the reported item changes. | owner, 2026-09-18 |
 | R12 | The registration checkbox acknowledges the privacy notice; marketing needs its own unticked consent; role addresses by legitimate interest with opt-out, named persons by consent (§6b). | Act XLVIII/2008 |
 | R13 | Salary data stays aggregated; no registrant's own salary is asked or stored; no Article 9 field exists (§6b). | GDPR |
 | R14 | Registration, marketing e-mail and candidate matching run only when the policy record's fields for them are set (the gate). | §6b |
-| R11 | In fine-tuning, only the reported item changes. | owner, 2026-09-18 |
 
 ## 6b. Responsible-data policy record (PROPOSED, 2026-09-20)
 
@@ -140,6 +140,7 @@ DPIA decision. Rules R12–R14.
 | `00-brief.md` | what it is, what is real, where it stands | status changes |
 | `SOURCES-AND-GAPS.md` | every source file, every gap, every change round | any input or build changes |
 | `04-decisions.md` | the register | a decision is made |
+| `09-business-logic.md` | the rules end to end, mapped to the SSOT's rules |
 | `10-ssot.md` | this file | a definition changes |
 | `11-architecture.md` | measured host, containers, PROPOSED stack, ADRs | an architectural decision changes |
 | `12-technical-design.md` | templates, data pipeline, registration, export, media, analytics | a design detail changes |

@@ -98,4 +98,21 @@ projects taught.
 | 8 | `EXECUTIVE.md` for business.direct (B3) | business.direct | optional; the presentation covers it |
 
 None of these is required to present any project. Items 1–3 change what a client would
-be told; 4–8 are quality. All are the owner's call.
+be told; 4–8 are quality.
+
+## 7. Done (the owner approved all eight, 2026-09-20)
+
+| Action | What shipped |
+|---|---|
+| 1 | A domain-specific responsible-data policy record (PROPOSED) in each SSOT — Lexodont §4b (health, children as patients, the booking processor), IDBC §6b (notice vs marketing consent, B2B addresses, aggregated salary data), DiscountDirect §6b (unknown age = no profiled offer, no Article 9 inference, the vulnerability pause, true flash limits, the postal address on letters), Holdvölgy §6b (adults only with age at checkout and delivery, no minor in images, club and newsletter by consent) — with rules and a decision each |
+| 2 | The stale-phrase scan and the decision-range check in the Lexodont and IDBC gates; they found a stale range and two "not yet built" statements about pages that exist — fixed |
+| 3 | IDBC, Lexodont and DiscountDirect asks re-classified into prerequisites documents; the registers show none open; the three presentations ask for nothing today |
+| 4 | Every benchmark estate and both source lists in Holdvölgy's research linked and curl-checked |
+| 5 | IDBC measured at 768 and 1440 (clean), DiscountDirect at 390 and 1440 (clean; two `h1` stated), Lexodont at 768 — the header row overflowed by 24 px on every page and is fixed |
+| 6 | business.direct's gate checks inert controls and the prototype banner |
+| 7 | `09-business-logic.md` for Holdvölgy and IDBC with rules maps; `LOGIC-AUDIT.md` for DiscountDirect — eight findings, three major (the e-mail legal basis in Hungary, two holdout mechanisms, no cross-channel cap), fixes PROPOSED |
+| 8 | `15-executive-summary.md` for business.direct |
+
+The matrix in §1 is the state before the actions; the rows "Responsible-data policy record",
+"Business logic document", "Stale-phrase scan", "Widths measured", "What we ask today" and
+"Research with sources" now read yes / present for every project the action named.

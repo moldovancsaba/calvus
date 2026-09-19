@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>DiscountDirect — audit of the business logic</title>
+<style>
+:root{--gds-bg-canvas:#f8fafc;--gds-bg-surface:#ffffff;--gds-bg-inverse:#111827;--gds-text-body:#111827;--gds-text-meta:#64748b;--gds-border-card:#e2e8f0;--gds-brand-accent:#3b5bdb;--gds-brand-accent-tint:#e7ecfb;--gds-radius-card:8px}
+*{box-sizing:border-box}
+body{margin:0;background:var(--gds-bg-canvas);color:var(--gds-text-body);font:15.5px/1.6 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;padding:0 24px 64px}
+.wrap{max-width:76ch;margin-inline:auto}
+.top{display:flex;flex-wrap:wrap;gap:8px 18px;align-items:center;padding:16px 0;border-bottom:1px solid var(--gds-border-card);font-size:13px;color:var(--gds-text-meta)}
+.top b{color:var(--gds-text-body)} .top a{color:var(--gds-brand-accent);text-decoration:none;min-height:44px;display:inline-flex;align-items:center} .top a.on{color:var(--gds-text-body);font-weight:600}
+h1{font-size:38px;line-height:1.15;margin:32px 0 10px;letter-spacing:0}
+h2{font-size:22px;margin:44px 0 10px;padding-top:18px;border-top:1px solid var(--gds-border-card)}
+h3{font-size:17px;margin:26px 0 8px}
+p{margin:0 0 12px} li{margin:4px 0} strong{font-weight:600}
+code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.86em;background:var(--gds-brand-accent-tint);padding:1px 5px;border-radius:5px}
+pre{background:var(--gds-bg-inverse);color:#f8fafc;padding:16px;border-radius:var(--gds-radius-card);overflow-x:auto;font-size:13px;line-height:1.5} pre code{background:none;color:inherit;padding:0;font-size:inherit}
+.tbl{overflow-x:auto;margin:12px 0 20px;border:1px solid var(--gds-border-card);border-radius:var(--gds-radius-card);background:var(--gds-bg-surface)}
+table{border-collapse:collapse;width:100%;font-size:13.5px;min-width:560px}
+th{text-align:left;font-weight:600;background:var(--gds-bg-canvas);padding:10px 12px;border-bottom:1px solid var(--gds-border-card);font-size:12px;letter-spacing:0;text-transform:uppercase;color:var(--gds-text-meta)}
+td{padding:10px 12px;border-top:1px solid var(--gds-border-card);vertical-align:top}
+a{color:var(--gds-brand-accent)}
+footer{margin-top:48px;padding-top:16px;border-top:1px solid var(--gds-border-card);font-size:12px;color:var(--gds-text-meta)}
+</style>
+</head>
+<body><div class="wrap">
+<div class="top"><b>DiscountDirect</b><a href="docs.html">Overview</a><a href="bemutato.html">Bemutató</a><a href="executive.html">Executive summary</a><a href="research.html">Research</a><a href="audit.html">Audit</a><a href="sources.html">Sources</a><a href="business-logic.html">Business logic</a><a href="design.html">Design</a><a href="build-log.html">Build log</a><a href="gate.html">Gate</a><a href="logic-audit.html" class=on>Logic audit</a><a href="client-asks.html">Register of asks</a><a href="prerequisites.html">Prerequisites</a><a href="ssot.html">SSOT</a><a href="architecture.html">Architecture</a><a href="technical-design.html">Technical design</a><a href="implementation-plan.html">Implementation plan</a><a href="token-map.html">Token map</a><a href="index.html">Open the prototype →</a></div>
+<h1>DiscountDirect — audit of the business logic</h1>
+<p><em>2026-09-20 (hub audit action 7). <a href="business-logic.html"><code>BUSINESS-LOGIC.md</code></a> (§1–§11), the SSOT's rules R1–R25
+and settings, <a href="technical-design.html"><code>TECHNICAL-DESIGN.md</code></a> and the prototype (<code>index.html</code>) read against each
+other, the way business.direct's logic was audited the day before. Findings A1–A8 with a
+severity and a fix; every fix is PROPOSED to the product owner. The audit changed one
+thing: the rules register's order (R20 was listed after R21).</em></p>
+<h2>1. Summary</h2>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>Severity</th>
+<th>Findings</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Major</td>
+<td>A1 (legal basis for B2C e-mail in Hungary), A2 (two holdout mechanisms), A3 (no cross-channel cap)</td>
+</tr>
+<tr>
+<td>Minor</td>
+<td>A4 ("implemented" means the codebase this repo cannot see), A5 (rule order), A6 (silent channel default), A7 (prototype behind the decisions — already ask #1 / prerequisite P-4), A8 (minors and vulnerable buyers had no rule until today)</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Verdict.</strong> The logic is the most complete on the hub after business.direct's — 27
+decisions, formulas on every rule, a consent model per channel, reference-price
+discipline, a holdout. Its weak points are on the edges the law watches: the e-mail basis
+in the first market, the sum of touches across channels, and the audiences it had not
+named (minors, vulnerable buyers) until the policy record of 2026-09-20.</p>
+<h2>2. Findings</h2>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>#</th>
+<th>Severity</th>
+<th>Finding</th>
+<th>Evidence</th>
+<th>Fix (PROPOSED)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>A1</td>
+<td>major</td>
+<td><strong>R15 allows a marketing send on <code>legitimate_interest ∧ soft_opt_in ∧ order_count ≥ 1</code>.</strong> The EU ePrivacy directive's existing-customer exception exists, but Hungary's Act XLVIII/2008 §6 requires the recipient's prior, express consent for direct marketing to natural persons and is generally read as not carrying the soft-opt-in exception for e-mail. In the first market the <code>consent</code> branch may be the only lawful one for e-mail to consumers.</td>
+<td>SSOT R15, <code>LegalBasis</code>; research I §8b of business.direct</td>
+<td>counsel confirms per market (prerequisite P-3); until then the HU market's e-mail basis defaults to <code>consent</code>; postal letters keep opt-out (Robinson-list) handling</td>
+</tr>
+<tr>
+<td>A2</td>
+<td>major</td>
+<td><strong>Two holdout mechanisms.</strong> The SSOT defines a deterministic bucket (<code>SHA-256(buyer_id + ":" + scope) mod 10000</code>, R19); the technical design's schema carries <code>holdout_seed int default floor(random()*1000000)</code> and a boolean per offer. A random seed per buyer and a hash per scope give different holdouts.</td>
+<td>SSOT R19; <a href="technical-design.html"><code>TECHNICAL-DESIGN.md</code></a> schema</td>
+<td>one mechanism: the SSOT's deterministic bucket (reproducible, auditable); drop <code>holdout_seed</code></td>
+</tr>
+<tr>
+<td>A3</td>
+<td>major</td>
+<td><strong>No cross-channel cap.</strong> <code>frequency_cap</code> is per channel (e-mail 4 / 30 d, chat 3 / 7 d, mailing 1 / 90 d, RCS 1 / 7 d): one seller may reach a buyer ~17 times a month within the rules. The research behind the cap (§6) argued for a total.</td>
+<td>SSOT §4 <code>frequency_cap</code>, R16</td>
+<td>add a total per <code>(buyer, seller)</code> per 30 days (proposal: 6) enforced with the per-channel caps; deferred, never dropped, as R16 says</td>
+</tr>
+<tr>
+<td>A4</td>
+<td>minor</td>
+<td>The enumerations say <strong>"Implemented"</strong> for states and channels (<code>expired</code>, <code>cancelled</code>, <code>postal</code>, <code>in_app</code>) that live in the existing codebase (DD-000) this repo cannot see; the prototype implements <code>pending → accepted / declined</code> only, with flash limits "carried, never evaluated" (BL §4). A reader takes "implemented" as verified.</td>
+<td>SSOT §2; BL §4, §8; prerequisite P-1</td>
+<td>label the column "reported implemented in DD-000 (not verified by this repo)" until P-1 gives access</td>
+</tr>
+<tr>
+<td>A5</td>
+<td>minor</td>
+<td>The rules register listed R21 before R20.</td>
+<td>SSOT §6</td>
+<td>reordered in this commit</td>
+</tr>
+<tr>
+<td>A6</td>
+<td>minor</td>
+<td>A flash campaign with no channel checked "reports chat" — a silent default the seller did not choose.</td>
+<td>BL §3.5</td>
+<td>the form requires at least one channel; no silent default</td>
+</tr>
+<tr>
+<td>A7</td>
+<td>minor</td>
+<td>The prototype predates D1–D26 (hand-off on accept, sold-out notice, rules block, advanced mode, print mode) and the docs say so; a client seeing the demo and the decisions side by side must be told which is current.</td>
+<td>ask #1 → prerequisite P-4; the presentation's lede says it</td>
+<td>as decided: freeze as the pre-decision reference or update — P-4</td>
+</tr>
+<tr>
+<td>A8</td>
+<td>minor</td>
+<td>Until 2026-09-20 no rule addressed a buyer who may be a minor, a buyer in hardship, dark patterns or AI-written reasons.</td>
+<td>SSOT §6b, R22–R25 (added by hub audit action 1)</td>
+<td>done; counsel review in P-3</td>
+</tr>
+</tbody>
+</table></div>
+<h2>3. What is consistent (checked and found sound)</h2>
+<ul>
+<li>Reference price: R5's <code>discount_base = min(current, lowest in 30 days)</code> and R18 match the
+  EU price-indication rule; the prototype's strike-through follows it.</li>
+<li>Flash quantity: R10's atomic check against both limits and R11's sold-out notice with
+  optional compensation match D2/D10/D14 and BL §3.5.</li>
+<li>One offer per recommendation (R2), the buyer-only transition (R6), the audit of both
+  reasons (R3) — consistent across BL, SSOT and the prototype.</li>
+<li>Transparency (R21): the rules block on every rendering is in the architecture
+  (<code>transparency</code> module) and the technical design (A13).</li>
+<li>The engineering docs never describe a delivery gap as shipped (BL §11) — the register
+  in §8 is honest.</li>
+</ul>
+<h2>4. Recommended order</h2>
+<p>A1 first (a legal question for the first market); A2 and A3 before Release 1's scheduler;
+A4 and A6 as text and form fixes; A7 is the product owner's standing decision.</p>
+<footer>Source: <code>discountdirect/LOGIC-AUDIT.md</code>, rendered by <code>build-docs.py</code>. Documentation tokens are mapped in <code>GDS-TOKEN-MAP.md</code>; the application implementation uses GDS 6.7.0.</footer>
+</div></body></html>

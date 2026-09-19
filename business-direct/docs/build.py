@@ -30,6 +30,7 @@ PAGES = [  # (source, output, nav label)
     ("12-technical-design.md", "technical-design.html", "Technical design"),
     ("13-implementation-plan.md", "implementation-plan.html", "Plan"),
     ("14-token-map.md", "token-map.html", "Token map"),
+    ("15-executive-summary.md", "executive.html", "Executive summary"),
     ("16-analytics-and-unit-economics.md", "analytics.html", "Analytics"),
     ("17-business-logic-audit-and-swot.md", "audit-swot.html", "Audit · SWOT"),
     ("18-responsible-data-policy-framework.md", "policy-framework.html", "Policy framework"),

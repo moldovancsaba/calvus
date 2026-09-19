@@ -17,7 +17,7 @@ Built to the prototyping standard (`PROTOTYPING.md`); this index is the process 
 | 01f research V | `01f-research-beyond-children.md` | Beyond children: children in real footage, the adults who work with them, people in vulnerable circumstances, protected characteristics, accessibility, sensitive data categories, dark patterns and AI manipulation — the law and the enforcement behind each, the rule it becomes (R30–R36), how it generalises |
 | 02 audit | `02-audit.md` | Your Field measured: API, 253 providers, field coverage, site copy, the platform's own policy and terms; the Hungarian reference instance; the two videos frame by frame; what DiscountDirect provides |
 | 03 sources | `03-sources.md` | What is real (the platform's public data), what is sample (generated from real cards), what is inherited |
-| 04 decisions | `04-decisions.md` | D1–D35 |
+| 04 decisions | `04-decisions.md` | D1–D36 |
 | 05 design | `design-system.html` + `../assets/tokens.css` + `../assets/components.css` | **Gate 1 approved (D9)**: tokens and components, one source |
 | 05 layouts | `05-layout-specs.md` + `layouts.html` + `frames/` | **Gate 2 approved (D16)**: platform 1440 / 390, provider 390, family 390; the later screens reuse the same grids |
 | 06 build log | `06-build-log.md` | Nine rounds: the prototype; presentation and package; editors and tablet; campaigns, upgrades, recap; conversations; economics; the research implemented; the audit implemented; the policy screen; the two interfaces |
@@ -29,6 +29,7 @@ Built to the prototyping standard (`PROTOTYPING.md`); this index is the process 
 | 12 technical design | `12-technical-design.md` | screens, content model, state machines, jobs, connector, media and channel adapter interfaces, drafting, i18n, operations |
 | 13 plan | `13-implementation-plan.md` | seven milestones, 65 issues with a Definition of Done, blocked register (the prerequisites), risks, release scope in two halves |
 | 14 token map | `14-token-map.md` | tokens and components → GDS + Mantine; contrast computed |
+| 15 executive summary | `15-executive-summary.md` | One page in prose: the thesis, the evidence, the first client, what the machine already found, what is different, what we ask today, what comes next (hub audit action 8) |
 | 16 analytics | `16-analytics-and-unit-economics.md` | CAC / LTV / payback for providers, the marketing value of an avid family, content ROI, the next-dollar rule, the metrics tree, events and attribution, rules R16–R19; what is real vs assumed (D26) |
 | 17 audit · SWOT | `17-business-logic-audit-and-swot.md` | Audit of the business logic: 19 findings with fixes; the SWOT with evidence; the recommendations Q1–Q12 (adopted and implemented, D30) |
 | 18 policy framework | `18-responsible-data-policy-framework.md` | Seventeen principles, the policy record per instance, the gate (ten rows), onboarding, the client's value, two worked instances, how it generalises (D32, D35) |
@@ -215,5 +216,12 @@ provider confirms written parental consent) and the adults who coach them (safeg
 shown only as verified). Plus people in vulnerable circumstances, protected characteristics
 in targeting, accessibility, sensitive data categories, dark patterns and AI manipulation —
 rules R30–R36, seven policy fields, three gate rows, the Policy screen's seventh card.
+
+**2026-09-20 — the hub audit's actions (D36).** The cross-project audit (`../../hub-audit.html`)
+was run and the owner approved every action: on this project, two gate checks from the
+other gates and the executive summary; on the other four projects, responsible-data policy
+records, the stale and consistency checks, asks re-classified, sourced benchmarks, the
+missing widths measured, business-logic documents for Holdvölgy and IDBC, and an audit of
+DiscountDirect's logic.
 
 **Next.** Present. After acceptance, the prerequisites checklist.

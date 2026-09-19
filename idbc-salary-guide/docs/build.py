@@ -19,6 +19,7 @@ PAGES = [  # (source, output, nav label)
     ("07-gate.md", "gate.html", "Gate"),
     ("08-client-asks.md", "client-asks.html", "Register of asks"),
     ("19-implementation-prerequisites.md", "prerequisites.html", "Prerequisites"),
+    ("09-business-logic.md", "business-logic.html", "Business logic"),
     ("10-ssot.md", "ssot.html", "SSOT"),
     ("11-architecture.md", "architecture.html", "Architecture"),
     ("12-technical-design.md", "technical-design.html", "Technical design"),

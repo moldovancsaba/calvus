@@ -101,10 +101,10 @@ Standing rules the prototype obeys and the production build must keep.
 | R8 | 18+ gate before any content; "Nem" leaves the site. | live site, kept |
 | R9 | Component class names are namespaced; the gate checks for collisions. | D18 |
 | R10 | No stale-state phrase on any page; the prototype banner says only what is inert. | check.py |
+| R11 | Navigation and document indexes are single-sourced. | D15 |
 | R12 | Adults only: the age gate on every entry, age confirmed again at checkout and at delivery; no minor in any image; no marketing a minor could read as aimed at them (§6b). | Act XLVIII/2008 §18 |
 | R13 | Newsletter and club mail by consent only; nothing pre-ticked; at most two mails a month; opt-out within one business day (§6b). | GDPR; R28 |
 | R14 | Checkout, delivery, the club and the newsletter run only when the policy record's fields for them are set (the gate). | §6b |
-| R11 | Navigation and document indexes are single-sourced. | D15 |
 
 ## 6b. Responsible-data policy record (PROPOSED, 2026-09-20)
 
@@ -151,6 +151,7 @@ consent texts; every image needs the no-minor check. Rules R12–R14.
 | Document | Purpose | Changes when |
 |---|---|---|
 | `00-brief.md` | what it is, what is real, where it stands | status changes |
+| `09-business-logic.md` | the rules end to end, mapped to the SSOT's rules |
 | `10-ssot.md` | this file | a definition changes |
 | `11-architecture.md` | measured current state, target containers, NFRs, stack ADRs | an architectural decision changes |
 | `12-technical-design.md` | templates, data mapping, forms, images, i18n, SEO, ops detail | a design detail changes |
