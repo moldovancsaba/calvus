@@ -94,7 +94,7 @@ implementation of the enumerations and state machines below.*
 
 ## 5. Decision register
 
-`04-decisions.md` holds D1–D24. The ones the engineering documents rest on: D2 (three
+`04-decisions.md` holds D1–D26. The ones the engineering documents rest on: D2 (three
 views), D5 (DiscountDirect sibling), D6 (departments, knowledge layer, human-in-the-loop,
 optional AI, dashboard, integrations), D11 (Your Field first), D14 (two flows), D15
 (post card and pipeline strip), D17 (one page, in-memory state), D18 (sample generated
@@ -118,6 +118,10 @@ PROPOSED.
 | R11 | A campaign reaches only families who saved the provider or are nearby with a child in the age range, by their preferences, under the cap; the provider approves the copy, never the list | `campaignsFor`, `campaignCard` |
 | R12 | An upgrade never changes what a family receives — it changes where the provider appears | products |
 | R14 | Every enquiry gets a drafted answer within a minute and a sent answer only after the provider's approval; reply time is measured from the enquiry, not from the draft | `enquiriesFor`, `approveEnquiry` |
+| R16 | The next-dollar ranking runs weekly on measured rates where they exist and on the documented assumption where they do not; the recap says which | `econ()`; `16-analytics…` §4 |
+| R17 | A sequence step is added or removed when its marginal reply rate per touch falls below the cost-per-touch breakeven for two consecutive weeks, inside the 4–7 benchmark | production |
+| R18 | Content slots go to the neighbourhood × activity pairs with the highest families-per-post over four weeks; a new pair gets one slot a week to be measured | production |
+| R19 | The upgrade card appears only when a provider's delivered value exceeds the product's annual price | provider results (P8) |
 | R13 | The machine never discounts; offers with a price cut are DiscountDirect's domain (D5) | — |
 
 ## 7. Metrics
@@ -134,6 +138,13 @@ PROPOSED.
 | Opt-outs | families who turned a channel off or stopped everything, per month | production only |
 | Families reached by campaigns | sum of approved campaigns' audiences after the cap | intelligence (sample audiences) |
 | Upgrade revenue | sum of active entitlements' prices per month | intelligence (sample prices) |
+| CAC (managing / upgraded) | outbound cost ÷ new managing / paying providers | economics |
+| LTV | ARPA × margin ÷ monthly churn | economics |
+| Payback | CAC ÷ monthly contribution | economics |
+| Avid family | saved ≥ 3, opened the last two digests, asked once | economics, family events |
+| Marketing value of an avid family | platform capture of delivered value + referral value, per year | economics |
+| Cost per family from content | content stack ÷ families from posts | economics |
+| Next dollar | expected LTV gained per $ for touch / call / content | economics, recap |
 
 ## 8. Document map
 
@@ -148,6 +159,7 @@ PROPOSED.
 | `06-build-log.md`, `07-gate.md` | rounds and the measured pass |
 | `08-client-asks.md` | open items |
 | `09-business-logic.md` | the rules end to end: parties, flows, departments, campaigns, money, families, law, recap |
+| `16-analytics-and-unit-economics.md` | CAC, LTV, avid value, content ROI, next dollar, metrics tree, events, attribution |
 | `10-ssot.md` (this) | terms, enumerations, entities, rules, metrics |
 | `11-architecture.md` | context, quality attributes, containers, flows, stack, ADRs |
 | `12-technical-design.md` | data model, state machines, connectors, jobs, operations |

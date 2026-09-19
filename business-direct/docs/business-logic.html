@@ -36,7 +36,7 @@ footer{margin-top:56px;padding-top:18px;border-top:1px solid var(--line);font-si
 </head>
 <body>
 <div class="wrap">
-<nav class="docnav" aria-label="Project documentation"><span class="docnav-brand">business.direct · docs</span><a href="index.html">Overview</a><a href="brief.html">Brief</a><a href="research.html">Research</a><a href="research-2.html">Research II</a><a href="audit.html">Audit</a><a href="sources.html">Sources</a><a href="design-system.html">Design system</a><a href="layouts.html">Layouts</a><a href="05-layout-specs.html">Layout specs</a><a href="decisions.html">Decisions</a><a href="build-log.html">Build log</a><a href="gate.html">Gate</a><a href="client-asks.html">Owner asks</a><a href="business-logic.html" aria-current=page>Business logic</a><a href="ssot.html">SSOT</a><a href="architecture.html">Architecture</a><a href="technical-design.html">Technical design</a><a href="implementation-plan.html">Plan</a><a href="token-map.html">Token map</a></nav>
+<nav class="docnav" aria-label="Project documentation"><span class="docnav-brand">business.direct · docs</span><a href="index.html">Overview</a><a href="brief.html">Brief</a><a href="research.html">Research</a><a href="research-2.html">Research II</a><a href="audit.html">Audit</a><a href="sources.html">Sources</a><a href="design-system.html">Design system</a><a href="layouts.html">Layouts</a><a href="05-layout-specs.html">Layout specs</a><a href="decisions.html">Decisions</a><a href="build-log.html">Build log</a><a href="gate.html">Gate</a><a href="client-asks.html">Owner asks</a><a href="business-logic.html" aria-current=page>Business logic</a><a href="ssot.html">SSOT</a><a href="architecture.html">Architecture</a><a href="technical-design.html">Technical design</a><a href="implementation-plan.html">Plan</a><a href="token-map.html">Token map</a><a href="analytics.html">Analytics</a></nav>
 <header><p class="eyebrow">Calvus · business.direct · project documentation</p><h1>business.direct — business logic</h1></header>
 <p><em>Written 2026-09-19 with phase 2 (D21–D23). The machine's rules end to end, in the order
 money and messages move: who the parties are, what each department does, what leaves, who
@@ -255,6 +255,13 @@ prices, page opportunities, unreachable providers); and "needs you" — approval
 providers who replied but did not apply, integrations still to connect. Real where the
 catalogue is the source; sample until the platform's analytics and a pilot provider's
 numbers arrive (asks #6–7).</p>
+<h2>8b. Data-driven decisions (D26)</h2>
+<p>The recap is read; the economics are acted on. The system keeps CAC and LTV per provider
+cohort, the marketing value of an avid family, the cost per family from content, and ranks
+the next dollar weekly (touch · call · content) by expected LTV gained — on measured rates
+where they exist and on documented assumptions where they do not, saying which (R16). The
+sequence cadence, the content slots and the upgrade pitch follow the numbers (R17–R19).
+The model and its events are <a href="analytics.html"><code>16-analytics-and-unit-economics.md</code></a>.</p>
 <h2>9. What the machine never does</h2>
 <p>Sends without an approval or a preference; answers a family without the provider's approval; texts without consent; exceeds the cap; deletes
 a provider's stage history; discounts; publishes a generated page with fewer than three

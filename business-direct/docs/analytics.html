@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>business.direct — analytics and unit economics — business.direct docs</title>
+<link rel="stylesheet" href="../assets/tokens.css">
+<style>/* business.direct — documentation pages on the product tokens (GDS roles, teal accent). */
+:root{--ground:var(--gds-bg-canvas,#f8fafc);--card:var(--gds-bg-surface,#fff);--ink:var(--gds-text-body,#111827);--text:#1f2937;--muted:var(--gds-text-meta,#64748b);--accent:var(--gds-brand-accent,#0f766e);--accent-deep:var(--gds-brand-accent-strong,#115e59);--line:var(--gds-border-card,#e2e8f0);--line-soft:#eef2f7;--note:var(--gds-brand-accent-tint,#e6f4f2)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--ground);color:var(--text);font-family:var(--gds-font,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif);font-size:15.5px;line-height:1.6;padding-block:0 64px;padding-inline:clamp(16px,4vw,40px)}
+.wrap{max-width:74ch;margin-inline:auto}
+.docnav{display:flex;flex-wrap:wrap;gap:4px 18px;align-items:center;padding:16px 0;border-bottom:1px solid var(--line);font-size:12px;letter-spacing:.06em;text-transform:uppercase}
+.docnav a{color:var(--muted);text-decoration:none;min-height:44px;min-width:44px;display:inline-flex;align-items:center;border-bottom:2px solid transparent}
+.docnav a:hover,.docnav a[aria-current]{color:var(--ink);border-color:var(--accent)}
+.docnav-brand{color:var(--accent-deep);font-weight:800;margin-right:6px}
+.docnav-hub{margin-left:auto}
+header{padding-block:40px 24px;border-bottom:1px solid var(--line);margin-bottom:28px}
+.eyebrow{font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--accent-deep);margin:0 0 12px;font-weight:800}
+h1,h2,h3{color:var(--ink);line-height:1.1;text-wrap:balance;margin:0;letter-spacing:-.02em}
+h1{font-size:clamp(30px,6vw,46px);font-weight:900}
+h2{font-size:clamp(23px,4vw,30px);font-weight:900;margin:48px 0 14px;padding-top:20px;border-top:1px solid var(--line)}
+h3{font-size:18px;margin:30px 0 8px;font-weight:800}
+p{margin:0 0 14px} strong{color:var(--ink);font-weight:800}
+ul,ol{padding-left:22px;margin:0 0 16px} li{margin:5px 0} li>ul{margin:6px 0 0}
+code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.86em;background:var(--note);padding:1px 5px;border-radius:4px;color:var(--ink);overflow-wrap:anywhere}
+pre{overflow-x:auto;padding:14px 16px;border:1px solid var(--line);border-radius:10px;background:var(--card);font-size:12px;line-height:1.35}
+pre code{background:none;padding:0;font-size:inherit}
+a{color:var(--accent-deep)} :focus-visible{outline:2px solid var(--accent-deep);outline-offset:2px}
+.tbl{overflow-x:auto;margin:14px 0 22px;border:1px solid var(--line);border-radius:10px;background:var(--card)}
+table{border-collapse:collapse;width:100%;font-size:13.5px;min-width:560px}
+th{text-align:left;font-weight:800;color:var(--ink);background:var(--note);padding:10px 12px;border-bottom:1px solid var(--line);font-size:11.5px;letter-spacing:.06em;text-transform:uppercase}
+td{padding:10px 12px;border-top:1px solid var(--line-soft);vertical-align:top;background:var(--card)} td:first-child{color:var(--ink)}
+footer{margin-top:56px;padding-top:18px;border-top:1px solid var(--line);font-size:12px;color:var(--muted)}
+</style>
+</head>
+<body>
+<div class="wrap">
+<nav class="docnav" aria-label="Project documentation"><span class="docnav-brand">business.direct · docs</span><a href="index.html">Overview</a><a href="brief.html">Brief</a><a href="research.html">Research</a><a href="research-2.html">Research II</a><a href="audit.html">Audit</a><a href="sources.html">Sources</a><a href="design-system.html">Design system</a><a href="layouts.html">Layouts</a><a href="05-layout-specs.html">Layout specs</a><a href="decisions.html">Decisions</a><a href="build-log.html">Build log</a><a href="gate.html">Gate</a><a href="client-asks.html">Owner asks</a><a href="business-logic.html">Business logic</a><a href="ssot.html">SSOT</a><a href="architecture.html">Architecture</a><a href="technical-design.html">Technical design</a><a href="implementation-plan.html">Plan</a><a href="token-map.html">Token map</a><a href="analytics.html" aria-current=page>Analytics</a></nav>
+<header><p class="eyebrow">Calvus · business.direct · project documentation</p><h1>business.direct — analytics and unit economics</h1></header>
+<p><em>Written 2026-09-19 on the owner's directive: "we will need ROI calculations and planning for
+CAC and LTV for B2B clients, marketing value for the avid users, and all the other analytics
+information that helps the system deliver data-driven marketing decisions." This is the
+model the </em>Economics<em> screen (<code>../index.html?view=platform&amp;screen=economics</code>) computes; the
+screen's inputs are this document's assumptions, and every number that is not from the
+catalogue or a cited benchmark is marked so. Terms are the SSOT's; the decision rules become
+R16–R19 there.</em></p>
+<h2>1. What the numbers are for</h2>
+<p>The machine spends three things — e-mail touches, operator minutes and tool subscriptions —
+and gets back providers who manage their page, providers who pay, and families who come,
+save, ask and enrol. Data-driven marketing here means four questions the system can answer
+from its own events, every week:</p>
+<ol>
+<li><strong>What does a paying provider cost and what is it worth?</strong> (CAC, LTV, payback, LTV:CAC)</li>
+<li><strong>What is a family worth, and an <em>avid</em> one?</strong> (marketing value on the demand side)</li>
+<li><strong>Does content pay?</strong> (cost per family from the content engine vs the value of a family)</li>
+<li><strong>Where does the next dollar go?</strong> (expected LTV gained per dollar, across the three
+   levers: another touch, a call, a week of content)</li>
+</ol>
+<h2>2. The B2B model: providers (the platform's B2B clients)</h2>
+<h3>2.1 Funnel and rates</h3>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>Stage</th>
+<th>Count today (real)</th>
+<th>Rate to next</th>
+<th>Source of the rate</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Identified</td>
+<td>252</td>
+<td>—</td>
+<td>catalogue</td>
+</tr>
+<tr>
+<td>Reachable by e-mail</td>
+<td>130</td>
+<td>reply <strong>5.5 %</strong> (top-quartile benchmark; 3.43 % average, 10.7 % top decile)</td>
+<td><a href="https://instantly.ai/cold-email-benchmark-report-2026">Instantly 2026 benchmark</a> (research II §5.1)</td>
+</tr>
+<tr>
+<td>Phone only</td>
+<td>50</td>
+<td>a call converts ~3× an e-mail; half are reached</td>
+<td>assumption; multi-channel +40 % (research II §5.1)</td>
+</tr>
+<tr>
+<td>Website only</td>
+<td>72</td>
+<td>not in the model until a form step exists</td>
+<td>—</td>
+</tr>
+<tr>
+<td>Replied → applied</td>
+<td>—</td>
+<td><strong>40 %</strong></td>
+<td>assumption</td>
+</tr>
+<tr>
+<td>Applied → managing</td>
+<td>—</td>
+<td><strong>80 %</strong> (the platform confirms the claim)</td>
+<td>assumption</td>
+</tr>
+<tr>
+<td>Managing → upgraded within 3 months</td>
+<td>—</td>
+<td><strong>25 %</strong></td>
+<td>assumption; SMB activation 35–50 % (research II §2.2)</td>
+</tr>
+</tbody>
+</table></div>
+<h3>2.2 Cost of acquisition</h3>
+<p><code>cost = e-mailed × touches × cost per touch + phone-only × cost per call + approvals ×
+operator minutes ÷ 60 × operator rate + tooling × 3 months</code></p>
+<p>Defaults: 3 touches at $0.05, $5 per call task, 2 operator minutes per approval at $40/h,
+$150/month tooling (sending domain, warm-up, enrichment). <strong>CAC (managing)</strong> = cost ÷ new
+managing providers; <strong>CAC (upgraded)</strong> = cost ÷ new paying providers.</p>
+<h3>2.3 Lifetime value</h3>
+<p><code>contribution = ARPA × gross margin</code> · <code>LTV = contribution ÷ monthly churn</code> ·
+<code>payback = CAC ÷ contribution</code> · <strong>healthy when LTV : CAC ≥ 3 and payback ≤ 12 months</strong>.</p>
+<p>Defaults: ARPA $49/month (the platform's three products at sample prices: $49, $29,
+$149/season), margin 80 %, churn 5 %/month (SMB SaaS range 3–7 %, research II §2.2).</p>
+<h3>2.4 What the defaults say (the first data-driven finding)</h3>
+<p>With the defaults, one quarter of outbound to the current catalogue yields about 2 managing
+and 0.6 upgraded providers for ~$720 — <strong>CAC (upgraded) ≈ $1,200 against an LTV of $784:
+LTV : CAC 0.7, payback 31 months.</strong> Raising the reply rate to the top decile (10.7 %) only
+reaches 1.3 : 1. The model is telling the truth about the business: <em>outbound e-mail to a
+252-provider catalogue cannot pay for itself on $49 upgrades.</em> It pays in one of three
+ways, and the plan should say which:</p>
+<ul>
+<li><strong>the base machine is the platform's growth engine, not a profit centre</strong> (D21: bundled;
+  its return is families and managed pages, valued below), or</li>
+<li><strong>a larger catalogue</strong> (the cost is mostly fixed tooling; at 1,000 providers CAC falls
+  under $400 with the same rates), or</li>
+<li><strong>higher ARPA</strong> (camp placement at $149/season, bundles) and lower churn (annual plans).</li>
+</ul>
+<p>The screen makes each of these one input away.</p>
+<h2>3. The B2C model: families and the value of an avid user</h2>
+<h3>3.1 Definitions</h3>
+<ul>
+<li><strong>Family</strong>: an account on the platform (count is the platform's — ask #6; 5,000 assumed).</li>
+<li><strong>Avid family</strong>: saved ≥ 3 providers, opened the last two digests, asked a provider at
+  least once — the behaviour the machine can observe. Assumed 15 % of families.</li>
+<li><strong>Value delivered to providers per avid family per year</strong> = trials per year × trial →
+  enrolment rate × provider revenue per enrolment. Defaults 2 × 40 % × <strong>$1,016</strong> (US
+  families' average spend per child per sport, 2024 — <a href="https://projectplay.org/news/2025/2/24/project-play-survey-family-spending-on-youth-sports-rises-46-over-five-years">Project Play</a>) ≈ <strong>$813/year</strong>.</li>
+<li><strong>Marketing value of an avid family to the platform</strong> = the platform's capture of that
+  value (upgrades bought because the machine delivered families; 5 % assumed) + the
+  referral value (0.3 new families per avid family per year × the share who become avid ×
+  their capture). Defaults ≈ <strong>$42/year</strong>.</li>
+<li><strong>Expected value of a new family</strong> = P(avid) × avid value ≈ $6 at the defaults — the
+  number a content post has to beat.</li>
+</ul>
+<h3>3.2 Content ROI</h3>
+<p><code>cost per family from content = content stack $/month ÷ (posts per week × 4.33 × new
+families per post)</code>. Defaults $120 ÷ (5 × 4.33 × 1.5) ≈ <strong>$4 per family</strong>, against $6
+expected value: positive, thin, and entirely dependent on <em>families per post</em>, which is
+the one number a connected channel measures (research II §3).</p>
+<h2>4. Where the next dollar goes (the allocation rule)</h2>
+<p>Every week the system ranks three actions by <strong>expected LTV gained per dollar</strong>:</p>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>Action</th>
+<th>Cost</th>
+<th>Expected gain</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>One more e-mail touch to the unreplied</td>
+<td>unreplied × cost per touch</td>
+<td>unreplied × reply rate × 42 % (share of replies after step one) × apply × managing × upgrade × LTV</td>
+</tr>
+<tr>
+<td>Call the phone-only providers</td>
+<td>phone-only × cost per call</td>
+<td>phone-only × ½ reached × reply rate × 3 × apply × managing × upgrade × LTV</td>
+</tr>
+<tr>
+<td>A week of the content engine</td>
+<td>content stack ÷ 4.33</td>
+<td>posts per week × families per post × expected value of a new family</td>
+</tr>
+</tbody>
+</table></div>
+<p>The recap's "needs you" shows the winner; the operator still approves. At the defaults the
+e-mail touch wins (cheap), the content week second, the call list third — and every one of
+these flips when a real rate replaces an assumption.</p>
+<h2>5. The metrics tree the system maintains</h2>
+<pre><code>Platform revenue (MRR)
+├─ upgraded providers × ARPA                       ← entitlements
+│   ├─ managing providers × upgrade rate           ← pipeline events
+│   │   └─ contacted × reply × apply × managing    ← sequence + inbox events
+│   └─ churn                                        ← entitlement ended
+└─ families delivered to providers (the product)
+    ├─ avid families × trials × enrolment           ← saves, asks, campaign clicks, bookings
+    ├─ new families from content                    ← post → listing → sign-up (UTM/referrer)
+    └─ referrals                                    ← platform's invite events
+Cost
+├─ outbound (touches, calls, operator minutes)     ← messages, tasks, approvals
+├─ content stack (media adapters)                  ← adapter usage
+└─ tooling
+</code></pre>
+<p>Every leaf is an event the machine already writes (<code>messages</code>, <code>approvals</code>,
+<code>provider_state</code>, <code>entitlements</code>, <code>campaigns</code>, <code>enquiries</code>) or one the platform must expose
+(saves, sign-ups with source, bookings — asks #6–7). Metrics are materialised nightly per
+<code>platform_id</code> (architecture ADR-11).</p>
+<h2>6. Events and attribution (what to log)</h2>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>Event</th>
+<th>Fields</th>
+<th>Feeds</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>touch.sent</code> / <code>touch.replied</code></td>
+<td>provider_id, step, channel, cost</td>
+<td>reply rate, CAC</td>
+</tr>
+<tr>
+<td><code>stage.changed</code></td>
+<td>provider_id, from, to, by</td>
+<td>funnel rates</td>
+</tr>
+<tr>
+<td><code>approval</code></td>
+<td>draft kind, minutes (from open to decision)</td>
+<td>operator cost</td>
+</tr>
+<tr>
+<td><code>entitlement.started</code> / <code>.ended</code></td>
+<td>provider_id, product, price</td>
+<td>ARPA, churn, LTV</td>
+</tr>
+<tr>
+<td><code>post.published</code> / <code>post.clicked</code> / <code>signup</code></td>
+<td>post_id, channel, utm, family_id</td>
+<td>families per post, content CPA</td>
+</tr>
+<tr>
+<td><code>family.saved</code> / <code>family.asked</code> / <code>digest.opened</code></td>
+<td>family_id, provider_id</td>
+<td>avid definition</td>
+</tr>
+<tr>
+<td><code>campaign.sent</code> / <code>.clicked</code> / <code>booking</code></td>
+<td>campaign_id, family_id, provider_id</td>
+<td>trials, enrolment value</td>
+</tr>
+<tr>
+<td><code>adapter.used</code></td>
+<td>adapter, units, cost</td>
+<td>content stack cost</td>
+</tr>
+</tbody>
+</table></div>
+<p>Attribution: last touch within 7 days for a sign-up (post → listing → account); a booking is
+attributed to the campaign or enquiry that preceded it within 30 days; an upgrade is
+attributed to the pipeline (always) and to the campaign result shown at the moment of
+purchase (P8) — both recorded, neither double-counted in revenue.</p>
+<h2>7. Decision rules (proposed R16–R19)</h2>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>#</th>
+<th>Rule</th>
+<th>Effect</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>R16</td>
+<td>The next-dollar ranking runs weekly on measured rates where they exist and on the documented assumption where they do not; the recap shows which is which</td>
+<td>no allocation on a hidden assumption</td>
+</tr>
+<tr>
+<td>R17</td>
+<td>A sequence step is added or removed when its measured marginal reply rate per touch falls below the cost-per-touch breakeven for two consecutive weeks</td>
+<td>the cadence follows the data, inside the 4–7 benchmark</td>
+</tr>
+<tr>
+<td>R18</td>
+<td>Content slots go to the neighbourhood × activity pairs with the highest families-per-post over the trailing 4 weeks; new pairs get one slot a week to be measured</td>
+<td>the engine learns where families come from</td>
+</tr>
+<tr>
+<td>R19</td>
+<td>The upgrade card appears only when a provider's delivered value (trials × enrolment value) exceeds the product's annual price — the sale is made by the number</td>
+<td>P8; no upgrade pitch below breakeven</td>
+</tr>
+</tbody>
+</table></div>
+<h2>8. What is real, what is assumed (2026-09-19)</h2>
+<p>Real: 252 · 130 · 50 · 72 (catalogue); this session's stage counts. Benchmarks: reply rates
+(Instantly), activation range and churn range (research II), $1,016 per child per sport
+(Project Play). Assumptions: every conversion rate after reply, ARPA, margin, cost per
+touch and call, operator minutes, tooling, family count, avid share, trials, enrolment,
+capture, referral, families per post, content cost. Each is one input on the screen and
+one line here; the platform's analytics (ask #6) and a pilot provider (ask #7) replace them
+in that order.</p>
+<footer>Source: <code>business-direct/docs/16-analytics-and-unit-economics.md</code> · rendered by <code>docs/build.py</code>.</footer>
+</div>
+</body>
+</html>

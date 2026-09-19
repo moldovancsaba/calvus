@@ -36,7 +36,7 @@ footer{margin-top:56px;padding-top:18px;border-top:1px solid var(--line);font-si
 </head>
 <body>
 <div class="wrap">
-<nav class="docnav" aria-label="Project documentation"><span class="docnav-brand">business.direct · docs</span><a href="index.html">Overview</a><a href="brief.html">Brief</a><a href="research.html">Research</a><a href="research-2.html">Research II</a><a href="audit.html">Audit</a><a href="sources.html">Sources</a><a href="design-system.html">Design system</a><a href="layouts.html">Layouts</a><a href="05-layout-specs.html">Layout specs</a><a href="decisions.html">Decisions</a><a href="build-log.html">Build log</a><a href="gate.html">Gate</a><a href="client-asks.html">Owner asks</a><a href="business-logic.html">Business logic</a><a href="ssot.html">SSOT</a><a href="architecture.html" aria-current=page>Architecture</a><a href="technical-design.html">Technical design</a><a href="implementation-plan.html">Plan</a><a href="token-map.html">Token map</a></nav>
+<nav class="docnav" aria-label="Project documentation"><span class="docnav-brand">business.direct · docs</span><a href="index.html">Overview</a><a href="brief.html">Brief</a><a href="research.html">Research</a><a href="research-2.html">Research II</a><a href="audit.html">Audit</a><a href="sources.html">Sources</a><a href="design-system.html">Design system</a><a href="layouts.html">Layouts</a><a href="05-layout-specs.html">Layout specs</a><a href="decisions.html">Decisions</a><a href="build-log.html">Build log</a><a href="gate.html">Gate</a><a href="client-asks.html">Owner asks</a><a href="business-logic.html">Business logic</a><a href="ssot.html">SSOT</a><a href="architecture.html" aria-current=page>Architecture</a><a href="technical-design.html">Technical design</a><a href="implementation-plan.html">Plan</a><a href="token-map.html">Token map</a><a href="analytics.html">Analytics</a></nav>
 <header><p class="eyebrow">Calvus · business.direct · project documentation</p><h1>business.direct — architecture</h1></header>
 <p><em>Written 2026-09-19 for the first client, Your Field NYC (D11); phase 2 (campaigns, upgrades, recap — D21–D23) added the same day. The stack is PROPOSED
 (§10, ADRs in §11): it follows DiscountDirect's decided stack (D26 there) because the
@@ -253,7 +253,7 @@ every channel off and cancels queued messages for that family in the same transa
 <p>MongoDB collections: <code>providers_cache</code> (the catalogue copy, refreshed by sync, never
 edited), <code>provider_state</code>, <code>drafts</code>, <code>approvals</code> (append-only), <code>sequences</code>, <code>threads</code>,
 <code>families_prefs</code>, <code>consents</code> (append-only, with the proof text), <code>messages</code> (append-only
-log of everything sent), <code>knowledge_files</code>, <code>integrations</code>, <code>generated_pages</code>, <code>campaigns</code>, <code>products</code>, <code>entitlements</code>, <code>enquiries</code>, <code>comments</code>. Every
+log of everything sent), <code>knowledge_files</code>, <code>integrations</code>, <code>generated_pages</code>, <code>campaigns</code>, <code>products</code>, <code>entitlements</code>, <code>enquiries</code>, <code>comments</code>, <code>events</code> (append-only, ADR-11) and <code>metrics_daily</code> (materialised). Every
 document carries <code>platform_id</code> (Your Field, Sportolok) — one deployment, several
 instances (ADR-2). Retention: message log 24 months; consent log for the life of the
 account plus 5 years; drafts 90 days after their final state.</p>
@@ -470,6 +470,12 @@ a family's deletion request.</p>
 <td><strong>Upgrades billed by Stripe on the platform's account</strong>; business.direct stores only the entitlement</td>
 <td>(a) business.direct as merchant; (b) the platform as merchant via Stripe; (c) invoices by hand</td>
 <td>(b): the platform already sells "List your program"; one merchant, one tax position; the machine never holds card data</td>
+</tr>
+<tr>
+<td>ADR-11</td>
+<td><strong>Analytics as an append-only event log in MongoDB with nightly materialised metrics per <code>platform_id</code></strong>; no third-party analytics SaaS holds family data</td>
+<td>(a) product-analytics SaaS (Amplitude / Mixpanel); (b) own event log + materialised views; (c) warehouse + BI</td>
+<td>(b): the events already exist as collections; the metrics tree is small and known; family data stays in the platform's region (§8); a warehouse can be added when a second instance needs cross-instance reporting</td>
 </tr>
 <tr>
 <td>ADR-10</td>

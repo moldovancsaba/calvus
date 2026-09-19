@@ -111,3 +111,21 @@ approve → the family's thread shows the answer; results tile "3 / 4"; `scrollW
 throughout, every control ≥ 44 px, 0 console errors. At 1440 — conversations via the
 `&stage=managing` deep link: 3 cards, one `h1`, `scrollWidth` 1440, 0 errors.
 `python3 check.py` → `GATE: CLEAN`.
+
+## Round 5 — 2026-09-19 — economics and planning (D26)
+
+**Built** (`assets/app.js?v=7`, `app.css?v=3`). Platform *Economics*: eight tiles (CAC
+managing / upgraded, LTV, LTV : CAC with the 3 : 1 rule, payback, value of an avid family,
+avid families, cost per family from content), the next-dollar table (touch · call · content
+ranked by expected LTV per $), the quarter's funnel strip, a 12-month plan with churn and
+content cost, and 23 editable inputs grouped B2B / B2C with the source of each default in
+its label; every figure recomputes on input and the focused field is kept. The recap's
+"needs you" names the next dollar; the provider's results gain a "your return" line.
+Layout fix: `main` now `align-content:start` — an empty-state card no longer floats mid-page
+on short screens.
+
+**Measured** (app browser pane, 2026-09-19): at 390 — `scrollWidth` 390, all 23 inputs
+≥ 44 px, three next-dollar rows, twelve plan rows; changing the reply rate to 10.7 moved
+CAC (managing) from $300 to $156 and LTV : CAC from 0.7 to 1.3 with focus retained; 0
+console errors. At 1440 — `scrollWidth` 1440, the empty state sits 46 px under the title.
+`python3 check.py` → `GATE: CLEAN` (exit 0).

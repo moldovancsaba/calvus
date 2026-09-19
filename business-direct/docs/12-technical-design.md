@@ -17,6 +17,7 @@ developer can read the behaviour before the code exists.*
 | Platform | Integrations | card grid | `platform.integrations` |
 | Platform | Knowledge and rules | file editors | `platform.knowledge`, `kfiles` |
 | Platform | Intelligence | tiles + by department · radar and needs-you | `platform.intelligence` |
+| Platform | Economics | tiles + next-dollar table + funnel strip + 12-month plan · inputs | `platform.economics`, `econ()`, `S.econ` |
 | Provider | Today | hero card + (invitation · or · tiles, waiting, team, knowledge) | `provider.today` |
 | Provider | Conversations | tiles + enquiry cards with drafted answers | `provider.conversations`, `enquiriesFor`, `enquiryCard` |
 | Provider | Campaigns | approval cards built from the card | `provider.campaigns`, `campaignsFor`, `campaignCard` |
@@ -56,6 +57,9 @@ entitlements     { provider_id, platform_id, product_id, since, until?, stripe_s
 enquiries        { _id, platform_id, provider_id, family_id?, channel, from{name,kid,area}, text, received_at,
                    draft, state, ai, answered_at?, thread_id }
 comments         { _id, platform_id, post_id, provider_id, channel, external_id, from, text, draft, state, ai, replied_at? }
+events           { _id, platform_id, at, name, provider_id?, family_id?, draft_id?, campaign_id?, props{} }   # append-only, ADR-11
+metrics_daily    { platform_id, day, cac_managing, cac_upgraded, ltv, payback, avid_families, avid_value, content_cpa, next_dollar[], rates{} }
+assumptions      { platform_id, key, value, source: 'measured'|'benchmark'|'assumption', updated_by, updated_at }
 ```
 
 Indexes: `provider_state (platform_id, stage)`, `drafts (platform_id, state, scheduled_for)`,
@@ -119,6 +123,7 @@ cannot turn SMS on without a consent row.
 | `send-campaigns` | every 5 min | approved campaigns: resolve audience, preference + cap per family, outbox |
 | `draft-answers` | on inbound webhook | enquiry or comment → draft from the knowledge files and the card within a minute (R14) |
 | `entitlements` | webhook-driven | Stripe events → entitlements → stage → card flag through the connector |
+| `metrics` | nightly 02:00 | roll `events` into `metrics_daily`; replace an assumption with a measured rate once ≥ 100 observations exist (R16) |
 | `retention` | nightly | drafts 90 days after final state; messages 24 months |
 
 ## 6. Connectors and adapters

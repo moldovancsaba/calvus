@@ -135,7 +135,7 @@ every channel off and cancels queued messages for that family in the same transa
 MongoDB collections: `providers_cache` (the catalogue copy, refreshed by sync, never
 edited), `provider_state`, `drafts`, `approvals` (append-only), `sequences`, `threads`,
 `families_prefs`, `consents` (append-only, with the proof text), `messages` (append-only
-log of everything sent), `knowledge_files`, `integrations`, `generated_pages`, `campaigns`, `products`, `entitlements`, `enquiries`, `comments`. Every
+log of everything sent), `knowledge_files`, `integrations`, `generated_pages`, `campaigns`, `products`, `entitlements`, `enquiries`, `comments`, `events` (append-only, ADR-11) and `metrics_daily` (materialised). Every
 document carries `platform_id` (Your Field, Sportolok) — one deployment, several
 instances (ADR-2). Retention: message log 24 months; consent log for the life of the
 account plus 5 years; drafts 90 days after their final state.
@@ -202,4 +202,5 @@ a family's deletion request.
 | ADR-7 | **AI drafting behind an interface, optional per department**, outputs marked | (a) AI always on; (b) optional per department; (c) none | (b): D6; EU AI Act Art. 50 marking; the provider with AI off still gets the listing's own text |
 | ADR-8 | **Generated pages are written to the platform** through its API, not hosted by business.direct | (a) host here; (b) write to the platform | (b): search authority belongs to the platform's domain (research §5) |
 | ADR-9 | **Upgrades billed by Stripe on the platform's account**; business.direct stores only the entitlement | (a) business.direct as merchant; (b) the platform as merchant via Stripe; (c) invoices by hand | (b): the platform already sells "List your program"; one merchant, one tax position; the machine never holds card data |
+| ADR-11 | **Analytics as an append-only event log in MongoDB with nightly materialised metrics per `platform_id`**; no third-party analytics SaaS holds family data | (a) product-analytics SaaS (Amplitude / Mixpanel); (b) own event log + materialised views; (c) warehouse + BI | (b): the events already exist as collections; the metrics tree is small and known; family data stays in the platform's region (§8); a warehouse can be added when a second instance needs cross-instance reporting |
 | ADR-10 | **Campaign audiences are resolved by the platform's saves and location, never uploaded lists** | (a) providers upload contacts; (b) audiences from the platform's data only | (b): consent lives on the platform (R4, R11); no provider list ever enters the machine |

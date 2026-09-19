@@ -13,10 +13,10 @@ Built to the prototyping standard (`PROTOTYPING.md`); this index is the process 
 | 02 audit | `02-audit.md` | Your Field measured: API, 252 providers, field coverage, site copy; the Hungarian reference instance; the two videos frame by frame; what DiscountDirect provides |
 | 03 sources | `03-sources.md` | What is real (the platform's public data), what is sample, what is inherited |
 | presentation | `bemutato.html` | Standalone, English, on the product's tokens: one sentence, three numbers, the four things to click with previews, what is real, the asks, what comes next |
-| 04 decisions | `04-decisions.md` | D1–D25 |
+| 04 decisions | `04-decisions.md` | D1–D26 |
 | 05 design | `design-system.html` + `../assets/tokens.css` + `../assets/components.css` | **Gate 1 approved (D9)**: tokens and components, one source |
 | 05 layouts | `05-layout-specs.md` + `layouts.html` + `frames/` | **Gate 2 approved (D16)**: platform 1440 / 390, provider 390, family 390 |
-| 06 build log | `06-build-log.md` | Round 1: the prototype; 1b: presentation and package; 2: editors real, tablet measured; 3: phase 2 — campaigns, upgrades, recap; 4: phase 3 — conversations |
+| 06 build log | `06-build-log.md` | Round 1: the prototype; 1b: presentation and package; 2: editors real, tablet measured; 3: phase 2 — campaigns, upgrades, recap; 4: phase 3 — conversations; 5: economics |
 | 07 gate | `07-gate.md` + `../check.py` | Measured pass at 390, 768, 1024 and 1440: overflow, tap targets, navigation, console, links |
 | 08 owner asks | `08-client-asks.md` | Seven open items (#1 closed by D20; #4–6 assumed by D21 until answered) |
 | 09 business logic | `09-business-logic.md` | The rules end to end: parties, flows, departments, campaigns, money, families, law, recap, what the machine never does (D24) |
@@ -25,6 +25,7 @@ Built to the prototyping standard (`PROTOTYPING.md`); this index is the process 
 | 12 technical design | `12-technical-design.md` | screens, content model, state machines, jobs, connector and adapter interfaces, drafting, i18n, operations |
 | 13 plan | `13-implementation-plan.md` | seven milestones, 40 issues with a Definition of Done, blocked register, risks, release scope |
 | 14 token map | `14-token-map.md` | tokens and components → GDS + Mantine; contrast computed |
+| 16 analytics | `16-analytics-and-unit-economics.md` | CAC / LTV / payback for providers, the marketing value of an avid family, content ROI, the next-dollar rule, the metrics tree, events and attribution, rules R16–R19; what is real vs assumed (D26) |
 
 Rendered by `build.py` (`python3 business-direct/docs/build.py`); gate `python3 business-direct/check.py`
 (also run by the root `check.py`). Data: `python3 business-direct/data/fetch-yourfield.py`
@@ -111,5 +112,12 @@ sources, primary marked; Sora's shutdown, the four platforms' AI-label rules and
 e-mail benchmarks change what the plan should assume. Nine proposals (P1–P9) wait for the
 owner; each becomes a D-number.
 
-**Next.** The owner's decisions on P1–P9 and asks #2–8; the first to build is P2 (the clip
-engine) and P3 (labelling in the pipeline) if approved.
+**2026-09-19 — economics (D26).** The owner asked for ROI, CAC and LTV planning for the B2B
+clients, the marketing value of avid users and the analytics that let the system decide.
+Built as the platform's *Economics* screen (23 editable inputs, eight tiles, the next-dollar
+ranking, the quarter's funnel, a 12-month plan) and written as `16-analytics-and-unit-economics.md`
+(the model, the metrics tree, the events to log, attribution, R16–R19). The defaults expose
+the first real finding: outbound alone does not pay for $49 upgrades on 252 providers.
+
+**Next.** The owner's decisions on P1–P9 and asks #2–8; the platform's analytics (ask #6)
+turn the assumptions into measurements.

@@ -36,7 +36,7 @@ footer{margin-top:56px;padding-top:18px;border-top:1px solid var(--line);font-si
 </head>
 <body>
 <div class="wrap">
-<nav class="docnav" aria-label="Project documentation"><span class="docnav-brand">business.direct · docs</span><a href="index.html">Overview</a><a href="brief.html">Brief</a><a href="research.html">Research</a><a href="research-2.html">Research II</a><a href="audit.html">Audit</a><a href="sources.html">Sources</a><a href="design-system.html">Design system</a><a href="layouts.html">Layouts</a><a href="05-layout-specs.html">Layout specs</a><a href="decisions.html">Decisions</a><a href="build-log.html">Build log</a><a href="gate.html">Gate</a><a href="client-asks.html">Owner asks</a><a href="business-logic.html">Business logic</a><a href="ssot.html" aria-current=page>SSOT</a><a href="architecture.html">Architecture</a><a href="technical-design.html">Technical design</a><a href="implementation-plan.html">Plan</a><a href="token-map.html">Token map</a></nav>
+<nav class="docnav" aria-label="Project documentation"><span class="docnav-brand">business.direct · docs</span><a href="index.html">Overview</a><a href="brief.html">Brief</a><a href="research.html">Research</a><a href="research-2.html">Research II</a><a href="audit.html">Audit</a><a href="sources.html">Sources</a><a href="design-system.html">Design system</a><a href="layouts.html">Layouts</a><a href="05-layout-specs.html">Layout specs</a><a href="decisions.html">Decisions</a><a href="build-log.html">Build log</a><a href="gate.html">Gate</a><a href="client-asks.html">Owner asks</a><a href="business-logic.html">Business logic</a><a href="ssot.html" aria-current=page>SSOT</a><a href="architecture.html">Architecture</a><a href="technical-design.html">Technical design</a><a href="implementation-plan.html">Plan</a><a href="token-map.html">Token map</a><a href="analytics.html">Analytics</a></nav>
 <header><p class="eyebrow">Calvus · business.direct · project documentation</p><h1>business.direct — single source of truth</h1></header>
 <p><em>Written 2026-09-19 after gate 2 and the first build round (D16–D18). Every term the
 other engineering documents use is defined here; where a term is DiscountDirect's, it
@@ -426,7 +426,7 @@ implementation of the enumerations and state machines below.</em></p>
 </tbody>
 </table></div>
 <h2>5. Decision register</h2>
-<p><a href="decisions.html"><code>04-decisions.md</code></a> holds D1–D24. The ones the engineering documents rest on: D2 (three
+<p><a href="decisions.html"><code>04-decisions.md</code></a> holds D1–D26. The ones the engineering documents rest on: D2 (three
 views), D5 (DiscountDirect sibling), D6 (departments, knowledge layer, human-in-the-loop,
 optional AI, dashboard, integrations), D11 (Your Field first), D14 (two flows), D15
 (post card and pipeline strip), D17 (one page, in-memory state), D18 (sample generated
@@ -508,6 +508,26 @@ PROPOSED.</p>
 <td><code>enquiriesFor</code>, <code>approveEnquiry</code></td>
 </tr>
 <tr>
+<td>R16</td>
+<td>The next-dollar ranking runs weekly on measured rates where they exist and on the documented assumption where they do not; the recap says which</td>
+<td><code>econ()</code>; <code>16-analytics…</code> §4</td>
+</tr>
+<tr>
+<td>R17</td>
+<td>A sequence step is added or removed when its marginal reply rate per touch falls below the cost-per-touch breakeven for two consecutive weeks, inside the 4–7 benchmark</td>
+<td>production</td>
+</tr>
+<tr>
+<td>R18</td>
+<td>Content slots go to the neighbourhood × activity pairs with the highest families-per-post over four weeks; a new pair gets one slot a week to be measured</td>
+<td>production</td>
+</tr>
+<tr>
+<td>R19</td>
+<td>The upgrade card appears only when a provider's delivered value exceeds the product's annual price</td>
+<td>provider results (P8)</td>
+</tr>
+<tr>
 <td>R13</td>
 <td>The machine never discounts; offers with a price cut are DiscountDirect's domain (D5)</td>
 <td>—</td>
@@ -574,6 +594,41 @@ PROPOSED.</p>
 <td>sum of active entitlements' prices per month</td>
 <td>intelligence (sample prices)</td>
 </tr>
+<tr>
+<td>CAC (managing / upgraded)</td>
+<td>outbound cost ÷ new managing / paying providers</td>
+<td>economics</td>
+</tr>
+<tr>
+<td>LTV</td>
+<td>ARPA × margin ÷ monthly churn</td>
+<td>economics</td>
+</tr>
+<tr>
+<td>Payback</td>
+<td>CAC ÷ monthly contribution</td>
+<td>economics</td>
+</tr>
+<tr>
+<td>Avid family</td>
+<td>saved ≥ 3, opened the last two digests, asked once</td>
+<td>economics, family events</td>
+</tr>
+<tr>
+<td>Marketing value of an avid family</td>
+<td>platform capture of delivered value + referral value, per year</td>
+<td>economics</td>
+</tr>
+<tr>
+<td>Cost per family from content</td>
+<td>content stack ÷ families from posts</td>
+<td>economics</td>
+</tr>
+<tr>
+<td>Next dollar</td>
+<td>expected LTV gained per $ for touch / call / content</td>
+<td>economics, recap</td>
+</tr>
 </tbody>
 </table></div>
 <h2>8. Document map</h2>
@@ -620,6 +675,10 @@ PROPOSED.</p>
 <tr>
 <td><a href="business-logic.html"><code>09-business-logic.md</code></a></td>
 <td>the rules end to end: parties, flows, departments, campaigns, money, families, law, recap</td>
+</tr>
+<tr>
+<td><a href="analytics.html"><code>16-analytics-and-unit-economics.md</code></a></td>
+<td>CAC, LTV, avid value, content ROI, next dollar, metrics tree, events, attribution</td>
 </tr>
 <tr>
 <td><a href="ssot.html"><code>10-ssot.md</code></a> (this)</td>

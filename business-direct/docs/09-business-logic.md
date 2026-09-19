@@ -123,6 +123,15 @@ providers who replied but did not apply, integrations still to connect. Real whe
 catalogue is the source; sample until the platform's analytics and a pilot provider's
 numbers arrive (asks #6–7).
 
+## 8b. Data-driven decisions (D26)
+
+The recap is read; the economics are acted on. The system keeps CAC and LTV per provider
+cohort, the marketing value of an avid family, the cost per family from content, and ranks
+the next dollar weekly (touch · call · content) by expected LTV gained — on measured rates
+where they exist and on documented assumptions where they do not, saying which (R16). The
+sequence cadence, the content slots and the upgrade pitch follow the numbers (R17–R19).
+The model and its events are `16-analytics-and-unit-economics.md`.
+
 ## 9. What the machine never does
 
 Sends without an approval or a preference; answers a family without the provider's approval; texts without consent; exceeds the cap; deletes

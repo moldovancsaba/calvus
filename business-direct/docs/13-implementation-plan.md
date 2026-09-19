@@ -66,6 +66,9 @@ instance (`platform_id`). "Measured" means a number in the build log, not a clai
 | BD-4-2 | Market radar weekly note | from catalogue stats; filed by the operator |
 | BD-4-3 | Generated pages through the connector | only ≥ 3 providers; JSON-LD; sitemap entry on the platform |
 | BD-4-4 | Operations dashboards and alerts | the five alerts in architecture §9 fire in a drill |
+| BD-4-6 | Event log and nightly metrics (`events`, `metrics_daily`, `assumptions`) | every leaf of the metrics tree has an event; a rate flips from assumption to measured at 100 observations (test) |
+| BD-4-7 | Economics screen on real metrics | the prototype's 23 inputs read from `assumptions`; measured ones are read-only and labelled |
+| BD-4-8 | Next-dollar ranking in the recap; R17–R19 as jobs | cadence, content slots and the upgrade card follow the rules (tests per rule) |
 | BD-4-5 | Intelligence recap screen | every tile names its source; "needs you" lists approvals, replied-not-applied, v1 integrations to connect |
 | BD-5-1 | `draft-campaigns` job and the campaign model | one draft per kind per card event; kinds per `09-business-logic.md` §4 |
 | BD-5-2 | Provider campaigns screen | approve / edit / skip; edit drops the AI badge; audience shown before approval |
@@ -87,6 +90,7 @@ instance (`platform_id`). "Measured" means a number in the build log, not a clai
 | B5 | Pilot provider | ask #6: one provider's real numbers | provider-view metrics |
 | B6 | Product prices | ask #4: the platform's real prices (assumed bundled base + provider-bought reach, D21) | BD-5-5 |
 | B7 | Audience data | the platform's saves and family locations through keyed endpoints | BD-5-3 |
+| B9 | Family, sign-up-source and booking events | the platform's analytics (ask #6) | BD-4-6's family leaves; the avid-family value |
 | B8 | Stripe account | the platform's merchant account and tax setup | BD-5-5 |
 
 ## 5. Risks

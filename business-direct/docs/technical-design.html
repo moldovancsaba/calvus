@@ -36,7 +36,7 @@ footer{margin-top:56px;padding-top:18px;border-top:1px solid var(--line);font-si
 </head>
 <body>
 <div class="wrap">
-<nav class="docnav" aria-label="Project documentation"><span class="docnav-brand">business.direct · docs</span><a href="index.html">Overview</a><a href="brief.html">Brief</a><a href="research.html">Research</a><a href="research-2.html">Research II</a><a href="audit.html">Audit</a><a href="sources.html">Sources</a><a href="design-system.html">Design system</a><a href="layouts.html">Layouts</a><a href="05-layout-specs.html">Layout specs</a><a href="decisions.html">Decisions</a><a href="build-log.html">Build log</a><a href="gate.html">Gate</a><a href="client-asks.html">Owner asks</a><a href="business-logic.html">Business logic</a><a href="ssot.html">SSOT</a><a href="architecture.html">Architecture</a><a href="technical-design.html" aria-current=page>Technical design</a><a href="implementation-plan.html">Plan</a><a href="token-map.html">Token map</a></nav>
+<nav class="docnav" aria-label="Project documentation"><span class="docnav-brand">business.direct · docs</span><a href="index.html">Overview</a><a href="brief.html">Brief</a><a href="research.html">Research</a><a href="research-2.html">Research II</a><a href="audit.html">Audit</a><a href="sources.html">Sources</a><a href="design-system.html">Design system</a><a href="layouts.html">Layouts</a><a href="05-layout-specs.html">Layout specs</a><a href="decisions.html">Decisions</a><a href="build-log.html">Build log</a><a href="gate.html">Gate</a><a href="client-asks.html">Owner asks</a><a href="business-logic.html">Business logic</a><a href="ssot.html">SSOT</a><a href="architecture.html">Architecture</a><a href="technical-design.html" aria-current=page>Technical design</a><a href="implementation-plan.html">Plan</a><a href="token-map.html">Token map</a><a href="analytics.html">Analytics</a></nav>
 <header><p class="eyebrow">Calvus · business.direct · project documentation</p><h1>business.direct — technical design</h1></header>
 <p><em>Written 2026-09-19 on <a href="architecture.html"><code>11-architecture.md</code></a>'s PROPOSED containers. Where the prototype
 already implements a rule, the section names the function in <code>assets/app.js</code> so a
@@ -105,6 +105,12 @@ developer can read the behaviour before the code exists.</em></p>
 <td>Intelligence</td>
 <td>tiles + by department · radar and needs-you</td>
 <td><code>platform.intelligence</code></td>
+</tr>
+<tr>
+<td>Platform</td>
+<td>Economics</td>
+<td>tiles + next-dollar table + funnel strip + 12-month plan · inputs</td>
+<td><code>platform.economics</code>, <code>econ()</code>, <code>S.econ</code></td>
 </tr>
 <tr>
 <td>Provider</td>
@@ -188,6 +194,9 @@ entitlements     { provider_id, platform_id, product_id, since, until?, stripe_s
 enquiries        { _id, platform_id, provider_id, family_id?, channel, from{name,kid,area}, text, received_at,
                    draft, state, ai, answered_at?, thread_id }
 comments         { _id, platform_id, post_id, provider_id, channel, external_id, from, text, draft, state, ai, replied_at? }
+events           { _id, platform_id, at, name, provider_id?, family_id?, draft_id?, campaign_id?, props{} }   # append-only, ADR-11
+metrics_daily    { platform_id, day, cac_managing, cac_upgraded, ltv, payback, avid_families, avid_value, content_cpa, next_dollar[], rates{} }
+assumptions      { platform_id, key, value, source: 'measured'|'benchmark'|'assumption', updated_by, updated_at }
 </code></pre>
 <p>Indexes: <code>provider_state (platform_id, stage)</code>, <code>drafts (platform_id, state, scheduled_for)</code>,
 <code>messages (family_id, sent_at)</code> for the cap query, <code>consents (family_id, channel, provider_id)</code>.</p>
@@ -323,6 +332,11 @@ cannot turn SMS on without a consent row.</p>
 <td><code>entitlements</code></td>
 <td>webhook-driven</td>
 <td>Stripe events → entitlements → stage → card flag through the connector</td>
+</tr>
+<tr>
+<td><code>metrics</code></td>
+<td>nightly 02:00</td>
+<td>roll <code>events</code> into <code>metrics_daily</code>; replace an assumption with a measured rate once ≥ 100 observations exist (R16)</td>
 </tr>
 <tr>
 <td><code>retention</code></td>
