@@ -85,5 +85,4 @@ Stages 0–5 done 2026-09-19. **Gate 1 (design system) approved (D9)**, re-issue
 English on the client's data the same day; **gate 2 (layout frames) approved (D16)**; the
 prototype built as one page with three views (`../index.html`, D17–D18) and measured at 390
 and 1440 (`06-build-log.md`, `07-gate.md`); the presentation (`bemutato.html`) and the
-technical package (`10`–`14`, stack PROPOSED) written. **Next: the owner's click-through →
-round 2.**
+technical package (`10`–`14`, stack PROPOSED) written. Tested by the owner and accepted (D20); round 2 shipped. **Next: the open asks.**

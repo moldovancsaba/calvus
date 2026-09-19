@@ -2,7 +2,7 @@
 
 | # | Item | Why |
 |---|---|---|
-| 1 | ~~Gate 2~~ — **approved 2026-09-19 (D16)**; the prototype is at `../index.html`. What to correct after clicking through it | round 2 of the build log |
+| 1 | ~~Gate 2~~ — **approved 2026-09-19 (D16)**; ~~the click-through~~ — **tested and accepted 2026-09-19 (D20)**, round 2 shipped | closed |
 | 2 | Confirm the provider persona (Brooklyn Force Soccer) or name another real provider | D13 defaults it |
 | 3 | Confirm the family persona (Park Slope parent, children 5 and 9) or give another | D13 defaults it |
 | 4 | Which integrations to show as connectable in v1: Your Field API (given), e-mail (Resend, per D26), push, SMS (TCPA consent state), Google Business Profile, Instagram/Facebook, a calendar, a booking tool | the integrations screen shows states; the list is a product decision |

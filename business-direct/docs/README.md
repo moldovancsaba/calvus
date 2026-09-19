@@ -12,12 +12,12 @@ Built to the prototyping standard (`PROTOTYPING.md`); this index is the process 
 | 02 audit | `02-audit.md` | Your Field measured: API, 252 providers, field coverage, site copy; the Hungarian reference instance; the two videos frame by frame; what DiscountDirect provides |
 | 03 sources | `03-sources.md` | What is real (the platform's public data), what is sample, what is inherited |
 | presentation | `bemutato.html` | Standalone, English, on the product's tokens: one sentence, three numbers, the four things to click with previews, what is real, the asks, what comes next |
-| 04 decisions | `04-decisions.md` | D1–D19 |
+| 04 decisions | `04-decisions.md` | D1–D20 |
 | 05 design | `design-system.html` + `../assets/tokens.css` + `../assets/components.css` | **Gate 1 approved (D9)**: tokens and components, one source |
 | 05 layouts | `05-layout-specs.md` + `layouts.html` + `frames/` | **Gate 2 approved (D16)**: platform 1440 / 390, provider 390, family 390 |
-| 06 build log | `06-build-log.md` | Round 1: the prototype — one page, three views, every screen from the frames, driven by the real catalogue |
-| 07 gate | `07-gate.md` + `../check.py` | Measured pass at 390 and 1440: overflow, tap targets, console, links |
-| 08 owner asks | `08-client-asks.md` | Seven open items (gate 2 closed) |
+| 06 build log | `06-build-log.md` | Round 1: the prototype; 1b: presentation and package; 2: editors real, tablet measured |
+| 07 gate | `07-gate.md` + `../check.py` | Measured pass at 390, 768, 1024 and 1440: overflow, tap targets, navigation, console, links |
+| 08 owner asks | `08-client-asks.md` | Seven open items (#1 closed by D20) |
 | 10 SSOT | `10-ssot.md` | glossary, enumerations, entities, settings, rules, metrics, document map |
 | 11 architecture | `11-architecture.md` | context, the platform measured, quality attributes, containers, flows, integrations, stack and ADR-1–8 — **PROPOSED** (D19) |
 | 12 technical design | `12-technical-design.md` | screens, content model, state machines, jobs, connector and adapter interfaces, drafting, i18n, operations |
@@ -75,5 +75,9 @@ already implements, a six-milestone plan with 33 issues and an honest blocked re
 and the token map with computed contrast. The brief's status and `tokens.css`'s header
 brought current.
 
-**Next.** The owner clicks through `../index.html` on the phone; corrections become round 2.
-An ADR the owner or client flips becomes D20.
+**2026-09-19 — tested, round 2 (D20).** The owner clicked through with no correction. Round
+2 made the sequence and reply editors real and measured the tablet widths (768 and 1024)
+against the layout specification — both as specified.
+
+**Next.** Owner asks #2–8 (`08-client-asks.md`); an ADR the owner or client flips becomes
+D21; a pilot provider's real numbers would replace the last sample tiles.

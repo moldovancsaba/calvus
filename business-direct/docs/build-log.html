@@ -101,6 +101,17 @@ intended screens (overview, overview, provider sales, Brooklyn Force Soccer, Wha
 <code>architecture.html</code> at 390: the two ASCII diagrams scroll inside their <code>pre</code> (682 and
 610 px content in a 358 px box), page width 390. <code>python3 check.py</code> → <code>GATE: CLEAN</code>
 (216 files, 5,827 references).</p>
+<h2>Round 2 — 2026-09-19 — editors real, tablet measured (D20)</h2>
+<p><strong>Built.</strong> The sequence card's <em>Edit</em> opens the subject and body in place (save keeps the
+sequence waiting, in the operator's words, without the AI badge; approve then sends). The
+reply card's <em>Edit</em> opens the draft in place; <em>Save and send</em> sends the edited text and
+writes it to the provider's thread. <code>assets/app.js?v=4</code>. Nothing else changed.</p>
+<p><strong>Measured</strong> (app browser pane, 2026-09-19): at <strong>1024 × 768</strong> the rail shows, tiles
+auto-fit, <code>scrollWidth</code> 1024 on every screen and view; at <strong>768 × 1024</strong> the phone
+navigation (bottom bar, no rail) as <a href="05-layout-specs.html"><code>05-layout-specs.md</code></a> specifies, tiles two-up on the
+overview, every control ≥ 44 px, <code>scrollWidth</code> 768 on every screen and view; edited
+sequence shows the new subject and loses the AI badge; edited reply appears in the
+provider's drawer thread; 0 console errors. <code>python3 check.py</code> → <code>GATE: CLEAN</code>.</p>
 <footer>Source: <code>business-direct/docs/06-build-log.md</code> · rendered by <code>docs/build.py</code>.</footer>
 </div>
 </body>

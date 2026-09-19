@@ -52,3 +52,17 @@ intended screens (overview, overview, provider sales, Brooklyn Force Soccer, Wha
 `architecture.html` at 390: the two ASCII diagrams scroll inside their `pre` (682 and
 610 px content in a 358 px box), page width 390. `python3 check.py` → `GATE: CLEAN`
 (216 files, 5,827 references).
+
+## Round 2 — 2026-09-19 — editors real, tablet measured (D20)
+
+**Built.** The sequence card's *Edit* opens the subject and body in place (save keeps the
+sequence waiting, in the operator's words, without the AI badge; approve then sends). The
+reply card's *Edit* opens the draft in place; *Save and send* sends the edited text and
+writes it to the provider's thread. `assets/app.js?v=4`. Nothing else changed.
+
+**Measured** (app browser pane, 2026-09-19): at **1024 × 768** the rail shows, tiles
+auto-fit, `scrollWidth` 1024 on every screen and view; at **768 × 1024** the phone
+navigation (bottom bar, no rail) as `05-layout-specs.md` specifies, tiles two-up on the
+overview, every control ≥ 44 px, `scrollWidth` 768 on every screen and view; edited
+sequence shows the new subject and loses the AI badge; edited reply appears in the
+provider's drawer thread; 0 console errors. `python3 check.py` → `GATE: CLEAN`.

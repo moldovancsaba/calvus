@@ -72,13 +72,15 @@ any finding. It must print <code>GATE: CLEAN</code> before a push.</p>
 </table></div>
 <h2>Measured in the browser (not automated — the standard's method, <code>PROTOTYPING.md</code> §6)</h2>
 <p>Run the page from <code>python3 -m http.server</code> at the repo root; open it in the app browser pane;
-set the viewport explicitly (390 × 844 and 1440 × 900); walk every screen and action with a
+set the viewport explicitly (390 × 844, 768 × 1024, 1024 × 768, 1440 × 900); walk every screen and action with a
 DOM script; read the console. Pass conditions and the 2026-09-19 result:</p>
 <div class="tbl"><table>
 <thead>
 <tr>
 <th>Condition</th>
 <th>390</th>
+<th>768</th>
+<th>1024</th>
 <th>1440</th>
 </tr>
 </thead>
@@ -87,24 +89,41 @@ DOM script; read the console. Pass conditions and the 2026-09-19 result:</p>
 <td><code>document.documentElement.scrollWidth == innerWidth</code> on every screen</td>
 <td>pass</td>
 <td>pass</td>
+<td>pass</td>
+<td>pass</td>
 </tr>
 <tr>
 <td>no element past the viewport except inside <code>.tbl</code> (which scrolls)</td>
+<td>pass</td>
+<td>pass</td>
 <td>pass</td>
 <td>pass</td>
 </tr>
 <tr>
 <td>every <code>button, a, select, input</code> ≥ 44 × 44</td>
 <td>pass</td>
+<td>pass</td>
 <td>n/a</td>
+<td>n/a</td>
+</tr>
+<tr>
+<td>navigation as <a href="05-layout-specs.html"><code>05-layout-specs.md</code></a> (bottom bar &lt; 1024, rail ≥ 1024)</td>
+<td>pass</td>
+<td>pass</td>
+<td>pass</td>
+<td>pass</td>
 </tr>
 <tr>
 <td>one <code>h1</code> per screen; every <code>img</code> has <code>alt</code></td>
 <td>pass</td>
 <td>pass</td>
+<td>pass</td>
+<td>pass</td>
 </tr>
 <tr>
 <td>0 console errors through the full click path</td>
+<td>pass</td>
+<td>pass</td>
 <td>pass</td>
 <td>pass</td>
 </tr>
