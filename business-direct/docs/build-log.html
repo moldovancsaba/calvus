@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>business.direct — build log — business.direct docs</title>
+<link rel="stylesheet" href="../assets/tokens.css">
+<style>/* business.direct — documentation pages on the product tokens (GDS roles, teal accent). */
+:root{--ground:var(--gds-bg-canvas,#f8fafc);--card:var(--gds-bg-surface,#fff);--ink:var(--gds-text-body,#111827);--text:#1f2937;--muted:var(--gds-text-meta,#64748b);--accent:var(--gds-brand-accent,#0f766e);--accent-deep:var(--gds-brand-accent-strong,#115e59);--line:var(--gds-border-card,#e2e8f0);--line-soft:#eef2f7;--note:var(--gds-brand-accent-tint,#e6f4f2)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--ground);color:var(--text);font-family:var(--gds-font,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif);font-size:15.5px;line-height:1.6;padding-block:0 64px;padding-inline:clamp(16px,4vw,40px)}
+.wrap{max-width:74ch;margin-inline:auto}
+.docnav{display:flex;flex-wrap:wrap;gap:4px 18px;align-items:center;padding:16px 0;border-bottom:1px solid var(--line);font-size:12px;letter-spacing:.06em;text-transform:uppercase}
+.docnav a{color:var(--muted);text-decoration:none;min-height:44px;min-width:44px;display:inline-flex;align-items:center;border-bottom:2px solid transparent}
+.docnav a:hover,.docnav a[aria-current]{color:var(--ink);border-color:var(--accent)}
+.docnav-brand{color:var(--accent-deep);font-weight:800;margin-right:6px}
+.docnav-hub{margin-left:auto}
+header{padding-block:40px 24px;border-bottom:1px solid var(--line);margin-bottom:28px}
+.eyebrow{font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--accent-deep);margin:0 0 12px;font-weight:800}
+h1,h2,h3{color:var(--ink);line-height:1.1;text-wrap:balance;margin:0;letter-spacing:-.02em}
+h1{font-size:clamp(30px,6vw,46px);font-weight:900}
+h2{font-size:clamp(23px,4vw,30px);font-weight:900;margin:48px 0 14px;padding-top:20px;border-top:1px solid var(--line)}
+h3{font-size:18px;margin:30px 0 8px;font-weight:800}
+p{margin:0 0 14px} strong{color:var(--ink);font-weight:800}
+ul,ol{padding-left:22px;margin:0 0 16px} li{margin:5px 0} li>ul{margin:6px 0 0}
+code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.86em;background:var(--note);padding:1px 5px;border-radius:4px;color:var(--ink);overflow-wrap:anywhere}
+pre{overflow-x:auto;padding:14px 16px;border:1px solid var(--line);border-radius:10px;background:var(--card);font-size:12px;line-height:1.35}
+pre code{background:none;padding:0;font-size:inherit}
+a{color:var(--accent-deep)} :focus-visible{outline:2px solid var(--accent-deep);outline-offset:2px}
+.tbl{overflow-x:auto;margin:14px 0 22px;border:1px solid var(--line);border-radius:10px;background:var(--card)}
+table{border-collapse:collapse;width:100%;font-size:13.5px;min-width:560px}
+th{text-align:left;font-weight:800;color:var(--ink);background:var(--note);padding:10px 12px;border-bottom:1px solid var(--line);font-size:11.5px;letter-spacing:.06em;text-transform:uppercase}
+td{padding:10px 12px;border-top:1px solid var(--line-soft);vertical-align:top;background:var(--card)} td:first-child{color:var(--ink)}
+footer{margin-top:56px;padding-top:18px;border-top:1px solid var(--line);font-size:12px;color:var(--muted)}
+</style>
+</head>
+<body>
+<div class="wrap">
+<nav class="docnav" aria-label="Project documentation"><span class="docnav-brand">business.direct · docs</span><a href="index.html">Overview</a><a href="brief.html">Brief</a><a href="research.html">Research</a><a href="audit.html">Audit</a><a href="sources.html">Sources</a><a href="design-system.html">Design system</a><a href="layouts.html">Layouts</a><a href="05-layout-specs.html">Layout specs</a><a href="decisions.html">Decisions</a><a href="build-log.html" aria-current=page>Build log</a><a href="gate.html">Gate</a><a href="client-asks.html">Owner asks</a></nav>
+<header><p class="eyebrow">Calvus · business.direct · project documentation</p><h1>business.direct — build log</h1></header>
+<p>Every round: what was built, from which decision, what was measured. The gate is
+<a href="gate.html"><code>07-gate.md</code></a>; the standard is <code>PROTOTYPING.md</code> §5–6.</p>
+<h2>Round 1 — 2026-09-19 — the prototype (D16–D18)</h2>
+<p><strong>Built.</strong> <code>index.html</code> + <code>assets/app.css</code> (layout, mirrors the gate-2 frames) +
+<code>assets/app.js</code> (state and screens). Tokens and components untouched since gate 1
+(<code>assets/tokens.css</code>, <code>assets/components.css</code>).</p>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>View</th>
+<th>Screens</th>
+<th>Driven by</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Platform</td>
+<td>Overview · Social publishing · Provider sales · Approvals · Providers · Generated pages · Integrations · Knowledge and rules</td>
+<td>252 real providers; the pipeline, posts, sequences, replies and AI toggles in memory</td>
+</tr>
+<tr>
+<td>Provider</td>
+<td>Today (invitation → apply → managing) · Knowledge</td>
+<td>the persona select lists the 60 first providers with an e-mail; default Brooklyn Force Soccer (D13)</td>
+</tr>
+<tr>
+<td>Family</td>
+<td>Inbox (a published post, the weekly picks digest, a provider text) · Saved · Preferences</td>
+<td>Maya, Park Slope, two children (D13); saved providers are real; nearby providers are real Park Slope rows with a next session</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>What moves.</strong> Approve / edit / skip a post → scheduled on the calendar and shown in the
+family's inbox as published. Approve the invitation → 130 providers <em>contacted</em>, three
+sample replies with drafted answers in the inbox, three providers <em>replied</em>. Approve a reply
+whose text says "yes" → <em>applied</em>. The drawer's stage chips move a provider by hand. The
+provider's "Apply to manage" → <em>managing</em> and the today screen changes shape. AI toggles
+per department; the social toggle relabels every waiting draft. The family's toggles change
+what the inbox shows; "Stop" turns everything off. Knowledge files are editable textareas.</p>
+<p><strong>Declared.</strong> The banner under the top bar says it on every screen: real providers, sample
+activity, nothing sends, state resets on reload. Every tile says <em>real</em> or <em>sample</em>.</p>
+<p><strong>Measured</strong> (app browser pane, DOM audit, 2026-09-19): at 1440 and 390 every screen
+<code>scrollWidth == innerWidth</code>; 0 elements past the viewport outside the scrolling table
+container; at 390 every button, link, select and input ≥ 44 × 44; one <code>h1</code> per screen;
+every <code>img</code> has <code>alt</code>; 0 console errors through the full click path (all screens, all
+actions, both widths). Two findings fixed on the way: the digest's meta line inherited
+<code>white-space: nowrap</code> and pushed the family inbox to 475 px; the preference toggles were
+36 px wide. <code>python3 check.py</code> → <code>GATE: CLEAN</code>.</p>
+<p><strong>Not built, on purpose.</strong> Sequence and reply editing show a toast instead of an editor (the
+copy lives in the knowledge files); tablet 1024 is the phone layout with wider cards
+(<a href="05-layout-specs.html"><code>05-layout-specs.md</code></a>); no persistence (D17).</p>
+<footer>Source: <code>business-direct/docs/06-build-log.md</code> · rendered by <code>docs/build.py</code>.</footer>
+</div>
+</body>
+</html>

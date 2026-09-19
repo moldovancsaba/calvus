@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>business.direct — what needs the owner — business.direct docs</title>
+<title>business.direct — gate — business.direct docs</title>
 <link rel="stylesheet" href="../assets/tokens.css">
 <style>/* business.direct — documentation pages on the product tokens (GDS roles, teal accent). */
 :root{--ground:var(--gds-bg-canvas,#f8fafc);--card:var(--gds-bg-surface,#fff);--ink:var(--gds-text-body,#111827);--text:#1f2937;--muted:var(--gds-text-meta,#64748b);--accent:var(--gds-brand-accent,#0f766e);--accent-deep:var(--gds-brand-accent-strong,#115e59);--line:var(--gds-border-card,#e2e8f0);--line-soft:#eef2f7;--note:var(--gds-brand-accent-tint,#e6f4f2)}
@@ -36,60 +36,82 @@ footer{margin-top:56px;padding-top:18px;border-top:1px solid var(--line);font-si
 </head>
 <body>
 <div class="wrap">
-<nav class="docnav" aria-label="Project documentation"><span class="docnav-brand">business.direct · docs</span><a href="index.html">Overview</a><a href="brief.html">Brief</a><a href="research.html">Research</a><a href="audit.html">Audit</a><a href="sources.html">Sources</a><a href="design-system.html">Design system</a><a href="layouts.html">Layouts</a><a href="05-layout-specs.html">Layout specs</a><a href="decisions.html">Decisions</a><a href="build-log.html">Build log</a><a href="gate.html">Gate</a><a href="client-asks.html" aria-current=page>Owner asks</a></nav>
-<header><p class="eyebrow">Calvus · business.direct · project documentation</p><h1>business.direct — what needs the owner</h1></header>
+<nav class="docnav" aria-label="Project documentation"><span class="docnav-brand">business.direct · docs</span><a href="index.html">Overview</a><a href="brief.html">Brief</a><a href="research.html">Research</a><a href="audit.html">Audit</a><a href="sources.html">Sources</a><a href="design-system.html">Design system</a><a href="layouts.html">Layouts</a><a href="05-layout-specs.html">Layout specs</a><a href="decisions.html">Decisions</a><a href="build-log.html">Build log</a><a href="gate.html" aria-current=page>Gate</a><a href="client-asks.html">Owner asks</a></nav>
+<header><p class="eyebrow">Calvus · business.direct · project documentation</p><h1>business.direct — gate</h1></header>
+<p><code>python3 business-direct/check.py</code> (also run by the root <code>python3 check.py</code>). Exit 1 on
+any finding. It must print <code>GATE: CLEAN</code> before a push.</p>
 <div class="tbl"><table>
 <thead>
 <tr>
-<th>#</th>
-<th>Item</th>
-<th>Why</th>
+<th>Check</th>
+<th>What</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>1</td>
-<td>~~Gate 2~~ — <strong>approved 2026-09-19 (D16)</strong>; the prototype is at <code>../index.html</code>. What to correct after clicking through it</td>
-<td>round 2 of the build log</td>
+<td>Links</td>
+<td>every relative <code>href</code>/<code>src</code> in the pages and docs resolves on disk</td>
 </tr>
 <tr>
-<td>2</td>
-<td>Confirm the provider persona (Brooklyn Force Soccer) or name another real provider</td>
-<td>D13 defaults it</td>
+<td>Anchors</td>
+<td>every cross-page <code>#anchor</code> points at an existing id</td>
 </tr>
 <tr>
-<td>3</td>
-<td>Confirm the family persona (Park Slope parent, children 5 and 9) or give another</td>
-<td>D13 defaults it</td>
+<td>Docs nav</td>
+<td>every docs page links every other docs page</td>
 </tr>
 <tr>
-<td>4</td>
-<td>Which integrations to show as connectable in v1: Your Field API (given), e-mail (Resend, per D26), push, SMS (TCPA consent state), Google Business Profile, Instagram/Facebook, a calendar, a booking tool</td>
-<td>the integrations screen shows states; the list is a product decision</td>
+<td>Data</td>
+<td><code>data/providers.json</code> parses, has ≥ 1 provider, and every provider has <code>id</code>, <code>name</code>, <code>neighborhood</code></td>
 </tr>
 <tr>
-<td>5</td>
-<td>Whether business.direct is offered by the platform (bundled, the "List your program" upsell) or bought by the provider (self-serve) — or both, as a setting like DiscountDirect's <code>inbox_mode</code></td>
-<td>the activation ladder and pricing states</td>
-</tr>
-<tr>
-<td>6</td>
-<td>Whether <code>claim-requests</code>, <code>demand-capture</code> and <code>scout/recommend</code> may be called by the prototype (read-only today)</td>
-<td>integrations screen honesty</td>
-</tr>
-<tr>
-<td>7</td>
-<td>Access to the platform's own analytics (saves, plan usage, newsletter list size) for the intelligence tiles</td>
-<td>today every non-catalogue number is sample</td>
-</tr>
-<tr>
-<td>8</td>
-<td>The provider's real numbers, if a pilot provider agrees: replies, trials booked, no-shows</td>
-<td>the provider view's tiles</td>
+<td>Script</td>
+<td><code>assets/app.js</code> parses (<code>node --check</code>) when node is installed</td>
 </tr>
 </tbody>
 </table></div>
-<footer>Source: <code>business-direct/docs/08-client-asks.md</code> · rendered by <code>docs/build.py</code>.</footer>
+<h2>Measured in the browser (not automated — the standard's method, <code>PROTOTYPING.md</code> §6)</h2>
+<p>Run the page from <code>python3 -m http.server</code> at the repo root; open it in the app browser pane;
+set the viewport explicitly (390 × 844 and 1440 × 900); walk every screen and action with a
+DOM script; read the console. Pass conditions and the 2026-09-19 result:</p>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>Condition</th>
+<th>390</th>
+<th>1440</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>document.documentElement.scrollWidth == innerWidth</code> on every screen</td>
+<td>pass</td>
+<td>pass</td>
+</tr>
+<tr>
+<td>no element past the viewport except inside <code>.tbl</code> (which scrolls)</td>
+<td>pass</td>
+<td>pass</td>
+</tr>
+<tr>
+<td>every <code>button, a, select, input</code> ≥ 44 × 44</td>
+<td>pass</td>
+<td>n/a</td>
+</tr>
+<tr>
+<td>one <code>h1</code> per screen; every <code>img</code> has <code>alt</code></td>
+<td>pass</td>
+<td>pass</td>
+</tr>
+<tr>
+<td>0 console errors through the full click path</td>
+<td>pass</td>
+<td>pass</td>
+</tr>
+</tbody>
+</table></div>
+<p>The round's findings and fixes are in <a href="build-log.html"><code>06-build-log.md</code></a>.</p>
+<footer>Source: <code>business-direct/docs/07-gate.md</code> · rendered by <code>docs/build.py</code>.</footer>
 </div>
 </body>
 </html>

@@ -36,7 +36,7 @@ footer{margin-top:56px;padding-top:18px;border-top:1px solid var(--line);font-si
 </head>
 <body>
 <div class="wrap">
-<nav class="docnav" aria-label="Project documentation"><span class="docnav-brand">business.direct · docs</span><a href="index.html">Overview</a><a href="brief.html">Brief</a><a href="research.html">Research</a><a href="audit.html">Audit</a><a href="sources.html">Sources</a><a href="design-system.html">Design system</a><a href="layouts.html">Layouts</a><a href="05-layout-specs.html">Layout specs</a><a href="decisions.html" aria-current=page>Decisions</a><a href="client-asks.html">Owner asks</a></nav>
+<nav class="docnav" aria-label="Project documentation"><span class="docnav-brand">business.direct · docs</span><a href="index.html">Overview</a><a href="brief.html">Brief</a><a href="research.html">Research</a><a href="audit.html">Audit</a><a href="sources.html">Sources</a><a href="design-system.html">Design system</a><a href="layouts.html">Layouts</a><a href="05-layout-specs.html">Layout specs</a><a href="decisions.html" aria-current=page>Decisions</a><a href="build-log.html">Build log</a><a href="gate.html">Gate</a><a href="client-asks.html">Owner asks</a></nav>
 <header><p class="eyebrow">Calvus · business.direct · project documentation</p><h1>business.direct — decision register</h1></header>
 <div class="tbl"><table>
 <thead>
@@ -153,6 +153,27 @@ footer{margin-top:56px;padding-top:18px;border-top:1px solid var(--line);font-si
 <td>Two components added for D14 — the <strong>social post card</strong> (channel, listing, copy, media slot, state) and the <strong>pipeline stage strip</strong> (identified → contacted → replied → applied → managing → upgraded) — PROPOSED, reviewed with gate 2</td>
 <td>Calvus</td>
 <td>the approved set had no social or pipeline component</td>
+</tr>
+<tr>
+<td>D16</td>
+<td>2026-09-19</td>
+<td><strong>Gate 2 approved</strong> — the four layout frames and <a href="05-layout-specs.html"><code>05-layout-specs.md</code></a> as issued; build starts</td>
+<td>owner: "Approved and Continue"</td>
+<td>D15's two components enter the approved set</td>
+</tr>
+<tr>
+<td>D17</td>
+<td>2026-09-19</td>
+<td>The prototype is <strong>one page, three views</strong> (<code>index.html</code> + <code>assets/app.js</code>): the role switch and a persona select in the top bar; every screen rendered from <code>data/providers.json</code>; approvals, pipeline stages, replies, saves and preferences live in memory and reset on reload; nothing sends, publishes or connects</td>
+<td>Calvus</td>
+<td>one page keeps the frames' shell and the state in one place; a per-view page set would need shared state anyway</td>
+</tr>
+<tr>
+<td>D18</td>
+<td>2026-09-19</td>
+<td><strong>Sample activity is generated from the real catalogue, not invented rows</strong>: social drafts come from providers that have an image and an announcement, a trial offer or a next session; the invitation goes to the 130 providers with an e-mail on their card; the three sample replies carry real provider names and our invented words; the family digest is her saved providers plus real Park Slope providers with a published next session</td>
+<td>Calvus</td>
+<td>keeps "what is real / what is sample" checkable (<a href="sources.html"><code>03-sources.md</code></a>)</td>
 </tr>
 </tbody>
 </table></div>

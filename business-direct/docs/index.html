@@ -36,7 +36,7 @@ footer{margin-top:56px;padding-top:18px;border-top:1px solid var(--line);font-si
 </head>
 <body>
 <div class="wrap">
-<nav class="docnav" aria-label="Project documentation"><span class="docnav-brand">business.direct · docs</span><a href="index.html" aria-current=page>Overview</a><a href="brief.html">Brief</a><a href="research.html">Research</a><a href="audit.html">Audit</a><a href="sources.html">Sources</a><a href="design-system.html">Design system</a><a href="layouts.html">Layouts</a><a href="05-layout-specs.html">Layout specs</a><a href="decisions.html">Decisions</a><a href="client-asks.html">Owner asks</a></nav>
+<nav class="docnav" aria-label="Project documentation"><span class="docnav-brand">business.direct · docs</span><a href="index.html" aria-current=page>Overview</a><a href="brief.html">Brief</a><a href="research.html">Research</a><a href="audit.html">Audit</a><a href="sources.html">Sources</a><a href="design-system.html">Design system</a><a href="layouts.html">Layouts</a><a href="05-layout-specs.html">Layout specs</a><a href="decisions.html">Decisions</a><a href="build-log.html">Build log</a><a href="gate.html">Gate</a><a href="client-asks.html">Owner asks</a></nav>
 <header><p class="eyebrow">Calvus · business.direct · project documentation</p><h1>business.direct — project documentation</h1></header>
 <p>An automated marketing machine for B2B2C listing platforms — the one-person sales and
 marketing team for a listed business, run by the platform, with the consumer as the
@@ -74,7 +74,7 @@ Built to the prototyping standard (<code>PROTOTYPING.md</code>); this index is t
 <tr>
 <td>04 decisions</td>
 <td><a href="decisions.html"><code>04-decisions.md</code></a></td>
-<td>D1–D13</td>
+<td>D1–D18</td>
 </tr>
 <tr>
 <td>05 design</td>
@@ -84,17 +84,27 @@ Built to the prototyping standard (<code>PROTOTYPING.md</code>); this index is t
 <tr>
 <td>05 layouts</td>
 <td><a href="05-layout-specs.html"><code>05-layout-specs.md</code></a> + <code>layouts.html</code> + <code>frames/</code></td>
-<td><strong>Gate 2</strong>: platform 1440 / 390, provider 390, family 390 — PROPOSED</td>
+<td><strong>Gate 2 approved (D16)</strong>: platform 1440 / 390, provider 390, family 390</td>
+</tr>
+<tr>
+<td>06 build log</td>
+<td><a href="build-log.html"><code>06-build-log.md</code></a></td>
+<td>Round 1: the prototype — one page, three views, every screen from the frames, driven by the real catalogue</td>
+</tr>
+<tr>
+<td>07 gate</td>
+<td><a href="gate.html"><code>07-gate.md</code></a> + <code>../check.py</code></td>
+<td>Measured pass at 390 and 1440: overflow, tap targets, console, links</td>
 </tr>
 <tr>
 <td>08 owner asks</td>
 <td><a href="client-asks.html"><code>08-client-asks.md</code></a></td>
-<td>Eight items, the first being gate 2</td>
+<td>Seven open items (gate 2 closed)</td>
 </tr>
 <tr>
-<td>06, 07, 10–14</td>
+<td>10–14</td>
 <td>—</td>
-<td>written when the stage arrives: build log with the first page, gate with the sweep, technical package after gate 2</td>
+<td>technical package, written after the owner has clicked through the prototype</td>
 </tr>
 </tbody>
 </table></div>
@@ -123,8 +133,18 @@ own listing and more. Two components added for them (D15), reviewed with gate 2.
 <p><strong>2026-09-19 — gate 2 built.</strong> Four frames from the approved components and the real
 providers: platform 1440 and 390, provider 390, family 390; the layout specification with
 the tablet resolution and the assumptions the open asks force.</p>
-<p><strong>Next.</strong> Gate 2 — the owner's approval of <code>layouts.html</code>. Then the first page: the platform
-overview, generated from the data.</p>
+<p><strong>2026-09-19 — gate 2 approved (D16), the prototype built (D17–D18).</strong> "Approved and
+Continue." One page, three views (<code>../index.html</code>, <code>assets/app.js</code>): the platform's nine
+screens (overview, social publishing with a week calendar and queue, provider sales with the
+pipeline strip, sequences and reply inbox, approvals, providers with chips, search and a
+detail drawer, generated pages, integrations, knowledge and rules), the provider's today and
+knowledge, the family's inbox, saved and preferences. Every approval moves state: an approved
+post lands on the calendar and in the family's inbox; the approved invitation moves 130
+providers to <em>contacted</em> and three sample replies arrive; "Apply to manage" in the provider
+view moves the persona to <em>managing</em>. Measured at 390 and 1440 (<a href="build-log.html"><code>06-build-log.md</code></a>,
+<a href="gate.html"><code>07-gate.md</code></a>); gate clean.</p>
+<p><strong>Next.</strong> The owner clicks through <code>../index.html</code> on the phone; corrections become round 2.
+Then the presentation page and the technical package (10–14, PROPOSED on D26's stack).</p>
 <footer>Source: <code>business-direct/docs/README.md</code> · rendered by <code>docs/build.py</code>.</footer>
 </div>
 </body>

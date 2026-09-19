@@ -11,11 +11,13 @@ Built to the prototyping standard (`PROTOTYPING.md`); this index is the process 
 | 01 research | `01-research.md` | Sourced: reputation and claiming, speed to lead, reminders, digests, generated pages, marketplace monetisation, AI adoption and human-in-the-loop, EU AI Act Art. 50, US CAN-SPAM and TCPA, the Hungarian reference market |
 | 02 audit | `02-audit.md` | Your Field measured: API, 252 providers, field coverage, site copy; the Hungarian reference instance; the two videos frame by frame; what DiscountDirect provides |
 | 03 sources | `03-sources.md` | What is real (the platform's public data), what is sample, what is inherited |
-| 04 decisions | `04-decisions.md` | D1–D13 |
+| 04 decisions | `04-decisions.md` | D1–D18 |
 | 05 design | `design-system.html` + `../assets/tokens.css` + `../assets/components.css` | **Gate 1 approved (D9)**: tokens and components, one source |
-| 05 layouts | `05-layout-specs.md` + `layouts.html` + `frames/` | **Gate 2**: platform 1440 / 390, provider 390, family 390 — PROPOSED |
-| 08 owner asks | `08-client-asks.md` | Eight items, the first being gate 2 |
-| 06, 07, 10–14 | — | written when the stage arrives: build log with the first page, gate with the sweep, technical package after gate 2 |
+| 05 layouts | `05-layout-specs.md` + `layouts.html` + `frames/` | **Gate 2 approved (D16)**: platform 1440 / 390, provider 390, family 390 |
+| 06 build log | `06-build-log.md` | Round 1: the prototype — one page, three views, every screen from the frames, driven by the real catalogue |
+| 07 gate | `07-gate.md` + `../check.py` | Measured pass at 390 and 1440: overflow, tap targets, console, links |
+| 08 owner asks | `08-client-asks.md` | Seven open items (gate 2 closed) |
+| 10–14 | — | technical package, written after the owner has clicked through the prototype |
 
 Rendered by `build.py` (`python3 business-direct/docs/build.py`); gate `python3 business-direct/check.py`
 (also run by the root `check.py`). Data: `python3 business-direct/data/fetch-yourfield.py`
@@ -49,5 +51,16 @@ own listing and more. Two components added for them (D15), reviewed with gate 2.
 providers: platform 1440 and 390, provider 390, family 390; the layout specification with
 the tablet resolution and the assumptions the open asks force.
 
-**Next.** Gate 2 — the owner's approval of `layouts.html`. Then the first page: the platform
-overview, generated from the data.
+**2026-09-19 — gate 2 approved (D16), the prototype built (D17–D18).** "Approved and
+Continue." One page, three views (`../index.html`, `assets/app.js`): the platform's nine
+screens (overview, social publishing with a week calendar and queue, provider sales with the
+pipeline strip, sequences and reply inbox, approvals, providers with chips, search and a
+detail drawer, generated pages, integrations, knowledge and rules), the provider's today and
+knowledge, the family's inbox, saved and preferences. Every approval moves state: an approved
+post lands on the calendar and in the family's inbox; the approved invitation moves 130
+providers to *contacted* and three sample replies arrive; "Apply to manage" in the provider
+view moves the persona to *managing*. Measured at 390 and 1440 (`06-build-log.md`,
+`07-gate.md`); gate clean.
+
+**Next.** The owner clicks through `../index.html` on the phone; corrections become round 2.
+Then the presentation page and the technical package (10–14, PROPOSED on D26's stack).
