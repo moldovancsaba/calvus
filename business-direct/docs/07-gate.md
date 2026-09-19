@@ -11,6 +11,7 @@ any finding. It must print `GATE: CLEAN` before a push.
 | Data | `data/providers.json` parses, has ≥ 1 provider, and every provider has `id`, `name`, `borough` |
 | Script | `assets/app.js` parses (`node --check`) when node is installed |
 | Consistency | the decision range in the docs index and the SSOT equals the register's last D-number; the index's issue count equals the plan's; no document still cites "ask #n" once the register moved it to the prerequisites (D34) — added 2026-09-19 after the owner found deprecated statements the phrase scan could not see |
+| Rules map | every rule in the SSOT is stated in the business logic (§8e) — a rule without a business-logic home is a finding |
 | Stale phrases | the docs, pages and script carry nothing that was true once — "awaits the owner", "coming soon", "not yet built", "inert here", "will be built", a proposed gate; the register, the build log, this page and the process log are exempt (added after round 4, when three rounds in one day left four such phrases behind) |
 
 ## Measured in the browser (not automated — the standard's method, `PROTOTYPING.md` §6)

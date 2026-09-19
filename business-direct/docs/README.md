@@ -198,4 +198,13 @@ and hub summaries, and every "ask #n" reference outside the register — now the
 prerequisite code. The gate gained a consistency check (decision range, issue count, ask
 references) and was proved to fire on planted drift.
 
+**2026-09-19 — business logic and system consistency.** Checked rule by rule and setting by
+setting against the prototype: the provider's *apply* skipped the *applied* stage the
+business logic and the state machine describe (fixed: applied by the provider, managing by
+the platform, both in the history); the SSOT's opt-out setting said ten business days while
+the policy says one; its campaign-audience setting predated Q3; family defaults were not a
+setting; the Draft entity lacked `media`, and AutoApproval and Recommendation were not
+entities. The business logic gained a rules map (§8e) and the gate a check that every SSOT
+rule is stated there.
+
 **Next.** Present. After acceptance, the prerequisites checklist.

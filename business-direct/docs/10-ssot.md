@@ -73,7 +73,7 @@ implementation of the enumerations and state machines below.*
 |---|---|---|
 | **Provider** | `id`, `name`, `category`, `borough`, `neighborhood`, `address`, `lat`, `lng`, `activityTypes[]`, `primaryActivityType`, `ageRanges[]`, `ageMinMonths`, `ageMaxMonths`, `shortDescription`, `longDescription`, `price{amount,currency,unit,evidence}`, `website`, `phone`, `email`, `image`, `dayTimeTags[]`, `venueModel`, `sessions[{id,title,registration}]`, `nextOccurrence`, `announcement{title,description,badge}`, `bookingEnabled`, `trial{available,free,text}`, `rating`, `reviewCount`, `badges[]`, `claimStatus`, `verifiedFields[]`, `updatedAt`, `publishedAt`, `sourceCount` | the platform owns it; business.direct reads it (`fetch-yourfield.py`). One of 252 has no neighbourhood; the borough stands in |
 | **ProviderState** (ours) | `providerId`, `stage`, `stageChangedAt`, `stageChangedBy` (`sequence` / `reply` / `operator` / `provider`), `thread[]` | in memory today (`S.stage`, `S.threads`) |
-| **Draft** | `id`, `kind` (`post` / `sequence` / `reply` / `digest`), `providerId?`, `channels[]`, `copy`, `media?`, `state`, `ai` (bool: AI-drafted), `scheduledFor?`, `why?` | `S.posts`, `S.sequences`, `S.replies` |
+| **Draft** | `id`, `kind` (`post` / `sequence` / `reply` / `digest`), `providerId?`, `channels[]`, `copy`, `media{kind: real / generated, src}` (posts, D28), `state`, `ai` (bool: AI-drafted), `editing?`, `scheduledFor?`, `why?` | `S.posts`, `S.sequences`, `S.replies` |
 | **Sequence** | `id`, `name`, `to[providerId]`, `steps[]`, `subject`, `body` (merge fields `{name}`, `{first name}`, `{neighborhood}`, `{activity}`, `{link}`), `state`, `why` | `S.sequences` |
 | **Family** | `name`, `neighborhood`, `borough`, `kids[{age}]` (ages only, R24), `saved[providerId]`, `prefs{picks,alerts,nearby,sms}`, `smsConsent[providerId]` | the platform owns the account; business.direct owns preferences and consent records |
 | **KnowledgeFile** | `path`, `text`, `owner` (`platform` / `providerId`) | `S.knowledge` |
@@ -89,7 +89,9 @@ implementation of the enumerations and state machines below.*
 | **StageChange** | `providerId`, `from`, `to`, `by` (`sequence` / `reply` / `family ask` / `provider` / `operator`), `at`, `reason?` | `S.history`; production: `events` |
 | **Policy** | `platform_id`, `client`, `instance`, `contact`, `postalAddress`, `jurisdictions[]`, `laws[]`, `audienceModel`, `ageOfConsent`, `childData`, `minors{profiling,targetedAds,quietHours}`, `channels{}`, `consentText{}`, `defaults`, `cap`, `optOutSla`, `aiDisclosure`, `retention`, `privacyPolicy{url,lastUpdated,emailAlerts,savesOptIn,childrenNone}`, `dpia` | `S.policies[instance]`; one per instance (D32) |
 | **Experiment** | `name`, `treat`, `control`, `weeks`, `week`, `state` | `S.experiment` |
-| **Entitlement** | `providerId`, `productId`, `since`, `billingRef?` | `S.bought` |
+| **Entitlement** | `providerId`, `productId`, `since`, `billingRef?`, `attributedTo?` (the delivered result that preceded the purchase, Q8) | `S.bought`, `S.attributed` |
+| **AutoApproval** | `owner`, `department`, `cleanWeeks`, `earned` (R25) | `S.auto` |
+| **Recommendation** | `id`, `what`, `why`, `auto` (safe to run), `go?`, `act?` | `recommend()` (D33) |
 
 ## 4. Settings the prototype fixes
 
@@ -102,10 +104,11 @@ implementation of the enumerations and state machines below.*
 | Digest day and time | Sunday 18:00 | research §4 |
 | Generated-page threshold | ≥ 3 providers | no thin pages, research §5 |
 | Invitation sequence | three touches 3–4 days apart (invitation → "a family saved you" → reminder), then the call task for phone-only providers (D28) | research II §5.1 |
-| Opt-out handling | every provider e-mail carries an opt-out; honoured within 10 business days | CAN-SPAM, research §8 |
+| Opt-out handling | every provider e-mail carries an opt-out and the postal address; honoured within one business day (the law allows 10) | CAN-SPAM, research §8, policy `optOutSla` |
 | SMS to families | only with written consent per provider | TCPA, research §8 |
 | AI drafts | optional per department; default on for social, sales, radar, provider conversations (and so campaigns); off for picks and pages | D6 |
-| Campaign audience | saved families + nearby families in the age range; the provider cannot widen it | D22 |
+| Campaign audience | saved families + nearby families in the age range who turned "new provider nearby" on; the provider cannot widen it | D22, D30 (Q3) |
+| Family defaults | weekly picks on, saved-provider alerts on, nearby off, SMS off until written consent for a provider (the demo family consented on 2026-09-02) | R28, policy `defaults` |
 | Products and prices | the platform's three products; prices sample until the platform sets them | D21 |
 | v1 integrations | platform API, Resend, Instagram + Facebook, platform push | D21 |
 | AI-content marking | drafts carry the ✦ AI badge internally; published content is marked per EU AI Act Art. 50 where it applies (from 2 Aug 2026) | research §7 |

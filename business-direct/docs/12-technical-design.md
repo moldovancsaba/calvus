@@ -23,7 +23,7 @@ developer can read the behaviour before the code exists.*
 | Platform | Knowledge and rules | file editors | `platform.knowledge`, `kfiles` |
 | Platform | Intelligence | tiles + by department · radar and needs-you | `platform.intelligence` |
 | Platform | Economics | tiles + next-dollar table + funnel strip + 12-month plan · inputs | `platform.economics`, `econ()`, `S.econ` |
-| Provider | Today | hero card + (invitation · or · tiles, waiting, team, knowledge) | `provider.today` |
+| Provider | Today | hero card + (invitation · or · tiles, waiting enquiries, the four departments with earned auto-approval, the products when R19 allows, knowledge) | `provider.today` |
 | Provider | Conversations | tiles + enquiry cards with drafted answers | `provider.conversations`, `enquiriesFor`, `enquiryCard` |
 | Provider | Campaigns | approval cards built from the card | `provider.campaigns`, `campaignsFor`, `campaignCard` |
 | Provider | Media | recording upload (inert) → clips into the platform's queue; the card photo | `provider.media`, `upload` action |

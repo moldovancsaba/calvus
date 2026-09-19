@@ -11,6 +11,7 @@ Exit 1 on any finding. Covers the pages and the docs:
    "will be built", a "PROPOSED" gate — the register and the build log may keep history
 7. consistency: the decision range in README and the SSOT equals the register's last D-number; the
    README's issue count equals the plan's; no doc still cites "ask #n" after D34 (cite P-n)
+8. every rule in the SSOT is stated in the business logic (the rules map, §8e)
 """
 import re, sys, json, shutil, subprocess, pathlib
 HERE = pathlib.Path(__file__).resolve().parent
@@ -70,6 +71,10 @@ for f in sorted(docs.glob("*.md")) + [HERE / "assets/app.js"]:
     for m in _re.finditer(r"\basks? #\d", f.read_text(encoding="utf-8")):
         findings.append(f"stale reference  {f.relative_to(ROOT)}: \"{m.group(0)}…\" — asks moved to the prerequisites (D34); cite P-n")
         break
+
+rules = set(_re.findall(r"^\| (R\d+) \|", (docs / "10-ssot.md").read_text(encoding="utf-8"), _re.M))
+cited = set(_re.findall(r"\b(R\d+)\b", (docs / "09-business-logic.md").read_text(encoding="utf-8")))
+for r in sorted(rules - cited, key=lambda x: int(x[1:])): findings.append(f"unmapped rule  SSOT {r} is not stated in docs/09-business-logic.md")
 
 if shutil.which("node"):
     r = subprocess.run(["node", "--check", str(HERE / "assets/app.js")], capture_output=True, text=True)

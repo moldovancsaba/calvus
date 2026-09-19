@@ -93,7 +93,7 @@ stay "needs your judgement". <strong>Advanced</strong> is for a professional: ev
 every rule. Both carry a <em>What is this?</em> panel per screen, a <em>How to use</em> screen, and
 <em>Templates</em> — sequences, posts, campaigns, knowledge files and policy records for other
 client types — that copy into the machine with one press. The same rules apply in both;
-Simple changes what is shown, not what may happen.</p>
+Simple changes what is shown, not what may happen (R29).</p>
 <h2>3. The departments (D6) and what each may do alone</h2>
 <div class="tbl"><table>
 <thead>
@@ -151,11 +151,11 @@ Simple changes what is shown, not what may happen.</p>
 </tr>
 </tbody>
 </table></div>
-<p>AI is optional per department (R10). With it off, every draft is the listing's own text or
+<p>Nothing leaves without a person's approval or an earned auto-approval (R1, R25). AI is optional per department (R10). With it off, every draft is the listing's own text or
 a template with merge fields; with it on, the knowledge files are the prompt and the draft
 carries the ✦ badge until a person edits it.</p>
 <h2>4. Provider campaigns (phase 2, D22)</h2>
-<p>A campaign is a provider's message to families, built from the provider's own card:</p>
+<p>A campaign is a provider's message to families, built from the provider's own card (R11):</p>
 <div class="tbl"><table>
 <thead>
 <tr>
@@ -199,10 +199,10 @@ the prototype (prerequisite P-5 — the platform's saves data).</p>
 <h2>4b. Conversations (phase 3, D25)</h2>
 <p>An <strong>enquiry</strong> is a family's message to a provider on any channel the provider exposes:
 the platform's message, e-mail, a missed call (the machine texts back). The machine drafts
-the answer from the provider's <code>knowledge/faq.md</code> and <code>offer.md</code> and the card (next
+the answer from the provider's <code>knowledge/faq.md</code> and <code>offer.md</code> (R8) and the card (next
 session, trial policy, ages); the provider approves, edits or skips; the answer goes back on
 the same channel and into the family's inbox thread. Reply time is measured from the
-enquiry to the sent answer — the metric the provider sees first. A family asks from her
+enquiry to the sent answer — the metric the provider sees first (R14). A family asks from her
 saved providers; the machine never lets a provider message a family who has not written
 first or saved it (R11). <strong>An enquiry to a provider that has not claimed its page</strong> does
 not vanish: it becomes the sales sequence's strongest touch — "a family asked about you,
@@ -242,9 +242,9 @@ program" copy:</p>
 </tr>
 </tbody>
 </table></div>
-<p>Choosing one moves the provider to <em>upgraded</em>; the platform's intelligence screen sums the
-sample revenue. Billing is Stripe (ADR-9, PROPOSED); the platform invoices, business.direct
-records the entitlement. No discounting logic — that is DiscountDirect's domain (D5).</p>
+<p>Choosing one moves the provider to <em>upgraded</em>; it changes where the provider appears, never
+what a family receives (R12); the platform's intelligence screen sums the sample revenue. Billing is Stripe (ADR-9, PROPOSED); the platform invoices, business.direct
+records the entitlement. No discounting logic — that is DiscountDirect's domain (D5, R13).</p>
 <h2>6. Families: preferences, consent, cap, stop</h2>
 <ul>
 <li><strong>Preferences</strong> per channel: weekly picks (e-mail), saved-provider alerts (push), new
@@ -425,6 +425,109 @@ The model and its events are <a href="analytics.html"><code>16-analytics-and-uni
 <tr>
 <td>Voice agents pay back fastest on inbound, after-hours and follow-ups; Yelp Receptionist at $99 (research II §5.1, III §1)</td>
 <td>missed-call text-back stays in v1; voice remains "later" until Twilio and consent (prerequisites P-11 and P-12)</td>
+</tr>
+</tbody>
+</table></div>
+<h2>8e. The rules, mapped (every SSOT rule → where this document states it)</h2>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>Rule</th>
+<th>Where</th>
+<th>Rule</th>
+<th>Where</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>R1 human gate on everything</td>
+<td>§3, §9</td>
+<td>R16 next-dollar ranking on measured or declared rates</td>
+<td>§8b</td>
+</tr>
+<tr>
+<td>R2 who, why, how to stop</td>
+<td>§6, §7</td>
+<td>R17 sequence cadence follows the data</td>
+<td>§8b</td>
+</tr>
+<tr>
+<td>R3 the cap: 4 provider messages a month</td>
+<td>§6</td>
+<td>R18 content slots follow families-per-post</td>
+<td>§8b, §8c</td>
+</tr>
+<tr>
+<td>R4 consent per channel, per provider for SMS</td>
+<td>§6</td>
+<td>R19 the upgrade pitch at delivered value, 60-day floor</td>
+<td>§5, §8d</td>
+</tr>
+<tr>
+<td>R5 provider e-mail without consent, opt-out honoured, "not my program" stops</td>
+<td>§7</td>
+<td>R20 credentials and disclosure on generated and AI-drafted content</td>
+<td>§8c, §8d</td>
+</tr>
+<tr>
+<td>R6 generated pages only with ≥ 3 providers</td>
+<td>§3, §8c</td>
+<td>R21 real footage beats generation</td>
+<td>§8c</td>
+</tr>
+<tr>
+<td>R7 every non-catalogue figure labelled sample</td>
+<td>§1 (the machine says what is real), §8</td>
+<td>R22 propensity score orders sequences and the call list</td>
+<td>§8c, §8d</td>
+</tr>
+<tr>
+<td>R8 knowledge files read before every draft</td>
+<td>§3</td>
+<td>R23 the sending guard</td>
+<td>§7, §8d</td>
+</tr>
+<tr>
+<td>R9 stages move on events; a person may move any, logged</td>
+<td>§2, §8d</td>
+<td>R24 a child is an age, never a name</td>
+<td>§4b, §6b</td>
+</tr>
+<tr>
+<td>R10 AI optional per department</td>
+<td>§3</td>
+<td>R25 batch and earned auto-approval</td>
+<td>§3, §8d</td>
+</tr>
+<tr>
+<td>R11 campaigns reach saved and opted-in nearby families only</td>
+<td>§4, §4b</td>
+<td>R26 the policy gate</td>
+<td>§6b</td>
+</tr>
+<tr>
+<td>R12 an upgrade changes where the provider appears, never what a family receives</td>
+<td>§5</td>
+<td>R27 no profiling or targeting of minors</td>
+<td>§6b</td>
+</tr>
+<tr>
+<td>R13 the machine never discounts</td>
+<td>§5</td>
+<td>R28 high-privacy defaults</td>
+<td>§6, §6b</td>
+</tr>
+<tr>
+<td>R14 a drafted answer within a minute; reply time from the enquiry</td>
+<td>§4b</td>
+<td>R29 the one press runs only safe recommendations</td>
+<td>§2b</td>
+</tr>
+<tr>
+<td>R15 never generate a person or a child</td>
+<td>§8c, §9</td>
+<td></td>
+<td></td>
 </tr>
 </tbody>
 </table></div>

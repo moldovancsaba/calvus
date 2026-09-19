@@ -41,7 +41,7 @@ stay "needs your judgement". **Advanced** is for a professional: every screen, e
 every rule. Both carry a *What is this?* panel per screen, a *How to use* screen, and
 *Templates* — sequences, posts, campaigns, knowledge files and policy records for other
 client types — that copy into the machine with one press. The same rules apply in both;
-Simple changes what is shown, not what may happen.
+Simple changes what is shown, not what may happen (R29).
 
 ## 3. The departments (D6) and what each may do alone
 
@@ -57,13 +57,13 @@ Simple changes what is shown, not what may happen.
 | Campaigns (provider) | draft trial, open-spots, announcement and registration campaigns from the card; size the audience | approve, edit, skip |
 | Page and visibility (provider) | keep sessions, trial and photos on the card current | choose an upgrade |
 
-AI is optional per department (R10). With it off, every draft is the listing's own text or
+Nothing leaves without a person's approval or an earned auto-approval (R1, R25). AI is optional per department (R10). With it off, every draft is the listing's own text or
 a template with merge fields; with it on, the knowledge files are the prompt and the draft
 carries the ✦ badge until a person edits it.
 
 ## 4. Provider campaigns (phase 2, D22)
 
-A campaign is a provider's message to families, built from the provider's own card:
+A campaign is a provider's message to families, built from the provider's own card (R11):
 
 | Kind | Built when | Default audience | Default channels |
 |---|---|---|---|
@@ -81,10 +81,10 @@ the prototype (prerequisite P-5 — the platform's saves data).
 
 An **enquiry** is a family's message to a provider on any channel the provider exposes:
 the platform's message, e-mail, a missed call (the machine texts back). The machine drafts
-the answer from the provider's `knowledge/faq.md` and `offer.md` and the card (next
+the answer from the provider's `knowledge/faq.md` and `offer.md` (R8) and the card (next
 session, trial policy, ages); the provider approves, edits or skips; the answer goes back on
 the same channel and into the family's inbox thread. Reply time is measured from the
-enquiry to the sent answer — the metric the provider sees first. A family asks from her
+enquiry to the sent answer — the metric the provider sees first (R14). A family asks from her
 saved providers; the machine never lets a provider message a family who has not written
 first or saved it (R11). **An enquiry to a provider that has not claimed its page** does
 not vanish: it becomes the sales sequence's strongest touch — "a family asked about you,
@@ -107,9 +107,9 @@ program" copy:
 | Camp placement | the camps guide and the March "camps near you" digest | $149 / season |
 | Local discovery profile | photos, coach bio, reviews, booking on the card | $29 / month |
 
-Choosing one moves the provider to *upgraded*; the platform's intelligence screen sums the
-sample revenue. Billing is Stripe (ADR-9, PROPOSED); the platform invoices, business.direct
-records the entitlement. No discounting logic — that is DiscountDirect's domain (D5).
+Choosing one moves the provider to *upgraded*; it changes where the provider appears, never
+what a family receives (R12); the platform's intelligence screen sums the sample revenue. Billing is Stripe (ADR-9, PROPOSED); the platform invoices, business.direct
+records the entitlement. No discounting logic — that is DiscountDirect's domain (D5, R13).
 
 ## 6. Families: preferences, consent, cap, stop
 
@@ -208,6 +208,26 @@ The model and its events are `16-analytics-and-unit-economics.md`.
 | Marketplace experiments must be clustered; MMM waits under $1 M spend (research III §3) | the first experiment is a neighbourhood holdout (content on in one neighbourhood, off in a comparable one, four weeks); attribution stays last-touch until then |
 | Cohorts, not averages (research III §2) | cohort LTV per acquisition channel shown as *assumption* until 100 observations, then *measured* (R16) |
 | Voice agents pay back fastest on inbound, after-hours and follow-ups; Yelp Receptionist at $99 (research II §5.1, III §1) | missed-call text-back stays in v1; voice remains "later" until Twilio and consent (prerequisites P-11 and P-12) |
+
+## 8e. The rules, mapped (every SSOT rule → where this document states it)
+
+| Rule | Where | Rule | Where |
+|---|---|---|---|
+| R1 human gate on everything | §3, §9 | R16 next-dollar ranking on measured or declared rates | §8b |
+| R2 who, why, how to stop | §6, §7 | R17 sequence cadence follows the data | §8b |
+| R3 the cap: 4 provider messages a month | §6 | R18 content slots follow families-per-post | §8b, §8c |
+| R4 consent per channel, per provider for SMS | §6 | R19 the upgrade pitch at delivered value, 60-day floor | §5, §8d |
+| R5 provider e-mail without consent, opt-out honoured, "not my program" stops | §7 | R20 credentials and disclosure on generated and AI-drafted content | §8c, §8d |
+| R6 generated pages only with ≥ 3 providers | §3, §8c | R21 real footage beats generation | §8c |
+| R7 every non-catalogue figure labelled sample | §1 (the machine says what is real), §8 | R22 propensity score orders sequences and the call list | §8c, §8d |
+| R8 knowledge files read before every draft | §3 | R23 the sending guard | §7, §8d |
+| R9 stages move on events; a person may move any, logged | §2, §8d | R24 a child is an age, never a name | §4b, §6b |
+| R10 AI optional per department | §3 | R25 batch and earned auto-approval | §3, §8d |
+| R11 campaigns reach saved and opted-in nearby families only | §4, §4b | R26 the policy gate | §6b |
+| R12 an upgrade changes where the provider appears, never what a family receives | §5 | R27 no profiling or targeting of minors | §6b |
+| R13 the machine never discounts | §5 | R28 high-privacy defaults | §6, §6b |
+| R14 a drafted answer within a minute; reply time from the enquiry | §4b | R29 the one press runs only safe recommendations | §2b |
+| R15 never generate a person or a child | §8c, §9 | | |
 
 ## 9. What the machine never does
 

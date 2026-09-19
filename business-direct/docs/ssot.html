@@ -348,7 +348,7 @@ implementation of the enumerations and state machines below.</em></p>
 </tr>
 <tr>
 <td><strong>Draft</strong></td>
-<td><code>id</code>, <code>kind</code> (<code>post</code> / <code>sequence</code> / <code>reply</code> / <code>digest</code>), <code>providerId?</code>, <code>channels[]</code>, <code>copy</code>, <code>media?</code>, <code>state</code>, <code>ai</code> (bool: AI-drafted), <code>scheduledFor?</code>, <code>why?</code></td>
+<td><code>id</code>, <code>kind</code> (<code>post</code> / <code>sequence</code> / <code>reply</code> / <code>digest</code>), <code>providerId?</code>, <code>channels[]</code>, <code>copy</code>, <code>media{kind: real / generated, src}</code> (posts, D28), <code>state</code>, <code>ai</code> (bool: AI-drafted), <code>editing?</code>, <code>scheduledFor?</code>, <code>why?</code></td>
 <td><code>S.posts</code>, <code>S.sequences</code>, <code>S.replies</code></td>
 </tr>
 <tr>
@@ -428,8 +428,18 @@ implementation of the enumerations and state machines below.</em></p>
 </tr>
 <tr>
 <td><strong>Entitlement</strong></td>
-<td><code>providerId</code>, <code>productId</code>, <code>since</code>, <code>billingRef?</code></td>
-<td><code>S.bought</code></td>
+<td><code>providerId</code>, <code>productId</code>, <code>since</code>, <code>billingRef?</code>, <code>attributedTo?</code> (the delivered result that preceded the purchase, Q8)</td>
+<td><code>S.bought</code>, <code>S.attributed</code></td>
+</tr>
+<tr>
+<td><strong>AutoApproval</strong></td>
+<td><code>owner</code>, <code>department</code>, <code>cleanWeeks</code>, <code>earned</code> (R25)</td>
+<td><code>S.auto</code></td>
+</tr>
+<tr>
+<td><strong>Recommendation</strong></td>
+<td><code>id</code>, <code>what</code>, <code>why</code>, <code>auto</code> (safe to run), <code>go?</code>, <code>act?</code></td>
+<td><code>recommend()</code> (D33)</td>
 </tr>
 </tbody>
 </table></div>
@@ -480,8 +490,8 @@ implementation of the enumerations and state machines below.</em></p>
 </tr>
 <tr>
 <td>Opt-out handling</td>
-<td>every provider e-mail carries an opt-out; honoured within 10 business days</td>
-<td>CAN-SPAM, research §8</td>
+<td>every provider e-mail carries an opt-out and the postal address; honoured within one business day (the law allows 10)</td>
+<td>CAN-SPAM, research §8, policy <code>optOutSla</code></td>
 </tr>
 <tr>
 <td>SMS to families</td>
@@ -495,8 +505,13 @@ implementation of the enumerations and state machines below.</em></p>
 </tr>
 <tr>
 <td>Campaign audience</td>
-<td>saved families + nearby families in the age range; the provider cannot widen it</td>
-<td>D22</td>
+<td>saved families + nearby families in the age range who turned "new provider nearby" on; the provider cannot widen it</td>
+<td>D22, D30 (Q3)</td>
+</tr>
+<tr>
+<td>Family defaults</td>
+<td>weekly picks on, saved-provider alerts on, nearby off, SMS off until written consent for a provider (the demo family consented on 2026-09-02)</td>
+<td>R28, policy <code>defaults</code></td>
 </tr>
 <tr>
 <td>Products and prices</td>
