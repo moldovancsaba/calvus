@@ -36,7 +36,7 @@ footer{margin-top:56px;padding-top:18px;border-top:1px solid var(--line);font-si
 </head>
 <body>
 <div class="wrap">
-<nav class="docnav" aria-label="Project documentation"><span class="docnav-brand">business.direct · docs</span><a href="index.html">Overview</a><a href="brief.html">Brief</a><a href="research.html">Research</a><a href="research-2.html">Research II</a><a href="audit.html">Audit</a><a href="sources.html">Sources</a><a href="design-system.html">Design system</a><a href="layouts.html">Layouts</a><a href="05-layout-specs.html">Layout specs</a><a href="decisions.html">Decisions</a><a href="build-log.html" aria-current=page>Build log</a><a href="gate.html">Gate</a><a href="client-asks.html">Owner asks</a><a href="business-logic.html">Business logic</a><a href="ssot.html">SSOT</a><a href="architecture.html">Architecture</a><a href="technical-design.html">Technical design</a><a href="implementation-plan.html">Plan</a><a href="token-map.html">Token map</a><a href="analytics.html">Analytics</a></nav>
+<nav class="docnav" aria-label="Project documentation"><span class="docnav-brand">business.direct · docs</span><a href="index.html">Overview</a><a href="brief.html">Brief</a><a href="research.html">Research</a><a href="research-2.html">Research II</a><a href="research-3.html">Research III</a><a href="audit.html">Audit</a><a href="sources.html">Sources</a><a href="design-system.html">Design system</a><a href="layouts.html">Layouts</a><a href="05-layout-specs.html">Layout specs</a><a href="decisions.html">Decisions</a><a href="build-log.html" aria-current=page>Build log</a><a href="gate.html">Gate</a><a href="client-asks.html">Owner asks</a><a href="business-logic.html">Business logic</a><a href="ssot.html">SSOT</a><a href="architecture.html">Architecture</a><a href="technical-design.html">Technical design</a><a href="implementation-plan.html">Plan</a><a href="token-map.html">Token map</a><a href="analytics.html">Analytics</a></nav>
 <header><p class="eyebrow">Calvus · business.direct · project documentation</p><h1>business.direct — build log</h1></header>
 <p>Every round: what was built, from which decision, what was measured. The gate is
 <a href="gate.html"><code>07-gate.md</code></a>; the standard is <code>PROTOTYPING.md</code> §5–6.</p>
@@ -165,6 +165,15 @@ on short screens.</p>
 ≥ 44 px, three next-dollar rows, twelve plan rows; changing the reply rate to 10.7 moved
 CAC (managing) from $300 to $156 and LTV : CAC from 0.7 to 1.3 with focus retained; 0
 console errors. At 1440 — <code>scrollWidth</code> 1440, the empty state sits 46 px under the title.
+<code>python3 check.py</code> → <code>GATE: CLEAN</code> (exit 0).</p>
+<h2>Round 5b — 2026-09-19 — the decision flow in the presentation, research III (D27)</h2>
+<p><strong>Built.</strong> <code>bemutato.html</code>: a new section "How the machine decides — the data-driven flow"
+(events → nightly metrics → the next dollar → a person approves → measure and adjust the
+rules, plus the first finding with links to Economics and Research III); the hero's third
+number is now the loop. <a href="research-3.html"><code>01c-research-data-driven-marketing.md</code></a> rendered as
+<code>research-3.html</code> and linked from every docs page; asks #11 (P10–P12).</p>
+<p><strong>Measured</strong> (app browser pane, 2026-09-19): presentation at 390 — five sections, six
+flow cards, <code>scrollWidth</code> 390, every link ≥ 44 px, 0 console errors.
 <code>python3 check.py</code> → <code>GATE: CLEAN</code> (exit 0).</p>
 <footer>Source: <code>business-direct/docs/06-build-log.md</code> · rendered by <code>docs/build.py</code>.</footer>
 </div>

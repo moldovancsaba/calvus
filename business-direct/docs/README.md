@@ -10,10 +10,11 @@ Built to the prototyping standard (`PROTOTYPING.md`); this index is the process 
 | 00 brief | `00-brief.md` | Client, problem, the three views and four automations, what is real, what is inert |
 | 01 research | `01-research.md` | Sourced: reputation and claiming, speed to lead, reminders, digests, generated pages, marketplace monetisation, AI adoption and human-in-the-loop, EU AI Act Art. 50, US CAN-SPAM and TCPA, the Hungarian reference market |
 | 01b research II | `01b-research-acquisition-content-sales.md` | Owner's ask 2026-09-19: acquiring customers for classified media (demand and supply side), content strategies, the AI creation services to add (Higgsfield and the video / image / audio / design / scheduling landscape with prices and the labelling rules), the sales processes with benchmarks — and nine proposals P1–P9 |
+| 01c research III | `01c-research-data-driven-marketing.md` | Case studies and best practices behind the data-driven decision flow: Yelp (Receptionist, Hatch $270 M, revenue per location), Angi (revenue per lead), Thumbtack, Rover; LTV : CAC and payback lines; attribution → incrementality → MMM; Booking.com and next-best-action; the map from each finding to our services; P10–P12 |
 | 02 audit | `02-audit.md` | Your Field measured: API, 252 providers, field coverage, site copy; the Hungarian reference instance; the two videos frame by frame; what DiscountDirect provides |
 | 03 sources | `03-sources.md` | What is real (the platform's public data), what is sample, what is inherited |
 | presentation | `bemutato.html` | Standalone, English, on the product's tokens: one sentence, three numbers, the four things to click with previews, what is real, the asks, what comes next |
-| 04 decisions | `04-decisions.md` | D1–D26 |
+| 04 decisions | `04-decisions.md` | D1–D27 |
 | 05 design | `design-system.html` + `../assets/tokens.css` + `../assets/components.css` | **Gate 1 approved (D9)**: tokens and components, one source |
 | 05 layouts | `05-layout-specs.md` + `layouts.html` + `frames/` | **Gate 2 approved (D16)**: platform 1440 / 390, provider 390, family 390 |
 | 06 build log | `06-build-log.md` | Round 1: the prototype; 1b: presentation and package; 2: editors real, tablet measured; 3: phase 2 — campaigns, upgrades, recap; 4: phase 3 — conversations; 5: economics |
@@ -119,5 +120,12 @@ ranking, the quarter's funnel, a 12-month plan) and written as `16-analytics-and
 (the model, the metrics tree, the events to log, attribution, R16–R19). The defaults expose
 the first real finding: outbound alone does not pay for $49 upgrades on 252 providers.
 
-**Next.** The owner's decisions on P1–P9 and asks #2–8; the platform's analytics (ask #6)
-turn the assumptions into measurements.
+**2026-09-19 — research III and the decision flow in the presentation.** The owner asked
+for the industry's best case studies and practices as the source of the data-driven
+services. Written with primary filings and releases (Yelp's Q4 2025 letter, the Hatch
+acquisition, Yelp Receptionist pricing, Angi's 10-K, a16z's metrics, HBR on Booking.com,
+Airbnb's cluster-randomised experiments, Google Meridian); each finding mapped to a
+business.direct service; P10–P12 added. The presentation gained the decision flow —
+events → metrics → next dollar → approval → measure — as its own section.
+
+**Next.** The owner's decisions on P1–P12 and asks #2–10.

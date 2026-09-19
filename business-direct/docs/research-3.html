@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>business.direct — research III: data-driven marketing decisions — case studies and best practices — business.direct docs</title>
+<link rel="stylesheet" href="../assets/tokens.css">
+<style>/* business.direct — documentation pages on the product tokens (GDS roles, teal accent). */
+:root{--ground:var(--gds-bg-canvas,#f8fafc);--card:var(--gds-bg-surface,#fff);--ink:var(--gds-text-body,#111827);--text:#1f2937;--muted:var(--gds-text-meta,#64748b);--accent:var(--gds-brand-accent,#0f766e);--accent-deep:var(--gds-brand-accent-strong,#115e59);--line:var(--gds-border-card,#e2e8f0);--line-soft:#eef2f7;--note:var(--gds-brand-accent-tint,#e6f4f2)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--ground);color:var(--text);font-family:var(--gds-font,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif);font-size:15.5px;line-height:1.6;padding-block:0 64px;padding-inline:clamp(16px,4vw,40px)}
+.wrap{max-width:74ch;margin-inline:auto}
+.docnav{display:flex;flex-wrap:wrap;gap:4px 18px;align-items:center;padding:16px 0;border-bottom:1px solid var(--line);font-size:12px;letter-spacing:.06em;text-transform:uppercase}
+.docnav a{color:var(--muted);text-decoration:none;min-height:44px;min-width:44px;display:inline-flex;align-items:center;border-bottom:2px solid transparent}
+.docnav a:hover,.docnav a[aria-current]{color:var(--ink);border-color:var(--accent)}
+.docnav-brand{color:var(--accent-deep);font-weight:800;margin-right:6px}
+.docnav-hub{margin-left:auto}
+header{padding-block:40px 24px;border-bottom:1px solid var(--line);margin-bottom:28px}
+.eyebrow{font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--accent-deep);margin:0 0 12px;font-weight:800}
+h1,h2,h3{color:var(--ink);line-height:1.1;text-wrap:balance;margin:0;letter-spacing:-.02em}
+h1{font-size:clamp(30px,6vw,46px);font-weight:900}
+h2{font-size:clamp(23px,4vw,30px);font-weight:900;margin:48px 0 14px;padding-top:20px;border-top:1px solid var(--line)}
+h3{font-size:18px;margin:30px 0 8px;font-weight:800}
+p{margin:0 0 14px} strong{color:var(--ink);font-weight:800}
+ul,ol{padding-left:22px;margin:0 0 16px} li{margin:5px 0} li>ul{margin:6px 0 0}
+code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.86em;background:var(--note);padding:1px 5px;border-radius:4px;color:var(--ink);overflow-wrap:anywhere}
+pre{overflow-x:auto;padding:14px 16px;border:1px solid var(--line);border-radius:10px;background:var(--card);font-size:12px;line-height:1.35}
+pre code{background:none;padding:0;font-size:inherit}
+a{color:var(--accent-deep)} :focus-visible{outline:2px solid var(--accent-deep);outline-offset:2px}
+.tbl{overflow-x:auto;margin:14px 0 22px;border:1px solid var(--line);border-radius:10px;background:var(--card)}
+table{border-collapse:collapse;width:100%;font-size:13.5px;min-width:560px}
+th{text-align:left;font-weight:800;color:var(--ink);background:var(--note);padding:10px 12px;border-bottom:1px solid var(--line);font-size:11.5px;letter-spacing:.06em;text-transform:uppercase}
+td{padding:10px 12px;border-top:1px solid var(--line-soft);vertical-align:top;background:var(--card)} td:first-child{color:var(--ink)}
+footer{margin-top:56px;padding-top:18px;border-top:1px solid var(--line);font-size:12px;color:var(--muted)}
+</style>
+</head>
+<body>
+<div class="wrap">
+<nav class="docnav" aria-label="Project documentation"><span class="docnav-brand">business.direct · docs</span><a href="index.html">Overview</a><a href="brief.html">Brief</a><a href="research.html">Research</a><a href="research-2.html">Research II</a><a href="research-3.html" aria-current=page>Research III</a><a href="audit.html">Audit</a><a href="sources.html">Sources</a><a href="design-system.html">Design system</a><a href="layouts.html">Layouts</a><a href="05-layout-specs.html">Layout specs</a><a href="decisions.html">Decisions</a><a href="build-log.html">Build log</a><a href="gate.html">Gate</a><a href="client-asks.html">Owner asks</a><a href="business-logic.html">Business logic</a><a href="ssot.html">SSOT</a><a href="architecture.html">Architecture</a><a href="technical-design.html">Technical design</a><a href="implementation-plan.html">Plan</a><a href="token-map.html">Token map</a><a href="analytics.html">Analytics</a></nav>
+<header><p class="eyebrow">Calvus · business.direct · project documentation</p><h1>business.direct — research III: data-driven marketing decisions — case studies and best practices</h1></header>
+<p><em>Third research round, 2026-09-19, on the owner's ask: "the industry research for it, to have
+the best case studies and best practices as a source of our services" — </em>it<em> being the
+data-driven decision flow of D26 (<a href="analytics.html"><code>16-analytics-and-unit-economics.md</code></a>). Every figure links
+to where it was read; </em><em>P</em><em> = primary (filing, the company's own release, the report itself),
+</em><em>A</em><em> = aggregator or trade article. §6 maps each finding to a business.direct service.</em></p>
+<h2>1. What the incumbents in our category actually measure and sell</h2>
+<p><strong>Yelp (local services, US — the closest public comparable).</strong>
+- 496,000 paying advertising locations at Q4 2025 (−5 % year over year) while <strong>average
+  revenue per location set an annual record</strong>; Services advertising revenue $948 million
+  (+8 %); Request-a-Quote projects +15 % excluding paid search, "driven by improvements to the
+  flow and increased adoption of Yelp Assistant". <strong>P</strong> <a href="https://s24.q4cdn.com/521204325/files/doc_financials/2025/q4/Yelp-Q4-2025-Letter-to-Shareholders.pdf">Yelp Q4 2025 letter to shareholders</a>,
+  <a href="https://www.yelp-ir.com/news/press-releases/news-release-details/2026/Yelp-Delivers-Record-Net-Revenue-in-2025-Accelerating-Investment-in-AI-Transformation/default.aspx">Yelp press release, 12 Feb 2026</a>
+  <em>Reading: the growth lever moved from more advertisers to more revenue per advertiser and
+  more projects per advertiser — ARPA and delivered value, our §2.3 and §3.1.</em>
+- <strong>Yelp Assistant</strong> project submissions +400 % year over year in Q2 2025; the business
+  owner's inbox shows AI summaries of each job. <strong>P</strong> <a href="https://blog.yelp.com/news/fall-product-release-2025/">Yelp fall 2025 release</a>,
+  <a href="https://blog.yelp.com/news/spring-product-release-2025/">Yelp spring 2025 release</a>
+- <strong>Yelp Receptionist</strong> (from $99/month) and <strong>Yelp Host</strong> (from $149/month), October 2025:
+  answers calls, qualifies leads, collects quote details, transcribes and summarises. <strong>P</strong>
+  <a href="https://blog.yelp.com/news/yelp-host-yelp-receptionist-launch/">Yelp blog, 21 Oct 2025</a>
+  <em>This is our missed-call text-back and after-hours voice (P9), priced by the incumbent.</em>
+- <strong>Hatch acquisition, 21 January 2026, $270 million cash + $30 million retention</strong>: an
+  AI lead-management and customer-communication platform, $25 million ARR growing 70 %;
+  Yelp's words — Hatch is "solving challenging lead management and communication pain points
+  for services businesses" to "help service providers operate and grow more efficiently".
+  <strong>P</strong> <a href="https://www.yelp-ir.com/news/press-releases/news-release-details/2026/Yelp-Accelerates-Strategy-with-Acquisition-of-AI-Lead-Management-Platform-Hatch/default.aspx">Yelp IR</a>.
+  Hatch's predictive lead scoring lets media buying reallocate budget in real time toward
+  channels that historically delivered higher-scoring leads. <strong>A</strong> <a href="https://ppc.land/yelp-bets-270m-on-ai-with-hatch-acquisition-to-automate-services-leads/">PPC Land</a>
+  <em>The closest public statement of our thesis: the platform buys the provider's one-person
+  sales team and the lead-scoring loop that decides where the next dollar goes.</em></p>
+<p><strong>Angi (home services leads, US).</strong>
+- Pros buy full-priced leads within a monthly budget, discounted leads in a subscription,
+  double-opt-in leads à la carte, and pre-priced offerings; 2025: 15,543 thousand service
+  requests, 20,195 thousand leads, proprietary-channel revenue +17 %; <strong>revenue per lead</strong>
+  +11 % in Q3 2025 after the sales force was consolidated (mix moved away from discounted
+  pros), −2 % in Q4 when subscription pros were sent leads above contract value. <strong>P</strong>
+  <a href="https://www.sec.gov/Archives/edgar/data/1705110/000170511026000011/angi-20251231.htm">Angi 10-K FY2025</a>,
+  <a href="https://www.sec.gov/Archives/edgar/data/1705110/000170511025000132/q32025earningsrelease.htm">Angi Q3 2025 release</a>,
+  <a href="https://ir.angi.com/static-files/ae683376-8a82-4524-bcbd-d409c35807f4">Angi Q1 2025 metrics</a>
+  <em>Reading: a lead marketplace manages two numbers — revenue per lead and lead quality —
+  and reports both; ours are "families delivered" and "trials → enrolment".</em></p>
+<p><strong>Thumbtack</strong> — $400 million+ revenue growing 27 %, 300,000+ pros, distribution inside
+ChatGPT and Claude (research II §2.1). <strong>A</strong> <a href="https://research.contrary.com/company/thumbtack">Contrary Research</a>,
+<a href="https://www.gsb.stanford.edu/faculty-research/case-studies/thumbtack">Stanford GSB case</a></p>
+<p><strong>Rover</strong> (pet care marketplace) — gross booking value past $1 billion in 2024; "Perfect
+Match" matching rollout credited with ~12 % lift in booking conversion and ~9 % higher
+retention; an added service line raised customer LTV ~20 % in two years. <strong>A</strong> <a href="https://www.brineweb.com/blog/how-rover-works-business-model-revenue-strategy-and-growth-explained">Brineweb</a>,
+<a href="https://vocal.media/01/how-does-rover-work-analyzing-the-growth-and-strategy-of-rover-s-business-model">Vocal</a>
+<em>(secondary figures; treat as indicative).</em></p>
+<h2>2. Unit-economics best practice (the rules behind the economics screen)</h2>
+<ul>
+<li><strong>LTV : CAC of 3 : 1 is the accepted health line</strong>; below 1 : 1 is unsustainable, above
+  5 : 1 signals under-investment. Sales-led SMB companies target 6–12-month payback at
+  3 : 1. <strong>A</strong> <a href="https://pmtoolkit.ai/benchmarks/ltv-cac-ratio-benchmarks">PM Toolkit</a>,
+  <a href="https://www.saashero.net/strategy/b2b-saas-ltv-cac-benchmarks/">SaaS Hero</a></li>
+<li><strong>CAC payback</strong>: median B2B SaaS 15–16 months; top quartile 6–8; bottom quartile 24–36;
+  Bessemer's targets by segment — <strong>under 12 months for SMB</strong>, 18 mid-market, 24 enterprise.
+  <strong>A</strong> <a href="https://www.getaleph.com/answers/cac-payback-period-saas-2026">Aleph</a>,
+  <a href="https://optif.ai/learn/questions/cac-payback-period-benchmark/">Optifai, 939 companies</a>,
+  <a href="https://foundrycro.com/blog/cac-payback-benchmarks-2026/">Foundry CRO</a></li>
+<li><strong>The metrics set</strong>: a16z's 16 startup metrics (CAC, LTV, ARPA, churn, activation,
+  retention …) and 13 marketplace metrics (GMV, take rate, liquidity, supply/demand
+  concentration). <strong>P</strong> <a href="https://a16z.com/16-startup-metrics/">a16z: 16 startup metrics</a>,
+  <a href="https://a16z.com/13-metrics-for-marketplace-companies/">a16z: 13 marketplace metrics</a>,
+  <a href="https://a16z.com/16-more-startup-metrics/">16 more</a>; <strong>A</strong> <a href="https://www.lennysnewsletter.com/p/the-most-important-marketplace-metrics">Lenny's marketplace metrics</a></li>
+<li><strong>Cohorts, not averages</strong>: LTV and churn by acquisition month and by channel, so that a
+  CAC is compared with the LTV of the cohort it bought. <strong>A</strong> <a href="https://www.dualentry.com/blog/saas-unit-economics">DualEntry</a></li>
+</ul>
+<p><strong>Reading.</strong> The economics screen's 3 : 1 badge and the 12-month payback line are the
+industry's lines, not ours; the plan's next step is cohorts by acquisition channel
+(touch · call · content) once events exist.</p>
+<h2>3. Measurement best practice: attribution, incrementality, mix modelling</h2>
+<ul>
+<li><strong>Triangulate three methods</strong>: attribution for the day-to-day, incrementality tests for
+  causal proof, marketing-mix modelling for the budget. <strong>A</strong> <a href="https://www.measured.com/faq/marketing-mix-modeling-2026-complete-guide-for-strategic-marketers/">Measured</a>,
+  <a href="https://www.feld-m.de/en/blog/google-meridian-triangulation-future-marketing-measurement/">FELD M</a></li>
+<li><strong>Open-source MMM exists and is free</strong>: Google <strong>Meridian</strong> (Bayesian, with <strong>GeoX</strong>
+  geo-incrementality announced May 2026), Meta <strong>Robyn</strong>, PyMC-Marketing. <strong>P</strong> <a href="https://business.google.com/uk/think/measurement/meridian-marketing-mix-model/">Google Meridian</a>;
+  <strong>A</strong> <a href="https://improvado.io/blog/marketing-mix-modeling-providers">Improvado</a>,
+  <a href="https://elevarus.com/marketing-mix-modeling-meridian-google-marketing-live-2026/">Elevarus on GeoX</a></li>
+<li><strong>But not yet for us</strong>: under ~2 years of data or under ~$1 million annual spend the
+  sample is too small for stable coefficients — start with last-touch attribution plus
+  periodic incrementality tests (geo holdouts, PSA controls) and revisit MMM in 12–18
+  months. <strong>A</strong> <a href="https://www.digitalapplied.com/blog/marketing-mix-modeling-2026-mmm-vs-attribution-playbook">Digital Applied</a></li>
+<li><strong>Marketplace experiments interfere with themselves</strong> (a treated listing takes demand
+  from a control listing); Airbnb's answer is cluster randomisation — by neighbourhood, not
+  by listing. <strong>P</strong> <a href="https://pubsonline.informs.org/doi/10.1287/mnsc.2020.01157">Management Science, Airbnb pricing meta-experiment</a>,
+  <a href="https://medium.com/airbnb-engineering/experiments-at-airbnb-e2db3abf39e7">Airbnb engineering: Experiments at Airbnb</a></li>
+</ul>
+<p><strong>Reading.</strong> Our attribution (last touch, 7 days for a sign-up, 30 for a booking —
+analytics §6) is the right first stage. The first <em>incrementality</em> test business.direct
+can run is a <strong>neighbourhood holdout</strong>: run the content engine in Park Slope and not in
+Carroll Gardens for four weeks and compare sign-ups — cluster by neighbourhood exactly as
+Airbnb does. MMM waits.</p>
+<h2>4. Decision best practice: experimentation and next-best-action</h2>
+<ul>
+<li><strong>Booking.com runs ~25,000 experiments a year</strong>; anyone can test without permission;
+  the culture, not the tooling, is the asset (Stefan Thomke, HBS). <strong>P</strong> <a href="https://hbr.org/2020/03/building-a-culture-of-experimentation">HBR, March 2020</a>,
+  <a href="https://hbr.org/podcast/2024/06/how-booking-com-sustains-a-culture-of-innovation">HBR IdeaCast 2024</a>;
+  <strong>A</strong> <a href="https://vwo.com/blog/cro-best-practices-booking/">VWO</a></li>
+<li><strong>Next-best-action</strong>: lifecycle teams replace segment campaigns with a per-customer
+  decision (which action, which channel, which moment) driven by propensity scores
+  (convert, churn, upgrade) and continuous 1 : 1 experiments. <strong>A</strong> <a href="https://hightouch.com/blog/next-best-action">Hightouch</a>,
+  <a href="https://www.braze.com/resources/articles/next-best-action">Braze</a>,
+  <a href="https://clevertap.com/blog/next-best-action/">CleverTap</a></li>
+<li><strong>Lead scoring reallocates spend</strong>: Hatch's model (now Yelp's) scores each lead and
+  moves budget toward the channels that produced high scores. <strong>A</strong> <a href="https://ppc.land/yelp-bets-270m-on-ai-with-hatch-acquisition-to-automate-services-leads/">PPC Land</a></li>
+</ul>
+<p><strong>Reading.</strong> Our "next dollar" (analytics §4) is next-best-action at the <em>budget</em> level;
+the provider-level version is a <strong>propensity to claim / to upgrade</strong> per provider (phone
+on card, trial policy, next session, replies) that orders the sequence and the call list —
+one score, computed nightly from the same events.</p>
+<h2>5. What the case studies say about the provider's own numbers</h2>
+<ul>
+<li>Speed to lead, reminders and reply time (research I §2–3) are the numbers Yelp now sells
+  back to the provider as Receptionist and Hatch; Angi prices leads by quality.</li>
+<li>A provider's dashboard therefore needs three lines, in this order: <strong>enquiries answered
+  and how fast</strong>, <strong>trials → enrolments and their value</strong>, <strong>what the plan costs</strong> — the
+  "your return" line built in round 5.</li>
+</ul>
+<h2>6. Source of our services — the map</h2>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>business.direct service</th>
+<th>The case or practice it rests on</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Conversations: drafted answers, missed-call text-back, reply-time tile</td>
+<td>Yelp Receptionist ($99/mo) and Hatch ($270 M) — the incumbent's own products (§1)</td>
+</tr>
+<tr>
+<td>Economics screen: CAC, LTV, payback, 3 : 1 line</td>
+<td>a16z metrics, Bessemer SMB payback &lt; 12 months, LTV : CAC 3 : 1 (§2)</td>
+</tr>
+<tr>
+<td>Next-dollar ranking (R16)</td>
+<td>next-best-action at budget level; Hatch's lead-scored reallocation (§4)</td>
+</tr>
+<tr>
+<td>Cohorts by acquisition channel (planned)</td>
+<td>unit-economics practice (§2)</td>
+</tr>
+<tr>
+<td>Attribution windows 7 / 30 days, then neighbourhood holdouts</td>
+<td>triangulation; Airbnb cluster randomisation; MMM deferred under $1 M spend (§3)</td>
+</tr>
+<tr>
+<td>Provider propensity score ordering the sequence and the call list (proposed P10)</td>
+<td>Hatch lead scoring; next-best-action (§4)</td>
+</tr>
+<tr>
+<td>"Your return" line for the provider</td>
+<td>Angi's revenue per lead and quality reporting; Yelp's revenue-per-location focus (§1, §5)</td>
+</tr>
+<tr>
+<td>Delivered value as the platform's product (families → trials → enrolments)</td>
+<td>Yelp's projects-per-advertiser growth; Rover's matching lift (§1)</td>
+</tr>
+<tr>
+<td>Experiment culture: every rule (R17–R19) is a test with a holdout, not a setting</td>
+<td>Booking.com (§4)</td>
+</tr>
+</tbody>
+</table></div>
+<h2>7. Proposals added to the register of asks (P10–P12)</h2>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>#</th>
+<th>Proposal</th>
+<th>Where it lands</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>P10</td>
+<td><strong>Provider propensity score</strong> (claim, upgrade) from card fields and events, ordering the sequence and the call list nightly</td>
+<td>sales department, <code>metrics_daily</code></td>
+</tr>
+<tr>
+<td>P11</td>
+<td><strong>Neighbourhood holdout</strong> as the first incrementality test of the content engine (4 weeks, cluster by neighbourhood)</td>
+<td>content department, analytics §3</td>
+</tr>
+<tr>
+<td>P12</td>
+<td><strong>Cohort LTV by acquisition channel</strong> in the economics screen once 100 observations exist per channel</td>
+<td>economics, R16</td>
+</tr>
+</tbody>
+</table></div>
+<h2>8. What was not found</h2>
+<ul>
+<li>Yelp and Angi do not disclose CAC or advertiser churn; revenue per location / per lead
+  and paying-location counts are the public proxies.</li>
+<li>Rover's "Perfect Match" and LTV figures come from secondary write-ups, not a filing.</li>
+<li>No public case study of a <em>youth-activities</em> platform's unit economics exists; the
+  home-services comparables are the nearest.</li>
+<li><strong>Link check</strong> (<code>curl</code>, 2026-09-19): eight sources refuse scripted fetches (SEC EDGAR
+  requires a declared user agent; Yelp IR, PPC Land, Medium, INFORMS and an Angi PDF return
+  403 / no response) — each was read through the fetch tool at writing time and is kept as
+  the primary source; open them in a browser.</li>
+</ul>
+<footer>Source: <code>business-direct/docs/01c-research-data-driven-marketing.md</code> · rendered by <code>docs/build.py</code>.</footer>
+</div>
+</body>
+</html>

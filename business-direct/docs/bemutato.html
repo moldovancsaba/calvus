@@ -59,7 +59,7 @@ footer a{display:inline-flex;align-items:center;min-height:44px}
     <div class="nums">
       <div class="num"><b>252</b><span>real providers from getyourfield.com's public API — every screen runs on them; none has claimed its page</span></div>
       <div class="num"><b>2 + 2</b><span>flows at the front door — B2C social publishing, B2B provider sales — and behind them provider campaigns and upgrades, on the platform's own products</span></div>
-      <div class="num"><b>0</b><span>messages sent. Every approval changes the page's state only; nothing publishes, e-mails or connects</span></div>
+      <div class="num"><b>1 loop</b><span>events → metrics → the next dollar → a person approves → measure. Nothing sends; every approval changes the page's state only</span></div>
     </div>
   </div>
 </header>
@@ -81,7 +81,7 @@ footer a{display:inline-flex;align-items:center;min-height:44px}
       <article class="step">
         <div>
           <h3><small>2 · Platform</small>Provider sales, then the Monday recap</h3>
-          <p>The pipeline strip: identified → contacted → replied → applied → managing → upgraded. Approve the invitation sequence (130 providers have an e-mail on their card; commercial e-mail needs no prior consent in the US, every message carries the opt-out) and three sample replies arrive with drafted answers. Click any provider to open its card, thread and stage. <b>Intelligence</b> is the recap the operator reads on Monday: what moved, by department, the market radar from the catalogue, what needs a decision. <b>Economics</b> is the plan: CAC and LTV per provider, the value of an avid family, content ROI and where the next dollar goes — every assumption is an input you can change.</p>
+          <p>The pipeline strip: identified → contacted → replied → applied → managing → upgraded. Approve the invitation sequence (130 providers have an e-mail on their card; commercial e-mail needs no prior consent in the US, every message carries the opt-out) and three sample replies arrive with drafted answers. Click any provider to open its card, thread and stage. <b>Intelligence</b> is the recap the operator reads on Monday: what moved, by department, the market radar from the catalogue, what needs a decision. <b>Economics</b> is the plan: CAC and LTV per provider, the value of an avid family, content ROI and where the next dollar goes — every assumption is an input you can change (the flow is described below).</p>
           <div class="btns"><a class="btn" href="../index.html?view=platform&amp;screen=sales">Open provider sales</a><a class="btn alt" href="../index.html?view=platform&amp;screen=intelligence">Intelligence</a><a class="btn alt" href="../index.html?view=platform&amp;screen=economics">Economics</a></div>
         </div>
         <div class="phone"><iframe src="../index.html?view=platform&amp;screen=sales" title="Provider sales, phone preview" loading="lazy" tabindex="-1"></iframe></div>
@@ -110,6 +110,19 @@ footer a{display:inline-flex;align-items:center;min-height:44px}
         </div>
         <div class="phone"><iframe src="../index.html?view=family" title="Family view, phone preview" loading="lazy" tabindex="-1"></iframe></div>
       </article>
+    </div>
+  </section>
+
+  <section>
+    <h2>How the machine decides — the data-driven flow</h2>
+    <p class="lede">Every message the machine sends and every dollar it spends comes out of one loop. It is what the Economics screen shows and what the analytics document specifies; the industry's cases behind it are on the Research III page.</p>
+    <div class="grid">
+      <div class="card"><h3>1 · Events</h3><p>Every touch, reply, stage change, approval, post, click, save, ask, booking and payment is a row in an append-only log — the platform's own data, never a third-party analytics store.</p></div>
+      <div class="card"><h3>2 · Metrics, nightly</h3><p>CAC per managing and per paying provider; LTV, payback and the 3 : 1 line; the value of an avid family; cost per family from content. Each rate is labelled <b>measured</b>, <b>benchmark</b> or <b>assumption</b> — and flips to measured at 100 observations.</p></div>
+      <div class="card"><h3>3 · The next dollar</h3><p>Three levers ranked every week by expected lifetime value gained per dollar: one more e-mail touch, the call list, a week of the content engine. The recap names the winner.</p></div>
+      <div class="card"><h3>4 · A person approves</h3><p>The ranking is a recommendation. The operator approves the sequence, the provider approves the campaign, the family sets her preferences — the human gate does not move.</p></div>
+      <div class="card"><h3>5 · Measure, then adjust the rules</h3><p>The sequence cadence, the content slots per neighbourhood and the moment the upgrade card appears follow the measured numbers (rules R17–R19); the first causal test is a neighbourhood holdout, as marketplaces run them.</p></div>
+      <div class="card"><h3>What it already found</h3><p>At the defaults, outbound e-mail to a 252-provider catalogue does not pay for $49 upgrades (LTV : CAC 0.7). The model says the base machine is the platform's growth engine, or the catalogue grows, or the price rises — each one input away.</p><div class="btns"><a class="btn alt" href="../index.html?view=platform&amp;screen=economics">Open Economics</a><a class="btn alt" href="research-3.html">Research III</a></div></div>
     </div>
   </section>
 

@@ -129,3 +129,15 @@ on short screens.
 CAC (managing) from $300 to $156 and LTV : CAC from 0.7 to 1.3 with focus retained; 0
 console errors. At 1440 — `scrollWidth` 1440, the empty state sits 46 px under the title.
 `python3 check.py` → `GATE: CLEAN` (exit 0).
+
+## Round 5b — 2026-09-19 — the decision flow in the presentation, research III (D27)
+
+**Built.** `bemutato.html`: a new section "How the machine decides — the data-driven flow"
+(events → nightly metrics → the next dollar → a person approves → measure and adjust the
+rules, plus the first finding with links to Economics and Research III); the hero's third
+number is now the loop. `01c-research-data-driven-marketing.md` rendered as
+`research-3.html` and linked from every docs page; asks #11 (P10–P12).
+
+**Measured** (app browser pane, 2026-09-19): presentation at 390 — five sections, six
+flow cards, `scrollWidth` 390, every link ≥ 44 px, 0 console errors.
+`python3 check.py` → `GATE: CLEAN` (exit 0).

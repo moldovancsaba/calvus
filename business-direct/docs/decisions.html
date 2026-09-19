@@ -36,7 +36,7 @@ footer{margin-top:56px;padding-top:18px;border-top:1px solid var(--line);font-si
 </head>
 <body>
 <div class="wrap">
-<nav class="docnav" aria-label="Project documentation"><span class="docnav-brand">business.direct · docs</span><a href="index.html">Overview</a><a href="brief.html">Brief</a><a href="research.html">Research</a><a href="research-2.html">Research II</a><a href="audit.html">Audit</a><a href="sources.html">Sources</a><a href="design-system.html">Design system</a><a href="layouts.html">Layouts</a><a href="05-layout-specs.html">Layout specs</a><a href="decisions.html" aria-current=page>Decisions</a><a href="build-log.html">Build log</a><a href="gate.html">Gate</a><a href="client-asks.html">Owner asks</a><a href="business-logic.html">Business logic</a><a href="ssot.html">SSOT</a><a href="architecture.html">Architecture</a><a href="technical-design.html">Technical design</a><a href="implementation-plan.html">Plan</a><a href="token-map.html">Token map</a><a href="analytics.html">Analytics</a></nav>
+<nav class="docnav" aria-label="Project documentation"><span class="docnav-brand">business.direct · docs</span><a href="index.html">Overview</a><a href="brief.html">Brief</a><a href="research.html">Research</a><a href="research-2.html">Research II</a><a href="research-3.html">Research III</a><a href="audit.html">Audit</a><a href="sources.html">Sources</a><a href="design-system.html">Design system</a><a href="layouts.html">Layouts</a><a href="05-layout-specs.html">Layout specs</a><a href="decisions.html" aria-current=page>Decisions</a><a href="build-log.html">Build log</a><a href="gate.html">Gate</a><a href="client-asks.html">Owner asks</a><a href="business-logic.html">Business logic</a><a href="ssot.html">SSOT</a><a href="architecture.html">Architecture</a><a href="technical-design.html">Technical design</a><a href="implementation-plan.html">Plan</a><a href="token-map.html">Token map</a><a href="analytics.html">Analytics</a></nav>
 <header><p class="eyebrow">Calvus · business.direct · project documentation</p><h1>business.direct — decision register</h1></header>
 <div class="tbl"><table>
 <thead>
@@ -230,6 +230,13 @@ footer{margin-top:56px;padding-top:18px;border-top:1px solid var(--line);font-si
 <td><strong>Analytics and unit economics are part of the product</strong>: an <em>Economics</em> screen on the platform computes CAC and LTV for providers, the marketing value of an avid family, content ROI and the next-dollar ranking from the catalogue, this session's pipeline and editable assumptions; <a href="analytics.html"><code>16-analytics-and-unit-economics.md</code></a> is the model, with the events to log, attribution and rules R16–R19; the provider's results carry a "your return" line</td>
 <td>owner: "ROI calculations and planning for CAC and LTV for B2B clients, marketing value for the avid users, and all the other analytics … data-driven marketing decisions"</td>
 <td>the first finding the model produces is that outbound e-mail to a 252-provider catalogue does not pay for itself on $49 upgrades (LTV : CAC 0.7 at the defaults) — the base machine is the platform's growth engine, or the catalogue grows, or ARPA rises</td>
+</tr>
+<tr>
+<td>D27</td>
+<td>2026-09-19</td>
+<td><strong>The decision flow is client-facing</strong>: the presentation carries "How the machine decides" (events → nightly metrics → next dollar → a person approves → measure and adjust) and the first finding; research III documents the cases and practices each step rests on and adds P10–P12</td>
+<td>owner: "update the client presentation with the data driven decision flow … industry research … best case studies and best practices as a source of our services"</td>
+<td>the client sees the loop, not only the screens</td>
 </tr>
 </tbody>
 </table></div>
