@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>business.direct — Family · What arrives (frame, 390)</title>
+<link rel="stylesheet" href="../../assets/tokens.css"><link rel="stylesheet" href="../../assets/components.css"><link rel="stylesheet" href="frame.css">
+</head>
+<body>
+<div class="shell">
+<div class="frame-note">Gate 2 · frame · 390 · Family view · providers real; the parent, her saves and the messages sample</div>
+<header class="topbar"><div class="brand">business<span>.direct</span></div><div class="roles" role="tablist" aria-label="View"><button role="tab" aria-selected="false">Platform</button><button role="tab" aria-selected="false">Provider</button><button class="on" role="tab" aria-selected="true">Family</button></div></header>
+<div class="body">
+  <main>
+    <div><h1 class="page-title">What arrives</h1><p class="sub">Maya · Park Slope, Brooklyn · Leo (5), Nora (9) · 4 saved providers</p></div>
+    <section class="stack">
+      <div class="section-head"><h2>Where a new family meets Your Field</h2><span class="meta">the B2C flow — a post, then the listing page</span></div>
+      <div class="stack" id="social"></div>
+    </section>
+    <section class="stack">
+      <div class="section-head"><h2>This week</h2><span class="meta">arrived Sunday</span></div>
+      <div class="push"><div class="app">Y</div><div><b>This week near Park Slope</b><span>3 new sessions: Saturday soccer, Tuesday taekwondo, a free trial at the Y.</span></div></div>
+      <div class="digest"><h4>This week in Park Slope · Sep 21–27</h4><p class="meta">Based on your saved providers and Leo's and Nora's ages. One e-mail a week.</p><ul id="digest-rows"></ul></div>
+    </section>
+    <section class="stack">
+      <div class="section-head"><h2>From providers</h2><span class="meta">1</span></div>
+      <div class="sms">Hi Maya — Leo's trial is Saturday 8:45 at the Park Slope field. Reply "later" if the time doesn't work and we'll find another. — Danny</div>
+      <p class="meta">Why you got this: you saved Brooklyn Force Soccer and asked for a trial; you gave written consent for texts from this provider. Message 2 of 4 this month.</p>
+    </section>
+    <section class="stack">
+      <div class="section-head"><h2>Channels and frequency</h2></div>
+      <article class="card">
+        <div class="pref" style="border-top:0"><div><b>Weekly picks</b><span>e-mail · Sunday 18:00</span></div><span class="toggle on"><i></i></span></div>
+        <div class="pref"><div><b>New session at a saved provider</b><span>push · immediately</span></div><span class="toggle on"><i></i></span></div>
+        <div class="pref"><div><b>New provider nearby</b><span>push · weekly</span></div><span class="toggle"><i></i></span></div>
+        <div class="pref"><div><b>Texts from providers</b><span>SMS · only providers you consented to · max 4 / month</span></div><span class="toggle on"><i></i></span></div>
+        <div class="pref"><div><b>Stop everything</b><span>one tap, any time</span></div><button class="btn ghost" style="padding-right:0">Stop</button></div>
+      </article>
+    </section>
+  </main>
+</div>
+<nav class="bottombar" aria-label="Family"><a href="#"><i></i>Find</a><a href="#"><i></i>Saved</a><a class="on" href="#"><i></i>Inbox</a><a href="#"><i></i>Account</a></nav>
+</div>
+<script>
+fetch('../../data/providers.json').then(r=>r.json()).then(d=>{
+  const P=d.providers, by=id=>P.find(p=>p.id===id);
+  const l=by('prov-brooklyn-force-soccer');
+  document.getElementById('social').innerHTML=l?`<article class="card post"><div class="media">${l.image?`<img src='${l.image}' alt=''>`:'media'}</div><div><div class="row" style="justify-content:space-between"><span class="chan"><span>Instagram</span><span class="meta">@yourfieldnyc · sample</span></span><span class="badge b-ok">Published</span></div><p>Saturday mornings in Park Slope: Brooklyn Force Soccer runs first-touch sessions for 3–5s and teams up to 14. Trial by appointment — details at the link.</p><div class="row" style="margin-top:8px"><span class="link">getyourfield.com/nyc/providers/${l.id}</span></div><div class="row" style="margin-top:10px"><button class="btn">Open on Your Field</button><button class="btn sec">Save</button></div></div></article>`:'';
+  const pick=[['prov-brooklyn-force-soccer','Sat 8:45','Saturday soccer'],['prov-champions-martial-arts-park-slope','Tue 16:30','Little Tigers taekwondo'],['prov-prospect-park-ymca-tennis-be42d884','Sun 10:00','Swim lessons'],['tutu-camp-park-slope','Wed 15:30','Ballet']];
+  document.getElementById('digest-rows').innerHTML=pick.map(([id,when,what])=>{const p=by(id);return p?`<li><div><b>${what}</b> — ${p.name}<br><span class="meta">${p.neighborhood} · real provider; the slot is sample</span></div><span>${when}</span></li>`:''}).join('');
+});
+</script>
+</body>
+</html>

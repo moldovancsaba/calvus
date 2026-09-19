@@ -36,7 +36,7 @@ footer{margin-top:56px;padding-top:18px;border-top:1px solid var(--line);font-si
 </head>
 <body>
 <div class="wrap">
-<nav class="docnav" aria-label="Project documentation"><span class="docnav-brand">business.direct · docs</span><a href="index.html">Overview</a><a href="brief.html">Brief</a><a href="research.html">Research</a><a href="audit.html">Audit</a><a href="sources.html" aria-current=page>Sources</a><a href="design-system.html">Design system</a><a href="decisions.html">Decisions</a><a href="client-asks.html">Owner asks</a><a class="docnav-hub" href="../../index.html">Calvus Hub</a></nav>
+<nav class="docnav" aria-label="Project documentation"><span class="docnav-brand">business.direct · docs</span><a href="index.html">Overview</a><a href="brief.html">Brief</a><a href="research.html">Research</a><a href="audit.html">Audit</a><a href="sources.html" aria-current=page>Sources</a><a href="design-system.html">Design system</a><a href="layouts.html">Layouts</a><a href="05-layout-specs.html">Layout specs</a><a href="decisions.html">Decisions</a><a href="client-asks.html">Owner asks</a></nav>
 <header><p class="eyebrow">Calvus · business.direct · project documentation</p><h1>business.direct — sources and assets</h1></header>
 <div class="tbl"><table>
 <thead>
@@ -48,28 +48,33 @@ footer{margin-top:56px;padding-top:18px;border-top:1px solid var(--line);font-si
 </thead>
 <tbody>
 <tr>
-<td>431 listings: name, category, locality, county, address, coordinates, website, description, verified/checked date, when, hours, next session</td>
-<td><code>data/fetch-sportolok.py</code> → <code>data/listings.json</code>, from sport.doneisbetter.com's public API and listing pages' JSON-LD, 2026-09-19</td>
+<td>252 providers with every field listed in <a href="audit.html"><code>02-audit.md</code></a> §2</td>
+<td><code>data/fetch-yourfield.py</code> → <code>data/providers.json</code>, from getyourfield.com's public API, 2026-09-19</td>
 <td><strong>real</strong> — public data only; re-run to refresh</td>
 </tr>
 <tr>
-<td>Facets, territory levels, age bands, site copy</td>
+<td>Boroughs, neighbourhoods, activity counts, site copy</td>
 <td>same → <code>data/platform.json</code></td>
 <td>real</td>
 </tr>
 <tr>
 <td>Claim state</td>
-<td>inferred: the claim prompt appears on every listing</td>
-<td>real (none claimed)</td>
+<td>the API's <code>claimStatus</code> (15 <code>unclaimed</code>; the rest unset)</td>
+<td>real</td>
 </tr>
 <tr>
-<td>A claimed business's brand voice, offers, sessions, campaign results, approval items, integration states</td>
-<td>written for the prototype</td>
+<td>The Hungarian reference instance (431 listings)</td>
+<td><code>data/fetch-sportolok.py</code> → <code>data/reference-sportolok/</code></td>
+<td>real, reference only</td>
+</tr>
+<tr>
+<td>The provider persona's brand voice, knowledge files, campaign results, approval items, integration states</td>
+<td>written for the prototype around <strong>Brooklyn Force Soccer</strong> (a real, explicitly unclaimed provider)</td>
 <td><strong>sample</strong>, declared on the page</td>
 </tr>
 <tr>
-<td>Consumer personas (saved items, location, age band, channel preferences)</td>
-<td>written for the prototype</td>
+<td>The family persona (a Park Slope parent, two children, saved items, channel preferences)</td>
+<td>written for the prototype; the saved providers are real</td>
 <td>sample</td>
 </tr>
 <tr>
@@ -79,7 +84,7 @@ footer{margin-top:56px;padding-top:18px;border-top:1px solid var(--line);font-si
 </tr>
 <tr>
 <td>The target shape</td>
-<td>two owner-supplied videos (<a href="audit.html"><code>02-audit.md</code></a> §3), 42 frames extracted with a Swift/AVFoundation script — the videos themselves are not in the repo</td>
+<td>two owner-supplied videos (<a href="audit.html"><code>02-audit.md</code></a> §4), 42 frames extracted with a Swift/AVFoundation script — the videos themselves are not in the repo</td>
 <td>owner input</td>
 </tr>
 <tr>
@@ -89,8 +94,7 @@ footer{margin-top:56px;padding-top:18px;border-top:1px solid var(--line);font-si
 </tr>
 </tbody>
 </table></div>
-<p>No listed business, consumer or platform account is contacted or written to by the
-prototype. <code>POST /api/ingest</code> is documented but never called.</p>
+<p>No provider, family or platform account is contacted or written to by the prototype.</p>
 <footer>Source: <code>business-direct/docs/03-sources.md</code> · rendered by <code>docs/build.py</code>.</footer>
 </div>
 </body>

@@ -2,14 +2,14 @@
 
 | Content | Source | Real or sample |
 |---|---|---|
-| 431 listings: name, category, locality, county, address, coordinates, website, description, verified/checked date, when, hours, next session | `data/fetch-sportolok.py` → `data/listings.json`, from sport.doneisbetter.com's public API and listing pages' JSON-LD, 2026-09-19 | **real** — public data only; re-run to refresh |
-| Facets, territory levels, age bands, site copy | same → `data/platform.json` | real |
-| Claim state | inferred: the claim prompt appears on every listing | real (none claimed) |
-| A claimed business's brand voice, offers, sessions, campaign results, approval items, integration states | written for the prototype | **sample**, declared on the page |
-| Consumer personas (saved items, location, age band, channel preferences) | written for the prototype | sample |
+| 252 providers with every field listed in `02-audit.md` §2 | `data/fetch-yourfield.py` → `data/providers.json`, from getyourfield.com's public API, 2026-09-19 | **real** — public data only; re-run to refresh |
+| Boroughs, neighbourhoods, activity counts, site copy | same → `data/platform.json` | real |
+| Claim state | the API's `claimStatus` (15 `unclaimed`; the rest unset) | real |
+| The Hungarian reference instance (431 listings) | `data/fetch-sportolok.py` → `data/reference-sportolok/` | real, reference only |
+| The provider persona's brand voice, knowledge files, campaign results, approval items, integration states | written for the prototype around **Brooklyn Force Soccer** (a real, explicitly unclaimed provider) | **sample**, declared on the page |
+| The family persona (a Park Slope parent, two children, saved items, channel preferences) | written for the prototype; the saved providers are real | sample |
 | Research figures | `01-research.md`, each with its link; primary vs aggregator marked | real, cited |
-| The target shape | two owner-supplied videos (`02-audit.md` §3), 42 frames extracted with a Swift/AVFoundation script — the videos themselves are not in the repo | owner input |
+| The target shape | two owner-supplied videos (`02-audit.md` §4), 42 frames extracted with a Swift/AVFoundation script — the videos themselves are not in the repo | owner input |
 | Terms, tokens, stack | DiscountDirect's SSOT, GDS token map, ARCHITECTURE (D26) | inherited (D5) |
 
-No listed business, consumer or platform account is contacted or written to by the
-prototype. `POST /api/ingest` is documented but never called.
+No provider, family or platform account is contacted or written to by the prototype.

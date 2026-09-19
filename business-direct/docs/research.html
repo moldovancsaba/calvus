@@ -36,7 +36,7 @@ footer{margin-top:56px;padding-top:18px;border-top:1px solid var(--line);font-si
 </head>
 <body>
 <div class="wrap">
-<nav class="docnav" aria-label="Project documentation"><span class="docnav-brand">business.direct · docs</span><a href="index.html">Overview</a><a href="brief.html">Brief</a><a href="research.html" aria-current=page>Research</a><a href="audit.html">Audit</a><a href="sources.html">Sources</a><a href="design-system.html">Design system</a><a href="decisions.html">Decisions</a><a href="client-asks.html">Owner asks</a><a class="docnav-hub" href="../../index.html">Calvus Hub</a></nav>
+<nav class="docnav" aria-label="Project documentation"><span class="docnav-brand">business.direct · docs</span><a href="index.html">Overview</a><a href="brief.html">Brief</a><a href="research.html" aria-current=page>Research</a><a href="audit.html">Audit</a><a href="sources.html">Sources</a><a href="design-system.html">Design system</a><a href="layouts.html">Layouts</a><a href="05-layout-specs.html">Layout specs</a><a href="decisions.html">Decisions</a><a href="client-asks.html">Owner asks</a></nav>
 <header><p class="eyebrow">Calvus · business.direct · project documentation</p><h1>business.direct — research</h1></header>
 <p><em>What the evidence says about the four automations and the one-person machine, with the
 source behind every figure. Searched 2026-09-19. Primary sources (studies, platform
@@ -159,7 +159,21 @@ business.direct's platform view should show the ladder as states of a listing.</
 <p><strong>Reading.</strong> "Optional AI support" (D6) is right on the evidence: the machine is rules
 and integrations first; AI drafts where switched on, is labelled as AI where the law
 requires, and never sends without the owner. The videos' rule and the regulation agree.</p>
-<h2>8. Hungary specifics</h2>
+<h2>8. First market: New York (United States)</h2>
+<ul>
+<li><strong>CAN-SPAM</strong> requires no prior consent for commercial e-mail — B2B or B2C — but every
+  message needs a working opt-out honoured within <strong>10 business days</strong>, a physical address,
+  accurate headers and no deceptive subject lines. <strong>P</strong> <a href="https://www.ftc.gov/business-guidance/resources/can-spam-act-compliance-guide-business">FTC compliance guide</a>, <a href="https://www.ana.net/content/show/id/accountability-digital-marketing-CANSPAM-faq">ANA FAQ</a></li>
+<li><strong>TCPA</strong>: marketing <strong>SMS needs prior express written consent</strong> (signed, with clear
+  disclosures; the FCC's 2025 one-to-one rule was vacated and the prior standard
+  reinstated on 29 August 2025); opt-outs honoured within 10 business days from April
+  2025; statutory damages <strong>$500–1 500 per message</strong>. <strong>P/A</strong> <a href="https://docs.fcc.gov/public/attachments/DOC-408396A1.pdf">FCC document</a>, <a href="https://www.nelsonmullins.com/insights/alerts/fcc-download/all/the-fcc-s-prior-express-written-consent-rule-is-changing-this-month-what-marketers-need-to-know">Nelson Mullins</a>, <a href="https://www.bclplaw.com/en-US/events-insights-news/the-tcpas-new-opt-out-rules-take-effect-on-april-11-2025-what-does-this-mean-for-businesses.html">BCLP on the opt-out rules</a></li>
+</ul>
+<p><strong>Reading.</strong> Provider activation by e-mail (130 providers have an address on their card)
+is lawful without consent; every family-facing SMS needs written consent captured on the
+platform, and the frames show that as a state, not an assumption. E-mail and push carry
+the digests; SMS only where a parent opted in for a specific provider.</p>
+<h2>8b. Reference market: Hungary</h2>
 <ul>
 <li><strong>B2B e-mail to corporate addresses does not require prior consent</strong> in Hungary under
   Act XLVIII of 2008 — unless the address contains personal data (a named person's
@@ -167,10 +181,9 @@ requires, and never sends without the owner. The videos' rule and the regulation
 <li><strong>57.4 % of Hungarian SMEs</strong> have at least basic digital intensity (EU 72.9 %); AI use
   lags "in particular for SMEs, due to a lack of digital skills". <strong>P</strong> <a href="https://digital-strategy.ec.europa.eu/en/factpages/hungary-2025-digital-decade-country-report">Digital Decade 2025 country report, Hungary</a></li>
 </ul>
-<p><strong>Reading.</strong> Activation outreach to <code>info@</code>-type addresses found on the listed
-businesses' own sites is lawful in Hungary; outreach to a named owner needs consent or
-another lawful basis — the prototype shows the distinction as a state on the listing.
-The digital-skills gap is the reason the machine must run with "nobody logs in".</p>
+<p><strong>Reading.</strong> For the Hungarian reference instance the same activation is lawful to
+<code>info@</code>-type addresses and not to a named owner without consent; the digital-skills gap
+is the reason the machine must run with "nobody logs in" on any instance.</p>
 <h2>9. What the two reference videos add (owner-supplied, 2026-09-19)</h2>
 <p>Not evidence — a target shape, read from 42 extracted frames (<a href="audit.html"><code>02-audit.md</code></a> §3):
 departments as the unit of automation; a brand knowledge layer as plain files

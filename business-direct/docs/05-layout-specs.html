@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>business.direct — layout specifications (gate 2) — business.direct docs</title>
+<link rel="stylesheet" href="../assets/tokens.css">
+<style>/* business.direct — documentation pages on the product tokens (GDS roles, teal accent). */
+:root{--ground:var(--gds-bg-canvas,#f8fafc);--card:var(--gds-bg-surface,#fff);--ink:var(--gds-text-body,#111827);--text:#1f2937;--muted:var(--gds-text-meta,#64748b);--accent:var(--gds-brand-accent,#0f766e);--accent-deep:var(--gds-brand-accent-strong,#115e59);--line:var(--gds-border-card,#e2e8f0);--line-soft:#eef2f7;--note:var(--gds-brand-accent-tint,#e6f4f2)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--ground);color:var(--text);font-family:var(--gds-font,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif);font-size:15.5px;line-height:1.6;padding-block:0 64px;padding-inline:clamp(16px,4vw,40px)}
+.wrap{max-width:74ch;margin-inline:auto}
+.docnav{display:flex;flex-wrap:wrap;gap:4px 18px;align-items:center;padding:16px 0;border-bottom:1px solid var(--line);font-size:12px;letter-spacing:.06em;text-transform:uppercase}
+.docnav a{color:var(--muted);text-decoration:none;min-height:44px;min-width:44px;display:inline-flex;align-items:center;border-bottom:2px solid transparent}
+.docnav a:hover,.docnav a[aria-current]{color:var(--ink);border-color:var(--accent)}
+.docnav-brand{color:var(--accent-deep);font-weight:800;margin-right:6px}
+.docnav-hub{margin-left:auto}
+header{padding-block:40px 24px;border-bottom:1px solid var(--line);margin-bottom:28px}
+.eyebrow{font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--accent-deep);margin:0 0 12px;font-weight:800}
+h1,h2,h3{color:var(--ink);line-height:1.1;text-wrap:balance;margin:0;letter-spacing:-.02em}
+h1{font-size:clamp(30px,6vw,46px);font-weight:900}
+h2{font-size:clamp(23px,4vw,30px);font-weight:900;margin:48px 0 14px;padding-top:20px;border-top:1px solid var(--line)}
+h3{font-size:18px;margin:30px 0 8px;font-weight:800}
+p{margin:0 0 14px} strong{color:var(--ink);font-weight:800}
+ul,ol{padding-left:22px;margin:0 0 16px} li{margin:5px 0} li>ul{margin:6px 0 0}
+code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.86em;background:var(--note);padding:1px 5px;border-radius:4px;color:var(--ink);overflow-wrap:anywhere}
+pre{overflow-x:auto;padding:14px 16px;border:1px solid var(--line);border-radius:10px;background:var(--card);font-size:12px;line-height:1.35}
+pre code{background:none;padding:0;font-size:inherit}
+a{color:var(--accent-deep)} :focus-visible{outline:2px solid var(--accent-deep);outline-offset:2px}
+.tbl{overflow-x:auto;margin:14px 0 22px;border:1px solid var(--line);border-radius:10px;background:var(--card)}
+table{border-collapse:collapse;width:100%;font-size:13.5px;min-width:560px}
+th{text-align:left;font-weight:800;color:var(--ink);background:var(--note);padding:10px 12px;border-bottom:1px solid var(--line);font-size:11.5px;letter-spacing:.06em;text-transform:uppercase}
+td{padding:10px 12px;border-top:1px solid var(--line-soft);vertical-align:top;background:var(--card)} td:first-child{color:var(--ink)}
+footer{margin-top:56px;padding-top:18px;border-top:1px solid var(--line);font-size:12px;color:var(--muted)}
+</style>
+</head>
+<body>
+<div class="wrap">
+<nav class="docnav" aria-label="Project documentation"><span class="docnav-brand">business.direct · docs</span><a href="index.html">Overview</a><a href="brief.html">Brief</a><a href="research.html">Research</a><a href="audit.html">Audit</a><a href="sources.html">Sources</a><a href="design-system.html">Design system</a><a href="layouts.html">Layouts</a><a href="05-layout-specs.html" aria-current=page>Layout specs</a><a href="decisions.html">Decisions</a><a href="client-asks.html">Owner asks</a></nav>
+<header><p class="eyebrow">Calvus · business.direct · project documentation</p><h1>business.direct — layout specifications (gate 2)</h1></header>
+<p><em>Four frames composed only from the approved components (<code>assets/components.css</code>, D9) and
+the real providers (<code>data/providers.json</code>). Layout rules live in <code>docs/frames/frame.css</code>
+and nowhere else. PROPOSED 2026-09-19; the owner approves or corrects on <code>layouts.html</code>.</em></p>
+<h2>Reference widths and the tablet resolution</h2>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>Width</th>
+<th>Navigation</th>
+<th>Grids</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>≥ 1024 (desktop, framed at 1440)</td>
+<td>left rail (flows · data · system) + top bar with the three-role switch</td>
+<td>two-column body: the flow columns 1.5 : 1; tiles auto-fit; tables full</td>
+</tr>
+<tr>
+<td>768–1023 (tablet)</td>
+<td>the phone navigation (bottom bar), no rail</td>
+<td>the desktop grids where they fit (tiles, department cards); flow columns stack</td>
+</tr>
+<tr>
+<td>&lt; 768 (phone, framed at 390)</td>
+<td>bottom bar with four items and the approval count; top bar keeps the role switch</td>
+<td>single column; tiles two-up; pipeline strip three-up; approval actions stacked, approve full-width</td>
+</tr>
+</tbody>
+</table></div>
+<p>Tap targets 44 px below 980; desktop density tighter. Content max 1400 px. Every frame
+loads the live JSON, so a refreshed catalogue changes the frames without an edit.</p>
+<h2>Frame 1 — Platform · Overview · 1440 (<code>frames/platform-desktop-1440.html</code>)</h2>
+<p>The control room, ordered by the two primary flows (D14):</p>
+<ol>
+<li>Title and the day's state (7 items waiting).</li>
+<li>Six intelligence tiles — four real (providers, managing, with e-mail/phone, next session known), two declared sample.</li>
+<li>Left column, <strong>B2C · Social publishing</strong>: this week's posts as post cards (channels, copy, media, link back to the listing page, AI-draft badge, approve/edit/skip), then the approval queue.</li>
+<li>Right column, <strong>B2B · Provider sales</strong>: the pipeline strip (252 identified, real; the rest zero), next actions (invitation sequence, call list, website-form list), then the departments (social, sales, weekly picks, generated pages, market radar).</li>
+<li>Providers table with filter chips built from real counts (unclaimed flag 15, e-mail 130, phone 180, trial 72) and a stage badge.</li>
+</ol>
+<h2>Frame 2 — Platform · Overview · 390 (<code>frames/platform-phone-390.html</code>)</h2>
+<p>Same content, single column, in the same order: tiles two-up → this week's posts →
+pipeline strip three-up + the invitation approval → departments → providers as listing
+cards with the ladder. Bottom bar: Overview · Approvals (7) · Providers · More.</p>
+<h2>Frame 3 — Provider · Today · 390 (<code>frames/provider-phone-390.html</code>)</h2>
+<p>The provider lives on a phone. Top: the real card of Brooklyn Force Soccer (claim state
+real: unclaimed). Then the B2B flow from the provider's side in two steps: <strong>what the
+coach received</strong> (the invitation e-mail with "Apply to manage my page" and the opt-out) and
+<strong>after approval: Today</strong> — two tiles, two approval items (a reply to a family's trial
+request; a trial-class campaign with the consent rule stated), the four departments, the
+knowledge files. Bottom bar: Today · Waiting (2) · Team · More.</p>
+<h2>Frame 4 — Family · What arrives · 390 (<code>frames/family-phone-390.html</code>)</h2>
+<p>Where a new family meets the platform — the <strong>published social post with its link back</strong>
+(the B2C flow's landing) — then this week's push and digest built from real providers,
+one provider text with the consent and cap stated, and the channel/frequency controls
+with a one-tap stop. Bottom bar: Find · Saved · Inbox · Account.</p>
+<h2>Assumptions the open asks force (<a href="client-asks.html"><code>08-client-asks.md</code></a>)</h2>
+<ul>
+<li>Provider persona Brooklyn Force Soccer; family persona Maya in Park Slope (D13).</li>
+<li>Integrations shown: Your Field API, Instagram/Facebook, TikTok/X, e-mail (Resend), push, SMS with consent state, Google Business Profile.</li>
+<li>Social channels are the platform's own accounts (@yourfieldnyc); the provider's spotlight post is requested by the provider and published by the platform.</li>
+<li>Every family-facing SMS requires written consent captured on the platform; e-mail and push do not.</li>
+</ul>
+<h2>What approval of these frames fixes</h2>
+<p>Section order per view, the two-column desktop body, the phone bottom bars, the tile
+set, the post card and pipeline strip (D15) in place. It does not fix copy — every
+sentence in the frames is sample except the provider data and the site's own phrases.</p>
+<footer>Source: <code>business-direct/docs/05-layout-specs.md</code> · rendered by <code>docs/build.py</code>.</footer>
+</div>
+</body>
+</html>

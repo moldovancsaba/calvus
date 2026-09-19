@@ -36,72 +36,58 @@ footer{margin-top:56px;padding-top:18px;border-top:1px solid var(--line);font-si
 </head>
 <body>
 <div class="wrap">
-<nav class="docnav" aria-label="Project documentation"><span class="docnav-brand">business.direct · docs</span><a href="index.html">Overview</a><a href="brief.html">Brief</a><a href="research.html">Research</a><a href="audit.html" aria-current=page>Audit</a><a href="sources.html">Sources</a><a href="design-system.html">Design system</a><a href="decisions.html">Decisions</a><a href="client-asks.html">Owner asks</a><a class="docnav-hub" href="../../index.html">Calvus Hub</a></nav>
+<nav class="docnav" aria-label="Project documentation"><span class="docnav-brand">business.direct · docs</span><a href="index.html">Overview</a><a href="brief.html">Brief</a><a href="research.html">Research</a><a href="audit.html" aria-current=page>Audit</a><a href="sources.html">Sources</a><a href="design-system.html">Design system</a><a href="layouts.html">Layouts</a><a href="05-layout-specs.html">Layout specs</a><a href="decisions.html">Decisions</a><a href="client-asks.html">Owner asks</a></nav>
 <header><p class="eyebrow">Calvus · business.direct · project documentation</p><h1>business.direct — audit of the starting point</h1></header>
-<p><em>Measured 2026-09-19 with <code>curl</code> and the converter; the videos read frame by frame.</em></p>
-<h2>1. The reference platforms</h2>
+<p><em>Measured 2026-09-19 with <code>curl</code> and the two converters; the videos read frame by frame.
+Your Field NYC is the client (D11); the Hungarian instance is the reference.</em></p>
+<h2>1. The client platform: Your Field NYC (getyourfield.com)</h2>
 <div class="tbl"><table>
 <thead>
 <tr>
 <th>Measure</th>
-<th>Most én sportolok! (sport.doneisbetter.com)</th>
-<th>Your Field NYC (getyourfield.com/nyc)</th>
+<th>Value</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td>Stack</td>
-<td>Next.js + Mantine on Vercel (<code>data-dpl-id</code>), HU</td>
-<td>same stack, EN</td>
+<td>Next.js + Mantine on Vercel (<code>data-dpl-id</code>), English; v0.201.105</td>
 </tr>
 <tr>
-<td>Home</td>
-<td>559 KB HTML, 30 scripts, 3 stylesheets; TTFB 4,8 s cold</td>
-<td>118 KB, 24 scripts; TTFB 0,53 s</td>
+<td>Home (<code>/nyc</code>)</td>
+<td>118 KB HTML, 24 scripts, 3 stylesheets; TTFB 0,53 s</td>
 </tr>
 <tr>
-<td>Content</td>
-<td>hero, location step, 8 categories, 7 age bands, "this week", saved items, map, account</td>
-<td>home, find sports, map, account; "no pins in this view" on first load</td>
+<td>Structure (sitemap, 280 URLs)</td>
+<td><code>/nyc/</code> home · <code>all</code> · <code>classes</code> · <code>camps</code> · <code>drop-in-activities</code> · <code>family-events</code> · <code>map</code> · 22 <code>neighborhood-guides/*</code> · <strong>251 <code>providers/*</code></strong></td>
 </tr>
 <tr>
-<td>Public API</td>
-<td><code>/api-reference</code>: <code>browse-facets</code>, <code>map-pins</code>, <code>site</code>, <code>listings/[id]/nearby</code>, <code>scout?q=</code> (intent search with explanations), <code>POST /api/ingest</code> (create a discovery card, API key)</td>
-<td>not checked</td>
+<td>Public API (found in the site's own JS bundles; no reference page)</td>
+<td><code>browse-facets</code>, <code>site</code>, <code>providers</code>, <code>providers/{id}</code>, <code>browse?…</code>, <code>family-events</code>, <code>home-feed</code>, <code>meetup-groups</code>, <code>nearby-services?listingId=</code>, <code>claim-requests?city=</code>, <code>demand-capture</code>, <code>scout/recommend</code> (POST), <code>map-pins</code> (empty today)</td>
 </tr>
 <tr>
-<td>Listings</td>
-<td><strong>431</strong>, all with coordinates (<code>capped: false</code>, <code>unmapped: 0</code>)</td>
-<td>not counted</td>
+<td>Providers</td>
+<td><strong>252</strong>: Manhattan 107, Brooklyn 145; categories Classes 188 · Camps 44 · Drop-In Activities 20; 20 activity types (Martial Arts 76, Dance 39, Swimming 36, Soccer 32 …); 84 neighbourhoods</td>
+</tr>
+<tr>
+<td>Provider record</td>
+<td>name, category, borough, neighbourhood, address, geo, activity types, age ranges, short and long description, price with evidence and source, website, phone, e-mail, image, day/time tags, venue model, sessions with registration status, next occurrence (weekday, time, text), announcement, booking flag, trial policy, rating/reviews (all 0), badges, <strong>field-level verification records</strong> (field, method, source URL, verified by "enrichment"), updated/published dates, source count</td>
 </tr>
 <tr>
 <td>Claim state</td>
-<td>every listing shows "Az enyém ez a sportolási lehetőség" — <strong>none claimed</strong></td>
-<td>—</td>
+<td><code>unclaimed</code> on 15, unset on 237 — <strong>none claimed</strong></td>
 </tr>
 <tr>
-<td>Verification</td>
-<td>"Ellenőrzött" / "Checked recently" with a date on every listing (crawler check, not owner verification)</td>
-<td>—</td>
+<td>Consumer features</td>
+<td>sign-up, saved items, family plan with cost estimate, family preferences, neighbourhood detection, notifications endpoint</td>
 </tr>
 <tr>
-<td>Ingestion</td>
-<td>IDs <code>l-openclaw-&lt;name&gt;-&lt;domain&gt;</code> — cards created from the businesses' own websites</td>
-<td>—</td>
-</tr>
-<tr>
-<td>Structured data</td>
-<td><code>LocalBusiness</code> JSON-LD on every listing: name, description, url, sameAs (the business's site), address, geo</td>
-<td>—</td>
-</tr>
-<tr>
-<td>Version</td>
-<td>0.121.1 · sportolok · c8b7a08</td>
-<td>0.201.105</td>
+<td>Site copy</td>
+<td>hero "Find sports your child will <em>love</em>, close to home"; "How Your Field NY works" (choose your neighbourhood → compare local options → save and plan); trust pillars; newsletter "Get the latest kids activity picks for your neighborhood"; <strong>"List your program — reach more NYC families with a featured listing, camp placement, or local discovery profile"</strong></td>
 </tr>
 </tbody>
 </table></div>
-<h2>2. The catalogue as pulled (<code>data/listings.json</code>, 431 rows)</h2>
+<h2>2. The catalogue as pulled (<code>data/providers.json</code>, 252 rows)</h2>
 <div class="tbl"><table>
 <thead>
 <tr>
@@ -111,50 +97,58 @@ footer{margin-top:56px;padding-top:18px;border-top:1px solid var(--line);font-si
 </thead>
 <tbody>
 <tr>
-<td>Category (8 facets + multi + default)</td>
-<td>Edzőtermek 119 · Sportboltok 82 · Többféle lehetőség 63 · Bérelhető pályák 59 · Gyógytorna 44 · Sportegyesületek 26 · Tanfolyamok 17 · Szabadidősport 10 · Egyéb 6 · Versenyek 5</td>
+<td>Website</td>
+<td>252 — the activation channel exists for every provider</td>
 </tr>
 <tr>
-<td>County</td>
-<td>20; Budapest 190, Pest 58, Csongrád-Csanád 23, Bács-Kiskun 22, Veszprém 20 …</td>
+<td>Phone / e-mail</td>
+<td>180 / 130</td>
 </tr>
 <tr>
-<td>Locality</td>
-<td>147; Budapest 176 (districts appear in the locality string), Szeged 21, Debrecen 12</td>
+<td>Coordinates</td>
+<td>219</td>
 </tr>
 <tr>
-<td>Website (<code>sameAs</code>)</td>
-<td>395 of 431 — the activation channel exists for 92 %</td>
+<td>Age ranges</td>
+<td>182 (buckets 3–5, 6–8, 9–12, Teens)</td>
 </tr>
 <tr>
-<td>Description</td>
-<td>385</td>
+<td>Price with amount</td>
+<td>28 (evidence "stated" with source URL) — most prices are unknown to the platform</td>
 </tr>
 <tr>
-<td>Opening hours (parsed from the page)</td>
-<td>175</td>
+<td>Sessions</td>
+<td>73; next occurrence 83 (weekday, start time, free text)</td>
 </tr>
 <tr>
-<td>"When" tags (weekday/weekend, morning/evening, price)</td>
-<td>23</td>
+<td>Trial policy</td>
+<td>72 (48 explicitly free)</td>
 </tr>
 <tr>
-<td>Next session in the coming 7 days</td>
-<td>21 — the "this week" automation has thin real input today</td>
+<td>Announcement</td>
+<td>26; booking enabled 10</td>
 </tr>
 <tr>
-<td>Checked date</td>
-<td>431 (all between 2026-09-13 and 2026-09-18)</td>
+<td>Verified fields</td>
+<td>every record; typically description, venue model, price, trial policy — read from the provider's official page</td>
 </tr>
 <tr>
-<td>Age bands</td>
-<td>every facet count equals 431 — ages are not yet a real per-listing attribute on this instance</td>
+<td>Claim</td>
+<td>15 <code>unclaimed</code>, 237 unset</td>
 </tr>
 </tbody>
 </table></div>
-<p>Facets and site copy are in <code>data/platform.json</code>. Territory has three levels (vármegye,
-kerület, városrész); only the first is populated.</p>
-<h2>3. The reference videos (owner-supplied)</h2>
+<p>Facets and site copy are in <code>data/platform.json</code>. The converter is read-only; re-run to
+refresh.</p>
+<h2>3. The reference instance: Most én sportolok! (sport.doneisbetter.com)</h2>
+<p>Same stack, Hungarian. 431 listings with coordinates, 8 categories, 20 counties, a
+documented public API (<code>/api-reference</code>: facets, pins, site, nearby, intent search,
+<code>POST /api/ingest</code>), <code>LocalBusiness</code> JSON-LD on every listing, a claim prompt on every
+card (none claimed), a crawler-verified date on each. Pulled to
+<code>data/reference-sportolok/</code> by <code>fetch-sportolok.py</code> (431 rows: 395 websites, 385
+descriptions, 21 sessions in the next 7 days). Home 559 KB, TTFB 4,8 s cold. It proves
+the machine generalises: two instances, one pattern, two converters of the same shape.</p>
+<h2>4. The reference videos (owner-supplied)</h2>
 <p>Two ~100 s vertical videos by the same creator (@structurewebworks / @restructural),
 21 frames each read at 5 s intervals:</p>
 <div class="tbl"><table>
@@ -169,7 +163,7 @@ kerület, városrész); only the first is populated.</p>
 <tr>
 <td>Structure</td>
 <td>03 Orchestrator → eight departments; 04 Knowledge layer + access ("Brand OS file system": <code>/brand-brain/voice-guide.md</code>, <code>positioning.md</code>, <code>messaging-pillars.md</code>, <code>/signals-seo</code>, <code>/content</code>, <code>/creative</code>, <code>/social</code>, <code>/reputation</code>, <code>/conversation</code>, <code>/reporting</code>); access control plane</td>
-<td>departments: research &amp; intelligence (Google Trends, Semrush, SparkToro) → content engine (Claude + Surfer; <code>brief.md</code>, <code>offer.md</code>, <code>values.md</code>) → distribution (Metricool → IG/FB/TikTok/YouTube) → creative studio → lead capture &amp; routing (ManyChat DMs, CallRail) → sales &amp; booking (HubSpot, Twilio SMS, Calendly, payments) → results (Looker "Today's recap") → knowledge updated (<code>leads.md</code>, <code>customers.md</code>, <code>targets.md</code>) → back to research</td>
+<td>research &amp; intelligence (Google Trends, Semrush, SparkToro) → content engine (Claude + Surfer; <code>brief.md</code>, <code>offer.md</code>, <code>values.md</code>) → distribution (Metricool → IG/FB/TikTok/YouTube) → creative studio → lead capture &amp; routing (ManyChat DMs, CallRail) → sales &amp; booking (HubSpot, Twilio SMS, Calendly, payments) → results (Looker "Today's recap") → knowledge updated (<code>leads.md</code>, <code>customers.md</code>, <code>targets.md</code>) → back to research</td>
 </tr>
 <tr>
 <td>Operating rule (captions)</td>
@@ -181,23 +175,17 @@ kerület, városrész); only the first is populated.</p>
 <td>a skincare/social brand</td>
 <td>"Structure Motors" — a test-drive request for a 911 GT3 RS handled from DM to calendar</td>
 </tr>
-<tr>
-<td>Tools shown</td>
-<td>Claude, Surfer, Grammarly, GBP reviews, Podium, Yelp, Semrush, GA4, GSC, Ahrefs, Canva, Midjourney, Descript, CapCut, Looker, BigQuery</td>
-<td>Claude Code as the orchestrator; HubSpot, ManyChat, Calendly, Twilio, Metricool, Looker Studio</td>
-</tr>
 </tbody>
 </table></div>
 <p>What business.direct takes from them: departments as the unit; the knowledge layer as
 files the owner can read; approval before anything leaves; the recap; integrations as
-the machine's hands. What it does not take: 62 agents and a tool stack of twenty
-subscriptions — the listed business is one person with a phone.</p>
-<h2>4. What DiscountDirect already gives this project</h2>
+the machine's hands. What it does not take: 62 agents and twenty subscriptions — the
+provider is one coach with a phone.</p>
+<h2>5. What DiscountDirect already gives this project</h2>
 <p>SSOT terms (offer, channel, consent, frequency cap, holdout, predefined rule set /
 advanced mode), the GDS token names, the decided stack (D26: Next.js 15, MongoDB Atlas,
-Vercel, DoneIsBetter SSO, Resend, Vercel Cron + outbox, Socket.IO, Upstash, Blob), and the
-research on price and the nine buying levers. business.direct reuses all of it and adds
-the listing platform as the data source and the three roles.</p>
+Vercel, DoneIsBetter SSO, Resend, Vercel Cron + outbox, Socket.IO, Upstash, Blob — the
+same family Your Field runs on), and the research on price and the nine buying levers.</p>
 <footer>Source: <code>business-direct/docs/02-audit.md</code> · rendered by <code>docs/build.py</code>.</footer>
 </div>
 </body>

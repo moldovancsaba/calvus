@@ -50,7 +50,7 @@ footer{{margin-top:48px;padding-top:16px;border-top:1px solid var(--gds-border-c
 </style>
 </head>
 <body><div class="wrap">
-<div class="top"><b>DiscountDirect</b>{nav}<a href="index.html">Open the prototype →</a><a href="../index.html">Calvus Hub</a></div>
+<div class="top"><b>DiscountDirect</b>{nav}<a href="index.html">Open the prototype →</a></div>
 <h1>{title}</h1>
 {body}
 <footer>Source: <code>discountdirect/{src}</code>, rendered by <code>build-docs.py</code>. Documentation tokens are mapped in <code>GDS-TOKEN-MAP.md</code>; the application implementation uses GDS 6.7.0.</footer>

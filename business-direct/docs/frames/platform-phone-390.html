@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>business.direct — Platform · Overview (frame, 390)</title>
+<link rel="stylesheet" href="../../assets/tokens.css"><link rel="stylesheet" href="../../assets/components.css"><link rel="stylesheet" href="frame.css">
+</head>
+<body>
+<div class="shell">
+<div class="frame-note">Gate 2 · frame · 390 · Platform</div>
+<header class="topbar"><div class="brand">business<span>.direct</span></div><div class="roles" role="tablist" aria-label="View"><button class="on" role="tab" aria-selected="true">Platform</button><button role="tab" aria-selected="false">Provider</button><button role="tab" aria-selected="false">Family</button></div></header>
+<div class="body">
+  <main>
+    <div><h1 class="page-title">Overview</h1><p class="sub">Your Field NYC · Sep 19 · 7 items waiting</p></div>
+    <section class="tiles" id="tiles"></section>
+    <section class="stack">
+      <div class="section-head"><h2>B2C · This week's posts</h2><span class="meta">5 drafts</span></div>
+      <div class="stack" id="posts"></div>
+    </section>
+    <section class="stack">
+      <div class="section-head"><h2>B2B · Provider sales</h2></div>
+      <ul class="pipeline"><li class="on"><b>252</b><span>Identified</span></li><li><b>0</b><span>Contacted</span></li><li><b>0</b><span>Replied</span></li><li><b>0</b><span>Applied</span></li><li><b>0</b><span>Managing</span></li><li><b>0</b><span>Upgraded</span></li></ul>
+      <article class="card approval"><div><div class="row" style="margin-bottom:6px"><span class="badge b-wait">Waiting</span><span class="badge b-ai">✦ AI draft</span></div><h4>Invitation to 130 providers with e-mail</h4><p class="why">"Your program is on Your Field — manage your page?" · opt-out in the footer.</p></div><div class="actions"><button class="btn">Approve · 130</button><button class="btn sec">Edit</button><button class="btn ghost">Skip</button></div></article>
+    </section>
+    <section class="stack">
+      <div class="section-head"><h2>Departments</h2><span class="meta">4 running · 2 paused</span></div>
+      <article class="card"><h4>Social publishing</h4><ul class="dept-list"><li>Posts <span class="badge b-wait">5 drafts</span></li><li>Channels <span class="badge b-off">Not connected</span></li></ul></article>
+      <article class="card"><h4>Provider sales</h4><ul class="dept-list"><li>Invitation sequence <span class="badge b-wait">Waiting</span></li><li>Reply inbox <span class="badge b-ok">Running</span></li></ul></article>
+      <article class="card"><h4>Weekly picks</h4><ul class="dept-list"><li>Sunday digest <span class="badge b-ok">Running</span></li></ul></article>
+    </section>
+    <section class="stack">
+      <div class="section-head"><h2>Providers</h2><span class="meta">252</span></div>
+      <div class="row"><span class="chip on">All</span><span class="chip">With e-mail</span><span class="chip">Managing</span></div>
+      <div class="stack" id="cards"></div>
+    </section>
+  </main>
+</div>
+<nav class="bottombar" aria-label="Platform"><a class="on" href="#"><i></i>Overview</a><a href="#"><i></i>Approvals<span class="count">7</span></a><a href="#"><i></i>Providers</a><a href="#"><i></i>More</a></nav>
+</div>
+<script>
+fetch('../../data/providers.json').then(r=>r.json()).then(d=>{
+  const P=d.providers, by=id=>P.find(p=>p.id===id);
+  document.getElementById('tiles').innerHTML=[['Providers',P.length,'real'],['Managing','0','real'],['With e-mail',P.filter(p=>p.email).length,'real'],['Posts this week','0 / 5','sample']].map(([k,v,d])=>`<div class="tile"><div class="k">${k}</div><div class="v">${v}</div><div class="d">${d}</div></div>`).join('');
+  const posts=[[by('prov-brooklyn-force-soccer'),['Instagram','Facebook'],'Saturday mornings in Park Slope: first-touch sessions for 3–5s and teams up to 14. Trial by appointment.',true],[by('prov-ahn-s-taekwondo-nyc'),['Instagram'],'Back to school at Ahn\'s Taekwondo: free trial class and a free uniform with enrollment.',true]];
+  document.getElementById('posts').innerHTML=posts.map(([l,ch,copy,ai])=>l?`<article class="card post"><div class="media">${l.image?`<img src='${l.image}' alt=''>`:'media'}</div><div><div class="row" style="justify-content:space-between"><span class="chan">${ch.map(c=>`<span>${c}</span>`).join('')}</span><span class="badge b-wait">Waiting</span></div><p>${copy}</p><div class="row" style="margin-top:8px"><button class="btn">Approve</button><button class="btn sec">Edit</button></div></div></article>`:'').join('');
+  document.getElementById('cards').innerHTML=['prov-brooklyn-force-soccer','prov-champions-martial-arts-park-slope','prov-ahn-s-taekwondo-nyc'].map(by).filter(Boolean).map(l=>`<article class="card listing"><div class="pin">${(l.primaryActivityType||l.category).slice(0,2)}</div><div><h4>${l.name}</h4><p class="meta">${l.primaryActivityType} · ${l.neighborhood}${l.email?' · e-mail':''}${l.phone?' · phone':''}</p><ul class="ladder"><li class="on">Identified</li><li>Contacted</li><li>Applied</li></ul></div></article>`).join('');
+});
+</script>
+</body>
+</html>

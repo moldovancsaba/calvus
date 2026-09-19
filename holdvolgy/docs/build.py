@@ -55,7 +55,7 @@ def render(src, out, label):
 </head>
 <body>
 <div class="wrap">
-<nav class="docnav" aria-label="Project documentation"><span class="docnav-brand">Holdvölgy 2026 · docs</span>{nav}<a class="docnav-hub" href="../../index.html">Calvus Hub</a></nav>
+<nav class="docnav" aria-label="Project documentation"><span class="docnav-brand">Holdvölgy 2026 · docs</span>{nav}</nav>
 <header><p class="eyebrow">Calvus · Holdvölgy · project documentation</p><h1>{title}</h1></header>
 {body}
 <script>(function(){{function f(){{document.querySelectorAll('.scale-d').forEach(function(e){{e.style.setProperty('--w',e.clientWidth)}});document.querySelectorAll('.scale-p').forEach(function(e){{e.style.setProperty('--pw',e.clientWidth)}})}}f();addEventListener('resize',f)}})();</script>
@@ -76,7 +76,7 @@ def sync_static_nav():
     """Hand-written doc pages (design-system.html) get the same navigation as the generated ones, on every build."""
     for name in ("design-system.html",):
         f = HERE / name; t = f.read_text(encoding="utf-8")
-        new = f'<nav class="docnav" aria-label="Project documentation"><span class="docnav-brand">Holdvölgy 2026 · docs</span>{nav_html(name)}<a href="../../index.html" style="margin-left:auto">Calvus Hub</a></nav>'
+        new = f'<nav class="docnav" aria-label="Project documentation"><span class="docnav-brand">Holdvölgy 2026 · docs</span>{nav_html(name)}</nav>'
         t2 = re.sub(r'<nav class="docnav".*?</nav>', new, t, count=1, flags=re.S)
         assert t2 != t or nav_html(name) in t, name
         f.write_text(t2, encoding="utf-8"); print("%-16s nav synced" % name)

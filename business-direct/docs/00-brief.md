@@ -1,27 +1,34 @@
 # business.direct — brief
 
-*Stage 0 of the prototyping standard (`PROTOTYPING.md`). Written 2026-09-19, before any
-page exists. Everything here is what the owner said, what the two reference platforms
-expose, and what the two reference videos show — nothing else.*
+*Stage 0 of the prototyping standard (`PROTOTYPING.md`). Written 2026-09-19, revised the same
+day when the owner named the first client. Everything here is what the owner said, what the
+client platform exposes, and what the two reference videos show — nothing else.*
 
 ## The client
 
-The owner's own product family. The reference platforms are DoneIsBetter listing sites —
-*Most én sportolok!* (sport.doneisbetter.com, a Hungarian sports-opportunity directory) and
-*Your Field NYC* (getyourfield.com, kids' activities by borough) — and the pattern
-generalises to job portals, classifieds and any listing site. **business.direct is a
-sibling of DiscountDirect** (D5): DiscountDirect retains a web shop's customers;
-business.direct markets a *listed business*.
+**Your Field NYC** (getyourfield.com) — "youth sports discovery, starting with your
+neighborhood": 252 providers of kids' classes, camps and drop-in activities across
+Manhattan (107) and Brooklyn (145), 84 neighbourhoods, 20 activity types, saved items, a
+family plan with cost estimates, a newsletter, and a "List your program" pitch to
+providers. It is the owner's own product (Next.js + Mantine on Vercel), the **first
+platform business.direct will run on** (D11). *Most én sportolok!* (sport.doneisbetter.com,
+Hungary) and job portals / classifieds are reference ideas: the same pattern, other
+instances.
+
+**business.direct is a sibling of DiscountDirect** (D5): DiscountDirect retains a web shop's
+customers; business.direct markets a *listed business* to the families on the platform —
+and markets the platform to the business.
 
 ## The problem
 
-A listing platform is B2B2C: **platform → listed business → consumer**. On the sport
-platform 431 businesses are listed, ingested by a crawler from their own websites; none has
-claimed its card ("Az enyém ez a sportolási lehetőség" appears on every one). The
-businesses are one-person or few-person operations — a gym, a physio, a climbing wall, a
-squash club — that do no marketing, answer no reviews, send no reminders, and do not know
-they are listed. The consumer side has facets, ages, a map and saved items, but nobody
-tells a consumer what is on near them this week.
+A listing platform is B2B2C: **platform → listed business → consumer**. On Your Field every
+provider was gathered from its own website by an enrichment pipeline (field-level
+verification records say which fields were read from where); **none is claimed** — 15 are
+marked `unclaimed` explicitly, 237 carry no claim state at all. The providers are small
+operations — a soccer club run by one coach, a taekwondo school, a dance studio — that
+answer late, do not follow up trials, and do not know the platform sends them families.
+On the consumer side, parents can save and plan, but nobody tells them what starts near
+them this week.
 
 The two videos the owner shared show the target shape: **the one-person sales and
 marketing team** — an orchestrator over departments (research and intelligence, content,
@@ -32,39 +39,48 @@ that make the machine run while "nobody logs in".
 
 ## What will be built
 
-A clickable prototype with **three views** (D2):
+A clickable prototype in English with **three views** (D2, D10):
 
 | View | Who | What they see |
 |---|---|---|
-| Platform | the operator of a listing site | the machine across every listing: automations, audiences, approval queue, the intelligence dashboard, integrations |
-| Business | a listed business after claiming its card | its own one-person team: knowledge layer, departments, what is waiting for approval, what went out, results |
-| Consumer | a person using the listing site | what arrives: the weekly "near you" digest, saved-item alerts, a business's offer or event, and the controls over channel and frequency |
+| Platform | Your Field's operator | the machine across every provider: automations, audiences, the approval queue, the intelligence dashboard, integrations |
+| Provider | a listed business after claiming its card | its own one-person team: knowledge files, departments, what is waiting for approval, what went out, results |
+| Family | a parent using Your Field | what arrives: the weekly "near you" digest, saved-item alerts, a provider's trial offer or announcement, and the controls over channel and frequency |
 
-Four automations are clickable (D3): **consumer digests and alerts**, **business
-activation** (you are listed — claim, verify, add), **generated landing pages and SEO**
-(category × place × age), **business campaigns** (offers, open slots, course starts,
-events — DiscountDirect's offer cards on listing data). Optional AI support is a layer
-the owner can switch on per department, never a requirement (D6). An **intelligence
-dashboard** and an **integrations** screen (the platform's own API first) are part of
-the first build (D6).
+Two flows are the front door (D14), and four automations sit behind them (D3):
 
-## What will be real
+| Flow | What the machine does | Who approves |
+|---|---|---|
+| **B2C social** | Turns listings, updates and news into posts for Instagram, Facebook, TikTok and X — a provider spotlight, "this week in Park Slope", a new-camp announcement, a parent tip — scheduled, drafted (AI optional), and published only after approval, each with the link back to the listing page. Goal: new families on the platform. | platform operator |
+| **B2B sales** | Works every listed provider through a pipeline — identified → contacted → replied → applied → managing → upgraded — with e-mail and phone from the card, sequences with human sign-off, the reply inbox, and the upsell ("and more": featured listing, camp placement, campaigns). Goal: providers who manage their own listing and buy more. | platform operator; the provider on their side |
 
-The data: **431 real listings** from the sport platform's public API and pages (8
-categories, 20 counties, 147 localities, 395 websites, 385 descriptions, 21 with a next
-session), pulled by `data/fetch-sportolok.py` and never edited by hand (D4). The site copy
-and facets are the platform's own. Everything that is not on the platform — a business's
-brand voice, its offers, the results of a campaign — is **sample** and is declared as
-sample in the page. No listed business is contacted by the prototype.
+Behind them: **family digests and alerts**, **generated landing pages and SEO** (activity ×
+neighbourhood × age), **provider campaigns** (trial classes, open spots, camp registration,
+announcements — DiscountDirect's offer cards on listing data), and **activation** as the
+pipeline's first stages. Optional AI support is a layer the operator or provider switches
+on per department, never a requirement (D6). An **intelligence dashboard** and an
+**integrations** screen (the platform's own API first, then the social channels, e-mail,
+phone/SMS) are part of the first build.
 
-## What will be inert
+## What is real
 
-Sending (e-mail, push, SMS, social posts), publishing generated pages to the platform,
-claiming a card, connecting an integration with a key. Each is shown in place, visibly
-inert, with the reason.
+The data: **252 real providers** from Your Field's public API (`data/fetch-yourfield.py`,
+never edited by hand, D4/D11): name, category, borough, neighbourhood, address, 219 with
+coordinates, every one with a website, 180 phones, 130 e-mails, 28 stated prices with
+evidence, 73 with sessions, 83 with a next occurrence, 72 with a trial policy, 26 with an
+announcement, 10 with booking enabled, claim state, verified fields. The site copy
+(hero, how it works, trust pillars, newsletter, "List your program") is the platform's
+own. Everything that is not on the platform — a provider's brand voice, a campaign's
+results, the parent persona and her saved items — is **sample** and is declared as sample
+in the page. No provider or family is contacted by the prototype.
+
+## What is inert
+
+Sending (e-mail, push, SMS, social), publishing generated pages, claiming a card,
+connecting an integration with a key. Each is shown in place, visibly inert, with the reason.
 
 ## Where it stands
 
-Stage 0–2 done 2026-09-19 (this brief, `01-research.md`, `02-audit.md`, `03-sources.md`,
-the data converter). **Gate 1 — the design system (`design-system.html`) — awaits the
-owner's approval.** No layout, no page before that (standard §2).
+Stage 0–2 done 2026-09-19. **Gate 1 (design system) approved (D9)**; re-issued in English
+on the client's data the same day, tokens and components unchanged. **Gate 2 — the layout
+frames (`layouts.html`) — awaits the owner.**

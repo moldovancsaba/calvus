@@ -14,7 +14,7 @@ import io, json, re, sys, time, html, datetime, concurrent.futures
 import urllib.request
 
 BASE = sys.argv[1].rstrip("/") if len(sys.argv) > 1 else "https://sport.doneisbetter.com"
-OUT = __file__.rsplit("/", 1)[0]
+OUT = __file__.rsplit("/", 1)[0] + "/reference-sportolok"
 UA = {"User-Agent": "Mozilla/5.0 (business.direct prototype; public data only)"}
 
 def get(path, tries=3):

@@ -36,7 +36,7 @@ footer{margin-top:56px;padding-top:18px;border-top:1px solid var(--line);font-si
 </head>
 <body>
 <div class="wrap">
-<nav class="docnav" aria-label="Project documentation"><span class="docnav-brand">business.direct · docs</span><a href="index.html">Overview</a><a href="brief.html">Brief</a><a href="research.html">Research</a><a href="audit.html">Audit</a><a href="sources.html">Sources</a><a href="design-system.html">Design system</a><a href="decisions.html" aria-current=page>Decisions</a><a href="client-asks.html">Owner asks</a><a class="docnav-hub" href="../../index.html">Calvus Hub</a></nav>
+<nav class="docnav" aria-label="Project documentation"><span class="docnav-brand">business.direct · docs</span><a href="index.html">Overview</a><a href="brief.html">Brief</a><a href="research.html">Research</a><a href="audit.html">Audit</a><a href="sources.html">Sources</a><a href="design-system.html">Design system</a><a href="layouts.html">Layouts</a><a href="05-layout-specs.html">Layout specs</a><a href="decisions.html" aria-current=page>Decisions</a><a href="client-asks.html">Owner asks</a></nav>
 <header><p class="eyebrow">Calvus · business.direct · project documentation</p><h1>business.direct — decision register</h1></header>
 <div class="tbl"><table>
 <thead>
@@ -59,23 +59,23 @@ footer{margin-top:56px;padding-top:18px;border-top:1px solid var(--line);font-si
 <tr>
 <td>D2</td>
 <td>2026-09-19</td>
-<td>Three views: platform operator, listed business, consumer</td>
+<td>Three views: platform operator, listed business (provider), consumer (family)</td>
 <td>owner</td>
-<td>DiscountDirect's seller/buyer pattern plus the platform role, because the platform is the party that runs the machine across listings</td>
+<td>DiscountDirect's seller/buyer pattern plus the platform role, because the platform runs the machine across listings</td>
 </tr>
 <tr>
 <td>D3</td>
 <td>2026-09-19</td>
-<td>Four automations clickable in v1: consumer digests and alerts; business activation; generated landing pages and SEO; business campaigns</td>
+<td>Four automations clickable in v1: digests and alerts; activation; generated landing pages and SEO; provider campaigns</td>
 <td>owner</td>
 <td>all four chosen</td>
 </tr>
 <tr>
 <td>D4</td>
 <td>2026-09-19</td>
-<td>Real data from sport.doneisbetter.com via its public API, pulled by a converter; nothing edited by hand</td>
+<td>Real data pulled by a converter from a platform's public API; nothing edited by hand</td>
 <td>owner</td>
-<td>over Your Field data or a fictional instance; generic enough to show any listing site</td>
+<td>over a fictional instance</td>
 </tr>
 <tr>
 <td>D5</td>
@@ -89,7 +89,7 @@ footer{margin-top:56px;padding-top:18px;border-top:1px solid var(--line);font-si
 <td>2026-09-19</td>
 <td>The shape is the <strong>one-person sales and marketing machine</strong>: departments as automations, a knowledge layer, human-in-the-loop, <strong>optional AI support</strong> per department, an <strong>intelligence dashboard</strong>, <strong>integrations</strong> (the platform's API first)</td>
 <td>owner, with two reference videos</td>
-<td>widens D3: the automations are departments of one machine, not four features</td>
+<td>widens D3</td>
 </tr>
 <tr>
 <td>D7</td>
@@ -101,9 +101,58 @@ footer{margin-top:56px;padding-top:18px;border-top:1px solid var(--line);font-si
 <tr>
 <td>D8</td>
 <td>2026-09-19</td>
-<td>Tokens: GDS role names shared with DiscountDirect; product accent teal <code>#0f766e</code> (DiscountDirect is indigo) — <strong>PROPOSED</strong></td>
+<td>Tokens: GDS role names shared with DiscountDirect; product accent teal <code>#0f766e</code></td>
+<td>Calvus, proposed</td>
+<td>siblings share a system and differ by one accent</td>
+</tr>
+<tr>
+<td>D9</td>
+<td>2026-09-19</td>
+<td><strong>Gate 1 approved</strong> — tokens and components as on <code>design-system.html</code></td>
+<td>owner: "Approved"</td>
+<td>D8 stands; components moved to <code>assets/components.css</code> as the one source for the page and every frame</td>
+</tr>
+<tr>
+<td>D10</td>
+<td>2026-09-19</td>
+<td><strong>Everything product- and client-facing is in English</strong></td>
+<td>owner</td>
+<td>replaced the Hungarian UI copy of the first design-system page; docs were already English</td>
+</tr>
+<tr>
+<td>D11</td>
+<td>2026-09-19</td>
+<td><strong>Your Field NYC (getyourfield.com) is the first client</strong>; <em>Most én sportolok!</em> and job portals / classifieds are reference ideas</td>
+<td>owner</td>
+<td>replaced D4's choice of the Hungarian instance as the data source; that data moved to <code>data/reference-sportolok/</code>; a second converter of the same shape pulls Your Field</td>
+</tr>
+<tr>
+<td>D12</td>
+<td>2026-09-19</td>
+<td>No "Calvus Hub" link on any user-facing page or document, in any project</td>
+<td>owner</td>
+<td>removed from every generator, renderer and hand-written page repo-wide</td>
+</tr>
+<tr>
+<td>D13</td>
+<td>2026-09-19</td>
+<td>Demo personas: provider <strong>Brooklyn Force Soccer</strong> (Park Slope, explicitly unclaimed, e-mail and phone on the card, Saturday sessions, trial by appointment); family: a Park Slope parent with two children</td>
+<td>Calvus, on the data</td>
+<td>the owner asks #2–3 default to these until answered</td>
+</tr>
+<tr>
+<td>D14</td>
+<td>2026-09-19</td>
+<td><strong>Two primary flows</strong>: (1) <strong>B2C social communication</strong> — posting listings, updates and news to social channels to acquire new families for the listing page; (2) <strong>B2B sales flow</strong> — contacting listed businesses and inviting them to apply to manage their own listing, then more. Digests and alerts, generated pages and provider campaigns are the second ring</td>
+<td>owner</td>
+<td>reorders D3/D6: the machine's front door is acquisition on both sides; the frames are built around the two flows</td>
+</tr>
+<tr>
+<td>D15</td>
+<td>2026-09-19</td>
+<td>Two components added for D14 — the <strong>social post card</strong> (channel, listing, copy, media slot, state) and the <strong>pipeline stage strip</strong> (identified → contacted → replied → applied → managing → upgraded) — PROPOSED, reviewed with gate 2</td>
 <td>Calvus</td>
-<td>siblings share a system and differ by one accent; awaits gate 1</td>
+<td>the approved set had no social or pipeline component</td>
 </tr>
 </tbody>
 </table></div>

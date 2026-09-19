@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>business.direct — layout frames (gate 2)</title>
+<link rel="stylesheet" href="../assets/tokens.css">
+<link rel="stylesheet" href="docs.css">
+<style>
+.frames{display:grid;gap:28px;margin:18px 0 30px}
+.frames figure{margin:0} .frames figcaption{font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);margin-bottom:8px;font-weight:700}
+.scale-d{width:100%;aspect-ratio:1440/2200;position:relative;overflow:hidden;border:1px solid var(--line);border-radius:10px;background:var(--ground)}
+.scale-d iframe{position:absolute;top:0;left:0;width:1440px;height:2200px;border:0;transform-origin:0 0;transform:scale(calc(var(--w,720) / 1440))}
+.phones{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:20px}
+.scale-p{width:100%;max-width:300px;aspect-ratio:390/1600;position:relative;overflow:hidden;border:1px solid var(--line);border-radius:14px;background:var(--ground)}
+.scale-p iframe{position:absolute;top:0;left:0;width:390px;height:1600px;border:0;transform-origin:0 0;transform:scale(calc(var(--pw,300) / 390))}
+.open{display:inline-flex;align-items:center;min-height:44px;font-weight:700}
+</style>
+</head>
+<body><div class="wrap">
+<nav class="docnav" aria-label="Project documentation"><span class="docnav-brand">business.direct · docs</span><a href="index.html">Overview</a><a href="brief.html">Brief</a><a href="research.html">Research</a><a href="audit.html">Audit</a><a href="sources.html">Sources</a><a href="design-system.html">Design system</a><a href="layouts.html" aria-current="page">Layouts</a><a href="05-layout-specs.html">Layout specs</a><a href="decisions.html">Decisions</a><a href="client-asks.html">Owner asks</a></nav>
+<header><p class="eyebrow">Gate 2 · PROPOSED 2026-09-19 · awaits the owner</p><h1>business.direct — layout frames</h1></header>
+<p>Four frames composed from the approved components and Your Field's real providers, arranged around the two primary flows (D14): <strong>B2C social publishing</strong> to bring families to the listing page, and the <strong>B2B provider sales pipeline</strong> to bring providers to manage their own page and more. Specification and assumptions: <a class="open" href="05-layout-specs.html"><code>05-layout-specs.md</code></a>. Every frame is a live page — open it full size to click the role switch, scroll and resize.</p>
+<p><em>What approval means:</em> section order per view, the desktop two-column body, the phone bottom bars, the tile set, and the two components added for the flows (post card, pipeline strip — D15). Copy in the frames is sample; the providers are real.</p>
+
+<h2>Platform · Overview · 1440</h2>
+<div class="frames"><figure><figcaption>Desktop 1440 — the control room</figcaption><div class="scale-d"><iframe src="frames/platform-desktop-1440.html" title="Platform overview at 1440" loading="lazy" tabindex="-1"></iframe></div><a class="open" href="frames/platform-desktop-1440.html">Open the frame →</a></figure></div>
+
+<h2>Phone · 390 — platform, provider, family</h2>
+<div class="phones">
+  <figure><figcaption>Platform · Overview</figcaption><div class="scale-p"><iframe src="frames/platform-phone-390.html" title="Platform overview at 390" loading="lazy" tabindex="-1"></iframe></div><a class="open" href="frames/platform-phone-390.html">Open →</a></figure>
+  <figure><figcaption>Provider · Today (Brooklyn Force Soccer)</figcaption><div class="scale-p"><iframe src="frames/provider-phone-390.html" title="Provider view at 390" loading="lazy" tabindex="-1"></iframe></div><a class="open" href="frames/provider-phone-390.html">Open →</a></figure>
+  <figure><figcaption>Family · What arrives (Maya, Park Slope)</figcaption><div class="scale-p"><iframe src="frames/family-phone-390.html" title="Family view at 390" loading="lazy" tabindex="-1"></iframe></div><a class="open" href="frames/family-phone-390.html">Open →</a></figure>
+</div>
+
+<footer>Source: <code>business-direct/docs/layouts.html</code> (hand-written), frames under <code>docs/frames/</code>, layout rules in <code>frames/frame.css</code>. Providers from <code>data/providers.json</code>.</footer>
+</div>
+<script>(function(){function f(){document.querySelectorAll('.scale-d').forEach(function(e){e.style.setProperty('--w',e.clientWidth)});document.querySelectorAll('.scale-p').forEach(function(e){e.style.setProperty('--pw',e.clientWidth)})}f();addEventListener('resize',f)})();</script>
+</body>
+</html>

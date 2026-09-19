@@ -36,7 +36,7 @@ footer{margin-top:56px;padding-top:18px;border-top:1px solid var(--line);font-si
 </head>
 <body>
 <div class="wrap">
-<nav class="docnav" aria-label="Project documentation"><span class="docnav-brand">business.direct · docs</span><a href="index.html">Overview</a><a href="brief.html">Brief</a><a href="research.html">Research</a><a href="audit.html">Audit</a><a href="sources.html">Sources</a><a href="design-system.html">Design system</a><a href="decisions.html">Decisions</a><a href="client-asks.html" aria-current=page>Owner asks</a><a class="docnav-hub" href="../../index.html">Calvus Hub</a></nav>
+<nav class="docnav" aria-label="Project documentation"><span class="docnav-brand">business.direct · docs</span><a href="index.html">Overview</a><a href="brief.html">Brief</a><a href="research.html">Research</a><a href="audit.html">Audit</a><a href="sources.html">Sources</a><a href="design-system.html">Design system</a><a href="layouts.html">Layouts</a><a href="05-layout-specs.html">Layout specs</a><a href="decisions.html">Decisions</a><a href="client-asks.html" aria-current=page>Owner asks</a></nav>
 <header><p class="eyebrow">Calvus · business.direct · project documentation</p><h1>business.direct — what needs the owner</h1></header>
 <div class="tbl"><table>
 <thead>
@@ -49,43 +49,43 @@ footer{margin-top:56px;padding-top:18px;border-top:1px solid var(--line);font-si
 <tbody>
 <tr>
 <td>1</td>
-<td><strong>Gate 1: approve or correct the design system</strong> (<code>design-system.html</code>) — tokens, the teal accent, the components</td>
-<td>nothing is laid out before it (D7)</td>
+<td><strong>Gate 2: approve or correct the layout frames</strong> (<code>layouts.html</code>) — platform at 1440 and 390, provider at 390, family at 390</td>
+<td>nothing is built before it (D7)</td>
 </tr>
 <tr>
 <td>2</td>
-<td>The listed business persona for the demo: one real listing from the 431 (a gym? a physio? a squash club?) whose sample brand voice and offers we write, or a fictional one</td>
-<td>the business view needs one concrete owner</td>
+<td>Confirm the provider persona (Brooklyn Force Soccer) or name another real provider</td>
+<td>D13 defaults it</td>
 </tr>
 <tr>
 <td>3</td>
-<td>Consumer personas: two or three (a parent in Budapest XI, an adult in Szeged, a 60+ in Veszprém?)</td>
-<td>the consumer view and the digest need saved items and a location</td>
+<td>Confirm the family persona (Park Slope parent, children 5 and 9) or give another</td>
+<td>D13 defaults it</td>
 </tr>
 <tr>
 <td>4</td>
-<td>Which integrations to show as connectable in v1: the platform API (given), e-mail (Resend, per D26), push, SMS, Google Business Profile, Instagram/Facebook, a calendar, a booking tool</td>
+<td>Which integrations to show as connectable in v1: Your Field API (given), e-mail (Resend, per D26), push, SMS (TCPA consent state), Google Business Profile, Instagram/Facebook, a calendar, a booking tool</td>
 <td>the integrations screen shows states; the list is a product decision</td>
 </tr>
 <tr>
 <td>5</td>
-<td>Language of the prototype UI: HU (the platform is HU) with the operator view in EN, or HU throughout</td>
-<td>copy</td>
+<td>Whether business.direct is offered by the platform (bundled, the "List your program" upsell) or bought by the provider (self-serve) — or both, as a setting like DiscountDirect's <code>inbox_mode</code></td>
+<td>the activation ladder and pricing states</td>
 </tr>
 <tr>
 <td>6</td>
-<td>Whether business.direct is offered by the platform (bundled) or bought by the business (self-serve) — or both, as a setting like DiscountDirect's <code>inbox_mode</code></td>
-<td>the activation ladder and pricing states on the listing</td>
+<td>Whether <code>claim-requests</code>, <code>demand-capture</code> and <code>scout/recommend</code> may be called by the prototype (read-only today)</td>
+<td>integrations screen honesty</td>
 </tr>
 <tr>
 <td>7</td>
-<td>Whether the age bands and the "this week" sessions will become real per-listing data on the platform (today: ages all 431, sessions 21)</td>
-<td>the digest's real inputs</td>
+<td>Access to the platform's own analytics (saves, plan usage, newsletter list size) for the intelligence tiles</td>
+<td>today every non-catalogue number is sample</td>
 </tr>
 <tr>
 <td>8</td>
-<td>Whether a <code>POST /api/ingest</code> key will exist for the prototype's generated pages later (not now)</td>
-<td>integrations screen honesty</td>
+<td>The provider's real numbers, if a pilot provider agrees: replies, trials booked, no-shows</td>
+<td>the provider view's tiles</td>
 </tr>
 </tbody>
 </table></div>

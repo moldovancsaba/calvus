@@ -129,7 +129,22 @@ business.direct's platform view should show the ladder as states of a listing.
 and integrations first; AI drafts where switched on, is labelled as AI where the law
 requires, and never sends without the owner. The videos' rule and the regulation agree.
 
-## 8. Hungary specifics
+## 8. First market: New York (United States)
+
+- **CAN-SPAM** requires no prior consent for commercial e-mail — B2B or B2C — but every
+  message needs a working opt-out honoured within **10 business days**, a physical address,
+  accurate headers and no deceptive subject lines. **P** [FTC compliance guide](https://www.ftc.gov/business-guidance/resources/can-spam-act-compliance-guide-business), [ANA FAQ](https://www.ana.net/content/show/id/accountability-digital-marketing-CANSPAM-faq)
+- **TCPA**: marketing **SMS needs prior express written consent** (signed, with clear
+  disclosures; the FCC's 2025 one-to-one rule was vacated and the prior standard
+  reinstated on 29 August 2025); opt-outs honoured within 10 business days from April
+  2025; statutory damages **$500–1 500 per message**. **P/A** [FCC document](https://docs.fcc.gov/public/attachments/DOC-408396A1.pdf), [Nelson Mullins](https://www.nelsonmullins.com/insights/alerts/fcc-download/all/the-fcc-s-prior-express-written-consent-rule-is-changing-this-month-what-marketers-need-to-know), [BCLP on the opt-out rules](https://www.bclplaw.com/en-US/events-insights-news/the-tcpas-new-opt-out-rules-take-effect-on-april-11-2025-what-does-this-mean-for-businesses.html)
+
+**Reading.** Provider activation by e-mail (130 providers have an address on their card)
+is lawful without consent; every family-facing SMS needs written consent captured on the
+platform, and the frames show that as a state, not an assumption. E-mail and push carry
+the digests; SMS only where a parent opted in for a specific provider.
+
+## 8b. Reference market: Hungary
 
 - **B2B e-mail to corporate addresses does not require prior consent** in Hungary under
   Act XLVIII of 2008 — unless the address contains personal data (a named person's
@@ -137,10 +152,9 @@ requires, and never sends without the owner. The videos' rule and the regulation
 - **57.4 % of Hungarian SMEs** have at least basic digital intensity (EU 72.9 %); AI use
   lags "in particular for SMEs, due to a lack of digital skills". **P** [Digital Decade 2025 country report, Hungary](https://digital-strategy.ec.europa.eu/en/factpages/hungary-2025-digital-decade-country-report)
 
-**Reading.** Activation outreach to `info@`-type addresses found on the listed
-businesses' own sites is lawful in Hungary; outreach to a named owner needs consent or
-another lawful basis — the prototype shows the distinction as a state on the listing.
-The digital-skills gap is the reason the machine must run with "nobody logs in".
+**Reading.** For the Hungarian reference instance the same activation is lawful to
+`info@`-type addresses and not to a named owner without consent; the digital-skills gap
+is the reason the machine must run with "nobody logs in" on any instance.
 
 ## 9. What the two reference videos add (owner-supplied, 2026-09-19)
 

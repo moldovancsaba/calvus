@@ -14,6 +14,7 @@ PAGES = [  # (source, output, nav label)
     ("01-research.md", "research.html", "Research"),
     ("02-audit.md", "audit.html", "Audit"),
     ("03-sources.md", "sources.html", "Sources"),
+    ("05-layout-specs.md", "05-layout-specs.html", "Layout specs"),
     ("04-decisions.md", "decisions.html", "Decisions"),
     ("08-client-asks.md", "client-asks.html", "Owner asks"),
 ]
@@ -29,7 +30,7 @@ def render(src, out, label):
         base = s.split("/")[-1]
         body = body.replace(f"<code>{base}</code>", f'<a href="{o}"><code>{base}</code></a>')
     nav = "".join(f'<a href="{o}"{" aria-current=page" if o == out else ""}>{l}</a>' for _, o, l in PAGES)
-    nav = nav.replace('<a href="decisions.html"', '<a href="design-system.html">Design system</a><a href="decisions.html"', 1)
+    nav = nav.replace('<a href="05-layout-specs.html"', '<a href="design-system.html">Design system</a><a href="layouts.html">Layouts</a><a href="05-layout-specs.html"', 1)
     html = f"""<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -41,7 +42,7 @@ def render(src, out, label):
 </head>
 <body>
 <div class="wrap">
-<nav class="docnav" aria-label="Project documentation"><span class="docnav-brand">business.direct · docs</span>{nav}<a class="docnav-hub" href="../../index.html">Calvus Hub</a></nav>
+<nav class="docnav" aria-label="Project documentation"><span class="docnav-brand">business.direct · docs</span>{nav}</nav>
 <header><p class="eyebrow">Calvus · business.direct · project documentation</p><h1>{title}</h1></header>
 {body}
 <footer>Source: <code>business-direct/docs/{src}</code> · rendered by <code>docs/build.py</code>.</footer>

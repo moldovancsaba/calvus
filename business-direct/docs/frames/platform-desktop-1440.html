@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>business.direct — Platform · Overview (frame, 1440)</title>
+<link rel="stylesheet" href="../../assets/tokens.css"><link rel="stylesheet" href="../../assets/components.css"><link rel="stylesheet" href="frame.css">
+</head>
+<body>
+<div class="shell">
+<div class="frame-note">Gate 2 · layout frame · 1440 · Platform view · real providers, sample activity — nothing sends</div>
+<header class="topbar"><div class="brand">business<span>.direct</span></div><div class="roles" role="tablist" aria-label="View"><button class="on" role="tab" aria-selected="true">Platform</button><button role="tab" aria-selected="false">Provider</button><button role="tab" aria-selected="false">Family</button></div><span class="topnote">Your Field NYC · 252 providers · v0</span></header>
+<div class="body">
+  <nav class="rail" aria-label="Platform"><p class="group">Flows</p><a class="on" href="#">Overview</a><a href="#">Social publishing</a><a href="#">Provider sales</a><a href="#">Approvals <span class="count">7</span></a><p class="group">Data</p><a href="#">Providers</a><a href="#">Families</a><a href="#">Generated pages</a><p class="group">System</p><a href="#">Integrations</a><a href="#">Knowledge and rules</a><a href="#">Settings</a></nav>
+  <main>
+    <div><h1 class="page-title">Overview — Your Field NYC</h1><p class="sub">Friday, September 19 · the machine has run since 09:00 · 7 items are waiting for you</p></div>
+    <section class="tiles" id="tiles"></section>
+    <section class="two">
+      <div class="stack">
+        <div class="section-head"><h2>B2C · Social publishing — this week's posts</h2><span class="meta">5 drafted · 0 published · no channel connected yet</span></div>
+        <div class="stack" id="posts"></div>
+        <div class="section-head"><h2>Awaiting approval</h2><a class="btn ghost" href="#" style="padding-left:0">All 7 →</a></div>
+        <article class="card approval"><div><div class="row" style="margin-bottom:6px"><span class="badge b-wait">Awaiting approval</span><span class="badge b-ai">✦ AI draft</span><span class="meta">Provider sales · invitation sequence</span></div><h4>Invitation to 130 providers with an e-mail on their card — "Your program is on Your Field"</h4><p class="why">Why: none of the 252 providers manages its page; 130 have an e-mail address, 180 a phone. CAN-SPAM needs no prior consent for commercial e-mail; every message carries the opt-out (research §8). Sequence: invitation → reminder after 5 days → a call task for the 40 with a phone and no e-mail.</p><div class="preview"><b>Subject: {name} is listed on Your Field — manage your page?</b>Hi {first name} — {name} is already on Your Field NYC, in {neighborhood}, under {activity}. We built the page from your site. If you'd rather run it yourself — sessions, trial policy, photos — it's one click…</div></div><div class="actions"><button class="btn">Approve · 130 recipients</button><button class="btn sec">Edit</button><button class="btn ghost">Skip</button></div></article>
+      </div>
+      <div class="stack">
+        <div class="section-head"><h2>B2B · Provider sales pipeline</h2><span class="meta">real: identified · sample: the rest</span></div>
+        <ul class="pipeline"><li class="on"><b>252</b><span>Identified</span></li><li><b>0</b><span>Contacted</span></li><li><b>0</b><span>Replied</span></li><li><b>0</b><span>Applied</span></li><li><b>0</b><span>Managing</span></li><li><b>0</b><span>Upgraded</span></li></ul>
+        <article class="card"><h4>Next actions</h4><ul class="dept-list"><li>Send the invitation to 130 with e-mail <span class="badge b-wait">Awaiting approval</span></li><li>Call list: 40 with phone only <span class="badge b-off">Not started</span></li><li>82 with neither — website contact form <span class="badge b-off">Not started</span></li></ul><div class="foot"><span class="toggle on"><i></i>AI drafts</span><span class="meta">reply inbox: 0 threads</span></div></article>
+        <div class="section-head"><h2>Departments</h2><span class="meta">4 running · 2 paused</span></div>
+        <article class="card"><h4>Social publishing</h4><ul class="dept-list"><li>This week's posts <span class="badge b-wait">5 drafts</span></li><li>Instagram · Facebook · TikTok · X <span class="badge b-off">Not connected</span></li></ul><div class="foot"><span class="toggle on"><i></i>AI drafts</span><span class="meta">link back to the listing on every post</span></div></article>
+        <article class="card"><h4>Provider sales</h4><ul class="dept-list"><li>Invitation sequence <span class="badge b-wait">Awaiting approval</span></li><li>Reply inbox <span class="badge b-ok">Running</span></li><li>Apply-to-manage form <span class="badge b-ok">Live on the platform</span></li></ul></article>
+        <article class="card"><h4>Weekly picks (families)</h4><ul class="dept-list"><li>Sunday 18:00 digest <span class="badge b-ok">Running</span></li><li>Saved-provider alerts <span class="badge b-ok">Running</span></li></ul><div class="foot"><span class="toggle"><i></i>AI drafts</span><span class="meta">4 messages / month cap</span></div></article>
+        <article class="card"><h4>Generated pages</h4><ul class="dept-list"><li>Activity × neighbourhood <span class="badge b-ok">live where ≥ 3 providers</span></li><li>Age pages <span class="badge b-off">Paused — 182 of 252 have ages</span></li></ul></article>
+        <article class="card radar"><h4>Market radar</h4><ul class="dept-list"><li>Weekly note: Brooklyn martial arts, 40 providers, 0 managing <span class="badge b-wait">Awaiting approval</span></li></ul></article>
+      </div>
+    </section>
+    <section class="stack">
+      <div class="section-head"><h2>Providers</h2><span class="meta">252 · by pipeline stage · real data, stage is sample</span></div>
+      <div class="row"><span class="chip on">All · 252</span><span class="chip">Unclaimed flag · 15</span><span class="chip">With e-mail · 130</span><span class="chip">With phone · 180</span><span class="chip">Trial offered · 72</span><span class="chip">Managing · 0</span></div>
+      <div class="tbl"><table><thead><tr><th>Provider</th><th>Activity</th><th>Neighbourhood</th><th>Contact on card</th><th>Next session</th><th>Stage</th></tr></thead><tbody id="rows"></tbody></table></div>
+    </section>
+  </main>
+</div>
+</div>
+<script>
+fetch('../../data/providers.json').then(r=>r.json()).then(d=>{
+  const P=d.providers, n=P.length, by=id=>P.find(p=>p.id===id);
+  const email=P.filter(p=>p.email).length, phone=P.filter(p=>p.phone).length, trial=P.filter(p=>p.trial&&p.trial.available).length, nxt=P.filter(p=>p.nextOccurrence).length;
+  document.getElementById('tiles').innerHTML=[
+    ['Providers',n,'real · 20 activities, 84 neighbourhoods',''],['Managing their page','0 / '+n,'real · today',''],['With e-mail / phone',email+' / '+phone,'real · the sales channel','up'],
+    ['Next session known',nxt,'real · the digest\'s input',''],['New families from social','—','sample · no channel connected',''],['Posts published this week','0 / 5','sample · 5 drafts waiting','']
+  ].map(([k,v,d,c])=>`<div class="tile"><div class="k">${k}</div><div class="v">${v}</div><div class="d ${c}">${d}</div></div>`).join('');
+  const posts=[[by('prov-brooklyn-force-soccer'),['Instagram','Facebook'],'Saturday mornings in Park Slope: Brooklyn Force Soccer runs first-touch sessions for 3–5s and teams up to 14. Trial by appointment — details at the link.','Awaiting approval','b-wait',true],
+               [by('prov-ahn-s-taekwondo-nyc'),['Instagram'],'Back to school at Ahn\'s Taekwondo, East Village: free trial class and a free uniform with enrollment. Ages 3 to teens.','Awaiting approval','b-wait',true],
+               [by('prov-dodge-ymca-summer-camp-2026'),['Facebook','X'],'Camp news: Dodge YMCA\'s traditional summer camp — day-camp weeks, swimming included, Manhattan bus pick-ups.','Draft','b-off',false]];
+  document.getElementById('posts').innerHTML=posts.map(([l,ch,copy,state,cls,ai])=>l?`<article class="card post"><div class="media">${l.image?`<img src='${l.image}' alt=''>`:'media<br>slot'}</div><div><div class="row" style="justify-content:space-between"><span class="chan">${ch.map(c=>`<span>${c}</span>`).join('')}<span class="meta">${l.neighborhood}</span></span><span class="badge ${cls}">${state}</span></div><p>${copy}</p><div class="row" style="margin-top:8px;gap:8px">${ai?'<span class="badge b-ai">✦ AI draft</span>':''}<span class="link">getyourfield.com/nyc/providers/${l.id}</span></div><div class="row" style="margin-top:10px"><button class="btn">Approve and schedule</button><button class="btn sec">Edit</button><button class="btn ghost">Skip</button></div></div></article>`:'').join('');
+  const ids=['prov-brooklyn-force-soccer','prov-champions-martial-arts-park-slope','prov-ahn-s-taekwondo-nyc','prov-dodge-ymca-summer-camp-2026','prov-prospect-park-ymca-tennis-be42d884','prov-kidsunited-park-slope','prov-renzo-gracie-academy','prov-aviator-sports'];
+  document.getElementById('rows').innerHTML=ids.map(by).filter(Boolean).map(l=>`<tr><td><b>${l.name}</b><br><span class="meta">${l.category} · claim: ${l.claimStatus}</span></td><td>${l.primaryActivityType||'—'}</td><td>${l.neighborhood}, ${l.borough}</td><td>${l.email?'e-mail':''}${l.email&&l.phone?' · ':''}${l.phone?'phone':''}${!l.email&&!l.phone?'website only':''}</td><td>${l.nextOccurrence?(l.nextOccurrence.weekday||'')+' '+(l.nextOccurrence.startTime||l.nextOccurrence.timeText||''):'—'}</td><td><span class="badge b-off">Identified</span></td></tr>`).join('');
+});
+</script>
+</body>
+</html>
