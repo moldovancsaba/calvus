@@ -8,7 +8,7 @@ Everything PROPOSED. Written 2026-09-18.*
 
 - **LX-000** Mark the wireframe "delivered" on the hub card and in the repo README; URLs
   stay live (rule). DoD: hub text changed; both prototypes still return 200.
-- **LX-00A** Delete nothing. `public/` stays (unreferenced, recorded in `03-sources.md`).
+- **LX-00A** Delete nothing that a page references. `public/` (unreferenced, recorded in `03-sources.md`) was removed on the owner's instruction, 2026-09-19.
 
 ## If there is a second iteration
 

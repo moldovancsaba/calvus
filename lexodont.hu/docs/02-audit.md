@@ -45,7 +45,7 @@ browser pane (`07-gate.md`).*
 | Images | 49 of 49 are picsum.photos placeholders | 6 (sliders), all placeholders |
 | JavaScript | before/after slider only (home, case studies) | same |
 | Parity | — | lacked gyerekfogászat, gyökérkezelés, parodontológia (added to the polished set on 2026-04-09, never mirrored) — mirrored on 2026-09-18 so the gate's parity check is clean (D15) |
-| `public/` (repo root) | 20 PNGs from the first build (crew, hero, team) — unreferenced since the switch to picsum on 2026-03-31 | |
+| `public/` (repo root) | 20 PNGs from the first build (crew, hero, team) — unreferenced since the switch to picsum on 2026-03-31; removed 2026-09-19 | |
 
 ## Reading
 

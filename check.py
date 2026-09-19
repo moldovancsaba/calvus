@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """The repo gate, in one command:  python3 check.py
 Runs every project's own gate and a repo-wide link audit over every HTML file that no
-project gate covers (the hub, `public/`-free). Exit 1 if any of them finds something.
+project gate covers (the hub). Exit 1 if any of them finds something.
 
   holdvolgy/check.py          Holdvölgy site + docs, DiscountDirect pages, the hub: links, anchors,
                               docs cross-links, stale-phrase scan, prototype banner

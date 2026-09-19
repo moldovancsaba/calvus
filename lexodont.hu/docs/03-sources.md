@@ -13,7 +13,7 @@
 | Before/after case texts | written as examples | fictional |
 | Four knowledge articles | written as examples on the client's topics | illustrative |
 | All images | `picsum.photos` seeded URLs | placeholders, 49 of 49 |
-| `public/*.png` (repo root, 20 files) | the first build's crew/hero/team images (2026-03-31, commit 746ac72) | unreferenced since the same day's switch to picsum; source unknown, not used |
+| `public/*.png` (repo root, 20 files) | the first build's crew/hero/team images (2026-03-31, commit 746ac72) | unreferenced since the same day's switch to picsum; removed 2026-09-19 (owner instruction) — recoverable from git history |
 | Map | OpenStreetMap embed (bbox around the practice) | real service, real location |
 
 No client file is archived in this repo; feedback arrived in conversation and is visible

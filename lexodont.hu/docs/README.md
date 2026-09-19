@@ -10,7 +10,7 @@ The wireframe of Lexodont Dental Studio's website (March–April 2026), and — 
 | 00 brief | `00-brief.md` | Client, what the prototype is, what happened next, where it stands |
 | 01 research | `01-research.md` | None was done — said plainly; what was read; what a second iteration would read |
 | 02 audit | `02-audit.md` | **Start here**: the live lexodont.hu measured, wireframe → live page by page, the wireframe's own measurements |
-| 03 sources | `03-sources.md` | What is real, what is placeholder, what is fictional; the unreferenced `public/` set |
+| 03 sources | `03-sources.md` | What is real, what is placeholder, what is fictional; the removed `public/` set |
 | 04 decisions | `04-decisions.md` | D1–D14 reconstructed from the commits; what the live site decided without this repo |
 | 05 design | `05-design.md` | Two fidelities, tokens, layout; what the built site chose instead |
 | 06 build log | `06-build-log.md` | The two build days and the 2026-09-18 measurement |
