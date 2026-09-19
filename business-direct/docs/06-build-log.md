@@ -88,3 +88,26 @@ Scheduled · Scheduled · Awaiting; results lists 2 items; *Choose* moves the st
 Upgraded (drawer badge) and the recap sums $49 / month; the family inbox shows 2 campaigns
 with the reason line; 0 console errors. At 1440 — intelligence, campaigns, results, today:
 `scrollWidth` 1440, one `h1`, 0 console errors. `python3 check.py` → `GATE: CLEAN`.
+
+## Round 4 — 2026-09-19 — phase 3: conversations (D25)
+
+**Built** (`assets/app.js?v=6`). Provider *Conversations*: three sample enquiries per
+provider (platform message, missed call, e-mail) with answers drafted from the provider's
+`knowledge/faq.md` and `offer.md` and the card (next session, trial policy, ages, the
+coach's first name from the card's e-mail); tiles for waiting, answered, reply time and
+missed calls texted back, computed from state; approve / edit / skip. *Today*'s "Waiting for
+you" now shows enquiries (it showed the platform's replies to the provider — wrong side).
+Family *Saved*: *Ask about a trial* on every saved provider → an enquiry from Maya at the
+top of that provider's inbox; her inbox's *Your conversations* shows the thread and the
+approved answer. Platform *Social publishing*: approving a post creates a sample comment
+with a drafted reply that links to the listing; in the queue, the approvals list and the
+pending count; *Intelligence* counts comments answered.
+
+**Measured** (app browser pane, 2026-09-19): at 390 — social (comment arrives on approve,
+edit → save and reply → Sent), provider today (1 enquiry shown, link "3"), conversations
+(3 cards; approve + edit-save → tiles 1 · 2 · 4 min · 1), family saved → ask → inbox
+thread "Sent just now"; provider inbox shows "Maya · Leo (5) · Park Slope" first (4 cards);
+approve → the family's thread shows the answer; results tile "3 / 4"; `scrollWidth` 390
+throughout, every control ≥ 44 px, 0 console errors. At 1440 — conversations via the
+`&stage=managing` deep link: 3 cards, one `h1`, `scrollWidth` 1440, 0 errors.
+`python3 check.py` → `GATE: CLEAN`.

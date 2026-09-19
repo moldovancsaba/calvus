@@ -73,9 +73,9 @@ instance (<code>platform_id</code>). "Measured" means a number in the build log,
 </tr>
 <tr>
 <td>M1</td>
-<td>Provider sales</td>
+<td>Provider sales and conversations</td>
 <td>3–5</td>
-<td>sequences, Resend out + inbound, threads, drafted replies (AI optional), pipeline, apply-to-manage through <code>claim-requests</code>, provider view (today, knowledge)</td>
+<td>sequences, Resend out + inbound, threads, drafted replies (AI optional), pipeline, apply-to-manage through <code>claim-requests</code>, provider view (today, conversations, knowledge), the family's ask</td>
 </tr>
 <tr>
 <td>M2</td>
@@ -180,6 +180,16 @@ instance (<code>platform_id</code>). "Measured" means a number in the build log,
 <td>a provider sees its thread, its drafts, edits its files</td>
 </tr>
 <tr>
+<td>BD-1-8</td>
+<td>Provider conversations: inbound (platform message, Resend inbound, Twilio missed call) → <code>enquiries</code> → drafted answer → approve / edit → same channel</td>
+<td>reply time logged; the family's thread updated (phase 3)</td>
+</tr>
+<tr>
+<td>BD-1-9</td>
+<td>Family "ask about a trial" from a saved provider</td>
+<td>creates an enquiry as a platform message; visible in the provider's inbox within a minute</td>
+</tr>
+<tr>
 <td>BD-1-7</td>
 <td>"Not my program" and unsubscribe</td>
 <td>the address is excluded from every future sequence (test)</td>
@@ -203,6 +213,11 @@ instance (<code>platform_id</code>). "Measured" means a number in the build log,
 <td>BD-2-4</td>
 <td><code>MetaAdapter</code> publish + inbound comments/DMs</td>
 <td>OAuth per page; a publish writes <code>messages</code> + a Blob snapshot</td>
+</tr>
+<tr>
+<td>BD-2-6</td>
+<td>Drafted replies to comments and DMs with the listing link</td>
+<td>operator approves; reply sent through the adapter; comments-answered metric</td>
 </tr>
 <tr>
 <td>BD-2-5</td>

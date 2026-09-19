@@ -18,10 +18,12 @@ developer can read the behaviour before the code exists.*
 | Platform | Knowledge and rules | file editors | `platform.knowledge`, `kfiles` |
 | Platform | Intelligence | tiles + by department · radar and needs-you | `platform.intelligence` |
 | Provider | Today | hero card + (invitation · or · tiles, waiting, team, knowledge) | `provider.today` |
+| Provider | Conversations | tiles + enquiry cards with drafted answers | `provider.conversations`, `enquiriesFor`, `enquiryCard` |
 | Provider | Campaigns | approval cards built from the card | `provider.campaigns`, `campaignsFor`, `campaignCard` |
 | Provider | Results | tiles + what went out + plan ladder | `provider.results`, `ladder` |
 | Provider | Knowledge | file editors | `SCREENS.provider.knowledge` |
-| Family | Inbox | published post · digest · campaigns from saved providers · provider SMS | `family.inbox` |
+| Family | Inbox | published post · digest · her conversations · campaigns from saved providers · provider SMS | `family.inbox` |
+| Family | Saved | listing cards with *Ask about a trial* | `family.saved`, `data-ask` |
 | Family | Saved | listing cards | `family.saved` |
 | Family | Preferences | toggles + stop | `family.prefs` |
 
@@ -51,6 +53,9 @@ campaigns        { _id, platform_id, provider_id, kind, title, copy, channels[],
                    audience_rule: 'saved'|'saved+nearby', audience_count?, approved_by?, approved_at?, version }
 products         { platform_id, id, name, what, price_cents, interval: 'month'|'season', card_flag }
 entitlements     { provider_id, platform_id, product_id, since, until?, stripe_subscription_id }
+enquiries        { _id, platform_id, provider_id, family_id?, channel, from{name,kid,area}, text, received_at,
+                   draft, state, ai, answered_at?, thread_id }
+comments         { _id, platform_id, post_id, provider_id, channel, external_id, from, text, draft, state, ai, replied_at? }
 ```
 
 Indexes: `provider_state (platform_id, stage)`, `drafts (platform_id, state, scheduled_for)`,
@@ -89,6 +94,10 @@ message); `waiting → skipped`; radar notes `waiting → filed`. Prototype: `ap
 (prototype: `approveCampaign`, `saveCampaign`, `skipCampaign`). Sending resolves the audience
 at send time (ADR-10), then the per-family preference and cap checks.
 
+**Enquiry** — `waiting → sent`; `waiting → skipped`; edit sets `ai=false`; `answered_at −
+received_at` is the reply time (prototype: `approveEnquiry`, `saveEnquiry`). **Comment** — the
+same machine (prototype: `approveComment`).
+
 **Entitlement** — `none → active` on the Stripe webhook; `active → ended` on cancellation;
 the first `active` moves the provider to *upgraded* (prototype: `data-buy`).
 
@@ -108,6 +117,7 @@ cannot turn SMS on without a consent row.
 | `send` | every minute | drain the outbox: cap check again (R3), send, log; retry with backoff; dead-letter after 5 |
 | `draft-campaigns` | daily 08:30 | for managing providers: one draft per kind per card event, none if one is waiting |
 | `send-campaigns` | every 5 min | approved campaigns: resolve audience, preference + cap per family, outbox |
+| `draft-answers` | on inbound webhook | enquiry or comment → draft from the knowledge files and the card within a minute (R14) |
 | `entitlements` | webhook-driven | Stripe events → entitlements → stage → card flag through the connector |
 | `retention` | nightly | drafts 90 days after final state; messages 24 months |
 

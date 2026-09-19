@@ -114,6 +114,12 @@ developer can read the behaviour before the code exists.</em></p>
 </tr>
 <tr>
 <td>Provider</td>
+<td>Conversations</td>
+<td>tiles + enquiry cards with drafted answers</td>
+<td><code>provider.conversations</code>, <code>enquiriesFor</code>, <code>enquiryCard</code></td>
+</tr>
+<tr>
+<td>Provider</td>
 <td>Campaigns</td>
 <td>approval cards built from the card</td>
 <td><code>provider.campaigns</code>, <code>campaignsFor</code>, <code>campaignCard</code></td>
@@ -133,8 +139,14 @@ developer can read the behaviour before the code exists.</em></p>
 <tr>
 <td>Family</td>
 <td>Inbox</td>
-<td>published post · digest · campaigns from saved providers · provider SMS</td>
+<td>published post · digest · her conversations · campaigns from saved providers · provider SMS</td>
 <td><code>family.inbox</code></td>
+</tr>
+<tr>
+<td>Family</td>
+<td>Saved</td>
+<td>listing cards with <em>Ask about a trial</em></td>
+<td><code>family.saved</code>, <code>data-ask</code></td>
 </tr>
 <tr>
 <td>Family</td>
@@ -173,6 +185,9 @@ campaigns        { _id, platform_id, provider_id, kind, title, copy, channels[],
                    audience_rule: 'saved'|'saved+nearby', audience_count?, approved_by?, approved_at?, version }
 products         { platform_id, id, name, what, price_cents, interval: 'month'|'season', card_flag }
 entitlements     { provider_id, platform_id, product_id, since, until?, stripe_subscription_id }
+enquiries        { _id, platform_id, provider_id, family_id?, channel, from{name,kid,area}, text, received_at,
+                   draft, state, ai, answered_at?, thread_id }
+comments         { _id, platform_id, post_id, provider_id, channel, external_id, from, text, draft, state, ai, replied_at? }
 </code></pre>
 <p>Indexes: <code>provider_state (platform_id, stage)</code>, <code>drafts (platform_id, state, scheduled_for)</code>,
 <code>messages (family_id, sent_at)</code> for the cap query, <code>consents (family_id, channel, provider_id)</code>.</p>
@@ -241,6 +256,9 @@ message); <code>waiting → skipped</code>; radar notes <code>waiting → filed<
 <p><strong>Campaign</strong> — <code>waiting → scheduled → published</code>; <code>waiting → skipped</code>; edit sets <code>ai=false</code>
 (prototype: <code>approveCampaign</code>, <code>saveCampaign</code>, <code>skipCampaign</code>). Sending resolves the audience
 at send time (ADR-10), then the per-family preference and cap checks.</p>
+<p><strong>Enquiry</strong> — <code>waiting → sent</code>; <code>waiting → skipped</code>; edit sets <code>ai=false</code>; <code>answered_at −
+received_at</code> is the reply time (prototype: <code>approveEnquiry</code>, <code>saveEnquiry</code>). <strong>Comment</strong> — the
+same machine (prototype: <code>approveComment</code>).</p>
 <p><strong>Entitlement</strong> — <code>none → active</code> on the Stripe webhook; <code>active → ended</code> on cancellation;
 the first <code>active</code> moves the provider to <em>upgraded</em> (prototype: <code>data-buy</code>).</p>
 <p><strong>Family channel</strong> — <code>on ↔ off</code> per channel; <em>Stop</em> → every channel off + cancel queued
@@ -295,6 +313,11 @@ cannot turn SMS on without a consent row.</p>
 <td><code>send-campaigns</code></td>
 <td>every 5 min</td>
 <td>approved campaigns: resolve audience, preference + cap per family, outbox</td>
+</tr>
+<tr>
+<td><code>draft-answers</code></td>
+<td>on inbound webhook</td>
+<td>enquiry or comment → draft from the knowledge files and the card within a minute (R14)</td>
 </tr>
 <tr>
 <td><code>entitlements</code></td>

@@ -88,4 +88,6 @@ prototype built as one page with three views (`../index.html`, D17–D18) and me
 and 1440 (`06-build-log.md`, `07-gate.md`); the presentation (`bemutato.html`) and the
 technical package (`10`–`14`, stack PROPOSED) written. Tested by the owner and accepted (D20); round 2 shipped. **Phase 2 (D21–D24)**: provider
 campaigns and results, upgrades, the intelligence recap, the business-logic document — asks
-#4–6 assumed (D21) until answered. **Next: the owner's answers, or a flipped ADR.**
+#4–6 assumed (D21) until answered. **Phase 3 (D25)**: conversations — family enquiries with
+drafted answers in the provider's inbox, the family's "ask about a trial", comments on
+published posts. **Next: the owner's answers, or a flipped ADR.**

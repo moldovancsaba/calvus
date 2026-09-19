@@ -34,12 +34,12 @@ that address.
 
 | Department | Runs alone | Needs a person |
 |---|---|---|
-| Social publishing (platform) | draft, schedule slots, read comments | publish, reply |
+| Social publishing (platform) | draft, schedule slots, read comments and DMs, draft the reply with the link to the listing | publish, send the reply — "someone tags you — first, not a queue" (D25) |
 | Provider sales (platform) | draft the sequence and the reply, move stages on events, build the call list | send, override a stage |
 | Weekly picks (platform → families) | build the Sunday digest and saved-provider alerts within the cap | nothing — the family's preferences are the approval (R2, R3) |
 | Generated pages (platform) | compute activity × neighbourhood pages with ≥ 3 providers | publish through the platform |
 | Market radar (platform) | the weekly note from the catalogue | read and file |
-| Conversations and reputation (provider) | draft replies, text back a missed call | send |
+| Conversations and reputation (provider) | draft an answer to every enquiry (platform message, e-mail, missed call) from the knowledge files; text back a missed call | send — the provider approves or edits each answer (phase 3, D25) |
 | Reminders (provider) | 3-day and 1-day session reminders to booked families | nothing — the booking is the consent |
 | Campaigns (provider) | draft trial, open-spots, announcement and registration campaigns from the card; size the audience | approve, edit, skip |
 | Page and visibility (provider) | keep sessions, trial and photos on the card current | choose an upgrade |
@@ -63,6 +63,18 @@ The provider approves, edits or skips; the platform sends by each family's prefe
 and never past the cap (R3). A family sees why she received it (she saved the provider),
 on which channel, and that it counts toward her monthly four. Audience sizes are sample in
 the prototype (ask #6 — the platform's saves data).
+
+## 4b. Conversations (phase 3, D25)
+
+An **enquiry** is a family's message to a provider on any channel the provider exposes:
+the platform's message, e-mail, a missed call (the machine texts back). The machine drafts
+the answer from the provider's `knowledge/faq.md` and `offer.md` and the card (next
+session, trial policy, ages); the provider approves, edits or skips; the answer goes back on
+the same channel and into the family's inbox thread. Reply time is measured from the
+enquiry to the sent answer — the metric the provider sees first. A family asks from her
+saved providers; the machine never lets a provider message a family who has not written
+first or saved it (R11). On the platform side, a **comment or DM** on a published post gets
+a drafted reply that links to the listing; the operator approves it.
 
 ## 5. Upgrades and money (D21: bundled base, provider-bought upgrades)
 
@@ -113,7 +125,7 @@ numbers arrive (asks #6–7).
 
 ## 9. What the machine never does
 
-Sends without an approval or a preference; texts without consent; exceeds the cap; deletes
+Sends without an approval or a preference; answers a family without the provider's approval; texts without consent; exceeds the cap; deletes
 a provider's stage history; discounts; publishes a generated page with fewer than three
 providers; speaks as an AI to a family or a provider — the product speaks as the platform
 or the provider.

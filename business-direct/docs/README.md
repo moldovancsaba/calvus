@@ -12,10 +12,10 @@ Built to the prototyping standard (`PROTOTYPING.md`); this index is the process 
 | 02 audit | `02-audit.md` | Your Field measured: API, 252 providers, field coverage, site copy; the Hungarian reference instance; the two videos frame by frame; what DiscountDirect provides |
 | 03 sources | `03-sources.md` | What is real (the platform's public data), what is sample, what is inherited |
 | presentation | `bemutato.html` | Standalone, English, on the product's tokens: one sentence, three numbers, the four things to click with previews, what is real, the asks, what comes next |
-| 04 decisions | `04-decisions.md` | D1–D24 |
+| 04 decisions | `04-decisions.md` | D1–D25 |
 | 05 design | `design-system.html` + `../assets/tokens.css` + `../assets/components.css` | **Gate 1 approved (D9)**: tokens and components, one source |
 | 05 layouts | `05-layout-specs.md` + `layouts.html` + `frames/` | **Gate 2 approved (D16)**: platform 1440 / 390, provider 390, family 390 |
-| 06 build log | `06-build-log.md` | Round 1: the prototype; 1b: presentation and package; 2: editors real, tablet measured; 3: phase 2 — campaigns, upgrades, recap |
+| 06 build log | `06-build-log.md` | Round 1: the prototype; 1b: presentation and package; 2: editors real, tablet measured; 3: phase 2 — campaigns, upgrades, recap; 4: phase 3 — conversations |
 | 07 gate | `07-gate.md` + `../check.py` | Measured pass at 390, 768, 1024 and 1440: overflow, tap targets, navigation, console, links |
 | 08 owner asks | `08-client-asks.md` | Seven open items (#1 closed by D20; #4–6 assumed by D21 until answered) |
 | 09 business logic | `09-business-logic.md` | The rules end to end: parties, flows, departments, campaigns, money, families, law, recap, what the machine never does (D24) |
@@ -93,5 +93,11 @@ Stripe on the platform's account, ADR-10 audiences from the platform's data only
 technical design, plan (M5), token map, layout spec, brief, asks and the presentation
 updated. Measured at 390 and 1440.
 
+**2026-09-19 — phase 3 (D25).** Conversations on both sides: the provider's inbox of
+family enquiries with answers drafted from its knowledge files, the family's "ask about a
+trial" that lands there and comes back answered, comments on published posts with drafted
+replies. The provider's "waiting for you" corrected to show enquiries. Business logic §4b,
+SSOT, architecture, technical design and plan updated.
+
 **Next.** The owner's answers to asks #2–8 (three are assumed, each one line to flip); a
-flipped ADR becomes D25; a pilot provider's real numbers replace the last sample tiles.
+flipped ADR becomes D26; a pilot provider's real enquiries replace the sample ones.

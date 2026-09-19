@@ -32,6 +32,8 @@ implementation of the enumerations and state machines below.*
 | **Audience** | the families a campaign may reach: those who saved the provider, plus nearby families with a child in the age range; sample counts today | campaign card |
 | **Product** | one of the platform's paid reach products — featured listing, camp placement, local discovery profile (D21); prices sample | provider today, drawer, results |
 | **Upgrade** | a provider buying a product; moves the stage to *upgraded* | pipeline |
+| **Enquiry** | a family's message to a provider — platform message, e-mail or missed call — with an answer drafted from the provider's knowledge files (D25) | provider conversations, family inbox |
+| **Comment** | a comment or DM on a published post, with a drafted reply that links to the listing (D25) | social publishing, approvals |
 | **Recap** | the weekly intelligence screen: what moved, by department, the market radar, what needs the operator (D23) | intelligence |
 | **Integration** | a connector that gives the machine hands: the platform API, social channels, e-mail, push, SMS, Google Business Profile, calendar | integrations |
 | **Real / sample** | real = from the platform's public API, never edited; sample = generated for the prototype from real providers and declared as such (D18) | every tile's third line |
@@ -45,6 +47,7 @@ implementation of the enumerations and state machines below.*
 | `draftState` | `waiting` · `scheduled` · `published` · `skipped` (posts, campaigns); `waiting` · `sent` · `filed` · `skipped` (sequences, replies) | `stateBadge` |
 | `campaignKind` | `Trial class` · `Open spots` · `Announcement` · `Registration` · `Hello` (fallback when the card has none of the four) | `campaignsFor` |
 | `product` | `featured` · `camp` · `profile` | `S.products` |
+| `enquiryChannel` | `Platform message` · `E-mail` · `Missed call` | `enquiriesFor` |
 | `integrationTier` | `v1` · `later` (D21) | `S.integrations[].v1` |
 | `channel` (B2C) | `Instagram` · `Facebook` · `TikTok` · `X` (posts); `email` · `push` · `sms` (families) | D14; `post.channels`, `family.prefs` |
 | `channel` (B2B) | `email` · `phone` (from the card) · `website form` (neither on the card) | providers table, "Contact on card" |
@@ -69,6 +72,8 @@ implementation of the enumerations and state machines below.*
 | **GeneratedPage** | `activity`, `area`, `n`, `slug` | computed (`genPages()`), threshold 3 |
 | **Campaign** | `id`, `providerId`, `kind`, `title`, `copy`, `audience{saved,nearby}`, `channels[]`, `state`, `ai`, `scheduledFor?` | `S.campaigns[pid]`, built on first visit from the card |
 | **Product** | `id`, `name`, `what`, `price` | `S.products` — the platform's list; prices sample |
+| **Enquiry** | `id`, `providerId`, `from{name,kid,area}`, `channel`, `at`, `text`, `draft`, `state`, `ai`, `sentIn?` | `S.enquiries[pid]`; a family's ask is unshifted with `from.name` = the family |
+| **Comment** | `id`, `postId`, `providerId`, `channel`, `from`, `text`, `draft`, `state`, `ai` | `S.comments`, created when a post is approved |
 | **Entitlement** | `providerId`, `productId`, `since`, `billingRef?` | `S.bought` |
 
 ## 4. Settings the prototype fixes
@@ -112,6 +117,7 @@ PROPOSED.
 | R10 | AI is optional per department; with it off, copy is the listing's own text | `S.ai`, `draftCopy` |
 | R11 | A campaign reaches only families who saved the provider or are nearby with a child in the age range, by their preferences, under the cap; the provider approves the copy, never the list | `campaignsFor`, `campaignCard` |
 | R12 | An upgrade never changes what a family receives — it changes where the provider appears | products |
+| R14 | Every enquiry gets a drafted answer within a minute and a sent answer only after the provider's approval; reply time is measured from the enquiry, not from the draft | `enquiriesFor`, `approveEnquiry` |
 | R13 | The machine never discounts; offers with a price cut are DiscountDirect's domain (D5) | — |
 
 ## 7. Metrics
@@ -122,7 +128,8 @@ PROPOSED.
 | Contactable | providers with e-mail / with phone | overview (130 / 180) |
 | Families from social | sign-ups whose first session had a social referrer | overview (sample until a channel is connected) |
 | Posts scheduled | approved posts this week / drafted | overview, calendar |
-| Reply time | median time from inbound to sent reply, per provider | provider today (sample) |
+| Reply time | median time from an enquiry to the sent answer, per provider | provider conversations and results (sample until real enquiries) |
+| Comments answered | replies sent / comments received on published posts | intelligence |
 | Trials booked | bookings with `trial` in the session, per provider per week | provider today (sample) |
 | Opt-outs | families who turned a channel off or stopped everything, per month | production only |
 | Families reached by campaigns | sum of approved campaigns' audiences after the cap | intelligence (sample audiences) |

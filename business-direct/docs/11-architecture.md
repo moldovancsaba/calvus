@@ -116,6 +116,13 @@ provider approves / edits / skips in its view → audience resolved (saved famil
 in the age range, from the platform's saves) → per family: preference and cap check →
 outbox → channel adapter → message log with the reason line.
 
+**Conversations (phase 3).** Inbound: platform message (webhook from the platform), e-mail
+(Resend inbound), missed call (Twilio voice webhook) → `enquiries` row → draft from the
+provider's knowledge files + card → provider view → approve / edit → outbox → the same
+channel + the family's inbox thread; reply time logged. A family's "ask about a trial"
+is a platform message to a saved provider. Comments and DMs on published posts arrive by
+the channel adapter's webhook → drafted reply with the listing link → operator approves.
+
 **Upgrades.** Provider chooses a product → Stripe Checkout (the platform's account) →
 webhook → `entitlements` row → stage *upgraded* → the platform connector sets the
 featured / camp / profile flag on the card.
@@ -128,7 +135,7 @@ every channel off and cancels queued messages for that family in the same transa
 MongoDB collections: `providers_cache` (the catalogue copy, refreshed by sync, never
 edited), `provider_state`, `drafts`, `approvals` (append-only), `sequences`, `threads`,
 `families_prefs`, `consents` (append-only, with the proof text), `messages` (append-only
-log of everything sent), `knowledge_files`, `integrations`, `generated_pages`, `campaigns`, `products`, `entitlements`. Every
+log of everything sent), `knowledge_files`, `integrations`, `generated_pages`, `campaigns`, `products`, `entitlements`, `enquiries`, `comments`. Every
 document carries `platform_id` (Your Field, Sportolok) — one deployment, several
 instances (ADR-2). Retention: message log 24 months; consent log for the life of the
 account plus 5 years; drafts 90 days after their final state.

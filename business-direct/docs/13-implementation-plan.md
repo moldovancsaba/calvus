@@ -24,7 +24,7 @@ instance (`platform_id`). "Measured" means a number in the build log, not a clai
 | M | Name | Weeks | Ships |
 |---|---|---|---|
 | M0 | Foundation | 1–2 | repo, SSO, MongoDB, connector for Your Field with sync, the operator console shell with the three views' navigation, feature flags |
-| M1 | Provider sales | 3–5 | sequences, Resend out + inbound, threads, drafted replies (AI optional), pipeline, apply-to-manage through `claim-requests`, provider view (today, knowledge) |
+| M1 | Provider sales and conversations | 3–5 | sequences, Resend out + inbound, threads, drafted replies (AI optional), pipeline, apply-to-manage through `claim-requests`, provider view (today, conversations, knowledge), the family's ask |
 | M2 | Social publishing | 6–8 | post drafts from the catalogue, approval queue, calendar, Meta adapter (IG + FB) publish, comments/DMs inbound, audit snapshots |
 | M3 | Families | 9–10 | preferences by signed link, consent capture, caps, Sunday digest, saved-provider alerts through platform push, Stop |
 | M4 | Intelligence and pages | 11–12 | overview tiles on real numbers, the intelligence recap screen, market radar note, generated pages written through the connector, operations dashboards |
@@ -47,11 +47,14 @@ instance (`platform_id`). "Measured" means a number in the build log, not a clai
 | BD-1-4 | Pipeline stage machine | only event-driven forward moves (test per row of §4); operator override logged |
 | BD-1-5 | Apply-to-manage → `claim-requests` | needs the platform key (blocked B1); stage *applied* on 2xx |
 | BD-1-6 | Provider view: invitation, today, knowledge | a provider sees its thread, its drafts, edits its files |
+| BD-1-8 | Provider conversations: inbound (platform message, Resend inbound, Twilio missed call) → `enquiries` → drafted answer → approve / edit → same channel | reply time logged; the family's thread updated (phase 3) |
+| BD-1-9 | Family "ask about a trial" from a saved provider | creates an enquiry as a platform message; visible in the provider's inbox within a minute |
 | BD-1-7 | "Not my program" and unsubscribe | the address is excluded from every future sequence (test) |
 | BD-2-1 | `draft-social` job from catalogue events | drafts only for providers with news; no duplicate per week |
 | BD-2-2 | Approval queue with edit diff | edited copy sets `ai=false`; the diff is stored |
 | BD-2-3 | Calendar and slots | a scheduled post publishes at its slot ± 5 min (measured) |
 | BD-2-4 | `MetaAdapter` publish + inbound comments/DMs | OAuth per page; a publish writes `messages` + a Blob snapshot |
+| BD-2-6 | Drafted replies to comments and DMs with the listing link | operator approves; reply sent through the adapter; comments-answered metric |
 | BD-2-5 | AI-content marking | published AI content carries the mark where Art. 50 applies |
 | BD-3-1 | Signed preference links from the platform | a family changes a channel without a password; link expiry |
 | BD-3-2 | Consent capture and log | SMS toggle impossible without a consent row (test) |

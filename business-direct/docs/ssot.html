@@ -168,6 +168,16 @@ implementation of the enumerations and state machines below.</em></p>
 <td>pipeline</td>
 </tr>
 <tr>
+<td><strong>Enquiry</strong></td>
+<td>a family's message to a provider — platform message, e-mail or missed call — with an answer drafted from the provider's knowledge files (D25)</td>
+<td>provider conversations, family inbox</td>
+</tr>
+<tr>
+<td><strong>Comment</strong></td>
+<td>a comment or DM on a published post, with a drafted reply that links to the listing (D25)</td>
+<td>social publishing, approvals</td>
+</tr>
+<tr>
 <td><strong>Recap</strong></td>
 <td>the weekly intelligence screen: what moved, by department, the market radar, what needs the operator (D23)</td>
 <td>intelligence</td>
@@ -218,6 +228,11 @@ implementation of the enumerations and state machines below.</em></p>
 <td><code>product</code></td>
 <td><code>featured</code> · <code>camp</code> · <code>profile</code></td>
 <td><code>S.products</code></td>
+</tr>
+<tr>
+<td><code>enquiryChannel</code></td>
+<td><code>Platform message</code> · <code>E-mail</code> · <code>Missed call</code></td>
+<td><code>enquiriesFor</code></td>
 </tr>
 <tr>
 <td><code>integrationTier</code></td>
@@ -325,6 +340,16 @@ implementation of the enumerations and state machines below.</em></p>
 <td><strong>Product</strong></td>
 <td><code>id</code>, <code>name</code>, <code>what</code>, <code>price</code></td>
 <td><code>S.products</code> — the platform's list; prices sample</td>
+</tr>
+<tr>
+<td><strong>Enquiry</strong></td>
+<td><code>id</code>, <code>providerId</code>, <code>from{name,kid,area}</code>, <code>channel</code>, <code>at</code>, <code>text</code>, <code>draft</code>, <code>state</code>, <code>ai</code>, <code>sentIn?</code></td>
+<td><code>S.enquiries[pid]</code>; a family's ask is unshifted with <code>from.name</code> = the family</td>
+</tr>
+<tr>
+<td><strong>Comment</strong></td>
+<td><code>id</code>, <code>postId</code>, <code>providerId</code>, <code>channel</code>, <code>from</code>, <code>text</code>, <code>draft</code>, <code>state</code>, <code>ai</code></td>
+<td><code>S.comments</code>, created when a post is approved</td>
 </tr>
 <tr>
 <td><strong>Entitlement</strong></td>
@@ -478,6 +503,11 @@ PROPOSED.</p>
 <td>products</td>
 </tr>
 <tr>
+<td>R14</td>
+<td>Every enquiry gets a drafted answer within a minute and a sent answer only after the provider's approval; reply time is measured from the enquiry, not from the draft</td>
+<td><code>enquiriesFor</code>, <code>approveEnquiry</code></td>
+</tr>
+<tr>
 <td>R13</td>
 <td>The machine never discounts; offers with a price cut are DiscountDirect's domain (D5)</td>
 <td>—</td>
@@ -516,8 +546,13 @@ PROPOSED.</p>
 </tr>
 <tr>
 <td>Reply time</td>
-<td>median time from inbound to sent reply, per provider</td>
-<td>provider today (sample)</td>
+<td>median time from an enquiry to the sent answer, per provider</td>
+<td>provider conversations and results (sample until real enquiries)</td>
+</tr>
+<tr>
+<td>Comments answered</td>
+<td>replies sent / comments received on published posts</td>
+<td>intelligence</td>
 </tr>
 <tr>
 <td>Trials booked</td>
