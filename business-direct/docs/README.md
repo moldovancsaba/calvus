@@ -9,6 +9,7 @@ Built to the prototyping standard (`PROTOTYPING.md`); this index is the process 
 |---|---|---|
 | 00 brief | `00-brief.md` | Client, problem, the three views and four automations, what is real, what is inert |
 | 01 research | `01-research.md` | Sourced: reputation and claiming, speed to lead, reminders, digests, generated pages, marketplace monetisation, AI adoption and human-in-the-loop, EU AI Act Art. 50, US CAN-SPAM and TCPA, the Hungarian reference market |
+| 01b research II | `01b-research-acquisition-content-sales.md` | Owner's ask 2026-09-19: acquiring customers for classified media (demand and supply side), content strategies, the AI creation services to add (Higgsfield and the video / image / audio / design / scheduling landscape with prices and the labelling rules), the sales processes with benchmarks — and nine proposals P1–P9 |
 | 02 audit | `02-audit.md` | Your Field measured: API, 252 providers, field coverage, site copy; the Hungarian reference instance; the two videos frame by frame; what DiscountDirect provides |
 | 03 sources | `03-sources.md` | What is real (the platform's public data), what is sample, what is inherited |
 | presentation | `bemutato.html` | Standalone, English, on the product's tokens: one sentence, three numbers, the four things to click with previews, what is real, the asks, what comes next |
@@ -103,5 +104,12 @@ SSOT, architecture, technical design and plan updated.
 presentation, hub and README brought to the built state; the gate gained a stale-phrase scan
 (proved to fire on a planted phrase) so the next round cannot leave such text behind.
 
-**Next.** The owner's answers to asks #2–8 (three are assumed, each one line to flip); a
-flipped ADR becomes D26; a pilot provider's real enquiries replace the sample ones.
+**2026-09-19 — research II.** The owner asked for research on what the market says about
+acquiring customers for classified media sites, content strategies, the AI content-creation
+services to add (Higgsfield and the rest), and the sales processes. Written with 60+ linked
+sources, primary marked; Sora's shutdown, the four platforms' AI-label rules and the cold
+e-mail benchmarks change what the plan should assume. Nine proposals (P1–P9) wait for the
+owner; each becomes a D-number.
+
+**Next.** The owner's decisions on P1–P9 and asks #2–8; the first to build is P2 (the clip
+engine) and P3 (labelling in the pipeline) if approved.

@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>business.direct — research II: acquiring customers, content, AI creation services, sales processes — business.direct docs</title>
+<link rel="stylesheet" href="../assets/tokens.css">
+<style>/* business.direct — documentation pages on the product tokens (GDS roles, teal accent). */
+:root{--ground:var(--gds-bg-canvas,#f8fafc);--card:var(--gds-bg-surface,#fff);--ink:var(--gds-text-body,#111827);--text:#1f2937;--muted:var(--gds-text-meta,#64748b);--accent:var(--gds-brand-accent,#0f766e);--accent-deep:var(--gds-brand-accent-strong,#115e59);--line:var(--gds-border-card,#e2e8f0);--line-soft:#eef2f7;--note:var(--gds-brand-accent-tint,#e6f4f2)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--ground);color:var(--text);font-family:var(--gds-font,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif);font-size:15.5px;line-height:1.6;padding-block:0 64px;padding-inline:clamp(16px,4vw,40px)}
+.wrap{max-width:74ch;margin-inline:auto}
+.docnav{display:flex;flex-wrap:wrap;gap:4px 18px;align-items:center;padding:16px 0;border-bottom:1px solid var(--line);font-size:12px;letter-spacing:.06em;text-transform:uppercase}
+.docnav a{color:var(--muted);text-decoration:none;min-height:44px;min-width:44px;display:inline-flex;align-items:center;border-bottom:2px solid transparent}
+.docnav a:hover,.docnav a[aria-current]{color:var(--ink);border-color:var(--accent)}
+.docnav-brand{color:var(--accent-deep);font-weight:800;margin-right:6px}
+.docnav-hub{margin-left:auto}
+header{padding-block:40px 24px;border-bottom:1px solid var(--line);margin-bottom:28px}
+.eyebrow{font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--accent-deep);margin:0 0 12px;font-weight:800}
+h1,h2,h3{color:var(--ink);line-height:1.1;text-wrap:balance;margin:0;letter-spacing:-.02em}
+h1{font-size:clamp(30px,6vw,46px);font-weight:900}
+h2{font-size:clamp(23px,4vw,30px);font-weight:900;margin:48px 0 14px;padding-top:20px;border-top:1px solid var(--line)}
+h3{font-size:18px;margin:30px 0 8px;font-weight:800}
+p{margin:0 0 14px} strong{color:var(--ink);font-weight:800}
+ul,ol{padding-left:22px;margin:0 0 16px} li{margin:5px 0} li>ul{margin:6px 0 0}
+code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.86em;background:var(--note);padding:1px 5px;border-radius:4px;color:var(--ink);overflow-wrap:anywhere}
+pre{overflow-x:auto;padding:14px 16px;border:1px solid var(--line);border-radius:10px;background:var(--card);font-size:12px;line-height:1.35}
+pre code{background:none;padding:0;font-size:inherit}
+a{color:var(--accent-deep)} :focus-visible{outline:2px solid var(--accent-deep);outline-offset:2px}
+.tbl{overflow-x:auto;margin:14px 0 22px;border:1px solid var(--line);border-radius:10px;background:var(--card)}
+table{border-collapse:collapse;width:100%;font-size:13.5px;min-width:560px}
+th{text-align:left;font-weight:800;color:var(--ink);background:var(--note);padding:10px 12px;border-bottom:1px solid var(--line);font-size:11.5px;letter-spacing:.06em;text-transform:uppercase}
+td{padding:10px 12px;border-top:1px solid var(--line-soft);vertical-align:top;background:var(--card)} td:first-child{color:var(--ink)}
+footer{margin-top:56px;padding-top:18px;border-top:1px solid var(--line);font-size:12px;color:var(--muted)}
+</style>
+</head>
+<body>
+<div class="wrap">
+<nav class="docnav" aria-label="Project documentation"><span class="docnav-brand">business.direct · docs</span><a href="index.html">Overview</a><a href="brief.html">Brief</a><a href="research.html">Research</a><a href="research-2.html" aria-current=page>Research II</a><a href="audit.html">Audit</a><a href="sources.html">Sources</a><a href="design-system.html">Design system</a><a href="layouts.html">Layouts</a><a href="05-layout-specs.html">Layout specs</a><a href="decisions.html">Decisions</a><a href="build-log.html">Build log</a><a href="gate.html">Gate</a><a href="client-asks.html">Owner asks</a><a href="business-logic.html">Business logic</a><a href="ssot.html">SSOT</a><a href="architecture.html">Architecture</a><a href="technical-design.html">Technical design</a><a href="implementation-plan.html">Plan</a><a href="token-map.html">Token map</a></nav>
+<header><p class="eyebrow">Calvus · business.direct · project documentation</p><h1>business.direct — research II: acquiring customers, content, AI creation services, sales processes</h1></header>
+<p><em>Second research round, 2026-09-19, on the owner's ask: "based on what we have now and what
+the market says about the trends — how to find and acquire customers for classified media
+sites, what content strategies content providers use, how to deliver those contents (which
+services to add: Higgsfield or other image and video creators, audio creators, other AI
+content creation tools and more) — and the same for the sales processes." Every figure
+links to where it was read; </em><em>P</em><em> = primary (the platform, vendor or report itself),
+</em><em>A</em><em> = aggregator or trade article; </em><em>V</em><em> = read on the vendor's own site with <code>curl</code>.
+Where a claim could not be verified, §7 says so. The first research round
+(<a href="research.html"><code>01-research.md</code></a>) stands; this one does not repeat it.</em></p>
+<h2>1. What we have now</h2>
+<p>The prototype (<code>../index.html</code>, rounds 1–4) already runs the shape the market below
+describes: <strong>B2C social publishing</strong> (posts drafted from listing data, approved, scheduled,
+with the link back to the listing page), a <strong>B2B provider sales pipeline</strong> (invitation
+sequence → reply inbox → apply-to-manage → managing → upgraded), <strong>provider campaigns</strong>
+(trial, open spots, announcement, registration), <strong>conversations</strong> (family enquiries with
+drafted answers; comments on posts), the <strong>weekly digest and alerts</strong>, <strong>generated pages</strong>
+where ≥ 3 providers exist, an <strong>intelligence recap</strong>, <strong>integrations</strong> with a v1 / later
+split, a <strong>knowledge layer</strong> of plain files, and the <strong>human gate</strong> on everything that
+leaves. What it does <em>not</em> have: any content <em>production</em> beyond copy — no image, video or
+audio creation; no channel adapters (v1 = Instagram + Facebook, e-mail, push); no
+deliverability or sending infrastructure; no AI-content marking pipeline; no defined
+outbound cadence beyond "invitation → reminder after 5 days → call task". This round asks
+what the market says each of those should be.</p>
+<h2>2. How to find and acquire customers for classified media sites — what the market says</h2>
+<h3>2.1 The demand side (families / consumers): search is splitting three ways</h3>
+<ul>
+<li><strong>Google organic sends fewer clicks to the same rankings.</strong> From January 2023 to
+  December 2025 organic rankings rose 26 % while organic traffic fell 19 %; more than 58 %
+  of US Google searches ended without a click in 2025. <strong>A</strong> <a href="https://neilpatel.com/marketing-stats/rankings-up-traffic-down/">NP Digital</a>,
+  <a href="https://www.growandconvert.com/ai/seo-traffic-decline-chatgpt-ai/">Grow &amp; Convert</a></li>
+<li><strong>Programmatic (generated) pages are under enforcement.</strong> Google's March 2026 scaled-content
+  action stripped 50–80 % of traffic from low-value programmatic sites; marketplaces that
+  kept traffic paired templates with real differentiators — reviews, trust signals, local
+  intent, schema, internal links. <strong>A</strong> <a href="https://www.tryvizup.com/blog/programmatic-seo-trends-2026">Vizup</a>,
+  <a href="https://www.getpassionfruit.com/blog/programmatic-seo-traffic-cliff-guide">Passionfruit</a>,
+  <a href="https://www.journeyh.io/blog/marketplace-seo-playbook">Journey</a>. <em>Our R6 (≥ 3 providers per
+  generated page) is the right instinct; the bar is now "a page a parent would bookmark".</em></li>
+<li><strong>Being cited by AI answers is the new listing.</strong> Yelp earned 512,680 citations across
+  ChatGPT, Gemini, Perplexity and Google AI Mode in Q4 2025 — 3.4× the second source (BBB
+  149,710; Angi 145,633; Thumbtack 56,004; Nextdoor 10,308); AI Mode and Perplexity account
+  for 95 % of local-discovery citations. <strong>A</strong> <a href="https://ppc.land/yelp-gets-3-4x-more-ai-citations-than-any-rival-in-new-local-search-data/">PPC Land on Foundation/AirOps data</a>,
+  <a href="https://foundationinc.co/lab/yelp-ai-local-discovery/">Foundation</a>. Brands cited in AI
+  Overviews get ~35 % more organic clicks than uncited ones. <strong>A</strong> <a href="https://www.madx.digital/learn/programmatic-seo-ai-overviews">MADX</a></li>
+<li><strong>Marketplaces are plugging into the assistants directly.</strong> Thumbtack shipped inside
+  ChatGPT (October 2025) and Anthropic's Claude (23 April 2026: find, compare and hire from
+  300,000+ businesses inside the conversation). <strong>P</strong> <a href="https://claude.com/connectors/thumbtack">Claude connector page</a>, <a href="https://www.businesswire.com/news/home/20260423884720/en/Thumbtack-Delivers-Home-Services-Experience-in-Anthropics-Claude">Business Wire release, 23 Apr 2026</a> (the wire blocks scripted fetches; read through the search result); <strong>A</strong> <a href="https://viirl.com/blog/yelp-thumbtack-ai-partnerships-home-service-marketing/">Viirl</a></li>
+<li><strong>Social platforms are the search engine for the parents of 2026.</strong> ~46 % of Gen Z and
+  35 % of millennials prefer social platforms over search engines; 40–46 % of young users
+  go to TikTok or Instagram before Google Maps for a place to eat, shop or explore; Reels
+  and Shorts are indexed by keyword and surfaced to non-followers. <strong>A</strong> <a href="https://www.marketingdive.com/news/google-tiktok-instagram-local-search-preference-gen-z/710130/">Marketing Dive</a>,
+  <a href="https://www.surmado.com/blog/gen-z-tiktok-local-discovery">Surmado</a>,
+  <a href="https://almcorp.com/blog/youtube-tiktok-instagram-social-seo-2026/">ALM</a>. 73 % of internet
+  users 16+ research brands on social. <strong>P</strong> <a href="https://www.hubspot.com/marketing-statistics">HubSpot statistics</a></li>
+<li><strong>Owned audiences beat rented ones.</strong> Newsletter platforms grow "product- and community-led":
+  beehiiv reports ~90 % of monthly growth unpaid and sells subscriber acquisition at ~$1.50
+  per confirmed opt-in through cross-recommendations. <strong>A</strong> <a href="https://sacra.com/c/beehiiv/">Sacra</a>,
+  <a href="https://www.emailtooltester.com/en/reviews/beehiiv/">emailtooltester</a>. The parent-media
+  incumbent in Your Field's city, Mommy Poppins, sells exactly this: newsletter placements
+  and social campaigns targeted by metro, child age bracket and interest. <strong>P</strong> <a href="https://mommypoppins.com/advertise-in-mommy-poppins-newsletters">Mommy Poppins advertising</a></li>
+<li><strong>The category itself is growing and the buyer trusts programmes, not ads.</strong> US families
+  spent an average $1,016 per child on the primary sport in 2024 (+46 % since 2019). <strong>P</strong>
+  <a href="https://projectplay.org/news/2025/2/24/project-play-survey-family-spending-on-youth-sports-rises-46-over-five-years">Project Play</a>.
+  80 % of parents would choose the brand that sponsors their child's programme between two
+  similar ones (YouGov Sport, 2026). <strong>A</strong> <a href="https://youthsportsbusinessreport.com/new-youth-sports-parents-poll-five-numbers-that-challenge-the-industry-narrative/">Youth Sports Business Report</a></li>
+</ul>
+<p><strong>Reading.</strong> For a listing platform in 2026 the acquisition stack is, in order: (1) be the
+source AI answers and social search cite — structured, reviewed, current listing pages;
+(2) short-form video on Instagram/TikTok that leads to those pages; (3) an owned weekly
+audience (newsletter/digest) that does not depend on any algorithm; (4) referral loops
+between families and programmes; (5) generated pages only where they carry real
+differentiators. Paid search is the last lever, not the first.</p>
+<h3>2.2 The supply side (providers / listed businesses): activation is the bottleneck</h3>
+<ul>
+<li>Two-thirds of failed marketplaces die on the supply side. <strong>P</strong> <a href="https://a16z.com/the-marketplace-glossary/">a16z marketplace glossary</a>,
+  <a href="https://a16z.com/marketplace-supply-strategy-comprehensive-exclusive-or-curated/">a16z on supply strategy</a></li>
+<li>The pattern Your Field already follows — scrape the supply that is already online, then
+  "claim your listing" with pre-populated photos and descriptions to shorten activation —
+  is the documented playbook (Adzuna in recruitment). <strong>A</strong> <a href="https://www.antler.co/blog/how-to-grow-marketplace-supply-fast">Antler</a>,
+  <a href="https://themarketplaceguide.com/patterns/supply-acquisition/">The Marketplace Guide</a></li>
+<li>Cold-start sequencing: give the harder side (supply) single-player utility first, seed,
+  concierge-match, then flip the network; teams that skip single-player utility fail ~4×
+  more often. <strong>A</strong> <a href="https://forkoff.xyz/blog/founder-growth/two-sided-marketplace-cold-start-2026">FORKOFF</a>
+  <em>Our provider view is that single-player utility: conversations, reminders, campaigns work
+  the day the provider claims, before the platform has sent it a single family.</em></li>
+<li>SMB decision-makers prefer digital self-service (&gt;70 %); SMB sales cycles run one to four
+  weeks; healthy SMB activation is 35–50 %; SMB churn is structurally high and "cheap
+  self-serve acquisition + fast payback" is the business model — expensive retention
+  interventions can destroy value. <strong>A</strong> <a href="https://pipeline.zoominfo.com/sales/smb-sales-strategy">ZoomInfo</a>,
+  <a href="https://pmtoolkit.ai/benchmarks/activation-rate-benchmarks">PM Toolkit</a>,
+  <a href="https://orm-tech.com/blog/saas-churn-rate-benchmarks-by-segment">ORM</a></li>
+<li>Directory referrals convert: niche directories send intent-bearing visitors; profiles at
+  85–95 % completeness out-click "100 % stuffed" ones. <strong>A</strong> <a href="https://ascendlymarketing.com/online-business-directories-a-2026-guide-for-smbs/">Ascendly</a>,
+  <a href="https://www.jasminedirectory.com/blog/small-business-marketing-2026-directories-beat-ads/">Jasmine Directory</a></li>
+</ul>
+<p><strong>Reading.</strong> The provider is won by (1) a claim that costs one click and lands on a page
+that already looks finished, (2) a tool that works alone on day one (answer enquiries, text
+back missed calls, remind booked families), (3) self-serve upgrades with a price on the
+page, and (4) accepting churn rather than fighting it with humans. That is D21's "bundled
+base, provider buys reach" — the research supports it.</p>
+<h2>3. Content strategies used by content providers</h2>
+<ul>
+<li><strong>Short-form video is the ROI format.</strong> Marketers name short-form video (49 %), long-form
+  video (29 %) and live video (25 %) as the three highest-ROI formats; Instagram is the
+  most-cited ROI platform, Facebook 43 %, TikTok 32 %; the top five platforms marketers will
+  invest in all carry short-form video. <strong>P</strong> <a href="https://www.hubspot.com/marketing-statistics">HubSpot State of Marketing 2026 (statistics page)</a>,
+  <a href="https://blog.hubspot.com/marketing/hubspot-blog-social-media-marketing-report">HubSpot social report</a></li>
+<li><strong>Human-made first; AI for insight and process.</strong> Sprout's 2026 content-strategy study
+  (2,300+ consumers, 1,200 marketers) finds consumers want brands to make human-generated
+  content the #1 priority and to use AI for audience insight and efficiency, not to replace
+  taste. <strong>P</strong> <a href="https://sproutsocial.com/insights/data/2026-social-media-content-strategy-report/">Sprout Social</a>.
+  61 % of marketers plan to increase creator-content investment; micro-creators (1K–100K)
+  are the top-performing tier for 32 %. <strong>P</strong> <a href="https://sproutsocial.com/insights/data/2026-influencer-marketing-report/">Sprout influencer report</a>,
+  <a href="https://blog.hubspot.com/marketing/hubspot-blog-social-media-marketing-report">HubSpot</a></li>
+<li><strong>Small businesses have already moved.</strong> Among 300+ US/Canadian SMBs (Feb 2026): 66 % use
+  unpaid social, 56 % social ads; Facebook 90 %, Instagram 74 %, TikTok 22 % (down from
+  34 %); 53 % will invest in video in 2026; AI for content creation 81 % (up from 52 %), for
+  design 54 %, for social management 35 %; 83 % say referrals are their best acquisition
+  source (up from 65 %). <strong>P</strong> <a href="https://localiq.com/blog/small-business-marketing-trends-report-2026/">LocaliQ 2026 report</a></li>
+<li><strong>The "content engine": one source, many cuts.</strong> Creators and publishers produce one
+  anchor piece a week and cut it into clips, carousels, posts, a newsletter item and a
+  page — short-form for discovery, long-form for search and proof, the newsletter for the
+  owned relationship. <strong>A</strong> <a href="https://postiv.ai/blog/content-repurposing-strategies">Postiv</a>,
+  <a href="https://www.newzenler.com/blog/content-repurposing-system-creators-2026">Newzenler</a>,
+  <a href="https://www.opus.pro/blog/short-form-video-trends-reshaping-creator-marketing-2026">OpusClip on 2026 short-form</a></li>
+<li><strong>Social search optimisation is a content rule, not an SEO afterthought.</strong> Keywords in
+  the on-screen text, caption and spoken audio; a location and an activity in every post;
+  a series format so the platform learns the account. <strong>A</strong> <a href="https://skedsocial.com/blog/social-search-how-to-optimize-for-discoverability-on-tiktok-and-instagram-2025">Sked Social</a>,
+  <a href="https://almcorp.com/blog/youtube-tiktok-instagram-social-seo-2026/">ALM</a></li>
+<li><strong>What the parent audience responds to</strong> (from the platform incumbents' own sell sheets):
+  age-bracketed, neighbourhood-specific, "this week" content; the trusted curator voice;
+  real people demonstrating real experiences. <strong>P</strong> <a href="https://mommypoppins.com/content/advertise-on-mommy-poppins">Mommy Poppins</a>;
+  <strong>A</strong> <a href="https://www.theadfirm.net/social-search-is-eating-discovery-what-your-business-needs-before-search-and-social-fully-merge">The Ad Firm</a></li>
+</ul>
+<p><strong>Reading.</strong> The content strategy for business.direct is a weekly <em>engine</em>, not a queue of
+one-off posts: one anchor per neighbourhood or activity per week (a real session filmed or
+photographed by the provider, or a provider spotlight built from the card), cut into a
+Reel/Short, a carousel, a story, a digest item and a listing-page update — each carrying
+the neighbourhood, the activity and the age in text, caption and voice. Human footage from
+the provider first; generated media fills the gaps, labelled.</p>
+<h2>4. How to deliver those contents — which services to add</h2>
+<h3>4.1 The landscape in one table (September 2026)</h3>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>Layer</th>
+<th>Services</th>
+<th>What they are for here</th>
+<th>Price points read</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Video (generative)</strong></td>
+<td><strong>Higgsfield</strong> (aggregator over Veo 3.1, Kling 3.0, Sora 2, Wan, Seedance; Cinema Studio, Marketing Studio, UGC Factory, Lipsync Studio, Soul image model, MCP/CLI + API, ChatGPT plugin) <strong>V</strong>; Google <strong>Veo 3.1</strong> (native synced audio); <strong>Kling 3.0</strong>; <strong>Runway Gen-4.5</strong> (reference-image control, character consistency); Pika, Luma, Hailuo, Wan</td>
+<td>provider spotlights when no footage exists; b-roll behind a real photo; camera moves on a still</td>
+<td>Higgsfield tiers read as Starter $15 / Plus $39 / Ultra $99 monthly (annual billing), ~200 / 1,000 / 3,000 credits, ~50–100 credits per short clip, credits expire monthly <strong>A</strong> (<a href="https://www.layer3labs.io/guides/higgsfield-ai-pricing">Layer3 Labs, updated 5 Sep 2026</a>); other pages list Plus ~$49 and a Business seat ~$89 <strong>A</strong> (<a href="https://www.bleap.finance/en-us/blog/what-is-higgsfield-ai">bleap</a>) — <strong>the pricing page itself is JavaScript-rendered and could not be read</strong>, so treat every figure as third-party</td>
+<td><strong>Do not build on Sora</strong>: the Sora app closed 26 Apr 2026 and the Sora 2 API shuts on 24 Sep 2026 <strong>P</strong> (<a href="https://help.openai.com/en/articles/20001152-what-to-know-about-the-sora-discontinuation">OpenAI help centre</a>, <a href="https://developers.openai.com/api/docs/deprecations">OpenAI deprecations</a>)</td>
+</tr>
+<tr>
+<td><strong>Video (avatar / UGC-style)</strong></td>
+<td><strong>HeyGen</strong> (Avatar IV, 1,100+ avatars, Veo/Kling b-roll), <strong>Synthesia</strong>, <strong>Arcads</strong>, <strong>Creatify</strong>, Oakgen</td>
+<td>a "coach explains the trial policy" clip when the coach will not film; ad variants</td>
+<td>HeyGen and Synthesia from ~$29/mo; Synthesia ~15–25 % cheaper per finished minute at entry; Creatify free/10 credits, $39/100, $99/300 (quality videos ~20 credits); Arcads $110 list <strong>A</strong> (<a href="https://www.colossyan.com/posts/heygen-vs-synthesia/">Colossyan</a>, <a href="https://vidico.com/news/heygen-vs-synthesia/">Vidico</a>, <a href="https://creatify.ai/blog/arcads-pricing-%282026%29-plans-credits-and-what-you-ll-actually-pay">Creatify on Arcads</a>, <a href="https://www.hyperfx.ai/blog/arcads-vs-creatify-vs-higgs-field-vs-hyper-2026">Hyperfx</a>)</td>
+<td>a synthetic "coach" is a realistic-person deepfake under every platform's rules — label it, or better, do not do it for a children's-activity brand (§4.3)</td>
+</tr>
+<tr>
+<td><strong>Video (from real footage)</strong></td>
+<td><strong>OpusClip</strong> (long → clips, captions, b-roll, scheduling to 6 platforms), <strong>CapCut</strong> (free, 300M MAU), <strong>Descript</strong>, Captions</td>
+<td>the real lever: a provider's 30-minute session recording becomes a week of Reels</td>
+<td>OpusClip free 60 min/mo, Starter $15/150, Pro $29/300 processing minutes <strong>A</strong> (<a href="https://www.eesel.ai/blog/opusclip-pricing">eesel</a>, <a href="https://creatify.ai/blog/opusclip-pricing-plans-and-what-you-ll-actually-pay-in-2026">Creatify</a>)</td>
+<td>this is where "human-made first" (§3) and cost meet</td>
+</tr>
+<tr>
+<td><strong>Image</strong></td>
+<td><strong>Nano Banana 2 / Pro</strong> (Google, photorealism, editing), <strong>FLUX.2</strong> (photoreal, API from ~3 ¢/image), <strong>Ideogram 4.0</strong> (best text-in-image → social tiles), <strong>GPT Image 1.5 / 2</strong>, <strong>Midjourney v8</strong> (art direction), <strong>Adobe Firefly</strong> (licensed training data, IP indemnification)</td>
+<td>digest headers, "this week in Park Slope" tiles, activity × neighbourhood page art, editing a provider's photo (crop, extend, clean)</td>
+<td>free to ~€120/mo; FLUX API cents per image <strong>A</strong> (<a href="https://www.provimedia.de/en/blog/ai-image-generation-2026-best-tools">Provimedia</a>, <a href="https://www.aimagicx.com/blog/midjourney-vs-flux-vs-ideogram-image-comparison-2026">AI Magicx</a>, <a href="https://aicomparison.ai/best-ai-image-generators/">aicomparison</a>)</td>
+<td>never generate children; edit the provider's own photos; Firefly where indemnity matters</td>
+</tr>
+<tr>
+<td><strong>Audio</strong></td>
+<td><strong>ElevenLabs</strong> (voice, dubbing; ElevenLabs Music commercially licensed from the $6 Starter), <strong>Suno v5</strong> / <strong>Udio</strong> (full songs; label settlements late 2025), Google <strong>Lyria 3</strong> (Vertex), licensed libraries (Epidemic Sound, Artlist), Murf</td>
+<td>voice-over for Reels and the digest's audio version; bed music; the provider's "text back" voice</td>
+<td>ElevenLabs from $6/mo <strong>A</strong> (<a href="https://www.aimagicx.com/blog/suno-vs-udio-vs-elevenlabs-music-comparison-2026">AI Magicx</a>, <a href="https://internet-pros.com/blog/generative-music-ai-suno-udio-2026/">Internet Pros</a>)</td>
+<td>choose a service with clear licensing and indemnity for a commercial brand</td>
+</tr>
+<tr>
+<td><strong>Design and assembly</strong></td>
+<td><strong>Canva Magic Studio</strong> (free–$15/mo: brand templates, auto-resize, text-to-image inside the layout), <strong>Adobe Express / Firefly</strong> ($9.99/mo standalone)</td>
+<td>the layer a one-person operator actually lives in: brand kit, resize per channel, captions</td>
+<td><strong>A</strong> <a href="https://www.socialpilot.co/ai-social-media-content-creation-tools">SocialPilot</a>, <a href="https://www.upskillist.com/blog/best-ai-graphic-design-tools/">Upskillist</a></td>
+<td></td>
+</tr>
+<tr>
+<td><strong>Scheduling and inbox</strong></td>
+<td><strong>Buffer</strong>, <strong>Later</strong>, <strong>Metricool</strong>, <strong>Hootsuite</strong>; all-in-one SMB tools (Brand Brain $29/mo, Enrich Labs $39/mo)</td>
+<td>publishing at the slot, comments/DMs inbox, analytics per post</td>
+<td>$29–$200/mo <strong>A</strong> <a href="https://zapier.com/blog/best-ai-social-media-management/">Zapier</a>, <a href="https://aifwd.net/blog/ai-social-media-management-2026/">aifwd</a></td>
+<td>business.direct's outbox + Meta adapter replaces this for the platform; a provider on the free page may still use one</td>
+</tr>
+<tr>
+<td><strong>Copy and drafting</strong></td>
+<td>Claude / GPT class models behind an interface (ADR-7)</td>
+<td>every draft the machine writes</td>
+<td>per-token</td>
+<td>already in the architecture</td>
+</tr>
+<tr>
+<td><strong>Research and signals</strong> (from the reference videos)</td>
+<td>Google Trends, Semrush, SparkToro, Surfer</td>
+<td>the market-radar department</td>
+<td>subscription</td>
+<td>keep as "later"</td>
+</tr>
+</tbody>
+</table></div>
+<h3>4.2 What this means for delivery — the pipeline to add</h3>
+<ol>
+<li><strong>Real media first, generated second.</strong> The provider's own session photo or clip is
+   the input (upload from the provider view; the card's image is the fallback). Generation
+   fills three gaps only: a <em>still-to-motion</em> spotlight when the provider has no video (a
+   camera move on its real photo — Higgsfield/Runway class); <em>tiles and headers</em> with text
+   (Ideogram/Nano Banana class, or Canva); <em>voice-over</em> for a Reel or the digest's audio
+   (ElevenLabs class). This matches Sprout's "human first" finding and the platform rules.</li>
+<li><strong>One "media" department, three adapters behind one interface</strong> — <code>MediaAdapter.image</code>,
+   <code>.video</code>, <code>.audio</code> — so the vendor can change (Sora already did). Higgsfield's value is
+   exactly that it is an aggregator with an API/MCP over the leading video models; treat it
+   as one candidate adapter, not a dependency.</li>
+<li><strong>The clip engine is the highest-return service</strong> (OpusClip class): a provider records
+   one session, the machine cuts it into the week's Reels with captions and the listing
+   link; approval per clip as today's post card.</li>
+<li><strong>Labelling in the pipeline, not as a checkbox</strong>: every generated asset carries C2PA
+   Content Credentials at creation and the platform-specific disclosure at publish time;
+   real footage carries none (§4.3).</li>
+<li><strong>Never generate a child.</strong> Edit the provider's real photos; generate places, objects,
+   type, motion — not people, and certainly not children. This is a product rule (proposed
+   R15), not a legal footnote.</li>
+</ol>
+<h3>4.3 Labelling and law for generated media (state on 2026-09-19)</h3>
+<ul>
+<li>EU AI Act <strong>Article 50</strong> applies from <strong>2 August 2026</strong>: AI-generated or manipulated
+  content that resembles real people, places or events must be visibly marked when used
+  for professional purposes. <strong>A</strong> <a href="https://billo.app/blog/ai-labeling/">Billo</a>,
+  <a href="https://qbsglobal.blog/labeling-ai-generated-content-rules-2026">QBS</a> (the first round's
+  §7 cites the regulation itself)</li>
+<li><strong>TikTok</strong> requires visible labels on realistic AI visuals and audio, detects C2PA
+  credentials automatically, and reduces reach ~60 % for 30 days after three unlabelled AI
+  videos. <strong>A</strong> <a href="https://storrito.com/resources/tiktoks-2026-ai-labeling-rules-and-what-they-signal-for-platform-governance/">Storrito</a>,
+  <a href="https://influencermarketinghub.com/ai-disclosure-rules/">Influencer Marketing Hub</a></li>
+<li><strong>Meta</strong> unified Instagram/Facebook AI disclosure in February 2026: an in-post tag above
+  the content, like a paid-partnership label. <strong>A</strong> <a href="https://www.digitalapplied.com/blog/ai-content-labeling-rules-advertisers-2026-reference">Digital Applied</a></li>
+<li><strong>YouTube</strong> has required disclosure of realistic altered or synthetic content since 2025.
+  <strong>A</strong> <a href="https://influencermarketinghub.com/ai-disclosure-rules/">Influencer Marketing Hub</a></li>
+<li><strong>C2PA 2.3</strong> (February 2026) is the credential format the platforms read. <strong>A</strong> <a href="https://billo.app/blog/ai-labeling/">Billo</a></li>
+</ul>
+<p><strong>Reading.</strong> Four platforms, four label systems, one pipeline rule: mark at creation, disclose
+at publish, keep the credential in the audit snapshot (architecture §4, Blob).</p>
+<h2>5. The sales processes — what the market says</h2>
+<h3>5.1 Outbound to small businesses (our B2B provider sales)</h3>
+<ul>
+<li><strong>Benchmarks (billions of sends, Jan–Dec 2025):</strong> average reply 3.43 %; top quartile
+  5.5 %+; top decile 10.7 %+; <strong>58 % of replies come from step one</strong>; 4–7 touches, 3–4 days
+  apart; first e-mail under 80 words with one CTA; bounce &lt; 2 %; warm a domain 4–6 weeks
+  from 5–10 sends a day; stable domains see +15–20 % replies. <strong>P</strong> <a href="https://instantly.ai/cold-email-benchmark-report-2026">Instantly benchmark report 2026</a></li>
+<li>SMB targets reply 20–40 % more than enterprise; keep SMB sequences to 4–5 touches over
+  14–21 days. <strong>A</strong> <a href="https://www.cleverly.co/blog/cold-email-benchmarks-by-industry">Cleverly</a>,
+  <a href="https://puzzleinbox.com/blog/cold-email-reply-rate-benchmarks-2026-by-segment">Puzzle Inbox</a></li>
+<li>Multi-channel (e-mail + phone + LinkedIn) outperforms single-channel by ~40 % in
+  engagement; top teams reach 15–25 % across channels with tight targeting and a signal
+  in the first line. <strong>A</strong> <a href="https://belkins.io/blog/sales-outreach-strategy">Belkins</a>,
+  <a href="https://salesmotion.io/blog/cold-outreach-best-practices">Salesmotion</a></li>
+<li><strong>Deliverability is the failure mode of AI outbound</strong>: domain-reputation collapse from
+  over-sending caps 47 % of AI-SDR deployments in their first 90 days; Microsoft 365
+  inboxes filter strictest. <strong>A</strong> <a href="https://www.digitalapplied.com/blog/ai-sdr-statistics-2026-outbound-sales-data-points">Digital Applied</a></li>
+<li><strong>The tool tiers</strong>: data + sequencing (Apollo; Clay for enrichment), e-mail-first volume
+  with warm-up (Instantly, Smartlead, lemlist), and "autonomous SDR" workers (11x Alice,
+  Artisan, AiSDR). <strong>A</strong> <a href="https://pipeline.zoominfo.com/sales/ai-sdr-for-outbound-sales">ZoomInfo</a>,
+  <a href="https://www.cirrusinsight.com/blog/ai-outbound-sales">Cirrus Insight</a>,
+  <a href="https://www.11x.ai/guides/ai-sdr-tools-b2b-sales-teams">11x</a></li>
+<li><strong>Voice</strong>: 62 % of inbound SMB calls go unanswered at peak; AI voice agents pay back
+  fastest on inbound qualification, after-hours and follow-ups; outbound voice works when
+  it verifies the person, asks few questions and stops. <strong>A</strong> <a href="https://www.cloudtalk.io/blog/best-ai-voice-agents/">CloudTalk</a>,
+  <a href="https://www.b2bnn.com/2026/09/how-b2b-teams-use-ai-voice-agents-for-outbound-without-burning-lead-lists/">B2BNN</a>,
+  <a href="https://aloware.com/blog/best-ai-voice-agents-complete-guide-for-smbs">Aloware</a></li>
+</ul>
+<p><strong>Reading against what we have.</strong> Our invitation sequence (1 e-mail + 1 reminder + a call
+task) is one touch short of the evidence; the copy's "your programme is already listed —
+manage it in one click" <em>is</em> the signal-in-the-first-line the benchmarks reward, and 130
+addresses is small enough that deliverability is a warm-up problem, not a volume problem.
+What is missing: a <strong>sending domain per platform with warm-up and bounce handling</strong>, a
+<strong>third touch</strong> (a different angle: "a family saved you this week"), a <strong>phone step</strong> that
+is a real call task or a compliant voice agent for the 50 phone-only providers, and
+<strong>reply-time SLAs</strong> on the inbox — the same speed-to-lead rule we sell to providers.</p>
+<h3>5.2 Selling the upgrade (self-serve, in-product)</h3>
+<ul>
+<li>SMB buyers self-serve (&gt;70 % prefer digital), cycles run days to weeks, and PLG with a
+  sales-assist on high-activity accounts is the pattern that fits. <strong>A</strong> <a href="https://pipeline.zoominfo.com/sales/smb-sales-strategy">ZoomInfo</a>,
+  <a href="https://usermotion.com/blog/4-plg-funnels-for-smb-and-enterprise-sales">UserMotion</a></li>
+<li>Activation is the strongest predictor of conversion (top quartile 65–75 % vs 52 %
+  median); the activation moment for a provider is the first answered enquiry or the first
+  filled trial — measurable in our conversations screen. <strong>A</strong> <a href="https://productquant.dev/blog/saas-activation-benchmarks-by-industry-2026/">ProductQuant</a>,
+  <a href="https://www.flint.com/articles/b2b-saas-free-trial-conversion-rate-statistics">Flint</a></li>
+</ul>
+<p><strong>Reading.</strong> The upgrade is sold by the product at the activation moment: "your trial-class
+campaign reached 22 families — featured listing puts you first in Park Slope for $49" —
+one card, one Stripe checkout (ADR-9), no salesperson. A human touch only for providers
+with high activity and no purchase after 30 days.</p>
+<h3>5.3 The provider's own sales process (what business.direct runs for them)</h3>
+<p>Speed to lead (research I §2), reminders (§3) and the campaign kinds (business logic §4)
+are the provider's sales process; the market adds the <strong>missed-call text-back</strong> and
+<strong>after-hours voice</strong> as the two highest-ROI automations for an SMB. Both are already in the
+provider's conversations department; voice is "later" until consent and Twilio are decided.</p>
+<h2>6. What it means for business.direct — proposed additions (each is a D-number when the owner decides)</h2>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>#</th>
+<th>Proposal</th>
+<th>Where it lands</th>
+<th>Why (section)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>P1</td>
+<td><strong>A media department</strong> with one <code>MediaAdapter</code> interface and three candidate services (video: Higgsfield-class aggregator or Runway; image: Nano Banana / Ideogram / Firefly; audio: ElevenLabs) — generation only where real media is missing; <strong>never a person, never a child</strong> (R15)</td>
+<td>architecture §4/§7, technical design §6, SSOT R15</td>
+<td>§3, §4.2</td>
+</tr>
+<tr>
+<td>P2</td>
+<td><strong>The clip engine</strong>: a provider uploads one session recording; the machine cuts the week's Reels with captions and the listing link; approval per clip</td>
+<td>provider view (a <em>Media</em> screen), social queue</td>
+<td>§3, §4.1</td>
+</tr>
+<tr>
+<td>P3</td>
+<td><strong>Labelling in the pipeline</strong>: C2PA at creation, platform disclosure at publish, credential kept in the audit snapshot</td>
+<td>outbox, channel adapters</td>
+<td>§4.3</td>
+</tr>
+<tr>
+<td>P4</td>
+<td><strong>Content engine cadence</strong>: one anchor per neighbourhood or activity per week → Reel, carousel, story, digest item, page update; keywords (neighbourhood · activity · age) in text, caption and audio</td>
+<td>social department rules file, calendar</td>
+<td>§3</td>
+</tr>
+<tr>
+<td>P5</td>
+<td><strong>AI-citation readiness</strong>: listing pages and generated pages carry reviews, schema, "last verified" dates and a plain-language answer block — the properties the cited sources share</td>
+<td>generated pages, platform connector</td>
+<td>§2.1</td>
+</tr>
+<tr>
+<td>P6</td>
+<td><strong>Owned audience as a channel</strong>: the digest becomes a public neighbourhood newsletter families can join without an account, with cross-recommendation as the growth loop</td>
+<td>family view, digest job</td>
+<td>§2.1</td>
+</tr>
+<tr>
+<td>P7</td>
+<td><strong>Sending infrastructure</strong>: a dedicated sending domain per platform instance, 4–6-week warm-up, bounce &lt; 2 %, three touches (invitation → "a family saved you" → reminder), then the call task; reply within one business day</td>
+<td>sequences, outbox, <code>rules/consent.md</code></td>
+<td>§5.1</td>
+</tr>
+<tr>
+<td>P8</td>
+<td><strong>Upgrade at the activation moment</strong>: the product card appears on the first campaign result or the first answered enquiry; sales-assist only after 30 days of activity without a purchase</td>
+<td>provider results, drawer</td>
+<td>§5.2</td>
+</tr>
+<tr>
+<td>P9</td>
+<td><strong>Voice, later</strong>: missed-call text-back stays; an inbound voice agent for providers and an outbound verification call for phone-only providers wait on Twilio and consent (asks #4/#5)</td>
+<td>integrations</td>
+<td>§5.1, §5.3</td>
+</tr>
+</tbody>
+</table></div>
+<p>None of these changes the approved design system or layouts; P2 adds one provider screen
+on the existing grids.</p>
+<h2>7. What was not found or could not be verified</h2>
+<ul>
+<li><strong>Higgsfield's own pricing page</strong> is JavaScript-rendered; <code>curl</code> returned only the
+  navigation (which did confirm the product set: Marketing Studio, UGC Factory, Lipsync
+  Studio, Soul, Cinema Studio, MCP/CLI API, ChatGPT plugin, Veo/Sora/Kling/Wan/Seedance).
+  Prices above are third-party readings of September 2026 and disagree with each other by
+  tier; confirm on the site before any decision.</li>
+<li><strong>Sprout's full 2026 report figures</strong> sit behind a download; only its headline findings
+  are on the public page and are quoted as such.</li>
+<li><strong>No "claim your listing" conversion benchmark</strong> for directories was found; the closest
+  evidence is SMB activation (35–50 %) and the marketplace playbooks in §2.2.</li>
+<li><strong>No published data on how NYC parents specifically find activities</strong>; the parent-media
+  sell sheets (Mommy Poppins) and youth-sports spending are the nearest primary sources.</li>
+<li><strong>AIM Group's classifieds reports</strong> are paid; only their scope was readable.</li>
+<li><strong>Link check</strong> (<code>curl</code>, 2026-09-19): every source resolved except six that block scripted
+  fetches (403: OpenAI help centre, NP Digital, emailtooltester, Internet Pros, The Ad Firm;
+  no response: Business Wire) — each was read through the search tool and is kept because it
+  is the primary or the clearest statement; open them in a browser.</li>
+</ul>
+<footer>Source: <code>business-direct/docs/01b-research-acquisition-content-sales.md</code> · rendered by <code>docs/build.py</code>.</footer>
+</div>
+</body>
+</html>

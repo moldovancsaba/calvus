@@ -12,6 +12,7 @@ PAGES = [  # (source, output, nav label)
     ("README.md", "index.html", "Overview"),
     ("00-brief.md", "brief.html", "Brief"),
     ("01-research.md", "research.html", "Research"),
+    ("01b-research-acquisition-content-sales.md", "research-2.html", "Research II"),
     ("02-audit.md", "audit.html", "Audit"),
     ("03-sources.md", "sources.html", "Sources"),
     ("05-layout-specs.md", "05-layout-specs.html", "Layout specs"),
