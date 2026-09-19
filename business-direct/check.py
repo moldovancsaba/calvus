@@ -49,7 +49,7 @@ except Exception as e:
     findings.append(f"data  providers.json unreadable: {e}")
 STALE = ["awaits the owner", "coming soon", "not yet built", "inert here", "will be built", "gate 2 · proposed", "gate 1 · proposed", "awaiting approval of the frames", "round 2 of the build log"]
 for f in sorted((HERE / "docs").glob("*.md")) + ALL + [HERE / "assets/app.js"]:
-    if f.name in ("04-decisions.md", "06-build-log.md", "decisions.html", "build-log.html", "README.md", "index.html") and f.parent.name == "docs": continue
+    if f.name in ("04-decisions.md", "06-build-log.md", "07-gate.md", "decisions.html", "build-log.html", "gate.html", "README.md", "index.html") and f.parent.name == "docs": continue  # history and the scan's own list
     t = f.read_text(encoding="utf-8").lower()
     for ph in STALE:
         if ph in t: findings.append(f"stale phrase  {f.relative_to(ROOT)}: \"{ph}\"")

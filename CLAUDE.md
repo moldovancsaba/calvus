@@ -152,6 +152,9 @@ must actually happen before every push, not just be claimed:
   `python3 business-direct/data/fetch-yourfield.py` — never edit `providers.json` by hand.
   Bump the `?v=` on `assets/app.js` / `app.css` in `index.html` when their behaviour
   changes (a comment-only edit needs no bump).
+- **Read the gate's exit code, not its last line.** `python3 check.py | tail -1` always
+  exits 0 (the pipe's status is `tail`'s); a push went out on 2026-09-19 with a failing
+  project gate that way. Run `python3 check.py` unpiped, or `python3 check.py > log; echo $?`.
 - For IDBC changes also run `python3 idbc-salary-guide/check.py` (links, anchors, docs
   cross-links, one chart-asset version everywhere, inert controls still marked) — must
   print `GATE: CLEAN`. Added 2026-09-18 with the standard documentation structure
