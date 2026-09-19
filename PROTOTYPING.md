@@ -127,7 +127,15 @@ pane is hidden they come back blank, so the gate must not depend on them — and
 pane reports a 0 px viewport, so every measurement sets an explicit width first and
 records `clientWidth` with the result.
 
-### 3.4 Interaction
+### 3.4 Interaction and the two interfaces
+
+A prototype that a client's operator will run day to day has **two interfaces on one
+machine**: a *Simple* one that shows what needs a person as ranked recommendations with
+the reason and one button, plus a single press for the actions the machine judges safe;
+and an *Advanced* one with every screen and input. Every screen carries a *What is this?*
+panel; a *How to use* screen and *Templates* the operator can copy exist from the first
+build round that has a second screen (business.direct, D33). The rules are identical in
+both modes — Simple changes what is shown, never what may happen.
 
 The feature that changed is exercised, not glanced at: every filter value, every tab,
 every persona, both views. When real data cannot reach a code path (IDBC's TOP3 pill before
@@ -150,12 +158,14 @@ live), indexed by a `README.md` that is also the dated process log:
 | 05 | `05-design.md` | tokens, components, layout at the reference widths; or the client's mockups the pages transcribe |
 | 06 | `06-build-log.md` | every round: what changed, what was measured |
 | 07 | `07-gate.md` + `check.py` | what the script checks, the measured pass, deliberate deviations with reasons |
-| 08 | `08-client-asks.md` | numbered items only the client can close, each naming where it lands |
+| 08 | `08-client-asks.md` | the register of asks with states; **nothing the client must answer to be presented to** — open items that only matter after acceptance move to `19-implementation-prerequisites.md` (before the first real action · before the keyed release · to confirm at acceptance) |
 | 10 | `10-ssot.md` | glossary, enumerations, entities, settings, rules register, metrics, document map |
 | 11 | `11-architecture.md` | context, the target measured, quality attributes, containers, flows, stack, ADRs |
 | 12 | `12-technical-design.md` | templates, content model, data mapping, forms, state machines, i18n, SEO/URLs, media, performance, operations |
 | 13 | `13-implementation-plan.md` | milestones, issues with a Definition of Done, blocked register, risks, release scope |
 | 14 | `14-token-map.md` | prototype tokens and components → production; or why there is nothing to map |
+| 18 | `18-responsible-data-policy-framework.md` (or the project's equivalent) | **required for any prototype that sends, stores or targets people**: the policy record per client instance (jurisdictions and laws, audience model, child-data rule, consent per channel, high-privacy defaults, cap, opt-out SLA, AI disclosure, retention, the client's published policy clauses) and the gate that blocks a feature until its fields are set — see business.direct for the reference |
+| 19 | `19-implementation-prerequisites.md` | what the client provides after acceptance, grouped by when it blocks; the presentation's "what we ask of you today" is one decision |
 
 Rules for the set:
 
@@ -175,7 +185,14 @@ Rules for the set:
   warm and cold, cache headers. Numbers, not impressions — Holdvölgy's 23 plugins against
   a target of 12 and 4,5 s cold TTFB are the whole argument for its stack proposal.
 - **Client asks are a list with owners**, not sentences in prose; when one closes it moves
-  to the process log.
+  to the process log. **An ask is never a presentation blocker**: the prototype runs on
+  declared defaults and samples; what only matters after acceptance is a prerequisite, not
+  an ask (owner directive 2026-09-19).
+- **Responsible data is not client-specific.** A child is an age, never a name; no profiling
+  or targeting on a minor's data, with or without consent; high-privacy defaults; consent
+  that names channel and sender; the postal address and the opt-out on every commercial
+  e-mail; disclosure when a machine wrote or made something. These hold whatever the client
+  — the client's record changes values, not rules (owner directive 2026-09-19).
 - **Docs pass the same page rules**: no horizontal overflow at 375 (long `code` strings
   need `overflow-wrap: anywhere`), 44 px links, one `h1`.
 

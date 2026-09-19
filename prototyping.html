@@ -236,7 +236,14 @@ site, load every page in same-origin iframes at both widths and measure from one
 pane is hidden they come back blank, so the gate must not depend on them — and a hidden
 pane reports a 0 px viewport, so every measurement sets an explicit width first and
 records <code>clientWidth</code> with the result.</p>
-<h3>3.4 Interaction</h3>
+<h3>3.4 Interaction and the two interfaces</h3>
+<p>A prototype that a client's operator will run day to day has <strong>two interfaces on one
+machine</strong>: a <em>Simple</em> one that shows what needs a person as ranked recommendations with
+the reason and one button, plus a single press for the actions the machine judges safe;
+and an <em>Advanced</em> one with every screen and input. Every screen carries a <em>What is this?</em>
+panel; a <em>How to use</em> screen and <em>Templates</em> the operator can copy exist from the first
+build round that has a second screen (business.direct, D33). The rules are identical in
+both modes — Simple changes what is shown, never what may happen.</p>
 <p>The feature that changed is exercised, not glanced at: every filter value, every tab,
 every persona, both views. When real data cannot reach a code path (IDBC's TOP3 pill before
 the new bértábla), the path is exercised with synthetic rows through the component's API
@@ -301,7 +308,7 @@ live), indexed by a <code>README.md</code> that is also the dated process log:</
 <tr>
 <td>08</td>
 <td><code>08-client-asks.md</code></td>
-<td>numbered items only the client can close, each naming where it lands</td>
+<td>the register of asks with states; <strong>nothing the client must answer to be presented to</strong> — open items that only matter after acceptance move to <code>19-implementation-prerequisites.md</code> (before the first real action · before the keyed release · to confirm at acceptance)</td>
 </tr>
 <tr>
 <td>10</td>
@@ -328,6 +335,16 @@ live), indexed by a <code>README.md</code> that is also the dated process log:</
 <td><code>14-token-map.md</code></td>
 <td>prototype tokens and components → production; or why there is nothing to map</td>
 </tr>
+<tr>
+<td>18</td>
+<td><code>18-responsible-data-policy-framework.md</code> (or the project's equivalent)</td>
+<td><strong>required for any prototype that sends, stores or targets people</strong>: the policy record per client instance (jurisdictions and laws, audience model, child-data rule, consent per channel, high-privacy defaults, cap, opt-out SLA, AI disclosure, retention, the client's published policy clauses) and the gate that blocks a feature until its fields are set — see business.direct for the reference</td>
+</tr>
+<tr>
+<td>19</td>
+<td><code>19-implementation-prerequisites.md</code></td>
+<td>what the client provides after acceptance, grouped by when it blocks; the presentation's "what we ask of you today" is one decision</td>
+</tr>
 </tbody>
 </table></div>
 <p>Rules for the set:</p>
@@ -348,7 +365,14 @@ live), indexed by a <code>README.md</code> that is also the dated process log:</
   warm and cold, cache headers. Numbers, not impressions — Holdvölgy's 23 plugins against
   a target of 12 and 4,5 s cold TTFB are the whole argument for its stack proposal.</li>
 <li><strong>Client asks are a list with owners</strong>, not sentences in prose; when one closes it moves
-  to the process log.</li>
+  to the process log. <strong>An ask is never a presentation blocker</strong>: the prototype runs on
+  declared defaults and samples; what only matters after acceptance is a prerequisite, not
+  an ask (owner directive 2026-09-19).</li>
+<li><strong>Responsible data is not client-specific.</strong> A child is an age, never a name; no profiling
+  or targeting on a minor's data, with or without consent; high-privacy defaults; consent
+  that names channel and sender; the postal address and the opt-out on every commercial
+  e-mail; disclosure when a machine wrote or made something. These hold whatever the client
+  — the client's record changes values, not rules (owner directive 2026-09-19).</li>
 <li><strong>Docs pass the same page rules</strong>: no horizontal overflow at 375 (long <code>code</code> strings
   need <code>overflow-wrap: anywhere</code>), 44 px links, one <code>h1</code>.</li>
 </ul>
