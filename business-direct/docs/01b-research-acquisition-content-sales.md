@@ -239,7 +239,7 @@ manage it in one click" *is* the signal-in-the-first-line the benchmarks reward,
 addresses is small enough that deliverability is a warm-up problem, not a volume problem.
 What is missing: a **sending domain per platform with warm-up and bounce handling**, a
 **third touch** (a different angle: "a family saved you this week"), a **phone step** that
-is a real call task or a compliant voice agent for the 50 phone-only providers, and
+is a real call task or a compliant voice agent for the 72 phone-only providers, and
 **reply-time SLAs** on the inbox — the same speed-to-lead rule we sell to providers.
 
 ### 5.2 Selling the upgrade (self-serve, in-product)

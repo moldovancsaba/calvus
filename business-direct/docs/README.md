@@ -14,7 +14,7 @@ Built to the prototyping standard (`PROTOTYPING.md`); this index is the process 
 | 02 audit | `02-audit.md` | Your Field measured: API, 252 providers, field coverage, site copy; the Hungarian reference instance; the two videos frame by frame; what DiscountDirect provides |
 | 03 sources | `03-sources.md` | What is real (the platform's public data), what is sample, what is inherited |
 | presentation | `bemutato.html` | Standalone, English, on the product's tokens: one sentence, three numbers, the four things to click with previews, what is real, the asks, what comes next |
-| 04 decisions | `04-decisions.md` | D1–D28 |
+| 04 decisions | `04-decisions.md` | D1–D29 |
 | 05 design | `design-system.html` + `../assets/tokens.css` + `../assets/components.css` | **Gate 1 approved (D9)**: tokens and components, one source |
 | 05 layouts | `05-layout-specs.md` + `layouts.html` + `frames/` | **Gate 2 approved (D16)**: platform 1440 / 390, provider 390, family 390 |
 | 06 build log | `06-build-log.md` | Round 1: the prototype; 1b: presentation and package; 2: editors real, tablet measured; 3: phase 2 — campaigns, upgrades, recap; 4: phase 3 — conversations; 5: economics; 6: the research implemented |
@@ -26,6 +26,7 @@ Built to the prototyping standard (`PROTOTYPING.md`); this index is the process 
 | 12 technical design | `12-technical-design.md` | screens, content model, state machines, jobs, connector and adapter interfaces, drafting, i18n, operations |
 | 13 plan | `13-implementation-plan.md` | seven milestones, 40 issues with a Definition of Done, blocked register, risks, release scope |
 | 14 token map | `14-token-map.md` | tokens and components → GDS + Mantine; contrast computed |
+| 17 audit · SWOT | `17-business-logic-audit-and-swot.md` | Deep audit of the business logic against the rules, the prototype, the catalogue and the research: 18 findings (2 critical, 8 major, 8 minor) with fixes; the SWOT with evidence per item and the cross-reads; twelve PROPOSED recommendations Q1–Q12 |
 | 16 analytics | `16-analytics-and-unit-economics.md` | CAC / LTV / payback for providers, the marketing value of an avid family, content ROI, the next-dollar rule, the metrics tree, events and attribution, rules R16–R19; what is real vs assumed (D26) |
 
 Rendered by `build.py` (`python3 business-direct/docs/build.py`); gate `python3 business-direct/check.py`
@@ -137,4 +138,15 @@ value, a neighbourhood holdout running, cohorts by channel — in the prototype 
 business logic §8c, the SSOT (R15, R20–R22), the architecture (ADR-12, ADR-13), the
 technical design, the plan and the presentation. Asks #9 and #11 closed.
 
-**Next.** The owner's answers to asks #2–8 and #10; a pilot provider.
+**2026-09-19 — business logic audit and SWOT (D29).** Every rule read against every other
+rule, the prototype, the catalogue and the research. Two critical findings — the family cap
+as written is consumed by the weekly digest alone, and the invitation footer lacks the
+postal address CAN-SPAM requires — eight major (nearby audiences vs the *nearby*
+preference, enquiries to unclaimed providers lost, R9 wording, R19 on sample trials, the
+score's missing negative signals, no sending-guard rule, operator time undercounted,
+capture undefined), eight minor. The SWOT names Sawyer as the direct threat on the
+provider side and the incumbents' own moves as the confirmation of the thesis. Q1–Q12
+PROPOSED; asks #12–14.
+
+**Next.** The owner's decisions on Q1–Q12 — Q1 and Q2 before any send — and asks #2–8,
+#10, #12–13.

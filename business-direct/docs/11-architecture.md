@@ -105,7 +105,7 @@ message log + audit snapshot → comments and DMs arrive by webhook → drafted 
 Resend with the opt-out → stage *contacted* → inbound reply by webhook → thread + drafted
 answer → queue → sent → stage *replied* → provider clicks apply → platform `claim-requests`
 → stage *applied* → platform confirms → *managing* → provider view unlocks → later
-upgrades → *upgraded*. Reminder after 5 days to non-repliers; call task for phone-only.
+upgrades → *upgraded*. Three touches 3–4 days apart in propensity order (D28); call task for phone-only.
 
 **Family digest and alerts.** Sunday 17:00: for every family with `picks` on, build the
 digest from saved providers + nearby providers with a session next week → cap check →

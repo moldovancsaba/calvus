@@ -29,8 +29,8 @@ from its own events, every week:
 |---|---|---|---|
 | Identified | 252 | — | catalogue |
 | Reachable by e-mail | 130 | reply **5.5 %** (top-quartile benchmark; 3.43 % average, 10.7 % top decile) | [Instantly 2026 benchmark](https://instantly.ai/cold-email-benchmark-report-2026) (research II §5.1) |
-| Phone only | 50 | a call converts ~3× an e-mail; half are reached | assumption; multi-channel +40 % (research II §5.1) |
-| Website only | 72 | not in the model until a form step exists | — |
+| Phone only | 72 | a call converts ~3× an e-mail; half are reached | assumption; multi-channel +40 % (research II §5.1) |
+| Website only | 50 | not in the model until a form step exists | — |
 | Replied → applied | — | **40 %** | assumption |
 | Applied → managing | — | **80 %** (the platform confirms the claim) | assumption |
 | Managing → upgraded within 3 months | — | **25 %** | assumption; SMB activation 35–50 % (research II §2.2) |
@@ -159,7 +159,7 @@ purchase (P8) — both recorded, neither double-counted in revenue.
 
 ## 8. What is real, what is assumed (2026-09-19)
 
-Real: 252 · 130 · 50 · 72 (catalogue); this session's stage counts. Benchmarks: reply rates
+Real: 252 · 130 · 72 · 50 (catalogue — e-mail · phone only · neither; corrected by the audit, the screen always computed them right); this session's stage counts. Benchmarks: reply rates
 (Instantly), activation range and churn range (research II), $1,016 per child per sport
 (Project Play). Assumptions: every conversion rate after reply, ARPA, margin, cost per
 touch and call, operator minutes, tooling, family count, avid share, trials, enrolment,

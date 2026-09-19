@@ -36,7 +36,7 @@ footer{margin-top:56px;padding-top:18px;border-top:1px solid var(--line);font-si
 </head>
 <body>
 <div class="wrap">
-<nav class="docnav" aria-label="Project documentation"><span class="docnav-brand">business.direct · docs</span><a href="index.html">Overview</a><a href="brief.html">Brief</a><a href="research.html">Research</a><a href="research-2.html">Research II</a><a href="research-3.html">Research III</a><a href="audit.html">Audit</a><a href="sources.html">Sources</a><a href="design-system.html">Design system</a><a href="layouts.html">Layouts</a><a href="05-layout-specs.html">Layout specs</a><a href="decisions.html" aria-current=page>Decisions</a><a href="build-log.html">Build log</a><a href="gate.html">Gate</a><a href="client-asks.html">Owner asks</a><a href="business-logic.html">Business logic</a><a href="ssot.html">SSOT</a><a href="architecture.html">Architecture</a><a href="technical-design.html">Technical design</a><a href="implementation-plan.html">Plan</a><a href="token-map.html">Token map</a><a href="analytics.html">Analytics</a></nav>
+<nav class="docnav" aria-label="Project documentation"><span class="docnav-brand">business.direct · docs</span><a href="index.html">Overview</a><a href="brief.html">Brief</a><a href="research.html">Research</a><a href="research-2.html">Research II</a><a href="research-3.html">Research III</a><a href="audit.html">Audit</a><a href="sources.html">Sources</a><a href="design-system.html">Design system</a><a href="layouts.html">Layouts</a><a href="05-layout-specs.html">Layout specs</a><a href="decisions.html" aria-current=page>Decisions</a><a href="build-log.html">Build log</a><a href="gate.html">Gate</a><a href="client-asks.html">Owner asks</a><a href="business-logic.html">Business logic</a><a href="ssot.html">SSOT</a><a href="architecture.html">Architecture</a><a href="technical-design.html">Technical design</a><a href="implementation-plan.html">Plan</a><a href="token-map.html">Token map</a><a href="analytics.html">Analytics</a><a href="audit-swot.html">Audit · SWOT</a></nav>
 <header><p class="eyebrow">Calvus · business.direct · project documentation</p><h1>business.direct — decision register</h1></header>
 <div class="tbl"><table>
 <thead>
@@ -244,6 +244,13 @@ footer{margin-top:56px;padding-top:18px;border-top:1px solid var(--line);font-si
 <td><strong>The research is implemented</strong> — P1–P12 enter the business logic and the prototype in the form that fits the system best: a media department behind one adapter interface with the clip engine as v1 and generation as "later"; real-media / generated labels on every post with C2PA at creation; the weekly anchor plan per neighbourhood × activity; AI-citation readiness per generated page; the public neighbourhood newsletter; sending infrastructure with warm-up, cap and bounce limits and a three-touch sequence ordered by a <strong>propensity score</strong>; the upgrade card gated by delivered value (R19); a neighbourhood holdout as the running experiment; cohort LTV by channel that stays "assumption" until 100 observations; voice kept "later"</td>
 <td>owner: "implement the results of the research into our business logics and prototyping based on the best possible outcome"</td>
 <td>closes asks #9 and #11; rules R15, R20–R22 join the SSOT</td>
+</tr>
+<tr>
+<td>D29</td>
+<td>2026-09-19</td>
+<td><strong>The business logic is audited</strong> (<a href="audit-swot.html"><code>17-business-logic-audit-and-swot.md</code></a>): 18 findings, two critical (the family cap as written is consumed by the digest alone — no campaign or alert could ever send; the CAN-SPAM footer lacks a postal address), eight major, eight minor; a SWOT with evidence per item; twelve recommendations Q1–Q12 PROPOSED. The audit changed nothing except two factual errors in our own documents (phone-only 72 / neither 50 were swapped) and two stale sequence descriptions</td>
+<td>owner: "a deep business logic audit … a professional SWOT"</td>
+<td>Q1–Q12 wait for the owner; asks #12–13 added</td>
 </tr>
 </tbody>
 </table></div>

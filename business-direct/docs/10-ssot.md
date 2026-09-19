@@ -90,7 +90,7 @@ implementation of the enumerations and state machines below.*
 | Family frequency cap | 4 messages / month across every channel | research §4, `rules/consent.md` |
 | Digest day and time | Sunday 18:00 | research §4 |
 | Generated-page threshold | ≥ 3 providers | no thin pages, research §5 |
-| Invitation sequence | invitation → reminder after 5 days → call task for phone-only providers | research §2–3 |
+| Invitation sequence | three touches 3–4 days apart (invitation → "a family saved you" → reminder), then the call task for phone-only providers (D28) | research II §5.1 |
 | Opt-out handling | every provider e-mail carries an opt-out; honoured within 10 business days | CAN-SPAM, research §8 |
 | SMS to families | only with written consent per provider | TCPA, research §8 |
 | AI drafts | optional per department; default on for social, sales, radar, provider conversations (and so campaigns); off for picks and pages | D6 |
@@ -101,7 +101,7 @@ implementation of the enumerations and state machines below.*
 
 ## 5. Decision register
 
-`04-decisions.md` holds D1–D28. The ones the engineering documents rest on: D2 (three
+`04-decisions.md` holds D1–D29. The ones the engineering documents rest on: D2 (three
 views), D5 (DiscountDirect sibling), D6 (departments, knowledge layer, human-in-the-loop,
 optional AI, dashboard, integrations), D11 (Your Field first), D14 (two flows), D15
 (post card and pipeline strip), D17 (one page, in-memory state), D18 (sample generated
