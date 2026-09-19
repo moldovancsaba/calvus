@@ -42,3 +42,17 @@ cannot reach a code path). Results are written into the change note of that roun
 | Pages measured | 7 × 375 px + 7 × desktop, last full pass 2026-09-18 after the bértábla rebuild |
 | Overflow, small targets, console errors | 0 / 0 / 0 |
 | Live verification | every push polled on GitHub Pages with a unique marker until served |
+
+## Tablet and desktop widths measured (2026-09-20, hub audit action 5)
+
+The standard names phone and desktop; the earlier passes measured 375 and "desktop" (the
+pane's width). Measured explicitly in the app browser pane, DOM audit per page:
+
+| Page | 768 × 1024 | 1440 × 900 |
+|---|---|---|
+| index, berezes, sap, expert-pool, esettanulmanyok, terulet (IT) | `scrollWidth` 768, one `h1`, every control ≥ 44 px | `scrollWidth` 1440, one `h1` |
+| regisztracio | `scrollWidth` 768; one control under 44 px — the native `adatvedelem` checkbox (the label is the tap target; left as is, fine-tuning rule) | `scrollWidth` 1440 |
+
+No page changed. The stale-phrase scan and the decision-range check joined `check.py` the
+same day and found two "not yet built" statements about pages that exist (fixed in
+`data/SOURCES-AND-GAPS.md`) and a stale decision range in the docs index (fixed).

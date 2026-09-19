@@ -35,3 +35,11 @@ px; console errors. Numbers go into `BUILD-LOG.md`.
 - **Prototype vs decisions**: not a gate failure — the documents are authoritative
   (`AUDIT.md`), the prototype is the pre-decision reference until `CLIENT-ASKS.md` #1 is
   answered.
+
+## 390 and 1440 measured (2026-09-20, hub audit action 5)
+
+The earlier passes measured 375 and 1024. Measured explicitly in the app browser pane on
+the default screen: at **390 × 844** `scrollWidth` 390, no overflow, no control under
+44 px; at **1440 × 900** `scrollWidth` 1440. Observed and left: the page carries two `h1`
+elements (the seller and the buyer view each have one; one is hidden at a time) — a stated
+deviation, since the two views are two screens on one page.

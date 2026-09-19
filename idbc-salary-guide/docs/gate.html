@@ -93,6 +93,33 @@ cannot reach a code path). Results are written into the change note of that roun
 </tr>
 </tbody>
 </table></div>
+<h2>Tablet and desktop widths measured (2026-09-20, hub audit action 5)</h2>
+<p>The standard names phone and desktop; the earlier passes measured 375 and "desktop" (the
+pane's width). Measured explicitly in the app browser pane, DOM audit per page:</p>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>Page</th>
+<th>768 × 1024</th>
+<th>1440 × 900</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>index, berezes, sap, expert-pool, esettanulmanyok, terulet (IT)</td>
+<td><code>scrollWidth</code> 768, one <code>h1</code>, every control ≥ 44 px</td>
+<td><code>scrollWidth</code> 1440, one <code>h1</code></td>
+</tr>
+<tr>
+<td>regisztracio</td>
+<td><code>scrollWidth</code> 768; one control under 44 px — the native <code>adatvedelem</code> checkbox (the label is the tap target; left as is, fine-tuning rule)</td>
+<td><code>scrollWidth</code> 1440</td>
+</tr>
+</tbody>
+</table></div>
+<p>No page changed. The stale-phrase scan and the decision-range check joined <code>check.py</code> the
+same day and found two "not yet built" statements about pages that exist (fixed in
+<code>data/SOURCES-AND-GAPS.md</code>) and a stale decision range in the docs index (fixed).</p>
 <footer>Source: <code>idbc-salary-guide/docs/07-gate.md</code> · rendered by <code>docs/build.py</code>.</footer>
 </div>
 </body>

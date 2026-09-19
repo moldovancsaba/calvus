@@ -20,6 +20,16 @@ added (D15) and the gate is clean — 49 files, 708 references.
 overflow, `h1` count, `alt` coverage, `<title>`, `lang`, tap targets under 44 px at 390.
 Results in `06-build-log.md`.
 
+## 768 measured (2026-09-20, hub audit action 5)
+
+Measured in the app browser pane at **768 × 1024** on index, araink, implantologia and
+esettanulmanyok: the header row (brand + nav + CTA) overflowed the viewport by 24 px on
+every page (`scrollWidth` 792–808) because the nav stays visible down to 740 px. Fixed in
+`styles.css` (the tablet media query lets the header wrap and gives nav links a 44 px
+height; stylesheet cache-busted on all 18 pages); re-measured: `scrollWidth` 768 on all
+four, 390 unchanged. Remaining in-prose and footer text links stay 19–26 px — the same
+stated deviation as at 390 below.
+
 ## Findings left open, and why
 
 - 18 pages with tap targets under 44 px at 390 and one 8 px overflow. The wireframe is

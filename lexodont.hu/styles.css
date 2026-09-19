@@ -609,6 +609,11 @@ h2 {
 }
 
 @media (max-width: 1024px) {
+  /* tablet, measured 2026-09-20: the header row (brand + nav + CTA) overflowed 768 by 24 px; the nav links were 26 px tall */
+  .nav-wrap { flex-wrap: wrap; row-gap: 8px; }
+  .site-nav { gap: 14px; flex-wrap: wrap; }
+  .site-nav a { display: inline-flex; align-items: center; min-height: 44px; }
+
   .knowledge-grid,
   .contact-grid,
   .info-grid,
