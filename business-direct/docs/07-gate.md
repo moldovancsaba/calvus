@@ -10,6 +10,7 @@ any finding. It must print `GATE: CLEAN` before a push.
 | Docs nav | every docs page links every other docs page |
 | Data | `data/providers.json` parses, has ≥ 1 provider, and every provider has `id`, `name`, `borough` |
 | Script | `assets/app.js` parses (`node --check`) when node is installed |
+| Stale phrases | the docs, pages and script carry nothing that was true once — "awaits the owner", "coming soon", "not yet built", "inert here", "will be built", a proposed gate; the register and the build log keep history and are exempt (added after round 4, when three rounds in one day left four such phrases behind) |
 
 ## Measured in the browser (not automated — the standard's method, `PROTOTYPING.md` §6)
 

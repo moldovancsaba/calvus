@@ -6,6 +6,9 @@ Exit 1 on any finding. Covers the pages and the docs:
 3. every docs page links every other docs page (design-system.html included)
 4. data/providers.json parses and every provider carries id, name, borough
 5. assets/app.js parses (node --check), when node is installed
+6. stale-state phrases in the docs and pages (things that were true once): "awaits the owner",
+   "for approval" outside the approval UI wording, "coming soon", "not yet built", "inert here",
+   "will be built", a "PROPOSED" gate — the register and the build log may keep history
 """
 import re, sys, json, shutil, subprocess, pathlib
 HERE = pathlib.Path(__file__).resolve().parent
@@ -44,6 +47,12 @@ try:
         if not all(r.get(k) for k in ("id", "name", "borough")): findings.append(f"data  provider without id/name/borough: {r.get('id')}")
 except Exception as e:
     findings.append(f"data  providers.json unreadable: {e}")
+STALE = ["awaits the owner", "coming soon", "not yet built", "inert here", "will be built", "gate 2 · proposed", "gate 1 · proposed", "awaiting approval of the frames", "round 2 of the build log"]
+for f in sorted((HERE / "docs").glob("*.md")) + ALL + [HERE / "assets/app.js"]:
+    if f.name in ("04-decisions.md", "06-build-log.md", "decisions.html", "build-log.html", "README.md", "index.html") and f.parent.name == "docs": continue
+    t = f.read_text(encoding="utf-8").lower()
+    for ph in STALE:
+        if ph in t: findings.append(f"stale phrase  {f.relative_to(ROOT)}: \"{ph}\"")
 if shutil.which("node"):
     r = subprocess.run(["node", "--check", str(HERE / "assets/app.js")], capture_output=True, text=True)
     if r.returncode: findings.append("script  app.js: " + r.stderr.strip().splitlines()[-1])

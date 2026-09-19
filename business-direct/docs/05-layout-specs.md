@@ -60,8 +60,8 @@ Section order per view, the two-column desktop body, the phone bottom bars, the 
 set, the post card and pipeline strip (D15) in place. It does not fix copy — every
 sentence in the frames is sample except the provider data and the site's own phrases.
 
-## Phase 2 screens (D22–D23, 2026-09-19)
+## Phase 2 and 3 screens (D22–D25, 2026-09-19)
 
-No new layout. *Campaigns* and *Results* (provider) and *Intelligence* (platform) reuse the
+No new layout. *Conversations*, *Campaigns* and *Results* (provider) and *Intelligence* (platform) reuse the
 frames' grids: approval cards in a single stack, tiles auto-fit / two-up, the two-column
 body for the recap at ≥ 1024. Measured at 390 and 1440 with the rest (`07-gate.md`).

@@ -37,14 +37,14 @@ distribution, creative, leads and conversations, reviews and reputation, results
 post, it stops and asks, the owner still owns"), an intelligence recap, and integrations
 that make the machine run while "nobody logs in".
 
-## What will be built
+## What is built
 
 A clickable prototype in English with **three views** (D2, D10):
 
 | View | Who | What they see |
 |---|---|---|
 | Platform | Your Field's operator | the machine across every provider: automations, audiences, the approval queue, the intelligence dashboard, integrations |
-| Provider | a listed business after claiming its card | its own one-person team: knowledge files, departments, what is waiting for approval, what went out, results |
+| Provider | a listed business after claiming its card | its own one-person team: conversations with families, campaigns, the platform's reach products, results, knowledge files, departments |
 | Family | a parent using Your Field | what arrives: the weekly "near you" digest, saved-item alerts, a provider's trial offer or announcement, and the controls over channel and frequency |
 
 Two flows are the front door (D14), and four automations sit behind them (D3):

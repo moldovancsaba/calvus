@@ -99,5 +99,9 @@ trial" that lands there and comes back answered, comments on published posts wit
 replies. The provider's "waiting for you" corrected to show enquiries. Business logic §4b,
 SSOT, architecture, technical design and plan updated.
 
+**2026-09-19 — consistency pass after rounds 3–4.** Brief, sources, layout spec, token map,
+presentation, hub and README brought to the built state; the gate gained a stale-phrase scan
+(proved to fire on a planted phrase) so the next round cannot leave such text behind.
+
 **Next.** The owner's answers to asks #2–8 (three are assumed, each one line to flip); a
 flipped ADR becomes D26; a pilot provider's real enquiries replace the sample ones.
