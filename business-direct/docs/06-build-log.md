@@ -245,3 +245,40 @@ template landed in the provider's FAQ, a policy template created "Sports directo
 at 3 / 7, a sequence template added a card; every control ≥ 44 px after two fixes (inline
 help links, list links); `scrollWidth` 390 / 1440; 0 errors on a fresh load.
 `python3 check.py` → `GATE: CLEAN`.
+
+## Round 10 — 2026-09-19 — beyond children (D35)
+
+**Built** (`assets/app.js?v=15`). Seven policy fields on both instance records; three gate
+rows (clips from a recording that shows children; safeguarding on a card; any draft or
+screen); the Policy screen's seventh card and the R30–R36 principle line; the provider's
+Media screen asks "Children appear in this recording — written parental consent on file"
+before *Upload*, and refuses the cut without it (R30); the provider hero shows
+"Safeguarding: not verified by the platform (R31)"; `rules/voice.md` carries the banned
+list, the pause words and the accessibility rule.
+
+**Measured** (390 × 844): upload without consent → refused with the reason, 0 clips; with
+consent → 3 clips; the hero's three badges; the policy gate 8 / 10 for Your Field, 4 / 10
+for the unfilled reference record; the seventh card present; `scrollWidth` 390, every
+control ≥ 44 px, 0 errors. `python3 check.py` → `GATE: CLEAN`.
+
+## Round 10b — 2026-09-19 — the catalogue re-pulled; the presentation's phone layout
+
+**Data.** `python3 data/fetch-yourfield.py` re-run the same evening: **253** providers
+(+1: Kids In Sports NYC, Manhattan), 51 records updated (26 gained coordinates → 246, 18
+new descriptions, 3 new verified fields), phone 181, sessions 74; e-mail 130, next
+occurrence 83, trial 72 (34 free), announcements 26, claims 15 `unclaimed` / 238 unset
+unchanged. Every figure in the docs, the presentation, the design-system samples, the hub
+and the README updated; two earlier figures were wrong on the old pull too (48 free trials
+was 34; 84 neighbourhoods was 83 on the cards — the facets list 21) and are corrected. The
+overview tile now counts neighbourhoods from the file; the catalogue fetch carries a
+cache-bust (`?v=`) to bump with every re-pull.
+
+**Fixed.** The presentation's ask cards wrapped one word per line on a phone (the owner's
+screenshot): a `<b>` and a bare text node were two grid items in a two-column grid; the text
+is now one `<span>`. Measured at 390: 276 px text width, seven lines. A slip while adding
+the cache-bust commented out the `.then()` and stopped the app from booting — caught in the
+browser, fixed before commit.
+
+**Measured** (390 × 844): overview tile 253, pipeline 253, every platform screen renders
+with one `h1`, `scrollWidth` 390, 0 errors on a fresh load. `python3 check.py` →
+`GATE: CLEAN`.

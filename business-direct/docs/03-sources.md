@@ -2,7 +2,7 @@
 
 | Content | Source | Real or sample |
 |---|---|---|
-| 252 providers with every field listed in `02-audit.md` §2 | `data/fetch-yourfield.py` → `data/providers.json`, from getyourfield.com's public API, 2026-09-19 | **real** — public data only; re-run to refresh |
+| 253 providers with every field listed in `02-audit.md` §2 | `data/fetch-yourfield.py` → `data/providers.json`, from getyourfield.com's public API, 2026-09-19 (re-pulled the same evening) | **real** — public data only; re-run to refresh |
 | Boroughs, neighbourhoods, activity counts, site copy | same → `data/platform.json` | real |
 | Claim state | the API's `claimStatus` (15 `unclaimed`; the rest unset) | real |
 | The Hungarian reference instance (431 listings) | `data/fetch-sportolok.py` → `data/reference-sportolok/` | real, reference only |

@@ -36,7 +36,7 @@ footer{margin-top:56px;padding-top:18px;border-top:1px solid var(--line);font-si
 </head>
 <body>
 <div class="wrap">
-<nav class="docnav" aria-label="Project documentation"><span class="docnav-brand">business.direct · docs</span><a href="index.html">Overview</a><a href="brief.html">Brief</a><a href="research.html">Research</a><a href="research-2.html">Research II</a><a href="research-3.html">Research III</a><a href="research-4.html">Research IV</a><a href="audit.html">Audit</a><a href="sources.html">Sources</a><a href="design-system.html">Design system</a><a href="layouts.html">Layouts</a><a href="05-layout-specs.html">Layout specs</a><a href="decisions.html">Decisions</a><a href="build-log.html" aria-current=page>Build log</a><a href="gate.html">Gate</a><a href="client-asks.html">Register of asks</a><a href="implementation-prerequisites.html">Prerequisites</a><a href="business-logic.html">Business logic</a><a href="ssot.html">SSOT</a><a href="architecture.html">Architecture</a><a href="technical-design.html">Technical design</a><a href="implementation-plan.html">Plan</a><a href="token-map.html">Token map</a><a href="analytics.html">Analytics</a><a href="audit-swot.html">Audit · SWOT</a><a href="policy-framework.html">Policy framework</a></nav>
+<nav class="docnav" aria-label="Project documentation"><span class="docnav-brand">business.direct · docs</span><a href="index.html">Overview</a><a href="brief.html">Brief</a><a href="research.html">Research</a><a href="research-2.html">Research II</a><a href="research-3.html">Research III</a><a href="research-4.html">Research IV</a><a href="research-5.html">Research V</a><a href="audit.html">Audit</a><a href="sources.html">Sources</a><a href="design-system.html">Design system</a><a href="layouts.html">Layouts</a><a href="05-layout-specs.html">Layout specs</a><a href="decisions.html">Decisions</a><a href="build-log.html" aria-current=page>Build log</a><a href="gate.html">Gate</a><a href="client-asks.html">Register of asks</a><a href="implementation-prerequisites.html">Prerequisites</a><a href="business-logic.html">Business logic</a><a href="ssot.html">SSOT</a><a href="architecture.html">Architecture</a><a href="technical-design.html">Technical design</a><a href="implementation-plan.html">Plan</a><a href="token-map.html">Token map</a><a href="analytics.html">Analytics</a><a href="audit-swot.html">Audit · SWOT</a><a href="policy-framework.html">Policy framework</a></nav>
 <header><p class="eyebrow">Calvus · business.direct · project documentation</p><h1>business.direct — build log</h1></header>
 <p>Every round: what was built, from which decision, what was measured. The gate is
 <a href="gate.html"><code>07-gate.md</code></a>; the standard is <code>PROTOTYPING.md</code> §5–6.</p>
@@ -264,6 +264,36 @@ template landed in the provider's FAQ, a policy template created "Sports directo
 at 3 / 7, a sequence template added a card; every control ≥ 44 px after two fixes (inline
 help links, list links); <code>scrollWidth</code> 390 / 1440; 0 errors on a fresh load.
 <code>python3 check.py</code> → <code>GATE: CLEAN</code>.</p>
+<h2>Round 10 — 2026-09-19 — beyond children (D35)</h2>
+<p><strong>Built</strong> (<code>assets/app.js?v=15</code>). Seven policy fields on both instance records; three gate
+rows (clips from a recording that shows children; safeguarding on a card; any draft or
+screen); the Policy screen's seventh card and the R30–R36 principle line; the provider's
+Media screen asks "Children appear in this recording — written parental consent on file"
+before <em>Upload</em>, and refuses the cut without it (R30); the provider hero shows
+"Safeguarding: not verified by the platform (R31)"; <code>rules/voice.md</code> carries the banned
+list, the pause words and the accessibility rule.</p>
+<p><strong>Measured</strong> (390 × 844): upload without consent → refused with the reason, 0 clips; with
+consent → 3 clips; the hero's three badges; the policy gate 8 / 10 for Your Field, 4 / 10
+for the unfilled reference record; the seventh card present; <code>scrollWidth</code> 390, every
+control ≥ 44 px, 0 errors. <code>python3 check.py</code> → <code>GATE: CLEAN</code>.</p>
+<h2>Round 10b — 2026-09-19 — the catalogue re-pulled; the presentation's phone layout</h2>
+<p><strong>Data.</strong> <code>python3 data/fetch-yourfield.py</code> re-run the same evening: <strong>253</strong> providers
+(+1: Kids In Sports NYC, Manhattan), 51 records updated (26 gained coordinates → 246, 18
+new descriptions, 3 new verified fields), phone 181, sessions 74; e-mail 130, next
+occurrence 83, trial 72 (34 free), announcements 26, claims 15 <code>unclaimed</code> / 238 unset
+unchanged. Every figure in the docs, the presentation, the design-system samples, the hub
+and the README updated; two earlier figures were wrong on the old pull too (48 free trials
+was 34; 84 neighbourhoods was 83 on the cards — the facets list 21) and are corrected. The
+overview tile now counts neighbourhoods from the file; the catalogue fetch carries a
+cache-bust (<code>?v=</code>) to bump with every re-pull.</p>
+<p><strong>Fixed.</strong> The presentation's ask cards wrapped one word per line on a phone (the owner's
+screenshot): a <code>&lt;b&gt;</code> and a bare text node were two grid items in a two-column grid; the text
+is now one <code>&lt;span&gt;</code>. Measured at 390: 276 px text width, seven lines. A slip while adding
+the cache-bust commented out the <code>.then()</code> and stopped the app from booting — caught in the
+browser, fixed before commit.</p>
+<p><strong>Measured</strong> (390 × 844): overview tile 253, pipeline 253, every platform screen renders
+with one <code>h1</code>, <code>scrollWidth</code> 390, 0 errors on a fresh load. <code>python3 check.py</code> →
+<code>GATE: CLEAN</code>.</p>
 <footer>Source: <code>business-direct/docs/06-build-log.md</code> · rendered by <code>docs/build.py</code>.</footer>
 </div>
 </body>

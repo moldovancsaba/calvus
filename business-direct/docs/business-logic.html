@@ -36,7 +36,7 @@ footer{margin-top:56px;padding-top:18px;border-top:1px solid var(--line);font-si
 </head>
 <body>
 <div class="wrap">
-<nav class="docnav" aria-label="Project documentation"><span class="docnav-brand">business.direct · docs</span><a href="index.html">Overview</a><a href="brief.html">Brief</a><a href="research.html">Research</a><a href="research-2.html">Research II</a><a href="research-3.html">Research III</a><a href="research-4.html">Research IV</a><a href="audit.html">Audit</a><a href="sources.html">Sources</a><a href="design-system.html">Design system</a><a href="layouts.html">Layouts</a><a href="05-layout-specs.html">Layout specs</a><a href="decisions.html">Decisions</a><a href="build-log.html">Build log</a><a href="gate.html">Gate</a><a href="client-asks.html">Register of asks</a><a href="implementation-prerequisites.html">Prerequisites</a><a href="business-logic.html" aria-current=page>Business logic</a><a href="ssot.html">SSOT</a><a href="architecture.html">Architecture</a><a href="technical-design.html">Technical design</a><a href="implementation-plan.html">Plan</a><a href="token-map.html">Token map</a><a href="analytics.html">Analytics</a><a href="audit-swot.html">Audit · SWOT</a><a href="policy-framework.html">Policy framework</a></nav>
+<nav class="docnav" aria-label="Project documentation"><span class="docnav-brand">business.direct · docs</span><a href="index.html">Overview</a><a href="brief.html">Brief</a><a href="research.html">Research</a><a href="research-2.html">Research II</a><a href="research-3.html">Research III</a><a href="research-4.html">Research IV</a><a href="research-5.html">Research V</a><a href="audit.html">Audit</a><a href="sources.html">Sources</a><a href="design-system.html">Design system</a><a href="layouts.html">Layouts</a><a href="05-layout-specs.html">Layout specs</a><a href="decisions.html">Decisions</a><a href="build-log.html">Build log</a><a href="gate.html">Gate</a><a href="client-asks.html">Register of asks</a><a href="implementation-prerequisites.html">Prerequisites</a><a href="business-logic.html" aria-current=page>Business logic</a><a href="ssot.html">SSOT</a><a href="architecture.html">Architecture</a><a href="technical-design.html">Technical design</a><a href="implementation-plan.html">Plan</a><a href="token-map.html">Token map</a><a href="analytics.html">Analytics</a><a href="audit-swot.html">Audit · SWOT</a><a href="policy-framework.html">Policy framework</a></nav>
 <header><p class="eyebrow">Calvus · business.direct · project documentation</p><h1>business.direct — business logic</h1></header>
 <p><em>Written 2026-09-19 with phase 2 (D21–D23). The machine's rules end to end, in the order
 money and messages move: who the parties are, what each department does, what leaves, who
@@ -273,6 +273,19 @@ audience model and a DPIA. The client's value is lower exposure, a better-conver
 audience, trust as the acquisition channel, and auditability: every send carries its policy
 basis. For Your Field NYC (ClassScout) the gate today blocks provider e-mail (no postal
 address, prerequisite P-1) and the digest (the policy does not yet describe e-mail alerts, prerequisite P-2).</p>
+<h2>6c. Beyond children (D35)</h2>
+<p>Seven more cases hold for every client (research V). <strong>Children in real footage</strong>: the
+clip engine cuts a recording that shows a child only when the provider confirms written
+parental consent for every child shown, and never puts a child's name on a clip (R30). <strong>The
+adults who work with children</strong>: safeguarding is shown only as the platform verified it —
+"not verified" is a displayed state, never a claim (R31). <strong>People in vulnerable
+circumstances</strong>: no false urgency; "not now", "bereavement" or "can't afford" pauses all
+marketing and gets a human; every purchase has a cooling-off (R32). <strong>Protected
+characteristics</strong>: never an audience, a slot or a score, nor a proxy; delivery by
+neighbourhood is audited (R33). <strong>Accessibility</strong>: WCAG 2.2 AA on every message, captions on
+every clip (R34). <strong>Sensitive categories</strong> — health, location tracks, biometrics, Article 9,
+hardship — are answered, never stored (R35). <strong>Dark patterns and AI manipulation</strong>: a banned
+list on every draft and screen; Stop is one tap (R36).</p>
 <h2>7. Providers: the law on the sales side</h2>
 <p>US (first market): commercial e-mail to a business needs no prior consent (CAN-SPAM);
 every message carries the platform's <strong>registered postal address</strong> (a merge field, checked
@@ -526,13 +539,31 @@ The model and its events are <a href="analytics.html"><code>16-analytics-and-uni
 <tr>
 <td>R15 never generate a person or a child</td>
 <td>§8c, §9</td>
-<td></td>
-<td></td>
+<td>R30 children in footage with written parental consent</td>
+<td>§6c</td>
+</tr>
+<tr>
+<td>R31 safeguarding shown as verified only</td>
+<td>§6c</td>
+<td>R32 no pressure; "not now" pauses</td>
+<td>§6c</td>
+</tr>
+<tr>
+<td>R33 no protected characteristic or proxy</td>
+<td>§6c</td>
+<td>R34 accessible by default</td>
+<td>§6c</td>
+</tr>
+<tr>
+<td>R35 sensitive categories answered, never stored</td>
+<td>§6c</td>
+<td>R36 no dark pattern, no AI manipulation</td>
+<td>§6c</td>
 </tr>
 </tbody>
 </table></div>
 <h2>9. What the machine never does</h2>
-<p>Sends without an approval or a preference; answers a family without the provider's approval; texts without consent; sends past the domain's warm-up cap or bounce limit (R23); sends a provider e-mail without the postal address; shows a child's name to anyone (R24); profiles or targets a minor (R27); runs a feature its policy record does not allow (R26); publishes generated media unlabelled; generates a person or a child; exceeds the cap; deletes
+<p>Sends without an approval or a preference; answers a family without the provider's approval; texts without consent; sends past the domain's warm-up cap or bounce limit (R23); sends a provider e-mail without the postal address; shows a child's name to anyone (R24); profiles or targets a minor (R27); cuts a clip that shows a child without written parental consent (R30); claims safety it has not verified (R31); pressures anyone (R32, R36); builds an audience on a protected characteristic (R33); stores a sensitive category (R35); runs a feature its policy record does not allow (R26); publishes generated media unlabelled; generates a person or a child; exceeds the cap; deletes
 a provider's stage history; discounts; publishes a generated page with fewer than three
 providers; speaks as an AI to a family or a provider — the product speaks as the platform
 or the provider.</p>

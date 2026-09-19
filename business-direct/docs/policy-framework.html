@@ -36,7 +36,7 @@ footer{margin-top:56px;padding-top:18px;border-top:1px solid var(--line);font-si
 </head>
 <body>
 <div class="wrap">
-<nav class="docnav" aria-label="Project documentation"><span class="docnav-brand">business.direct · docs</span><a href="index.html">Overview</a><a href="brief.html">Brief</a><a href="research.html">Research</a><a href="research-2.html">Research II</a><a href="research-3.html">Research III</a><a href="research-4.html">Research IV</a><a href="audit.html">Audit</a><a href="sources.html">Sources</a><a href="design-system.html">Design system</a><a href="layouts.html">Layouts</a><a href="05-layout-specs.html">Layout specs</a><a href="decisions.html">Decisions</a><a href="build-log.html">Build log</a><a href="gate.html">Gate</a><a href="client-asks.html">Register of asks</a><a href="implementation-prerequisites.html">Prerequisites</a><a href="business-logic.html">Business logic</a><a href="ssot.html">SSOT</a><a href="architecture.html">Architecture</a><a href="technical-design.html">Technical design</a><a href="implementation-plan.html">Plan</a><a href="token-map.html">Token map</a><a href="analytics.html">Analytics</a><a href="audit-swot.html">Audit · SWOT</a><a href="policy-framework.html" aria-current=page>Policy framework</a></nav>
+<nav class="docnav" aria-label="Project documentation"><span class="docnav-brand">business.direct · docs</span><a href="index.html">Overview</a><a href="brief.html">Brief</a><a href="research.html">Research</a><a href="research-2.html">Research II</a><a href="research-3.html">Research III</a><a href="research-4.html">Research IV</a><a href="research-5.html">Research V</a><a href="audit.html">Audit</a><a href="sources.html">Sources</a><a href="design-system.html">Design system</a><a href="layouts.html">Layouts</a><a href="05-layout-specs.html">Layout specs</a><a href="decisions.html">Decisions</a><a href="build-log.html">Build log</a><a href="gate.html">Gate</a><a href="client-asks.html">Register of asks</a><a href="implementation-prerequisites.html">Prerequisites</a><a href="business-logic.html">Business logic</a><a href="ssot.html">SSOT</a><a href="architecture.html">Architecture</a><a href="technical-design.html">Technical design</a><a href="implementation-plan.html">Plan</a><a href="token-map.html">Token map</a><a href="analytics.html">Analytics</a><a href="audit-swot.html">Audit · SWOT</a><a href="policy-framework.html" aria-current=page>Policy framework</a></nav>
 <header><p class="eyebrow">Calvus · business.direct · project documentation</p><h1>business.direct — responsible data and marketing policy framework (for every client)</h1></header>
 <p><em>Written 2026-09-19 (D32). The first client is ClassScout, operator of Your Field NYC; the
 framework is written so that the second, third and any later client — a sports directory, a
@@ -106,6 +106,41 @@ value for the client.</em></p>
 <td><strong>The gate is code.</strong> A feature does not run until the policy fields it needs are set; the operator sees what is blocked and why.</td>
 <td>R26, the policy gate</td>
 </tr>
+<tr>
+<td>11</td>
+<td><strong>Children in real footage only with written parental consent</strong>, kept with the clip; never a child's name on a clip.</td>
+<td>R30, <code>mediaConsent</code></td>
+</tr>
+<tr>
+<td>12</td>
+<td><strong>Safeguarding is shown as verified or not — never claimed.</strong></td>
+<td>R31, <code>safeguarding</code></td>
+</tr>
+<tr>
+<td>13</td>
+<td><strong>No pressure on anyone.</strong> No false urgency or scarcity; "not now" pauses marketing and gets a human; a cooling-off on every purchase.</td>
+<td>R32, <code>vulnerability</code></td>
+</tr>
+<tr>
+<td>14</td>
+<td><strong>No protected characteristic, directly or by proxy</strong>, in any audience, slot or score; delivery audited.</td>
+<td>R33, <code>protected</code></td>
+</tr>
+<tr>
+<td>15</td>
+<td><strong>Accessible by default</strong> — WCAG 2.2 AA on every message, captions on every clip.</td>
+<td>R34, <code>accessibility</code></td>
+</tr>
+<tr>
+<td>16</td>
+<td><strong>Sensitive categories are answered, never stored</strong> — health, location tracks, biometrics, Art. 9, hardship.</td>
+<td>R35, <code>sensitive</code></td>
+</tr>
+<tr>
+<td>17</td>
+<td><strong>No dark pattern, no AI manipulation</strong> — a banned list on every draft and screen; Stop is one tap.</td>
+<td>R36, <code>darkPatterns</code></td>
+</tr>
 </tbody>
 </table></div>
 <h2>2. The policy — one record per instance</h2>
@@ -125,7 +160,8 @@ value for the client.</em></p>
   aiDisclosure: 'none' | 'label' | 'label+text',                               # principle 8, per market
   retention: { messages: '24m', consents: 'account+5y', drafts: '90d', events: '24m' },
   privacyPolicy: { url, lastUpdated, clauses: { emailAlerts: bool, savesOptIn: bool, childrenNone: bool } },
-  dpia: { done: bool, at? }                                                    # required for a mixed or child-directed instance
+  dpia: { done: bool, at? },                                                   # required for a mixed or child-directed instance
+  mediaConsent, safeguarding, vulnerability, protected, accessibility, sensitive, darkPatterns   # research V, R30–R36
 }
 </code></pre>
 <h2>3. The policy gate (R26) — what runs only when what is set</h2>
@@ -173,6 +209,21 @@ value for the client.</em></p>
 <td><code>minorsMarketing.pushQuietHours</code></td>
 <td>no push in quiet hours on a mixed instance</td>
 </tr>
+<tr>
+<td>Clips from a recording that shows children</td>
+<td><code>mediaConsent</code> rule · consent confirmed per recording</td>
+<td>the clip engine refuses; offers a coach-only or place-only cut (R30)</td>
+</tr>
+<tr>
+<td>Safeguarding on a card</td>
+<td><code>safeguarding</code> rule</td>
+<td>shown only as verified; "not verified" is displayed (R31)</td>
+</tr>
+<tr>
+<td>Any draft or screen</td>
+<td><code>darkPatterns</code> list · <code>accessibility</code> rule</td>
+<td>drafts with a banned pattern refused; inaccessible output refused (R34, R36)</td>
+</tr>
 </tbody>
 </table></div>
 <p>The gate runs before every send (<code>sending-guard</code>), on every draft (<code>draft-*</code> jobs) and at
@@ -187,6 +238,7 @@ missing / placeholder) and every feature it blocks.</p>
 <li>The client's published privacy policy: URL, date, the three clauses the machine needs
    (e-mail alerts described, saves opt-in described, children's data stance).</li>
 <li>Cap, opt-out SLA, retention, AI disclosure.</li>
+<li>Beyond children: media consent, safeguarding, vulnerability, protected characteristics, accessibility, sensitive categories, dark patterns (research V).</li>
 <li>The gate report: what is blocked until which field is set.</li>
 </ol>
 <h2>5. What the client gets (the business value, in their words)</h2>

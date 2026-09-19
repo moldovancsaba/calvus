@@ -4,7 +4,7 @@
 a professional SWOT about the planned service"). Audited: `09-business-logic.md` (§1–§9),
 the SSOT's rules R1–R22 and settings, `16-analytics-and-unit-economics.md`, the ADRs, and
 the prototype's behaviour (`assets/app.js`, rounds 1–6). Method: every rule read against
-every other rule, against the prototype, against the real catalogue (252 providers, pulled
+every other rule, against the prototype, against the real catalogue (253 providers, pulled
 2026-09-19), and against the three research rounds. Findings are numbered A1–A18 with a
 severity (**critical** = the service does not work or is unlawful as written; **major** =
 a wrong number or a missing mechanism the plan depends on; **minor** = a text or model
@@ -61,7 +61,7 @@ upgrade business at today's catalogue size.
 
 | # | Severity | Finding | Evidence | Fix |
 |---|---|---|---|---|
-| A15 | minor | **Reviews are 0 on all 252 cards and prices known on 28** — the two properties AI answers cite most. The generated-page readiness can never reach 4 of 4 today; the "AI-citation" lever (P5) is a platform product problem before it is ours. | `providers.json`; pages screen | ask #12: does the platform plan reviews and price capture? Until then readiness caps at 3 of 4 and the pages carry "no reviews yet" honestly |
+| A15 | minor | **Reviews are 0 on all 253 cards and prices known on 28** — the two properties AI answers cite most. The generated-page readiness can never reach 4 of 4 today; the "AI-citation" lever (P5) is a platform product problem before it is ours. | `providers.json`; pages screen | ask #12: does the platform plan reviews and price capture? Until then readiness caps at 3 of 4 and the pages carry "no reviews yet" honestly |
 | A16 | minor | Six mechanisms depend on the platform's keyed endpoints or data the prototype does not have: claim requests, audiences (saves, location), notifications, card flags for upgrades, sign-up sources, bookings. Each is an ask (#5, #6, #10) — but the plan's Release 1 includes three of them. | plan B1, B7, B9 | Release 1 re-cut into what ships **read-only** (sales sequence, inbox, provider view, content queue, economics on assumptions) and what waits for the key; the presentation says so |
 | A17 | minor | The reference instance (Hungary) needs consent for named-person e-mail addresses; the connector interface has no "address is a named person" flag. | research I §8b; `PlatformConnector` | add `contactKind: 'role' \| 'person'` to the connector's provider record; the sequence job skips `person` addresses without consent on EU instances |
 | A18 | minor | "Never delete a provider's stage history" (business logic §9) has no store: `provider_state` holds one stage; the history lives in `events`. Fine in production, but the prototype's drawer shows no history. | technical design §2 | the drawer lists the last three `stage.changed` events with who and why |
@@ -74,9 +74,9 @@ upgrade business at today's catalogue size.
 |---|---|---|
 | S1 | **The thesis is the incumbents' thesis.** Yelp bought exactly this (Hatch, $270 M, lead management + scoring; Receptionist at $99/month) three months before we drew it; Thumbtack sells its supply inside ChatGPT and Claude. | research III §1 |
 | S2 | **Human gate on everything, from day one.** Every outbound path passes a person (R1); the outbox is the only sender (ADR-4); consent and caps are checked twice (ADR-3). This is the operating rule the reference videos and the Sprout consumer data both demand, and it is the hardest thing to retrofit. | business logic §3, §9 |
-| S3 | **Real data, declared honestly.** 252 real providers, every tile labelled real / sample / benchmark / assumption, the economics screen exposing a 0.7 LTV : CAC rather than hiding it. Owners and clients can trust the numbers because the bad ones are shown. | analytics §2.4, §8 |
+| S3 | **Real data, declared honestly.** 253 real providers, every tile labelled real / sample / benchmark / assumption, the economics screen exposing a 0.7 LTV : CAC rather than hiding it. Owners and clients can trust the numbers because the bad ones are shown. | analytics §2.4, §8 |
 | S4 | **Single-player utility for the provider on day one** — conversations, reminders, campaigns, media work before the platform has sent a single family — which the cold-start literature says is the difference between marketplaces that seed supply and those that die on it. | research II §2.2; provider view |
-| S5 | **One connector interface, two instances already pulled** (Your Field 252, Sportolok 431). Portability is built, not promised. | ADR-2; `data/` |
+| S5 | **One connector interface, two instances already pulled** (Your Field 253, Sportolok 431). Portability is built, not promised. | ADR-2; `data/` |
 | S6 | **The owner owns the platform.** No integration negotiation, no API risk from a third party, family data never leaves the owner's estate. | brief; ADR-11 |
 | S7 | **Documentation as a product**: SSOT, business logic, 28 decisions, 22 rules, three research rounds with primary sources, a gate that fails on stale text. A team can be onboarded from the folder. | this docs set |
 
@@ -84,11 +84,11 @@ upgrade business at today's catalogue size.
 
 | # | Weakness | Evidence |
 |---|---|---|
-| W1 | **Unit economics do not close at today's scale.** Outbound to 252 providers on $49 upgrades: LTV : CAC 0.7, payback 31 months. The service is a cost centre for the platform until the catalogue is ~4× larger or ARPA is higher. | analytics §2.4 |
+| W1 | **Unit economics do not close at today's scale.** Outbound to 253 providers on $49 upgrades: LTV : CAC 0.7, payback 31 months. The service is a cost centre for the platform until the catalogue is ~4× larger or ARPA is higher. | analytics §2.4 |
 | W2 | **Two rules cannot both hold** (A2) and one legal footer is wrong (A3). Small to fix; unacceptable to ship. | §2 |
 | W3 | **The operator is the bottleneck by design.** R1 puts one person in front of every post, reply, campaign and enquiry; the economics model undercounts that cost (A10). | A10 |
 | W4 | **Sample where it matters most**: audiences, trials, reply times, families per post, product prices. The screens are convincing and the numbers behind the two revenue levers (campaign reach, upgrade pitch) are invented until the platform's analytics arrive. | analytics §8; A7, A11 |
-| W5 | **Thin cards**: 0 reviews, 28 prices, 83 next sessions of 252. The content engine and the AI-citation lever depend on card quality the machine does not control. | A15 |
+| W5 | **Thin cards**: 0 reviews, 28 prices, 83 next sessions of 253. The content engine and the AI-citation lever depend on card quality the machine does not control. | A15 |
 | W6 | **Six dependencies on keyed platform endpoints** for the core loop (claims, audiences, notifications, flags, sources, bookings). | A16 |
 | W7 | **No media production yet** — the clip engine is v1 in the plan, sample in the prototype; the strongest content lever (real footage) is unbuilt. | round 6 |
 

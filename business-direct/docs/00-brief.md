@@ -7,8 +7,8 @@ client platform exposes, and what the two reference videos show — nothing else
 ## The client
 
 **ClassScout**, operator of **Your Field NYC** (getyourfield.com; contact info@classscout.ai)
-— "youth sports discovery, starting with your neighborhood": 252 providers of kids' classes, camps and drop-in activities across
-Manhattan (107) and Brooklyn (145), 84 neighbourhoods, 20 activity types, saved items, a
+— "youth sports discovery, starting with your neighborhood": 253 providers of kids' classes, camps and drop-in activities across
+Manhattan (108) and Brooklyn (145), 83 neighbourhoods on the cards, 20 activity types, saved items, a
 family plan with cost estimates, a newsletter, and a "List your program" pitch to
 providers. It is the owner's own product (Next.js + Mantine on Vercel), the **first
 platform business.direct will run on** (D11); the system is built for any later client —
@@ -66,10 +66,10 @@ phone/SMS) are part of the first build.
 
 ## What is real
 
-The data: **252 real providers** from Your Field's public API (`data/fetch-yourfield.py`,
-never edited by hand, D4/D11): name, category, borough, neighbourhood, address, 219 with
-coordinates, every one with a website, 180 phones, 130 e-mails, 28 stated prices with
-evidence, 73 with sessions, 83 with a next occurrence, 72 with a trial policy, 26 with an
+The data: **253 real providers** from Your Field's public API (`data/fetch-yourfield.py`,
+never edited by hand, D4/D11): name, category, borough, neighbourhood, address, 246 with
+coordinates, every one with a website, 181 phones, 130 e-mails, 28 stated prices with
+evidence, 74 with sessions, 83 with a next occurrence, 72 with a trial policy, 26 with an
 announcement, 10 with booking enabled, claim state, verified fields. The site copy
 (hero, how it works, trust pillars, newsletter, "List your program") is the platform's
 own. Everything that is not on the platform — a provider's brand voice, a campaign's

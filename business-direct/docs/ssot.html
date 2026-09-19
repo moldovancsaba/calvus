@@ -36,7 +36,7 @@ footer{margin-top:56px;padding-top:18px;border-top:1px solid var(--line);font-si
 </head>
 <body>
 <div class="wrap">
-<nav class="docnav" aria-label="Project documentation"><span class="docnav-brand">business.direct · docs</span><a href="index.html">Overview</a><a href="brief.html">Brief</a><a href="research.html">Research</a><a href="research-2.html">Research II</a><a href="research-3.html">Research III</a><a href="research-4.html">Research IV</a><a href="audit.html">Audit</a><a href="sources.html">Sources</a><a href="design-system.html">Design system</a><a href="layouts.html">Layouts</a><a href="05-layout-specs.html">Layout specs</a><a href="decisions.html">Decisions</a><a href="build-log.html">Build log</a><a href="gate.html">Gate</a><a href="client-asks.html">Register of asks</a><a href="implementation-prerequisites.html">Prerequisites</a><a href="business-logic.html">Business logic</a><a href="ssot.html" aria-current=page>SSOT</a><a href="architecture.html">Architecture</a><a href="technical-design.html">Technical design</a><a href="implementation-plan.html">Plan</a><a href="token-map.html">Token map</a><a href="analytics.html">Analytics</a><a href="audit-swot.html">Audit · SWOT</a><a href="policy-framework.html">Policy framework</a></nav>
+<nav class="docnav" aria-label="Project documentation"><span class="docnav-brand">business.direct · docs</span><a href="index.html">Overview</a><a href="brief.html">Brief</a><a href="research.html">Research</a><a href="research-2.html">Research II</a><a href="research-3.html">Research III</a><a href="research-4.html">Research IV</a><a href="research-5.html">Research V</a><a href="audit.html">Audit</a><a href="sources.html">Sources</a><a href="design-system.html">Design system</a><a href="layouts.html">Layouts</a><a href="05-layout-specs.html">Layout specs</a><a href="decisions.html">Decisions</a><a href="build-log.html">Build log</a><a href="gate.html">Gate</a><a href="client-asks.html">Register of asks</a><a href="implementation-prerequisites.html">Prerequisites</a><a href="business-logic.html">Business logic</a><a href="ssot.html" aria-current=page>SSOT</a><a href="architecture.html">Architecture</a><a href="technical-design.html">Technical design</a><a href="implementation-plan.html">Plan</a><a href="token-map.html">Token map</a><a href="analytics.html">Analytics</a><a href="audit-swot.html">Audit · SWOT</a><a href="policy-framework.html">Policy framework</a></nav>
 <header><p class="eyebrow">Calvus · business.direct · project documentation</p><h1>business.direct — single source of truth</h1></header>
 <p><em>Written 2026-09-19 after gate 2 and the first build round (D16–D18). Every term the
 other engineering documents use is defined here; where a term is DiscountDirect's, it
@@ -311,7 +311,7 @@ implementation of the enumerations and state machines below.</em></p>
 </tr>
 <tr>
 <td><code>claimStatus</code> (platform's)</td>
-<td><code>unclaimed</code> · unset (237 of 252); the platform's own enumeration has more values we have not seen</td>
+<td><code>unclaimed</code> · unset (238 of 253); the platform's own enumeration has more values we have not seen</td>
 <td><code>providers.json</code></td>
 </tr>
 <tr>
@@ -339,7 +339,7 @@ implementation of the enumerations and state machines below.</em></p>
 <tr>
 <td><strong>Provider</strong></td>
 <td><code>id</code>, <code>name</code>, <code>category</code>, <code>borough</code>, <code>neighborhood</code>, <code>address</code>, <code>lat</code>, <code>lng</code>, <code>activityTypes[]</code>, <code>primaryActivityType</code>, <code>ageRanges[]</code>, <code>ageMinMonths</code>, <code>ageMaxMonths</code>, <code>shortDescription</code>, <code>longDescription</code>, <code>price{amount,currency,unit,evidence}</code>, <code>website</code>, <code>phone</code>, <code>email</code>, <code>image</code>, <code>dayTimeTags[]</code>, <code>venueModel</code>, <code>sessions[{id,title,registration}]</code>, <code>nextOccurrence</code>, <code>announcement{title,description,badge}</code>, <code>bookingEnabled</code>, <code>trial{available,free,text}</code>, <code>rating</code>, <code>reviewCount</code>, <code>badges[]</code>, <code>claimStatus</code>, <code>verifiedFields[]</code>, <code>updatedAt</code>, <code>publishedAt</code>, <code>sourceCount</code></td>
-<td>the platform owns it; business.direct reads it (<code>fetch-yourfield.py</code>). One of 252 has no neighbourhood; the borough stands in</td>
+<td>the platform owns it; business.direct reads it (<code>fetch-yourfield.py</code>). One of 253 has no neighbourhood; the borough stands in</td>
 </tr>
 <tr>
 <td><strong>ProviderState</strong> (ours)</td>
@@ -418,7 +418,7 @@ implementation of the enumerations and state machines below.</em></p>
 </tr>
 <tr>
 <td><strong>Policy</strong></td>
-<td><code>platform_id</code>, <code>client</code>, <code>instance</code>, <code>contact</code>, <code>postalAddress</code>, <code>jurisdictions[]</code>, <code>laws[]</code>, <code>audienceModel</code>, <code>ageOfConsent</code>, <code>childData</code>, <code>minors{profiling,targetedAds,quietHours}</code>, <code>channels{}</code>, <code>consentText{}</code>, <code>defaults</code>, <code>cap</code>, <code>optOutSla</code>, <code>aiDisclosure</code>, <code>retention</code>, <code>privacyPolicy{url,lastUpdated,emailAlerts,savesOptIn,childrenNone}</code>, <code>dpia</code></td>
+<td><code>platform_id</code>, <code>client</code>, <code>instance</code>, <code>contact</code>, <code>postalAddress</code>, <code>jurisdictions[]</code>, <code>laws[]</code>, <code>audienceModel</code>, <code>ageOfConsent</code>, <code>childData</code>, <code>minors{profiling,targetedAds,quietHours}</code>, <code>channels{}</code>, <code>consentText{}</code>, <code>defaults</code>, <code>cap</code>, <code>optOutSla</code>, <code>aiDisclosure</code>, <code>retention</code>, <code>privacyPolicy{url,lastUpdated,emailAlerts,savesOptIn,childrenNone}</code>, <code>dpia</code>, <code>mediaConsent</code>, <code>safeguarding</code>, <code>vulnerability</code>, <code>protected</code>, <code>accessibility</code>, <code>sensitive</code>, <code>darkPatterns</code> (D35)</td>
 <td><code>S.policies[instance]</code>; one per instance (D32)</td>
 </tr>
 <tr>
@@ -531,7 +531,7 @@ implementation of the enumerations and state machines below.</em></p>
 </tbody>
 </table></div>
 <h2>5. Decision register</h2>
-<p><a href="decisions.html"><code>04-decisions.md</code></a> holds D1–D34. The ones the engineering documents rest on: D2 (three
+<p><a href="decisions.html"><code>04-decisions.md</code></a> holds D1–D35. The ones the engineering documents rest on: D2 (three
 views), D5 (DiscountDirect sibling), D6 (departments, knowledge layer, human-in-the-loop,
 optional AI, dashboard, integrations), D11 (Your Field first), D14 (two flows), D15
 (post card and pipeline strip), D17 (one page, in-memory state), D18 (sample generated
@@ -663,6 +663,41 @@ PROPOSED.</p>
 <td><code>runSafe</code>, <code>recommend().auto</code></td>
 </tr>
 <tr>
+<td>R30</td>
+<td>A recording that shows a child is cut only when the provider confirms written parental consent for every child shown; the clip carries no child's name or identifying detail; the consent record is kept with the clip; without it the clip engine refuses and offers a coach-only or place-only cut (D35)</td>
+<td><code>S.media.consent</code>, <code>upload</code></td>
+</tr>
+<tr>
+<td>R31</td>
+<td>A provider's safeguarding status (background checks, training, welfare contact) is shown only as the platform verified it; "not verified" is a displayed state; marketing copy never claims safety (D35)</td>
+<td>provider hero</td>
+</tr>
+<tr>
+<td>R32</td>
+<td>No false urgency or scarcity in any draft; a person who writes "not now", "bereavement" or "can't afford" gets a pause on all marketing and a human reply; every purchase has a cooling-off (D35)</td>
+<td><code>rules/voice.md</code>, the gate</td>
+</tr>
+<tr>
+<td>R33</td>
+<td>No audience, content slot or score is built or optimised on a protected characteristic or a proxy for one; neighbourhood delivery is audited for disparity; housing, employment and credit instances add their market's rules (D35)</td>
+<td>policy <code>protected</code></td>
+</tr>
+<tr>
+<td>R34</td>
+<td>Every message, page and post meets WCAG 2.2 AA; captions on every clip; alt text on every image (D35)</td>
+<td>policy <code>accessibility</code></td>
+</tr>
+<tr>
+<td>R35</td>
+<td>No health, location-track, biometric, Article 9 or financial-hardship data is stored about a person; when one arrives in a message it is answered, not recorded; no audience, slot or score uses one (D35)</td>
+<td>policy <code>sensitive</code></td>
+</tr>
+<tr>
+<td>R36</td>
+<td>A banned-pattern list is enforced on every draft and screen — no false urgency, no pre-ticked consent, no confirmshaming, no obstruction of Stop or unsubscribe, no hidden cost; an AI draft that scores or exploits a person's vulnerability is refused (D35)</td>
+<td><code>rules/voice.md</code>, policy <code>darkPatterns</code></td>
+</tr>
+<tr>
 <td>R25</td>
 <td>Approvals may be batched (one decision for a week's real-footage clips) and a department may earn auto-approval after four clean weeks (no edits, no complaints); every auto-sent message is logged and the family can stop it (D30)</td>
 <td><code>approveClips</code>, <code>S.auto</code></td>
@@ -707,7 +742,7 @@ PROPOSED.</p>
 <tr>
 <td>Providers managing</td>
 <td>providers in <code>managing</code> or <code>upgraded</code> / all providers</td>
-<td>platform overview (real: 0 / 252 today)</td>
+<td>platform overview (real: 0 / 253 today)</td>
 </tr>
 <tr>
 <td>Contactable</td>
@@ -818,7 +853,7 @@ PROPOSED.</p>
 </tr>
 <tr>
 <td><a href="decisions.html"><code>04-decisions.md</code></a></td>
-<td>D1–D34</td>
+<td>D1–D35</td>
 </tr>
 <tr>
 <td><a href="05-layout-specs.html"><code>05-layout-specs.md</code></a>, <code>design-system.html</code>, <code>layouts.html</code></td>

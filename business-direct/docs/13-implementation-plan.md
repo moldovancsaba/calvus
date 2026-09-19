@@ -38,8 +38,9 @@ instance (`platform_id`). "Measured" means a number in the build log, not a clai
 | BD-0-1 | Repo, Next.js 15, Mantine + GDS tokens from `14-token-map.md` | tokens resolve; the design-system page renders from the same CSS |
 | BD-0-2 | DoneIsBetter SSO for operator and provider roles | operator sees all; provider sees only its `provider_id` (test) |
 | BD-0-3 | MongoDB models per `12-technical-design.md` §2 with `platform_id` and `version` | migrations; optimistic-concurrency test |
-| BD-0-4 | `YourFieldConnector` + hourly `sync` | 252 providers cached; a changed `updatedAt` produces a diff event (test with a fixture) |
+| BD-0-4 | `YourFieldConnector` + hourly `sync` | 253 providers cached; a changed `updatedAt` produces a diff event (test with a fixture) |
 | BD-0-5 | Console shell: role switch, rail/bottom bar, deep links | the prototype's 13 screens reachable, empty states |
+| BD-0-11 | Policy fields R30–R36 and the three gate rows; safeguarding state on the card; delivery audit by neighbourhood (R33) | fields set or the features stay blocked; the audit report runs weekly |
 | BD-0-9 | Simple and Advanced modes; Home with recommendations; the one safe press (R29) | Simple shows Home, Approvals, Providers, Policy, How to use; the press runs only `auto` recommendations and logs each as the operator's (test) |
 | BD-0-10 | What-is-this panels, How-to-use screen, Templates with "Use" | every screen has a panel; a template copies into state and the operator lands on the edited item |
 | BD-0-7 | Policy record and gate (ADR-14) | a feature whose policy fields are missing does not run (test per row of framework §3); every message carries its policy basis |
@@ -64,6 +65,8 @@ instance (`platform_id`). "Measured" means a number in the build log, not a clai
 | BD-2-3 | Calendar and slots | a scheduled post publishes at its slot ± 5 min (measured) |
 | BD-2-4 | `MetaAdapter` publish + inbound comments/DMs | OAuth per page; a publish writes `messages` + a Blob snapshot |
 | BD-2-7 | Clip engine (`MediaAdapter.clips`) and the provider's Media screen | a recording becomes captioned clips with the listing link in the queue, each `media.kind = real` |
+| BD-2-10 | Media consent on the clip engine; captions; no child's name on a clip | a recording flagged as showing children is refused without the consent confirmation (test); every clip has captions (R30, R34) |
+| BD-2-11 | Pattern guard and vulnerability pause | banned patterns refused (tests per pattern); "not now" pauses all marketing for that person and opens a human task (R32, R36) |
 | BD-2-8 | Media labels and credentials | every generated asset has a C2PA credential and the platform label at publish (test per channel); a person-detection check blocks generation (R15) |
 | BD-2-9 | Weekly anchor plan per neighbourhood × activity | the calendar shows the anchor and its cuts; `rules/social.md` keywords enforced in the draft |
 | BD-2-6 | Drafted replies to comments and DMs with the listing link | operator approves; reply sent through the adapter; comments-answered metric |

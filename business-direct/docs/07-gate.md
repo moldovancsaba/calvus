@@ -29,5 +29,5 @@ DOM script; read the console. Pass conditions and the 2026-09-19 result:
 | one `h1` per screen; every `img` has `alt` | pass | pass | pass | pass |
 | 0 console errors through the full click path | pass | pass | pass | pass |
 
-The round's findings and fixes are in `06-build-log.md`. Rounds 3–9 (phase 2 and 3 screens, economics, the research and the audit implemented,
-the policy screen, the two interfaces) were measured at 390 and 1440; 768 and 1024 inherit the same grids (`05-layout-specs.md`).
+The round's findings and fixes are in `06-build-log.md`. Rounds 3–10 (phase 2 and 3 screens, economics, the research and the audit implemented,
+the policy screen, the two interfaces, beyond children) were measured at 390 and 1440; 768 and 1024 inherit the same grids (`05-layout-specs.md`).

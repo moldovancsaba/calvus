@@ -23,6 +23,13 @@ value for the client.*
 | 8 | **Disclosure when a machine wrote or made it**, per market's rule. | R20 |
 | 9 | **Retention with an end date**, per data class, per instance. | policy `retention` |
 | 10 | **The gate is code.** A feature does not run until the policy fields it needs are set; the operator sees what is blocked and why. | R26, the policy gate |
+| 11 | **Children in real footage only with written parental consent**, kept with the clip; never a child's name on a clip. | R30, `mediaConsent` |
+| 12 | **Safeguarding is shown as verified or not — never claimed.** | R31, `safeguarding` |
+| 13 | **No pressure on anyone.** No false urgency or scarcity; "not now" pauses marketing and gets a human; a cooling-off on every purchase. | R32, `vulnerability` |
+| 14 | **No protected characteristic, directly or by proxy**, in any audience, slot or score; delivery audited. | R33, `protected` |
+| 15 | **Accessible by default** — WCAG 2.2 AA on every message, captions on every clip. | R34, `accessibility` |
+| 16 | **Sensitive categories are answered, never stored** — health, location tracks, biometrics, Art. 9, hardship. | R35, `sensitive` |
+| 17 | **No dark pattern, no AI manipulation** — a banned list on every draft and screen; Stop is one tap. | R36, `darkPatterns` |
 
 ## 2. The policy — one record per instance
 
@@ -43,7 +50,8 @@ policy {
   aiDisclosure: 'none' | 'label' | 'label+text',                               # principle 8, per market
   retention: { messages: '24m', consents: 'account+5y', drafts: '90d', events: '24m' },
   privacyPolicy: { url, lastUpdated, clauses: { emailAlerts: bool, savesOptIn: bool, childrenNone: bool } },
-  dpia: { done: bool, at? }                                                    # required for a mixed or child-directed instance
+  dpia: { done: bool, at? },                                                   # required for a mixed or child-directed instance
+  mediaConsent, safeguarding, vulnerability, protected, accessibility, sensitive, darkPatterns   # research V, R30–R36
 }
 ```
 
@@ -58,6 +66,9 @@ policy {
 | Generated media, AI-drafted messages | `aiDisclosure` set | generation and unedited AI sends are blocked |
 | Any minor's data | `audienceModel`, `childData`, `dpia.done` for mixed / child-directed | the family entity accepts no child field beyond what `childData` allows |
 | Push notifications | `minorsMarketing.pushQuietHours` | no push in quiet hours on a mixed instance |
+| Clips from a recording that shows children | `mediaConsent` rule · consent confirmed per recording | the clip engine refuses; offers a coach-only or place-only cut (R30) |
+| Safeguarding on a card | `safeguarding` rule | shown only as verified; "not verified" is displayed (R31) |
+| Any draft or screen | `darkPatterns` list · `accessibility` rule | drafts with a banned pattern refused; inaccessible output refused (R34, R36) |
 
 The gate runs before every send (`sending-guard`), on every draft (`draft-*` jobs) and at
 schema level (the family entity). The *Policy* screen lists every field, its state (set /
@@ -72,7 +83,8 @@ missing / placeholder) and every feature it blocks.
 5. The client's published privacy policy: URL, date, the three clauses the machine needs
    (e-mail alerts described, saves opt-in described, children's data stance).
 6. Cap, opt-out SLA, retention, AI disclosure.
-7. The gate report: what is blocked until which field is set.
+7. Beyond children: media consent, safeguarding, vulnerability, protected characteristics, accessibility, sensitive categories, dark patterns (research V).
+8. The gate report: what is blocked until which field is set.
 
 ## 5. What the client gets (the business value, in their words)
 

@@ -15,6 +15,7 @@ PAGES = [  # (source, output, nav label)
     ("01b-research-acquisition-content-sales.md", "research-2.html", "Research II"),
     ("01c-research-data-driven-marketing.md", "research-3.html", "Research III"),
     ("01e-research-responsible-data.md", "research-4.html", "Research IV"),
+    ("01f-research-beyond-children.md", "research-5.html", "Research V"),
     ("02-audit.md", "audit.html", "Audit"),
     ("03-sources.md", "sources.html", "Sources"),
     ("05-layout-specs.md", "05-layout-specs.html", "Layout specs"),

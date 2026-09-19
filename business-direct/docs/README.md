@@ -14,23 +14,24 @@ Built to the prototyping standard (`PROTOTYPING.md`); this index is the process 
 | 01b research II | `01b-research-acquisition-content-sales.md` | Acquiring customers for classified media (demand and supply side), content strategies, the AI creation services (Higgsfield and the video / image / audio / design / scheduling landscape with prices and the labelling rules), the sales processes with benchmarks; P1–P9 (implemented, D28) |
 | 01c research III | `01c-research-data-driven-marketing.md` | Case studies and practices behind the data-driven decision flow: Yelp (Receptionist, Hatch, revenue per location), Angi, Thumbtack, Rover; LTV : CAC and payback lines; attribution → incrementality → MMM; Booking.com; next-best-action; P10–P12 (implemented, D28) |
 | 01e research IV | `01e-research-responsible-data.md` | Responsible data and children's rights: the law by market (COPPA 2025, NY CDPA, California and the states, GDPR Art. 8, DSA Art. 28, the UK Children's Code), the enforcement record, the frameworks (privacy by design, ICO, ISO 27701, NIST, LEGO), the business value of doing it properly |
-| 02 audit | `02-audit.md` | Your Field measured: API, 252 providers, field coverage, site copy, the platform's own policy and terms; the Hungarian reference instance; the two videos frame by frame; what DiscountDirect provides |
+| 01f research V | `01f-research-beyond-children.md` | Beyond children: children in real footage, the adults who work with them, people in vulnerable circumstances, protected characteristics, accessibility, sensitive data categories, dark patterns and AI manipulation — the law and the enforcement behind each, the rule it becomes (R30–R36), how it generalises |
+| 02 audit | `02-audit.md` | Your Field measured: API, 253 providers, field coverage, site copy, the platform's own policy and terms; the Hungarian reference instance; the two videos frame by frame; what DiscountDirect provides |
 | 03 sources | `03-sources.md` | What is real (the platform's public data), what is sample (generated from real cards), what is inherited |
-| 04 decisions | `04-decisions.md` | D1–D34 |
+| 04 decisions | `04-decisions.md` | D1–D35 |
 | 05 design | `design-system.html` + `../assets/tokens.css` + `../assets/components.css` | **Gate 1 approved (D9)**: tokens and components, one source |
 | 05 layouts | `05-layout-specs.md` + `layouts.html` + `frames/` | **Gate 2 approved (D16)**: platform 1440 / 390, provider 390, family 390; the later screens reuse the same grids |
 | 06 build log | `06-build-log.md` | Nine rounds: the prototype; presentation and package; editors and tablet; campaigns, upgrades, recap; conversations; economics; the research implemented; the audit implemented; the policy screen; the two interfaces |
 | 07 gate | `07-gate.md` + `../check.py` | What the script checks (links, anchors, docs cross-links, data, script, stale phrases); the measured pass at 390, 768, 1024 and 1440 |
 | 08 register of asks | `08-client-asks.md` | Every item that once needed the owner, with its state: none open for the presentation; the rest are prerequisites; four closed |
 | 09 business logic | `09-business-logic.md` | The rules end to end: parties, the two flows, the two interfaces, departments, campaigns, conversations, money, families, responsible data for every client, law, the recap, data-driven decisions, what the research and the audit changed, what the machine never does |
-| 10 SSOT | `10-ssot.md` | glossary, enumerations, entities, settings, rules R1–R29, metrics, document map |
+| 10 SSOT | `10-ssot.md` | glossary, enumerations, entities, settings, rules R1–R36, metrics, document map |
 | 11 architecture | `11-architecture.md` | context, the platform measured, quality attributes, containers, flows, integrations, stack and ADR-1–14 — **PROPOSED** (D19) |
 | 12 technical design | `12-technical-design.md` | screens, content model, state machines, jobs, connector, media and channel adapter interfaces, drafting, i18n, operations |
-| 13 plan | `13-implementation-plan.md` | seven milestones, 62 issues with a Definition of Done, blocked register (the prerequisites), risks, release scope in two halves |
+| 13 plan | `13-implementation-plan.md` | seven milestones, 65 issues with a Definition of Done, blocked register (the prerequisites), risks, release scope in two halves |
 | 14 token map | `14-token-map.md` | tokens and components → GDS + Mantine; contrast computed |
 | 16 analytics | `16-analytics-and-unit-economics.md` | CAC / LTV / payback for providers, the marketing value of an avid family, content ROI, the next-dollar rule, the metrics tree, events and attribution, rules R16–R19; what is real vs assumed (D26) |
 | 17 audit · SWOT | `17-business-logic-audit-and-swot.md` | Audit of the business logic: 19 findings with fixes; the SWOT with evidence; the recommendations Q1–Q12 (adopted and implemented, D30) |
-| 18 policy framework | `18-responsible-data-policy-framework.md` | Ten principles, the policy record per instance, the gate, onboarding, the client's value, two worked instances, how it generalises (D32) |
+| 18 policy framework | `18-responsible-data-policy-framework.md` | Seventeen principles, the policy record per instance, the gate (ten rows), onboarding, the client's value, two worked instances, how it generalises (D32, D35) |
 | 19 prerequisites | `19-implementation-prerequisites.md` | What the implementation needs from ClassScout after acceptance — before the first send, before Release 1b, to confirm at acceptance — not required for the presentation or the planning (D34) |
 
 Rendered by `build.py` (`python3 business-direct/docs/build.py`); gate `python3 business-direct/check.py`
@@ -206,5 +207,13 @@ the policy says one; its campaign-audience setting predated Q3; family defaults 
 setting; the Draft entity lacked `media`, and AutoApproval and Recommendation were not
 entities. The business logic gained a rules map (§8e) and the gate a check that every SSOT
 rule is stated there.
+
+**2026-09-19 — beyond children (D35).** The owner asked what other cases a responsible
+business must cover. Research V found seven — two of them gaps in our own category: real
+footage of children (the clip engine now refuses a recording that shows children until the
+provider confirms written parental consent) and the adults who coach them (safeguarding
+shown only as verified). Plus people in vulnerable circumstances, protected characteristics
+in targeting, accessibility, sensitive data categories, dark patterns and AI manipulation —
+rules R30–R36, seven policy fields, three gate rows, the Policy screen's seventh card.
 
 **Next.** Present. After acceptance, the prerequisites checklist.

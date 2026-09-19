@@ -63,7 +63,7 @@ implementation of the enumerations and state machines below.*
 | `department` (platform) | `social` · `sales` · `picks` · `pages` · `radar` | `S.ai` keys |
 | `department` (provider) | `conversations` · `reminders` · `campaigns` · `page` | provider today |
 | `integrationState` | `ok` (connected) · `off` (not connected) | `S.integrations` |
-| `claimStatus` (platform's) | `unclaimed` · unset (237 of 252); the platform's own enumeration has more values we have not seen | `providers.json` |
+| `claimStatus` (platform's) | `unclaimed` · unset (238 of 253); the platform's own enumeration has more values we have not seen | `providers.json` |
 | `activityType` | 20 values as the platform's `browse-facets` lists them (Martial Arts, Dance, Swimming, Soccer, …) | `platform.json` |
 | `borough` | `Manhattan` · `Brooklyn` (today) | facets |
 
@@ -71,7 +71,7 @@ implementation of the enumerations and state machines below.*
 
 | Entity | Fields (prototype) | Notes |
 |---|---|---|
-| **Provider** | `id`, `name`, `category`, `borough`, `neighborhood`, `address`, `lat`, `lng`, `activityTypes[]`, `primaryActivityType`, `ageRanges[]`, `ageMinMonths`, `ageMaxMonths`, `shortDescription`, `longDescription`, `price{amount,currency,unit,evidence}`, `website`, `phone`, `email`, `image`, `dayTimeTags[]`, `venueModel`, `sessions[{id,title,registration}]`, `nextOccurrence`, `announcement{title,description,badge}`, `bookingEnabled`, `trial{available,free,text}`, `rating`, `reviewCount`, `badges[]`, `claimStatus`, `verifiedFields[]`, `updatedAt`, `publishedAt`, `sourceCount` | the platform owns it; business.direct reads it (`fetch-yourfield.py`). One of 252 has no neighbourhood; the borough stands in |
+| **Provider** | `id`, `name`, `category`, `borough`, `neighborhood`, `address`, `lat`, `lng`, `activityTypes[]`, `primaryActivityType`, `ageRanges[]`, `ageMinMonths`, `ageMaxMonths`, `shortDescription`, `longDescription`, `price{amount,currency,unit,evidence}`, `website`, `phone`, `email`, `image`, `dayTimeTags[]`, `venueModel`, `sessions[{id,title,registration}]`, `nextOccurrence`, `announcement{title,description,badge}`, `bookingEnabled`, `trial{available,free,text}`, `rating`, `reviewCount`, `badges[]`, `claimStatus`, `verifiedFields[]`, `updatedAt`, `publishedAt`, `sourceCount` | the platform owns it; business.direct reads it (`fetch-yourfield.py`). One of 253 has no neighbourhood; the borough stands in |
 | **ProviderState** (ours) | `providerId`, `stage`, `stageChangedAt`, `stageChangedBy` (`sequence` / `reply` / `operator` / `provider`), `thread[]` | in memory today (`S.stage`, `S.threads`) |
 | **Draft** | `id`, `kind` (`post` / `sequence` / `reply` / `digest`), `providerId?`, `channels[]`, `copy`, `media{kind: real / generated, src}` (posts, D28), `state`, `ai` (bool: AI-drafted), `editing?`, `scheduledFor?`, `why?` | `S.posts`, `S.sequences`, `S.replies` |
 | **Sequence** | `id`, `name`, `to[providerId]`, `steps[]`, `subject`, `body` (merge fields `{name}`, `{first name}`, `{neighborhood}`, `{activity}`, `{link}`), `state`, `why` | `S.sequences` |
@@ -87,7 +87,7 @@ implementation of the enumerations and state machines below.*
 | **Sending** | `domain`, `warmDay`, `warmDays`, `dailyCap`, `bounce`, `replySla` | `S.sending`; per `platform_id` in production |
 | **OptOut** | `providerId`, `kind` (`not mine` / `unsubscribed` / `bounced`), `at` | `S.optOut`; excluded from every sequence |
 | **StageChange** | `providerId`, `from`, `to`, `by` (`sequence` / `reply` / `family ask` / `provider` / `operator`), `at`, `reason?` | `S.history`; production: `events` |
-| **Policy** | `platform_id`, `client`, `instance`, `contact`, `postalAddress`, `jurisdictions[]`, `laws[]`, `audienceModel`, `ageOfConsent`, `childData`, `minors{profiling,targetedAds,quietHours}`, `channels{}`, `consentText{}`, `defaults`, `cap`, `optOutSla`, `aiDisclosure`, `retention`, `privacyPolicy{url,lastUpdated,emailAlerts,savesOptIn,childrenNone}`, `dpia` | `S.policies[instance]`; one per instance (D32) |
+| **Policy** | `platform_id`, `client`, `instance`, `contact`, `postalAddress`, `jurisdictions[]`, `laws[]`, `audienceModel`, `ageOfConsent`, `childData`, `minors{profiling,targetedAds,quietHours}`, `channels{}`, `consentText{}`, `defaults`, `cap`, `optOutSla`, `aiDisclosure`, `retention`, `privacyPolicy{url,lastUpdated,emailAlerts,savesOptIn,childrenNone}`, `dpia`, `mediaConsent`, `safeguarding`, `vulnerability`, `protected`, `accessibility`, `sensitive`, `darkPatterns` (D35) | `S.policies[instance]`; one per instance (D32) |
 | **Experiment** | `name`, `treat`, `control`, `weeks`, `week`, `state` | `S.experiment` |
 | **Entitlement** | `providerId`, `productId`, `since`, `billingRef?`, `attributedTo?` (the delivered result that preceded the purchase, Q8) | `S.bought`, `S.attributed` |
 | **AutoApproval** | `owner`, `department`, `cleanWeeks`, `earned` (R25) | `S.auto` |
@@ -115,7 +115,7 @@ implementation of the enumerations and state machines below.*
 
 ## 5. Decision register
 
-`04-decisions.md` holds D1–D34. The ones the engineering documents rest on: D2 (three
+`04-decisions.md` holds D1–D35. The ones the engineering documents rest on: D2 (three
 views), D5 (DiscountDirect sibling), D6 (departments, knowledge layer, human-in-the-loop,
 optional AI, dashboard, integrations), D11 (Your Field first), D14 (two flows), D15
 (post card and pipeline strip), D17 (one page, in-memory state), D18 (sample generated
@@ -149,6 +149,13 @@ PROPOSED.
 | R27 | No profiling and no targeted advertising on a minor's data, on any instance, with or without consent (DSA Art. 28, California, Oregon, Nebraska as the floor) | policy `minors` |
 | R28 | High-privacy defaults on every instance: nothing that shares, locates or increases frequency is on until the person turns it on; push respects quiet hours where minors may be present | policy `defaults`, `family.prefs` |
 | R29 | The one-press run in Simple mode executes only recommendations the machine marks safe — approvals of drafts it wrote from real data, sends the policy gate allows, filing — never a reply to a person, never a purchase, never an override of a block; each action is logged as the operator's (D33) | `runSafe`, `recommend().auto` |
+| R30 | A recording that shows a child is cut only when the provider confirms written parental consent for every child shown; the clip carries no child's name or identifying detail; the consent record is kept with the clip; without it the clip engine refuses and offers a coach-only or place-only cut (D35) | `S.media.consent`, `upload` |
+| R31 | A provider's safeguarding status (background checks, training, welfare contact) is shown only as the platform verified it; "not verified" is a displayed state; marketing copy never claims safety (D35) | provider hero |
+| R32 | No false urgency or scarcity in any draft; a person who writes "not now", "bereavement" or "can't afford" gets a pause on all marketing and a human reply; every purchase has a cooling-off (D35) | `rules/voice.md`, the gate |
+| R33 | No audience, content slot or score is built or optimised on a protected characteristic or a proxy for one; neighbourhood delivery is audited for disparity; housing, employment and credit instances add their market's rules (D35) | policy `protected` |
+| R34 | Every message, page and post meets WCAG 2.2 AA; captions on every clip; alt text on every image (D35) | policy `accessibility` |
+| R35 | No health, location-track, biometric, Article 9 or financial-hardship data is stored about a person; when one arrives in a message it is answered, not recorded; no audience, slot or score uses one (D35) | policy `sensitive` |
+| R36 | A banned-pattern list is enforced on every draft and screen — no false urgency, no pre-ticked consent, no confirmshaming, no obstruction of Stop or unsubscribe, no hidden cost; an AI draft that scores or exploits a person's vulnerability is refused (D35) | `rules/voice.md`, policy `darkPatterns` |
 | R25 | Approvals may be batched (one decision for a week's real-footage clips) and a department may earn auto-approval after four clean weeks (no edits, no complaints); every auto-sent message is logged and the family can stop it (D30) | `approveClips`, `S.auto` |
 | R16 | The next-dollar ranking runs weekly on measured rates where they exist and on the documented assumption where they do not; the recap says which | `econ()`; `16-analytics…` §4 |
 | R17 | A sequence step is added or removed when its marginal reply rate per touch falls below the cost-per-touch breakeven for two consecutive weeks, inside the 4–7 benchmark | production |
@@ -160,7 +167,7 @@ PROPOSED.
 
 | Metric | Definition | View |
 |---|---|---|
-| Providers managing | providers in `managing` or `upgraded` / all providers | platform overview (real: 0 / 252 today) |
+| Providers managing | providers in `managing` or `upgraded` / all providers | platform overview (real: 0 / 253 today) |
 | Contactable | providers with e-mail / with phone | overview (130 / 180) |
 | Families from social | sign-ups whose first session had a social referrer | overview (sample until a channel is connected) |
 | Posts scheduled | approved posts this week / drafted | overview, calendar |
@@ -186,7 +193,7 @@ PROPOSED.
 | `01-research.md` | sourced evidence, legal by market |
 | `02-audit.md` | the platform measured, the catalogue's coverage, the videos, DiscountDirect's contribution |
 | `03-sources.md` | real vs sample |
-| `04-decisions.md` | D1–D34 |
+| `04-decisions.md` | D1–D35 |
 | `05-layout-specs.md`, `design-system.html`, `layouts.html` | gates 1 and 2 |
 | `06-build-log.md`, `07-gate.md` | rounds and the measured pass |
 | `08-client-asks.md` | the register of asks, with states |

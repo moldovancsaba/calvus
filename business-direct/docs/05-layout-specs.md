@@ -22,7 +22,7 @@ The control room, ordered by the two primary flows (D14):
 1. Title and the day's state (7 items waiting).
 2. Six intelligence tiles — four real (providers, managing, with e-mail/phone, next session known), two declared sample.
 3. Left column, **B2C · Social publishing**: this week's posts as post cards (channels, copy, media, link back to the listing page, AI-draft badge, approve/edit/skip), then the approval queue.
-4. Right column, **B2B · Provider sales**: the pipeline strip (252 identified, real; the rest zero), next actions (invitation sequence, call list, website-form list), then the departments (social, sales, weekly picks, generated pages, market radar).
+4. Right column, **B2B · Provider sales**: the pipeline strip (253 identified, real; the rest zero), next actions (invitation sequence, call list, website-form list), then the departments (social, sales, weekly picks, generated pages, market radar).
 5. Providers table with filter chips built from real counts (unclaimed flag 15, e-mail 130, phone 180, trial 72) and a stage badge.
 
 ## Frame 2 — Platform · Overview · 390 (`frames/platform-phone-390.html`)

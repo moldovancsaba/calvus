@@ -37,10 +37,10 @@ and the message log.
 | Measure | Value | Consequence |
 |---|---|---|
 | Platform stack | Next.js + Mantine on Vercel, v0.201.105 | the machine can be a module of the same deployment or a sibling app on the same stack (ADR-1) |
-| Public API | 12 endpoints found in the site's bundles; no reference page; read-only without a key | connector first, own copy of the catalogue second (ADR-2) |
+| Public API | 12 endpoints found in the site's bundles; no reference page; read-only without a key; the catalogue changes daily (one provider and 51 record updates between two pulls on the same day) | connector first, own copy of the catalogue second (ADR-2) |
 | Home | 118 KB HTML, 24 scripts, TTFB 0.53 s | no performance debt to inherit |
-| Providers | 252; 130 with e-mail, 180 with phone, 83 with a next session, 72 with a trial policy | the sales flow's reach and the digest's input are known numbers |
-| Claims | 0 of 252 managing their page | the pipeline starts with everyone at *identified* |
+| Providers | 253; 130 with e-mail, 181 with phone, 83 with a next session, 72 with a trial policy | the sales flow's reach and the digest's input are known numbers |
+| Claims | 0 of 253 managing their page | the pipeline starts with everyone at *identified* |
 | Reference instance | same stack, 431 listings, documented API incl. `POST /api/ingest` | the connector interface must fit two instances (ADR-2) |
 
 ## 3. Quality attributes

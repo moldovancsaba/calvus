@@ -141,6 +141,21 @@ audience, trust as the acquisition channel, and auditability: every send carries
 basis. For Your Field NYC (ClassScout) the gate today blocks provider e-mail (no postal
 address, prerequisite P-1) and the digest (the policy does not yet describe e-mail alerts, prerequisite P-2).
 
+## 6c. Beyond children (D35)
+
+Seven more cases hold for every client (research V). **Children in real footage**: the
+clip engine cuts a recording that shows a child only when the provider confirms written
+parental consent for every child shown, and never puts a child's name on a clip (R30). **The
+adults who work with children**: safeguarding is shown only as the platform verified it —
+"not verified" is a displayed state, never a claim (R31). **People in vulnerable
+circumstances**: no false urgency; "not now", "bereavement" or "can't afford" pauses all
+marketing and gets a human; every purchase has a cooling-off (R32). **Protected
+characteristics**: never an audience, a slot or a score, nor a proxy; delivery by
+neighbourhood is audited (R33). **Accessibility**: WCAG 2.2 AA on every message, captions on
+every clip (R34). **Sensitive categories** — health, location tracks, biometrics, Article 9,
+hardship — are answered, never stored (R35). **Dark patterns and AI manipulation**: a banned
+list on every draft and screen; Stop is one tap (R36).
+
 ## 7. Providers: the law on the sales side
 
 US (first market): commercial e-mail to a business needs no prior consent (CAN-SPAM);
@@ -227,11 +242,14 @@ The model and its events are `16-analytics-and-unit-economics.md`.
 | R12 an upgrade changes where the provider appears, never what a family receives | §5 | R27 no profiling or targeting of minors | §6b |
 | R13 the machine never discounts | §5 | R28 high-privacy defaults | §6, §6b |
 | R14 a drafted answer within a minute; reply time from the enquiry | §4b | R29 the one press runs only safe recommendations | §2b |
-| R15 never generate a person or a child | §8c, §9 | | |
+| R15 never generate a person or a child | §8c, §9 | R30 children in footage with written parental consent | §6c |
+| R31 safeguarding shown as verified only | §6c | R32 no pressure; "not now" pauses | §6c |
+| R33 no protected characteristic or proxy | §6c | R34 accessible by default | §6c |
+| R35 sensitive categories answered, never stored | §6c | R36 no dark pattern, no AI manipulation | §6c |
 
 ## 9. What the machine never does
 
-Sends without an approval or a preference; answers a family without the provider's approval; texts without consent; sends past the domain's warm-up cap or bounce limit (R23); sends a provider e-mail without the postal address; shows a child's name to anyone (R24); profiles or targets a minor (R27); runs a feature its policy record does not allow (R26); publishes generated media unlabelled; generates a person or a child; exceeds the cap; deletes
+Sends without an approval or a preference; answers a family without the provider's approval; texts without consent; sends past the domain's warm-up cap or bounce limit (R23); sends a provider e-mail without the postal address; shows a child's name to anyone (R24); profiles or targets a minor (R27); cuts a clip that shows a child without written parental consent (R30); claims safety it has not verified (R31); pressures anyone (R32, R36); builds an audience on a protected characteristic (R33); stores a sensitive category (R35); runs a feature its policy record does not allow (R26); publishes generated media unlabelled; generates a person or a child; exceeds the cap; deletes
 a provider's stage history; discounts; publishes a generated page with fewer than three
 providers; speaks as an AI to a family or a provider — the product speaks as the platform
 or the provider.

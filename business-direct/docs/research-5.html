@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>business.direct — research V: beyond children — the other people, data and practices a responsible marketing machine must cover — business.direct docs</title>
+<link rel="stylesheet" href="../assets/tokens.css">
+<style>/* business.direct — documentation pages on the product tokens (GDS roles, teal accent). */
+:root{--ground:var(--gds-bg-canvas,#f8fafc);--card:var(--gds-bg-surface,#fff);--ink:var(--gds-text-body,#111827);--text:#1f2937;--muted:var(--gds-text-meta,#64748b);--accent:var(--gds-brand-accent,#0f766e);--accent-deep:var(--gds-brand-accent-strong,#115e59);--line:var(--gds-border-card,#e2e8f0);--line-soft:#eef2f7;--note:var(--gds-brand-accent-tint,#e6f4f2)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--ground);color:var(--text);font-family:var(--gds-font,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif);font-size:15.5px;line-height:1.6;padding-block:0 64px;padding-inline:clamp(16px,4vw,40px)}
+.wrap{max-width:74ch;margin-inline:auto}
+.docnav{display:flex;flex-wrap:wrap;gap:4px 18px;align-items:center;padding:16px 0;border-bottom:1px solid var(--line);font-size:12px;letter-spacing:.06em;text-transform:uppercase}
+.docnav a{color:var(--muted);text-decoration:none;min-height:44px;min-width:44px;display:inline-flex;align-items:center;border-bottom:2px solid transparent}
+.docnav a:hover,.docnav a[aria-current]{color:var(--ink);border-color:var(--accent)}
+.docnav-brand{color:var(--accent-deep);font-weight:800;margin-right:6px}
+.docnav-hub{margin-left:auto}
+header{padding-block:40px 24px;border-bottom:1px solid var(--line);margin-bottom:28px}
+.eyebrow{font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--accent-deep);margin:0 0 12px;font-weight:800}
+h1,h2,h3{color:var(--ink);line-height:1.1;text-wrap:balance;margin:0;letter-spacing:-.02em}
+h1{font-size:clamp(30px,6vw,46px);font-weight:900}
+h2{font-size:clamp(23px,4vw,30px);font-weight:900;margin:48px 0 14px;padding-top:20px;border-top:1px solid var(--line)}
+h3{font-size:18px;margin:30px 0 8px;font-weight:800}
+p{margin:0 0 14px} strong{color:var(--ink);font-weight:800}
+ul,ol{padding-left:22px;margin:0 0 16px} li{margin:5px 0} li>ul{margin:6px 0 0}
+code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.86em;background:var(--note);padding:1px 5px;border-radius:4px;color:var(--ink);overflow-wrap:anywhere}
+pre{overflow-x:auto;padding:14px 16px;border:1px solid var(--line);border-radius:10px;background:var(--card);font-size:12px;line-height:1.35}
+pre code{background:none;padding:0;font-size:inherit}
+a{color:var(--accent-deep)} :focus-visible{outline:2px solid var(--accent-deep);outline-offset:2px}
+.tbl{overflow-x:auto;margin:14px 0 22px;border:1px solid var(--line);border-radius:10px;background:var(--card)}
+table{border-collapse:collapse;width:100%;font-size:13.5px;min-width:560px}
+th{text-align:left;font-weight:800;color:var(--ink);background:var(--note);padding:10px 12px;border-bottom:1px solid var(--line);font-size:11.5px;letter-spacing:.06em;text-transform:uppercase}
+td{padding:10px 12px;border-top:1px solid var(--line-soft);vertical-align:top;background:var(--card)} td:first-child{color:var(--ink)}
+footer{margin-top:56px;padding-top:18px;border-top:1px solid var(--line);font-size:12px;color:var(--muted)}
+</style>
+</head>
+<body>
+<div class="wrap">
+<nav class="docnav" aria-label="Project documentation"><span class="docnav-brand">business.direct · docs</span><a href="index.html">Overview</a><a href="brief.html">Brief</a><a href="research.html">Research</a><a href="research-2.html">Research II</a><a href="research-3.html">Research III</a><a href="research-4.html">Research IV</a><a href="research-5.html" aria-current=page>Research V</a><a href="audit.html">Audit</a><a href="sources.html">Sources</a><a href="design-system.html">Design system</a><a href="layouts.html">Layouts</a><a href="05-layout-specs.html">Layout specs</a><a href="decisions.html">Decisions</a><a href="build-log.html">Build log</a><a href="gate.html">Gate</a><a href="client-asks.html">Register of asks</a><a href="implementation-prerequisites.html">Prerequisites</a><a href="business-logic.html">Business logic</a><a href="ssot.html">SSOT</a><a href="architecture.html">Architecture</a><a href="technical-design.html">Technical design</a><a href="implementation-plan.html">Plan</a><a href="token-map.html">Token map</a><a href="analytics.html">Analytics</a><a href="audit-swot.html">Audit · SWOT</a><a href="policy-framework.html">Policy framework</a></nav>
+<header><p class="eyebrow">Calvus · business.direct · project documentation</p><h1>business.direct — research V: beyond children — the other people, data and practices a responsible marketing machine must cover</h1></header>
+<p><em>Fifth research round, 2026-09-19, on the owner's question: "Is there any other use case like
+kids that we need to cover, or could we cover, as a responsible business entity?" The
+answer is yes — eleven of them, in three groups: </em><em>people</em><em> the law or good practice treats as
+needing more care, </em><em>data categories</em><em> that may never drive marketing, and </em><em>practices</em><em>
+that are banned whoever the audience is. Each is anchored in a primary source where one
+exists (</em><em>P</em><em>), otherwise a law-firm or trade summary (</em><em>A</em><em>), and each ends with the rule
+it becomes in the framework (<a href="policy-framework.html"><code>18-responsible-data-policy-framework.md</code></a>, rules R30–R36) and
+what the prototype does about it. Two of the eleven are already live in our first client's
+own category and were gaps: real footage of children (§1.2) and the adults who work with
+them (§1.3).</em></p>
+<h2>1. People who need more care</h2>
+<h3>1.1 Children — covered (research IV)</h3>
+<p>A child is an age, never a name; no profiling or targeting; the platform's own policy
+(adults only, no children's data) binds the machine. Rules R15, R24, R27.</p>
+<h3>1.2 Children in real footage — a gap we had</h3>
+<p>The clip engine (D28) cuts a provider's session recording into the week's Reels. A session
+recording of a kids' soccer class is a video of children. Every safeguarding body's guidance
+is the same: <strong>written parental consent before a child under 16 is photographed or filmed,
+the child's own wishes honoured, no identifying detail (name, club, location) with the
+image</strong>, and consent that can be withdrawn. <strong>P</strong> <a href="https://learning.nspcc.org.uk/online-safety/photographing-filming-children">NSPCC: photographing and filming children</a>,
+<a href="https://thecpsu.org.uk/help-advice/topics/photography-and-filming-in-sports-and-activities/">CPSU: photography and filming in sport</a>,
+<a href="https://www.thefa.com/-/media/thefacom-new/files/rules-and-regulations/safeguarding/section-8/8-3-photographing-and-filming-children-colour-version.ashx">The FA guidance note 8.3</a>
+The 2025 COPPA rule also counts audio and images of a child as personal information
+(research IV §1.1).
+<strong>Rule R30 (media consent):</strong> a recording that shows a child is cut only when the provider
+confirms it holds written parental consent for every child shown, the clip carries no
+child's name or identifying detail, and the consent record is kept with the clip; without
+it the clip engine refuses and offers the coach-only or place-only cut.</p>
+<h3>1.3 The adults who work with children — safeguarding</h3>
+<p>US youth sports run on background checks and SafeSport training for every adult in regular
+contact with minors (thirteen states now require checks by statute; national bodies
+require them every two years), and in the UK the club or activity provider owes a <strong>duty of
+care</strong> to keep children safe. <strong>A</strong> <a href="https://sportsmanagementresources.com/library/background-and-reference-checks-and-required-safesport-training-covered-individuals">Sports Management Resources</a>,
+<a href="https://securesearchpro.com/youth-sports-background-check-requirements-by-state/">Secure Search Pro: state requirements</a>;
+<strong>P</strong> <a href="https://thecpsu.org.uk/resource-library/best-practice/duty-of-care/">CPSU: duty of care</a>,
+<a href="https://www.ussoccer.com/soccer-forward/resource-hub/safe-soccer-clearance-program">U.S. Soccer Safe Soccer Clearance</a>
+The machine markets providers to families. It must never imply a safeguarding standard it
+has not verified, and it can make the verified standard a visible, honest signal.
+<strong>Rule R31 (safeguarding signal):</strong> a provider's safeguarding status (background checks,
+safeguarding training, a named welfare contact) is shown only as the platform verified it
+— "not verified" is a valid, displayed state; marketing copy never claims safety; a family's
+enquiry template can ask.</p>
+<h3>1.4 People in vulnerable circumstances</h3>
+<p>UK financial regulation (the Consumer Duty, FG21/1 and the 2025 review) expects firms to
+identify customers in vulnerable circumstances — health, life events such as bereavement,
+low resilience, low capability — and to design communications and support around them;
+the EU's Unfair Commercial Practices Directive judges a practice by its effect on the
+vulnerable group it reaches ("mental or physical infirmity, age or credulity"). <strong>P</strong>
+<a href="https://www.fca.org.uk/publications/finalised-guidance/guidance-firms-fair-treatment-vulnerable-customers">FCA: fair treatment of vulnerable customers</a>,
+<a href="https://commission.europa.eu/law/law-topic/consumer-protection-law/unfair-commercial-practices-and-price-indication/unfair-commercial-practices-directive_en">EU UCPD</a>;
+<strong>A</strong> <a href="https://www.cov.com/en/news-and-insights/insights/2025/04/fca-publishes-findings-on-firms-treatment-of-consumers-in-vulnerable-circumstances">Covington on the 2025 FCA review</a>
+For a marketing machine this means: no urgency or scarcity pressure ("today only", "3 spots
+left" unless literally true), a cooling-off on any purchase, plain language, a human
+pathway on request, and a pause when a person signals a life event.
+<strong>Rule R32 (no pressure, plain language, a pause):</strong> no false urgency or scarcity in any
+draft (the voice file already bans it; the gate enforces it); a person who says "not now",
+"bereavement", "can't afford" or asks for a human gets a pause on all marketing and a
+human reply; every purchase has a cooling-off.</p>
+<h3>1.5 Protected characteristics in targeting and ad delivery</h3>
+<p>The US Department of Justice settled with Meta in 2022 over housing ads whose delivery
+relied on race, national origin and sex — a Fair Housing Act case about the <em>algorithm</em>,
+not the advertiser's intent; employment and credit advertising carry the same rules (ADEA,
+ECOA). <strong>P</strong> <a href="https://www.justice.gov/archives/opa/pr/justice-department-secures-groundbreaking-settlement-agreement-meta-platforms-formerly-known">DOJ settlement, June 2022</a>
+Our audiences are saves, asks and neighbourhood — and neighbourhood correlates with
+protected characteristics. The rule must be explicit.
+<strong>Rule R33 (no protected characteristic, directly or by proxy):</strong> audiences and content
+slots are never built or optimised on race, ethnicity, religion, sex, disability, family
+status or national origin — nor on a proxy for them; the neighbourhood holdout and the
+content-slot rule (R18) are audited for disparate delivery, and a job-portal or housing
+instance adds the market's specific ad rules to its policy record.</p>
+<h3>1.6 People with disabilities — accessibility of every message</h3>
+<p>The European Accessibility Act applies since 28 June 2025 to electronic communications and
+digital services, including e-mail and web content aimed at EU consumers; about 101 million
+people in the EU live with a disability. <strong>A</strong> <a href="https://wfanet.org/knowledge/item/2025/06/13/european-accessibility-act-what-it-means-for-marketers">WFA on the EAA</a>,
+<a href="https://www.levelaccess.com/compliance-overview/european-accessibility-act-eaa/">Level Access: EAA requirements</a>
+In the US the ADA's web-accessibility standard is WCAG in practice. The prototype already
+holds 44 px targets, one <code>h1</code>, alt text and contrast ≥ 4.5 : 1; the messages the machine
+sends must hold the same.
+<strong>Rule R34 (accessible by default):</strong> every e-mail, page and post the machine produces
+meets WCAG 2.2 AA (structure, alt text on real media, captions on every clip, contrast,
+plain language); captions are part of the clip engine's output, not an option.</p>
+<h2>2. Data categories that never drive marketing</h2>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>Category</th>
+<th>Law / case</th>
+<th>What it means for the machine</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Health, reproductive, mental health</strong></td>
+<td>FTC v. GoodRx ($1.5 M, Feb 2023) and BetterHelp ($7.8 M, 2023): sharing health data with ad platforms, banned from using it for advertising. <strong>P</strong> <a href="https://www.ftc.gov/news-events/news/press-releases/2023/02/ftc-enforcement-action-bar-goodrx-sharing-consumers-sensitive-health-info-advertising">FTC: GoodRx</a>, <a href="https://www.ftc.gov/news-events/news/press-releases/2023/07/ftc-gives-final-approval-order-banning-betterhelp-sharing-sensitive-health-data-advertising">FTC: BetterHelp</a></td>
+<td>a family's note that a child has a condition (an enquiry: "my son has ADHD, is the class suitable?") is an answer to give, never a field to store or a segment to build</td>
+</tr>
+<tr>
+<td><strong>Precise location and sensitive places</strong></td>
+<td>FTC v. Kochava (2022–2026): selling location that reveals visits to clinics, places of worship, schools, shelters; the order bars it without opt-in consent. <strong>P</strong> <a href="https://www.ftc.gov/news-events/news/press-releases/2022/08/ftc-sues-kochava-selling-data-tracks-people-reproductive-health-clinics-places-worship-other">FTC complaint, Aug 2022</a>; <strong>A</strong> <a href="https://www.whitecase.com/insight-alert/ftc-settles-data-broker-kochava-over-sale-sensitive-location-data-key-takeaways">White &amp; Case</a></td>
+<td>the machine uses a neighbourhood the family chose, never a device location; "nearby" is a preference, not a track</td>
+</tr>
+<tr>
+<td><strong>Biometrics, voice, face</strong></td>
+<td>Illinois BIPA: written notice and consent before any face or voice template; private right of action, $1,000+ per person. <strong>A</strong> <a href="https://www.aclu-il.org/campaigns-initiatives/biometric-information-privacy-act-bipa/">ACLU of Illinois</a>; COPPA 2025 adds biometrics for children</td>
+<td>no face recognition in the clip engine; voice cloning only with the coach's written consent, never a child's voice</td>
+</tr>
+<tr>
+<td><strong>GDPR Article 9 special categories</strong> (ethnicity, religion, politics, union, genetics, biometrics, health, sex life or orientation)</td>
+<td>processing prohibited unless an exception applies; explicit consent for marketing is practically never obtained. <strong>P</strong> <a href="https://gdpr-info.eu/art-9-gdpr/">Art. 9 GDPR</a></td>
+<td>on any EU instance these fields do not exist in the machine; a job portal instance must not infer them from a CV</td>
+</tr>
+<tr>
+<td><strong>Financial hardship, debt</strong></td>
+<td>UCPD and the FCA's vulnerability guidance (§1.4)</td>
+<td>"can't afford" pauses marketing; discounts are not the machine's tool (R13)</td>
+</tr>
+<tr>
+<td><strong>Immigration status, family status</strong></td>
+<td>protected under fair-housing and employment rules in the US; special or sensitive in the EU</td>
+<td>never stored, never inferred</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Rule R35 (sensitive categories):</strong> the machine stores no health, location-track,
+biometric, Article 9 or financial-hardship data about a person; when one arrives in a
+message it is answered and not recorded as a field; no audience, slot or score uses one.</p>
+<h2>3. Practices banned whoever the audience is</h2>
+<ul>
+<li><strong>Dark patterns.</strong> The FTC's 2022 report <em>Bringing Dark Patterns to Light</em> (false urgency,
+  hidden costs, obstruction of cancellation, pre-ticked boxes, confirmshaming) and the EU
+  DSA Article 25 (interfaces that "deceive or manipulate … or otherwise materially distort
+  or impair" free decisions). <strong>P</strong> <a href="https://www.ftc.gov/system/files/ftc_gov/pdf/P214800+Dark+Patterns+Report+9.14.2022+-+FINAL.pdf">FTC report (PDF)</a>,
+  <a href="https://dsa-library.com/article/25/">DSA Art. 25</a></li>
+<li><strong>AI manipulation.</strong> EU AI Act Article 5, applicable since 2 February 2025, prohibits AI
+  systems that use manipulative or deceptive techniques to distort behaviour, and systems
+  that exploit vulnerabilities of age, disability or socio-economic situation. <strong>A</strong> <a href="https://fpf.org/blog/red-lines-under-the-eu-ai-act-understanding-manipulative-techniques-and-the-exploitation-of-vulnerabilities/">Future of Privacy Forum</a>,
+  <a href="https://www.wilmerhale.com/en/insights/blogs/wilmerhale-privacy-and-cybersecurity-law/20240408-prohibited-ai-practices-a-deep-dive-into-article-5-of-the-european-unions-ai-act">WilmerHale</a></li>
+<li><strong>Frequency and timing.</strong> Push notification hours for minors (Nebraska, California —
+  research IV); the cap and quiet hours already exist.</li>
+</ul>
+<p><strong>Rule R36 (no dark pattern, no manipulation):</strong> a banned-pattern list is enforced on every
+draft and every screen — no false urgency or scarcity, no pre-ticked consent, no
+confirmshaming, no obstruction of Stop or unsubscribe (one tap, always), no hidden cost;
+an AI draft that scores a person's vulnerability or pressures on it is refused.</p>
+<h2>4. What it means for other clients (the framework generalises)</h2>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>Client type</th>
+<th>The case that matters most</th>
+<th>Policy fields</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Kids' activities (Your Field)</td>
+<td>children in footage; the adults who coach them; parents in vulnerable circumstances</td>
+<td><code>mediaConsent</code>, <code>safeguarding</code>, <code>vulnerability</code></td>
+</tr>
+<tr>
+<td>Sports directory (athletes may be minors)</td>
+<td>the same, plus the athlete's own health data (injuries)</td>
+<td>+ <code>sensitiveCategories: health</code></td>
+</tr>
+<tr>
+<td>Job portal</td>
+<td>protected characteristics in job ads and matching (ADEA, EEOC, EU equal treatment); candidates' CVs as Article 9 sources; apprentices 16–18</td>
+<td><code>protectedCharacteristics</code>, <code>sensitiveCategories</code>, <code>audienceModel: mixed</code></td>
+</tr>
+<tr>
+<td>Classifieds</td>
+<td>sellers' home addresses and phone numbers; buyers' locations; vulnerable sellers (bereavement sales, debt)</td>
+<td><code>sensitiveCategories: location</code>, <code>vulnerability</code></td>
+</tr>
+<tr>
+<td>Housing or credit adjacent (any)</td>
+<td>Fair Housing / ECOA ad-delivery rules</td>
+<td><code>protectedCharacteristics</code> with the market's specific rules</td>
+</tr>
+</tbody>
+</table></div>
+<h2>5. What was not found</h2>
+<ul>
+<li>No published enforcement yet under the EAA for marketing e-mail specifically; the
+  obligation is clear, the case law is not.</li>
+<li>No US federal rule on filming children at private activities — the standard is the
+  safeguarding bodies' guidance and COPPA's definition of personal information.</li>
+<li>The AI Act's Article 5 guidance from the Commission was read through summaries; the
+  prohibition's wording is quoted from them.</li>
+</ul>
+<footer>Source: <code>business-direct/docs/01f-research-beyond-children.md</code> · rendered by <code>docs/build.py</code>.</footer>
+</div>
+</body>
+</html>

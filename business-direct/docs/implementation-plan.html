@@ -36,7 +36,7 @@ footer{margin-top:56px;padding-top:18px;border-top:1px solid var(--line);font-si
 </head>
 <body>
 <div class="wrap">
-<nav class="docnav" aria-label="Project documentation"><span class="docnav-brand">business.direct · docs</span><a href="index.html">Overview</a><a href="brief.html">Brief</a><a href="research.html">Research</a><a href="research-2.html">Research II</a><a href="research-3.html">Research III</a><a href="research-4.html">Research IV</a><a href="audit.html">Audit</a><a href="sources.html">Sources</a><a href="design-system.html">Design system</a><a href="layouts.html">Layouts</a><a href="05-layout-specs.html">Layout specs</a><a href="decisions.html">Decisions</a><a href="build-log.html">Build log</a><a href="gate.html">Gate</a><a href="client-asks.html">Register of asks</a><a href="implementation-prerequisites.html">Prerequisites</a><a href="business-logic.html">Business logic</a><a href="ssot.html">SSOT</a><a href="architecture.html">Architecture</a><a href="technical-design.html">Technical design</a><a href="implementation-plan.html" aria-current=page>Plan</a><a href="token-map.html">Token map</a><a href="analytics.html">Analytics</a><a href="audit-swot.html">Audit · SWOT</a><a href="policy-framework.html">Policy framework</a></nav>
+<nav class="docnav" aria-label="Project documentation"><span class="docnav-brand">business.direct · docs</span><a href="index.html">Overview</a><a href="brief.html">Brief</a><a href="research.html">Research</a><a href="research-2.html">Research II</a><a href="research-3.html">Research III</a><a href="research-4.html">Research IV</a><a href="research-5.html">Research V</a><a href="audit.html">Audit</a><a href="sources.html">Sources</a><a href="design-system.html">Design system</a><a href="layouts.html">Layouts</a><a href="05-layout-specs.html">Layout specs</a><a href="decisions.html">Decisions</a><a href="build-log.html">Build log</a><a href="gate.html">Gate</a><a href="client-asks.html">Register of asks</a><a href="implementation-prerequisites.html">Prerequisites</a><a href="business-logic.html">Business logic</a><a href="ssot.html">SSOT</a><a href="architecture.html">Architecture</a><a href="technical-design.html">Technical design</a><a href="implementation-plan.html" aria-current=page>Plan</a><a href="token-map.html">Token map</a><a href="analytics.html">Analytics</a><a href="audit-swot.html">Audit · SWOT</a><a href="policy-framework.html">Policy framework</a></nav>
 <header><p class="eyebrow">Calvus · business.direct · project documentation</p><h1>business.direct — implementation plan</h1></header>
 <p><em>Written 2026-09-19 on the PROPOSED architecture; phase 2 (M5) added the same day. Estimates are for a team of two
 developers and the owner as product lead; they assume ADR-1 to ADR-8 stand and the open
@@ -137,12 +137,17 @@ instance (<code>platform_id</code>). "Measured" means a number in the build log,
 <tr>
 <td>BD-0-4</td>
 <td><code>YourFieldConnector</code> + hourly <code>sync</code></td>
-<td>252 providers cached; a changed <code>updatedAt</code> produces a diff event (test with a fixture)</td>
+<td>253 providers cached; a changed <code>updatedAt</code> produces a diff event (test with a fixture)</td>
 </tr>
 <tr>
 <td>BD-0-5</td>
 <td>Console shell: role switch, rail/bottom bar, deep links</td>
 <td>the prototype's 13 screens reachable, empty states</td>
+</tr>
+<tr>
+<td>BD-0-11</td>
+<td>Policy fields R30–R36 and the three gate rows; safeguarding state on the card; delivery audit by neighbourhood (R33)</td>
+<td>fields set or the features stay blocked; the audit report runs weekly</td>
 </tr>
 <tr>
 <td>BD-0-9</td>
@@ -263,6 +268,16 @@ instance (<code>platform_id</code>). "Measured" means a number in the build log,
 <td>BD-2-7</td>
 <td>Clip engine (<code>MediaAdapter.clips</code>) and the provider's Media screen</td>
 <td>a recording becomes captioned clips with the listing link in the queue, each <code>media.kind = real</code></td>
+</tr>
+<tr>
+<td>BD-2-10</td>
+<td>Media consent on the clip engine; captions; no child's name on a clip</td>
+<td>a recording flagged as showing children is refused without the consent confirmation (test); every clip has captions (R30, R34)</td>
+</tr>
+<tr>
+<td>BD-2-11</td>
+<td>Pattern guard and vulnerability pause</td>
+<td>banned patterns refused (tests per pattern); "not now" pauses all marketing for that person and opens a human task (R32, R36)</td>
 </tr>
 <tr>
 <td>BD-2-8</td>

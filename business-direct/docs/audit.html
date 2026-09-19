@@ -36,9 +36,9 @@ footer{margin-top:56px;padding-top:18px;border-top:1px solid var(--line);font-si
 </head>
 <body>
 <div class="wrap">
-<nav class="docnav" aria-label="Project documentation"><span class="docnav-brand">business.direct · docs</span><a href="index.html">Overview</a><a href="brief.html">Brief</a><a href="research.html">Research</a><a href="research-2.html">Research II</a><a href="research-3.html">Research III</a><a href="research-4.html">Research IV</a><a href="audit.html" aria-current=page>Audit</a><a href="sources.html">Sources</a><a href="design-system.html">Design system</a><a href="layouts.html">Layouts</a><a href="05-layout-specs.html">Layout specs</a><a href="decisions.html">Decisions</a><a href="build-log.html">Build log</a><a href="gate.html">Gate</a><a href="client-asks.html">Register of asks</a><a href="implementation-prerequisites.html">Prerequisites</a><a href="business-logic.html">Business logic</a><a href="ssot.html">SSOT</a><a href="architecture.html">Architecture</a><a href="technical-design.html">Technical design</a><a href="implementation-plan.html">Plan</a><a href="token-map.html">Token map</a><a href="analytics.html">Analytics</a><a href="audit-swot.html">Audit · SWOT</a><a href="policy-framework.html">Policy framework</a></nav>
+<nav class="docnav" aria-label="Project documentation"><span class="docnav-brand">business.direct · docs</span><a href="index.html">Overview</a><a href="brief.html">Brief</a><a href="research.html">Research</a><a href="research-2.html">Research II</a><a href="research-3.html">Research III</a><a href="research-4.html">Research IV</a><a href="research-5.html">Research V</a><a href="audit.html" aria-current=page>Audit</a><a href="sources.html">Sources</a><a href="design-system.html">Design system</a><a href="layouts.html">Layouts</a><a href="05-layout-specs.html">Layout specs</a><a href="decisions.html">Decisions</a><a href="build-log.html">Build log</a><a href="gate.html">Gate</a><a href="client-asks.html">Register of asks</a><a href="implementation-prerequisites.html">Prerequisites</a><a href="business-logic.html">Business logic</a><a href="ssot.html">SSOT</a><a href="architecture.html">Architecture</a><a href="technical-design.html">Technical design</a><a href="implementation-plan.html">Plan</a><a href="token-map.html">Token map</a><a href="analytics.html">Analytics</a><a href="audit-swot.html">Audit · SWOT</a><a href="policy-framework.html">Policy framework</a></nav>
 <header><p class="eyebrow">Calvus · business.direct · project documentation</p><h1>business.direct — audit of the starting point</h1></header>
-<p><em>Measured 2026-09-19 with <code>curl</code> and the two converters; the videos read frame by frame.
+<p><em>Measured 2026-09-19 with <code>curl</code> and the two converters (catalogue re-pulled the same evening: 253 providers, 51 records updated); the videos read frame by frame.
 Your Field NYC is the client (D11); the Hungarian instance is the reference.</em></p>
 <h2>1. The client platform: Your Field NYC (getyourfield.com)</h2>
 <div class="tbl"><table>
@@ -63,11 +63,11 @@ Your Field NYC is the client (D11); the Hungarian instance is the reference.</em
 </tr>
 <tr>
 <td>Public API (found in the site's own JS bundles; no reference page)</td>
-<td><code>browse-facets</code>, <code>site</code>, <code>providers</code>, <code>providers/{id}</code>, <code>browse?…</code>, <code>family-events</code>, <code>home-feed</code>, <code>meetup-groups</code>, <code>nearby-services?listingId=</code>, <code>claim-requests?city=</code>, <code>demand-capture</code>, <code>scout/recommend</code> (POST), <code>map-pins</code> (empty today)</td>
+<td><code>browse-facets</code>, <code>site</code>, <code>providers</code>, <code>providers/{id}</code> (252 cards on the first pull, 253 on the re-pull the same evening), <code>browse?…</code>, <code>family-events</code>, <code>home-feed</code>, <code>meetup-groups</code>, <code>nearby-services?listingId=</code>, <code>claim-requests?city=</code>, <code>demand-capture</code>, <code>scout/recommend</code> (POST), <code>map-pins</code> (empty today)</td>
 </tr>
 <tr>
 <td>Providers</td>
-<td><strong>252</strong>: Manhattan 107, Brooklyn 145; categories Classes 188 · Camps 44 · Drop-In Activities 20; 20 activity types (Martial Arts 76, Dance 39, Swimming 36, Soccer 32 …); 84 neighbourhoods</td>
+<td><strong>253</strong>: Manhattan 108, Brooklyn 145; categories Classes 189 · Camps 44 · Drop-In Activities 20; 20 activity types in the facets (Martial Arts 76, Dance 39, Swimming 36, Soccer 33 …); 83 neighbourhood values on the cards, 21 neighbourhoods in the platform's guides</td>
 </tr>
 <tr>
 <td>Provider record</td>
@@ -134,7 +134,7 @@ Your Field NYC is the client (D11); the Hungarian instance is the reference.</em
 </tr>
 </tbody>
 </table></div>
-<h2>2. The catalogue as pulled (<code>data/providers.json</code>, 252 rows)</h2>
+<h2>2. The catalogue as pulled (<code>data/providers.json</code>, 253 rows — re-pulled 2026-09-19 evening: one provider added, Kids In Sports NYC; 26 records gained coordinates, 18 new descriptions, 3 new verified fields)</h2>
 <div class="tbl"><table>
 <thead>
 <tr>
@@ -145,19 +145,19 @@ Your Field NYC is the client (D11); the Hungarian instance is the reference.</em
 <tbody>
 <tr>
 <td>Website</td>
-<td>252 — the activation channel exists for every provider</td>
+<td>253 — the activation channel exists for every provider</td>
 </tr>
 <tr>
 <td>Phone / e-mail</td>
-<td>180 / 130</td>
+<td>181 / 130 (73 phone only, 50 neither)</td>
 </tr>
 <tr>
 <td>Coordinates</td>
-<td>219</td>
+<td>246</td>
 </tr>
 <tr>
 <td>Age ranges</td>
-<td>182 (buckets 3–5, 6–8, 9–12, Teens)</td>
+<td>183 (buckets 3–5, 6–8, 9–12, Teens)</td>
 </tr>
 <tr>
 <td>Price with amount</td>
@@ -165,11 +165,11 @@ Your Field NYC is the client (D11); the Hungarian instance is the reference.</em
 </tr>
 <tr>
 <td>Sessions</td>
-<td>73; next occurrence 83 (weekday, start time, free text)</td>
+<td>74; next occurrence 83 (weekday, start time, free text)</td>
 </tr>
 <tr>
 <td>Trial policy</td>
-<td>72 (48 explicitly free)</td>
+<td>72 (34 explicitly free)</td>
 </tr>
 <tr>
 <td>Announcement</td>
@@ -177,11 +177,11 @@ Your Field NYC is the client (D11); the Hungarian instance is the reference.</em
 </tr>
 <tr>
 <td>Verified fields</td>
-<td>every record; typically description, venue model, price, trial policy — read from the provider's official page</td>
+<td>every record but one (Goldfish Swim School Gowanus); typically description, venue model, price, trial policy — read from the provider's official page</td>
 </tr>
 <tr>
 <td>Claim</td>
-<td>15 <code>unclaimed</code>, 237 unset</td>
+<td>15 <code>unclaimed</code>, 238 unset</td>
 </tr>
 </tbody>
 </table></div>

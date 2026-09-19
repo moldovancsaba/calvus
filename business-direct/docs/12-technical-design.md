@@ -136,8 +136,9 @@ cannot turn SMS on without a consent row.
 | `send-campaigns` | every 5 min | approved campaigns: resolve audience, preference + cap per family, outbox |
 | `draft-answers` | on inbound webhook | enquiry or comment → draft from the knowledge files and the card within a minute (R14) |
 | `entitlements` | webhook-driven | Stripe events → entitlements → stage → card flag through the connector |
-| `clips` | on upload | run `MediaAdapter.clips`; each clip becomes a post draft with `media.kind = 'real'` |
+| `clips` | on upload | refuse unless the provider confirmed written parental consent for a recording that shows children (R30); run `MediaAdapter.clips`; captions on every clip (R34); each clip becomes a post draft with `media.kind = 'real'` and the consent record attached |
 | `score` | nightly 02:30 | propensity per provider → `provider_state.score`; the sequence and call-list jobs read it (ADR-13) |
+| `pattern-guard` | on every draft | refuse a draft with a banned pattern (false urgency, scarcity, confirmshaming, pressure on a stated vulnerability) or inaccessible output (R32, R34, R36) |
 | `policy-gate` | before every send and draft; at schema validation | refuse a feature whose policy fields are missing; write the policy basis (clause, consent, cap) on every message (R26) |
 | `sending-guard` | before every send | refuse when past the warm-up cap; pause the sequence at bounce ≥ 2 %; pace at the daily cap; block a provider template without `{postal_address}` (R23, Q2) |
 | `auto-approve` | on draft | a department with four clean weeks sends without a person (R25); logged; the family's Stop cancels |

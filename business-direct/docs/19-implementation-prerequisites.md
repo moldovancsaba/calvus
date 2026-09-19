@@ -23,7 +23,7 @@ implementation starts from.*
 | P-5 (ask #17) | The **opted-in share**: how many accounts turned on activity recording (saves recorded "only after you explicitly opt in, off by default") | ClassScout | campaign audiences and the avid-family definition are only opted-in accounts | real audience counts on campaign cards |
 | P-6 (asks #7, #10) | **Analytics events and counts**: families, sign-ups with source, saves, digest opens, bookings; the real prices of the three products | ClassScout | every assumption in the economics model becomes a measurement | the economics tiles; capture; cohorts |
 | P-7 (ask #6) | A **key and the write contract** for claim requests, notifications, card flags, saves for audiences — or the decision that the machine stays read-only | ClassScout | apply-to-manage, upgrades' card flags, alerts | Release 1b |
-| P-8 (ask #12) | Whether **review capture and price capture** are planned on the cards (0 reviews, 28 prices on 252 today) | ClassScout product | the AI-citation lever and the content engine depend on card quality | generated pages' readiness; anchors |
+| P-8 (ask #12) | Whether **review capture and price capture** are planned on the cards (0 reviews, 28 prices on 253 today) | ClassScout product | the AI-citation lever and the content engine depend on card quality | generated pages' readiness; anchors |
 | P-9 (ask #8) | A **pilot provider** willing to share replies, trials booked, no-shows | ClassScout + one provider | the provider view's tiles are sample until then | provider results; "your return" |
 
 ## 3. To confirm at acceptance (assumptions the prototype runs on; a "yes" closes each)

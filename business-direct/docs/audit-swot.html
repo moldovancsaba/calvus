@@ -36,13 +36,13 @@ footer{margin-top:56px;padding-top:18px;border-top:1px solid var(--line);font-si
 </head>
 <body>
 <div class="wrap">
-<nav class="docnav" aria-label="Project documentation"><span class="docnav-brand">business.direct · docs</span><a href="index.html">Overview</a><a href="brief.html">Brief</a><a href="research.html">Research</a><a href="research-2.html">Research II</a><a href="research-3.html">Research III</a><a href="research-4.html">Research IV</a><a href="audit.html">Audit</a><a href="sources.html">Sources</a><a href="design-system.html">Design system</a><a href="layouts.html">Layouts</a><a href="05-layout-specs.html">Layout specs</a><a href="decisions.html">Decisions</a><a href="build-log.html">Build log</a><a href="gate.html">Gate</a><a href="client-asks.html">Register of asks</a><a href="implementation-prerequisites.html">Prerequisites</a><a href="business-logic.html">Business logic</a><a href="ssot.html">SSOT</a><a href="architecture.html">Architecture</a><a href="technical-design.html">Technical design</a><a href="implementation-plan.html">Plan</a><a href="token-map.html">Token map</a><a href="analytics.html">Analytics</a><a href="audit-swot.html" aria-current=page>Audit · SWOT</a><a href="policy-framework.html">Policy framework</a></nav>
+<nav class="docnav" aria-label="Project documentation"><span class="docnav-brand">business.direct · docs</span><a href="index.html">Overview</a><a href="brief.html">Brief</a><a href="research.html">Research</a><a href="research-2.html">Research II</a><a href="research-3.html">Research III</a><a href="research-4.html">Research IV</a><a href="research-5.html">Research V</a><a href="audit.html">Audit</a><a href="sources.html">Sources</a><a href="design-system.html">Design system</a><a href="layouts.html">Layouts</a><a href="05-layout-specs.html">Layout specs</a><a href="decisions.html">Decisions</a><a href="build-log.html">Build log</a><a href="gate.html">Gate</a><a href="client-asks.html">Register of asks</a><a href="implementation-prerequisites.html">Prerequisites</a><a href="business-logic.html">Business logic</a><a href="ssot.html">SSOT</a><a href="architecture.html">Architecture</a><a href="technical-design.html">Technical design</a><a href="implementation-plan.html">Plan</a><a href="token-map.html">Token map</a><a href="analytics.html">Analytics</a><a href="audit-swot.html" aria-current=page>Audit · SWOT</a><a href="policy-framework.html">Policy framework</a></nav>
 <header><p class="eyebrow">Calvus · business.direct · project documentation</p><h1>business.direct — business logic audit and SWOT</h1></header>
 <p><em>Commissioned by the owner 2026-09-19 ("a deep business logic audit of the system to have
 a professional SWOT about the planned service"). Audited: <a href="business-logic.html"><code>09-business-logic.md</code></a> (§1–§9),
 the SSOT's rules R1–R22 and settings, <a href="analytics.html"><code>16-analytics-and-unit-economics.md</code></a>, the ADRs, and
 the prototype's behaviour (<code>assets/app.js</code>, rounds 1–6). Method: every rule read against
-every other rule, against the prototype, against the real catalogue (252 providers, pulled
+every other rule, against the prototype, against the real catalogue (253 providers, pulled
 2026-09-19), and against the three research rounds. Findings are numbered A1–A18 with a
 severity (</em><em>critical</em><em> = the service does not work or is unlawful as written; </em><em>major</em><em> =
 a wrong number or a missing mechanism the plan depends on; </em><em>minor</em><em> = a text or model
@@ -227,7 +227,7 @@ upgrade business at today's catalogue size.</p>
 <tr>
 <td>A15</td>
 <td>minor</td>
-<td><strong>Reviews are 0 on all 252 cards and prices known on 28</strong> — the two properties AI answers cite most. The generated-page readiness can never reach 4 of 4 today; the "AI-citation" lever (P5) is a platform product problem before it is ours.</td>
+<td><strong>Reviews are 0 on all 253 cards and prices known on 28</strong> — the two properties AI answers cite most. The generated-page readiness can never reach 4 of 4 today; the "AI-citation" lever (P5) is a platform product problem before it is ours.</td>
 <td><code>providers.json</code>; pages screen</td>
 <td>ask #12: does the platform plan reviews and price capture? Until then readiness caps at 3 of 4 and the pages carry "no reviews yet" honestly</td>
 </tr>
@@ -277,7 +277,7 @@ upgrade business at today's catalogue size.</p>
 </tr>
 <tr>
 <td>S3</td>
-<td><strong>Real data, declared honestly.</strong> 252 real providers, every tile labelled real / sample / benchmark / assumption, the economics screen exposing a 0.7 LTV : CAC rather than hiding it. Owners and clients can trust the numbers because the bad ones are shown.</td>
+<td><strong>Real data, declared honestly.</strong> 253 real providers, every tile labelled real / sample / benchmark / assumption, the economics screen exposing a 0.7 LTV : CAC rather than hiding it. Owners and clients can trust the numbers because the bad ones are shown.</td>
 <td>analytics §2.4, §8</td>
 </tr>
 <tr>
@@ -287,7 +287,7 @@ upgrade business at today's catalogue size.</p>
 </tr>
 <tr>
 <td>S5</td>
-<td><strong>One connector interface, two instances already pulled</strong> (Your Field 252, Sportolok 431). Portability is built, not promised.</td>
+<td><strong>One connector interface, two instances already pulled</strong> (Your Field 253, Sportolok 431). Portability is built, not promised.</td>
 <td>ADR-2; <code>data/</code></td>
 </tr>
 <tr>
@@ -314,7 +314,7 @@ upgrade business at today's catalogue size.</p>
 <tbody>
 <tr>
 <td>W1</td>
-<td><strong>Unit economics do not close at today's scale.</strong> Outbound to 252 providers on $49 upgrades: LTV : CAC 0.7, payback 31 months. The service is a cost centre for the platform until the catalogue is ~4× larger or ARPA is higher.</td>
+<td><strong>Unit economics do not close at today's scale.</strong> Outbound to 253 providers on $49 upgrades: LTV : CAC 0.7, payback 31 months. The service is a cost centre for the platform until the catalogue is ~4× larger or ARPA is higher.</td>
 <td>analytics §2.4</td>
 </tr>
 <tr>
@@ -334,7 +334,7 @@ upgrade business at today's catalogue size.</p>
 </tr>
 <tr>
 <td>W5</td>
-<td><strong>Thin cards</strong>: 0 reviews, 28 prices, 83 next sessions of 252. The content engine and the AI-citation lever depend on card quality the machine does not control.</td>
+<td><strong>Thin cards</strong>: 0 reviews, 28 prices, 83 next sessions of 253. The content engine and the AI-citation lever depend on card quality the machine does not control.</td>
 <td>A15</td>
 </tr>
 <tr>

@@ -27,9 +27,9 @@ from its own events, every week:
 
 | Stage | Count today (real) | Rate to next | Source of the rate |
 |---|---|---|---|
-| Identified | 252 | — | catalogue |
+| Identified | 253 | — | catalogue |
 | Reachable by e-mail | 130 | reply **5.5 %** (top-quartile benchmark; 3.43 % average, 10.7 % top decile) | [Instantly 2026 benchmark](https://instantly.ai/cold-email-benchmark-report-2026) (research II §5.1) |
-| Phone only | 72 | a call converts ~3× an e-mail; half are reached | assumption; multi-channel +40 % (research II §5.1) |
+| Phone only | 73 | a call converts ~3× an e-mail; half are reached | assumption; multi-channel +40 % (research II §5.1) |
 | Website only | 50 | not in the model until a form step exists | — |
 | Replied → applied | — | **40 %** | assumption |
 | Applied → managing | — | **80 %** (the platform confirms the claim) | assumption |
@@ -63,7 +63,7 @@ With the defaults, one quarter of outbound to the current catalogue yields about
 and 0.6 upgraded providers for ~$720 — **CAC (upgraded) ≈ $1,200 against an LTV of $784:
 LTV : CAC 0.7, payback 31 months.** Raising the reply rate to the top decile (10.7 %) only
 reaches 1.3 : 1. The model is telling the truth about the business: *outbound e-mail to a
-252-provider catalogue cannot pay for itself on $49 upgrades.* It pays in one of three
+253-provider catalogue cannot pay for itself on $49 upgrades.* It pays in one of three
 ways, and the plan should say which:
 
 - **the base machine is the platform's growth engine, not a profit centre** (D21: bundled;
@@ -166,7 +166,7 @@ purchase (P8) — both recorded, neither double-counted in revenue.
 
 ## 8. What is real, what is assumed (2026-09-19)
 
-Real: 252 · 130 · 72 · 50 (catalogue — e-mail · phone only · neither; corrected by the audit, the screen always computed them right); this session's stage counts. Benchmarks: reply rates
+Real: 253 · 130 · 73 · 50 (catalogue — e-mail · phone only · neither; the screen computes them from the file); this session's stage counts. Benchmarks: reply rates
 (Instantly), activation range and churn range (research II), $1,016 per child per sport
 (Project Play). Assumptions: every conversion rate after reply, ARPA, margin, cost per
 touch and call, operator minutes, tooling, family count, avid share, trials, enrolment,

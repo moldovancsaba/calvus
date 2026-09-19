@@ -1,6 +1,6 @@
 # business.direct — audit of the starting point
 
-*Measured 2026-09-19 with `curl` and the two converters; the videos read frame by frame.
+*Measured 2026-09-19 with `curl` and the two converters (catalogue re-pulled the same evening: 253 providers, 51 records updated); the videos read frame by frame.
 Your Field NYC is the client (D11); the Hungarian instance is the reference.*
 
 ## 1. The client platform: Your Field NYC (getyourfield.com)
@@ -10,8 +10,8 @@ Your Field NYC is the client (D11); the Hungarian instance is the reference.*
 | Stack | Next.js + Mantine on Vercel (`data-dpl-id`), English; v0.201.105 |
 | Home (`/nyc`) | 118 KB HTML, 24 scripts, 3 stylesheets; TTFB 0,53 s |
 | Structure (sitemap, 280 URLs) | `/nyc/` home · `all` · `classes` · `camps` · `drop-in-activities` · `family-events` · `map` · 22 `neighborhood-guides/*` · **251 `providers/*`** |
-| Public API (found in the site's own JS bundles; no reference page) | `browse-facets`, `site`, `providers`, `providers/{id}`, `browse?…`, `family-events`, `home-feed`, `meetup-groups`, `nearby-services?listingId=`, `claim-requests?city=`, `demand-capture`, `scout/recommend` (POST), `map-pins` (empty today) |
-| Providers | **252**: Manhattan 107, Brooklyn 145; categories Classes 188 · Camps 44 · Drop-In Activities 20; 20 activity types (Martial Arts 76, Dance 39, Swimming 36, Soccer 32 …); 84 neighbourhoods |
+| Public API (found in the site's own JS bundles; no reference page) | `browse-facets`, `site`, `providers`, `providers/{id}` (252 cards on the first pull, 253 on the re-pull the same evening), `browse?…`, `family-events`, `home-feed`, `meetup-groups`, `nearby-services?listingId=`, `claim-requests?city=`, `demand-capture`, `scout/recommend` (POST), `map-pins` (empty today) |
+| Providers | **253**: Manhattan 108, Brooklyn 145; categories Classes 189 · Camps 44 · Drop-In Activities 20; 20 activity types in the facets (Martial Arts 76, Dance 39, Swimming 36, Soccer 33 …); 83 neighbourhood values on the cards, 21 neighbourhoods in the platform's guides |
 | Provider record | name, category, borough, neighbourhood, address, geo, activity types, age ranges, short and long description, price with evidence and source, website, phone, e-mail, image, day/time tags, venue model, sessions with registration status, next occurrence (weekday, time, text), announcement, booking flag, trial policy, rating/reviews (all 0), badges, **field-level verification records** (field, method, source URL, verified by "enrichment"), updated/published dates, source count |
 | Claim state | `unclaimed` on 15, unset on 237 — **none claimed** |
 | Consumer features | sign-up, saved items, family plan with cost estimate, family preferences, neighbourhood detection, notifications endpoint |
@@ -29,20 +29,20 @@ Your Field NYC is the client (D11); the Hungarian instance is the reference.*
 | Contact | info@classscout.ai; no postal address on the site | prerequisite P-1 — CAN-SPAM needs one |
 | Provenance | listings "aggregated from public directories, civic sources, activity providers, and the Google Places API" | the card's `verifiedFields` and `sourceCount` are the provenance we cite |
 
-## 2. The catalogue as pulled (`data/providers.json`, 252 rows)
+## 2. The catalogue as pulled (`data/providers.json`, 253 rows — re-pulled 2026-09-19 evening: one provider added, Kids In Sports NYC; 26 records gained coordinates, 18 new descriptions, 3 new verified fields)
 
 | Field | Coverage |
 |---|---|
-| Website | 252 — the activation channel exists for every provider |
-| Phone / e-mail | 180 / 130 |
-| Coordinates | 219 |
-| Age ranges | 182 (buckets 3–5, 6–8, 9–12, Teens) |
+| Website | 253 — the activation channel exists for every provider |
+| Phone / e-mail | 181 / 130 (73 phone only, 50 neither) |
+| Coordinates | 246 |
+| Age ranges | 183 (buckets 3–5, 6–8, 9–12, Teens) |
 | Price with amount | 28 (evidence "stated" with source URL) — most prices are unknown to the platform |
-| Sessions | 73; next occurrence 83 (weekday, start time, free text) |
-| Trial policy | 72 (48 explicitly free) |
+| Sessions | 74; next occurrence 83 (weekday, start time, free text) |
+| Trial policy | 72 (34 explicitly free) |
 | Announcement | 26; booking enabled 10 |
-| Verified fields | every record; typically description, venue model, price, trial policy — read from the provider's official page |
-| Claim | 15 `unclaimed`, 237 unset |
+| Verified fields | every record but one (Goldfish Swim School Gowanus); typically description, venue model, price, trial policy — read from the provider's official page |
+| Claim | 15 `unclaimed`, 238 unset |
 
 Facets and site copy are in `data/platform.json`. The converter is read-only; re-run to
 refresh.
