@@ -223,6 +223,14 @@ plan's note; 24 inputs; <code>scrollWidth</code> 390 on every screen, every cont
 on a fresh load. Two slips caught by the browser before commit: a line comment that
 swallowed the rest of a statement (<code>list is not defined</code>) and a signed shift that made a
 sample audience negative (−20 nearby) — both fixed. <code>python3 check.py</code> → <code>GATE: CLEAN</code>.</p>
+<h2>Round 7b — 2026-09-19 — the platform's policy applied (D31)</h2>
+<p><strong>Built</strong> (<code>assets/app.js?v=10</code>). Children's names removed from the model: the family
+persona is <code>kids: [{age: 5}, {age: 9}]</code>; every text — the inbox header, the digest line, the
+SMS, the ask, the enquiry heads — reads "a child of N" / "your 5-year-old". Audit §1b of
+the platform's policy and terms added.</p>
+<p><strong>Measured</strong> (390 × 844): inbox header "a child of 5, a child of 9", SMS "your 5-year-old's
+trial", ask "is there a trial for my 5-year-old?", no child's name anywhere in the page
+text (regex check), 0 errors. <code>python3 check.py</code> → <code>GATE: CLEAN</code>.</p>
 <footer>Source: <code>business-direct/docs/06-build-log.md</code> · rendered by <code>docs/build.py</code>.</footer>
 </div>
 </body>

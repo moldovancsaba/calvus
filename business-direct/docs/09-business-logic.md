@@ -76,8 +76,9 @@ saved providers; the machine never lets a provider message a family who has not 
 first or saved it (R11). **An enquiry to a provider that has not claimed its page** does
 not vanish: it becomes the sales sequence's strongest touch — "a family asked about you,
 claim your page and answer her in one click" — the provider moves to *contacted*, and the
-family is told the provider has been notified (Q4). Providers see a child as an age band
-("a child of 6"); the name appears only in the family's own view (R24). On the platform side, a **comment or DM** on a published post gets
+family is told the provider has been notified (Q4). The machine stores no child's name at all — the
+platform's own policy says it does not collect children's data — so every party, the family
+included, sees "a child of 6" (R24, D31). On the platform side, a **comment or DM** on a published post gets
 a drafted reply that links to the listing; the operator approves it.
 
 ## 5. Upgrades and money (D21: bundled base, provider-bought upgrades)

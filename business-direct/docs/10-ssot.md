@@ -70,7 +70,7 @@ implementation of the enumerations and state machines below.*
 | **ProviderState** (ours) | `providerId`, `stage`, `stageChangedAt`, `stageChangedBy` (`sequence` / `reply` / `operator` / `provider`), `thread[]` | in memory today (`S.stage`, `S.threads`) |
 | **Draft** | `id`, `kind` (`post` / `sequence` / `reply` / `digest`), `providerId?`, `channels[]`, `copy`, `media?`, `state`, `ai` (bool: AI-drafted), `scheduledFor?`, `why?` | `S.posts`, `S.sequences`, `S.replies` |
 | **Sequence** | `id`, `name`, `to[providerId]`, `steps[]`, `subject`, `body` (merge fields `{name}`, `{first name}`, `{neighborhood}`, `{activity}`, `{link}`), `state`, `why` | `S.sequences` |
-| **Family** | `name`, `neighborhood`, `borough`, `kids[{name,age}]`, `saved[providerId]`, `prefs{picks,alerts,nearby,sms}`, `smsConsent[providerId]` | the platform owns the account; business.direct owns preferences and consent records |
+| **Family** | `name`, `neighborhood`, `borough`, `kids[{age}]` (ages only, R24), `saved[providerId]`, `prefs{picks,alerts,nearby,sms}`, `smsConsent[providerId]` | the platform owns the account; business.direct owns preferences and consent records |
 | **KnowledgeFile** | `path`, `text`, `owner` (`platform` / `providerId`) | `S.knowledge` |
 | **Integration** | `id`, `name`, `what`, `state`, `label`, `note` | `S.integrations` |
 | **GeneratedPage** | `activity`, `area`, `n`, `slug` | computed (`genPages()`), threshold 3 |
@@ -106,7 +106,7 @@ implementation of the enumerations and state machines below.*
 
 ## 5. Decision register
 
-`04-decisions.md` holds D1–D30. The ones the engineering documents rest on: D2 (three
+`04-decisions.md` holds D1–D31. The ones the engineering documents rest on: D2 (three
 views), D5 (DiscountDirect sibling), D6 (departments, knowledge layer, human-in-the-loop,
 optional AI, dashboard, integrations), D11 (Your Field first), D14 (two flows), D15
 (post card and pipeline strip), D17 (one page, in-memory state), D18 (sample generated
@@ -135,7 +135,7 @@ PROPOSED.
 | R21 | A provider's real recording beats any generation; the clip engine is the v1 media service; generation fills gaps only | provider media, social queue |
 | R22 | A propensity score per provider orders every sequence and the call list; recomputed nightly from the card and the events: +15 when a family saved or asked, −40 after "not my program", −20 after a bounce, 0 and excluded after unsubscribe (D30) | `score()`, `S.optOut` |
 | R23 | The outbox refuses any send past the sending domain's warm-up cap; a bounce rate ≥ 2 % pauses the sequence and alerts; recipients are paced at the daily cap (D30) | `sendInvitation`, `S.sending` |
-| R24 | A child appears to a provider as an age band ("a child of 6"); the name is shown only in the family's own view; enquiry and campaign texts to providers never carry a child's name (D30; counsel ask #13) | `enquiryCard` |
+| R24 | The machine stores no child's name; a child is an age ("a child of 6") to every party, the family included — the platform's policy does not collect children's data (D30, D31; counsel ask #13) | `S.family.kids`, `enquiryCard` |
 | R25 | Approvals may be batched (one decision for a week's real-footage clips) and a department may earn auto-approval after four clean weeks (no edits, no complaints); every auto-sent message is logged and the family can stop it (D30) | `approveClips`, `S.auto` |
 | R16 | The next-dollar ranking runs weekly on measured rates where they exist and on the documented assumption where they do not; the recap says which | `econ()`; `16-analytics…` §4 |
 | R17 | A sequence step is added or removed when its marginal reply rate per touch falls below the cost-per-touch breakeven for two consecutive weeks, inside the 4–7 benchmark | production |

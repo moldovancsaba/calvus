@@ -17,6 +17,18 @@ Your Field NYC is the client (D11); the Hungarian instance is the reference.*
 | Consumer features | sign-up, saved items, family plan with cost estimate, family preferences, neighbourhood detection, notifications endpoint |
 | Site copy | hero "Find sports your child will *love*, close to home"; "How Your Field NY works" (choose your neighbourhood → compare local options → save and plan); trust pillars; newsletter "Get the latest kids activity picks for your neighborhood"; **"List your program — reach more NYC families with a featured listing, camp placement, or local discovery profile"** |
 
+### 1b. The platform's policy and terms (read 2026-09-19, both "last updated 2026-09-12")
+
+| Clause | What it says | Consequence for business.direct |
+|---|---|---|
+| Audience | "intended for adults (18+)"; "we do not knowingly collect personal information from children"; telemetry contains "no child data" | no child's name anywhere in the machine; ages only (R24, D31) |
+| E-mail | "we do not yet offer email alerts; if we add them, the preferences you set will be described here"; a "notify me" e-mail is opt-in only | the digest and alerts require a policy revision before launch (ask #16) |
+| Account activity | views, saves and contacts are recorded for suggestions "only after you explicitly opt in", off by default | campaign audiences and the avid-family definition come only from opted-in accounts (ask #17) |
+| Claims | "claim and update requests" are a platform feature (§e-1) | apply-to-manage rides on it |
+| Sign-in | doneisbetter provides name and e-mail; no passwords | ADR-5 confirmed |
+| Contact | info@classscout.ai; no postal address on the site | ask #15 stays open — CAN-SPAM needs one |
+| Provenance | listings "aggregated from public directories, civic sources, activity providers, and the Google Places API" | the card's `verifiedFields` and `sourceCount` are the provenance we cite |
+
 ## 2. The catalogue as pulled (`data/providers.json`, 252 rows)
 
 | Field | Coverage |

@@ -195,3 +195,14 @@ plan's note; 24 inputs; `scrollWidth` 390 on every screen, every control ≥ 44 
 on a fresh load. Two slips caught by the browser before commit: a line comment that
 swallowed the rest of a statement (`list is not defined`) and a signed shift that made a
 sample audience negative (−20 nearby) — both fixed. `python3 check.py` → `GATE: CLEAN`.
+
+## Round 7b — 2026-09-19 — the platform's policy applied (D31)
+
+**Built** (`assets/app.js?v=10`). Children's names removed from the model: the family
+persona is `kids: [{age: 5}, {age: 9}]`; every text — the inbox header, the digest line, the
+SMS, the ask, the enquiry heads — reads "a child of N" / "your 5-year-old". Audit §1b of
+the platform's policy and terms added.
+
+**Measured** (390 × 844): inbox header "a child of 5, a child of 9", SMS "your 5-year-old's
+trial", ask "is there a trial for my 5-year-old?", no child's name anywhere in the page
+text (regex check), 0 errors. `python3 check.py` → `GATE: CLEAN`.

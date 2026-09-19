@@ -14,7 +14,7 @@ Built to the prototyping standard (`PROTOTYPING.md`); this index is the process 
 | 02 audit | `02-audit.md` | Your Field measured: API, 252 providers, field coverage, site copy; the Hungarian reference instance; the two videos frame by frame; what DiscountDirect provides |
 | 03 sources | `03-sources.md` | What is real (the platform's public data), what is sample, what is inherited |
 | presentation | `bemutato.html` | Standalone, English, on the product's tokens: one sentence, three numbers, the four things to click with previews, what is real, the asks, what comes next |
-| 04 decisions | `04-decisions.md` | D1–D30 |
+| 04 decisions | `04-decisions.md` | D1–D31 |
 | 05 design | `design-system.html` + `../assets/tokens.css` + `../assets/components.css` | **Gate 1 approved (D9)**: tokens and components, one source |
 | 05 layouts | `05-layout-specs.md` + `layouts.html` + `frames/` | **Gate 2 approved (D16)**: platform 1440 / 390, provider 390, family 390 |
 | 06 build log | `06-build-log.md` | Round 1: the prototype; 1b: presentation and package; 2: editors real, tablet measured; 3: phase 2 — campaigns, upgrades, recap; 4: phase 3 — conversations; 5: economics; 6: the research implemented; 7: the audit implemented |
@@ -155,4 +155,12 @@ negative signals, operator hours and batch and earned approvals, capture measure
 bands for children, stage history, consent proof, the conversations line as a pricing
 input, Release 1 re-cut into read-only and keyed halves, positioning against Sawyer.
 
-**Next.** Asks #2–8, #10, #12–13 and #15 (the postal address); a pilot provider.
+**2026-09-19 — the platform's own policy read (D31).** Asked to proceed on the open asks, the
+platform's privacy policy and terms were read from its site: adults only and no children's
+data (the machine now stores no child's name — ages only), no e-mail alerts yet (policy
+revision before the digest, ask #16), saves recorded only after an opt-in that is off by
+default (audiences from opted-in accounts, ask #17), claims an existing feature, no postal
+address published (ask #15 stays open). Audit A19 recorded.
+
+**Next.** Asks #2–8, #10, #12–13, #15–17 — the postal address and the policy revision
+before any send; a pilot provider.

@@ -333,7 +333,7 @@ implementation of the enumerations and state machines below.</em></p>
 </tr>
 <tr>
 <td><strong>Family</strong></td>
-<td><code>name</code>, <code>neighborhood</code>, <code>borough</code>, <code>kids[{name,age}]</code>, <code>saved[providerId]</code>, <code>prefs{picks,alerts,nearby,sms}</code>, <code>smsConsent[providerId]</code></td>
+<td><code>name</code>, <code>neighborhood</code>, <code>borough</code>, <code>kids[{age}]</code> (ages only, R24), <code>saved[providerId]</code>, <code>prefs{picks,alerts,nearby,sms}</code>, <code>smsConsent[providerId]</code></td>
 <td>the platform owns the account; business.direct owns preferences and consent records</td>
 </tr>
 <tr>
@@ -486,7 +486,7 @@ implementation of the enumerations and state machines below.</em></p>
 </tbody>
 </table></div>
 <h2>5. Decision register</h2>
-<p><a href="decisions.html"><code>04-decisions.md</code></a> holds D1–D30. The ones the engineering documents rest on: D2 (three
+<p><a href="decisions.html"><code>04-decisions.md</code></a> holds D1–D31. The ones the engineering documents rest on: D2 (three
 views), D5 (DiscountDirect sibling), D6 (departments, knowledge layer, human-in-the-loop,
 optional AI, dashboard, integrations), D11 (Your Field first), D14 (two flows), D15
 (post card and pipeline strip), D17 (one page, in-memory state), D18 (sample generated
@@ -594,8 +594,8 @@ PROPOSED.</p>
 </tr>
 <tr>
 <td>R24</td>
-<td>A child appears to a provider as an age band ("a child of 6"); the name is shown only in the family's own view; enquiry and campaign texts to providers never carry a child's name (D30; counsel ask #13)</td>
-<td><code>enquiryCard</code></td>
+<td>The machine stores no child's name; a child is an age ("a child of 6") to every party, the family included — the platform's policy does not collect children's data (D30, D31; counsel ask #13)</td>
+<td><code>S.family.kids</code>, <code>enquiryCard</code></td>
 </tr>
 <tr>
 <td>R25</td>

@@ -87,6 +87,53 @@ Your Field NYC is the client (D11); the Hungarian instance is the reference.</em
 </tr>
 </tbody>
 </table></div>
+<h3>1b. The platform's policy and terms (read 2026-09-19, both "last updated 2026-09-12")</h3>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>Clause</th>
+<th>What it says</th>
+<th>Consequence for business.direct</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Audience</td>
+<td>"intended for adults (18+)"; "we do not knowingly collect personal information from children"; telemetry contains "no child data"</td>
+<td>no child's name anywhere in the machine; ages only (R24, D31)</td>
+</tr>
+<tr>
+<td>E-mail</td>
+<td>"we do not yet offer email alerts; if we add them, the preferences you set will be described here"; a "notify me" e-mail is opt-in only</td>
+<td>the digest and alerts require a policy revision before launch (ask #16)</td>
+</tr>
+<tr>
+<td>Account activity</td>
+<td>views, saves and contacts are recorded for suggestions "only after you explicitly opt in", off by default</td>
+<td>campaign audiences and the avid-family definition come only from opted-in accounts (ask #17)</td>
+</tr>
+<tr>
+<td>Claims</td>
+<td>"claim and update requests" are a platform feature (§e-1)</td>
+<td>apply-to-manage rides on it</td>
+</tr>
+<tr>
+<td>Sign-in</td>
+<td>doneisbetter provides name and e-mail; no passwords</td>
+<td>ADR-5 confirmed</td>
+</tr>
+<tr>
+<td>Contact</td>
+<td>info@classscout.ai; no postal address on the site</td>
+<td>ask #15 stays open — CAN-SPAM needs one</td>
+</tr>
+<tr>
+<td>Provenance</td>
+<td>listings "aggregated from public directories, civic sources, activity providers, and the Google Places API"</td>
+<td>the card's <code>verifiedFields</code> and <code>sourceCount</code> are the provenance we cite</td>
+</tr>
+</tbody>
+</table></div>
 <h2>2. The catalogue as pulled (<code>data/providers.json</code>, 252 rows)</h2>
 <div class="tbl"><table>
 <thead>
