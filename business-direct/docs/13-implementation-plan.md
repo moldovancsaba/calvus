@@ -100,6 +100,8 @@ instance (`platform_id`). "Measured" means a number in the build log, not a clai
 
 ## 4. Blocked register
 
+Every row below is an implementation prerequisite (`19-implementation-prerequisites.md`), provided by ClassScout after acceptance; none blocks the presentation or the planning.
+
 | # | Blocked | On | Unblocks |
 |---|---|---|---|
 | B1 | Writes to the platform (claim requests, notifications, pages) | ask #5: a key and the write contract | BD-1-5, BD-3-5, BD-4-3 |

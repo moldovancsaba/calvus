@@ -112,7 +112,7 @@ implementation of the enumerations and state machines below.*
 
 ## 5. Decision register
 
-`04-decisions.md` holds D1–D33. The ones the engineering documents rest on: D2 (three
+`04-decisions.md` holds D1–D34. The ones the engineering documents rest on: D2 (three
 views), D5 (DiscountDirect sibling), D6 (departments, knowledge layer, human-in-the-loop,
 optional AI, dashboard, integrations), D11 (Your Field first), D14 (two flows), D15
 (post card and pipeline strip), D17 (one page, in-memory state), D18 (sample generated
@@ -186,7 +186,8 @@ PROPOSED.
 | `04-decisions.md` | D1–D18 |
 | `05-layout-specs.md`, `design-system.html`, `layouts.html` | gates 1 and 2 |
 | `06-build-log.md`, `07-gate.md` | rounds and the measured pass |
-| `08-client-asks.md` | open items |
+| `08-client-asks.md` | the register of asks, with states |
+| `19-implementation-prerequisites.md` | what the implementation needs after acceptance; nothing for the presentation |
 | `09-business-logic.md` | the rules end to end: parties, flows, departments, campaigns, money, families, law, recap |
 | `16-analytics-and-unit-economics.md` | CAC, LTV, avid value, content ROI, next dollar, metrics tree, events, attribution |
 | `18-responsible-data-policy-framework.md` | principles, the policy record, the gate, onboarding, the client's value, worked instances |

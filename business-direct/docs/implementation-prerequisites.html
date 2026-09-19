@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>business.direct — implementation prerequisites (after the client accepts; not needed for the presentation) — business.direct docs</title>
+<link rel="stylesheet" href="../assets/tokens.css">
+<style>/* business.direct — documentation pages on the product tokens (GDS roles, teal accent). */
+:root{--ground:var(--gds-bg-canvas,#f8fafc);--card:var(--gds-bg-surface,#fff);--ink:var(--gds-text-body,#111827);--text:#1f2937;--muted:var(--gds-text-meta,#64748b);--accent:var(--gds-brand-accent,#0f766e);--accent-deep:var(--gds-brand-accent-strong,#115e59);--line:var(--gds-border-card,#e2e8f0);--line-soft:#eef2f7;--note:var(--gds-brand-accent-tint,#e6f4f2)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--ground);color:var(--text);font-family:var(--gds-font,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif);font-size:15.5px;line-height:1.6;padding-block:0 64px;padding-inline:clamp(16px,4vw,40px)}
+.wrap{max-width:74ch;margin-inline:auto}
+.docnav{display:flex;flex-wrap:wrap;gap:4px 18px;align-items:center;padding:16px 0;border-bottom:1px solid var(--line);font-size:12px;letter-spacing:.06em;text-transform:uppercase}
+.docnav a{color:var(--muted);text-decoration:none;min-height:44px;min-width:44px;display:inline-flex;align-items:center;border-bottom:2px solid transparent}
+.docnav a:hover,.docnav a[aria-current]{color:var(--ink);border-color:var(--accent)}
+.docnav-brand{color:var(--accent-deep);font-weight:800;margin-right:6px}
+.docnav-hub{margin-left:auto}
+header{padding-block:40px 24px;border-bottom:1px solid var(--line);margin-bottom:28px}
+.eyebrow{font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--accent-deep);margin:0 0 12px;font-weight:800}
+h1,h2,h3{color:var(--ink);line-height:1.1;text-wrap:balance;margin:0;letter-spacing:-.02em}
+h1{font-size:clamp(30px,6vw,46px);font-weight:900}
+h2{font-size:clamp(23px,4vw,30px);font-weight:900;margin:48px 0 14px;padding-top:20px;border-top:1px solid var(--line)}
+h3{font-size:18px;margin:30px 0 8px;font-weight:800}
+p{margin:0 0 14px} strong{color:var(--ink);font-weight:800}
+ul,ol{padding-left:22px;margin:0 0 16px} li{margin:5px 0} li>ul{margin:6px 0 0}
+code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.86em;background:var(--note);padding:1px 5px;border-radius:4px;color:var(--ink);overflow-wrap:anywhere}
+pre{overflow-x:auto;padding:14px 16px;border:1px solid var(--line);border-radius:10px;background:var(--card);font-size:12px;line-height:1.35}
+pre code{background:none;padding:0;font-size:inherit}
+a{color:var(--accent-deep)} :focus-visible{outline:2px solid var(--accent-deep);outline-offset:2px}
+.tbl{overflow-x:auto;margin:14px 0 22px;border:1px solid var(--line);border-radius:10px;background:var(--card)}
+table{border-collapse:collapse;width:100%;font-size:13.5px;min-width:560px}
+th{text-align:left;font-weight:800;color:var(--ink);background:var(--note);padding:10px 12px;border-bottom:1px solid var(--line);font-size:11.5px;letter-spacing:.06em;text-transform:uppercase}
+td{padding:10px 12px;border-top:1px solid var(--line-soft);vertical-align:top;background:var(--card)} td:first-child{color:var(--ink)}
+footer{margin-top:56px;padding-top:18px;border-top:1px solid var(--line);font-size:12px;color:var(--muted)}
+</style>
+</head>
+<body>
+<div class="wrap">
+<nav class="docnav" aria-label="Project documentation"><span class="docnav-brand">business.direct · docs</span><a href="index.html">Overview</a><a href="brief.html">Brief</a><a href="research.html">Research</a><a href="research-2.html">Research II</a><a href="research-3.html">Research III</a><a href="research-4.html">Research IV</a><a href="audit.html">Audit</a><a href="sources.html">Sources</a><a href="design-system.html">Design system</a><a href="layouts.html">Layouts</a><a href="05-layout-specs.html">Layout specs</a><a href="decisions.html">Decisions</a><a href="build-log.html">Build log</a><a href="gate.html">Gate</a><a href="client-asks.html">Register of asks</a><a href="implementation-prerequisites.html" aria-current=page>Prerequisites</a><a href="business-logic.html">Business logic</a><a href="ssot.html">SSOT</a><a href="architecture.html">Architecture</a><a href="technical-design.html">Technical design</a><a href="implementation-plan.html">Plan</a><a href="token-map.html">Token map</a><a href="analytics.html">Analytics</a><a href="audit-swot.html">Audit · SWOT</a><a href="policy-framework.html">Policy framework</a></nav>
+<header><p class="eyebrow">Calvus · business.direct · project documentation</p><h1>business.direct — implementation prerequisites (after the client accepts; not needed for the presentation)</h1></header>
+<p><em>Written 2026-09-19 on the owner's instruction: the open items are tasks for the day the
+client accepts the prototype, not for the presentation or the planning. Nothing in this
+list is required to present, to plan, or to build the prototype further — every item is
+defaulted or sampled in the prototype and declared as such on the screen. The register of
+asks (<a href="client-asks.html"><code>08-client-asks.md</code></a>) keeps the history; this document is the checklist the
+implementation starts from.</em></p>
+<h2>1. Before the first real message can be sent (legal and policy)</h2>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>#</th>
+<th>Prerequisite</th>
+<th>Who provides</th>
+<th>Why</th>
+<th>Unblocks</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>P-1 (ask #15)</td>
+<td>The platform's registered <strong>postal address</strong> for every provider e-mail</td>
+<td>ClassScout</td>
+<td>CAN-SPAM requires a physical address; the site publishes only info@classscout.ai</td>
+<td>the policy gate's "provider e-mail" row; the sequences</td>
+</tr>
+<tr>
+<td>P-2 (ask #16)</td>
+<td>The platform's <strong>privacy policy revised</strong> to describe the digest and alerts ("we do not yet offer email alerts; if we add them, the preferences you set will be described here")</td>
+<td>ClassScout (we draft the paragraph on request)</td>
+<td>the family digest and alerts must be described before they run</td>
+<td>the gate's "digest and alerts" row</td>
+</tr>
+<tr>
+<td>P-3 (ask #18)</td>
+<td>The <strong>policy record</strong> for Your Field NYC confirmed: audience model (adults, per the policy), retention periods, AI-disclosure choice, quiet hours</td>
+<td>ClassScout</td>
+<td>the gate reads the record before every send</td>
+<td>the whole gate</td>
+</tr>
+<tr>
+<td>P-4 (ask #13)</td>
+<td>Counsel's view on <strong>children's data</strong>: which of New York's Child Data Protection Act and COPPA applies to a parent's account describing a child, and the consent texts</td>
+<td>ClassScout's counsel</td>
+<td>the machine already stores no child's name; this confirms wording</td>
+<td>enquiry and campaign texts</td>
+</tr>
+</tbody>
+</table></div>
+<h2>2. Before Release 1b (the keyed half — data and writes from the platform)</h2>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>#</th>
+<th>Prerequisite</th>
+<th>Who provides</th>
+<th>Why</th>
+<th>Unblocks</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>P-5 (ask #17)</td>
+<td>The <strong>opted-in share</strong>: how many accounts turned on activity recording (saves recorded "only after you explicitly opt in, off by default")</td>
+<td>ClassScout</td>
+<td>campaign audiences and the avid-family definition are only opted-in accounts</td>
+<td>real audience counts on campaign cards</td>
+</tr>
+<tr>
+<td>P-6 (asks #7, #10)</td>
+<td><strong>Analytics events and counts</strong>: families, sign-ups with source, saves, digest opens, bookings; the real prices of the three products</td>
+<td>ClassScout</td>
+<td>every assumption in the economics model becomes a measurement</td>
+<td>the economics tiles; capture; cohorts</td>
+</tr>
+<tr>
+<td>P-7 (ask #6)</td>
+<td>A <strong>key and the write contract</strong> for claim requests, notifications, card flags, saves for audiences — or the decision that the machine stays read-only</td>
+<td>ClassScout</td>
+<td>apply-to-manage, upgrades' card flags, alerts</td>
+<td>Release 1b</td>
+</tr>
+<tr>
+<td>P-8 (ask #12)</td>
+<td>Whether <strong>review capture and price capture</strong> are planned on the cards (0 reviews, 28 prices on 252 today)</td>
+<td>ClassScout product</td>
+<td>the AI-citation lever and the content engine depend on card quality</td>
+<td>generated pages' readiness; anchors</td>
+</tr>
+<tr>
+<td>P-9 (ask #8)</td>
+<td>A <strong>pilot provider</strong> willing to share replies, trials booked, no-shows</td>
+<td>ClassScout + one provider</td>
+<td>the provider view's tiles are sample until then</td>
+<td>provider results; "your return"</td>
+</tr>
+</tbody>
+</table></div>
+<h2>3. To confirm at acceptance (assumptions the prototype runs on; a "yes" closes each)</h2>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>#</th>
+<th>Assumption in the prototype</th>
+<th>Where it shows</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>P-10 (asks #2, #3)</td>
+<td>Demo personas: Brooklyn Force Soccer; a Park Slope parent with a child of 5 and a child of 9</td>
+<td>provider and family views</td>
+</tr>
+<tr>
+<td>P-11 (ask #4)</td>
+<td>v1 integrations = the platform API, e-mail, Instagram + Facebook, push; later = TikTok, X, SMS, Google Business Profile, calendars</td>
+<td>integrations screen</td>
+</tr>
+<tr>
+<td>P-12 (ask #5)</td>
+<td>Money: the base machine bundled by the platform; providers buy reach (featured listing, camp placement, discovery profile — sample prices); the conversations line at 0 (bundled) or priced</td>
+<td>economics inputs; provider today</td>
+</tr>
+</tbody>
+</table></div>
+<h2>4. What the presentation needs from the owner today</h2>
+<p>Nothing. The prototype, the presentation and the plan stand on defaults and samples that
+are declared on every screen. The decision to present is the only decision open.</p>
+<footer>Source: <code>business-direct/docs/19-implementation-prerequisites.md</code> · rendered by <code>docs/build.py</code>.</footer>
+</div>
+</body>
+</html>

@@ -15,12 +15,13 @@ Built to the prototyping standard (`PROTOTYPING.md`); this index is the process 
 | 02 audit | `02-audit.md` | Your Field measured: API, 252 providers, field coverage, site copy; the Hungarian reference instance; the two videos frame by frame; what DiscountDirect provides |
 | 03 sources | `03-sources.md` | What is real (the platform's public data), what is sample, what is inherited |
 | presentation | `bemutato.html` | Standalone, English, on the product's tokens: one sentence, three numbers, the four things to click with previews, what is real, the asks, what comes next |
-| 04 decisions | `04-decisions.md` | D1–D33 |
+| 04 decisions | `04-decisions.md` | D1–D34 |
 | 05 design | `design-system.html` + `../assets/tokens.css` + `../assets/components.css` | **Gate 1 approved (D9)**: tokens and components, one source |
 | 05 layouts | `05-layout-specs.md` + `layouts.html` + `frames/` | **Gate 2 approved (D16)**: platform 1440 / 390, provider 390, family 390 |
 | 06 build log | `06-build-log.md` | Round 1: the prototype; 1b: presentation and package; 2: editors real, tablet measured; 3: phase 2 — campaigns, upgrades, recap; 4: phase 3 — conversations; 5: economics; 6: the research implemented; 7: the audit implemented; 8: policy; 9: two interfaces |
 | 07 gate | `07-gate.md` + `../check.py` | Measured pass at 390, 768, 1024 and 1440: overflow, tap targets, navigation, console, links |
-| 08 owner asks | `08-client-asks.md` | Seven open items (#1 closed by D20; #4–6 assumed by D21 until answered) |
+| 08 register of asks | `08-client-asks.md` | Every item that once needed the owner, with its state: none open for the presentation; the rest moved to the prerequisites; four closed |
+| 19 prerequisites | `19-implementation-prerequisites.md` | What the implementation needs from ClassScout once the client accepts — before the first send, before Release 1b, to confirm at acceptance — not required for the presentation or the planning (D34) |
 | 09 business logic | `09-business-logic.md` | The rules end to end: parties, flows, departments, campaigns, money, families, law, recap, what the machine never does (D24) |
 | 10 SSOT | `10-ssot.md` | glossary, enumerations, entities, settings, rules, metrics, document map |
 | 11 architecture | `11-architecture.md` | context, the platform measured, quality attributes, containers, flows, integrations, stack and ADR-1–10 — **PROPOSED** (D19) |
@@ -181,4 +182,11 @@ navigation. Advanced: everything. A What-is-this panel on every screen, a How-to
 and Templates that copy sequences, knowledge files and policy records for other client
 types into the machine. Simple is the default; `?mode=advanced` opens the other.
 
-**Next.** ClassScout confirms the policy record (ask #18) and closes #15–17; a pilot provider.
+**2026-09-19 — asks re-classified (D34).** The owner: the open items are tasks for the day
+the client accepts, not for the presentation or the planning. They now live in
+`19-implementation-prerequisites.md` in three groups — before the first send, before
+Release 1b, to confirm at acceptance — and the register records that nothing is open for
+the presentation. The presentation's asks section now reads "What we ask of you today: one
+decision — go ahead", followed by what the implementation will need.
+
+**Next.** Present. After acceptance, the prerequisites checklist.

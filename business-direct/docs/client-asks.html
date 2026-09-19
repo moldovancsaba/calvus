@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>business.direct — what needs the owner — business.direct docs</title>
+<title>business.direct — the register of asks — business.direct docs</title>
 <link rel="stylesheet" href="../assets/tokens.css">
 <style>/* business.direct — documentation pages on the product tokens (GDS roles, teal accent). */
 :root{--ground:var(--gds-bg-canvas,#f8fafc);--card:var(--gds-bg-surface,#fff);--ink:var(--gds-text-body,#111827);--text:#1f2937;--muted:var(--gds-text-meta,#64748b);--accent:var(--gds-brand-accent,#0f766e);--accent-deep:var(--gds-brand-accent-strong,#115e59);--line:var(--gds-border-card,#e2e8f0);--line-soft:#eef2f7;--note:var(--gds-brand-accent-tint,#e6f4f2)}
@@ -36,106 +36,125 @@ footer{margin-top:56px;padding-top:18px;border-top:1px solid var(--line);font-si
 </head>
 <body>
 <div class="wrap">
-<nav class="docnav" aria-label="Project documentation"><span class="docnav-brand">business.direct · docs</span><a href="index.html">Overview</a><a href="brief.html">Brief</a><a href="research.html">Research</a><a href="research-2.html">Research II</a><a href="research-3.html">Research III</a><a href="research-4.html">Research IV</a><a href="audit.html">Audit</a><a href="sources.html">Sources</a><a href="design-system.html">Design system</a><a href="layouts.html">Layouts</a><a href="05-layout-specs.html">Layout specs</a><a href="decisions.html">Decisions</a><a href="build-log.html">Build log</a><a href="gate.html">Gate</a><a href="client-asks.html" aria-current=page>Owner asks</a><a href="business-logic.html">Business logic</a><a href="ssot.html">SSOT</a><a href="architecture.html">Architecture</a><a href="technical-design.html">Technical design</a><a href="implementation-plan.html">Plan</a><a href="token-map.html">Token map</a><a href="analytics.html">Analytics</a><a href="audit-swot.html">Audit · SWOT</a><a href="policy-framework.html">Policy framework</a></nav>
-<header><p class="eyebrow">Calvus · business.direct · project documentation</p><h1>business.direct — what needs the owner</h1></header>
+<nav class="docnav" aria-label="Project documentation"><span class="docnav-brand">business.direct · docs</span><a href="index.html">Overview</a><a href="brief.html">Brief</a><a href="research.html">Research</a><a href="research-2.html">Research II</a><a href="research-3.html">Research III</a><a href="research-4.html">Research IV</a><a href="audit.html">Audit</a><a href="sources.html">Sources</a><a href="design-system.html">Design system</a><a href="layouts.html">Layouts</a><a href="05-layout-specs.html">Layout specs</a><a href="decisions.html">Decisions</a><a href="build-log.html">Build log</a><a href="gate.html">Gate</a><a href="client-asks.html" aria-current=page>Register of asks</a><a href="implementation-prerequisites.html">Prerequisites</a><a href="business-logic.html">Business logic</a><a href="ssot.html">SSOT</a><a href="architecture.html">Architecture</a><a href="technical-design.html">Technical design</a><a href="implementation-plan.html">Plan</a><a href="token-map.html">Token map</a><a href="analytics.html">Analytics</a><a href="audit-swot.html">Audit · SWOT</a><a href="policy-framework.html">Policy framework</a></nav>
+<header><p class="eyebrow">Calvus · business.direct · project documentation</p><h1>business.direct — the register of asks</h1></header>
+<p><em>Every item that once needed the owner or the client, with its state. Since 2026-09-19 (D34)
+the open items are </em><em>implementation prerequisites</em><em> — tasks for the day the client accepts —
+and live in <a href="implementation-prerequisites.html"><code>19-implementation-prerequisites.md</code></a>; none is required for the presentation or
+the planning. Nothing on this page is open for the presentation.</em></p>
+<h2>Open for the presentation</h2>
+<p>None.</p>
+<h2>Moved to the implementation prerequisites (<a href="implementation-prerequisites.html"><code>19-implementation-prerequisites.md</code></a>)</h2>
 <div class="tbl"><table>
 <thead>
 <tr>
 <th>#</th>
 <th>Item</th>
-<th>Why</th>
+<th>Now</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>2</td>
+<td>Confirm the provider persona (Brooklyn Force Soccer)</td>
+<td>P-10 — defaulted (D13); confirm at acceptance</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Confirm the family persona (a Park Slope parent, a child of 5 and a child of 9)</td>
+<td>P-10 — defaulted (D13); confirm at acceptance</td>
+</tr>
+<tr>
+<td>4</td>
+<td>Which integrations are connectable in v1</td>
+<td>P-11 — assumed (D21); confirm at acceptance</td>
+</tr>
+<tr>
+<td>5</td>
+<td>Bundled by the platform, bought by the provider, or both</td>
+<td>P-12 — assumed (D21); confirm at acceptance</td>
+</tr>
+<tr>
+<td>6</td>
+<td>Whether the prototype may call the platform's write endpoints</td>
+<td>P-7 — read-only assumed (D21); a key and the contract before Release 1b</td>
+</tr>
+<tr>
+<td>7</td>
+<td>Access to the platform's analytics</td>
+<td>P-6 — before Release 1b</td>
+</tr>
+<tr>
+<td>8</td>
+<td>A pilot provider's real numbers</td>
+<td>P-9 — before Release 1b</td>
+</tr>
+<tr>
+<td>10</td>
+<td>The platform's analytics events and the real product prices</td>
+<td>P-6 — before Release 1b</td>
+</tr>
+<tr>
+<td>12</td>
+<td>Review and price capture on the cards</td>
+<td>P-8 — before Release 1b</td>
+</tr>
+<tr>
+<td>13</td>
+<td>Counsel on children's data</td>
+<td>P-4 — before the first send</td>
+</tr>
+<tr>
+<td>15</td>
+<td>The platform's postal address</td>
+<td>P-1 — before the first send</td>
+</tr>
+<tr>
+<td>16</td>
+<td>The privacy policy revised to describe the digest and alerts</td>
+<td>P-2 — before the first send</td>
+</tr>
+<tr>
+<td>17</td>
+<td>The opted-in share for audiences</td>
+<td>P-5 — before Release 1b</td>
+</tr>
+<tr>
+<td>18</td>
+<td>The policy record confirmed by ClassScout</td>
+<td>P-3 — before the first send</td>
+</tr>
+</tbody>
+</table></div>
+<h2>Closed</h2>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>#</th>
+<th>Item</th>
+<th>Closed by</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td>1</td>
-<td>~~Gate 2~~ — <strong>approved 2026-09-19 (D16)</strong>; ~~the click-through~~ — <strong>tested and accepted 2026-09-19 (D20)</strong>, round 2 shipped</td>
-<td>closed</td>
-</tr>
-<tr>
-<td>2</td>
-<td>Confirm the provider persona (Brooklyn Force Soccer) or name another real provider</td>
-<td>D13 defaults it</td>
-</tr>
-<tr>
-<td>3</td>
-<td>Confirm the family persona (Park Slope parent, children 5 and 9) or give another</td>
-<td>D13 defaults it</td>
-</tr>
-<tr>
-<td>4</td>
-<td><strong>Assumed (D21)</strong> v1 = platform API, e-mail, Instagram + Facebook, push; later = the rest — shown on the integrations screen. Which integrations to show as connectable in v1: Your Field API (given), e-mail (Resend, per D26), push, SMS (TCPA consent state), Google Business Profile, Instagram/Facebook, a calendar, a booking tool</td>
-<td>the integrations screen shows states; the list is a product decision</td>
-</tr>
-<tr>
-<td>5</td>
-<td><strong>Assumed (D21)</strong> bundled base + provider-bought reach (the platform's own three products, sample prices). Whether business.direct is offered by the platform (bundled, the "List your program" upsell) or bought by the provider (self-serve) — or both, as a setting like DiscountDirect's <code>inbox_mode</code></td>
-<td>the activation ladder and pricing states</td>
-</tr>
-<tr>
-<td>6</td>
-<td><strong>Assumed (D21)</strong> read-only. Whether <code>claim-requests</code>, <code>demand-capture</code> and <code>scout/recommend</code> may be called by the prototype (read-only today)</td>
-<td>integrations screen honesty</td>
-</tr>
-<tr>
-<td>7</td>
-<td>Access to the platform's own analytics (saves, plan usage, newsletter list size) for the intelligence tiles</td>
-<td>today every non-catalogue number is sample</td>
-</tr>
-<tr>
-<td>12</td>
-<td>Does the platform plan review capture and price capture on the cards? (0 reviews, 28 prices on 252 today — the AI-citation lever and the content engine depend on them; audit A15)</td>
-<td>generated pages, anchors</td>
-</tr>
-<tr>
-<td>13</td>
-<td>Counsel: which of New York's Child Data Protection Act and COPPA applies to a parent's account describing a child, and what consent the enquiry and campaign texts need (audit A13)</td>
-<td>family entity, provider-facing copy</td>
-</tr>
-<tr>
-<td>18</td>
-<td>The policy record for Your Field NYC to be confirmed by ClassScout: audience model (adults per the policy), retention periods, AI disclosure choice, quiet hours — the <em>Policy</em> screen lists every field</td>
-<td>policy gate</td>
-</tr>
-<tr>
-<td>16</td>
-<td>The platform's privacy policy must describe the digest and alerts before they launch ("we do not yet offer email alerts; if we add them, the preferences you set will be described here")</td>
-<td>family digest, alerts</td>
-</tr>
-<tr>
-<td>17</td>
-<td>Campaign audiences and the avid-family definition depend on the account-activity opt-in (saves recorded "only after you explicitly opt in, off by default"): the opted-in share is the real audience — a number only the platform has</td>
-<td>campaign cards, economics</td>
-</tr>
-<tr>
-<td>15</td>
-<td>The platform's registered postal address for the provider e-mail footer (CAN-SPAM; the template carries a merge field and the gate blocks a template without it). Not on the site — the published contact is info@classscout.ai</td>
-<td>every provider e-mail</td>
-</tr>
-<tr>
-<td>14</td>
-<td>~~The audit's recommendations Q1–Q12~~ — <strong>adopted and implemented 2026-09-19 (D30)</strong>. The audit's recommendations Q1–Q12 (<a href="audit-swot.html"><code>17-business-logic-audit-and-swot.md</code></a> §4) — the two critical ones (Q1 cap semantics, Q2 postal address) before any send</td>
-<td>each approved item is a D-number</td>
-</tr>
-<tr>
-<td>11</td>
-<td>~~Research III proposals P10–P12~~ — <strong>implemented 2026-09-19 (D28)</strong>. Research III proposals P10–P12: a provider propensity score ordering the sequence and the call list; a neighbourhood holdout as the first incrementality test; cohort LTV by channel</td>
-<td>each approved proposal is a D-number</td>
-</tr>
-<tr>
-<td>10</td>
-<td>The platform's analytics events for the economics model: families, sign-ups with source, saves, digest opens, bookings; and the real prices of the three products</td>
-<td><a href="analytics.html"><code>16-analytics-and-unit-economics.md</code></a> §8 — every assumption becomes a measurement</td>
+<td>Gate 2; the owner's click-through</td>
+<td>D16, D20</td>
 </tr>
 <tr>
 <td>9</td>
-<td>~~Research II proposals P1–P9~~ — <strong>implemented 2026-09-19 (D28)</strong>; P9 (voice) stays later. Research II proposals P1–P9 (<a href="research-2.html"><code>01b-research-acquisition-content-sales.md</code></a> §6): a media department with three adapters, the clip engine, labelling in the pipeline, the weekly content cadence, AI-citation readiness, the public digest, sending infrastructure and a third touch, upgrade at the activation moment, voice later</td>
-<td>each approved proposal is a D-number and a build round</td>
+<td>Research II proposals P1–P9</td>
+<td>implemented, D28 (P9 voice stays later)</td>
 </tr>
 <tr>
-<td>8</td>
-<td>The provider's real numbers, if a pilot provider agrees: replies, trials booked, no-shows</td>
-<td>the provider view's tiles</td>
+<td>11</td>
+<td>Research III proposals P10–P12</td>
+<td>implemented, D28</td>
+</tr>
+<tr>
+<td>14</td>
+<td>The audit's recommendations Q1–Q12</td>
+<td>adopted and implemented, D30</td>
 </tr>
 </tbody>
 </table></div>
