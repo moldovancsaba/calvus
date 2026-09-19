@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Calvus hub — cross-project audit</title>
+<style>:root{--bg:#f7f7f7;--surface:#fff;--text:#1e1e1e;--muted:#626262;--line:#e5e5e5;--accent:#111}
+*{box-sizing:border-box}body{margin:0;font-family:Inter,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;background:var(--bg);color:var(--text);font-size:15.5px;line-height:1.6;padding:0 clamp(16px,4vw,40px) 64px}
+.wrap{max-width:76ch;margin:0 auto}.top{display:flex;flex-wrap:wrap;gap:8px 18px;align-items:center;padding:16px 0;border-bottom:1px solid var(--line);font-size:13px;color:var(--muted)}
+.top a{color:var(--accent);text-decoration:none;min-height:44px;display:inline-flex;align-items:center;font-weight:600}
+h1{font-size:clamp(28px,5vw,40px);line-height:1.1;margin:32px 0 10px;letter-spacing:-.01em}h2{font-size:22px;margin:44px 0 10px;padding-top:18px;border-top:1px solid var(--line)}h3{font-size:17px;margin:26px 0 8px}
+p{margin:0 0 12px}li{margin:4px 0}strong{font-weight:700}em{color:var(--muted)}
+code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.86em;background:#ececec;padding:1px 5px;border-radius:5px;overflow-wrap:anywhere}
+.tbl{overflow-x:auto;margin:12px 0 20px;border:1px solid var(--line);border-radius:12px;background:var(--surface)}table{border-collapse:collapse;width:100%;font-size:13.5px;min-width:560px}
+th{text-align:left;font-weight:700;background:var(--bg);padding:10px 12px;border-bottom:1px solid var(--line);font-size:12px;letter-spacing:.04em;text-transform:uppercase;color:var(--muted)}td{padding:10px 12px;border-top:1px solid var(--line);vertical-align:top}
+footer{margin-top:48px;padding-top:16px;border-top:1px solid var(--line);font-size:12px;color:var(--muted)}</style>
+</head>
+<body><div class="wrap">
+<div class="top"><b>Calvus</b><a href="index.html">Project Hub</a><a href="prototyping.html">How we prototype</a><a href="hub-audit.html">Hub audit</a><a href="holdvolgy/docs/index.html">Holdvölgy docs</a><a href="discountdirect/docs.html">DiscountDirect docs</a><a href="idbc-salary-guide/docs/index.html">IDBC docs</a><a href="lexodont.hu/docs/index.html">Lexodont docs</a><a href="business-direct/docs/index.html">business.direct docs</a></div>
+<h1>Calvus hub — cross-project audit</h1>
+<p><em>2026-09-20. Every project on the hub compared with every other and with the standard
+(<code>PROTOTYPING.md</code>): what business.direct misses that another project has, what
+business.direct does that the others miss, and the recommended actions. Method: the
+folders, gates, docs sets and live URLs were read and counted with scripts (not from
+memory); every figure below is what the tool returned. Recommended actions are PROPOSED —
+the owner decides which become work, and nothing here is a presentation blocker for any
+project.</em></p>
+<h2>1. The projects, measured</h2>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>Measure</th>
+<th>Lexodont</th>
+<th>Lexodont (Balsamiq)</th>
+<th>IDBC Salary Guide</th>
+<th>DiscountDirect</th>
+<th>Holdvölgy</th>
+<th>business.direct</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>What it is</td>
+<td>dental site wireframe, two fidelities</td>
+<td>the sketch mirror</td>
+<td>client research guide, 7 pages, real survey data</td>
+<td>retention engine prototype, docs flat</td>
+<td>winery site HU + EN, generated</td>
+<td>marketing machine prototype, three views</td>
+</tr>
+<tr>
+<td>Live on the hub</td>
+<td>yes</td>
+<td>yes</td>
+<td>yes</td>
+<td>yes</td>
+<td>yes</td>
+<td>yes</td>
+</tr>
+<tr>
+<td>Docs set (standard slots)</td>
+<td>00–08, 10–14 (15 md)</td>
+<td>none — mirrored by Lexodont's docs</td>
+<td>00, 01, 02, 04, 05, 07, 08, 10–14 (13 md; no 03, 06 — <code>data/SOURCES-AND-GAPS.md</code> stands in)</td>
+<td>full, flat, upper-case names (15 md) + EXECUTIVE</td>
+<td>00–14 with per-page build logs (20 md)</td>
+<td>00–19 incl. 01b–01f, 09, 16–19 (24 md)</td>
+</tr>
+<tr>
+<td>Decisions in the register</td>
+<td>D1–D15</td>
+<td>—</td>
+<td>D1–D27</td>
+<td>D1–D27</td>
+<td>D1–D18</td>
+<td>D1–D35</td>
+</tr>
+<tr>
+<td>Research with sources</td>
+<td>none (honestly declared)</td>
+<td>—</td>
+<td>client documents only, 0 links</td>
+<td>95 linked sources</td>
+<td>benchmarks named, <strong>0 links</strong></td>
+<td>224 linked sources, primary marked</td>
+</tr>
+<tr>
+<td>Presentation (<code>bemutato</code>)</td>
+<td>HU</td>
+<td>—</td>
+<td>HU</td>
+<td>HU</td>
+<td>HU</td>
+<td>EN (client's language)</td>
+</tr>
+<tr>
+<td>"What we ask today"</td>
+<td>list of asks</td>
+<td>—</td>
+<td>15 open asks</td>
+<td>9 open asks</td>
+<td>asks in <code>00-plan.md</code> §6</td>
+<td>one decision; prerequisites separate</td>
+</tr>
+<tr>
+<td>Gate checks</td>
+<td>links, anchors, docs links, fidelity parity</td>
+<td>—</td>
+<td>+ chart-asset version, inert markers</td>
+<td>covered by Holdvölgy's gate</td>
+<td>+ stale-phrase scan, prototype banner</td>
+<td>+ data shape, script parse, stale-phrase scan, decision range, issue count, ask references, rules map</td>
+</tr>
+<tr>
+<td>Widths measured (gate doc)</td>
+<td>390, 1440</td>
+<td>—</td>
+<td>375 only</td>
+<td>375, 1024</td>
+<td>390, 1024, 1440</td>
+<td>390, 768, 1024, 1440</td>
+</tr>
+<tr>
+<td>SSOT rules</td>
+<td>R1–R7</td>
+<td>—</td>
+<td>R1–R11</td>
+<td>R1–R21</td>
+<td>R1–R11</td>
+<td>R1–R36</td>
+</tr>
+<tr>
+<td>Architecture</td>
+<td>5 ADRs, stack PROPOSED</td>
+<td>—</td>
+<td>8 ADRs, PROPOSED</td>
+<td>14 ADRs, <strong>decided</strong> (D26)</td>
+<td>9 ADRs, PROPOSED</td>
+<td>14 ADRs, PROPOSED</td>
+</tr>
+<tr>
+<td>Business logic document</td>
+<td>no</td>
+<td>—</td>
+<td>no</td>
+<td>yes (<code>BUSINESS-LOGIC.md</code>)</td>
+<td>no</td>
+<td>yes (<code>09</code>)</td>
+</tr>
+<tr>
+<td>Unit economics / analytics</td>
+<td>no</td>
+<td>—</td>
+<td>no</td>
+<td>no</td>
+<td>no</td>
+<td>yes (<code>16</code>, the Economics screen)</td>
+</tr>
+<tr>
+<td>Audit + SWOT of the logic</td>
+<td>no</td>
+<td>—</td>
+<td>no</td>
+<td>no</td>
+<td>no</td>
+<td>yes (<code>17</code>)</td>
+</tr>
+<tr>
+<td>Responsible-data policy record + gate</td>
+<td>no</td>
+<td>—</td>
+<td>no</td>
+<td>no</td>
+<td>no</td>
+<td>yes (<code>18</code>, R26–R36)</td>
+</tr>
+<tr>
+<td>Sensitive-data exposure of the domain</td>
+<td><strong>health</strong> — a dental practice; booking through a third-party embed (Flexi-Dent)</td>
+<td>same</td>
+<td><strong>personal data at registration</strong> (consent checkbox present), salary data</td>
+<td><strong>consumer offers, consent per channel</strong> (the strongest of the four)</td>
+<td><strong>alcohol</strong> — age gate on HU and EN pages; shop with orders</td>
+<td>families and children — covered</td>
+</tr>
+<tr>
+<td>Simple / Advanced interface, help, templates</td>
+<td>no</td>
+<td>—</td>
+<td>no</td>
+<td>no</td>
+<td>no</td>
+<td>yes</td>
+</tr>
+<tr>
+<td>Prerequisites separated from asks</td>
+<td>no</td>
+<td>—</td>
+<td>no</td>
+<td>no</td>
+<td>no</td>
+<td>yes (<code>19</code>)</td>
+</tr>
+<tr>
+<td>Stale-phrase scan in the gate</td>
+<td>no</td>
+<td>—</td>
+<td>no</td>
+<td>via Holdvölgy</td>
+<td>yes</td>
+<td>yes</td>
+</tr>
+</tbody>
+</table></div>
+<h2>2. What business.direct misses that another project has</h2>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>#</th>
+<th>The other project has</th>
+<th>business.direct today</th>
+<th>Recommended action</th>
+<th>Effort</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>B1</td>
+<td><strong>IDBC's gate checks inert controls</strong> (<code>is-unavailable</code> on every button that does nothing)</td>
+<td>inert controls exist (Connect, Choose in production) with a <code>.inert</code> class but no gate check</td>
+<td>add check 9: every inert control carries <code>aria-disabled</code> and a title; fail otherwise</td>
+<td>small</td>
+</tr>
+<tr>
+<td>B2</td>
+<td><strong>Holdvölgy's gate checks the prototype banner</strong> on every page</td>
+<td>one page, one banner, no check</td>
+<td>add check 10: the banner text is the current one</td>
+<td>small</td>
+</tr>
+<tr>
+<td>B3</td>
+<td><strong>DiscountDirect's <code>EXECUTIVE.md</code></strong> — a one-page executive summary with the evidence</td>
+<td>the presentation covers the executive story; no standalone summary for a reader who wants prose, not a page with previews</td>
+<td>write <code>EXECUTIVE.md</code> (one page: thesis, evidence, economics finding, the ask) — or decide the presentation is enough</td>
+<td>small</td>
+</tr>
+<tr>
+<td>B4</td>
+<td><strong>Holdvölgy's asset inventory</strong> (<code>asset-inventory.json</code>, <code>assets-used.md</code>)</td>
+<td>media comes from the cards; no inventory of what the machine may reuse</td>
+<td>not needed until the clip engine is real; note in the plan (BD-2-7)</td>
+<td>none now</td>
+</tr>
+<tr>
+<td>B5</td>
+<td><strong>DiscountDirect's decided stack</strong></td>
+<td>ADRs PROPOSED by design (D19)</td>
+<td>correct as is; flips become D-numbers when the client accepts</td>
+<td>none</td>
+</tr>
+<tr>
+<td>B6</td>
+<td><strong>Lexodont's two-fidelity parity check</strong></td>
+<td>not applicable (one fidelity)</td>
+<td>none</td>
+<td>none</td>
+</tr>
+</tbody>
+</table></div>
+<p>business.direct misses nothing structural; B1 and B2 are gate hardening that the other
+projects taught.</p>
+<h2>3. What business.direct does that the others miss</h2>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>#</th>
+<th>business.direct has</th>
+<th>Who misses it</th>
+<th>Why it matters</th>
+<th>Recommended action</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>A1</td>
+<td><strong>Sourced research</strong> (224 links, primary marked, link-checked)</td>
+<td>Holdvölgy (benchmarks named, no links), IDBC (client docs only), Lexodont (none, declared)</td>
+<td>the standard requires "benchmarks with sources"; an unsourced figure cannot be defended in front of a client</td>
+<td>Holdvölgy: add the links to <code>01-research-benchmarks.md</code> (the sites were measured — the URLs exist); IDBC: a short market section with sources is optional (the guide is the client's data); Lexodont: nothing — its honesty is correct</td>
+</tr>
+<tr>
+<td>A2</td>
+<td><strong>A responsible-data policy record and gate</strong> (R26–R36)</td>
+<td>every other project</td>
+<td>each has a sensitive domain: <strong>Lexodont — health</strong> (a booking embed collects patient data; GDPR Art. 9 applies; the docs mention the privacy page once); <strong>IDBC — registration</strong> (a consent checkbox exists, but no rule says what is stored, for how long, or that no marketing follows without consent); <strong>DiscountDirect — consumer marketing</strong> (consent per channel is in the SSOT, but no rule on minors, vulnerable buyers, dark patterns or AI disclosure); <strong>Holdvölgy — alcohol</strong> (the age gate is built on both languages, but no rule on marketing to minors, the shop's age check at purchase, or the wine-club's data)</td>
+<td>add a <strong>policy record section to each project's <code>10-ssot.md</code></strong> from the framework's schema (<code>business-direct/docs/18-…</code> §2), filled for that domain; the gate row per feature follows when each project is built for real</td>
+</tr>
+<tr>
+<td>A3</td>
+<td><strong>A business-logic document</strong> with a rules map the gate checks</td>
+<td>Lexodont, IDBC, Holdvölgy</td>
+<td>the rules live in prose across several docs; nothing checks that every SSOT rule is stated where a reader would look</td>
+<td>for Holdvölgy and IDBC add a short <code>09-business-logic.md</code> (Holdvölgy: shop, club, age gate, HU/EN; IDBC: paywall, registration, data updates); Lexodont: not needed (a content site)</td>
+</tr>
+<tr>
+<td>A4</td>
+<td><strong>Stale-phrase and consistency checks</strong> in the gate</td>
+<td>Lexodont, IDBC (stale scan); all four (decision range, issue count, ask references)</td>
+<td>the owner caught stale text four times in Holdvölgy and again in business.direct; only two gates scan for it</td>
+<td>port the stale scan and the decision-range check to <code>lexodont.hu/check.py</code> and <code>idbc-salary-guide/check.py</code>; the issue-count check where a plan exists</td>
+</tr>
+<tr>
+<td>A5</td>
+<td><strong>Four widths measured</strong></td>
+<td>IDBC (375 only), DiscountDirect (375, 1024), Lexodont (390, 1440)</td>
+<td>the standard says phone and desktop are measured, not eyeballed; the tablet width is where two-column grids break</td>
+<td>one measured pass at 768 and 1440 for IDBC, 390 and 1440 for DiscountDirect, 768 for Lexodont — written into each <code>07-gate.md</code></td>
+</tr>
+<tr>
+<td>A6</td>
+<td><strong>"What we ask today: one decision"</strong> with prerequisites in a separate document</td>
+<td>IDBC (15 open asks in the presentation's register), DiscountDirect (9), Lexodont (6)</td>
+<td>the owner's rule (D34): an ask is never a presentation blocker</td>
+<td>re-classify each project's asks into "nothing today" + <code>19-implementation-prerequisites.md</code>; the presentations' ask sections say so</td>
+</tr>
+<tr>
+<td>A7</td>
+<td><strong>Unit economics</strong> (CAC, LTV, the next dollar)</td>
+<td>all</td>
+<td>only relevant where a business runs: DiscountDirect (the retention engine) and Holdvölgy (the shop and club)</td>
+<td>DiscountDirect: an economics section (offer margin, uplift, churn) would strengthen its executive summary; Holdvölgy: shop and club economics belong to the client's numbers — a prerequisite, not our work</td>
+</tr>
+<tr>
+<td>A8</td>
+<td><strong>Audit + SWOT</strong> of the logic</td>
+<td>all</td>
+<td>the audit found two critical contradictions in business.direct's own rules within a day of writing them</td>
+<td>a one-hour audit of DiscountDirect's business logic against its SSOT (27 decisions, 21 rules) is the one worth doing — it is the other project with rules</td>
+</tr>
+<tr>
+<td>A9</td>
+<td><strong>Simple / Advanced interface, help, templates</strong></td>
+<td>all</td>
+<td>only for prototypes an operator runs day to day</td>
+<td>DiscountDirect's seller console is that case: a Simple mode with recommendations is a round of work when the project resumes; the others are sites, not consoles</td>
+</tr>
+<tr>
+<td>A10</td>
+<td><strong>English throughout</strong> where the client is English</td>
+<td>—</td>
+<td>correct per client</td>
+<td>none — every other client is Hungarian and their presentations are in Hungarian, which is right</td>
+</tr>
+</tbody>
+</table></div>
+<h2>4. What the others do well that business.direct should keep</h2>
+<ul>
+<li><strong>Holdvölgy's generator</strong> (one content source → HU and EN, every page) and its <strong>per-page
+  build logs</strong> are the model for any multi-page, multi-language site; business.direct is
+  one page in one language by directive and needs neither.</li>
+<li><strong>IDBC's data converters</strong> with the client's workbooks as arguments, output verified
+  byte-identical on a re-run — business.direct's converter follows the same discipline
+  (the re-pull on 2026-09-19 was diffed record by record).</li>
+<li><strong>DiscountDirect's decided stack</strong> shows what the ADRs become once a client says yes.</li>
+<li><strong>Lexodont's honesty</strong> ("no research was done for this project") is the right way to
+  record an absence.</li>
+</ul>
+<h2>5. Findings that are not about business.direct</h2>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>#</th>
+<th>Finding</th>
+<th>Project</th>
+<th>Recommended action</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>F1</td>
+<td>The IDBC asks register has 15 open items, several already answered by the client's 2026-09-18 mail round (per its process log)</td>
+<td>IDBC</td>
+<td>close what the mail answered; move the rest to prerequisites (A6)</td>
+</tr>
+<tr>
+<td>F2</td>
+<td>Holdvölgy's <code>08 client asks</code> slot points at <code>00-plan.md</code> §6 rather than a numbered register with states</td>
+<td>Holdvölgy</td>
+<td>a <code>08-client-asks.md</code> in the standard's form, or leave and note the deviation in <code>07</code>… — the standard allows a stated deviation</td>
+</tr>
+<tr>
+<td>F3</td>
+<td>IDBC has no <code>03-sources.md</code>; <code>data/SOURCES-AND-GAPS.md</code> is the equivalent and richer</td>
+<td>IDBC</td>
+<td>note the deviation in the docs index (it already names the file) — no change</td>
+</tr>
+<tr>
+<td>F4</td>
+<td>Holdvölgy's benchmark research names the sites but carries no links</td>
+<td>Holdvölgy</td>
+<td>add them (A1)</td>
+</tr>
+<tr>
+<td>F5</td>
+<td>Lexodont's docs mention the privacy page once and the booking embed twice; a dental site is health data</td>
+<td>Lexodont</td>
+<td>a policy record paragraph (A2) before the site is built for real; nothing for the wireframe</td>
+</tr>
+<tr>
+<td>F6</td>
+<td>DiscountDirect's SSOT has one mention of minors and none of vulnerable buyers or dark patterns, in a system that sends timed, limited offers</td>
+<td>DiscountDirect</td>
+<td>the framework's rules R32 (no pressure) and R36 (no dark patterns) are exactly its risk — add them to its SSOT (A2)</td>
+</tr>
+</tbody>
+</table></div>
+<h2>6. Recommended actions, prioritised</h2>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>Priority</th>
+<th>Action</th>
+<th>Projects</th>
+<th>Why first</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>Policy record section in each SSOT from the framework schema (A2)</td>
+<td>Lexodont, IDBC, DiscountDirect, Holdvölgy</td>
+<td>the owner's directive: responsible data for every client, not only business.direct; each has a sensitive domain</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Port the stale-phrase scan and the decision-range check to the two gates that lack them (A4)</td>
+<td>Lexodont, IDBC</td>
+<td>the owner's stated pain, twice</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Re-classify asks into "nothing today" + prerequisites (A6, F1)</td>
+<td>IDBC, DiscountDirect, Lexodont</td>
+<td>the owner's rule (D34)</td>
+</tr>
+<tr>
+<td>4</td>
+<td>Add the benchmark links (A1, F4)</td>
+<td>Holdvölgy</td>
+<td>the standard's requirement</td>
+</tr>
+<tr>
+<td>5</td>
+<td>Measure the missing widths (A5)</td>
+<td>IDBC, DiscountDirect, Lexodont</td>
+<td>the standard's requirement; cheap</td>
+</tr>
+<tr>
+<td>6</td>
+<td>Gate hardening in business.direct (B1, B2)</td>
+<td>business.direct</td>
+<td>learned from IDBC and Holdvölgy</td>
+</tr>
+<tr>
+<td>7</td>
+<td>Business-logic documents (A3) and the DiscountDirect audit (A8)</td>
+<td>Holdvölgy, IDBC, DiscountDirect</td>
+<td>when each project resumes</td>
+</tr>
+<tr>
+<td>8</td>
+<td><code>EXECUTIVE.md</code> for business.direct (B3)</td>
+<td>business.direct</td>
+<td>optional; the presentation covers it</td>
+</tr>
+</tbody>
+</table></div>
+<p>None of these is required to present any project. Items 1–3 change what a client would
+be told; 4–8 are quality. All are the owner's call.</p>
+<footer>Source: <code>HUB-AUDIT.md</code>, rendered by <code>build-docs.py</code>.</footer>
+</div></body></html>
