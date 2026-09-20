@@ -171,6 +171,12 @@ must actually happen before every push, not just be claimed:
   `img { height: auto }` so width/height attributes never distort (owner found a
   black, stretched map on the live site, 2026-09-16). The gate includes a
   rendered look at every image-led section, not only measured numbers.
+- **No studio name, no tooling, no internal-documentation links on any client-facing page, on every
+  project** (owner, 2026-09-20, after finding it four times). Presentations link only to the
+  prototype; every page's footer and eyebrow carry the project's name and year, never "Source: …
+  rendered by build.py"; documentation is set on the project's own tokens and fonts, never a
+  generic docs theme; in prose the studio is "the studio". The root `check.py` enforces the first
+  three; the aesthetic is judged with a rendered look before every push.
 - **Never delete a URL that has been live.** When content moves, leave a redirect
   page at the old path (owner incident 2026-09-16: a cached hub card led to a 404).
 

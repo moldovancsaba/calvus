@@ -35,6 +35,19 @@ for p in list(ROOT.rglob("bemutato.html")) + list(ROOT.rglob("presentation.html"
         if _re2.search(r"(index|research|audit|decisions|design-system|layouts|gate|build-log|executive|business-logic|ssot|architecture|plan|sources|evidence|market|economics|responsible|first-customer|product-|documentation|brief|benchmarks|assets|sweep|token|client-asks|prerequisites)", h) and h.endswith(".html"):
             failed.append(f"{p.relative_to(ROOT)}: internal documentation link {h} in a client-facing document"); break
 
+# Every project page (prototype and documentation): no studio name, and no tooling in the page
+# chrome — a footer or eyebrow that says "Source: … rendered by build.py" is technical
+# information the client has no use for (owner rule, 2026-09-20). Body text of the technical
+# documents may name files; the footer and the eyebrow may not.
+for p in ROOT.rglob("*.html"):
+    if any(s in p.parts for s in (".git", ".claude", "node_modules")) or p.parent == ROOT: continue
+    t2 = p.read_text(encoding="utf-8", errors="replace")
+    if "Calvus" in t2: failed.append(f"{p.relative_to(ROOT)}: studio name on a project page")
+    for tag in ("footer", "eyebrow"):
+        for m in _re2.finditer(r'<footer[^>]*>(.*?)</footer>' if tag == "footer" else r'class="eyebrow"[^>]*>(.*?)</p>', t2, _re2.S):
+            if _re2.search(r"rendered by|build\.py|build-docs\.py|Source: <code>", m.group(1)):
+                failed.append(f"{p.relative_to(ROOT)}: tooling named in the page {tag}"); break
+
 # Every HTML file in the repo, outside .git and the worktrees, whether or not a project gate
 # already read it: relative href/src must resolve. Cheap, and it catches a new folder nobody
 # wired a gate for yet.
