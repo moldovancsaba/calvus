@@ -65,4 +65,7 @@ Release 1a, read-only against the platform: the sales sequence with its sending 
 reply inbox, the provider's team, the content queue with labels, economics on assumptions,
 family preferences by signed link. Release 1b, with the platform's key: claim requests,
 audiences from saves, notifications, card flags, sign-up sources, bookings. Then real
-intelligence and generated pages; then campaigns, results and upgrades billed by Stripe.
+intelligence and generated pages; then campaigns, results and upgrades billed by Stripe. The build
+is specified to implementation grade: every service verified and priced on the day, seventeen
+modules with pseudo code, nine two-week sprints with an acceptance test each
+(`20-system-blueprint.md`, `13-implementation-plan.md`).
