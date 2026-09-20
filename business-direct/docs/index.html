@@ -37,194 +37,17 @@ footer{margin-top:56px;padding-top:18px;border-top:1px solid var(--line);font-si
 </head>
 <body>
 <div class="wrap">
-<nav class="docnav" aria-label="Project documentation"><span class="docnav-brand">business.direct · docs</span><a href="index.html" aria-current=page>Overview</a><a href="brief.html">Brief</a><a href="research.html">Research</a><a href="research-2.html">Research II</a><a href="research-3.html">Research III</a><a href="research-4.html">Research IV</a><a href="research-5.html">Research V</a><a href="research-6.html">Research VI</a><a href="research-7.html">Research VII</a><a href="audit.html">Audit</a><a href="sources.html">Sources</a><a href="design-system.html">Design system</a><a href="layouts.html">Layouts</a><a href="05-layout-specs.html">Layout specs</a><a href="decisions.html">Decisions</a><a href="build-log.html">Build log</a><a href="gate.html">Gate</a><a href="client-asks.html">Register of asks</a><a href="implementation-prerequisites.html">Prerequisites</a><a href="business-logic.html">Business logic</a><a href="ssot.html">SSOT</a><a href="architecture.html">Architecture</a><a href="technical-design.html">Technical design</a><a href="implementation-plan.html">Plan</a><a href="system-blueprint.html">System blueprint</a><a href="documentation-audit.html">Documentation audit</a><a href="claims-register.html">Claims register</a><a href="legal.html">Legal position</a><a href="token-map.html">Token map</a><a href="executive.html">Executive summary</a><a href="business-case.html">Business case</a><a href="analytics.html">Analytics</a><a href="audit-swot.html">Audit · SWOT</a><a href="policy-framework.html">Policy framework</a></nav>
+<nav class="docnav" aria-label="Project documentation"><span class="docnav-brand">business.direct · docs</span><a href="index.html" aria-current=page>Overview</a><a href="executive-summary.html">Executive summary</a><a href="product-definition.html">Product definition</a><a href="product-specification.html">Product specification</a><a href="market.html">Market</a><a href="economics.html">Economics</a><a href="business-logic.html">Business logic and SSOT</a><a href="architecture.html">Architecture and blueprint</a><a href="delivery-plan.html">Delivery plan</a><a href="responsible-data.html">Responsible data and legal</a><a href="first-customer-classscout.html">First customer</a><a href="evidence.html">Evidence</a><a href="research.html">Research I</a><a href="research-2.html">Research II</a><a href="research-3.html">Research III</a><a href="research-4.html">Research IV</a><a href="research-5.html">Research V</a><a href="research-6.html">Research VI</a><a href="design-system.html">Design system</a><a href="layouts.html">Layouts</a><a href="05-layout-specs.html">Layout specs</a><a href="decisions.html">Decisions</a><a href="build-log.html">Build log</a><a href="gate.html">Gate</a><a href="register-of-asks.html">Register of asks</a><a href="logic-audit.html">Logic audit</a><a href="documentation-audit.html">Documentation audit</a></nav>
 <header><p class="eyebrow">Calvus · business.direct · project documentation</p><h1>business.direct — project documentation</h1></header>
-<p class="notice" role="note"><b>This documentation set is being replaced (audit D40).</b> business.direct is a standalone product — the one-person sales and marketing team; ClassScout is its first customer. The <a href="presentation.html">presentation</a>, the <a href="executive.html">executive summary</a> and the <a href="business-case.html">business case</a> are written for the product; most other pages still read as the first instance's project until the <a href="documentation-audit.html">transformation programme</a> replaces them.</p>
-<p>An automated marketing machine for B2B2C listing platforms — the one-person sales and
-marketing team for a listed business, run by the platform, with the consumer as the
-third role. First client: <strong>ClassScout</strong>, operator of <strong>Your Field NYC</strong> (getyourfield.com);
-built for any client, each with its own responsible-data policy record. Sibling of DiscountDirect.
-Built to the prototyping standard (<code>PROTOTYPING.md</code>); this index is the process log.</p>
-<div class="tbl"><table>
-<thead>
-<tr>
-<th>Slot</th>
-<th>File</th>
-<th>What it holds</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>presentation</td>
-<td><code>presentation.html</code></td>
-<td>The product's presentation for a classified media owner: the customer and their week, what they lose, the question, the product (marketing · B2B sales · retention, the advertiser's own team, the human gate, the loop), how the owner uses it, the benefits with the economics in the product, the first customer as proof, delivery, the decision; the demo as an appendix (<code>bemutato.html</code> redirects here)</td>
-</tr>
-<tr>
-<td>00 product definition</td>
-<td><a href="brief.html"><code>00-brief.md</code></a></td>
-<td>business.direct in the owner's words: for classified media owners — content to every medium, B2B sales (contact, acquire, reduce churn), the owner's economics as a service; the persona; ClassScout as the example and first buyer; the problem; what is built; what is real</td>
-</tr>
-<tr>
-<td>01 research</td>
-<td><a href="research.html"><code>01-research.md</code></a></td>
-<td>Sourced: reputation and claiming, speed to lead, reminders, digests, generated pages, marketplace monetisation, AI adoption and human-in-the-loop, EU AI Act Art. 50, US CAN-SPAM and TCPA, the Hungarian reference market</td>
-</tr>
-<tr>
-<td>01b research II</td>
-<td><a href="research-2.html"><code>01b-research-acquisition-content-sales.md</code></a></td>
-<td>Acquiring customers for classified media (demand and supply side), content strategies, the AI creation services (Higgsfield and the video / image / audio / design / scheduling landscape with prices and the labelling rules), the sales processes with benchmarks; P1–P9 (implemented, D28)</td>
-</tr>
-<tr>
-<td>01c research III</td>
-<td><a href="research-3.html"><code>01c-research-data-driven-marketing.md</code></a></td>
-<td>Case studies and practices behind the data-driven decision flow: Yelp (Receptionist, Hatch, revenue per location), Angi, Thumbtack, Rover; LTV : CAC and payback lines; attribution → incrementality → MMM; Booking.com; next-best-action; P10–P12 (implemented, D28)</td>
-</tr>
-<tr>
-<td>01e research IV</td>
-<td><a href="research-4.html"><code>01e-research-responsible-data.md</code></a></td>
-<td>Responsible data and children's rights: the law by market (COPPA 2025, NY CDPA, California and the states, GDPR Art. 8, DSA Art. 28, the UK Children's Code), the enforcement record, the frameworks (privacy by design, ICO, ISO 27701, NIST, LEGO), the business value of doing it properly</td>
-</tr>
-<tr>
-<td>01f research V</td>
-<td><a href="research-5.html"><code>01f-research-beyond-children.md</code></a></td>
-<td>Beyond children: children in real footage, the adults who work with them, people in vulnerable circumstances, protected characteristics, accessibility, sensitive data categories, dark patterns and AI manipulation — the law and the enforcement behind each, the rule it becomes (R30–R36), how it generalises</td>
-</tr>
-<tr>
-<td>01g research VI</td>
-<td><a href="research-6.html"><code>01g-research-real-system.md</code></a></td>
-<td>The real system's services verified on the day: hosting, database, cache, files, jobs, e-mail, Meta, SMS, payments, drafting, transcription, the media worker, credentials, sign-in, observability — auth, review, limits, prices, alternatives; what each needs before the first run; the monthly cost at pilot and at the sizing target; what is assumed</td>
-</tr>
-<tr>
-<td>01h research VII</td>
-<td><a href="research-7.html"><code>01h-research-product-market.md</code></a></td>
-<td>The product's market: the classified-media segment and how it earns, the site software owners run and what it does not do, what they buy for the pieces and at what price, the gap the product fills, the product's SWOT, what was not found (phase B)</td>
-</tr>
-<tr>
-<td>02 audit</td>
-<td><a href="audit.html"><code>02-audit.md</code></a></td>
-<td>Your Field measured: API, 253 providers, field coverage, site copy, the platform's own policy and terms; the Hungarian reference instance; the two videos frame by frame; what DiscountDirect provides</td>
-</tr>
-<tr>
-<td>03 sources</td>
-<td><a href="sources.html"><code>03-sources.md</code></a></td>
-<td>What is real (the platform's public data), what is sample (generated from real cards), what is inherited</td>
-</tr>
-<tr>
-<td>04 decisions</td>
-<td><a href="decisions.html"><code>04-decisions.md</code></a></td>
-<td>D1–D43</td>
-</tr>
-<tr>
-<td>05 design</td>
-<td><code>design-system.html</code> + <code>../assets/tokens.css</code> + <code>../assets/components.css</code></td>
-<td><strong>Gate 1 approved (D9)</strong>: tokens and components, one source</td>
-</tr>
-<tr>
-<td>05 layouts</td>
-<td><a href="05-layout-specs.html"><code>05-layout-specs.md</code></a> + <code>layouts.html</code> + <code>frames/</code></td>
-<td><strong>Gate 2 approved (D16)</strong>: platform 1440 / 390, provider 390, family 390; the later screens reuse the same grids</td>
-</tr>
-<tr>
-<td>06 build log</td>
-<td><a href="build-log.html"><code>06-build-log.md</code></a></td>
-<td>Ten rounds and a re-pull: the prototype; presentation and package; editors and tablet; campaigns, upgrades, recap; conversations; economics; the research implemented; the audit implemented; the policy screen; the two interfaces; beyond children; the catalogue re-pulled</td>
-</tr>
-<tr>
-<td>07 gate</td>
-<td><a href="gate.html"><code>07-gate.md</code></a> + <code>../check.py</code></td>
-<td>What the script checks (links, anchors, docs cross-links, data, script, stale phrases); the measured pass at 390, 768, 1024 and 1440</td>
-</tr>
-<tr>
-<td>08 register of asks</td>
-<td><a href="client-asks.html"><code>08-client-asks.md</code></a></td>
-<td>Closed (D41) — history: every item that once needed the owner or the first customer, with where it went</td>
-</tr>
-<tr>
-<td>09 business logic</td>
-<td><a href="business-logic.html"><code>09-business-logic.md</code></a></td>
-<td>The rules end to end: parties, the two flows, the two interfaces, departments, campaigns, conversations, money, families, responsible data for every client, law, the recap, data-driven decisions, what the research and the audit changed, what the machine never does</td>
-</tr>
-<tr>
-<td>10 SSOT</td>
-<td><a href="ssot.html"><code>10-ssot.md</code></a></td>
-<td>glossary, enumerations, entities, settings, rules R1–R36, metrics, document map</td>
-</tr>
-<tr>
-<td>11 architecture</td>
-<td><a href="architecture.html"><code>11-architecture.md</code></a></td>
-<td>context, the platform measured, quality attributes, containers (incl. the media worker), flows, integrations, stack and ADR-1–25 — the build baseline (D37)</td>
-</tr>
-<tr>
-<td>12 technical design</td>
-<td><a href="technical-design.html"><code>12-technical-design.md</code></a></td>
-<td>screens, content model, state machines, jobs, connector, media and channel adapter interfaces, drafting, i18n, operations</td>
-</tr>
-<tr>
-<td>13 plan</td>
-<td><a href="implementation-plan.html"><code>13-implementation-plan.md</code></a></td>
-<td>seven milestones, nine two-week sprints with an acceptance test each and a sprint-0 checklist, 66 issues with a Definition of Done, blocked register (the prerequisites), risks, release scope in two halves</td>
-</tr>
-<tr>
-<td>14 token map</td>
-<td><a href="token-map.html"><code>14-token-map.md</code></a></td>
-<td>tokens and components → GDS + Mantine; contrast computed</td>
-</tr>
-<tr>
-<td>15 executive summary</td>
-<td><a href="executive.html"><code>15-executive-summary.md</code></a></td>
-<td>One page: the classified media owner's situation and complication, the question, the product, how the owner uses it, the benefits, the proof, the decision (D41)</td>
-</tr>
-<tr>
-<td>16 economics department</td>
-<td><a href="analytics.html"><code>16-analytics-and-unit-economics.md</code></a></td>
-<td>CAC / LTV / payback for providers, the marketing value of an avid family, content ROI, the next-dollar rule, the metrics tree, events and attribution, rules R16–R19; what is real vs assumed (D26)</td>
-</tr>
-<tr>
-<td>17 audit · SWOT</td>
-<td><a href="audit-swot.html"><code>17-business-logic-audit-and-swot.md</code></a></td>
-<td>Audit of the business logic: 19 findings with fixes; the SWOT with evidence; the recommendations Q1–Q12 (adopted and implemented, D30)</td>
-</tr>
-<tr>
-<td>18 policy framework</td>
-<td><a href="policy-framework.html"><code>18-responsible-data-policy-framework.md</code></a></td>
-<td>Seventeen principles, the policy record per instance, the gate (ten rows), onboarding, the client's value, two worked instances, how it generalises (D32, D35)</td>
-</tr>
-<tr>
-<td>20 system blueprint</td>
-<td><a href="system-blueprint.html"><code>20-system-blueprint.md</code></a></td>
-<td>The document a developer builds from: drawings (context, deployment, module map, the two pipelines, the clip engine, the state machines), the repository layout, seventeen modules with what each owns and pseudo code, data contracts, the cron table, the outbox in full, security, configuration, the media worker, the test plan, operations, the prototype → module map (D37)</td>
-</tr>
-<tr>
-<td>21 deep audit and the plan</td>
-<td><a href="documentation-audit.html"><code>21-documentation-audit.md</code></a></td>
-<td>The deep audit of every file by error class with file-level evidence; what survives; the scorecard; the owner's answers; the transformation programme's status; <strong>§10 the consolidation plan (D43): the final twelve documents, what each existing file becomes, the acceptance criteria per document, the six steps in order</strong></td>
-</tr>
-<tr>
-<td>22 value</td>
-<td><a href="business-case.html"><code>22-business-case.md</code></a></td>
-<td>The value for the media owner — the economics as a service: what the product computes (listing price, advertiser CAC and LTV, visitor cost and value, churn and retention, the next dollar, the plan), the funnel and rates, the first customer's worked example, sensitivity, the costs the owner carries (D41)</td>
-</tr>
-<tr>
-<td>23 claims register</td>
-<td><a href="claims-register.html"><code>23-claims-register.md</code></a></td>
-<td>Every figure in the top layer and every vendor figure in research VI, with its source opened on 2026-09-20 and its status — P · A · corrected · assumption · owner; what the register changed (phase A)</td>
-</tr>
-<tr>
-<td>24 legal position</td>
-<td><a href="legal.html"><code>24-legal-and-data-processing.md</code></a></td>
-<td>The product as processor for the media owner: roles per data class, the documents the product must have (terms, DPA, privacy policy, sub-processors, security, retention, AI disclosure), the children's-data stance, the ten questions for counsel (phase D)</td>
-</tr>
-<tr>
-<td>19 first-customer onboarding</td>
-<td><a href="implementation-prerequisites.html"><code>19-implementation-prerequisites.md</code></a></td>
-<td>The ClassScout instance's onboarding inputs by the feature each unblocks — before the first message, before the keyed features, the instance settings to confirm; nothing needed for the presentation (D34, D41)</td>
-</tr>
-</tbody>
-</table></div>
-<p>Rendered by <code>build.py</code> (<code>python3 business-direct/docs/build.py</code>); gate <code>python3 business-direct/check.py</code>
-(also run by the root <code>check.py</code>). Data: <code>python3 business-direct/data/fetch-yourfield.py</code>
-(client) and <code>fetch-sportolok.py</code> (reference).</p>
-<h2>Reading paths (phase F)</h2>
+<p><strong>business.direct</strong> is a standalone product for classified media owners — listing platforms,
+directories, marketplaces of local businesses — that runs the three jobs their business never
+stops needing: <strong>marketing</strong> (content generated from the listings and delivered to every medium),
+<strong>B2B sales</strong> (every listed business contacted and acquired as a paying advertiser) and
+<strong>retention</strong> (churn seen weeks ahead), with a human gate on everything and the owner's own
+economics as a service. Example persona and first buyer: <strong>ClassScout</strong>, operator of <strong>Your Field
+NYC</strong>; the prototype runs on their real listings. Sibling of DiscountDirect. This index is also the
+process log.</p>
+<h2>The set</h2>
 <div class="tbl"><table>
 <thead>
 <tr>
@@ -235,32 +58,93 @@ Built to the prototyping standard (<code>PROTOTYPING.md</code>); this index is t
 </thead>
 <tbody>
 <tr>
-<td><strong>A classified media owner / a prospect</strong></td>
-<td><code>presentation.html</code></td>
-<td><a href="executive.html"><code>15-executive-summary.md</code></a> · <a href="business-case.html"><code>22-business-case.md</code></a> · <a href="brief.html"><code>00-brief.md</code></a> (the product definition) · <a href="policy-framework.html"><code>18-responsible-data-policy-framework.md</code></a> §5</td>
+<td><strong>A classified media owner; the stakeholders</strong></td>
+<td><a href="presentation.html"><code>presentation.html</code></a></td>
+<td><a href="executive-summary.html"><code>executive-summary.md</code></a> · <a href="product-definition.html"><code>product-definition.md</code></a> · <a href="product-specification.html"><code>product-specification.md</code></a> · <a href="market.html"><code>market.md</code></a> · <a href="economics.html"><code>economics.md</code></a></td>
 </tr>
 <tr>
 <td><strong>The delivery team</strong></td>
-<td><a href="ssot.html"><code>10-ssot.md</code></a> (§1a the product layer)</td>
-<td><a href="business-logic.html"><code>09-business-logic.md</code></a> · <a href="architecture.html"><code>11-architecture.md</code></a> · <a href="technical-design.html"><code>12-technical-design.md</code></a> · <a href="system-blueprint.html"><code>20-system-blueprint.md</code></a> · <a href="implementation-plan.html"><code>13-implementation-plan.md</code></a> (§2b sprints, §5b governance) · <a href="legal.html"><code>24-legal-and-data-processing.md</code></a> · <a href="token-map.html"><code>14-token-map.md</code></a></td>
+<td><a href="business-logic.html"><code>business-logic.md</code></a></td>
+<td><a href="architecture.html"><code>architecture.md</code></a> · <a href="delivery-plan.html"><code>delivery-plan.md</code></a> (sprints, governance, the operating model, the sign-off sheet) · <a href="responsible-data.html"><code>responsible-data.md</code></a> · the design set (<code>design-system.html</code>, <code>layouts.html</code>, <a href="05-layout-specs.html"><code>05-layout-specs.md</code></a>, <code>frames/</code>)</td>
 </tr>
 <tr>
-<td><strong>The first customer's instance (ClassScout · Your Field NYC)</strong></td>
-<td><a href="implementation-prerequisites.html"><code>19-implementation-prerequisites.md</code></a> (onboarding inputs)</td>
-<td><a href="audit.html"><code>02-audit.md</code></a> (their site measured) · <a href="sources.html"><code>03-sources.md</code></a> (what is real) · <a href="audit-swot.html"><code>17-business-logic-audit-and-swot.md</code></a> §3 (the pilot's SWOT) · the Policy and Economics screens</td>
+<td><strong>The first customer</strong></td>
+<td><a href="first-customer-classscout.html"><code>first-customer-classscout.md</code></a></td>
+<td>the Policy and Economics screens of the prototype</td>
 </tr>
 <tr>
-<td><strong>Evidence</strong></td>
-<td><a href="claims-register.html"><code>23-claims-register.md</code></a></td>
-<td>research I–VII (<code>01</code>–<code>01h</code>) · <a href="analytics.html"><code>16-analytics-and-unit-economics.md</code></a> (the Economics department's specification)</td>
+<td><strong>Anyone checking a figure</strong></td>
+<td><a href="evidence.html"><code>evidence.md</code></a></td>
+<td>research I–VI (<a href="research.html"><code>01-research.md</code></a> … <a href="research-6.html"><code>01g-research-real-system.md</code></a>) and <a href="market.html"><code>market.md</code></a> (VII)</td>
 </tr>
 <tr>
 <td><strong>History</strong></td>
-<td><a href="decisions.html"><code>04-decisions.md</code></a></td>
-<td><a href="build-log.html"><code>06-build-log.md</code></a> · <a href="gate.html"><code>07-gate.md</code></a> · <a href="client-asks.html"><code>08-client-asks.md</code></a> (closed) · <a href="documentation-audit.html"><code>21-documentation-audit.md</code></a></td>
+<td><a href="decisions.html"><code>decisions.md</code></a></td>
+<td><a href="build-log.html"><code>build-log.md</code></a> · <a href="gate.html"><code>gate.md</code></a> · <a href="register-of-asks.html"><code>register-of-asks.md</code></a> · <a href="logic-audit.html"><code>logic-audit.md</code></a> · <a href="documentation-audit.html"><code>documentation-audit.md</code></a></td>
 </tr>
 </tbody>
 </table></div>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>Document</th>
+<th>What it holds</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>presentation.html</code></td>
+<td>the customer and their week → what they lose → the question → the product → how the owner uses it → the benefits → the first customer → delivery → the decision; the demo as an appendix (<code>bemutato.html</code> and every earlier page name redirect here or to their new home)</td>
+</tr>
+<tr>
+<td><a href="executive-summary.html"><code>executive-summary.md</code></a></td>
+<td>one page: situation, complication, question, the product, how it is used, the benefits, the proof, the decision</td>
+</tr>
+<tr>
+<td><a href="product-definition.html"><code>product-definition.md</code></a></td>
+<td>the product in the owner's words: the three jobs, the departments, the vocabulary, the persona, ClassScout as example and first buyer, the problem, what is built, what is real</td>
+</tr>
+<tr>
+<td><a href="product-specification.html"><code>product-specification.md</code></a></td>
+<td>how it works and how the customer uses it, screen by screen and role by role; what runs alone, what needs a person; onboarding; what it never does; the benefits, measured</td>
+</tr>
+<tr>
+<td><a href="market.html"><code>market.md</code></a></td>
+<td>the classified-media segment, what owners run and buy, the gap, the product's SWOT</td>
+</tr>
+<tr>
+<td><a href="economics.html"><code>economics.md</code></a></td>
+<td>the Economics department: what the product computes for the owner, the funnel and rates, the first customer's worked example, sensitivity; Part B the model, the events, the decision rules</td>
+</tr>
+<tr>
+<td><a href="business-logic.html"><code>business-logic.md</code></a></td>
+<td>the rules R1–R37 end to end; Part B the SSOT: the product layer, glossary, enumerations, entities, settings, the rules register, metrics</td>
+</tr>
+<tr>
+<td><a href="architecture.html"><code>architecture.md</code></a></td>
+<td>context, quality attributes, containers, the ADRs; Part B the technical design; Part C the system blueprint with pseudo code; the token map as appendix</td>
+</tr>
+<tr>
+<td><a href="delivery-plan.html"><code>delivery-plan.md</code></a></td>
+<td>milestones, the nine sprints with acceptance tests, the sprint-0 checklist, issues with a Definition of Done, the blocked register, risks with owners and triggers, governance, the operating model, the stakeholder sign-off sheet</td>
+</tr>
+<tr>
+<td><a href="responsible-data.html"><code>responsible-data.md</code></a></td>
+<td>the seventeen principles, the policy record per site, the gate, onboarding, the customer's value; Part B the product's processor position, the documents it must have, sub-processors, the counsel list</td>
+</tr>
+<tr>
+<td><a href="first-customer-classscout.html"><code>first-customer-classscout.md</code></a></td>
+<td>their site measured, what is real and sample, the onboarding inputs by feature, the pilot's SWOT, the closed asks</td>
+</tr>
+<tr>
+<td><a href="evidence.html"><code>evidence.md</code></a></td>
+<td>the claims register — every figure with its source opened and its status — and the research base</td>
+</tr>
+</tbody>
+</table></div>
+<p>Rendered by <code>build.py</code> (<code>python3 business-direct/docs/build.py</code>); gate <code>python3 business-direct/check.py</code>
+(also run by the root <code>check.py</code>). Data: <code>python3 business-direct/data/fetch-yourfield.py</code>
+(the first customer's listings) and <code>fetch-sportolok.py</code> (the reference connector's data).</p>
 <h2>Process log</h2>
 <p><strong>2026-09-19 — stage 0–2.</strong> The owner named the product, chose three views, all four
 automations, real platform data and the DiscountDirect family (D1–D5), then widened the
@@ -291,8 +175,8 @@ detail drawer, generated pages, integrations, knowledge and rules), the provider
 knowledge, the family's inbox, saved and preferences. Every approval moves state: an approved
 post lands on the calendar and in the family's inbox; the approved invitation moves 130
 providers to <em>contacted</em> and three sample replies arrive; "Apply to manage" in the provider
-view moves the persona to <em>managing</em>. Measured at 390 and 1440 (<a href="build-log.html"><code>06-build-log.md</code></a>,
-<a href="gate.html"><code>07-gate.md</code></a>); gate clean.</p>
+view moves the persona to <em>managing</em>. Measured at 390 and 1440 (<a href="build-log.html"><code>build-log.md</code></a>,
+<a href="gate.html"><code>gate.md</code></a>); gate clean.</p>
 <p><strong>2026-09-19 — presentation and technical package (D19).</strong> <code>bemutato.html</code> in English on
 the product's tokens, with the prototype previewed per view (deep links <code>?view=&amp;screen=</code>
 added to <code>app.js</code>). The technical package <code>10</code>–<code>14</code>: SSOT, architecture with eight PROPOSED
@@ -310,7 +194,7 @@ business.direct's gate, renderer and converter; the standard notes the deep-link
 <p><strong>2026-09-19 — phase 2 (D21–D24).</strong> "Continue with the next phase and update all related
 documentation." Asks #4–6 assumed (D21) so the phase could ship: provider campaigns and
 results, the platform's upgrade products, the intelligence recap, campaigns in the family
-inbox with the reason line; <a href="business-logic.html"><code>09-business-logic.md</code></a> written; SSOT, architecture (ADR-9
+inbox with the reason line; <a href="business-logic.html"><code>business-logic.md</code></a> written; SSOT, architecture (ADR-9
 Stripe on the platform's account, ADR-10 audiences from the platform's data only),
 technical design, plan (M5), token map, layout spec, brief, asks and the presentation
 updated. Measured at 390 and 1440.</p>
@@ -331,7 +215,7 @@ owner; each becomes a D-number.</p>
 <p><strong>2026-09-19 — economics (D26).</strong> The owner asked for ROI, CAC and LTV planning for the B2B
 clients, the marketing value of avid users and the analytics that let the system decide.
 Built as the platform's <em>Economics</em> screen (23 editable inputs, eight tiles, the next-dollar
-ranking, the quarter's funnel, a 12-month plan) and written as <a href="analytics.html"><code>16-analytics-and-unit-economics.md</code></a>
+ranking, the quarter's funnel, a 12-month plan) and written as <a href="economics.html"><code>economics.md</code></a>
 (the model, the metrics tree, the events to log, attribution, R16–R19). The defaults expose
 the first real finding: outbound alone does not pay for $49 upgrades on 252 providers.</p>
 <p><strong>2026-09-19 — research III and the decision flow in the presentation.</strong> The owner asked
@@ -386,7 +270,7 @@ and Templates that copy sequences, knowledge files and policy records for other 
 types into the machine. Simple is the default; <code>?mode=advanced</code> opens the other.</p>
 <p><strong>2026-09-19 — asks re-classified (D34).</strong> The owner: the open items are tasks for the day
 the client accepts, not for the presentation or the planning. They now live in
-<a href="implementation-prerequisites.html"><code>19-implementation-prerequisites.md</code></a> in three groups — before the first send, before
+<a href="first-customer-classscout.html"><code>first-customer-classscout.md</code></a> in three groups — before the first send, before
 Release 1b, to confirm at acceptance — and the register records that nothing is open for
 the presentation. The presentation's asks section now reads "What we ask of you today: one
 decision — go ahead", followed by what the implementation will need.</p>
@@ -429,7 +313,7 @@ each and a sprint-0 checklist.</p>
 <p><strong>2026-09-20 — the documentation audited and the top of the pyramid rebuilt (D38).</strong> The
 owner read the live presentation: a guided tour of screens under a Hungarian filename, for an
 English-speaking client whose problem it never quantified. A Big4-standard audit of the whole
-set (<a href="documentation-audit.html"><code>21-documentation-audit.md</code></a>: ten criteria, a scorecard, twelve findings with root causes)
+set (<a href="documentation-audit.html"><code>documentation-audit.md</code></a>: ten criteria, a scorecard, twelve findings with root causes)
 found the engineering set sound and the two documents a client opens first failing. Shipped
 the same day: <code>presentation.html</code> rebuilt as situation → complication → question → answer →
 value → proof → responsible by design → delivery → decision, with the demo as an appendix;
@@ -461,10 +345,11 @@ onboarding file was reframed and the register of asks closed.</p>
 <p><strong>2026-09-20 — the plan to fix all documentation and plans (D43).</strong> Audit §10: the final set of
 twelve documents (a product specification new among them), the disposition of every existing
 file, ten acceptance criteria per document, six steps in order.</p>
-<p><strong>Next.</strong> Step 1 of the consolidation on the owner's go. The programme's earlier phases (<a href="documentation-audit.html"><code>21-documentation-audit.md</code></a> §8): the claims register
-and source verification (A), product-market research VII and the product SWOT (B), the rest of
-the business logic in product terms (C), the product's legal position (D), owners and dates in
-the plan (E), consolidation (F), the gate rows (G).</p>
+<p><strong>2026-09-20 — the consolidation executed (D44).</strong> Thirty-three files became the final set: twelve
+documents with English names, the prototype, the design set, the research base and the history;
+the product specification written; every old URL a redirect; the replacement notice removed; the
+gate rewritten for the final set; the product standard recorded at the hub (<code>PRODUCT.md</code>).</p>
+<p><strong>Next.</strong> Present to the stakeholders with the sign-off sheet (<a href="delivery-plan.html"><code>delivery-plan.md</code></a> §8).</p>
 <footer>Source: <code>business-direct/docs/README.md</code> · rendered by <code>docs/build.py</code>.</footer>
 </div>
 </body>

@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>business.direct — product definition — business.direct docs</title>
+<link rel="stylesheet" href="../assets/tokens.css">
+<style>/* business.direct — documentation pages on the product tokens (GDS roles, teal accent). */
+:root{--ground:var(--gds-bg-canvas,#f8fafc);--card:var(--gds-bg-surface,#fff);--ink:var(--gds-text-body,#111827);--text:#1f2937;--muted:var(--gds-text-meta,#64748b);--accent:var(--gds-brand-accent,#0f766e);--accent-deep:var(--gds-brand-accent-strong,#115e59);--line:var(--gds-border-card,#e2e8f0);--line-soft:#eef2f7;--note:var(--gds-brand-accent-tint,#e6f4f2)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--ground);color:var(--text);font-family:var(--gds-font,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif);font-size:15.5px;line-height:1.6;padding-block:0 64px;padding-inline:clamp(16px,4vw,40px)}
+.wrap{max-width:74ch;margin-inline:auto}
+.docnav{display:flex;flex-wrap:wrap;gap:4px 18px;align-items:center;padding:16px 0;border-bottom:1px solid var(--line);font-size:12px;letter-spacing:.06em;text-transform:uppercase}
+.docnav a{color:var(--muted);text-decoration:none;min-height:44px;min-width:44px;display:inline-flex;align-items:center;border-bottom:2px solid transparent}
+.docnav a:hover,.docnav a[aria-current]{color:var(--ink);border-color:var(--accent)}
+.docnav-brand{color:var(--accent-deep);font-weight:800;margin-right:6px}
+.docnav-hub{margin-left:auto}
+header{padding-block:40px 24px;border-bottom:1px solid var(--line);margin-bottom:28px}
+.eyebrow{font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--accent-deep);margin:0 0 12px;font-weight:800}
+h1,h2,h3{color:var(--ink);line-height:1.1;text-wrap:balance;margin:0;letter-spacing:-.02em}
+h1{font-size:clamp(30px,6vw,46px);font-weight:900}
+h2{font-size:clamp(23px,4vw,30px);font-weight:900;margin:48px 0 14px;padding-top:20px;border-top:1px solid var(--line)}
+h3{font-size:18px;margin:30px 0 8px;font-weight:800}
+p{margin:0 0 14px} strong{color:var(--ink);font-weight:800}
+ul,ol{padding-left:22px;margin:0 0 16px} li{margin:5px 0} li>ul{margin:6px 0 0}
+code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.86em;background:var(--note);padding:1px 5px;border-radius:4px;color:var(--ink);overflow-wrap:anywhere}
+.notice{margin:0 0 22px;padding:12px 16px;border-radius:10px;background:var(--gds-brand-accent-tint);border:1px solid var(--gds-border-card);font-size:13.5px;font-weight:600}
+pre{overflow-x:auto;padding:14px 16px;border:1px solid var(--line);border-radius:10px;background:var(--card);font-size:12px;line-height:1.35}
+pre code{background:none;padding:0;font-size:inherit}
+a{color:var(--accent-deep)} :focus-visible{outline:2px solid var(--accent-deep);outline-offset:2px}
+.tbl{overflow-x:auto;margin:14px 0 22px;border:1px solid var(--line);border-radius:10px;background:var(--card)}
+table{border-collapse:collapse;width:100%;font-size:13.5px;min-width:560px}
+th{text-align:left;font-weight:800;color:var(--ink);background:var(--note);padding:10px 12px;border-bottom:1px solid var(--line);font-size:11.5px;letter-spacing:.06em;text-transform:uppercase}
+td{padding:10px 12px;border-top:1px solid var(--line-soft);vertical-align:top;background:var(--card)} td:first-child{color:var(--ink)}
+footer{margin-top:56px;padding-top:18px;border-top:1px solid var(--line);font-size:12px;color:var(--muted)}
+</style>
+</head>
+<body>
+<div class="wrap">
+<nav class="docnav" aria-label="Project documentation"><span class="docnav-brand">business.direct · docs</span><a href="index.html">Overview</a><a href="executive-summary.html">Executive summary</a><a href="product-definition.html" aria-current=page>Product definition</a><a href="product-specification.html">Product specification</a><a href="market.html">Market</a><a href="economics.html">Economics</a><a href="business-logic.html">Business logic and SSOT</a><a href="architecture.html">Architecture and blueprint</a><a href="delivery-plan.html">Delivery plan</a><a href="responsible-data.html">Responsible data and legal</a><a href="first-customer-classscout.html">First customer</a><a href="evidence.html">Evidence</a><a href="research.html">Research I</a><a href="research-2.html">Research II</a><a href="research-3.html">Research III</a><a href="research-4.html">Research IV</a><a href="research-5.html">Research V</a><a href="research-6.html">Research VI</a><a href="design-system.html">Design system</a><a href="layouts.html">Layouts</a><a href="05-layout-specs.html">Layout specs</a><a href="decisions.html">Decisions</a><a href="build-log.html">Build log</a><a href="gate.html">Gate</a><a href="register-of-asks.html">Register of asks</a><a href="logic-audit.html">Logic audit</a><a href="documentation-audit.html">Documentation audit</a></nav>
+<header><p class="eyebrow">Calvus · business.direct · project documentation</p><h1>business.direct — product definition</h1></header>
+<p><em>The product definition. Written 2026-09-19; rewritten 2026-09-20 in the owner's definition
+(D41): a standalone product for classified media owners — content generated and delivered to
+every medium, the B2B sales process (contact, acquire, reduce churn), the owner's economics as a
+service; ClassScout is the persona example and the first buyer. Everything here is what the
+owner said, what the first customer's site exposes, and what the two reference videos show.</em></p>
+<h2>The product</h2>
+<p><strong>business.direct is a standalone product for classified media owners</strong> — listing platforms,
+directories, marketplaces of local businesses — to run the three jobs their business never
+stops needing: <strong>marketing</strong> (content generated from the listings and delivered to every
+medium, so visitors come and come back), <strong>B2B sales</strong> (every listed business contacted and
+acquired as a paying advertiser through a lawful pipeline) and <strong>retention</strong> (churn seen weeks
+ahead and answered with a touch). It runs as departments the owner approves, on the owner's
+own data and plain-text knowledge files, with a human gate on everything, one loop that ranks
+the next dollar, and <strong>the owner's economics as a service</strong> — what a listing sells for, what an
+advertiser costs to win and is worth, what a visitor costs to bring in, what churn costs and
+retention keeps, all costs and incomes, on one screen. Every site is an instance with its own
+policy record; the second site is a record and a connector.</p>
+<h2>The customer persona</h2>
+<p>The classified media owner: one person (or a very small team) who gathered the supply,
+built the site, and is now the whole sales and marketing department for both sides of it —
+thousands of listings not yet sold to the businesses on them, visitors who save and hear
+nothing, advertisers who leave for reasons visible weeks earlier. The pain and the machine are
+the same whether the listings are children's activities, sports clubs, jobs or second-hand goods.</p>
+<h2>The example and first customer</h2>
+<p><strong>ClassScout</strong>, operator of <strong>Your Field NYC</strong> (getyourfield.com; contact info@classscout.ai) —
+"youth sports discovery, starting with your neighborhood": a children's-activity directory in
+New York, families on one side, activity providers on the other, a catalogue gathered by a
+pipeline with thousands of listings still to publish, one founder as the department. ClassScout
+is the <strong>example</strong> every document uses to make the persona concrete and the <strong>first buyer</strong> of
+the product. In the product's terms its visitors are "families" and its advertisers are
+"providers" — the product shows each site's own words. The prototype runs on 253 of its
+providers pulled from its public API: the demo's data, not the size of the customer's business.
+<em>Most én sportolok!</em> (sport.doneisbetter.com) is a second directory pulled through the same
+connector shape to prove the second instance.</p>
+<p><strong>business.direct is a sibling of DiscountDirect</strong> (D5): DiscountDirect retains a web shop's
+customers; business.direct sells, fills and keeps a classified media site.</p>
+<h2>The problem</h2>
+<p>One person cannot run marketing, sales and retention for thousands of listings. The money is
+lost where nobody is: listings nobody contacted earn nothing; the second and third touch —
+which bring 42 % of all replies — never get sent; enquiries the site forwards die unanswered (a lead
+is 21× more likely to qualify in the first five minutes); the material that exists (offers,
+dates, news, footage) is never published; a paying advertiser leaves for reasons visible weeks
+earlier; the numbers are a feeling (research I, II). The tools on sale each do one job.</p>
+<p>The first customer shows the shape: measured on its public API (2026-09-19) for the demo, of
+253 providers pulled, 0 manage their page, 130 have an e-mail and 181 a phone, 83 next
+sessions and 72 trial policies sit unpublished, 0 reviews and 28 prices are on the cards —
+the demo's data; the customer's catalogue is far larger. The owner's own case, as the product
+computes it, is <a href="economics.html"><code>economics.md</code></a>.</p>
+<p><strong>Where the shape came from.</strong> The two videos the owner shared show the target: <strong>the one-person sales and
+marketing team</strong> — an orchestrator over departments (research and intelligence, content,
+distribution, creative, leads and conversations, reviews and reputation, results), a
+<strong>brand knowledge layer</strong> kept as plain files, <strong>human-in-the-loop</strong> ("it drafts, it can't
+post, it stops and asks, the owner still owns"), an intelligence recap, and integrations
+that make the machine run while "nobody logs in".</p>
+<h2>What is built</h2>
+<p>A clickable prototype in English with <strong>three views</strong> (D2, D10):</p>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>View</th>
+<th>Who</th>
+<th>What they see</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Media owner ("Platform" on Your Field)</td>
+<td>the classified media owner</td>
+<td>the machine across every listing: marketing, sales, retention, the approval queue, economics, the recap, integrations, the policy record</td>
+</tr>
+<tr>
+<td>Advertiser ("Provider" on Your Field)</td>
+<td>a listed business after claiming its page</td>
+<td>its own one-person team: conversations with visitors, campaigns, the site's advertising products, results, knowledge files</td>
+</tr>
+<tr>
+<td>Visitor ("Family" on Your Field)</td>
+<td>a person using the site</td>
+<td>what arrives: the weekly digest, saved-listing alerts, an advertiser's offer, and the controls over channel and frequency</td>
+</tr>
+</tbody>
+</table></div>
+<p>Three jobs: two flows at the front door (D14) and retention behind the pipeline (D41):</p>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>Flow</th>
+<th>What the machine does</th>
+<th>Who approves</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>B2C social</strong></td>
+<td>Turns listings, updates and news into posts for Instagram, Facebook, TikTok and X — a provider spotlight, "this week in Park Slope", a new-camp announcement, a parent tip — scheduled, drafted (AI optional), and published only after approval, each with the link back to the listing page. Goal: new families on the platform.</td>
+<td>platform operator</td>
+</tr>
+<tr>
+<td><strong>B2B sales</strong></td>
+<td>Works every listed provider through a pipeline — identified → contacted → replied → applied → managing → upgraded — with e-mail and phone from the card, sequences with human sign-off, the reply inbox, and the upsell ("and more": featured listing, camp placement, campaigns). Goal: providers who manage their own listing and buy more.</td>
+<td>platform operator; the provider on their side</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Retention (reduce churn)</strong>: every managing advertiser watched for a renewal, a stale page, an unanswered enquiry, a listing that stopped surfacing; a touch drafted from its own numbers; kept and lost logged into the churn rate (D41). Behind them: <strong>family digests and alerts</strong>, <strong>generated landing pages and SEO</strong> (activity ×
+neighbourhood × age), <strong>provider campaigns</strong> (trial classes, open spots, announcements,
+registration — built from the card, approved by the provider, sent by the family's
+preferences under the cap; phase 2, D22), <strong>upgrades</strong> (the platform's own products, D21)
+and <strong>activation</strong> as the pipeline's first stages. Optional AI support is a layer the operator or provider switches
+on per department, never a requirement (D6). An <strong>intelligence dashboard</strong> and an
+<strong>integrations</strong> screen (the platform's own API first, then the social channels, e-mail,
+phone/SMS) are part of the first build.</p>
+<h2>What is real</h2>
+<p>The data: <strong>253 real providers</strong> from Your Field's public API (<code>data/fetch-yourfield.py</code>,
+never edited by hand, D4/D11): name, category, borough, neighbourhood, address, 246 with
+coordinates, every one with a website, 181 phones, 130 e-mails, 28 stated prices with
+evidence, 74 with sessions, 83 with a next occurrence, 72 with a trial policy, 26 with an
+announcement, 10 with booking enabled, claim state, verified fields. The site copy
+(hero, how it works, trust pillars, newsletter, "List your program") is the platform's
+own. Everything that is not on the platform — a provider's brand voice, a campaign's
+results, the parent persona and her saved items — is <strong>sample</strong> and is declared as sample
+in the page. No provider or family is contacted by the prototype.</p>
+<h2>What is inert</h2>
+<p>Sending (e-mail, push, SMS, social), publishing generated pages, claiming a card,
+connecting an integration with a key. Each is shown in place, visibly inert, with the reason.</p>
+<h2>Where it stands</h2>
+<p>Every stage of the standard is done (2026-09-19). Gates 1 and 2 approved (D9, D16); the
+prototype built in nine rounds (<a href="build-log.html"><code>build-log.md</code></a>) — the two flows, campaigns and upgrades,
+conversations, economics, the research implemented, the audit implemented, the
+responsible-data policy record and gate, the Simple and Advanced interfaces — and measured
+(<a href="gate.html"><code>gate.md</code></a>); the presentation, the business logic, the technical package (the stack
+verified service by service and the system blueprint with modules and pseudo code, D37), the
+audit and SWOT, and the policy framework written. Nothing is open for the presentation; what
+the implementation needs after acceptance is <a href="first-customer-classscout.html"><code>first-customer-classscout.md</code></a>; the build
+starts with the sprint-0 checklist in <a href="delivery-plan.html"><code>delivery-plan.md</code></a>. <strong>Next: present.</strong></p>
+<footer>Source: <code>business-direct/docs/product-definition.md</code> · rendered by <code>docs/build.py</code>.</footer>
+</div>
+</body>
+</html>

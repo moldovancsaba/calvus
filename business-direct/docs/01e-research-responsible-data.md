@@ -8,7 +8,7 @@ value for the clients". This round reads the law by market, the enforcement reco
 design frameworks the regulators themselves publish, and the evidence that responsible data
 practice pays. **P** = primary (regulator, statute, the company's own document, the study
 itself), **A** = law-firm or trade summary. The framework that comes out of it is
-`18-responsible-data-policy-framework.md`; the policy screen in the prototype is its
+`responsible-data.md`; the policy screen in the prototype is its
 reference implementation.*
 
 ## 1. The law by market — what any client instance must encode

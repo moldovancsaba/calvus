@@ -22,7 +22,7 @@ code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.86em;bac
 .tbl{overflow-x:auto;margin:12px 0 20px;border:1px solid var(--line);border-radius:12px;background:var(--surface)}table{border-collapse:collapse;width:100%;font-size:13.5px;min-width:560px}
 th{text-align:left;font-weight:700;background:var(--bg);padding:10px 12px;border-bottom:1px solid var(--line);font-size:12px;letter-spacing:.04em;text-transform:uppercase;color:var(--muted)}td{padding:10px 12px;border-top:1px solid var(--line);vertical-align:top}
 footer{margin-top:48px;padding-top:16px;border-top:1px solid var(--line);font-size:12px;color:var(--muted)}"""
-for src, out in (("PROTOTYPING.md", "prototyping.html"), ("HUB-AUDIT.md", "hub-audit.html")):
+for src, out in (("PROTOTYPING.md", "prototyping.html"), ("HUB-AUDIT.md", "hub-audit.html"), ("PRODUCT.md", "product.html")):
     md = (ROOT / src).read_text(encoding="utf-8")
     title = re.match(r"#\s+(.+)", md).group(1)
     body = markdown.markdown(md[md.index("\n"):], extensions=["tables", "sane_lists", "fenced_code"])

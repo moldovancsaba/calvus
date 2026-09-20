@@ -37,9 +37,8 @@ footer{margin-top:56px;padding-top:18px;border-top:1px solid var(--line);font-si
 </head>
 <body>
 <div class="wrap">
-<nav class="docnav" aria-label="Project documentation"><span class="docnav-brand">business.direct · docs</span><a href="index.html">Overview</a><a href="brief.html">Brief</a><a href="research.html">Research</a><a href="research-2.html">Research II</a><a href="research-3.html">Research III</a><a href="research-4.html">Research IV</a><a href="research-5.html">Research V</a><a href="research-6.html">Research VI</a><a href="research-7.html">Research VII</a><a href="audit.html">Audit</a><a href="sources.html">Sources</a><a href="design-system.html">Design system</a><a href="layouts.html">Layouts</a><a href="05-layout-specs.html">Layout specs</a><a href="decisions.html">Decisions</a><a href="build-log.html">Build log</a><a href="gate.html">Gate</a><a href="client-asks.html">Register of asks</a><a href="implementation-prerequisites.html">Prerequisites</a><a href="business-logic.html">Business logic</a><a href="ssot.html">SSOT</a><a href="architecture.html">Architecture</a><a href="technical-design.html">Technical design</a><a href="implementation-plan.html">Plan</a><a href="system-blueprint.html">System blueprint</a><a href="documentation-audit.html" aria-current=page>Documentation audit</a><a href="claims-register.html">Claims register</a><a href="legal.html">Legal position</a><a href="token-map.html">Token map</a><a href="executive.html">Executive summary</a><a href="business-case.html">Business case</a><a href="analytics.html">Analytics</a><a href="audit-swot.html">Audit · SWOT</a><a href="policy-framework.html">Policy framework</a></nav>
+<nav class="docnav" aria-label="Project documentation"><span class="docnav-brand">business.direct · docs</span><a href="index.html">Overview</a><a href="executive-summary.html">Executive summary</a><a href="product-definition.html">Product definition</a><a href="product-specification.html">Product specification</a><a href="market.html">Market</a><a href="economics.html">Economics</a><a href="business-logic.html">Business logic and SSOT</a><a href="architecture.html">Architecture and blueprint</a><a href="delivery-plan.html">Delivery plan</a><a href="responsible-data.html">Responsible data and legal</a><a href="first-customer-classscout.html">First customer</a><a href="evidence.html">Evidence</a><a href="research.html">Research I</a><a href="research-2.html">Research II</a><a href="research-3.html">Research III</a><a href="research-4.html">Research IV</a><a href="research-5.html">Research V</a><a href="research-6.html">Research VI</a><a href="design-system.html">Design system</a><a href="layouts.html">Layouts</a><a href="05-layout-specs.html">Layout specs</a><a href="decisions.html">Decisions</a><a href="build-log.html">Build log</a><a href="gate.html">Gate</a><a href="register-of-asks.html">Register of asks</a><a href="logic-audit.html">Logic audit</a><a href="documentation-audit.html" aria-current=page>Documentation audit</a></nav>
 <header><p class="eyebrow">Calvus · business.direct · project documentation</p><h1>business.direct — the deep audit and the transformation programme</h1></header>
-<p class="notice" role="note"><b>This documentation set is being replaced (audit D40).</b> business.direct is a standalone product — the one-person sales and marketing team; ClassScout is its first customer. The <a href="presentation.html">presentation</a>, the <a href="executive.html">executive summary</a> and the <a href="business-case.html">business case</a> are written for the product; most other pages still read as the first instance's project until the <a href="documentation-audit.html">transformation programme</a> replaces them.</p>
 <p><em>For the owner. What this document is: the audit of everything written for business.direct —
 30 files, 469 KB, the prototype's copy, the hub's rows and the standard the project followed —
 against what the product actually is, and the programme that replaces the set rather than
@@ -148,42 +147,42 @@ risk and governance; consistency of state — and, added after D39, <strong>the 
 <tbody>
 <tr>
 <td>A1</td>
-<td><a href="implementation-prerequisites.html"><code>19-implementation-prerequisites.md</code></a></td>
+<td><a href="first-customer-classscout.html"><code>first-customer-classscout.md</code></a></td>
 <td>title: "after the client accepts; not needed for the presentation"; §1 "before the first real message"; every row "Who provides: ClassScout"</td>
 <td>a product's first customer does not "accept a prototype"; they onboard. The document mixes three different things: the <strong>product's own launch prerequisites</strong> (none written — see F-findings), the <strong>first customer's onboarding inputs</strong> (postal address, policy record, key) and <strong>the owner's product decisions</strong> (P-10–P-12 personas, integrations, money)</td>
 <td>split into the product launch checklist (new), the first-customer onboarding file (instance) and the owner's decision register; the word "accept" disappears</td>
 </tr>
 <tr>
 <td>A2</td>
-<td><a href="client-asks.html"><code>08-client-asks.md</code></a></td>
+<td><a href="register-of-asks.html"><code>register-of-asks.md</code></a></td>
 <td>"every item that once needed the owner or the client"; eighteen numbered items</td>
 <td>a register of asks to a <em>client</em> about a <em>client project</em>; for a product these are owner decisions or customer onboarding inputs</td>
-<td>close the register into history; owner decisions live in <code>04</code>, onboarding inputs in the instance file</td>
+<td>close the register into history; owner decisions live in <a href="decisions.html"><code>decisions.md</code></a>, onboarding inputs in the instance file</td>
 </tr>
 <tr>
 <td>A3</td>
-<td><a href="business-logic.html"><code>09-business-logic.md</code></a></td>
+<td><a href="business-logic.html"><code>business-logic.md</code></a></td>
 <td>§1 "The three parties … Platform (Your Field NYC) · Provider · Family"; §5 "the base machine is bundled by the platform … the provider buys reach"; §7 "US (first market)"; §8 "the operator reads one screen: providers contacted…"</td>
 <td>the product's rules are written as the first instance's rules: the parties, the money, the market and the recap are the instance's. The product's parties are <em>operator · prospect / customer · audience member</em>; the product's money is the subscription; the instance's monetisation is a feature inside it (the operator's own products)</td>
 <td>rewrite as the product's business logic with the instance as the worked example in every section; the rules R1–R36 survive with generic wording</td>
 </tr>
 <tr>
 <td>A4</td>
-<td><a href="ssot.html"><code>10-ssot.md</code></a></td>
+<td><a href="business-logic.html"><code>business-logic.md</code></a></td>
 <td>§1 "Client: ClassScout first"; "Platform / instance"; "Provider: the platform's own word"; "Family: the consumer on Your Field"; §2 <code>role = platform · provider · family</code>; §3 entities <code>Provider</code>, <code>Family</code></td>
 <td>the glossary has no product layer; the instance's roles are the enumeration</td>
 <td>add the product layer (operator, instance, prospect, customer, audience member, channel, department) and map the first instance's terms to it; entities generic with instance mapping</td>
 </tr>
 <tr>
 <td>A5</td>
-<td><a href="analytics.html"><code>16-analytics-and-unit-economics.md</code></a></td>
+<td><a href="economics.html"><code>economics.md</code></a></td>
 <td>"The B2B model: providers (the platform's B2B clients)"; "The B2C model: families"</td>
 <td>the model is the <em>operator's</em> economics (their prospects, their audience) — right as the product's Economics feature, wrong as the product's business case; the product's own CAC / LTV / churn is absent</td>
-<td>keep as the feature specification, retitle "the operator's economics — the Economics department"; the product's economics live in <code>22</code></td>
+<td>keep as the feature specification, retitle "the operator's economics — the Economics department"; the product's economics live in <a href="economics.html"><code>economics.md</code></a></td>
 </tr>
 <tr>
 <td>A6</td>
-<td><a href="audit-swot.html"><code>17-business-logic-audit-and-swot.md</code></a></td>
+<td><a href="logic-audit.html"><code>logic-audit.md</code></a></td>
 <td>§3 "SWOT of the planned service": S6 "the owner owns the platform"; T1 "Sawyer already sells booking … to kids'-activity providers"; W1 "unit economics do not close at today's scale (253 providers)"</td>
 <td>the SWOT is of the first instance's deployment; the product's competitors (AI marketing-team products, agent platforms, all-in-one SMB suites) are absent; S6 contradicts "ClassScout will pay"</td>
 <td>new SWOT of the product; the first-instance SWOT moves to the instance file as "what the pilot faces"</td>
@@ -197,14 +196,14 @@ risk and governance; consistency of state — and, added after D39, <strong>the 
 </tr>
 <tr>
 <td>A8</td>
-<td><a href="decisions.html"><code>04-decisions.md</code></a> D21</td>
+<td><a href="decisions.html"><code>decisions.md</code></a> D21</td>
 <td>"Money: the base machine bundled by the platform; providers buy reach"</td>
 <td>defines the first instance's monetisation as "the money model"; the product's price was undecided until D39's hypothesis</td>
 <td>D21 re-scoped to "the operator's products feature"; the product's pricing decision is the owner's (§7)</td>
 </tr>
 <tr>
 <td>A9</td>
-<td><a href="implementation-plan.html"><code>13-implementation-plan.md</code></a></td>
+<td><a href="delivery-plan.html"><code>delivery-plan.md</code></a></td>
 <td>§4 "Blocked register: … provided by ClassScout after acceptance"; §6 "Release 1a read-only against the platform … the presentation says which half is which"</td>
 <td>releases are cut by the first customer's key, not by the product's value; the second-instance milestone proves generality but no <em>second customer onboarding</em> is planned</td>
 <td>plan rewritten as the product's roadmap (releases by capability) with the first instance's pilot as one track</td>
@@ -238,13 +237,13 @@ risk and governance; consistency of state — and, added after D39, <strong>the 
 <tbody>
 <tr>
 <td>B1</td>
-<td><a href="architecture.html"><code>11-architecture.md</code></a>, <a href="technical-design.html"><code>12-technical-design.md</code></a>, <a href="system-blueprint.html"><code>20-system-blueprint.md</code></a></td>
+<td><a href="architecture.html"><code>architecture.md</code></a>, <a href="architecture.html"><code>architecture.md</code></a>, <a href="architecture.html"><code>architecture.md</code></a></td>
 <td>context drawing "Families … Your Field NYC … Providers"; collections <code>families_prefs</code>, <code>provider_state</code>; Zod <code>FamilyPrefs</code>, <code>provider_id</code>; job <code>digest</code> "per family"</td>
 <td>the engineering is generic in structure (<code>platform_id</code> on every record, a policy record per instance, a connector interface) but instance-named in every identifier and drawing. Two options in §7: rename to product terms, or keep and document the mapping</td>
 </tr>
 <tr>
 <td>B2</td>
-<td><a href="policy-framework.html"><code>18-responsible-data-policy-framework.md</code></a></td>
+<td><a href="responsible-data.html"><code>responsible-data.md</code></a></td>
 <td>worked examples "Your Field NYC" and "Most én sportolok!"; "the family, the candidate, the buyer"</td>
 <td>framework is already for every customer; wording generalised, examples kept</td>
 </tr>
@@ -256,13 +255,13 @@ risk and governance; consistency of state — and, added after D39, <strong>the 
 </tr>
 <tr>
 <td>B4</td>
-<td><a href="token-map.html"><code>14-token-map.md</code></a>, <a href="05-layout-specs.html"><code>05-layout-specs.md</code></a>, design pages</td>
+<td><a href="architecture.html"><code>architecture.md</code></a>, <a href="05-layout-specs.html"><code>05-layout-specs.md</code></a>, design pages</td>
 <td>"platform 1440 / provider 390 / family 390"</td>
 <td>fine as the first instance's frames; label them so</td>
 </tr>
 <tr>
 <td>B5</td>
-<td><code>presentation.html</code>, <code>15</code>, <code>22</code> (D39 versions)</td>
+<td><code>presentation.html</code>, <a href="executive-summary.html"><code>executive-summary.md</code></a>, <a href="economics.html"><code>economics.md</code></a> (D39 versions)</td>
 <td>product-first now, but §6 "Proof" and the appendix still explain the demo in instance terms without saying "these are the first customer's names for operator · customer · audience"</td>
 <td>one sentence of mapping in each</td>
 </tr>
@@ -282,58 +281,58 @@ risk and governance; consistency of state — and, added after D39, <strong>the 
 <tbody>
 <tr>
 <td>C1</td>
-<td><code>13</code> §2b, <code>22</code> §3, presentation §8</td>
+<td><a href="delivery-plan.html"><code>delivery-plan.md</code></a> §2b, <a href="economics.html"><code>economics.md</code></a> §3, presentation §8</td>
 <td>"two developers, nine sprints, seventeen weeks"</td>
 <td>my estimate; never validated against a team, a velocity or the blueprint's 65 issues</td>
 <td>label "estimate (unvalidated)"; validate with whoever builds it before it is quoted</td>
 </tr>
 <tr>
 <td>C2</td>
-<td><code>22</code> §4, presentation §5</td>
+<td><a href="economics.html"><code>economics.md</code></a> §4, presentation §5</td>
 <td>"$249 / $449 a month"</td>
 <td>my hypothesis, declared as such — but anchored on two figures of class D (below)</td>
 <td>keep as hypothesis; anchors verified first</td>
 </tr>
 <tr>
 <td>C3</td>
-<td><code>16</code> §2.1, <code>22</code> §7</td>
+<td><a href="economics.html"><code>economics.md</code></a> §2.1, <a href="economics.html"><code>economics.md</code></a> §7</td>
 <td>applied 40 %, managing 80 %, upgraded 25 %, churn 5 %, ARPA $49, avid 15 %, capture 5 %, families per post 1.5, 5 000 families</td>
 <td>declared assumptions; but they drive every "finding" quoted in the top layer ("LTV : CAC 0.7", "$610 k") as if they were results</td>
 <td>the top layer quotes a <em>model on assumptions</em>, never a finding; the phrase "already found" is removed</td>
 </tr>
 <tr>
 <td>C4</td>
-<td><code>00</code> (original), <code>17</code> S6</td>
+<td><a href="product-definition.html"><code>product-definition.md</code></a> (original), <a href="logic-audit.html"><code>logic-audit.md</code></a> S6</td>
 <td>"the owner's own product family … Your Field"; "the owner owns the platform"</td>
 <td>contradicts "ClassScout is the first paying user"; <strong>ownership of Your Field / ClassScout is not known to me</strong></td>
 <td>owner's answer (§7, Q1); until then no document states who owns the platform</td>
 </tr>
 <tr>
 <td>C5</td>
-<td><code>01g</code> §12, <code>11</code> ADR-5</td>
+<td><code>01g</code> §12, <a href="architecture.html"><code>architecture.md</code></a> ADR-5</td>
 <td>"DoneIsBetter SSO — the owner's own identity provider"</td>
 <td>assumption from the reference site; whether the product uses it, and for whose users, depends on Q1</td>
 <td>mark; resolve with Q1</td>
 </tr>
 <tr>
 <td>C6</td>
-<td><code>02</code> §4, <code>00</code></td>
+<td><a href="first-customer-classscout.html"><code>first-customer-classscout.md</code></a> §4, <a href="product-definition.html"><code>product-definition.md</code></a></td>
 <td>"the two reference videos show the target shape" — the departments list, "nobody logs in"</td>
 <td>owner-supplied input, correctly cited; but the product definition rests on 42 frames I read, not on a written product brief from the owner</td>
 <td>the product definition (F2) is written and the owner confirms it</td>
 </tr>
 <tr>
 <td>C7</td>
-<td><code>19</code> P-10</td>
+<td><a href="first-customer-classscout.html"><code>first-customer-classscout.md</code></a> P-10</td>
 <td>personas "Brooklyn Force Soccer", "a Park Slope parent, a child of 5 and a child of 9"</td>
 <td>invented for the demo; declared</td>
 <td>stays declared demo material in the instance file</td>
 </tr>
 <tr>
 <td>C8</td>
-<td><code>09</code> §7, <code>10</code> §4</td>
+<td><a href="business-logic.html"><code>business-logic.md</code></a> §7, <a href="business-logic.html"><code>business-logic.md</code></a> §4</td>
 <td>"Hungary (reference): corporate addresses without consent"</td>
-<td>legal reading of Act XLVIII §6 by me, not counsel; the same for every legal sentence in <code>01e</code>, <code>01f</code>, <code>18</code></td>
+<td>legal reading of Act XLVIII §6 by me, not counsel; the same for every legal sentence in <code>01e</code>, <code>01f</code>, <a href="responsible-data.html"><code>responsible-data.md</code></a></td>
 <td>every legal statement carries "not legal advice; counsel confirms per market" once at the top of the legal file (F5)</td>
 </tr>
 </tbody>
@@ -359,28 +358,28 @@ risk and governance; consistency of state — and, added after D39, <strong>the 
 </tr>
 <tr>
 <td>D2</td>
-<td>presentation hero, <code>22</code> §2, <code>15</code></td>
+<td>presentation hero, <a href="economics.html"><code>economics.md</code></a> §2, <a href="executive-summary.html"><code>executive-summary.md</code></a></td>
 <td>"62 % of calls to small businesses go unanswered"</td>
 <td>source is an aggregator quoting a 2016 study of 85 businesses (research I marks it <strong>A</strong>); it is a hero number on the product's first screen</td>
 <td>replace with a <strong>P</strong>-grade figure or drop it from the hero; hero numbers are primary-source only</td>
 </tr>
 <tr>
 <td>D3</td>
-<td>presentation, <code>22</code></td>
+<td>presentation, <a href="economics.html"><code>economics.md</code></a></td>
 <td>"78 % of customers buy from the business that responds first"</td>
 <td>research I cites it via two vendor blogs (<strong>A</strong>), the original source (Lead Connect / Vendasta) not opened</td>
 <td>verify or drop from the hero</td>
 </tr>
 <tr>
 <td>D4</td>
-<td><code>11</code> ADR-12, <code>17</code> T6</td>
+<td><a href="architecture.html"><code>architecture.md</code></a> ADR-12, <a href="logic-audit.html"><code>logic-audit.md</code></a> T6</td>
 <td>"Sora's shutdown in 2026 showed vendors churn"; "Sora died in five months"</td>
 <td>I cannot point to the source in the research files that establishes it; <code>01b</code> §4 only says "Sora already did"</td>
 <td>verify with a primary source or remove</td>
 </tr>
 <tr>
 <td>D5</td>
-<td><code>22</code> §2, presentation §2</td>
+<td><a href="economics.html"><code>economics.md</code></a> §2, presentation §2</td>
 <td>"the tools stack to $200–400 a month"</td>
 <td>my sum of the class-D price points in <code>01b</code> §4.1 (Buffer/Later "$29–200", OpusClip, HeyGen, Canva)</td>
 <td>recompute from verified prices; state the basket</td>
@@ -401,14 +400,14 @@ risk and governance; consistency of state — and, added after D39, <strong>the 
 </tr>
 <tr>
 <td>D8</td>
-<td><code>02</code> §1</td>
+<td><a href="first-customer-classscout.html"><code>first-customer-classscout.md</code></a> §1</td>
 <td>"public API … found in the site's own JS bundles"; endpoint list</td>
 <td>measured with <code>curl</code> at the time — verifiable; keep, but it is the first instance's, not the product's</td>
 <td></td>
 </tr>
 <tr>
 <td>D9</td>
-<td><a href="build-log.html"><code>06-build-log.md</code></a>, <a href="gate.html"><code>07-gate.md</code></a></td>
+<td><a href="build-log.html"><code>build-log.md</code></a>, <a href="gate.html"><code>gate.md</code></a></td>
 <td>"measured at 390 / 768 / 1024 / 1440", "no console errors"</td>
 <td>measured in the browser pane at the time; recorded honestly; keep</td>
 <td></td>
@@ -428,19 +427,19 @@ risk and governance; consistency of state — and, added after D39, <strong>the 
 <tbody>
 <tr>
 <td>E1</td>
-<td><code>09</code> §6 "Default: picks and alerts on"; <code>10</code> §4 "weekly picks on, saved-provider alerts on" ↔ R28 (<code>10</code> §6, <code>18</code> principle 4) "every switch … starts off"; <code>20</code> §5 Zod <code>prefs</code> all <code>false</code></td>
+<td><a href="business-logic.html"><code>business-logic.md</code></a> §6 "Default: picks and alerts on"; <a href="business-logic.html"><code>business-logic.md</code></a> §4 "weekly picks on, saved-provider alerts on" ↔ R28 (<a href="business-logic.html"><code>business-logic.md</code></a> §6, <a href="responsible-data.html"><code>responsible-data.md</code></a> principle 4) "every switch … starts off"; <a href="architecture.html"><code>architecture.md</code></a> §5 Zod <code>prefs</code> all <code>false</code></td>
 <td>the family defaults are stated both ways</td>
-<td>R28 wins; <code>09</code> and <code>10</code> §4 corrected; the prototype's family persona re-seeded</td>
+<td>R28 wins; <a href="business-logic.html"><code>business-logic.md</code></a> and <a href="business-logic.html"><code>business-logic.md</code></a> §4 corrected; the prototype's family persona re-seeded</td>
 </tr>
 <tr>
 <td>E2</td>
-<td><code>09</code> §6b "Ten principles" ↔ <code>18</code> §1 seventeen principles</td>
+<td><a href="business-logic.html"><code>business-logic.md</code></a> §6b "Ten principles" ↔ <a href="responsible-data.html"><code>responsible-data.md</code></a> §1 seventeen principles</td>
 <td>count stale since D35</td>
-<td>one sentence in <code>09</code></td>
+<td>one sentence in <a href="business-logic.html"><code>business-logic.md</code></a></td>
 </tr>
 <tr>
 <td>E3</td>
-<td><code>17</code> S7 "28 decisions, 22 rules, three research rounds"</td>
+<td><a href="logic-audit.html"><code>logic-audit.md</code></a> S7 "28 decisions, 22 rules, three research rounds"</td>
 <td>stale (39, 36, six) — a history document quoting live counts</td>
 <td>history documents never quote live counts; the gate adds the check</td>
 </tr>
@@ -452,25 +451,25 @@ risk and governance; consistency of state — and, added after D39, <strong>the 
 </tr>
 <tr>
 <td>E5</td>
-<td><code>22</code> §7 vs <code>16</code> §2.4</td>
-<td>both compute the first instance's economics; <code>22</code> says "0.7", <code>16</code> says "≈ 0.7 … 1.3 at top decile" — same, but two places</td>
-<td><code>22</code> cites <code>16</code>, never restates</td>
+<td><a href="economics.html"><code>economics.md</code></a> §7 vs <a href="economics.html"><code>economics.md</code></a> §2.4</td>
+<td>both compute the first instance's economics; <a href="economics.html"><code>economics.md</code></a> says "0.7", <a href="economics.html"><code>economics.md</code></a> says "≈ 0.7 … 1.3 at top decile" — same, but two places</td>
+<td><a href="economics.html"><code>economics.md</code></a> cites <a href="economics.html"><code>economics.md</code></a>, never restates</td>
 </tr>
 <tr>
 <td>E6</td>
-<td><code>13</code> §2b S2 "with a test policy record" ↔ <code>19</code> §1 "the policy record confirmed before the first real message"</td>
+<td><a href="delivery-plan.html"><code>delivery-plan.md</code></a> §2b S2 "with a test policy record" ↔ <a href="first-customer-classscout.html"><code>first-customer-classscout.md</code></a> §1 "the policy record confirmed before the first real message"</td>
 <td>the sprint plan sends test e-mails before the record is confirmed; consistent only if "test" means to our own addresses</td>
 <td>say so in the plan</td>
 </tr>
 <tr>
 <td>E7</td>
-<td>README (docs) "27 rendered documents" / hub README "six research rounds" / <code>21</code> "30 files"</td>
+<td>README (docs) "27 rendered documents" / hub README "six research rounds" / <a href="documentation-audit.html"><code>documentation-audit.md</code></a> "30 files"</td>
 <td>counts drift with every addition</td>
 <td>counts computed by the renderer, not written</td>
 </tr>
 <tr>
 <td>E8</td>
-<td><code>bemutato.html</code> → redirect; <code>06</code> build log and <code>README</code> process log still describe it as the presentation</td>
+<td><code>bemutato.html</code> → redirect; <a href="build-log.html"><code>build-log.md</code></a> build log and <code>README</code> process log still describe it as the presentation</td>
 <td>history; acceptable if labelled</td>
 <td>the process log entry of D38 says it</td>
 </tr>
@@ -497,7 +496,7 @@ risk and governance; consistency of state — and, added after D39, <strong>the 
 <td>F2</td>
 <td><strong>Product definition and positioning</strong>: the segment, the jobs, the promise, what it is not, the name of each part in the customer's words</td>
 <td>the one document every other document should derive from</td>
-<td>new <code>00</code> (replaces the brief)</td>
+<td>new <a href="product-definition.html"><code>product-definition.md</code></a> (replaces the brief)</td>
 </tr>
 <tr>
 <td>F3</td>
@@ -508,26 +507,26 @@ risk and governance; consistency of state — and, added after D39, <strong>the 
 <tr>
 <td>F4</td>
 <td><strong>The product's legal position</strong>: business.direct processes the operator's prospect and audience data — it is a <strong>processor</strong> (GDPR) / service provider (CCPA) for the operator; it needs its own terms of service, privacy policy, data-processing agreement, sub-processor list (Vercel, MongoDB, Upstash, Resend, Meta, Twilio, Stripe, Anthropic, Deepgram, Fly), security statement, retention and deletion commitments, and — because the first instance's audience includes parents describing children — the children's-data stance in its own policy, not only the customer's</td>
-<td>the responsible-data framework (<code>18</code>) governs <em>the customer's</em> record; nothing governs <em>the product's</em> obligations</td>
+<td>the responsible-data framework (<a href="responsible-data.html"><code>responsible-data.md</code></a>) governs <em>the customer's</em> record; nothing governs <em>the product's</em> obligations</td>
 <td>new legal file; counsel</td>
 </tr>
 <tr>
 <td>F5</td>
-<td><strong>Legal disclaimer and counsel path</strong> for every legal statement in <code>01e</code>, <code>01f</code>, <code>18</code>, <code>09</code> §7</td>
+<td><strong>Legal disclaimer and counsel path</strong> for every legal statement in <code>01e</code>, <code>01f</code>, <a href="responsible-data.html"><code>responsible-data.md</code></a>, <a href="business-logic.html"><code>business-logic.md</code></a> §7</td>
 <td>today they read as legal advice</td>
 <td>one file, one disclaimer, one list of the questions for counsel</td>
 </tr>
 <tr>
 <td>F6</td>
-<td><strong>Operating model</strong>: who runs the product (support, incident response, the runbooks exist in <code>20</code> §12), onboarding steps for a customer, the policy-record interview, the knowledge-file workshop, offboarding and data return</td>
+<td><strong>Operating model</strong>: who runs the product (support, incident response, the runbooks exist in <a href="architecture.html"><code>architecture.md</code></a> §12), onboarding steps for a customer, the policy-record interview, the knowledge-file workshop, offboarding and data return</td>
 <td>the customer buys an operated service, not code</td>
 <td>new, short</td>
 </tr>
 <tr>
 <td>F7</td>
 <td><strong>Roadmap by capability</strong> (not by the first customer's key): what ships for every operator in R1, R2, R3; what is instance-specific</td>
-<td><code>13</code> is a build plan for one instance's pilot</td>
-<td>rewritten <code>13</code></td>
+<td><a href="delivery-plan.html"><code>delivery-plan.md</code></a> is a build plan for one instance's pilot</td>
+<td>rewritten <a href="delivery-plan.html"><code>delivery-plan.md</code></a></td>
 </tr>
 <tr>
 <td>F8</td>
@@ -544,9 +543,9 @@ risk and governance; consistency of state — and, added after D39, <strong>the 
 </tbody>
 </table></div>
 <h3>3.7 Class G — sprawl</h3>
-<p>30 files, 469 KB. The rules are stated in <code>09</code>, <code>10</code> §6, <code>18</code> §1–3 and <code>20</code> §4; "what the research
-changed" and "what the audit changed" tables repeat in <code>09</code> §8c–§8d, <code>04</code>, <code>17</code> §4 and <code>01b</code> §6;
-three audits (<code>17</code>, <code>21</code>, <code>../../HUB-AUDIT.md</code>); seven research files with no index; the
+<p>30 files, 469 KB. The rules are stated in <a href="business-logic.html"><code>business-logic.md</code></a>, <a href="business-logic.html"><code>business-logic.md</code></a> §6, <a href="responsible-data.html"><code>responsible-data.md</code></a> §1–3 and <a href="architecture.html"><code>architecture.md</code></a> §4; "what the research
+changed" and "what the audit changed" tables repeat in <a href="business-logic.html"><code>business-logic.md</code></a> §8c–§8d, <a href="decisions.html"><code>decisions.md</code></a>, <a href="logic-audit.html"><code>logic-audit.md</code></a> §4 and <code>01b</code> §6;
+three audits (<a href="logic-audit.html"><code>logic-audit.md</code></a>, <a href="documentation-audit.html"><code>documentation-audit.md</code></a>, <code>../../HUB-AUDIT.md</code>); seven research files with no index; the
 process log in <a href="index.html"><code>README.md</code></a> repeats the decisions. A reader who wants "what is the product and
 what does it cost" opens six files. The target set is eleven documents (§6).</p>
 <h2>4. What survives the audit unchanged</h2>
@@ -594,7 +593,7 @@ thrown away; it is re-homed under the product.</p>
 <td>keep; hero numbers re-sourced; mapping sentence</td>
 </tr>
 <tr>
-<td><a href="executive.html"><code>15-executive-summary.md</code></a></td>
+<td><a href="executive-summary.html"><code>executive-summary.md</code></a></td>
 <td>✔ (D39)</td>
 <td>✔</td>
 <td>✔</td>
@@ -609,7 +608,7 @@ thrown away; it is re-homed under the product.</p>
 <td>keep; C3 clause</td>
 </tr>
 <tr>
-<td><a href="business-case.html"><code>22-business-case.md</code></a></td>
+<td><a href="economics.html"><code>economics.md</code></a></td>
 <td>✔ (D39)</td>
 <td>✔</td>
 <td>✔</td>
@@ -621,10 +620,10 @@ thrown away; it is re-homed under the product.</p>
 <td>✔</td>
 <td>✘</td>
 <td>✔</td>
-<td>keep; anchors verified; §7 cites <code>16</code></td>
+<td>keep; anchors verified; §7 cites <a href="economics.html"><code>economics.md</code></a></td>
 </tr>
 <tr>
-<td><a href="brief.html"><code>00-brief.md</code></a></td>
+<td><a href="product-definition.html"><code>product-definition.md</code></a></td>
 <td>✔ (D39)</td>
 <td>◐</td>
 <td>✔</td>
@@ -639,7 +638,7 @@ thrown away; it is re-homed under the product.</p>
 <td>replaced by the product definition (F2)</td>
 </tr>
 <tr>
-<td><a href="implementation-prerequisites.html"><code>19-implementation-prerequisites.md</code></a></td>
+<td><a href="first-customer-classscout.html"><code>first-customer-classscout.md</code></a></td>
 <td><strong>✘</strong></td>
 <td>✘</td>
 <td>—</td>
@@ -654,7 +653,7 @@ thrown away; it is re-homed under the product.</p>
 <td>split (A1)</td>
 </tr>
 <tr>
-<td><a href="client-asks.html"><code>08-client-asks.md</code></a></td>
+<td><a href="register-of-asks.html"><code>register-of-asks.md</code></a></td>
 <td><strong>✘</strong></td>
 <td>—</td>
 <td>—</td>
@@ -669,7 +668,7 @@ thrown away; it is re-homed under the product.</p>
 <td>closed into history (A2)</td>
 </tr>
 <tr>
-<td><a href="business-logic.html"><code>09-business-logic.md</code></a></td>
+<td><a href="business-logic.html"><code>business-logic.md</code></a></td>
 <td><strong>✘</strong></td>
 <td>✔</td>
 <td>—</td>
@@ -684,7 +683,7 @@ thrown away; it is re-homed under the product.</p>
 <td>rewritten (A3)</td>
 </tr>
 <tr>
-<td><a href="ssot.html"><code>10-ssot.md</code></a></td>
+<td><a href="business-logic.html"><code>business-logic.md</code></a></td>
 <td><strong>✘</strong></td>
 <td>✔</td>
 <td>—</td>
@@ -699,7 +698,7 @@ thrown away; it is re-homed under the product.</p>
 <td>product layer added (A4)</td>
 </tr>
 <tr>
-<td><a href="analytics.html"><code>16-analytics-and-unit-economics.md</code></a></td>
+<td><a href="economics.html"><code>economics.md</code></a></td>
 <td>◐ (feature, not case)</td>
 <td>✔</td>
 <td>◐</td>
@@ -714,7 +713,7 @@ thrown away; it is re-homed under the product.</p>
 <td>retitled (A5)</td>
 </tr>
 <tr>
-<td><a href="audit-swot.html"><code>17-business-logic-audit-and-swot.md</code></a></td>
+<td><a href="logic-audit.html"><code>logic-audit.md</code></a></td>
 <td><strong>✘</strong> (instance SWOT)</td>
 <td>✔</td>
 <td>◐</td>
@@ -759,7 +758,7 @@ thrown away; it is re-homed under the product.</p>
 <td>every row re-verified</td>
 </tr>
 <tr>
-<td><a href="audit.html"><code>02-audit.md</code></a>, <a href="sources.html"><code>03-sources.md</code></a></td>
+<td><a href="first-customer-classscout.html"><code>first-customer-classscout.md</code></a>, <a href="first-customer-classscout.html"><code>first-customer-classscout.md</code></a></td>
 <td>◐ (first instance)</td>
 <td>✔</td>
 <td>✔</td>
@@ -774,7 +773,7 @@ thrown away; it is re-homed under the product.</p>
 <td>moved into the instance file</td>
 </tr>
 <tr>
-<td><code>11</code>, <code>12</code>, <code>20</code></td>
+<td><a href="architecture.html"><code>architecture.md</code></a>, <a href="architecture.html"><code>architecture.md</code></a>, <a href="architecture.html"><code>architecture.md</code></a></td>
 <td>◐ (B1)</td>
 <td>✔</td>
 <td>—</td>
@@ -789,7 +788,7 @@ thrown away; it is re-homed under the product.</p>
 <td>merged into one architecture + blueprint; identifiers per §7 Q3</td>
 </tr>
 <tr>
-<td><a href="implementation-plan.html"><code>13-implementation-plan.md</code></a></td>
+<td><a href="delivery-plan.html"><code>delivery-plan.md</code></a></td>
 <td><strong>✘</strong> (A9)</td>
 <td>✔</td>
 <td>—</td>
@@ -804,7 +803,7 @@ thrown away; it is re-homed under the product.</p>
 <td>rewritten as the roadmap + the pilot track</td>
 </tr>
 <tr>
-<td><a href="policy-framework.html"><code>18-responsible-data-policy-framework.md</code></a></td>
+<td><a href="responsible-data.html"><code>responsible-data.md</code></a></td>
 <td>✔</td>
 <td>✔</td>
 <td>◐</td>
@@ -819,7 +818,7 @@ thrown away; it is re-homed under the product.</p>
 <td>wording generic; joined by the product's own legal file (F4)</td>
 </tr>
 <tr>
-<td><code>04</code>, <code>06</code>, <code>07</code></td>
+<td><a href="decisions.html"><code>decisions.md</code></a>, <a href="build-log.html"><code>build-log.md</code></a>, <a href="gate.html"><code>gate.md</code></a></td>
 <td>history</td>
 <td>✔</td>
 <td>—</td>
@@ -900,13 +899,13 @@ thrown away; it is re-homed under the product.</p>
 <td>Q2</td>
 <td>price and developer rate</td>
 <td><em>"why on earth should I care about developer costs?"</em> — and, restated 2026-09-20: <strong>no cost calculation of business.direct itself happens in this phase — not its price, not its build or run cost, not its legal paperwork.</strong> The product's job is to calculate costs and value <strong>for its users, about the users' own services</strong> (their listing price, advertiser LTV and CAC, visitor acquisition cost, churn, all costs and incomes)</td>
-<td>the developer rate, build-cost and run-cost lines are deleted from every product-facing document; <code>22</code> is the media owner's value with the Economics screen as the product; nothing about the product's own money remains in the set</td>
+<td>the developer rate, build-cost and run-cost lines are deleted from every product-facing document; <a href="economics.html"><code>economics.md</code></a> is the media owner's value with the Economics screen as the product; nothing about the product's own money remains in the set</td>
 </tr>
 <tr>
 <td>Q3–Q6</td>
 <td>identifiers, definition, consolidation, go-to-market</td>
 <td><em>no sense</em> — not the owner's questions</td>
-<td>decided here: identifiers stay the first instance's with the mapping in SSOT §1a; the product definition is <a href="brief.html"><code>00-brief.md</code></a> in the owner's words; consolidation proceeds without asking; go-to-market, the product's pricing and its legal paperwork are out of this phase</td>
+<td>decided here: identifiers stay the first instance's with the mapping in SSOT §1a; the product definition is <a href="product-definition.html"><code>product-definition.md</code></a> in the owner's words; consolidation proceeds without asking; go-to-market, the product's pricing and its legal paperwork are out of this phase</td>
 </tr>
 </tbody>
 </table></div>
@@ -963,17 +962,17 @@ it, and what benefits they have. Everything below is executed in that order.</p>
 </tbody>
 </table></div>
 <h2>8. The programme (executed from the owner's answers; every phase ends in a gate-clean push)</h2>
-<p><strong>Done 2026-09-20 (D42, the same evening):</strong> phase A — the claims register (<code>23</code>): 36 figures opened at
+<p><strong>Done 2026-09-20 (D42, the same evening):</strong> phase A — the claims register (<a href="evidence.html"><code>evidence.md</code></a>): 36 figures opened at
 their source, seven corrected in the documents (Vercel's limits, Resend's domains, Twilio's fees,
 Fly's price, Better Stack's checks, the reminder review's actual finding, the Gen Z figure), two
-A-grade hero numbers removed, one unsourced claim (Sora) removed; phase B — research VII (<code>01h</code>) and
+A-grade hero numbers removed, one unsourced claim (Sora) removed; phase B — research VII (<a href="market.html"><code>market.md</code></a>) and
 the product SWOT; phase C — the business logic's headings and parties in product terms; phase D —
-the product's legal position and the counsel list (<code>24</code>); phase E — risk owners and triggers,
-dates relative to the go, the governance section (<code>13</code> §5, §5b); phase F — the reading paths on
-the index and the evidence pointer in <code>03</code> (the eleven-document consolidation with redirects is
+the product's legal position and the counsel list (<a href="responsible-data.html"><code>responsible-data.md</code></a>); phase E — risk owners and triggers,
+dates relative to the go, the governance section (<a href="delivery-plan.html"><code>delivery-plan.md</code></a> §5, §5b); phase F — the reading paths on
+the index and the evidence pointer in <a href="first-customer-classscout.html"><code>first-customer-classscout.md</code></a> (the eleven-document consolidation with redirects is
 the remaining step); phase G — two gate checks (banned framing phrases in the top layer; no
 unverified row in the register).</p>
-<p><strong>Done 2026-09-20 (D41), same day as the answers:</strong> the product definition (<code>00</code>); the presentation,
+<p><strong>Done 2026-09-20 (D41), same day as the answers:</strong> the product definition (<a href="product-definition.html"><code>product-definition.md</code></a>); the presentation,
 executive summary and value document rewritten for the classified media owner; the product layer
 in the SSOT (§1a) with the instance mapping; the business logic's parties and the <strong>retention</strong>
 job (R37) — the third job the owner named and the documentation had not had; retention built
@@ -994,13 +993,13 @@ Remaining phases follow.</p>
 <tbody>
 <tr>
 <td><strong>A — truth</strong></td>
-<td><strong>done</strong> — <a href="claims-register.html"><code>23-claims-register.md</code></a></td>
+<td><strong>done</strong> — <a href="evidence.html"><code>evidence.md</code></a></td>
 <td>no "unverified" in the top layer; the gate reads the register</td>
 <td>—</td>
 </tr>
 <tr>
 <td><strong>B — the root</strong></td>
-<td><strong>done</strong> — the definition (<code>00</code>), research VII and the product SWOT (<code>01h</code>)</td>
+<td><strong>done</strong> — the definition (<a href="product-definition.html"><code>product-definition.md</code></a>), research VII and the product SWOT (<a href="market.html"><code>market.md</code></a>)</td>
 <td>every later document cites the definition</td>
 <td>—</td>
 </tr>
@@ -1012,19 +1011,19 @@ Remaining phases follow.</p>
 </tr>
 <tr>
 <td><strong>D — the product's legal position</strong></td>
-<td><strong>done</strong> — <a href="legal.html"><code>24-legal-and-data-processing.md</code></a> (roles, L1–L8, sub-processors, security, the children's-data stance, ten questions for counsel); <code>18</code> stays the customer's record</td>
+<td><strong>done</strong> — <a href="responsible-data.html"><code>responsible-data.md</code></a> (roles, L1–L8, sub-processors, security, the children's-data stance, ten questions for counsel); <a href="responsible-data.html"><code>responsible-data.md</code></a> stays the customer's record</td>
 <td>counsel has the list</td>
 <td>—</td>
 </tr>
 <tr>
 <td><strong>E — delivery</strong></td>
-<td><strong>done in part</strong> — risk owners and triggers, dates relative to the go, reviews, the decision path and change control (<code>13</code> §5, §5b); the operating model for onboarding and support (F6) and the architecture + blueprint merge (B1) remain</td>
+<td><strong>done in part</strong> — risk owners and triggers, dates relative to the go, reviews, the decision path and change control (<a href="delivery-plan.html"><code>delivery-plan.md</code></a> §5, §5b); the operating model for onboarding and support (F6) and the architecture + blueprint merge (B1) remain</td>
 <td>a developer and a customer-success person can each act from their file</td>
 <td>C</td>
 </tr>
 <tr>
 <td><strong>F — consolidation</strong></td>
-<td><strong>done in part</strong> — the reading paths on the index (client · delivery · first instance · evidence · history) and the evidence pointer in <code>03</code>; the eleven-document merge with redirects remains</td>
+<td><strong>done in part</strong> — the reading paths on the index (client · delivery · first instance · evidence · history) and the evidence pointer in <a href="first-customer-classscout.html"><code>first-customer-classscout.md</code></a>; the eleven-document merge with redirects remains</td>
 <td>thirty files → eleven + history; no broken or Hungarian URL; the renderer computes every count</td>
 <td>A–E</td>
 </tr>
@@ -1038,7 +1037,7 @@ Remaining phases follow.</p>
 </table></div>
 <p>Order of work: A and B together, then the rest of C, D and E, then F, then G. Until F the live
 set carries a banner on every page: <em>this set is being replaced — the product is defined in
-<code>presentation.html</code> and <a href="business-case.html"><code>22-business-case.md</code></a>; the rest still reads as the first instance's
+<code>presentation.html</code> and <a href="economics.html"><code>economics.md</code></a>; the rest still reads as the first instance's
 project</em>.</p>
 <h2>9. What this audit itself gets wrong if unread</h2>
 <p>It is written by the person who made the errors, on the same day, without the owner's product
@@ -1071,80 +1070,80 @@ legal paperwork, and go-to-market.</em></p>
 </tr>
 <tr>
 <td>2</td>
-<td><strong>Executive summary</strong> <code>executive-summary.md</code></td>
+<td><strong>Executive summary</strong> <a href="executive-summary.html"><code>executive-summary.md</code></a></td>
 <td>the stakeholders</td>
 <td>one page, SCQA, the decision</td>
-<td><code>15</code></td>
+<td><a href="executive-summary.html"><code>executive-summary.md</code></a></td>
 </tr>
 <tr>
 <td>3</td>
-<td><strong>Product definition</strong> <code>product-definition.md</code></td>
+<td><strong>Product definition</strong> <a href="product-definition.html"><code>product-definition.md</code></a></td>
 <td>everyone</td>
 <td>the product for classified media owners: the three jobs, the departments, the human gate, the loop, the vocabulary (media owner · advertiser · visitor · listing · instance), what it is not, the persona, the first customer as example</td>
-<td><code>00</code>, SSOT §1a</td>
+<td><a href="product-definition.html"><code>product-definition.md</code></a>, SSOT §1a</td>
 </tr>
 <tr>
 <td>4</td>
-<td><strong>Product specification</strong> <code>product-specification.md</code> — <em>new</em></td>
+<td><strong>Product specification</strong> <a href="product-specification.html"><code>product-specification.md</code></a> — <em>new</em></td>
 <td>the stakeholders; the delivery team</td>
 <td><strong>how it works and how the customer uses it</strong>, screen by screen and role by role: the owner's day (Home, the inbox, the recap, Economics, Policy, Templates, How to use), the advertiser's team (today, conversations, campaigns, media, results, knowledge), the visitor's side (inbox, saved, preferences, Stop); every state, every approval, what each department does alone and what needs a person; <strong>the benefits per role, measured on the screen</strong>; the prototype as the reference for every screen</td>
-<td>the prototype's screens and help texts, <code>09</code> §2b–§4b, <code>05</code>, the presentation §5–§6</td>
+<td>the prototype's screens and help texts, <a href="business-logic.html"><code>business-logic.md</code></a> §2b–§4b, <code>05</code>, the presentation §5–§6</td>
 </tr>
 <tr>
 <td>5</td>
-<td><strong>The market</strong> <code>market.md</code></td>
+<td><strong>The market</strong> <a href="market.html"><code>market.md</code></a></td>
 <td>the stakeholders</td>
 <td>the classified-media segment and how it earns, what owners run and buy today, the gap, the product's SWOT; the first customer's category evidence referenced, not repeated</td>
-<td><code>01h</code>; the reusable parts of <code>01b</code> §2 and <code>01c</code> §1</td>
+<td><a href="market.html"><code>market.md</code></a>; the reusable parts of <code>01b</code> §2 and <code>01c</code> §1</td>
 </tr>
 <tr>
 <td>6</td>
-<td><strong>The value — the Economics department</strong> <code>economics.md</code></td>
+<td><strong>The value — the Economics department</strong> <a href="economics.html"><code>economics.md</code></a></td>
 <td>the stakeholders; the delivery team</td>
 <td>what the product computes for the owner about the owner's services (listing price, advertiser CAC and LTV, visitor cost and value, churn and retention, costs, incomes, the next dollar, the plan), the formulas, the inputs and their status, the events, the decision rules R16–R19, the first customer's worked example, sensitivity</td>
-<td><code>22</code> + <code>16</code> merged</td>
+<td><a href="economics.html"><code>economics.md</code></a> + <a href="economics.html"><code>economics.md</code></a> merged</td>
 </tr>
 <tr>
 <td>7</td>
-<td><strong>Business logic and SSOT</strong> <code>business-logic.md</code></td>
+<td><strong>Business logic and SSOT</strong> <a href="business-logic.html"><code>business-logic.md</code></a></td>
 <td>the delivery team</td>
 <td>the product layer and glossary, enumerations, entities, settings, the rules R1–R37 end to end with the first instance as the worked example, the rules map, what the product never does</td>
-<td><code>09</code> + <code>10</code> merged</td>
+<td><a href="business-logic.html"><code>business-logic.md</code></a> + <a href="business-logic.html"><code>business-logic.md</code></a> merged</td>
 </tr>
 <tr>
 <td>8</td>
-<td><strong>Architecture and blueprint</strong> <code>architecture.md</code></td>
+<td><strong>Architecture and blueprint</strong> <a href="architecture.html"><code>architecture.md</code></a></td>
 <td>the delivery team</td>
 <td>context, quality attributes, containers, the ADRs (the build baseline), the content model and state machines, connectors and adapters, the module catalogue with pseudo code, data contracts, the cron table, the outbox, security, configuration, the media worker, tests, operations; the token map as an appendix</td>
-<td><code>11</code> + <code>12</code> + <code>20</code> + <code>14</code> merged</td>
+<td><a href="architecture.html"><code>architecture.md</code></a> + <a href="architecture.html"><code>architecture.md</code></a> + <a href="architecture.html"><code>architecture.md</code></a> + <a href="architecture.html"><code>architecture.md</code></a> merged</td>
 </tr>
 <tr>
 <td>9</td>
-<td><strong>Delivery plan and operating model</strong> <code>delivery-plan.md</code></td>
+<td><strong>Delivery plan and operating model</strong> <a href="delivery-plan.html"><code>delivery-plan.md</code></a></td>
 <td>the delivery team; the owner</td>
 <td>milestones, the nine sprints with acceptance tests, the sprint-0 checklist, issues with a Definition of Done, owners, dates relative to the go, reviews, decision path, change control, risks with triggers; <strong>the operating model</strong> — onboarding a site (the policy interview, the connector, the knowledge workshop), support, incidents, offboarding and data return; the <strong>stakeholder sign-off sheet</strong> — who accepts what, by which criterion, with the evidence link</td>
-<td><code>13</code> + new</td>
+<td><a href="delivery-plan.html"><code>delivery-plan.md</code></a> + new</td>
 </tr>
 <tr>
 <td>10</td>
-<td><strong>Responsible data and the legal position</strong> <code>responsible-data.md</code></td>
+<td><strong>Responsible data and the legal position</strong> <a href="responsible-data.html"><code>responsible-data.md</code></a></td>
 <td>the delivery team; counsel</td>
 <td>the seventeen principles, the policy record per site, the gate, onboarding checklist, the customer's value; the product's own position as processor, the documents it must have, sub-processors, security, the children's-data stance, the counsel list — with the one disclaimer at the top</td>
-<td><code>18</code> + <code>24</code> merged; <code>01e</code>, <code>01f</code> as evidence</td>
+<td><a href="responsible-data.html"><code>responsible-data.md</code></a> + <a href="responsible-data.html"><code>responsible-data.md</code></a> merged; <code>01e</code>, <code>01f</code> as evidence</td>
 </tr>
 <tr>
 <td>11</td>
-<td><strong>First customer: ClassScout · Your Field NYC</strong> <code>first-customer-classscout.md</code></td>
+<td><strong>First customer: ClassScout · Your Field NYC</strong> <a href="first-customer-classscout.html"><code>first-customer-classscout.md</code></a></td>
 <td>the first customer; the delivery team</td>
 <td>their site measured, what is real and what is sample, the onboarding inputs by the feature each unblocks, the pilot's SWOT, the personas, the closed asks — everything instance-specific in one place</td>
-<td><code>02</code> + <code>03</code> + <code>19</code> + <code>17</code> §3 + <code>08</code></td>
+<td><a href="first-customer-classscout.html"><code>first-customer-classscout.md</code></a> + <a href="first-customer-classscout.html"><code>first-customer-classscout.md</code></a> + <a href="first-customer-classscout.html"><code>first-customer-classscout.md</code></a> + <a href="logic-audit.html"><code>logic-audit.md</code></a> §3 + <a href="register-of-asks.html"><code>register-of-asks.md</code></a></td>
 </tr>
 <tr>
 <td>12</td>
-<td><strong>Evidence</strong> <code>evidence.md</code></td>
+<td><strong>Evidence</strong> <a href="evidence.html"><code>evidence.md</code></a></td>
 <td>anyone checking a figure</td>
 <td>the claims register (every figure, source opened, status) and the index to research I–VII</td>
-<td><code>23</code> + an index; research <code>01</code>–<code>01h</code> kept as the evidence base</td>
+<td><a href="evidence.html"><code>evidence.md</code></a> + an index; research <code>01</code>–<a href="market.html"><code>market.md</code></a> kept as the evidence base</td>
 </tr>
 <tr>
 <td>—</td>
@@ -1162,10 +1161,10 @@ legal paperwork, and go-to-market.</em></p>
 </tr>
 <tr>
 <td>—</td>
-<td><strong>History</strong> <code>decisions.md</code> (D-register), <code>build-log.md</code>, <code>gate.md</code>, the closed register of asks, this audit</td>
+<td><strong>History</strong> <a href="decisions.html"><code>decisions.md</code></a> (D-register), <a href="build-log.html"><code>build-log.md</code></a>, <a href="gate.html"><code>gate.md</code></a>, the closed register of asks, this audit</td>
 <td>the owner</td>
 <td>never edited except to append</td>
-<td><code>04</code>, <code>06</code>, <code>07</code>, <code>08</code>, <code>21</code></td>
+<td><a href="decisions.html"><code>decisions.md</code></a>, <a href="build-log.html"><code>build-log.md</code></a>, <a href="gate.html"><code>gate.md</code></a>, <a href="register-of-asks.html"><code>register-of-asks.md</code></a>, <a href="documentation-audit.html"><code>documentation-audit.md</code></a></td>
 </tr>
 </tbody>
 </table></div>
@@ -1238,7 +1237,7 @@ the document is; numbers go.</p>
 <p>The product's own price and packaging, its build and run costs, its legal documents' signature, and
 its go-to-market — by the owner's instruction, not this phase. The research files stay as evidence
 and are not rewritten. The design set is not redesigned.</p>
-<footer>Source: <code>business-direct/docs/21-documentation-audit.md</code> · rendered by <code>docs/build.py</code>.</footer>
+<footer>Source: <code>business-direct/docs/documentation-audit.md</code> · rendered by <code>docs/build.py</code>.</footer>
 </div>
 </body>
 </html>

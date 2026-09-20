@@ -1,10 +1,10 @@
-# business.direct — implementation plan
+# business.direct — delivery plan, operating model and stakeholder sign-off
 
 *Written 2026-09-19 on the architecture's ADRs; phase 2 (M5) added the same day; re-cut to
-sprint level on 2026-09-20 (D37) from the system blueprint (`20-system-blueprint.md`) and the
+sprint level on 2026-09-20 (D37) from the system blueprint (`architecture.md`) and the
 service research (`01g-research-real-system.md`). Estimates are for a team of two developers and
 the owner as product lead; they assume the ADRs (ADR-1 to ADR-25) stand as the build baseline and
-the prerequisites in `19-implementation-prerequisites.md` arrive as §4 says. Every issue has a
+the prerequisites in `first-customer-classscout.md` arrive as §4 says. Every issue has a
 Definition of Done; every sprint has an acceptance test the owner can watch; the blocked register
 is honest about what waits on the client.*
 
@@ -15,7 +15,7 @@ instance (`platform_id`). "Measured" means a number in the build log, not a clai
 
 ## 1. Global Definition of Done
 
-- The SSOT term is used in code, UI and docs; new terms are added to `10-ssot.md` first.
+- The SSOT term is used in code, UI and docs; new terms are added to `business-logic.md` first.
 - No outbound path exists outside the outbox (ADR-4); a test proves a Server Action cannot send.
 - Every message has a `messages` row, a `why`, and an opt-out or preference link.
 - Cap and consent checks have tests for the race (enqueue and send).
@@ -55,7 +55,7 @@ nothing from Meta.
 
 ### Sprint 0 checklist (the day before S1)
 
-1. Repository created (`20-system-blueprint.md` §3), `main` protected, preview deployments on.
+1. Repository created (`architecture.md` §3), `main` protected, preview deployments on.
 2. Vercel project with the environment of blueprint §9; `CRON_SECRET`; the thirteen crons in `vercel.json`.
 3. Atlas M0 cluster, the collections and indexes of technical design §2 + blueprint §5 (a `scripts/indexes.ts`).
 4. Upstash database in `us-east-1`; Blob store.
@@ -64,15 +64,15 @@ nothing from Meta.
 7. Claude API key with a spend limit; `DRAFTER=template` until the knowledge files are loaded.
 8. Sentry project; Better Stack monitor on `/api/health`.
 9. DoneIsBetter SSO client for the machine (owner).
-10. The first client's policy record entered on the Policy screen from `18-responsible-data-policy-framework.md` §6 — with `postal_address` empty until P-1.
+10. The first client's policy record entered on the Policy screen from `responsible-data.md` §6 — with `postal_address` empty until P-1.
 
 ## 3. Issues
 
 | Id | Issue | Definition of Done |
 |---|---|---|
-| BD-0-1 | Repo, Next.js 15, Mantine + GDS tokens from `14-token-map.md` | tokens resolve; the design-system page renders from the same CSS |
+| BD-0-1 | Repo, Next.js 15, Mantine + GDS tokens from `architecture.md` | tokens resolve; the design-system page renders from the same CSS |
 | BD-0-2 | DoneIsBetter SSO for operator and provider roles | operator sees all; provider sees only its `provider_id` (test) |
-| BD-0-3 | MongoDB models per `12-technical-design.md` §2 with `platform_id` and `version` | migrations; optimistic-concurrency test |
+| BD-0-3 | MongoDB models per `architecture.md` §2 with `platform_id` and `version` | migrations; optimistic-concurrency test |
 | BD-0-4 | `YourFieldConnector` + hourly `sync` | 253 providers cached; a changed `updatedAt` produces a diff event (test with a fixture) |
 | BD-0-5 | Console shell: role switch, rail/bottom bar, deep links | the prototype's 13 screens reachable, empty states |
 | BD-0-11 | Policy fields R30–R36 and the three gate rows; safeguarding state on the card; delivery audit by neighbourhood (R33) | fields set or the features stay blocked; the audit report runs weekly |
@@ -128,7 +128,7 @@ nothing from Meta.
 | BD-4-7 | Economics screen on real metrics | the prototype's 23 inputs read from `assumptions`; measured ones are read-only and labelled |
 | BD-4-8 | Next-dollar ranking in the recap; R17–R19 as jobs | cadence, content slots and the upgrade card follow the rules (tests per rule) |
 | BD-4-5 | Intelligence recap screen | every tile names its source; "needs you" lists approvals, replied-not-applied, v1 integrations to connect |
-| BD-5-1 | `draft-campaigns` job and the campaign model | one draft per kind per card event; kinds per `09-business-logic.md` §4 |
+| BD-5-1 | `draft-campaigns` job and the campaign model | one draft per kind per card event; kinds per `business-logic.md` §4 |
 | BD-5-2 | Provider campaigns screen | approve / edit / skip; edit drops the AI badge; audience shown before approval |
 | BD-5-3 | Audience resolution through the connector (`savesFor`, `familiesNear`) | no uploaded lists possible (test); counts logged |
 | BD-5-4 | `send-campaigns` with preference and cap | a family at the cap receives nothing (test); the reason line on every message |
@@ -139,7 +139,7 @@ nothing from Meta.
 
 ## 4. Blocked register
 
-Every row below is an implementation prerequisite (`19-implementation-prerequisites.md`), provided by ClassScout after acceptance; none blocks the presentation or the planning.
+Every row below is an implementation prerequisite (`first-customer-classscout.md`), provided by ClassScout after acceptance; none blocks the presentation or the planning.
 
 | # | Blocked | On | Unblocks |
 |---|---|---|---|
@@ -165,7 +165,7 @@ Every row below is an implementation prerequisite (`19-implementation-prerequisi
 | A vendor changes price or limit (claims register V1–V16, dated 2026-09-20) | cost or cadence | product owner | any vendor invoice > 1.5× the register's figure, or a limit hit | every vendor behind an interface; the register re-read at each contract |
 | The cron tick (800 s on Pro) or a days-long wait is outgrown | a job cannot finish | delivery lead | a job's tick exceeds 600 s twice in a week | ADR-18: batching first, then Vercel Workflows, then Inngest on the same outbox rows |
 | One operator is a bottleneck | queue grows | product owner with the first customer | approvals older than 48 h exceed 20 | Simple mode's press; batch approval; earned auto-approval; the queue shows age |
-| Counsel's answers change a rule (`24-legal-and-data-processing.md` §6) | a feature waits or changes | counsel; product owner | any answer to §6 differs from the product team's reading | the gate blocks the feature until the record is updated; rules change in the SSOT first |
+| Counsel's answers change a rule (`responsible-data.md` §6) | a feature waits or changes | counsel; product owner | any answer to §6 differs from the product team's reading | the gate blocks the feature until the record is updated; rules change in the SSOT first |
 | The first customer's data is thinner than the pull (reviews, prices, contacts) | the content and citation levers underperform | first-customer contact | readiness < 3 of 4 on more than half of generated pages | pages publish only at readiness ≥ 3 of 4 (R6); card-quality asks in the onboarding file |
 
 ## 5b. Owners, dates and governance (phase E, D42)
@@ -174,9 +174,9 @@ Every row below is an implementation prerequisite (`19-implementation-prerequisi
 |---|---|---|
 | Product (definition, price, rules, the D-register) | the owner (product lead) | decisions logged as D-numbers the day they are made |
 | Delivery (the nine sprints, the acceptance tests, the gate) | a named delivery lead among the two developers | S0 at G; S1 G+1 w; S2 G+3 w; S3 G+5 w; S4 G+7 w (or swapped); S5 G+9 w; S6 G+11 w; S7 G+13 w; S8 G+15 w; S9 G+17 w |
-| First customer (the ClassScout instance) | the customer's named contact | onboarding inputs (`19`) by the sprint that needs each: §1 before S2's first real send, §2 before S3/S6's keyed features, §3 at G |
-| Legal (`24` §6) | counsel | answers before S2's first real send; the DPA and terms before the contract |
-| Claims and sources (`23`) | product lead | re-verified at every contract and every quarter |
+| First customer (the ClassScout instance) | the customer's named contact | onboarding inputs (`first-customer-classscout.md`) by the sprint that needs each: §1 before S2's first real send, §2 before S3/S6's keyed features, §3 at G |
+| Legal (`responsible-data.md` §6) | counsel | answers before S2's first real send; the DPA and terms before the contract |
+| Claims and sources (`evidence.md`) | product lead | re-verified at every contract and every quarter |
 
 **Reviews.** A sprint review every second Friday: the acceptance test of §2b run live on the
 console, the measured numbers written into the build log, the next sprint confirmed or swapped.
@@ -184,7 +184,7 @@ A monthly owner review of the D-register, the risk table and the claims register
 
 **Decision path.** A product rule changes in the SSOT first, then in the code, then in the
 prototype's copy — never the other order. An instance setting changes in its policy record and
-onboarding file. A legal question goes on `24` §6 and blocks only the feature it concerns. A
+onboarding file. A legal question goes on `responsible-data.md` §6 and blocks only the feature it concerns. A
 price or packaging decision is a D-number by the owner.
 
 **Change control.** No issue is added to a sprint without removing one of equal size; a new
@@ -200,3 +200,27 @@ the operator's approval queue as the one gate. **Release 1.1 (M4, S7):** real in
 the recap, generated pages, dashboards. **Release 2 (M5, S8):** provider campaigns, results,
 products and Stripe upgrades. **Release 3 (M6, S9):** the second-instance proof. Out of scope until a
 decision: TikTok and X, Google Business Profile, calendars.
+
+## 7. The operating model — how the product is run for a customer
+
+| Stage | What happens | Who | Done when |
+|---|---|---|---|
+| **Onboarding (week 1)** | the policy interview (the Policy screen filled together: identity and postal address, jurisdictions, audience model, channels and consent, defaults, cap, retention, disclosure, the site's privacy-policy clauses); the connector configured against the site's API and the channels connected; the knowledge workshop (voice, rules, offers as plain files, from the templates); the placements and the sending domain loaded; the first week run in Simple mode | the product team with the site's operator | the gate shows no blocked feature the pilot needs; the first Monday recap has been read together |
+| **Running** | the operator's twenty minutes a day; the product team reads the health endpoint and the dead-letter tab daily, the sprint metrics weekly | operator; product team | — |
+| **Support** | one channel (e-mail to the product team); response within one business day; a fix or a workaround named in the reply; anything touching a rule R1–R37 becomes a D-number before it ships | product team | — |
+| **Incidents** | severity 1 (a send that should not have happened, data exposure): stop the outbox for the instance, notify the operator within the hour and per the DPA, runbook, post-mortem within five days; severity 2 (a channel down, a job failing): runbook, notice in the recap; severity 3: the next sprint | product team | the post-mortem's actions are issues in the plan |
+| **Change** | a rule changes in the SSOT first, then the code, then the copy; an instance setting changes in its policy record; every change is a D-number or an issue | owner; delivery lead | the gate is clean |
+| **Offboarding** | export of the owner's data (listings cache, state, messages, consents, events) within 30 days; deletion per the retention schedule; credentials and tokens revoked; the instance row closed | product team | the owner confirms receipt; deletion logged |
+
+## 8. Stakeholder sign-off — who accepts what, by which criterion
+
+| Stakeholder | Accepts | Criterion | Evidence |
+|---|---|---|---|
+| **The owner** (product lead) | the product definition and the specification; the rules; the plan | the definition is in the owner's words; every screen of the prototype has its section in the specification; every rule has its test in the plan | `product-definition.md`, `product-specification.md`, `business-logic.md`, this plan |
+| **The first customer** (ClassScout) | the value the product computes for them; their instance's policy record; the onboarding inputs and dates | the Economics screen runs on their listings; the record shows what each missing field blocks; every input has an owner and a sprint | `economics.md` §3, the Policy and Economics screens, `first-customer-classscout.md` |
+| **The delivery lead** | the architecture and blueprint; the sprints and acceptance tests; the operating model | a developer can build from the blueprint; every sprint has an acceptance test the owner can watch; the runbooks exist | `architecture.md`, this plan §2b, §7 |
+| **Counsel** | the responsible-data record, the product's processor position, the ten questions | every legal sentence carries the disclaimer; the questions are answered or scheduled | `responsible-data.md` §6 (counsel list) |
+| **Every stakeholder** | the evidence | every figure in the stakeholder documents has a row with its source opened | `evidence.md` |
+
+Acceptance is recorded as a D-number with the date and the stakeholder's name; an open point is
+an issue in §3 with an owner, never a footnote.

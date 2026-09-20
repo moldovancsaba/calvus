@@ -1,18 +1,18 @@
 # business.direct — the register of asks (closed; history)
 
 *Closed 2026-09-20 (D41): business.direct is a product, so there are no "client asks" — the
-first customer's onboarding inputs are `19-implementation-prerequisites.md`, the owner's
-decisions are `04-decisions.md`. Kept as history. Every item that once needed the owner or the
+first customer's onboarding inputs are `first-customer-classscout.md`, the owner's
+decisions are `decisions.md`. Kept as history. Every item that once needed the owner or the
 first customer, with its state. Since 2026-09-19 (D34)
 the open items became **onboarding inputs of the first customer's instance** —
-and live in `19-implementation-prerequisites.md`; none is required for the presentation or
+and live in `first-customer-classscout.md`; none is required for the presentation or
 the planning. Nothing on this page is open for the presentation.*
 
 ## Open for the presentation
 
 None.
 
-## Moved to the implementation prerequisites (`19-implementation-prerequisites.md`)
+## Moved to the implementation prerequisites (`first-customer-classscout.md`)
 
 | # | Item | Now |
 |---|---|---|

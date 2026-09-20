@@ -1,8 +1,8 @@
-# business.direct — business logic audit and SWOT
+# business.direct — the business-logic audit (history)
 
 *Commissioned by the owner 2026-09-19 ("a deep business logic audit of the system to have
-a professional SWOT about the planned service"). Audited: `09-business-logic.md` (§1–§9),
-the SSOT's rules R1–R22 and settings, `16-analytics-and-unit-economics.md`, the ADRs, and
+a professional SWOT about the planned service"). Audited: `business-logic.md` (§1–§9),
+the SSOT's rules R1–R22 and settings, `economics.md`, the ADRs, and
 the prototype's behaviour (`assets/app.js`, rounds 1–6). Method: every rule read against
 every other rule, against the prototype, against the real catalogue (253 providers, pulled
 2026-09-19), and against the three research rounds. Findings are numbered A1–A18 with a
@@ -66,68 +66,9 @@ upgrade business at today's catalogue size.
 | A17 | minor | The reference instance (Hungary) needs consent for named-person e-mail addresses; the connector interface has no "address is a named person" flag. | research I §8b; `PlatformConnector` | add `contactKind: 'role' \| 'person'` to the connector's provider record; the sequence job skips `person` addresses without consent on EU instances |
 | A18 | minor | "Never delete a provider's stage history" (business logic §9) has no store: `provider_state` holds one stage; the history lives in `events`. Fine in production, but the prototype's drawer shows no history. | technical design §2 | the drawer lists the last three `stage.changed` events with who and why |
 
-## 3. SWOT of the first instance's deployment (Your Field NYC)
+## 3. The pilot's SWOT
 
-*Note (D41): this SWOT was written when the documentation treated the first instance as the
-project; it reads as the pilot's SWOT — the first customer's market, competitors (Sawyer) and
-catalogue. The product's own market, competitors and SWOT are research VII (`01h-research-product-market.md`).*
-
-### Strengths (internal, evidenced)
-
-| # | Strength | Evidence |
-|---|---|---|
-| S1 | **The thesis is the incumbents' thesis.** Yelp bought exactly this (Hatch, $270 M, lead management + scoring; Receptionist at $99/month) three months before we drew it; Thumbtack sells its supply inside ChatGPT and Claude. | research III §1 |
-| S2 | **Human gate on everything, from day one.** Every outbound path passes a person (R1); the outbox is the only sender (ADR-4); consent and caps are checked twice (ADR-3). This is the operating rule the reference videos and the Sprout consumer data both demand, and it is the hardest thing to retrofit. | business logic §3, §9 |
-| S3 | **Real data, declared honestly.** 253 real providers, every tile labelled real / sample / benchmark / assumption, the economics screen exposing a 0.7 LTV : CAC rather than hiding it. Owners and clients can trust the numbers because the bad ones are shown. | analytics §2.4, §8 |
-| S4 | **Single-player utility for the provider on day one** — conversations, reminders, campaigns, media work before the platform has sent a single family — which the cold-start literature says is the difference between marketplaces that seed supply and those that die on it. | research II §2.2; provider view |
-| S5 | **One connector interface, two instances already pulled** (Your Field 253, Sportolok 431). Portability is built, not promised. | ADR-2; `data/` |
-| S6 | **The owner owns the platform.** No integration negotiation, no API risk from a third party, family data never leaves the owner's estate. | brief; ADR-11 |
-| S7 | **Documentation as a product**: SSOT, business logic, 28 decisions, 22 rules, three research rounds with primary sources, a gate that fails on stale text. A team can be onboarded from the folder. | this docs set |
-
-### Weaknesses (internal, evidenced)
-
-| # | Weakness | Evidence |
-|---|---|---|
-| W1 | **Unit economics do not close at today's scale.** Outbound to 253 providers on $49 upgrades: LTV : CAC 0.7, payback 31 months. The service is a cost centre for the platform until the catalogue is ~4× larger or ARPA is higher. | analytics §2.4 |
-| W2 | **Two rules cannot both hold** (A2) and one legal footer is wrong (A3). Small to fix; unacceptable to ship. | §2 |
-| W3 | **The operator is the bottleneck by design.** R1 puts one person in front of every post, reply, campaign and enquiry; the economics model undercounts that cost (A10). | A10 |
-| W4 | **Sample where it matters most**: audiences, trials, reply times, families per post, product prices. The screens are convincing and the numbers behind the two revenue levers (campaign reach, upgrade pitch) are invented until the platform's analytics arrive. | analytics §8; A7, A11 |
-| W5 | **Thin cards**: 0 reviews, 28 prices, 83 next sessions of 253. The content engine and the AI-citation lever depend on card quality the machine does not control. | A15 |
-| W6 | **Six dependencies on keyed platform endpoints** for the core loop (claims, audiences, notifications, flags, sources, bookings). | A16 |
-| W7 | **No media production yet** — the clip engine is v1 in the plan, sample in the prototype; the strongest content lever (real footage) is unbuilt. | round 6 |
-
-### Opportunities (external, evidenced)
-
-| # | Opportunity | Evidence |
-|---|---|---|
-| O1 | **AI answers and social search are replacing Google organic for local discovery** — the platform that is the cited, structured source wins; Yelp took 512,680 citations in a quarter. A curated, verified kids-activities catalogue is exactly the kind of source these engines cite. | research II §2.1 |
-| O2 | **Youth-activity spend is up 46 % in five years** ($1,016 per child per sport) and parents choose the programme that shows up in their world (80 % pick the sponsoring brand). Providers can pay because the families do. | research I §3, II §2.1 |
-| O3 | **SMBs already use AI for content (81 %) and want referrals (83 %)** — the provider is ready to accept drafts and a referral loop, which is what the machine sells. | research II §3 |
-| O4 | **Yelp Receptionist proves a $99/month price point** for "never miss a call" in services; the provider-side conversations department can be a product line, not only a bundled feature. | research III §1 |
-| O5 | **Owned audiences are cheap to build** (newsletter growth ~90 % unpaid; ~$1.50 per opt-in via cross-recommendation); the neighbourhood newsletter (P6) is a moat no channel algorithm can take. | research II §2.1 |
-| O6 | **Open-source measurement** (Meridian, Robyn) and cheap generation APIs (cents per image) mean the analytics and media layers cost tooling, not licences. | research II §4, III §3 |
-| O7 | **The second instance is a configuration** — every reference-idea platform (sport.doneisbetter.com, job portals, classifieds) is the same shape; the connector interface is the product. | ADR-2 |
-
-### Threats (external, evidenced)
-
-| # | Threat | Evidence |
-|---|---|---|
-| T1 | **The incumbents move first and bigger.** Yelp ($270 M for Hatch), Angi, Thumbtack inside the assistants; **Sawyer** already sells booking, registration and a marketplace to kids'-activity providers — the exact provider the machine courts. A provider with Sawyer's booking tool needs a reason to answer our invitation. | research III §1; **P** [Sawyer for Business](https://www.hisawyer.com/for-business), [Sawyer marketplace](https://www.hisawyer.com/for-business/features/marketplace) |
-| T2 | **Deliverability.** 47 % of AI-outbound deployments fail on domain reputation within 90 days; one bad week of sends and the platform's own transactional mail is at risk. | research II §5.1 |
-| T3 | **Law is moving under the service**: TCPA damages $500–1,500 per text; EU AI Act Art. 50 live since August 2026 with four different platform label systems; children's-data statutes in New York; CAN-SPAM's address rule (A3). | research I §8, II §4.3; A13 |
-| T4 | **Platform rules on AI content** — TikTok cuts reach ~60 % for 30 days after three unlabelled AI videos; Meta labels above the post. A labelling slip costs the channel, not just a post. | research II §4.3 |
-| T5 | **Google's enforcement on generated pages** (50–80 % traffic loss for thin programmatic sites) — the generated-pages lever is one algorithm update from a penalty if readiness is not real. | research II §2.1 |
-| T6 | **Vendor churn in generation**: generative-video vendors change quickly (K/V16: the earlier "Sora died in five months" had no source and was removed); Higgsfield's pricing could not even be read from its own page. Anything built on one vendor's API is fragile. | research II §4.1 |
-| T7 | **The provider is one coach with a phone.** Adoption depends on a claim that costs one click and a tool that works alone; any onboarding friction and the supply side — where two-thirds of marketplaces die — stays unclaimed. | research II §2.2 |
-
-### The cross-reads (what the SWOT says to do)
-
-- **S1 + T1 → position as the platform's own team, not a tool.** Sawyer sells software to the provider; we sell families to the provider and providers to the platform. Never compete on booking software; integrate with it (a Sawyer connector is a later adapter).
-- **W1 + O2 + O4 → fix the model, not the pitch.** Price the conversations department for providers at the incumbent's line ($99) *or* keep it bundled and fund the machine as platform growth — decide, and put the decision in the economics defaults.
-- **W3 + O3 → batch approvals and trust levels.** A provider who edited nothing for four weeks can have reminders and answers to FAQ questions auto-sent (still logged, still stoppable); R1 becomes "approval or an earned auto-approval per department".
-- **W5 + O1 + T5 → card quality is the product.** Reviews and price capture on the platform are the precondition for the citation lever; without them, do not publish generated pages.
-- **T2 + A9 → the sending guard is a rule, not a card** (R23).
-- **T3 + A2 + A3 + A13 → a legal pass before the first send**: address, cap semantics, children's data, per-market disclosure.
+Moved to `first-customer-classscout.md` Part D.
 
 ## 4. Recommendations — adopted and implemented as D30 (2026-09-19)
 

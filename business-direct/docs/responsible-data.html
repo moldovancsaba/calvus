@@ -1,0 +1,612 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>business.direct — responsible data: the policy record and gate for every customer, and the product's own legal position — business.direct docs</title>
+<link rel="stylesheet" href="../assets/tokens.css">
+<style>/* business.direct — documentation pages on the product tokens (GDS roles, teal accent). */
+:root{--ground:var(--gds-bg-canvas,#f8fafc);--card:var(--gds-bg-surface,#fff);--ink:var(--gds-text-body,#111827);--text:#1f2937;--muted:var(--gds-text-meta,#64748b);--accent:var(--gds-brand-accent,#0f766e);--accent-deep:var(--gds-brand-accent-strong,#115e59);--line:var(--gds-border-card,#e2e8f0);--line-soft:#eef2f7;--note:var(--gds-brand-accent-tint,#e6f4f2)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--ground);color:var(--text);font-family:var(--gds-font,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif);font-size:15.5px;line-height:1.6;padding-block:0 64px;padding-inline:clamp(16px,4vw,40px)}
+.wrap{max-width:74ch;margin-inline:auto}
+.docnav{display:flex;flex-wrap:wrap;gap:4px 18px;align-items:center;padding:16px 0;border-bottom:1px solid var(--line);font-size:12px;letter-spacing:.06em;text-transform:uppercase}
+.docnav a{color:var(--muted);text-decoration:none;min-height:44px;min-width:44px;display:inline-flex;align-items:center;border-bottom:2px solid transparent}
+.docnav a:hover,.docnav a[aria-current]{color:var(--ink);border-color:var(--accent)}
+.docnav-brand{color:var(--accent-deep);font-weight:800;margin-right:6px}
+.docnav-hub{margin-left:auto}
+header{padding-block:40px 24px;border-bottom:1px solid var(--line);margin-bottom:28px}
+.eyebrow{font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--accent-deep);margin:0 0 12px;font-weight:800}
+h1,h2,h3{color:var(--ink);line-height:1.1;text-wrap:balance;margin:0;letter-spacing:-.02em}
+h1{font-size:clamp(30px,6vw,46px);font-weight:900}
+h2{font-size:clamp(23px,4vw,30px);font-weight:900;margin:48px 0 14px;padding-top:20px;border-top:1px solid var(--line)}
+h3{font-size:18px;margin:30px 0 8px;font-weight:800}
+p{margin:0 0 14px} strong{color:var(--ink);font-weight:800}
+ul,ol{padding-left:22px;margin:0 0 16px} li{margin:5px 0} li>ul{margin:6px 0 0}
+code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.86em;background:var(--note);padding:1px 5px;border-radius:4px;color:var(--ink);overflow-wrap:anywhere}
+.notice{margin:0 0 22px;padding:12px 16px;border-radius:10px;background:var(--gds-brand-accent-tint);border:1px solid var(--gds-border-card);font-size:13.5px;font-weight:600}
+pre{overflow-x:auto;padding:14px 16px;border:1px solid var(--line);border-radius:10px;background:var(--card);font-size:12px;line-height:1.35}
+pre code{background:none;padding:0;font-size:inherit}
+a{color:var(--accent-deep)} :focus-visible{outline:2px solid var(--accent-deep);outline-offset:2px}
+.tbl{overflow-x:auto;margin:14px 0 22px;border:1px solid var(--line);border-radius:10px;background:var(--card)}
+table{border-collapse:collapse;width:100%;font-size:13.5px;min-width:560px}
+th{text-align:left;font-weight:800;color:var(--ink);background:var(--note);padding:10px 12px;border-bottom:1px solid var(--line);font-size:11.5px;letter-spacing:.06em;text-transform:uppercase}
+td{padding:10px 12px;border-top:1px solid var(--line-soft);vertical-align:top;background:var(--card)} td:first-child{color:var(--ink)}
+footer{margin-top:56px;padding-top:18px;border-top:1px solid var(--line);font-size:12px;color:var(--muted)}
+</style>
+</head>
+<body>
+<div class="wrap">
+<nav class="docnav" aria-label="Project documentation"><span class="docnav-brand">business.direct · docs</span><a href="index.html">Overview</a><a href="executive-summary.html">Executive summary</a><a href="product-definition.html">Product definition</a><a href="product-specification.html">Product specification</a><a href="market.html">Market</a><a href="economics.html">Economics</a><a href="business-logic.html">Business logic and SSOT</a><a href="architecture.html">Architecture and blueprint</a><a href="delivery-plan.html">Delivery plan</a><a href="responsible-data.html" aria-current=page>Responsible data and legal</a><a href="first-customer-classscout.html">First customer</a><a href="evidence.html">Evidence</a><a href="research.html">Research I</a><a href="research-2.html">Research II</a><a href="research-3.html">Research III</a><a href="research-4.html">Research IV</a><a href="research-5.html">Research V</a><a href="research-6.html">Research VI</a><a href="design-system.html">Design system</a><a href="layouts.html">Layouts</a><a href="05-layout-specs.html">Layout specs</a><a href="decisions.html">Decisions</a><a href="build-log.html">Build log</a><a href="gate.html">Gate</a><a href="register-of-asks.html">Register of asks</a><a href="logic-audit.html">Logic audit</a><a href="documentation-audit.html">Documentation audit</a></nav>
+<header><p class="eyebrow">Calvus · business.direct · project documentation</p><h1>business.direct — responsible data: the policy record and gate for every customer, and the product's own legal position</h1></header>
+<p><em>Part A is the framework every customer's site runs under; Part B is the product's own position as
+processor and the list of questions for counsel. </em><em>Nothing here is legal advice</em><em>: every legal
+sentence in this document and in the research is the product team's reading, written so counsel
+can confirm or correct it. Part A written 2026-09-19 (D32). The first client is ClassScout, operator of Your Field NYC; the
+framework is written so that the second, third and any later client — a sports directory, a
+job portal, a classifieds site — gets the same protection by configuration, not by a new
+build. The research behind it is <a href="research-4.html"><code>01e-research-responsible-data.md</code></a>; the reference
+implementation is the platform's </em>Policy<em> screen (<code>../index.html?view=platform&amp;screen=policy</code>)
+and the policy gate in the outbox. The owner's directive: respect children's rights whatever
+the client, care for customers' data, use it commercially but properly, and deliver business
+value for the client.</em></p>
+<h2>1. Principles (the machine's own, for any instance)</h2>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>#</th>
+<th>Principle</th>
+<th>Where it lives</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td><strong>Know who the service is for.</strong> Every instance declares its audience model: adults only, mixed, or child-directed. Nothing else is decided before this.</td>
+<td>policy <code>audienceModel</code></td>
+</tr>
+<tr>
+<td>2</td>
+<td><strong>A child is an age, never a name.</strong> Minimum by default: no name, no photo, no location of a child anywhere in the machine; an age or an age band at most, and only where the client's own policy allows it.</td>
+<td>R24, policy <code>childData</code></td>
+</tr>
+<tr>
+<td>3</td>
+<td><strong>No profiling or targeting on a minor's data, ever</strong> — not with consent, not with a parent's consent (the California and Oregon bans and DSA Art. 28 are the floor).</td>
+<td>R27</td>
+</tr>
+<tr>
+<td>4</td>
+<td><strong>High-privacy defaults.</strong> Every switch that shares, locates or increases frequency starts off; the family, the candidate, the buyer turns it on.</td>
+<td>R28, <code>family.prefs</code></td>
+</tr>
+<tr>
+<td>5</td>
+<td><strong>Consent names the channel and the sender</strong> and is stored verbatim with time and source; preference is enough for the platform's own service messages where the law allows, never for a third party's.</td>
+<td>R4, <code>consents</code></td>
+</tr>
+<tr>
+<td>6</td>
+<td><strong>Zero-party over inferred.</strong> The machine acts on what the person told it — saves, asks, preferences — not on what it guesses.</td>
+<td>R11, avid definition</td>
+</tr>
+<tr>
+<td>7</td>
+<td><strong>Every commercial message says who sent it, why, and how to stop</strong> — and carries the sender's postal address where the market requires it; opt-outs honoured within one business day.</td>
+<td>R2, R23, <code>postalAddress</code></td>
+</tr>
+<tr>
+<td>8</td>
+<td><strong>Disclosure when a machine wrote or made it</strong>, per market's rule.</td>
+<td>R20</td>
+</tr>
+<tr>
+<td>9</td>
+<td><strong>Retention with an end date</strong>, per data class, per instance.</td>
+<td>policy <code>retention</code></td>
+</tr>
+<tr>
+<td>10</td>
+<td><strong>The gate is code.</strong> A feature does not run until the policy fields it needs are set; the operator sees what is blocked and why.</td>
+<td>R26, the policy gate</td>
+</tr>
+<tr>
+<td>11</td>
+<td><strong>Children in real footage only with written parental consent</strong>, kept with the clip; never a child's name on a clip.</td>
+<td>R30, <code>mediaConsent</code></td>
+</tr>
+<tr>
+<td>12</td>
+<td><strong>Safeguarding is shown as verified or not — never claimed.</strong></td>
+<td>R31, <code>safeguarding</code></td>
+</tr>
+<tr>
+<td>13</td>
+<td><strong>No pressure on anyone.</strong> No false urgency or scarcity; "not now" pauses marketing and gets a human; a cooling-off on every purchase.</td>
+<td>R32, <code>vulnerability</code></td>
+</tr>
+<tr>
+<td>14</td>
+<td><strong>No protected characteristic, directly or by proxy</strong>, in any audience, slot or score; delivery audited.</td>
+<td>R33, <code>protected</code></td>
+</tr>
+<tr>
+<td>15</td>
+<td><strong>Accessible by default</strong> — WCAG 2.2 AA on every message, captions on every clip.</td>
+<td>R34, <code>accessibility</code></td>
+</tr>
+<tr>
+<td>16</td>
+<td><strong>Sensitive categories are answered, never stored</strong> — health, location tracks, biometrics, Art. 9, hardship.</td>
+<td>R35, <code>sensitive</code></td>
+</tr>
+<tr>
+<td>17</td>
+<td><strong>No dark pattern, no AI manipulation</strong> — a banned list on every draft and screen; Stop is one tap.</td>
+<td>R36, <code>darkPatterns</code></td>
+</tr>
+</tbody>
+</table></div>
+<h2>2. The policy — one record per instance</h2>
+<pre><code>policy {
+  platform_id, client, instance, operator_contact, postal_address,          # identity; the address CAN-SPAM needs
+  jurisdictions: ['US-NY', 'US'] | ['HU', 'EU'] | …,                          # the laws in force
+  laws: [...derived from jurisdictions],                                       # CAN-SPAM, TCPA, COPPA, NY CDPA, GDPR, DSA 28, Act XLVIII, AI Act 50
+  audienceModel: 'adults' | 'mixed' | 'child-directed',                        # principle 1
+  ageOfDigitalConsent: 13 | 16 | …,                                            # GDPR Art. 8 per member state; COPPA 13
+  childData: 'none' | 'age-band' | 'age' | 'with-parental-consent',           # principle 2
+  minorsMarketing: { profiling: false, targetedAds: false, pushQuietHours: [21, 7] },   # principle 3; Nebraska-style hours
+  channels: { email: 'preference' | 'consent', push: ..., sms: 'consent', social: 'public' },
+  consentText: { sms: '...', email: '...' },                                   # stored verbatim per consent
+  defaults: { picks: on/off, alerts: ..., nearby: off, sms: off },            # principle 4
+  cap: { providerMessagesPerMonth: 4, countsPlatformDigest: false },
+  optOutSlaHours: 24,
+  aiDisclosure: 'none' | 'label' | 'label+text',                               # principle 8, per market
+  retention: { messages: '24m', consents: 'account+5y', drafts: '90d', events: '24m' },
+  privacyPolicy: { url, lastUpdated, clauses: { emailAlerts: bool, savesOptIn: bool, childrenNone: bool } },
+  dpia: { done: bool, at? },                                                   # required for a mixed or child-directed instance
+  mediaConsent, safeguarding, vulnerability, protected, accessibility, sensitive, darkPatterns   # research V, R30–R36
+}
+</code></pre>
+<h2>3. The policy gate (R26) — what runs only when what is set</h2>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>Feature</th>
+<th>Needs</th>
+<th>Blocked otherwise</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Any provider e-mail (sequences, replies)</td>
+<td><code>postal_address</code>, opt-out footer, <code>jurisdictions</code></td>
+<td>the outbox refuses; the sequence card shows why</td>
+</tr>
+<tr>
+<td>Family digest and alerts</td>
+<td><code>privacyPolicy.clauses.emailAlerts = true</code>, <code>channels.email</code> set</td>
+<td>the digest job does not run; the family sees "coming when the policy is published"</td>
+</tr>
+<tr>
+<td>Campaign audiences from saves / nearby</td>
+<td><code>privacyPolicy.clauses.savesOptIn = true</code>, the platform's opt-in signal available</td>
+<td>audiences are 0; the campaign card says so</td>
+</tr>
+<tr>
+<td>SMS to families</td>
+<td><code>channels.sms = 'consent'</code>, <code>consentText.sms</code></td>
+<td>the SMS toggle cannot turn on</td>
+</tr>
+<tr>
+<td>Generated media, AI-drafted messages</td>
+<td><code>aiDisclosure</code> set</td>
+<td>generation and unedited AI sends are blocked</td>
+</tr>
+<tr>
+<td>Any minor's data</td>
+<td><code>audienceModel</code>, <code>childData</code>, <code>dpia.done</code> for mixed / child-directed</td>
+<td>the family entity accepts no child field beyond what <code>childData</code> allows</td>
+</tr>
+<tr>
+<td>Push notifications</td>
+<td><code>minorsMarketing.pushQuietHours</code></td>
+<td>no push in quiet hours on a mixed instance</td>
+</tr>
+<tr>
+<td>Clips from a recording that shows children</td>
+<td><code>mediaConsent</code> rule · consent confirmed per recording</td>
+<td>the clip engine refuses; offers a coach-only or place-only cut (R30)</td>
+</tr>
+<tr>
+<td>Safeguarding on a card</td>
+<td><code>safeguarding</code> rule</td>
+<td>shown only as verified; "not verified" is displayed (R31)</td>
+</tr>
+<tr>
+<td>Any draft or screen</td>
+<td><code>darkPatterns</code> list · <code>accessibility</code> rule</td>
+<td>drafts with a banned pattern refused; inaccessible output refused (R34, R36)</td>
+</tr>
+</tbody>
+</table></div>
+<p>The gate runs before every send (<code>sending-guard</code>), on every draft (<code>draft-*</code> jobs) and at
+schema level (the family entity). The <em>Policy</em> screen lists every field, its state (set /
+missing / placeholder) and every feature it blocks.</p>
+<h2>4. Client onboarding — the checklist the screen shows</h2>
+<ol>
+<li>Identity: client, instance, operator contact, <strong>postal address</strong>.</li>
+<li>Jurisdictions → the laws (derived, shown).</li>
+<li>Audience model; age of digital consent; child-data rule; DPIA if mixed or child-directed.</li>
+<li>Channels and their consent basis; consent texts; defaults (all high-privacy).</li>
+<li>The client's published privacy policy: URL, date, the three clauses the machine needs
+   (e-mail alerts described, saves opt-in described, children's data stance).</li>
+<li>Cap, opt-out SLA, retention, AI disclosure.</li>
+<li>Beyond children: media consent, safeguarding, vulnerability, protected characteristics, accessibility, sensitive categories, dark patterns (research V).</li>
+<li>The gate report: what is blocked until which field is set.</li>
+</ol>
+<h2>5. What the client gets (the business value, in their words)</h2>
+<ul>
+<li><strong>Lower exposure</strong>: the enforcement record (research IV §2) is a list of defaults, labels
+  and nudges; the gate makes the wrong default impossible to ship.</li>
+<li><strong>A better audience</strong>: every message goes to a person who saved, asked or opted in —
+  zero-party data converts better than inferred data (research IV §4) and needs no profiling.</li>
+<li><strong>Trust as acquisition</strong>: in a category where half of privacy-aware consumers have
+  switched a company over data practices and 83 % of small businesses grow on referrals,
+  the trusted platform is the one parents recommend.</li>
+<li><strong>Auditability</strong>: every send carries its policy basis (which clause, which consent, which
+  cap) in the message log; a regulator's question is a query, not a search.</li>
+<li><strong>Portability</strong>: the second instance is a policy record and a connector, not a rebuild.</li>
+</ul>
+<h2>6. Two instances, one framework (worked examples)</h2>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Your Field NYC (ClassScout)</th>
+<th>Most én sportolok! (reference, Hungary)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>jurisdictions</td>
+<td>US-NY, US</td>
+<td>HU, EU</td>
+</tr>
+<tr>
+<td>laws</td>
+<td>CAN-SPAM, TCPA, COPPA (2025 rule), NY CDPA, EU AI Act 50 where EU users</td>
+<td>GDPR (Art. 8 at 16 in Hungary), Act XLVIII/2008, DSA Art. 28, EU AI Act 50</td>
+</tr>
+<tr>
+<td>audienceModel</td>
+<td>adults (the policy says 18+)</td>
+<td>adults (athletes' guardians) — to confirm</td>
+</tr>
+<tr>
+<td>childData</td>
+<td>none — ages only in the family's own preferences</td>
+<td>none</td>
+</tr>
+<tr>
+<td>channels</td>
+<td>e-mail preference, push preference, SMS consent, social public</td>
+<td>e-mail consent for B2C, role addresses for B2B without consent, no SMS</td>
+</tr>
+<tr>
+<td>postal address</td>
+<td><strong>missing</strong> (prerequisite P-1)</td>
+<td>to obtain</td>
+</tr>
+<tr>
+<td>privacyPolicy clauses</td>
+<td>e-mail alerts <strong>not yet described</strong>; saves opt-in <strong>described (off by default)</strong>; children <strong>none</strong></td>
+<td>to read</td>
+</tr>
+<tr>
+<td>aiDisclosure</td>
+<td>label (platform rules)</td>
+<td>label + text (Art. 50)</td>
+</tr>
+<tr>
+<td>gate today</td>
+<td>sequences blocked in production (address); digest blocked (clause); audiences from opted-in accounts only</td>
+<td>everything blocked until the policy is filled</td>
+</tr>
+</tbody>
+</table></div>
+<h2>7. How the framework generalises</h2>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>Client type</th>
+<th>What changes</th>
+<th>What does not</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Kids' activities (Your Field)</td>
+<td>audience adults, child data none, parents consent for SMS</td>
+<td>the gate, the cap, the address, the disclosure</td>
+</tr>
+<tr>
+<td>Sports directory (Sportolok)</td>
+<td>athletes may be minors — <code>audienceModel: mixed</code>, DPIA, quiet hours, no profiling</td>
+<td>same</td>
+</tr>
+<tr>
+<td>Job portal</td>
+<td>candidates' data is sensitive; apprentices 16–18 are minors under some laws; consent for B2C, role addresses for employers</td>
+<td>same</td>
+</tr>
+<tr>
+<td>Classifieds</td>
+<td>sellers' addresses and phone numbers are personal data; buyers' locations off by default</td>
+<td>same</td>
+</tr>
+</tbody>
+</table></div>
+<p>The record changes values; the rules and the gate do not.</p>
+<h2>Part B — the product's legal position: processor for the media owner, the documents it must have, the counsel list</h2>
+<p><em>Phase D of the transformation programme (<a href="documentation-audit.html"><code>documentation-audit.md</code></a> §8). The responsible-data
+framework (<a href="responsible-data.html"><code>responsible-data.md</code></a>) governs </em><em>the customer's</em><em> policy record —
+what each media owner's site may send, to whom, under which law. This document is about
+</em><em>business.direct's own obligations</em><em> as the company that operates the product on the owner's
+data. </em><em>Nothing here is legal advice</em><em>: every statement is the product team's reading, written so
+that counsel can confirm or correct it; §6 is the list of questions for counsel. Every legal
+sentence in <code>01e</code>, <code>01f</code>, <a href="responsible-data.html"><code>responsible-data.md</code></a> and <a href="business-logic.html"><code>business-logic.md</code></a> §7 carries the same status. Written 2026-09-20 (D42).</em></p>
+<h3>1. The roles (the reading counsel confirms)</h3>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>Data</th>
+<th>Who decides why and how (controller)</th>
+<th>Who processes on instruction (processor)</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Listings and the advertisers' contact details (the site's catalogue)</td>
+<td>the media owner</td>
+<td>business.direct</td>
+<td>business contact data; for EU sites, a named person's e-mail is personal data (Act XLVIII, GDPR)</td>
+</tr>
+<tr>
+<td>Visitors' accounts, saves, preferences, consents</td>
+<td>the media owner (the site holds the account)</td>
+<td>business.direct (mirrors preferences and consents, sends on instruction)</td>
+<td>visitors never sign in to the product (ADR-6)</td>
+</tr>
+<tr>
+<td>Messages sent and received through the product</td>
+<td>the media owner</td>
+<td>business.direct</td>
+<td>the message log is the owner's record; the product keeps it for the retention period the owner sets</td>
+</tr>
+<tr>
+<td>The product's own operational data (events, metrics, the operator's approvals)</td>
+<td>business.direct, as necessary to run the service</td>
+<td>—</td>
+<td>contract; no marketing use across customers</td>
+</tr>
+<tr>
+<td>The product's telemetry about the owner's users (errors, health)</td>
+<td>business.direct</td>
+<td>—</td>
+<td>minimised; no visitor content in error reports</td>
+</tr>
+</tbody>
+</table></div>
+<p>In GDPR terms business.direct is a <strong>processor</strong> for the media owner (controller) — or a
+sub-processor where the owner is itself a processor for its advertisers; under the CCPA/CPRA a
+<strong>service provider</strong>. The first customer's site is US-only with adult users by its own policy
+(D31); the framework's children's-data rules apply to any instance where minors may be present.</p>
+<h3>2. The documents the product must have before the first customer contract</h3>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>#</th>
+<th>Document</th>
+<th>What it must say (in outline)</th>
+<th>Owner</th>
+<th>Status</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>L1</td>
+<td><strong>Terms of service</strong> (owner ↔ business.direct)</td>
+<td>the service (the three jobs as departments with a human gate), the owner's responsibilities (the policy record's truth, the postal address, its own privacy policy, the channels' authority), acceptable use (no purchased lists, no messages to people who did not save, ask or opt in — R11, ADR-10), the human gate as an operating condition, availability, fees and cooling-off, liability caps, termination and data return</td>
+<td>counsel drafts on the product team's outline</td>
+<td><strong>to write</strong></td>
+</tr>
+<tr>
+<td>L2</td>
+<td><strong>Data processing agreement</strong> (Art. 28 GDPR-shaped, usable for US customers)</td>
+<td>subject matter and duration, nature and purpose, the data categories in §1, the controller's instructions (the policy record <em>is</em> the instruction set), confidentiality, security (§4), sub-processors (§3) with notice of change, assistance with data-subject rights (export, deletion via the platform webhook — blueprint §8), breach notification (72 h to the owner), deletion or return at the end, audit rights</td>
+<td>counsel</td>
+<td><strong>to write</strong></td>
+</tr>
+<tr>
+<td>L3</td>
+<td><strong>The product's privacy policy</strong></td>
+<td>what business.direct itself collects (the operator's account via SSO, approvals, operational telemetry), the processor role for everything else, the sub-processors, retention, the children's-data stance (§5), contact</td>
+<td>counsel</td>
+<td><strong>to write</strong></td>
+</tr>
+<tr>
+<td>L4</td>
+<td><strong>Sub-processor list</strong> (§3)</td>
+<td>public page; notice before a change</td>
+<td>product team</td>
+<td>drafted below</td>
+</tr>
+<tr>
+<td>L5</td>
+<td><strong>Security statement</strong></td>
+<td>blueprint §8 in plain words: encryption in transit and at rest, secrets, webhook signatures, idempotency, access scoped per instance, append-only audit collections, backups, incident process, the runbooks</td>
+<td>product team</td>
+<td><strong>to write from <a href="architecture.html"><code>architecture.md</code></a> §8, §12</strong></td>
+</tr>
+<tr>
+<td>L6</td>
+<td><strong>Retention and deletion schedule</strong></td>
+<td>per data class per instance: messages 24 months, consents account + 5 years, drafts 90 days, events 24 months (framework §2); deletion on the owner's instruction and at the end of the contract</td>
+<td>product team</td>
+<td>drafted in <a href="responsible-data.html"><code>responsible-data.md</code></a> §2</td>
+</tr>
+<tr>
+<td>L7</td>
+<td><strong>AI-disclosure statement</strong></td>
+<td>which departments may use a model, that every output is marked internally and disclosed to recipients where the instance's law requires (R20, EU AI Act Art. 50 where EU users), that no decision about a person is automated (the human gate)</td>
+<td>product team + counsel</td>
+<td><strong>to write</strong></td>
+</tr>
+<tr>
+<td>L8</td>
+<td><strong>Children's-data stance</strong> (§5)</td>
+<td>in L3 and in the DPA's data categories</td>
+<td>counsel</td>
+<td>drafted below</td>
+</tr>
+</tbody>
+</table></div>
+<h3>3. Sub-processors (from research VI; every one under a contract with a DPA)</h3>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>Sub-processor</th>
+<th>Purpose</th>
+<th>Data it sees</th>
+<th>Region</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Vercel</td>
+<td>hosting, functions, cron, Blob (media, snapshots)</td>
+<td>all application data in transit; media files</td>
+<td>US (iad1)</td>
+</tr>
+<tr>
+<td>MongoDB Atlas</td>
+<td>the database</td>
+<td>all application data at rest</td>
+<td>US-East</td>
+</tr>
+<tr>
+<td>Upstash</td>
+<td>caps, locks, idempotency</td>
+<td>ids and counters only</td>
+<td>US-East</td>
+</tr>
+<tr>
+<td>Resend</td>
+<td>e-mail out and inbound</td>
+<td>recipients, message content</td>
+<td>US</td>
+</tr>
+<tr>
+<td>Meta (Instagram, Facebook)</td>
+<td>publishing, comments, DMs</td>
+<td>published content, commenters' public handles</td>
+<td>Meta's</td>
+</tr>
+<tr>
+<td>Twilio (when SMS is on)</td>
+<td>SMS, missed-call capture</td>
+<td>phone numbers, message content</td>
+<td>US</td>
+</tr>
+<tr>
+<td>Stripe</td>
+<td>the owner's advertiser payments (on the owner's own account)</td>
+<td>none through business.direct beyond the entitlement</td>
+<td>—</td>
+</tr>
+<tr>
+<td>Anthropic (Claude API)</td>
+<td>drafting and classification when the department's switch is on</td>
+<td>the knowledge files, the listing, the thread being answered — no visitor account data beyond what a message contains</td>
+<td>US (the API's data-use terms: no training on API inputs)</td>
+</tr>
+<tr>
+<td>Deepgram</td>
+<td>transcription of uploaded recordings</td>
+<td>the audio</td>
+<td>US</td>
+</tr>
+<tr>
+<td>Fly.io</td>
+<td>the media worker</td>
+<td>the recording and the clips while processing</td>
+<td>US (iad)</td>
+</tr>
+<tr>
+<td>Sentry</td>
+<td>errors</td>
+<td>stack traces with instance id; no message content</td>
+<td>US</td>
+</tr>
+<tr>
+<td>Better Stack</td>
+<td>uptime</td>
+<td>none</td>
+<td>—</td>
+</tr>
+<tr>
+<td>DoneIsBetter SSO</td>
+<td>the operator's sign-in</td>
+<td>operator e-mail and name</td>
+<td>the owner's</td>
+</tr>
+</tbody>
+</table></div>
+<p>Rule: a sub-processor is added only with notice to every customer; a recording that shows
+children never leaves the worker without the consent reference (R30).</p>
+<h3>4. Security commitments (what the owner can be promised, from <a href="architecture.html"><code>architecture.md</code></a> §8)</h3>
+<p>Encryption in transit (HTTPS, HSTS) and at rest (Atlas, Blob); secrets in the platform's
+encrypted environment; every webhook verified by signature before it is read; idempotency on
+every inbound event; access scoped to the operator's instance and to an advertiser's own
+records; append-only audit collections (approvals, consents, messages, opt-outs, events); daily
+backups at production tier; the incident runbooks in <a href="architecture.html"><code>architecture.md</code></a> §12; breach notice to the owner within
+72 hours of confirmation.</p>
+<h3>5. The children's-data stance of the product itself</h3>
+<p>business.direct stores no child's name, image or location on any instance (R24); a child is
+an age, and only where the instance's policy record allows the field (<code>childData</code>). It never
+profiles or targets a minor, with or without consent (R27). It cuts footage that shows a child
+only with the operator's confirmation of written parental consent, kept with the clip (R30). For
+an instance whose audience may include minors, the policy record requires the audience model and
+a DPIA before the family entity accepts any minor's field (R26, framework §3). The product's own
+privacy policy says this; the owner's policy record makes it enforceable per site.</p>
+<h3>6. The questions for counsel (one list; every legal sentence in the set depends on it)</h3>
+<ol>
+<li>Is the processor / service-provider reading in §1 right for the first customer (US, adult
+   users), and what changes if a later instance has EU users or minors?</li>
+<li>Which of L1–L8 must exist before the first real message is sent, and which before the
+   contract is signed?</li>
+<li>CAN-SPAM: the postal address in every advertiser e-mail is the <strong>owner's</strong> — confirm; may the
+   product's own address be used where the owner has none?</li>
+<li>TCPA / A2P 10DLC: the consent text stored verbatim per visitor per advertiser (R4) — confirm
+   the wording; who is the "sender" for registration, the owner or the product?</li>
+<li>Children's data (New York Child Data Protection Act, COPPA 2025): a parent's account
+   describing a child by age only — confirm no consent flow is needed and the wording of the
+   age field (<a href="first-customer-classscout.html"><code>first-customer-classscout.md</code></a> P-4).</li>
+<li>EU instances: named-person e-mail addresses need consent under Act XLVIII/2008 §6 — confirm;
+   the connector's <code>contactKind</code> flag is the mechanism (<a href="logic-audit.html"><code>logic-audit.md</code></a> A17).</li>
+<li>AI disclosure: for the first customer (US), which messages, if any, must carry a disclosure;
+   for EU users, the Art. 50 wording.</li>
+<li>The DPA's breach-notice window and liability cap for a product of this size.</li>
+<li>Whether the retention schedule in L6 satisfies the owner's own obligations to its users.</li>
+<li>Whether the product may use aggregated, de-identified metrics across customers for
+    benchmarks (today: no, by design).</li>
+</ol>
+<p>Until counsel answers, the product runs the pilot on test addresses and the owner's own
+accounts only, and every legal sentence in the documentation reads as "the product team's
+reading, to be confirmed".</p>
+<footer>Source: <code>business-direct/docs/responsible-data.md</code> · rendered by <code>docs/build.py</code>.</footer>
+</div>
+</body>
+</html>

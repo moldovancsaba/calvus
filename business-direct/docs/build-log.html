@@ -37,11 +37,10 @@ footer{margin-top:56px;padding-top:18px;border-top:1px solid var(--line);font-si
 </head>
 <body>
 <div class="wrap">
-<nav class="docnav" aria-label="Project documentation"><span class="docnav-brand">business.direct · docs</span><a href="index.html">Overview</a><a href="brief.html">Brief</a><a href="research.html">Research</a><a href="research-2.html">Research II</a><a href="research-3.html">Research III</a><a href="research-4.html">Research IV</a><a href="research-5.html">Research V</a><a href="research-6.html">Research VI</a><a href="research-7.html">Research VII</a><a href="audit.html">Audit</a><a href="sources.html">Sources</a><a href="design-system.html">Design system</a><a href="layouts.html">Layouts</a><a href="05-layout-specs.html">Layout specs</a><a href="decisions.html">Decisions</a><a href="build-log.html" aria-current=page>Build log</a><a href="gate.html">Gate</a><a href="client-asks.html">Register of asks</a><a href="implementation-prerequisites.html">Prerequisites</a><a href="business-logic.html">Business logic</a><a href="ssot.html">SSOT</a><a href="architecture.html">Architecture</a><a href="technical-design.html">Technical design</a><a href="implementation-plan.html">Plan</a><a href="system-blueprint.html">System blueprint</a><a href="documentation-audit.html">Documentation audit</a><a href="claims-register.html">Claims register</a><a href="legal.html">Legal position</a><a href="token-map.html">Token map</a><a href="executive.html">Executive summary</a><a href="business-case.html">Business case</a><a href="analytics.html">Analytics</a><a href="audit-swot.html">Audit · SWOT</a><a href="policy-framework.html">Policy framework</a></nav>
+<nav class="docnav" aria-label="Project documentation"><span class="docnav-brand">business.direct · docs</span><a href="index.html">Overview</a><a href="executive-summary.html">Executive summary</a><a href="product-definition.html">Product definition</a><a href="product-specification.html">Product specification</a><a href="market.html">Market</a><a href="economics.html">Economics</a><a href="business-logic.html">Business logic and SSOT</a><a href="architecture.html">Architecture and blueprint</a><a href="delivery-plan.html">Delivery plan</a><a href="responsible-data.html">Responsible data and legal</a><a href="first-customer-classscout.html">First customer</a><a href="evidence.html">Evidence</a><a href="research.html">Research I</a><a href="research-2.html">Research II</a><a href="research-3.html">Research III</a><a href="research-4.html">Research IV</a><a href="research-5.html">Research V</a><a href="research-6.html">Research VI</a><a href="design-system.html">Design system</a><a href="layouts.html">Layouts</a><a href="05-layout-specs.html">Layout specs</a><a href="decisions.html">Decisions</a><a href="build-log.html" aria-current=page>Build log</a><a href="gate.html">Gate</a><a href="register-of-asks.html">Register of asks</a><a href="logic-audit.html">Logic audit</a><a href="documentation-audit.html">Documentation audit</a></nav>
 <header><p class="eyebrow">Calvus · business.direct · project documentation</p><h1>business.direct — build log</h1></header>
-<p class="notice" role="note"><b>This documentation set is being replaced (audit D40).</b> business.direct is a standalone product — the one-person sales and marketing team; ClassScout is its first customer. The <a href="presentation.html">presentation</a>, the <a href="executive.html">executive summary</a> and the <a href="business-case.html">business case</a> are written for the product; most other pages still read as the first instance's project until the <a href="documentation-audit.html">transformation programme</a> replaces them.</p>
 <p>Every round: what was built, from which decision, what was measured. The gate is
-<a href="gate.html"><code>07-gate.md</code></a>; the standard is <code>PROTOTYPING.md</code> §5–6.</p>
+<a href="gate.html"><code>gate.md</code></a>; the standard is <code>PROTOTYPING.md</code> §5–6.</p>
 <h2>Round 1 — 2026-09-19 — the prototype (D16–D18)</h2>
 <p><strong>Built.</strong> <code>index.html</code> + <code>assets/app.css</code> (layout, mirrors the gate-2 frames) +
 <code>assets/app.js</code> (state and screens). Tokens and components untouched since gate 1
@@ -95,7 +94,7 @@ copy lives in the knowledge files); tablet 1024 is the phone layout with wider c
 <p><strong>Built.</strong> <code>docs/bemutato.html</code> (English, the product's tokens, standalone, four steps with
 phone previews and a desktop preview of the prototype, what is real, six asks, what comes
 next). <code>app.js</code>: <code>?view=platform|provider|family&amp;screen=&lt;id&gt;</code> deep links so the previews
-and the docs open the right screen (<code>assets/app.js?v=3</code>). Docs <code>10</code>–<code>14</code> rendered by
+and the docs open the right screen (<code>assets/app.js?v=3</code>). Docs <a href="business-logic.html"><code>business-logic.md</code></a>–<a href="architecture.html"><code>architecture.md</code></a> rendered by
 <code>build.py</code>; the two hand-written docs pages gained the package links.</p>
 <p><strong>Measured</strong> (app browser pane, 2026-09-19): presentation at 1440 — five iframes load the
 intended screens (overview, overview, provider sales, Brooklyn Force Soccer, What arrives),
@@ -124,7 +123,7 @@ department reads from state, "Reach more families" with the platform's three pro
 department, market radar from the catalogue, needs-you); the drawer shows a managing
 provider's plan; integrations carry v1 / later (D21). Family inbox: "From providers" shows
 approved campaigns from saved providers with the reason line, by preference. New doc
-<a href="business-logic.html"><code>09-business-logic.md</code></a>; SSOT, architecture (ADR-9, ADR-10), technical design, plan (M5,
+<a href="business-logic.html"><code>business-logic.md</code></a>; SSOT, architecture (ADR-9, ADR-10), technical design, plan (M5,
 seven issues, B6–B8), token map, layout spec, brief and presentation updated.</p>
 <p><strong>Measured</strong> (app browser pane, 2026-09-19): at 390 — intelligence, integrations, provider
 today (locked and managing), campaigns, results, family inbox: <code>scrollWidth</code> 390, every
@@ -296,7 +295,20 @@ browser, fixed before commit.</p>
 <p><strong>Measured</strong> (390 × 844): overview tile 253, pipeline 253, every platform screen renders
 with one <code>h1</code>, <code>scrollWidth</code> 390, 0 errors on a fresh load. <code>python3 check.py</code> →
 <code>GATE: CLEAN</code>.</p>
-<footer>Source: <code>business-direct/docs/06-build-log.md</code> · rendered by <code>docs/build.py</code>.</footer>
+<h2>Round 11 — 2026-09-20 — the consolidation (D44)</h2>
+<p><strong>What changed.</strong> The product specification written; thirty-three documentation files merged and
+renamed into the final set of twelve (plus the design set, six research rounds and the history);
+eighteen redirect pages for the earlier names; the replacement notice removed; the renderer's page
+list and both hand-written navigations regenerated; the gate rewritten for the final set; the app's
+documentation links and comments updated (<code>app.js?v=23</code>, links only — no behaviour change).</p>
+<p><strong>Measured</strong> (browser pane, fresh tab, cache-busted): <code>product-specification.html</code>,
+<code>business-logic.html</code>, <code>architecture.html</code> at 390 — scrollWidth 390, one <code>h1</code>, no overflowing
+code block, no notice; <code>delivery-plan.html</code> at 1440 — scrollWidth 1440, the operating model and
+the sign-off sections present; <code>ssot.html</code> → redirects to <code>business-logic.html</code>; the prototype in
+Simple mode at 390 — Home with 8 recommendations, scrollWidth 390, no console errors. Gate:
+<code>python3 check.py</code> exit 0, <code>GATE: CLEAN</code>, 48 files, 1 219 references in the project, 0 broken
+across the repo.</p>
+<footer>Source: <code>business-direct/docs/build-log.md</code> · rendered by <code>docs/build.py</code>.</footer>
 </div>
 </body>
 </html>

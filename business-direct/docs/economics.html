@@ -1,0 +1,613 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>business.direct — the Economics department: the value for the media owner, and the model behind the screen — business.direct docs</title>
+<link rel="stylesheet" href="../assets/tokens.css">
+<style>/* business.direct — documentation pages on the product tokens (GDS roles, teal accent). */
+:root{--ground:var(--gds-bg-canvas,#f8fafc);--card:var(--gds-bg-surface,#fff);--ink:var(--gds-text-body,#111827);--text:#1f2937;--muted:var(--gds-text-meta,#64748b);--accent:var(--gds-brand-accent,#0f766e);--accent-deep:var(--gds-brand-accent-strong,#115e59);--line:var(--gds-border-card,#e2e8f0);--line-soft:#eef2f7;--note:var(--gds-brand-accent-tint,#e6f4f2)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--ground);color:var(--text);font-family:var(--gds-font,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif);font-size:15.5px;line-height:1.6;padding-block:0 64px;padding-inline:clamp(16px,4vw,40px)}
+.wrap{max-width:74ch;margin-inline:auto}
+.docnav{display:flex;flex-wrap:wrap;gap:4px 18px;align-items:center;padding:16px 0;border-bottom:1px solid var(--line);font-size:12px;letter-spacing:.06em;text-transform:uppercase}
+.docnav a{color:var(--muted);text-decoration:none;min-height:44px;min-width:44px;display:inline-flex;align-items:center;border-bottom:2px solid transparent}
+.docnav a:hover,.docnav a[aria-current]{color:var(--ink);border-color:var(--accent)}
+.docnav-brand{color:var(--accent-deep);font-weight:800;margin-right:6px}
+.docnav-hub{margin-left:auto}
+header{padding-block:40px 24px;border-bottom:1px solid var(--line);margin-bottom:28px}
+.eyebrow{font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--accent-deep);margin:0 0 12px;font-weight:800}
+h1,h2,h3{color:var(--ink);line-height:1.1;text-wrap:balance;margin:0;letter-spacing:-.02em}
+h1{font-size:clamp(30px,6vw,46px);font-weight:900}
+h2{font-size:clamp(23px,4vw,30px);font-weight:900;margin:48px 0 14px;padding-top:20px;border-top:1px solid var(--line)}
+h3{font-size:18px;margin:30px 0 8px;font-weight:800}
+p{margin:0 0 14px} strong{color:var(--ink);font-weight:800}
+ul,ol{padding-left:22px;margin:0 0 16px} li{margin:5px 0} li>ul{margin:6px 0 0}
+code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.86em;background:var(--note);padding:1px 5px;border-radius:4px;color:var(--ink);overflow-wrap:anywhere}
+.notice{margin:0 0 22px;padding:12px 16px;border-radius:10px;background:var(--gds-brand-accent-tint);border:1px solid var(--gds-border-card);font-size:13.5px;font-weight:600}
+pre{overflow-x:auto;padding:14px 16px;border:1px solid var(--line);border-radius:10px;background:var(--card);font-size:12px;line-height:1.35}
+pre code{background:none;padding:0;font-size:inherit}
+a{color:var(--accent-deep)} :focus-visible{outline:2px solid var(--accent-deep);outline-offset:2px}
+.tbl{overflow-x:auto;margin:14px 0 22px;border:1px solid var(--line);border-radius:10px;background:var(--card)}
+table{border-collapse:collapse;width:100%;font-size:13.5px;min-width:560px}
+th{text-align:left;font-weight:800;color:var(--ink);background:var(--note);padding:10px 12px;border-bottom:1px solid var(--line);font-size:11.5px;letter-spacing:.06em;text-transform:uppercase}
+td{padding:10px 12px;border-top:1px solid var(--line-soft);vertical-align:top;background:var(--card)} td:first-child{color:var(--ink)}
+footer{margin-top:56px;padding-top:18px;border-top:1px solid var(--line);font-size:12px;color:var(--muted)}
+</style>
+</head>
+<body>
+<div class="wrap">
+<nav class="docnav" aria-label="Project documentation"><span class="docnav-brand">business.direct · docs</span><a href="index.html">Overview</a><a href="executive-summary.html">Executive summary</a><a href="product-definition.html">Product definition</a><a href="product-specification.html">Product specification</a><a href="market.html">Market</a><a href="economics.html" aria-current=page>Economics</a><a href="business-logic.html">Business logic and SSOT</a><a href="architecture.html">Architecture and blueprint</a><a href="delivery-plan.html">Delivery plan</a><a href="responsible-data.html">Responsible data and legal</a><a href="first-customer-classscout.html">First customer</a><a href="evidence.html">Evidence</a><a href="research.html">Research I</a><a href="research-2.html">Research II</a><a href="research-3.html">Research III</a><a href="research-4.html">Research IV</a><a href="research-5.html">Research V</a><a href="research-6.html">Research VI</a><a href="design-system.html">Design system</a><a href="layouts.html">Layouts</a><a href="05-layout-specs.html">Layout specs</a><a href="decisions.html">Decisions</a><a href="build-log.html">Build log</a><a href="gate.html">Gate</a><a href="register-of-asks.html">Register of asks</a><a href="logic-audit.html">Logic audit</a><a href="documentation-audit.html">Documentation audit</a></nav>
+<header><p class="eyebrow">Calvus · business.direct · project documentation</p><h1>business.direct — the Economics department: the value for the media owner, and the model behind the screen</h1></header>
+<p><em>For a classified media owner. What this page answers: what business.direct computes for you,
+on your numbers, every night — what a listing sells for and earns, what an advertiser costs to
+win and is worth, what a visitor costs to bring in and is worth, what churn costs and retention
+keeps, all costs and incomes, and where the next dollar goes — and what it read on the first
+customer's listings. Every input is marked </em><em>measured</em><em> (from the site's own data), </em><em>benchmark</em><em>
+(sourced) or </em><em>assumption</em><em> (a placeholder on the screen until your data replaces it). The
+formulas are the ones the product's Economics screen computes; Part B below is the department's
+specification (the model, the events, the decision rules). Written 2026-09-20 (D41). ClassScout (Your Field NYC) is
+the worked example.</em></p>
+<h2>1. What the product computes for the owner</h2>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>Question the owner asks</th>
+<th>The product's answer</th>
+<th>Inputs</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>What does a listing sell for?</strong></td>
+<td>the site's advertising products and their prices — featured placement, category placement, discovery profile — with the plan ladder every advertiser is on</td>
+<td>the site's products (Your Field: $49 / month, $149 / season, $29 / month — sample until the site sets them)</td>
+</tr>
+<tr>
+<td><strong>What does an advertiser cost to win?</strong></td>
+<td><strong>CAC</strong> = outbound cost (touches, calls, operator minutes, tooling) ÷ new managing advertisers; and ÷ new paying advertisers</td>
+<td>touches per prospect, cost per touch, cost per call, operator minutes per approval and rate, tooling</td>
+</tr>
+<tr>
+<td><strong>What is an advertiser worth?</strong></td>
+<td><strong>LTV</strong> = monthly contribution (price × margin) ÷ monthly churn; <strong>payback</strong> = CAC ÷ contribution; healthy at LTV : CAC ≥ 3 and payback ≤ 12 months</td>
+<td>price, margin, churn</td>
+</tr>
+<tr>
+<td><strong>What does a visitor cost to bring in?</strong></td>
+<td>cost per new visitor from content = content stack ÷ (posts × new visitors per post); compared with what an engaged visitor is worth</td>
+<td>posts per week, new visitors per post (measured once a channel is connected), content stack</td>
+</tr>
+<tr>
+<td><strong>What is a visitor worth?</strong></td>
+<td>value delivered to advertisers per engaged visitor per year (enquiries × conversion × the advertiser's revenue per conversion) and the site's share of it (capture, measured as placements bought within 30 days of a delivered result)</td>
+<td>engaged share, enquiries per year, conversion, revenue per conversion, capture, referrals</td>
+</tr>
+<tr>
+<td><strong>What does churn cost, what does retention keep?</strong></td>
+<td>LTV at risk = advertisers at risk × LTV; expected kept = at risk × share kept by a touch × LTV; keeping costs a touch, replacing costs a CAC</td>
+<td>churn, share kept (measured from the retention log)</td>
+</tr>
+<tr>
+<td><strong>Where does the next dollar go?</strong></td>
+<td>four levers ranked weekly by expected value per dollar: one more touch to the unreplied, the call list, a week of content, retention touches to the at-risk</td>
+<td>all of the above</td>
+</tr>
+<tr>
+<td><strong>What is the plan?</strong></td>
+<td>twelve months of managing and paying advertisers, monthly revenue (placements + any priced service line), cost and cumulative cash — every month follows the inputs</td>
+<td>the funnel rates, churn, price</td>
+</tr>
+<tr>
+<td><strong>Which numbers are real?</strong></td>
+<td>every tile says measured / benchmark / assumption; a rate flips to measured at 100 observations</td>
+<td>the event log</td>
+</tr>
+</tbody>
+</table></div>
+<h2>2. The funnel and its rates (what the owner sees on the sales side)</h2>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>Stage</th>
+<th>Rate to next</th>
+<th>Status</th>
+<th>Source</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Listed → reachable</td>
+<td>by e-mail, by phone, by website only — from the listings</td>
+<td>measured</td>
+<td>the site's own data</td>
+</tr>
+<tr>
+<td>Reachable → replied</td>
+<td>5.5 % (top quartile); 3.4 % average; 10.7 % top decile; 42 % of replies come from the follow-ups</td>
+<td>benchmark (K1)</td>
+<td><a href="evidence.html"><code>evidence.md</code></a></td>
+</tr>
+<tr>
+<td>Replied → applied</td>
+<td>40 %</td>
+<td>assumption</td>
+<td>—</td>
+</tr>
+<tr>
+<td>Applied → managing</td>
+<td>80 % (the site confirms the claim)</td>
+<td>assumption</td>
+<td>—</td>
+</tr>
+<tr>
+<td>Managing → paying within 3 months</td>
+<td>25 %</td>
+<td>assumption; SMB activation 35–50 %</td>
+<td>research II §2.2</td>
+</tr>
+<tr>
+<td>Paying → churned per month</td>
+<td>5 % (3–7 % range)</td>
+<td>benchmark</td>
+<td>research II §2.2</td>
+</tr>
+<tr>
+<td>At risk → kept by a retention touch</td>
+<td>30 %</td>
+<td>assumption; measured from the retention log</td>
+<td>—</td>
+</tr>
+</tbody>
+</table></div>
+<h2>3. The worked example — what the product read on the first customer's listings (2026-09-19 pull)</h2>
+<p>Your Field NYC, 253 providers pulled (the demo's data; the customer's catalogue is far larger):
+130 reachable by e-mail, 73 by phone only, 50 by website only; 0 managing; sample prices $49 /
+$29 / $149 per season.</p>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>The screen says</th>
+<th>Value</th>
+<th>Reading</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>CAC · managing advertiser</td>
+<td>≈ $300</td>
+<td>one quarter of outbound (three touches, the call list, the operator's minutes, $150 tooling) wins ≈ 2 managing advertisers</td>
+</tr>
+<tr>
+<td>CAC · paying advertiser</td>
+<td>≈ $1 200</td>
+<td>≈ 0.6 paying per quarter at the assumed rates</td>
+</tr>
+<tr>
+<td>LTV · paying advertiser</td>
+<td>$784</td>
+<td>$49 × 80 % margin ÷ 5 % churn</td>
+</tr>
+<tr>
+<td><strong>LTV : CAC</strong></td>
+<td><strong>0.7</strong> — below the 3 : 1 line</td>
+<td>outbound alone, on this pull at sample prices, does not pay for a $49 placement; payback 31 months</td>
+</tr>
+<tr>
+<td>Cost per new visitor from content</td>
+<td>≈ $4</td>
+<td>$120 content stack ÷ (5 posts × 1.5 new visitors per post)</td>
+</tr>
+<tr>
+<td>Value of an engaged visitor</td>
+<td>≈ $42 a year to the site; ≈ $813 to the advertisers it reaches</td>
+<td>2 enquiries × 40 % conversion × $1 016 (Project Play: family spend per child per sport); 5 % capture</td>
+</tr>
+<tr>
+<td>Advertisers at risk (sample cohort)</td>
+<td>4 of 7 managing</td>
+<td>LTV at risk ≈ $3 100; expected kept at 30 % ≈ $940</td>
+</tr>
+<tr>
+<td>Next dollar</td>
+<td>retention touches, then one more e-mail touch</td>
+<td>keeping an advertiser costs a touch; replacing one costs the CAC above</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>What turns it — three inputs on the same screen.</strong> (a) <strong>Scale</strong>: at 1 000 listings the
+tooling is spread and CAC falls under $400 (LTV : CAC ≈ 2, payback ≈ 10 months). (b) <strong>Price for
+the category</strong>: a placement mix at $89 with annual plans (3 % churn) makes LTV $2 373 (≈ 2 at
+253 listings, ≈ 6 at 1 000). (c) <strong>Count the demand side</strong>: the same outbound also produces
+managing advertisers who answer enquiries and visitors who come back — at 5 000 visitors and
+15 % engaged, ≈ $610 k a year of advertiser revenue flows through the site's introductions, the
+number the placements are priced against. The owner chooses which; the product shows each.</p>
+<h2>4. Sensitivity (what moves the owner's answer most)</h2>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>Input</th>
+<th>−50 %</th>
+<th>Default</th>
+<th>+50 % / top decile</th>
+<th>Effect</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Reply rate</td>
+<td>2.75 %</td>
+<td>5.5 %</td>
+<td>10.7 %</td>
+<td>LTV : CAC 0.35 → 0.7 → 1.3 at 253 listings; the largest lever the product controls (propensity order, the visitor's enquiry as a touch, the call list)</td>
+</tr>
+<tr>
+<td>Applied → managing → paying</td>
+<td>0.5×</td>
+<td>40 · 80 · 25 %</td>
+<td>1.5×</td>
+<td>linear in CAC; measured from the first cohort</td>
+</tr>
+<tr>
+<td>Monthly churn</td>
+<td>7 %</td>
+<td>5 %</td>
+<td>3 %</td>
+<td>LTV $560 → $784 → $1 307; retention and annual plans are the levers</td>
+</tr>
+<tr>
+<td>Placement price</td>
+<td>$29</td>
+<td>$49</td>
+<td>$89</td>
+<td>LTV $464 → $784 → $1 424; the owner's pricing decision</td>
+</tr>
+<tr>
+<td>Listings</td>
+<td>253</td>
+<td>253</td>
+<td>1 000</td>
+<td>CAC $1 200 → &lt; $400; fixed tooling spread</td>
+</tr>
+<tr>
+<td>Share kept by a retention touch</td>
+<td>15 %</td>
+<td>30 %</td>
+<td>45 %</td>
+<td>expected kept ≈ $470 → $940 → $1 400 on the sample cohort</td>
+</tr>
+</tbody>
+</table></div>
+<h2>5. The costs the owner carries, as the product counts them</h2>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>Line</th>
+<th>Default</th>
+<th>Status</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>E-mail touches</td>
+<td>3 per prospect at $0.05</td>
+<td>assumption; sending domain and warm-up in tooling</td>
+</tr>
+<tr>
+<td>Call tasks</td>
+<td>$5 per phone-only prospect (operator minutes)</td>
+<td>assumption</td>
+</tr>
+<tr>
+<td>Operator time</td>
+<td>2 minutes per approval at $40 / hour; measured on the screen as "operator hours this week"; falls as departments earn auto-approval</td>
+<td>measured in use</td>
+</tr>
+<tr>
+<td>Sales tooling</td>
+<td>$150 / month (sending domain, warm-up, enrichment)</td>
+<td>assumption</td>
+</tr>
+<tr>
+<td>Content stack</td>
+<td>$120 / month (clip engine, image, audio)</td>
+<td>assumption; research II §4</td>
+</tr>
+</tbody>
+</table></div>
+<h2>6. What the owner provides, and when</h2>
+<p>At onboarding: the site's API and channels; the policy record (jurisdictions, consent per
+channel, the cap, the postal address, the privacy-policy clauses); the knowledge files. Then, as
+they exist: the site's analytics events (visitors, sign-ups with source, saves, opens,
+bookings), the real placement prices, a write key for claims and card flags, and one pilot
+advertiser's numbers — each replaces an assumption on the screen. For the first customer the
+list is <a href="first-customer-classscout.html"><code>first-customer-classscout.md</code></a>.</p>
+<h2>7. The decision</h2>
+<p>Use the product; let the first cohort replace the assumptions. The screen is the argument: it
+shows the owner's numbers, says which are real, and ranks the next dollar every week.</p>
+<h2>Part B — the department's specification: the model, the events, the decision rules</h2>
+<p><em>This is the specification of the Economics screen — the owner's economics as a service (D41): the
+value it delivers is <a href="economics.html"><code>economics.md</code></a>. Written 2026-09-19 on the owner's directive: "we will need ROI calculations and planning for
+CAC and LTV for B2B clients, marketing value for the avid users, and all the other analytics
+information that helps the system deliver data-driven marketing decisions." This is the
+model the </em>Economics<em> screen (<code>../index.html?view=platform&amp;screen=economics</code>) computes; the
+screen's inputs are this document's assumptions, and every number that is not from the
+catalogue or a cited benchmark is marked so. Terms are the SSOT's; the decision rules become
+R16–R19 there.</em></p>
+<h3>1. What the numbers are for</h3>
+<p>The machine spends three things — e-mail touches, operator minutes and tool subscriptions —
+and gets back providers who manage their page, providers who pay, and families who come,
+save, ask and enrol. Data-driven marketing here means four questions the system can answer
+from its own events, every week:</p>
+<ol>
+<li><strong>What does a paying provider cost and what is it worth?</strong> (CAC, LTV, payback, LTV:CAC)</li>
+<li><strong>What is a family worth, and an <em>avid</em> one?</strong> (marketing value on the demand side)</li>
+<li><strong>Does content pay?</strong> (cost per family from the content engine vs the value of a family)</li>
+<li><strong>Where does the next dollar go?</strong> (expected LTV gained per dollar, across the three
+   levers: another touch, a call, a week of content)</li>
+</ol>
+<h3>2. The B2B model: providers (the platform's B2B clients)</h3>
+<h4>2.1 Funnel and rates</h4>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>Stage</th>
+<th>Count today (real)</th>
+<th>Rate to next</th>
+<th>Source of the rate</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Identified</td>
+<td>253</td>
+<td>—</td>
+<td>catalogue</td>
+</tr>
+<tr>
+<td>Reachable by e-mail</td>
+<td>130</td>
+<td>reply <strong>5.5 %</strong> (top-quartile benchmark; 3.43 % average, 10.7 % top decile)</td>
+<td><a href="https://instantly.ai/cold-email-benchmark-report-2026">Instantly 2026 benchmark</a> (research II §5.1)</td>
+</tr>
+<tr>
+<td>Phone only</td>
+<td>73</td>
+<td>a call converts ~3× an e-mail; half are reached</td>
+<td>assumption; multi-channel +40 % (research II §5.1)</td>
+</tr>
+<tr>
+<td>Website only</td>
+<td>50</td>
+<td>not in the model until a form step exists</td>
+<td>—</td>
+</tr>
+<tr>
+<td>Replied → applied</td>
+<td>—</td>
+<td><strong>40 %</strong></td>
+<td>assumption</td>
+</tr>
+<tr>
+<td>Applied → managing</td>
+<td>—</td>
+<td><strong>80 %</strong> (the platform confirms the claim)</td>
+<td>assumption</td>
+</tr>
+<tr>
+<td>Managing → upgraded within 3 months</td>
+<td>—</td>
+<td><strong>25 %</strong></td>
+<td>assumption; SMB activation 35–50 % (research II §2.2)</td>
+</tr>
+</tbody>
+</table></div>
+<h4>2.2 Cost of acquisition</h4>
+<p><code>cost = e-mailed × touches × cost per touch + phone-only × cost per call + approvals ×
+operator minutes ÷ 60 × operator rate + tooling × 3 months</code></p>
+<p>Defaults: 3 touches at $0.05, $5 per call task, 2 operator minutes per approval at $40/h,
+$150/month tooling (sending domain, warm-up, enrichment). <strong>Operator hours</strong> are the
+dominant cost (audit A10): the screen counts every approval and shows the hours; batch
+approval and earned auto-approval (R25) are the levers that bring them down. <strong>CAC (managing)</strong> = cost ÷ new
+managing providers; <strong>CAC (upgraded)</strong> = cost ÷ new paying providers.</p>
+<h4>2.3 Lifetime value</h4>
+<p><code>contribution = ARPA × gross margin</code> · <code>LTV = contribution ÷ monthly churn</code> ·
+<code>payback = CAC ÷ contribution</code> · <strong>healthy when LTV : CAC ≥ 3 and payback ≤ 12 months</strong>.</p>
+<p>Defaults: ARPA $49/month (the platform's three products at sample prices: $49, $29,
+$149/season), margin 80 %, churn 5 %/month (SMB SaaS range 3–7 %, research II §2.2).
+A <strong>conversations line</strong> input (default 0 = bundled per D21; Yelp Receptionist sells the
+same thing at $99) adds revenue per <em>managing</em> provider to the plan's MRR (Q12) — the
+owner's pricing decision is one number on the screen.</p>
+<h4>2.4 What the defaults say (the first data-driven finding)</h4>
+<p>With the defaults, one quarter of outbound to the current catalogue yields about 2 managing
+and 0.6 upgraded providers for ~$720 — <strong>CAC (upgraded) ≈ $1,200 against an LTV of $784:
+LTV : CAC 0.7, payback 31 months.</strong> Raising the reply rate to the top decile (10.7 %) only
+reaches 1.3 : 1. The model is telling the truth about the business: <em>outbound e-mail to a
+253-provider catalogue cannot pay for itself on $49 upgrades.</em> It pays in one of three
+ways, and the plan should say which:</p>
+<ul>
+<li><strong>the base machine is the platform's growth engine, not a profit centre</strong> (D21: bundled;
+  its return is families and managed pages, valued below), or</li>
+<li><strong>a larger catalogue</strong> (the cost is mostly fixed tooling; at 1,000 providers CAC falls
+  under $400 with the same rates), or</li>
+<li><strong>higher ARPA</strong> (camp placement at $149/season, bundles) and lower churn (annual plans).</li>
+</ul>
+<p>The screen makes each of these one input away.</p>
+<h3>3. The B2C model: families and the value of an avid user</h3>
+<h4>3.1 Definitions</h4>
+<ul>
+<li><strong>Family</strong>: an account on the platform (count is the platform's — prerequisite P-6; 5,000 assumed).</li>
+<li><strong>Avid family</strong>: saved ≥ 3 providers, opened the last two digests, asked a provider at
+  least once — the behaviour the machine can observe. Assumed 15 % of families.</li>
+<li><strong>Value delivered to providers per avid family per year</strong> = trials per year × trial →
+  enrolment rate × provider revenue per enrolment. Defaults 2 × 40 % × <strong>$1,016</strong> (US
+  families' average spend per child per sport, 2024 — <a href="https://projectplay.org/news/2025/2/24/project-play-survey-family-spending-on-youth-sports-rises-46-over-five-years">Project Play</a>) ≈ <strong>$813/year</strong>.</li>
+<li><strong>Marketing value of an avid family to the platform</strong> = the platform's capture of that
+  value — <strong>capture is measured</strong> as upgrades bought within 30 days of a delivered result
+  (a campaign sent, an enquiry answered) ÷ all upgrades (audit A11, Q8); 5 % assumed until
+  measured + the
+  referral value (0.3 new families per avid family per year × the share who become avid ×
+  their capture). Defaults ≈ <strong>$42/year</strong>.</li>
+<li><strong>Expected value of a new family</strong> = P(avid) × avid value ≈ $6 at the defaults — the
+  number a content post has to beat.</li>
+</ul>
+<h4>3.2 Content ROI</h4>
+<p><code>cost per family from content = content stack $/month ÷ (posts per week × 4.33 × new
+families per post)</code>. Defaults $120 ÷ (5 × 4.33 × 1.5) ≈ <strong>$4 per family</strong>, against $6
+expected value: positive, thin, and entirely dependent on <em>families per post</em>, which is
+the one number a connected channel measures (research II §3).</p>
+<h3>4. Where the next dollar goes (the allocation rule)</h3>
+<p>Every week the system ranks three actions by <strong>expected LTV gained per dollar</strong>:</p>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>Action</th>
+<th>Cost</th>
+<th>Expected gain</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Retention touches to the at-risk advertisers (D41)</td>
+<td>at risk × (cost per touch + operator minutes)</td>
+<td>at risk × share kept (<code>churnSaved</code>, 30 % assumed, measured from the retention log) × LTV</td>
+</tr>
+<tr>
+<td>One more e-mail touch to the unreplied</td>
+<td>unreplied × cost per touch</td>
+<td>unreplied × reply rate × 42 % (share of replies after step one) × apply × managing × upgrade × LTV</td>
+</tr>
+<tr>
+<td>Call the phone-only providers</td>
+<td>phone-only × cost per call</td>
+<td>phone-only × ½ reached × reply rate × 3 × apply × managing × upgrade × LTV</td>
+</tr>
+<tr>
+<td>A week of the content engine</td>
+<td>content stack ÷ 4.33</td>
+<td>posts per week × families per post × expected value of a new family</td>
+</tr>
+</tbody>
+</table></div>
+<p>The recap's "needs you" shows the winner; the operator still approves. At the defaults the
+e-mail touch wins (cheap), the content week second, the call list third — and every one of
+these flips when a real rate replaces an assumption.</p>
+<h3>5. The metrics tree the system maintains</h3>
+<pre><code>Platform revenue (MRR)
+├─ upgraded providers × ARPA                       ← entitlements
+│   ├─ managing providers × upgrade rate           ← pipeline events
+│   │   └─ contacted × reply × apply × managing    ← sequence + inbox events
+│   └─ churn                                        ← entitlement ended
+└─ families delivered to providers (the product)
+    ├─ avid families × trials × enrolment           ← saves, asks, campaign clicks, bookings
+    ├─ new families from content                    ← post → listing → sign-up (UTM/referrer)
+    └─ referrals                                    ← platform's invite events
+Cost
+├─ outbound (touches, calls, operator minutes)     ← messages, tasks, approvals
+├─ content stack (media adapters)                  ← adapter usage
+└─ tooling
+</code></pre>
+<p>Every leaf is an event the machine already writes (<code>messages</code>, <code>approvals</code>,
+<code>provider_state</code>, <code>entitlements</code>, <code>campaigns</code>, <code>enquiries</code>) or one the platform must expose
+(saves, sign-ups with source, bookings — prerequisites P-6 and P-9). Metrics are materialised nightly per
+<code>platform_id</code> (architecture ADR-11).</p>
+<h3>6. Events and attribution (what to log)</h3>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>Event</th>
+<th>Fields</th>
+<th>Feeds</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>touch.sent</code> / <code>touch.replied</code></td>
+<td>provider_id, step, channel, cost</td>
+<td>reply rate, CAC</td>
+</tr>
+<tr>
+<td><code>stage.changed</code></td>
+<td>provider_id, from, to, by</td>
+<td>funnel rates</td>
+</tr>
+<tr>
+<td><code>approval</code></td>
+<td>draft kind, minutes (from open to decision)</td>
+<td>operator cost</td>
+</tr>
+<tr>
+<td><code>entitlement.started</code> / <code>.ended</code></td>
+<td>provider_id, product, price</td>
+<td>ARPA, churn, LTV</td>
+</tr>
+<tr>
+<td><code>post.published</code> / <code>post.clicked</code> / <code>signup</code></td>
+<td>post_id, channel, utm, family_id</td>
+<td>families per post, content CPA</td>
+</tr>
+<tr>
+<td><code>family.saved</code> / <code>family.asked</code> / <code>digest.opened</code></td>
+<td>family_id, provider_id</td>
+<td>avid definition</td>
+</tr>
+<tr>
+<td><code>campaign.sent</code> / <code>.clicked</code> / <code>booking</code></td>
+<td>campaign_id, family_id, provider_id</td>
+<td>trials, enrolment value</td>
+</tr>
+<tr>
+<td><code>adapter.used</code></td>
+<td>adapter, units, cost</td>
+<td>content stack cost</td>
+</tr>
+</tbody>
+</table></div>
+<p>Attribution: last touch within 7 days for a sign-up (post → listing → account); a booking is
+attributed to the campaign or enquiry that preceded it within 30 days; an upgrade is
+attributed to the pipeline (always) and to the campaign result shown at the moment of
+purchase (P8) — both recorded, neither double-counted in revenue.</p>
+<h3>7. Decision rules (proposed R16–R19)</h3>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>#</th>
+<th>Rule</th>
+<th>Effect</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>R16</td>
+<td>The next-dollar ranking runs weekly on measured rates where they exist and on the documented assumption where they do not; the recap shows which is which</td>
+<td>no allocation on a hidden assumption</td>
+</tr>
+<tr>
+<td>R17</td>
+<td>A sequence step is added or removed when its measured marginal reply rate per touch falls below the cost-per-touch breakeven for two consecutive weeks</td>
+<td>the cadence follows the data, inside the 4–7 benchmark</td>
+</tr>
+<tr>
+<td>R18</td>
+<td>Content slots go to the neighbourhood × activity pairs with the highest families-per-post over the trailing 4 weeks; new pairs get one slot a week to be measured</td>
+<td>the engine learns where families come from</td>
+</tr>
+<tr>
+<td>R19</td>
+<td>The upgrade card appears only when a provider's delivered value (trials × enrolment value) exceeds the product's annual price — the sale is made by the number</td>
+<td>P8; no upgrade pitch below breakeven</td>
+</tr>
+</tbody>
+</table></div>
+<h3>8. What is real, what is assumed (2026-09-19)</h3>
+<p>Real: 253 · 130 · 73 · 50 (catalogue — e-mail · phone only · neither; the screen computes them from the file); this session's stage counts. Benchmarks: reply rates
+(Instantly), activation range and churn range (research II), $1,016 per child per sport
+(Project Play). Assumptions: every conversion rate after reply, ARPA, margin, cost per
+touch and call, operator minutes, tooling, family count, avid share, trials, enrolment,
+capture, referral, families per post, content cost. Each is one input on the screen and
+one line here; the platform's analytics (prerequisite P-6) and a pilot provider (prerequisite P-6) replace them
+in that order.</p>
+<footer>Source: <code>business-direct/docs/economics.md</code> · rendered by <code>docs/build.py</code>.</footer>
+</div>
+</body>
+</html>

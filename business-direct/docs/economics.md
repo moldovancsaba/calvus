@@ -1,7 +1,105 @@
-# business.direct — the Economics department: the media owner's analytics and unit economics (specification)
+# business.direct — the Economics department: the value for the media owner, and the model behind the screen
+
+*For a classified media owner. What this page answers: what business.direct computes for you,
+on your numbers, every night — what a listing sells for and earns, what an advertiser costs to
+win and is worth, what a visitor costs to bring in and is worth, what churn costs and retention
+keeps, all costs and incomes, and where the next dollar goes — and what it read on the first
+customer's listings. Every input is marked **measured** (from the site's own data), **benchmark**
+(sourced) or **assumption** (a placeholder on the screen until your data replaces it). The
+formulas are the ones the product's Economics screen computes; Part B below is the department's
+specification (the model, the events, the decision rules). Written 2026-09-20 (D41). ClassScout (Your Field NYC) is
+the worked example.*
+
+## 1. What the product computes for the owner
+
+| Question the owner asks | The product's answer | Inputs |
+|---|---|---|
+| **What does a listing sell for?** | the site's advertising products and their prices — featured placement, category placement, discovery profile — with the plan ladder every advertiser is on | the site's products (Your Field: $49 / month, $149 / season, $29 / month — sample until the site sets them) |
+| **What does an advertiser cost to win?** | **CAC** = outbound cost (touches, calls, operator minutes, tooling) ÷ new managing advertisers; and ÷ new paying advertisers | touches per prospect, cost per touch, cost per call, operator minutes per approval and rate, tooling |
+| **What is an advertiser worth?** | **LTV** = monthly contribution (price × margin) ÷ monthly churn; **payback** = CAC ÷ contribution; healthy at LTV : CAC ≥ 3 and payback ≤ 12 months | price, margin, churn |
+| **What does a visitor cost to bring in?** | cost per new visitor from content = content stack ÷ (posts × new visitors per post); compared with what an engaged visitor is worth | posts per week, new visitors per post (measured once a channel is connected), content stack |
+| **What is a visitor worth?** | value delivered to advertisers per engaged visitor per year (enquiries × conversion × the advertiser's revenue per conversion) and the site's share of it (capture, measured as placements bought within 30 days of a delivered result) | engaged share, enquiries per year, conversion, revenue per conversion, capture, referrals |
+| **What does churn cost, what does retention keep?** | LTV at risk = advertisers at risk × LTV; expected kept = at risk × share kept by a touch × LTV; keeping costs a touch, replacing costs a CAC | churn, share kept (measured from the retention log) |
+| **Where does the next dollar go?** | four levers ranked weekly by expected value per dollar: one more touch to the unreplied, the call list, a week of content, retention touches to the at-risk | all of the above |
+| **What is the plan?** | twelve months of managing and paying advertisers, monthly revenue (placements + any priced service line), cost and cumulative cash — every month follows the inputs | the funnel rates, churn, price |
+| **Which numbers are real?** | every tile says measured / benchmark / assumption; a rate flips to measured at 100 observations | the event log |
+
+## 2. The funnel and its rates (what the owner sees on the sales side)
+
+| Stage | Rate to next | Status | Source |
+|---|---|---|---|
+| Listed → reachable | by e-mail, by phone, by website only — from the listings | measured | the site's own data |
+| Reachable → replied | 5.5 % (top quartile); 3.4 % average; 10.7 % top decile; 42 % of replies come from the follow-ups | benchmark (K1) | `evidence.md` |
+| Replied → applied | 40 % | assumption | — |
+| Applied → managing | 80 % (the site confirms the claim) | assumption | — |
+| Managing → paying within 3 months | 25 % | assumption; SMB activation 35–50 % | research II §2.2 |
+| Paying → churned per month | 5 % (3–7 % range) | benchmark | research II §2.2 |
+| At risk → kept by a retention touch | 30 % | assumption; measured from the retention log | — |
+
+## 3. The worked example — what the product read on the first customer's listings (2026-09-19 pull)
+
+Your Field NYC, 253 providers pulled (the demo's data; the customer's catalogue is far larger):
+130 reachable by e-mail, 73 by phone only, 50 by website only; 0 managing; sample prices $49 /
+$29 / $149 per season.
+
+| The screen says | Value | Reading |
+|---|---|---|
+| CAC · managing advertiser | ≈ $300 | one quarter of outbound (three touches, the call list, the operator's minutes, $150 tooling) wins ≈ 2 managing advertisers |
+| CAC · paying advertiser | ≈ $1 200 | ≈ 0.6 paying per quarter at the assumed rates |
+| LTV · paying advertiser | $784 | $49 × 80 % margin ÷ 5 % churn |
+| **LTV : CAC** | **0.7** — below the 3 : 1 line | outbound alone, on this pull at sample prices, does not pay for a $49 placement; payback 31 months |
+| Cost per new visitor from content | ≈ $4 | $120 content stack ÷ (5 posts × 1.5 new visitors per post) |
+| Value of an engaged visitor | ≈ $42 a year to the site; ≈ $813 to the advertisers it reaches | 2 enquiries × 40 % conversion × $1 016 (Project Play: family spend per child per sport); 5 % capture |
+| Advertisers at risk (sample cohort) | 4 of 7 managing | LTV at risk ≈ $3 100; expected kept at 30 % ≈ $940 |
+| Next dollar | retention touches, then one more e-mail touch | keeping an advertiser costs a touch; replacing one costs the CAC above |
+
+**What turns it — three inputs on the same screen.** (a) **Scale**: at 1 000 listings the
+tooling is spread and CAC falls under $400 (LTV : CAC ≈ 2, payback ≈ 10 months). (b) **Price for
+the category**: a placement mix at $89 with annual plans (3 % churn) makes LTV $2 373 (≈ 2 at
+253 listings, ≈ 6 at 1 000). (c) **Count the demand side**: the same outbound also produces
+managing advertisers who answer enquiries and visitors who come back — at 5 000 visitors and
+15 % engaged, ≈ $610 k a year of advertiser revenue flows through the site's introductions, the
+number the placements are priced against. The owner chooses which; the product shows each.
+
+## 4. Sensitivity (what moves the owner's answer most)
+
+| Input | −50 % | Default | +50 % / top decile | Effect |
+|---|---|---|---|---|
+| Reply rate | 2.75 % | 5.5 % | 10.7 % | LTV : CAC 0.35 → 0.7 → 1.3 at 253 listings; the largest lever the product controls (propensity order, the visitor's enquiry as a touch, the call list) |
+| Applied → managing → paying | 0.5× | 40 · 80 · 25 % | 1.5× | linear in CAC; measured from the first cohort |
+| Monthly churn | 7 % | 5 % | 3 % | LTV $560 → $784 → $1 307; retention and annual plans are the levers |
+| Placement price | $29 | $49 | $89 | LTV $464 → $784 → $1 424; the owner's pricing decision |
+| Listings | 253 | 253 | 1 000 | CAC $1 200 → < $400; fixed tooling spread |
+| Share kept by a retention touch | 15 % | 30 % | 45 % | expected kept ≈ $470 → $940 → $1 400 on the sample cohort |
+
+## 5. The costs the owner carries, as the product counts them
+
+| Line | Default | Status |
+|---|---|---|
+| E-mail touches | 3 per prospect at $0.05 | assumption; sending domain and warm-up in tooling |
+| Call tasks | $5 per phone-only prospect (operator minutes) | assumption |
+| Operator time | 2 minutes per approval at $40 / hour; measured on the screen as "operator hours this week"; falls as departments earn auto-approval | measured in use |
+| Sales tooling | $150 / month (sending domain, warm-up, enrichment) | assumption |
+| Content stack | $120 / month (clip engine, image, audio) | assumption; research II §4 |
+
+## 6. What the owner provides, and when
+
+At onboarding: the site's API and channels; the policy record (jurisdictions, consent per
+channel, the cap, the postal address, the privacy-policy clauses); the knowledge files. Then, as
+they exist: the site's analytics events (visitors, sign-ups with source, saves, opens,
+bookings), the real placement prices, a write key for claims and card flags, and one pilot
+advertiser's numbers — each replaces an assumption on the screen. For the first customer the
+list is `first-customer-classscout.md`.
+
+## 7. The decision
+
+Use the product; let the first cohort replace the assumptions. The screen is the argument: it
+shows the owner's numbers, says which are real, and ranks the next dollar every week.
+
+## Part B — the department's specification: the model, the events, the decision rules
 
 *This is the specification of the Economics screen — the owner's economics as a service (D41): the
-value it delivers is `22-business-case.md`. Written 2026-09-19 on the owner's directive: "we will need ROI calculations and planning for
+value it delivers is `economics.md`. Written 2026-09-19 on the owner's directive: "we will need ROI calculations and planning for
 CAC and LTV for B2B clients, marketing value for the avid users, and all the other analytics
 information that helps the system deliver data-driven marketing decisions." This is the
 model the *Economics* screen (`../index.html?view=platform&screen=economics`) computes; the
@@ -9,7 +107,7 @@ screen's inputs are this document's assumptions, and every number that is not fr
 catalogue or a cited benchmark is marked so. Terms are the SSOT's; the decision rules become
 R16–R19 there.*
 
-## 1. What the numbers are for
+### 1. What the numbers are for
 
 The machine spends three things — e-mail touches, operator minutes and tool subscriptions —
 and gets back providers who manage their page, providers who pay, and families who come,
@@ -22,9 +120,9 @@ from its own events, every week:
 4. **Where does the next dollar go?** (expected LTV gained per dollar, across the three
    levers: another touch, a call, a week of content)
 
-## 2. The B2B model: providers (the platform's B2B clients)
+### 2. The B2B model: providers (the platform's B2B clients)
 
-### 2.1 Funnel and rates
+#### 2.1 Funnel and rates
 
 | Stage | Count today (real) | Rate to next | Source of the rate |
 |---|---|---|---|
@@ -36,7 +134,7 @@ from its own events, every week:
 | Applied → managing | — | **80 %** (the platform confirms the claim) | assumption |
 | Managing → upgraded within 3 months | — | **25 %** | assumption; SMB activation 35–50 % (research II §2.2) |
 
-### 2.2 Cost of acquisition
+#### 2.2 Cost of acquisition
 
 `cost = e-mailed × touches × cost per touch + phone-only × cost per call + approvals ×
 operator minutes ÷ 60 × operator rate + tooling × 3 months`
@@ -47,7 +145,7 @@ dominant cost (audit A10): the screen counts every approval and shows the hours;
 approval and earned auto-approval (R25) are the levers that bring them down. **CAC (managing)** = cost ÷ new
 managing providers; **CAC (upgraded)** = cost ÷ new paying providers.
 
-### 2.3 Lifetime value
+#### 2.3 Lifetime value
 
 `contribution = ARPA × gross margin` · `LTV = contribution ÷ monthly churn` ·
 `payback = CAC ÷ contribution` · **healthy when LTV : CAC ≥ 3 and payback ≤ 12 months**.
@@ -58,7 +156,7 @@ A **conversations line** input (default 0 = bundled per D21; Yelp Receptionist s
 same thing at $99) adds revenue per *managing* provider to the plan's MRR (Q12) — the
 owner's pricing decision is one number on the screen.
 
-### 2.4 What the defaults say (the first data-driven finding)
+#### 2.4 What the defaults say (the first data-driven finding)
 
 With the defaults, one quarter of outbound to the current catalogue yields about 2 managing
 and 0.6 upgraded providers for ~$720 — **CAC (upgraded) ≈ $1,200 against an LTV of $784:
@@ -75,9 +173,9 @@ ways, and the plan should say which:
 
 The screen makes each of these one input away.
 
-## 3. The B2C model: families and the value of an avid user
+### 3. The B2C model: families and the value of an avid user
 
-### 3.1 Definitions
+#### 3.1 Definitions
 
 - **Family**: an account on the platform (count is the platform's — prerequisite P-6; 5,000 assumed).
 - **Avid family**: saved ≥ 3 providers, opened the last two digests, asked a provider at
@@ -94,14 +192,14 @@ The screen makes each of these one input away.
 - **Expected value of a new family** = P(avid) × avid value ≈ $6 at the defaults — the
   number a content post has to beat.
 
-### 3.2 Content ROI
+#### 3.2 Content ROI
 
 `cost per family from content = content stack $/month ÷ (posts per week × 4.33 × new
 families per post)`. Defaults $120 ÷ (5 × 4.33 × 1.5) ≈ **$4 per family**, against $6
 expected value: positive, thin, and entirely dependent on *families per post*, which is
 the one number a connected channel measures (research II §3).
 
-## 4. Where the next dollar goes (the allocation rule)
+### 4. Where the next dollar goes (the allocation rule)
 
 Every week the system ranks three actions by **expected LTV gained per dollar**:
 
@@ -116,7 +214,7 @@ The recap's "needs you" shows the winner; the operator still approves. At the de
 e-mail touch wins (cheap), the content week second, the call list third — and every one of
 these flips when a real rate replaces an assumption.
 
-## 5. The metrics tree the system maintains
+### 5. The metrics tree the system maintains
 
 ```
 Platform revenue (MRR)
@@ -139,7 +237,7 @@ Every leaf is an event the machine already writes (`messages`, `approvals`,
 (saves, sign-ups with source, bookings — prerequisites P-6 and P-9). Metrics are materialised nightly per
 `platform_id` (architecture ADR-11).
 
-## 6. Events and attribution (what to log)
+### 6. Events and attribution (what to log)
 
 | Event | Fields | Feeds |
 |---|---|---|
@@ -157,7 +255,7 @@ attributed to the campaign or enquiry that preceded it within 30 days; an upgrad
 attributed to the pipeline (always) and to the campaign result shown at the moment of
 purchase (P8) — both recorded, neither double-counted in revenue.
 
-## 7. Decision rules (proposed R16–R19)
+### 7. Decision rules (proposed R16–R19)
 
 | # | Rule | Effect |
 |---|---|---|
@@ -166,7 +264,7 @@ purchase (P8) — both recorded, neither double-counted in revenue.
 | R18 | Content slots go to the neighbourhood × activity pairs with the highest families-per-post over the trailing 4 weeks; new pairs get one slot a week to be measured | the engine learns where families come from |
 | R19 | The upgrade card appears only when a provider's delivered value (trials × enrolment value) exceeds the product's annual price — the sale is made by the number | P8; no upgrade pitch below breakeven |
 
-## 8. What is real, what is assumed (2026-09-19)
+### 8. What is real, what is assumed (2026-09-19)
 
 Real: 253 · 130 · 73 · 50 (catalogue — e-mail · phone only · neither; the screen computes them from the file); this session's stage counts. Benchmarks: reply rates
 (Instantly), activation range and churn range (research II), $1,016 per child per sport
@@ -175,3 +273,4 @@ touch and call, operator minutes, tooling, family count, avid share, trials, enr
 capture, referral, families per post, content cost. Each is one input on the screen and
 one line here; the platform's analytics (prerequisite P-6) and a pilot provider (prerequisite P-6) replace them
 in that order.
+

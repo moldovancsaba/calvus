@@ -1,14 +1,14 @@
 # business.direct — research VI: the real system — every service verified, what it costs, what it needs, what it limits
 
 *Sixth research round, 2026-09-20; every row re-read against the vendor's page the same evening and
-corrected where it was wrong — the status of each figure is in `23-claims-register.md` §2 (V1–V16),
+corrected where it was wrong — the status of each figure is in `evidence.md` §2 (V1–V16),
 which is the authority where this file and the register differ. Originally written on the owner's instruction: "step to the next phase … make a
 research and plan how we can make it a real system … exact services, what module goes where,
 how it works, the architecture, the system drawings, everything with pseudo code." This document
 is the research half: for every external service the machine depends on, the vendor's own terms
 as read on 2026-09-20 — authentication, review or registration, rate limits, prices, and the
-alternative considered. The plan half is `20-system-blueprint.md` (modules, drawings, pseudo
-code) and `13-implementation-plan.md` (sprints, acceptance tests). **P** marks a primary source
+alternative considered. The plan half is `architecture.md` (modules, drawings, pseudo
+code) and `delivery-plan.md` (sprints, acceptance tests). **P** marks a primary source
 (the vendor's own documentation or pricing page), **A** a secondary summary. Prices and limits
 change; every number carries the date it was read and is re-checked at contract signature. The
 first customer is ClassScout (Your Field NYC); everything is English and US-first; a second instance is a
@@ -50,7 +50,7 @@ policy record and a connector (ADR-2), nothing here assumes one.*
   times the sizing target of 5 000 a day (architecture §3).
 - **Preview per branch** and production on `main` — the repo's existing model.
 - **Why not Fly.io for everything**: the app is a Next.js console with Server Actions; Vercel is the
-  platform the client already runs on (`02-audit.md`), the operator learns one dashboard, and the one
+  platform the client already runs on (`first-customer-classscout.md`), the operator learns one dashboard, and the one
   thing Vercel cannot do (long ffmpeg runs) goes to one small container (§10).
 
 ## 2. Database — MongoDB Atlas
@@ -63,7 +63,7 @@ with continuous backup, 10 GB, and the connection headroom Server Actions need.
   ≈ 3.6 GB in the message log at full scale → **M0 for the build and the pilot, M10 for production**;
   the message log is the first collection to need a TTL index (`retention` job).
 - Mongoose stays (D26, DiscountDirect); schemas are validated with Zod at the boundary
-  (`20-system-blueprint.md` §5) so a bad webhook never reaches the model.
+  (`architecture.md` §5) so a bad webhook never reaches the model.
 - **Change streams** are available from M10 (not on M0) — the blueprint does not depend on them; the
   outbox is polled by cron.
 
@@ -272,7 +272,7 @@ fallback is Auth.js with e-mail magic links, which changes one file.
   outbox lag, the last sync time, the last cron tick) and pages on failure. The five alerts in
   architecture §9 are computed in `/api/health` and by the `metrics` job.
 
-## 14. What each service needs before the first real run (folds into `19-implementation-prerequisites.md`)
+## 14. What each service needs before the first real run (folds into `first-customer-classscout.md`)
 
 | Service | Needs | Lead time |
 |---|---|---|
@@ -307,14 +307,14 @@ fallback is Auth.js with e-mail magic links, which changes one file.
 | Twilio (when on) | ~$3 + $0.01 per SMS | ~$20 + volume |
 | **Total infrastructure** | **≈ $50–75 a month** | **≈ $280–400 a month** |
 
-Against the economics model's ARPA of $49 (`16-analytics-and-unit-economics.md`): the pilot's
+Against the economics model's ARPA of $49 (`economics.md`): the pilot's
 infrastructure is covered by two upgraded providers; the sizing target's by eight.
 
 ## 16. What was not found or is assumed
 
 - Meta's App Review duration is quoted from developer reports (two to four weeks), not from a
   published SLA; it is the schedule's largest external risk and starts in sprint 1.
-- The Your Field API's rate limits are not published (`02-audit.md`); the connector polls hourly
+- The Your Field API's rate limits are not published (`first-customer-classscout.md`); the connector polls hourly
   with ETag / `updatedAt` diffs and backs off on 429.
 - DoneIsBetter SSO's protocol details are assumed to be OIDC (§12).
 - Whether the platform will accept a `reply.` MX on its domain, or the machine sends from its own

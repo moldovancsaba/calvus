@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>business.direct — evidence: the claims register and the research base — business.direct docs</title>
+<link rel="stylesheet" href="../assets/tokens.css">
+<style>/* business.direct — documentation pages on the product tokens (GDS roles, teal accent). */
+:root{--ground:var(--gds-bg-canvas,#f8fafc);--card:var(--gds-bg-surface,#fff);--ink:var(--gds-text-body,#111827);--text:#1f2937;--muted:var(--gds-text-meta,#64748b);--accent:var(--gds-brand-accent,#0f766e);--accent-deep:var(--gds-brand-accent-strong,#115e59);--line:var(--gds-border-card,#e2e8f0);--line-soft:#eef2f7;--note:var(--gds-brand-accent-tint,#e6f4f2)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--ground);color:var(--text);font-family:var(--gds-font,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif);font-size:15.5px;line-height:1.6;padding-block:0 64px;padding-inline:clamp(16px,4vw,40px)}
+.wrap{max-width:74ch;margin-inline:auto}
+.docnav{display:flex;flex-wrap:wrap;gap:4px 18px;align-items:center;padding:16px 0;border-bottom:1px solid var(--line);font-size:12px;letter-spacing:.06em;text-transform:uppercase}
+.docnav a{color:var(--muted);text-decoration:none;min-height:44px;min-width:44px;display:inline-flex;align-items:center;border-bottom:2px solid transparent}
+.docnav a:hover,.docnav a[aria-current]{color:var(--ink);border-color:var(--accent)}
+.docnav-brand{color:var(--accent-deep);font-weight:800;margin-right:6px}
+.docnav-hub{margin-left:auto}
+header{padding-block:40px 24px;border-bottom:1px solid var(--line);margin-bottom:28px}
+.eyebrow{font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--accent-deep);margin:0 0 12px;font-weight:800}
+h1,h2,h3{color:var(--ink);line-height:1.1;text-wrap:balance;margin:0;letter-spacing:-.02em}
+h1{font-size:clamp(30px,6vw,46px);font-weight:900}
+h2{font-size:clamp(23px,4vw,30px);font-weight:900;margin:48px 0 14px;padding-top:20px;border-top:1px solid var(--line)}
+h3{font-size:18px;margin:30px 0 8px;font-weight:800}
+p{margin:0 0 14px} strong{color:var(--ink);font-weight:800}
+ul,ol{padding-left:22px;margin:0 0 16px} li{margin:5px 0} li>ul{margin:6px 0 0}
+code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.86em;background:var(--note);padding:1px 5px;border-radius:4px;color:var(--ink);overflow-wrap:anywhere}
+.notice{margin:0 0 22px;padding:12px 16px;border-radius:10px;background:var(--gds-brand-accent-tint);border:1px solid var(--gds-border-card);font-size:13.5px;font-weight:600}
+pre{overflow-x:auto;padding:14px 16px;border:1px solid var(--line);border-radius:10px;background:var(--card);font-size:12px;line-height:1.35}
+pre code{background:none;padding:0;font-size:inherit}
+a{color:var(--accent-deep)} :focus-visible{outline:2px solid var(--accent-deep);outline-offset:2px}
+.tbl{overflow-x:auto;margin:14px 0 22px;border:1px solid var(--line);border-radius:10px;background:var(--card)}
+table{border-collapse:collapse;width:100%;font-size:13.5px;min-width:560px}
+th{text-align:left;font-weight:800;color:var(--ink);background:var(--note);padding:10px 12px;border-bottom:1px solid var(--line);font-size:11.5px;letter-spacing:.06em;text-transform:uppercase}
+td{padding:10px 12px;border-top:1px solid var(--line-soft);vertical-align:top;background:var(--card)} td:first-child{color:var(--ink)}
+footer{margin-top:56px;padding-top:18px;border-top:1px solid var(--line);font-size:12px;color:var(--muted)}
+</style>
+</head>
+<body>
+<div class="wrap">
+<nav class="docnav" aria-label="Project documentation"><span class="docnav-brand">business.direct · docs</span><a href="index.html">Overview</a><a href="executive-summary.html">Executive summary</a><a href="product-definition.html">Product definition</a><a href="product-specification.html">Product specification</a><a href="market.html">Market</a><a href="economics.html">Economics</a><a href="business-logic.html">Business logic and SSOT</a><a href="architecture.html">Architecture and blueprint</a><a href="delivery-plan.html">Delivery plan</a><a href="responsible-data.html">Responsible data and legal</a><a href="first-customer-classscout.html">First customer</a><a href="evidence.html" aria-current=page>Evidence</a><a href="research.html">Research I</a><a href="research-2.html">Research II</a><a href="research-3.html">Research III</a><a href="research-4.html">Research IV</a><a href="research-5.html">Research V</a><a href="research-6.html">Research VI</a><a href="design-system.html">Design system</a><a href="layouts.html">Layouts</a><a href="05-layout-specs.html">Layout specs</a><a href="decisions.html">Decisions</a><a href="build-log.html">Build log</a><a href="gate.html">Gate</a><a href="register-of-asks.html">Register of asks</a><a href="logic-audit.html">Logic audit</a><a href="documentation-audit.html">Documentation audit</a></nav>
+<header><p class="eyebrow">Calvus · business.direct · project documentation</p><h1>business.direct — evidence: the claims register and the research base</h1></header>
+<p><em>Every figure the product-facing documents rest on (the presentation, the executive summary,
+the value document, the product definition) and every vendor figure in research VI, with its
+source opened and read on 2026-09-20 (phase A of the transformation programme,
+<a href="documentation-audit.html"><code>documentation-audit.md</code></a> §8). </em><em>Status</em><em>: </em><em>P</em><em> the primary source was opened and says it;
+</em><em>A</em><em> a secondary source says it and the primary was not reachable; </em><em>corrected</em><em> the source
+says something different and the documents were changed; </em><em>assumption</em><em> ours, marked so where
+used; </em><em>owner</em><em> stated by the owner. A figure that is not in this register does not belong in
+the top layer. The gate (<code>../check.py</code>) reads the status column: a row marked </em>unverified<em> fails
+the gate.</em></p>
+<h2>1. The customer's problem and the market</h2>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>#</th>
+<th>Claim as used</th>
+<th>Source opened</th>
+<th>Status</th>
+<th>Note</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>K1</td>
+<td>Cold e-mail reply rates: 3.43 % average, 5.5 %+ top quartile, 10.7 %+ top decile; 58 % of replies from step one, 42 % from follow-ups; 4–7 touches; warm-up 4–6 weeks; bounce &lt; 2 %</td>
+<td><a href="https://instantly.ai/cold-email-benchmark-report-2026">Instantly, Cold Email Benchmark Report 2026</a></td>
+<td><strong>P</strong></td>
+<td>vendor benchmark on its own customers' data</td>
+</tr>
+<tr>
+<td>K2</td>
+<td>"Three touches in order triple the first touch"</td>
+<td>—</td>
+<td><strong>corrected</strong></td>
+<td>not in the source; K1 says follow-ups add 42 % of replies (≈ +72 % over step one alone). Wording changed to the source's</td>
+</tr>
+<tr>
+<td>K3</td>
+<td>A lead contacted within 5 minutes is 21× more likely to qualify than after 30; the odds of contacting it at all fall 100×</td>
+<td><a href="https://25649.fs1.hubspotusercontent-na2.net/hub/25649/file-13535879-pdf/docs/mit_study.pdf">InsideSales / MIT (Oldroyd) Lead Response Management Study, 2007 (PDF)</a></td>
+<td><strong>P</strong></td>
+<td>2007 web-lead data; the figures are the study's own wording; the date is now stated</td>
+</tr>
+<tr>
+<td>K4</td>
+<td>62 % of calls to small businesses go unanswered</td>
+<td>411 Locals 2016 (85 businesses) via <a href="https://skipcalls.com/blog/percentage-business-calls-unanswered-statistics-2026">SkipCalls</a></td>
+<td><strong>A</strong></td>
+<td>removed from every hero and headline; may appear only with the source and its size</td>
+</tr>
+<tr>
+<td>K5</td>
+<td>78 % of customers buy from the business that responds first</td>
+<td>vendor blogs (Kixie, LeadAngel) citing Lead Connect / Vendasta</td>
+<td><strong>A</strong></td>
+<td>removed from the top layer</td>
+</tr>
+<tr>
+<td>K6</td>
+<td>Automated reminders cut non-attendance</td>
+<td><a href="https://doi.org/10.1258/jtt.2011.110707">Hasvold &amp; Wootton 2011, J Telemed Telecare, 29 studies — DOI 10.1258/jtt.2011.110707</a> (metadata via PubMed)</td>
+<td><strong>corrected</strong></td>
+<td>the review: weighted mean relative reduction 34 % of baseline; <strong>automated reminders 29 %</strong>, manual calls 39 %; <strong>no difference between the day before and the week before</strong> — the Glofox claim that "3 days and 1 day beats a single one" is the vendor's, not the review's. Hospital appointments, not activity classes. Wording changed</td>
+</tr>
+<tr>
+<td>K7</td>
+<td>Organic Google sends 19 % fewer clicks to the same rankings (rankings +26 %, 2023–2025)</td>
+<td><a href="https://neilpatel.com/marketing-stats/rankings-up-traffic-down/">NP Digital index</a> (403 to scripted fetch; confirmed via search summary)</td>
+<td><strong>A</strong></td>
+<td>contested: other data sets show organic traffic −2.5 % YoY (<a href="https://searchengineland.com/organic-search-traffic-down-yoy-data-467748">Search Engine Land</a>); the top layer says "one index"</td>
+</tr>
+<tr>
+<td>K8</td>
+<td>Gen Z searches social before Google</td>
+<td><a href="https://www.marketingdive.com/news/google-tiktok-instagram-local-search-preference-gen-z/710130/">Marketing Dive on SOCi's 2024 Consumer Behavior Index (1 000 US consumers)</a></td>
+<td><strong>corrected</strong></td>
+<td>the source: for <strong>local search</strong> Gen Z uses Instagram (67 %) and TikTok (62 %) ahead of Google (61 %); "nearly half prefer social" was not in it. Wording changed</td>
+</tr>
+<tr>
+<td>K9</td>
+<td>AI answers cite the structured, reviewed source — Yelp 512 680 citations in Q4 2025, 3.4× the second source (BBB 149 710; Angi 145 633)</td>
+<td><a href="https://ppc.land/yelp-gets-3-4x-more-ai-citations-than-any-rival-in-new-local-search-data/">PPC Land on Foundation / AirOps, 28 M AI responses</a></td>
+<td><strong>A</strong></td>
+<td>trade press on an agency's data set</td>
+</tr>
+<tr>
+<td>K10</td>
+<td>US families spend $1 016 per child per primary sport (2024), +46 % since 2019; 1 848 parents</td>
+<td><a href="https://projectplay.org/news/2025/2/24/project-play-survey-family-spending-on-youth-sports-rises-46-over-five-years">Project Play / Aspen Institute, Feb 2025</a></td>
+<td><strong>P</strong></td>
+<td>the first customer's category; used only in its worked example</td>
+</tr>
+<tr>
+<td>K11</td>
+<td>Yelp acquired Hatch for ≈ $270 M cash + $30 M retention; closing early February 2026</td>
+<td><a href="https://www.yelp-ir.com/news/press-releases/news-release-details/2026/Yelp-Accelerates-Strategy-with-Acquisition-of-AI-Lead-Management-Platform-Hatch/default.aspx">Yelp IR press release</a></td>
+<td><strong>P</strong></td>
+<td>"expected to close" at announcement; the documents said "bought" — now "agreed to buy"</td>
+</tr>
+<tr>
+<td>K12</td>
+<td>Yelp Receptionist from $99 / month; Yelp Host $149 ($99 for Guest Manager customers)</td>
+<td><a href="https://blog.yelp.com/news/yelp-host-yelp-receptionist-launch/">Yelp blog, launch post</a></td>
+<td><strong>P</strong></td>
+<td></td>
+</tr>
+<tr>
+<td>K13</td>
+<td>83 % of small businesses say referrals are their best acquisition source (65 % the year before); AI for content 81 %; 300+ SMBs</td>
+<td><a href="https://localiq.com/blog/small-business-marketing-trends-report-2026/">LocaliQ 2026 report</a></td>
+<td><strong>P</strong></td>
+<td></td>
+</tr>
+<tr>
+<td>K14</td>
+<td>51 % of "privacy actives" have switched a company over data practices; 2 600 consumers, 12 countries</td>
+<td><a href="https://newsroom.cisco.com/c/r/newsroom/en/us/a/y2024/m10/how-safe-is-our-data-consumers-want-to-know.html">Cisco 2024 Consumer Privacy Survey</a></td>
+<td><strong>P</strong></td>
+<td>the "49 % of 25–34-year-olds" figure is not on this page — removed</td>
+</tr>
+<tr>
+<td>K15</td>
+<td>96 % of organisations say privacy investment returns more than it costs</td>
+<td><a href="https://www.cisco.com/c/dam/en_us/about/doing_business/trust-center/docs/cisco-privacy-benchmark-study-2025.pdf">Cisco 2025 Data Privacy Benchmark (PDF)</a></td>
+<td><strong>A</strong></td>
+<td>PDF not re-opened this round; cited from research IV</td>
+</tr>
+<tr>
+<td>K16</td>
+<td>Epic Games: $520 M (a $275 M COPPA penalty + $245 M refunds), Dec 2022</td>
+<td><a href="https://www.ftc.gov/news-events/news/press-releases/2022/12/fortnite-video-game-maker-epic-games-pay-more-half-billion-dollars-over-ftc-allegations">FTC press release</a></td>
+<td><strong>P</strong></td>
+<td>YouTube $170 M and Disney $10 M cited from research IV (<strong>A</strong> this round)</td>
+</tr>
+<tr>
+<td>K17</td>
+<td>SMB SaaS monthly churn 3–7 %; healthy SMB activation 35–50 %</td>
+<td><a href="https://orm-tech.com/blog/saas-churn-rate-benchmarks-by-segment">ORM</a>, <a href="https://pmtoolkit.ai/benchmarks/activation-rate-benchmarks">PM Toolkit</a></td>
+<td><strong>A</strong></td>
+<td>benchmark aggregators; used as ranges, marked benchmark</td>
+</tr>
+<tr>
+<td>K18</td>
+<td>Funnel rates 40 % / 80 % / 25 %, avid 15 %, capture 5 %, 1.5 visitors per post, 5 000 visitors, share kept by a retention touch 30 %</td>
+<td>—</td>
+<td><strong>assumption</strong></td>
+<td>marked on the Economics screen and in <a href="economics.html"><code>economics.md</code></a>; replaced by the site's data</td>
+</tr>
+<tr>
+<td>K19</td>
+<td>The first customer has thousands of listings still to publish</td>
+<td>the owner, 2026-09-20</td>
+<td><strong>owner</strong></td>
+<td></td>
+</tr>
+<tr>
+<td>K20</td>
+<td>253 providers, 130 e-mail, 181 phone, 83 next sessions, 72 trial policies, 26 announcements, 0 reviews, 28 prices, 0 managing</td>
+<td><code>data/providers.json</code>, pulled 2026-09-19</td>
+<td><strong>P</strong> (measured)</td>
+<td>the demo's pull</td>
+</tr>
+</tbody>
+</table></div>
+<h2>2. Research VI — the vendors (every row re-read)</h2>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>#</th>
+<th>Claim as used</th>
+<th>Source opened</th>
+<th>Status</th>
+<th>Note</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>V1</td>
+<td>Vercel cron: 100 cron jobs per project on every plan; Hobby once a day (±59 min), Pro / Enterprise once a minute</td>
+<td><a href="https://vercel.com/docs/cron-jobs/usage-and-pricing">Vercel cron usage and pricing</a></td>
+<td><strong>corrected</strong></td>
+<td>research VI said "Hobby 2, Pro 40" — wrong; fixed</td>
+</tr>
+<tr>
+<td>V2</td>
+<td>Vercel functions: 300 s default; <strong>Pro maximum 800 s (1 800 s beta)</strong>; memory 4 GB Pro; body 4.5 MB; bundle 250 MB (5 GB beta); Vercel Workflows for unlimited duration</td>
+<td><a href="https://vercel.com/docs/functions/limitations">Vercel functions limits</a></td>
+<td><strong>corrected</strong></td>
+<td>research VI said 300 s maximum and 3 GB; fixed. ADR-18's upgrade path is now Vercel Workflows before Inngest</td>
+</tr>
+<tr>
+<td>V3</td>
+<td>MongoDB Atlas M0 free 512 MB, 100 ops/s; Flex $8–30 / month; M10 from $0.08 / h ≈ $56.94 / month</td>
+<td><a href="https://www.mongodb.com/pricing">Atlas pricing</a></td>
+<td><strong>P</strong></td>
+<td></td>
+</tr>
+<tr>
+<td>V4</td>
+<td>Upstash Redis free 256 MB, 500 K commands / month, 10 GB bandwidth; $0.2 per 100 K after</td>
+<td><a href="https://upstash.com/pricing/redis">Upstash pricing</a></td>
+<td><strong>P</strong></td>
+<td></td>
+</tr>
+<tr>
+<td>V5</td>
+<td>Resend free 3 000 / month, 100 / day, 3 domains; Pro $20 (50 K) / $35 (100 K); inbound on all plans</td>
+<td><a href="https://resend.com/pricing">Resend pricing</a></td>
+<td><strong>corrected</strong></td>
+<td>research VI said "one custom domain" — it is 3; fixed</td>
+</tr>
+<tr>
+<td>V6</td>
+<td>Instagram: 100 API-published posts per account per rolling 24 h; JPEG only; carousels ≤ 10; permissions <code>instagram_business_basic</code> + <code>instagram_business_content_publish</code> (Instagram Login) or <code>instagram_basic</code> + <code>instagram_content_publish</code> + <code>pages_read_engagement</code> (Facebook Login)</td>
+<td><a href="https://developers.facebook.com/docs/instagram-platform/content-publishing">Meta content publishing</a></td>
+<td><strong>P</strong></td>
+<td>App Review duration stays "reported, no SLA"</td>
+</tr>
+<tr>
+<td>V7</td>
+<td>Twilio US SMS $0.0083 per segment; long code $1.15 / month; carrier fees $0.0025–0.01</td>
+<td><a href="https://www.twilio.com/en-us/sms/pricing/us">Twilio US SMS pricing</a></td>
+<td><strong>P</strong></td>
+<td></td>
+</tr>
+<tr>
+<td>V8</td>
+<td>A2P 10DLC: low-volume standard brand $4 (+ tax ≈ $4.41); campaign vetting $15; monthly campaign fee $2–10 by use case; standard brand higher with secondary vetting</td>
+<td>Twilio help centre via search; <a href="https://www.ghlscaleup.com/blog/a2p-10dlc-fees-explained">GHL fee explainer</a></td>
+<td><strong>A</strong></td>
+<td>research VI's "$4 … secondary vetting $40" replaced by this; re-check at registration</td>
+</tr>
+<tr>
+<td>V9</td>
+<td>Stripe: Billing 0.7 % of volume; US card fee 2.9 % + 30¢</td>
+<td><a href="https://stripe.com/pricing">Stripe pricing</a> (served the Hungarian page; US rate from Stripe's widely published US price)</td>
+<td><strong>A</strong> for the card fee, <strong>P</strong> for Billing</td>
+<td>re-check on the US page at contract</td>
+</tr>
+<tr>
+<td>V10</td>
+<td>Claude API: Opus 5 $5 / $25; Sonnet 5 $2 / $10 (standard, not introductory); Haiku 4.5 $1 / $5; Batch −50 %; cache reads 0.1×</td>
+<td><a href="https://platform.claude.com/docs/en/about-claude/pricing">Claude pricing</a></td>
+<td><strong>P</strong></td>
+<td></td>
+</tr>
+<tr>
+<td>V11</td>
+<td>Deepgram Nova-3 pre-recorded $0.0043 / min pay-as-you-go; $200 free credit</td>
+<td><a href="https://deepgram.com/pricing">Deepgram pricing</a></td>
+<td><strong>P</strong></td>
+<td></td>
+</tr>
+<tr>
+<td>V12</td>
+<td>Fly.io shared-cpu-1x 1 GB $0.0082 / h ≈ $5.92 / month; stopped machines pay rootfs only ($0.15 per GB per 30 days)</td>
+<td><a href="https://fly.io/docs/about/pricing/">Fly.io pricing</a></td>
+<td><strong>corrected</strong></td>
+<td>research VI said $0.007 / h; fixed</td>
+</tr>
+<tr>
+<td>V13</td>
+<td>Sentry Developer plan 5 K errors / month free; Team from $26 / month</td>
+<td><a href="https://sentry.io/pricing/">Sentry pricing</a></td>
+<td><strong>P</strong></td>
+<td></td>
+</tr>
+<tr>
+<td>V14</td>
+<td>Better Stack free: 10 monitors, checks up to every 30 s</td>
+<td><a href="https://betterstack.com/uptime/pricing">Better Stack pricing</a></td>
+<td><strong>corrected</strong></td>
+<td>research VI said 3-minute checks; fixed</td>
+</tr>
+<tr>
+<td>V15</td>
+<td>Inngest free 100 K step runs; Vercel Blob; Nano Banana image prices; C2PA node library on Node 22+</td>
+<td>search summaries, 2026-09-20</td>
+<td><strong>A</strong></td>
+<td>not re-opened this round; marked A in research VI</td>
+</tr>
+<tr>
+<td>V16</td>
+<td>Sora "shut down in five months"</td>
+<td>—</td>
+<td><strong>unverified → removed</strong></td>
+<td>no source in the files; the sentence in ADR-12 and the SWOT's T6 now reads "generative-video vendors change quickly"</td>
+</tr>
+</tbody>
+</table></div>
+<h2>3. What the register changed in the documents (2026-09-20)</h2>
+<ul>
+<li>Presentation §2 and the executive summary: K2, K4, K5, K6, K8 wording replaced by the sources'
+  wording; the 2007 date on K3; "agreed to buy" on K11.</li>
+<li><a href="economics.html"><code>economics.md</code></a> §2: K4/K5 removed; K1 and K3 stated with their sources.</li>
+<li><a href="research-6.html"><code>01g-research-real-system.md</code></a>: V1, V2, V5, V8, V12, V14 corrected in place; every row's
+  status column now says P or A honestly; V16 removed.</li>
+<li><a href="architecture.html"><code>architecture.md</code></a> ADR-12 and ADR-18, <a href="logic-audit.html"><code>logic-audit.md</code></a> T6: V16 and V2.</li>
+</ul>
+<h2>4. The research base (kept as written; every figure the stakeholder documents use is in §1–§2 above)</h2>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>Round</th>
+<th>File</th>
+<th>What it holds</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>I</td>
+<td><a href="research.html"><code>01-research.md</code></a></td>
+<td>reputation and claiming, speed to lead, reminders, digests, generated pages, how listing platforms monetise, AI adoption, the law in the US and the EU</td>
+</tr>
+<tr>
+<td>II</td>
+<td><a href="research-2.html"><code>01b-research-acquisition-content-sales.md</code></a></td>
+<td>acquiring customers for classified media (demand and supply side), content strategies, the AI creation services and their labelling rules, the sales processes</td>
+</tr>
+<tr>
+<td>III</td>
+<td><a href="research-3.html"><code>01c-research-data-driven-marketing.md</code></a></td>
+<td>the incumbents' cases (Yelp, Angi, Thumbtack), unit-economics practice, attribution and incrementality, next-best-action</td>
+</tr>
+<tr>
+<td>IV</td>
+<td><a href="research-4.html"><code>01e-research-responsible-data.md</code></a></td>
+<td>children's rights and responsible data: the law by market, the enforcement record, the frameworks, the business value</td>
+</tr>
+<tr>
+<td>V</td>
+<td><a href="research-5.html"><code>01f-research-beyond-children.md</code></a></td>
+<td>vulnerable people, protected characteristics, accessibility, sensitive categories, dark patterns — the rules R30–R36</td>
+</tr>
+<tr>
+<td>VI</td>
+<td><a href="research-6.html"><code>01g-research-real-system.md</code></a></td>
+<td>every external service verified: auth, review, limits, prices (corrected per §2)</td>
+</tr>
+<tr>
+<td>VII</td>
+<td><a href="market.html"><code>market.md</code></a></td>
+<td>the product's market</td>
+</tr>
+</tbody>
+</table></div>
+<footer>Source: <code>business-direct/docs/evidence.md</code> · rendered by <code>docs/build.py</code>.</footer>
+</div>
+</body>
+</html>

@@ -1,8 +1,9 @@
-# business.direct — research VII: the product's market — who the classified media owners are, what they run, what they buy, what nobody sells them
+# business.direct — the market: who the classified media owners are, what they run, what they buy, what nobody sells them
 
-*Seventh research round, 2026-09-20, phase B of the transformation programme
-(`21-documentation-audit.md` §8): the first research written about the product's own market
-rather than the first customer's. Questions: how large is the classified-media segment and how
+*For the stakeholders. What this document holds: the product's own market — the segment, how it
+earns, the software owners run, the tools they buy for the pieces, the gap the product fills, the
+product's SWOT. Written as research round VII on 2026-09-20 (phase B of the audit's programme);
+the first customer's category evidence is in research I–III (`evidence.md`). Questions: how large is the classified-media segment and how
 does it earn; what software do owners run their sites on and what does it not do; what do they
 buy today for the pieces of sales and marketing, at what price; where is the gap business.direct
 fills; and the product's own SWOT. **P** primary source opened, **A** secondary; market-size
@@ -74,12 +75,12 @@ what the owner should do; the agent platforms sell generic agents; the local-bus
 sell to the advertiser, not the owner. The product sits between them and is bought by the
 one who owns the inventory.
 
-## 5. The product's SWOT (the first instance's pilot SWOT is `17` §3)
+## 5. The product's SWOT (the first instance's pilot SWOT is `logic-audit.md` §3)
 
 | | Evidenced |
 |---|---|
 | **Strengths** | S1 the buyer owns the inventory and the data — one contract covers every listing; S2 the human gate and the policy gate are the operating rule, not a feature (research IV, the enforcement record); S3 the economics screen is the argument — the product proves its own ROI to the owner from the first cohort; S4 the second site is a policy record and a connector (ADR-2); S5 a managing advertiser gets what Podium and Yelp sell it, inside the owner's site — the reason it claims, stays and upgrades |
-| **Weaknesses** | W1 no customer beyond the first; the product's own funnel and CAC are unmeasured; W2 the product depends on each site's API and data quality (reviews, prices, contacts) it does not control (`17` A15, A16); W3 the operator is the bottleneck by design until departments earn auto-approval (`17` A10); W4 the vendor stack is behind interfaces but the clip engine and Meta publishing carry external review and rate limits (research VI) |
+| **Weaknesses** | W1 no customer beyond the first; the product's own funnel and CAC are unmeasured; W2 the product depends on each site's API and data quality (reviews, prices, contacts) it does not control (`logic-audit.md` A15, A16); W3 the operator is the bottleneck by design until departments earn auto-approval (`logic-audit.md` A10); W4 the vendor stack is behind interfaces but the clip engine and Meta publishing carry external review and rate limits (research VI) |
 | **Opportunities** | O1 a fragmented segment of thousands of vertical and local sites run by one to five people, sold software that describes the jobs; O2 incumbents validate the willingness to pay for answering and lead management ($99–400 a month per business — K12, §3) — the owner-level product aggregates it; O3 AI answers and social search reward the structured, published source (K7–K9): the content job has a measurable payoff; O4 outcome-priced agents (Breeze) set an expectation the product can meet with measured events |
 | **Threats** | T1 the directory-software vendors add "AI marketing" to the site product; T2 HubSpot / Salesforce agents grow a marketplace vocabulary; T3 platform rules and law move under the channels (labels, consent, children's data — research IV, V); T4 deliverability and channel review are single points of failure for two of the three jobs |
 

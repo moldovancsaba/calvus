@@ -3,7 +3,7 @@
 *One page for a classified media owner deciding to use the product, and for the owner deciding
 to build it. Every figure is sourced in the research, computed by the prototype on the first
 customer's real listings, or marked as an assumption; the value with the numbers is
-`22-business-case.md`. Written 2026-09-20 (D41).*
+`economics.md`. Written 2026-09-20 (D41).*
 
 ## The situation
 

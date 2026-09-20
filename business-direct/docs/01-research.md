@@ -4,7 +4,7 @@
 source behind every figure. Searched 2026-09-19. Primary sources (studies, platform
 disclosures, regulators) are marked **P**; industry aggregators are marked **A** and carry
 less weight — several repeat each other and cite older data. Nothing here was measured by
-us except the two reference platforms (`02-audit.md`).*
+us except the two reference platforms (`first-customer-classscout.md`).*
 
 ## 1. The listed business that does nothing loses to the one that does
 
@@ -88,7 +88,7 @@ and the week's sessions, with click rate as the metric — not opens.
   organic visits a month**; the pattern is one page tree: country › region › city ›
   neighbourhood › category. **A** [GrackerAI on Zillow](https://gracker.ai/case-studies/zillow), [Practical Programmatic on Tripadvisor](https://practicalprogrammatic.com/examples/tripadvisor), [Backlinko](https://backlinko.com/programmatic-seo)
 - The sport platform already has the tree: 8 categories × 20 counties × 147 localities × 7
-  age bands, with counts per facet from `/api/public/browse-facets` (`02-audit.md`).
+  age bands, with counts per facet from `/api/public/browse-facets` (`first-customer-classscout.md`).
 
 **Reading.** The generated-pages automation is the platform's own SEO department; every
 page must have real listings behind it (no empty category × place pages — a thin-content
@@ -158,7 +158,7 @@ is the reason the machine must run with "nobody logs in" on any instance.
 
 ## 9. What the two reference videos add (owner-supplied, 2026-09-19)
 
-Not evidence — a target shape, read from 42 extracted frames (`02-audit.md` §3):
+Not evidence — a target shape, read from 42 extracted frames (`first-customer-classscout.md` §3):
 departments as the unit of automation; a brand knowledge layer as plain files
 (`voice-guide.md`, `positioning.md`, `offer.md`, `leads.md`); an orchestrator; an access
 control plane; reviews and reputation answered first; a market radar that turns a

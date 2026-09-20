@@ -9,11 +9,15 @@ Exit 1 on any finding. Covers the pages and the docs:
 6. stale-state phrases in the docs and pages (things that were true once): "awaits the owner",
    "for approval" outside the approval UI wording, "coming soon", "not yet built", "inert here",
    "will be built", a "PROPOSED" gate — the register and the build log may keep history
-7. consistency: the decision range in README and the SSOT equals the register's last D-number; the
-   README's issue count equals the plan's; no doc still cites "ask #n" after D34 (cite P-n)
-8. every rule in the SSOT is stated in the business logic (the rules map, §8e)
+7. consistency: the decision range stated in the business logic equals the register's last D-number;
+   no live document cites "ask #n" (cite P-n)
+8. every rule in the SSOT's register is stated in the rules end to end (business-logic.md, both parts)
 9. every inert control carries aria-disabled and a title (from IDBC's gate)
 10. the page carries the current prototype banner (from Holdvölgy's gate)
+11. the stakeholder documents never frame the product as one customer's project or price the product
+12. the evidence register has no unverified row
+13. every redirect page (meta refresh) points at an existing page; redirect pages are excluded from the nav check
+14. the final set is exactly the twelve documents plus the design set, the research base and the history (D44)
 """
 import re, sys, json, shutil, subprocess, pathlib
 HERE = pathlib.Path(__file__).resolve().parent
@@ -38,9 +42,13 @@ for f in ALL:
         if tgt is not None and m.group(2) not in ids[tgt]:
             findings.append(f"missing anchor  {f.relative_to(ROOT)} → {m.group(1)}#{m.group(2)}")
 
-names = [p.stem for p in DOCS if p.stem not in ("bemutato", "presentation")]
+REDIRECTS = {p for p in DOCS if 'http-equiv="refresh"' in p.read_text(encoding="utf-8")}
+for p in REDIRECTS:
+    m = re.search(r'url=([^"]+)"', p.read_text(encoding="utf-8"))
+    if not m or not (p.parent / m.group(1)).exists(): findings.append(f"redirect  {p.name} points nowhere")
+names = [p.stem for p in DOCS if p.stem != "presentation" and p not in REDIRECTS]
 for p in DOCS:
-    if p.stem in ("bemutato", "presentation"): continue
+    if p.stem == "presentation" or p in REDIRECTS: continue
     t = p.read_text(encoding="utf-8")
     for n in names:
         if n != p.stem and f'href="{n}.html"' not in t: findings.append(f"docs nav  {p.name} does not link {n}.html")
@@ -54,40 +62,43 @@ except Exception as e:
     findings.append(f"data  providers.json unreadable: {e}")
 STALE = ["awaits the owner", "coming soon", "not yet built", "inert here", "will be built", "gate 2 · proposed", "gate 1 · proposed", "awaiting approval of the frames", "round 2 of the build log"]
 for f in sorted((HERE / "docs").glob("*.md")) + ALL + [HERE / "assets/app.js"]:
-    if f.name in ("04-decisions.md", "06-build-log.md", "07-gate.md", "decisions.html", "build-log.html", "gate.html", "README.md", "index.html") and f.parent.name == "docs": continue  # history and the scan's own list
+    if f.name in ("decisions.md", "build-log.md", "gate.md", "documentation-audit.md", "logic-audit.md", "register-of-asks.md", "decisions.html", "build-log.html", "gate.html", "documentation-audit.html", "logic-audit.html", "register-of-asks.html", "README.md", "index.html") and f.parent.name == "docs": continue  # history and the scan's own list
     t = f.read_text(encoding="utf-8").lower()
     for ph in STALE:
         if ph in t: findings.append(f"stale phrase  {f.relative_to(ROOT)}: \"{ph}\"")
 # 7. consistency: the decision range, the issue count and the ask numbering must agree across the docs
 docs = HERE / "docs"
 import re as _re
-last_d = max(int(m) for m in _re.findall(r"^\| D(\d+) \|", (docs / "04-decisions.md").read_text(encoding="utf-8"), _re.M))
-for f, pat in (("README.md", r"D1–D(\d+) \|"), ("10-ssot.md", r"`04-decisions.md` holds D1–D(\d+)\."), ("10-ssot.md", r"\| `04-decisions.md` \| D1–D(\d+) \|")):
+last_d = max(int(m) for m in _re.findall(r"^\| D(\d+) \|", (docs / "decisions.md").read_text(encoding="utf-8"), _re.M))
+for f, pat in (("business-logic.md", r"`decisions.md` holds D1–D(\d+)\."), ("business-logic.md", r"\| `decisions.md` \| D1–D(\d+) \|")):
     for m in _re.finditer(pat, (docs / f).read_text(encoding="utf-8")):
         if int(m.group(1)) != last_d: findings.append(f"stale count  docs/{f}: says D1–D{m.group(1)}, the register ends at D{last_d}")
-issues = len(_re.findall(r"^\| BD-", (docs / "13-implementation-plan.md").read_text(encoding="utf-8"), _re.M))
-m = _re.search(r"(\d+) issues with a Definition of Done", (docs / "README.md").read_text(encoding="utf-8"))
-if m and int(m.group(1)) != issues: findings.append(f"stale count  docs/README.md: says {m.group(1)} issues, the plan has {issues}")
 for f in sorted(docs.glob("*.md")) + [HERE / "assets/app.js"]:
-    if f.name in ("08-client-asks.md", "04-decisions.md", "06-build-log.md", "17-business-logic-audit-and-swot.md", "19-implementation-prerequisites.md", "README.md"): continue
+    if f.name in ("register-of-asks.md", "decisions.md", "build-log.md", "logic-audit.md", "first-customer-classscout.md", "documentation-audit.md", "README.md"): continue
     for m in _re.finditer(r"\basks? #\d", f.read_text(encoding="utf-8")):
         findings.append(f"stale reference  {f.relative_to(ROOT)}: \"{m.group(0)}…\" — asks moved to the prerequisites (D34); cite P-n")
         break
 
-rules = set(_re.findall(r"^\| (R\d+) \|", (docs / "10-ssot.md").read_text(encoding="utf-8"), _re.M))
-cited = set(_re.findall(r"\b(R\d+)\b", (docs / "09-business-logic.md").read_text(encoding="utf-8")))
-for r in sorted(rules - cited, key=lambda x: int(x[1:])): findings.append(f"unmapped rule  SSOT {r} is not stated in docs/09-business-logic.md")
+_bl = (docs / "business-logic.md").read_text(encoding="utf-8")
+_partA = _bl[:_bl.index("## Part B")]
+rules = set(_re.findall(r"^\| (R\d+) \|", _bl, _re.M))
+cited = set(_re.findall(r"\b(R\d+)\b", _partA))
+for r in sorted(rules - cited, key=lambda x: int(x[1:])): findings.append(f"unmapped rule  SSOT {r} is not stated in the rules end to end (business-logic.md Part A)")
 
 # 11. the top layer never frames the product as one customer's project; 12. the claims register has no unverified row (D42)
-TOP = ["docs/presentation.html", "docs/15-executive-summary.md", "docs/22-business-case.md", "docs/00-brief.md"]
-BANNED = ["the client accepts", "proposal for classscout", "after the client accepts", "one-man army for anybody", "the one-person sales and marketing team for anybody"]
+TOP = ["docs/presentation.html", "docs/executive-summary.md", "docs/economics.md", "docs/product-definition.md", "docs/product-specification.md", "docs/market.md"]
+BANNED = ["the client accepts", "proposal for classscout", "after the client accepts", "one-man army for anybody", "the one-person sales and marketing team for anybody", "developer rate", "developer-week", "pricing hypothesis", "the product's run cost", "sign the legal"]
 for rel in TOP:
     low = (HERE / rel).read_text(encoding="utf-8").lower()
     for ph in BANNED:
         if ph in low: findings.append(f"framing  {rel}: \"{ph}\"")
-reg = (HERE / "docs/23-claims-register.md").read_text(encoding="utf-8")
+reg = (HERE / "docs/evidence.md").read_text(encoding="utf-8")
 for line in reg.splitlines():
     if line.startswith("| ") and "| **unverified**" in line and "removed" not in line: findings.append(f"claims  unverified row without removal: {line[:60]}")
+FINAL = {"executive-summary.md", "product-definition.md", "product-specification.md", "market.md", "economics.md", "business-logic.md", "architecture.md", "delivery-plan.md", "responsible-data.md", "first-customer-classscout.md", "evidence.md", "README.md", "05-layout-specs.md", "decisions.md", "build-log.md", "gate.md", "register-of-asks.md", "logic-audit.md", "documentation-audit.md", "01-research.md", "01b-research-acquisition-content-sales.md", "01c-research-data-driven-marketing.md", "01e-research-responsible-data.md", "01f-research-beyond-children.md", "01g-research-real-system.md"}
+have = {p.name for p in docs.glob("*.md")}
+for n in sorted(have - FINAL): findings.append(f"set  docs/{n} is not part of the final set (D44)")
+for n in sorted(FINAL - have): findings.append(f"set  docs/{n} is missing from the final set (D44)")
 # 9. inert controls carry aria-disabled and a title; 10. the page carries the current prototype banner (hub audit 2026-09-20)
 js = (HERE / "assets/app.js").read_text(encoding="utf-8")
 for m in _re.finditer(r'<button class="btn[^"]*\binert\b[^"]*"([^>]*)>', js):

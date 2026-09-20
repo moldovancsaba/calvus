@@ -37,18 +37,17 @@ footer{margin-top:56px;padding-top:18px;border-top:1px solid var(--line);font-si
 </head>
 <body>
 <div class="wrap">
-<nav class="docnav" aria-label="Project documentation"><span class="docnav-brand">business.direct · docs</span><a href="index.html">Overview</a><a href="brief.html">Brief</a><a href="research.html">Research</a><a href="research-2.html">Research II</a><a href="research-3.html">Research III</a><a href="research-4.html">Research IV</a><a href="research-5.html">Research V</a><a href="research-6.html" aria-current=page>Research VI</a><a href="research-7.html">Research VII</a><a href="audit.html">Audit</a><a href="sources.html">Sources</a><a href="design-system.html">Design system</a><a href="layouts.html">Layouts</a><a href="05-layout-specs.html">Layout specs</a><a href="decisions.html">Decisions</a><a href="build-log.html">Build log</a><a href="gate.html">Gate</a><a href="client-asks.html">Register of asks</a><a href="implementation-prerequisites.html">Prerequisites</a><a href="business-logic.html">Business logic</a><a href="ssot.html">SSOT</a><a href="architecture.html">Architecture</a><a href="technical-design.html">Technical design</a><a href="implementation-plan.html">Plan</a><a href="system-blueprint.html">System blueprint</a><a href="documentation-audit.html">Documentation audit</a><a href="claims-register.html">Claims register</a><a href="legal.html">Legal position</a><a href="token-map.html">Token map</a><a href="executive.html">Executive summary</a><a href="business-case.html">Business case</a><a href="analytics.html">Analytics</a><a href="audit-swot.html">Audit · SWOT</a><a href="policy-framework.html">Policy framework</a></nav>
+<nav class="docnav" aria-label="Project documentation"><span class="docnav-brand">business.direct · docs</span><a href="index.html">Overview</a><a href="executive-summary.html">Executive summary</a><a href="product-definition.html">Product definition</a><a href="product-specification.html">Product specification</a><a href="market.html">Market</a><a href="economics.html">Economics</a><a href="business-logic.html">Business logic and SSOT</a><a href="architecture.html">Architecture and blueprint</a><a href="delivery-plan.html">Delivery plan</a><a href="responsible-data.html">Responsible data and legal</a><a href="first-customer-classscout.html">First customer</a><a href="evidence.html">Evidence</a><a href="research.html">Research I</a><a href="research-2.html">Research II</a><a href="research-3.html">Research III</a><a href="research-4.html">Research IV</a><a href="research-5.html">Research V</a><a href="research-6.html" aria-current=page>Research VI</a><a href="design-system.html">Design system</a><a href="layouts.html">Layouts</a><a href="05-layout-specs.html">Layout specs</a><a href="decisions.html">Decisions</a><a href="build-log.html">Build log</a><a href="gate.html">Gate</a><a href="register-of-asks.html">Register of asks</a><a href="logic-audit.html">Logic audit</a><a href="documentation-audit.html">Documentation audit</a></nav>
 <header><p class="eyebrow">Calvus · business.direct · project documentation</p><h1>business.direct — research VI: the real system — every service verified, what it costs, what it needs, what it limits</h1></header>
-<p class="notice" role="note"><b>This documentation set is being replaced (audit D40).</b> business.direct is a standalone product — the one-person sales and marketing team; ClassScout is its first customer. The <a href="presentation.html">presentation</a>, the <a href="executive.html">executive summary</a> and the <a href="business-case.html">business case</a> are written for the product; most other pages still read as the first instance's project until the <a href="documentation-audit.html">transformation programme</a> replaces them.</p>
 <p><em>Sixth research round, 2026-09-20; every row re-read against the vendor's page the same evening and
-corrected where it was wrong — the status of each figure is in <a href="claims-register.html"><code>23-claims-register.md</code></a> §2 (V1–V16),
+corrected where it was wrong — the status of each figure is in <a href="evidence.html"><code>evidence.md</code></a> §2 (V1–V16),
 which is the authority where this file and the register differ. Originally written on the owner's instruction: "step to the next phase … make a
 research and plan how we can make it a real system … exact services, what module goes where,
 how it works, the architecture, the system drawings, everything with pseudo code." This document
 is the research half: for every external service the machine depends on, the vendor's own terms
 as read on 2026-09-20 — authentication, review or registration, rate limits, prices, and the
-alternative considered. The plan half is <a href="system-blueprint.html"><code>20-system-blueprint.md</code></a> (modules, drawings, pseudo
-code) and <a href="implementation-plan.html"><code>13-implementation-plan.md</code></a> (sprints, acceptance tests). </em><em>P</em><em> marks a primary source
+alternative considered. The plan half is <a href="architecture.html"><code>architecture.md</code></a> (modules, drawings, pseudo
+code) and <a href="delivery-plan.html"><code>delivery-plan.md</code></a> (sprints, acceptance tests). </em><em>P</em><em> marks a primary source
 (the vendor's own documentation or pricing page), </em><em>A</em><em> a secondary summary. Prices and limits
 change; every number carries the date it was read and is re-checked at contract signature. The
 first customer is ClassScout (Your Field NYC); everything is English and US-first; a second instance is a
@@ -176,7 +175,7 @@ policy record and a connector (ADR-2), nothing here assumes one.</em></p>
   times the sizing target of 5 000 a day (architecture §3).</li>
 <li><strong>Preview per branch</strong> and production on <code>main</code> — the repo's existing model.</li>
 <li><strong>Why not Fly.io for everything</strong>: the app is a Next.js console with Server Actions; Vercel is the
-  platform the client already runs on (<a href="audit.html"><code>02-audit.md</code></a>), the operator learns one dashboard, and the one
+  platform the client already runs on (<a href="first-customer-classscout.html"><code>first-customer-classscout.md</code></a>), the operator learns one dashboard, and the one
   thing Vercel cannot do (long ffmpeg runs) goes to one small container (§10).</li>
 </ul>
 <h2>2. Database — MongoDB Atlas</h2>
@@ -188,7 +187,7 @@ with continuous backup, 10 GB, and the connection headroom Server Actions need.<
   ≈ 3.6 GB in the message log at full scale → <strong>M0 for the build and the pilot, M10 for production</strong>;
   the message log is the first collection to need a TTL index (<code>retention</code> job).</li>
 <li>Mongoose stays (D26, DiscountDirect); schemas are validated with Zod at the boundary
-  (<a href="system-blueprint.html"><code>20-system-blueprint.md</code></a> §5) so a bad webhook never reaches the model.</li>
+  (<a href="architecture.html"><code>architecture.md</code></a> §5) so a bad webhook never reaches the model.</li>
 <li><strong>Change streams</strong> are available from M10 (not on M0) — the blueprint does not depend on them; the
   outbox is polled by cron.</li>
 </ul>
@@ -384,7 +383,7 @@ fallback is Auth.js with e-mail magic links, which changes one file.</p>
   outbox lag, the last sync time, the last cron tick) and pages on failure. The five alerts in
   architecture §9 are computed in <code>/api/health</code> and by the <code>metrics</code> job.</li>
 </ul>
-<h2>14. What each service needs before the first real run (folds into <a href="implementation-prerequisites.html"><code>19-implementation-prerequisites.md</code></a>)</h2>
+<h2>14. What each service needs before the first real run (folds into <a href="first-customer-classscout.html"><code>first-customer-classscout.md</code></a>)</h2>
 <div class="tbl"><table>
 <thead>
 <tr>
@@ -533,13 +532,13 @@ fallback is Auth.js with e-mail magic links, which changes one file.</p>
 </tr>
 </tbody>
 </table></div>
-<p>Against the economics model's ARPA of $49 (<a href="analytics.html"><code>16-analytics-and-unit-economics.md</code></a>): the pilot's
+<p>Against the economics model's ARPA of $49 (<a href="economics.html"><code>economics.md</code></a>): the pilot's
 infrastructure is covered by two upgraded providers; the sizing target's by eight.</p>
 <h2>16. What was not found or is assumed</h2>
 <ul>
 <li>Meta's App Review duration is quoted from developer reports (two to four weeks), not from a
   published SLA; it is the schedule's largest external risk and starts in sprint 1.</li>
-<li>The Your Field API's rate limits are not published (<a href="audit.html"><code>02-audit.md</code></a>); the connector polls hourly
+<li>The Your Field API's rate limits are not published (<a href="first-customer-classscout.html"><code>first-customer-classscout.md</code></a>); the connector polls hourly
   with ETag / <code>updatedAt</code> diffs and backs off on 429.</li>
 <li>DoneIsBetter SSO's protocol details are assumed to be OIDC (§12).</li>
 <li>Whether the platform will accept a <code>reply.</code> MX on its domain, or the machine sends from its own

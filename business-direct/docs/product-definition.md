@@ -1,4 +1,4 @@
-# business.direct — brief
+# business.direct — product definition
 
 *The product definition. Written 2026-09-19; rewritten 2026-09-20 in the owner's definition
 (D41): a standalone product for classified media owners — content generated and delivered to
@@ -57,7 +57,7 @@ The first customer shows the shape: measured on its public API (2026-09-19) for 
 253 providers pulled, 0 manage their page, 130 have an e-mail and 181 a phone, 83 next
 sessions and 72 trial policies sit unpublished, 0 reviews and 28 prices are on the cards —
 the demo's data; the customer's catalogue is far larger. The owner's own case, as the product
-computes it, is `22-business-case.md`.
+computes it, is `economics.md`.
 
 **Where the shape came from.** The two videos the owner shared show the target: **the one-person sales and
 marketing team** — an orchestrator over departments (research and intelligence, content,
@@ -112,11 +112,11 @@ connecting an integration with a key. Each is shown in place, visibly inert, wit
 ## Where it stands
 
 Every stage of the standard is done (2026-09-19). Gates 1 and 2 approved (D9, D16); the
-prototype built in nine rounds (`06-build-log.md`) — the two flows, campaigns and upgrades,
+prototype built in nine rounds (`build-log.md`) — the two flows, campaigns and upgrades,
 conversations, economics, the research implemented, the audit implemented, the
 responsible-data policy record and gate, the Simple and Advanced interfaces — and measured
-(`07-gate.md`); the presentation, the business logic, the technical package (the stack
+(`gate.md`); the presentation, the business logic, the technical package (the stack
 verified service by service and the system blueprint with modules and pseudo code, D37), the
 audit and SWOT, and the policy framework written. Nothing is open for the presentation; what
-the implementation needs after acceptance is `19-implementation-prerequisites.md`; the build
-starts with the sprint-0 checklist in `13-implementation-plan.md`. **Next: present.**
+the implementation needs after acceptance is `first-customer-classscout.md`; the build
+starts with the sprint-0 checklist in `delivery-plan.md`. **Next: present.**

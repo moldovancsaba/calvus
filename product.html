@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The product standard — what a product needs that a client-site prototype does not</title>
+<style>:root{--bg:#f7f7f7;--surface:#fff;--text:#1e1e1e;--muted:#626262;--line:#e5e5e5;--accent:#111}
+*{box-sizing:border-box}body{margin:0;font-family:Inter,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;background:var(--bg);color:var(--text);font-size:15.5px;line-height:1.6;padding:0 clamp(16px,4vw,40px) 64px}
+.wrap{max-width:76ch;margin:0 auto}.top{display:flex;flex-wrap:wrap;gap:8px 18px;align-items:center;padding:16px 0;border-bottom:1px solid var(--line);font-size:13px;color:var(--muted)}
+.top a{color:var(--accent);text-decoration:none;min-height:44px;display:inline-flex;align-items:center;font-weight:600}
+h1{font-size:clamp(28px,5vw,40px);line-height:1.1;margin:32px 0 10px;letter-spacing:-.01em}h2{font-size:22px;margin:44px 0 10px;padding-top:18px;border-top:1px solid var(--line)}h3{font-size:17px;margin:26px 0 8px}
+p{margin:0 0 12px}li{margin:4px 0}strong{font-weight:700}em{color:var(--muted)}
+code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.86em;background:#ececec;padding:1px 5px;border-radius:5px;overflow-wrap:anywhere}
+.tbl{overflow-x:auto;margin:12px 0 20px;border:1px solid var(--line);border-radius:12px;background:var(--surface)}table{border-collapse:collapse;width:100%;font-size:13.5px;min-width:560px}
+th{text-align:left;font-weight:700;background:var(--bg);padding:10px 12px;border-bottom:1px solid var(--line);font-size:12px;letter-spacing:.04em;text-transform:uppercase;color:var(--muted)}td{padding:10px 12px;border-top:1px solid var(--line);vertical-align:top}
+footer{margin-top:48px;padding-top:16px;border-top:1px solid var(--line);font-size:12px;color:var(--muted)}</style>
+</head>
+<body><div class="wrap">
+<div class="top"><b>Calvus</b><a href="index.html">Project Hub</a><a href="prototyping.html">How we prototype</a><a href="hub-audit.html">Hub audit</a><a href="holdvolgy/docs/index.html">Holdvölgy docs</a><a href="discountdirect/docs.html">DiscountDirect docs</a><a href="idbc-salary-guide/docs/index.html">IDBC docs</a><a href="lexodont.hu/docs/index.html">Lexodont docs</a><a href="business-direct/docs/index.html">business.direct docs</a></div>
+<h1>The product standard — what a product needs that a client-site prototype does not</h1>
+<p><em>Added 2026-09-20 after business.direct's audit (<code>business-direct/docs/documentation-audit.md</code>):
+the prototyping standard (<code>PROTOTYPING.md</code>) is written for a client's site — stage 0 is "client,
+problem". A product followed it literally and every document became one customer's project. This
+page is the standard for a product; <code>PROTOTYPING.md</code> still governs the prototype inside it.</em></p>
+<h2>1. The premise, written first</h2>
+<p>The <strong>product</strong> is the subject. Its <strong>customer segment</strong> is named (for business.direct: classified
+media owners). A <strong>first customer</strong> is the example that makes the persona concrete and the first
+buyer — a section in every document, never the subject. Data pulled from the first customer's site
+is demo material and is labelled so; its counts are never "the situation".</p>
+<h2>2. The document set (twelve, in English, named for what they are)</h2>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>#</th>
+<th>Document</th>
+<th>Holds</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>presentation</td>
+<td>the customer and their week → the complication → the question → the product → how the customer uses it → the benefits → the first customer as proof → delivery → the decision; the demo as an appendix</td>
+</tr>
+<tr>
+<td>2</td>
+<td>executive summary</td>
+<td>one page, situation → complication → question → answer, the decision</td>
+</tr>
+<tr>
+<td>3</td>
+<td>product definition</td>
+<td>the product in the owner's words: the jobs, the departments, the vocabulary, the persona, what it is not</td>
+</tr>
+<tr>
+<td>4</td>
+<td>product specification</td>
+<td>how it works and how the customer uses it, screen by screen and role by role; what runs alone and what needs a person; the benefits, measured</td>
+</tr>
+<tr>
+<td>5</td>
+<td>market</td>
+<td>the segment, what customers run and buy today, the gap, the product's SWOT</td>
+</tr>
+<tr>
+<td>6</td>
+<td>the value the product computes for its user</td>
+<td>the product's own economics feature: what it calculates for the customer about the customer's business — never the product's own price or costs unless the owner opens that phase</td>
+</tr>
+<tr>
+<td>7</td>
+<td>business logic and SSOT</td>
+<td>the rules end to end; the product layer and the customer instance's mapping; glossary, entities, settings, the rules register</td>
+</tr>
+<tr>
+<td>8</td>
+<td>architecture and blueprint</td>
+<td>the ADRs, the design, the modules with pseudo code, the tests, operations</td>
+</tr>
+<tr>
+<td>9</td>
+<td>delivery plan and operating model</td>
+<td>sprints with acceptance tests, owners, dates, governance, risks with triggers; onboarding, support, incidents, offboarding; the stakeholder sign-off sheet</td>
+</tr>
+<tr>
+<td>10</td>
+<td>responsible data and the legal position</td>
+<td>the policy record and gate per customer; the product's own position as processor; the counsel list with one disclaimer</td>
+</tr>
+<tr>
+<td>11</td>
+<td>the first customer</td>
+<td>everything instance-specific: their site measured, what is real, onboarding inputs, the pilot's SWOT</td>
+</tr>
+<tr>
+<td>12</td>
+<td>evidence</td>
+<td>the claims register — every figure with its source opened and its status — and the research base</td>
+</tr>
+</tbody>
+</table></div>
+<p>Plus the prototype, the design set (<code>PROTOTYPING.md</code> stages 3–6) and the history (decisions, build
+log, gate, closed registers, audits).</p>
+<h2>3. Acceptance criteria for every document</h2>
+<ol>
+<li>The first paragraph says what the document is for, who reads it and what decision it supports.</li>
+<li>The subject is the product; the first customer appears as the example and is named as such.</li>
+<li>Product terms first; the customer instance's words in brackets or in the worked example.</li>
+<li>Every figure has a row in the evidence register with its source opened; a figure from memory or a search summary is never labelled as read.</li>
+<li>One fact, one place; counts are computed by the renderer, never written.</li>
+<li>Internal vocabulary (decision and rule numbers, gate names) stays in the delivery and history documents.</li>
+<li>Measured at 390 and 1440; one <code>h1</code>; 44 px targets; no console errors.</li>
+<li>The gate is clean, and the gate checks the framing (the customer never the subject; the product's own money never in the set unless that phase is open), the register, the redirects and the set.</li>
+<li>A stakeholder can act from the document alone.</li>
+<li>Nothing describes a state that is no longer true; every old URL that was live redirects.</li>
+</ol>
+<h2>4. The rules that came from the audit</h2>
+<ul>
+<li>A presentation is about the customer's problem, the product and the value — never a tour of the UI.</li>
+<li>Filenames and URLs are in the customer's language.</li>
+<li>What the product computes for its user (its economics feature) and what the product itself costs are two different things; the second is a separate phase the owner opens.</li>
+<li>Legal paperwork is a phase the owner opens; until then every legal sentence is "the product team's reading, to be confirmed" with the questions listed for counsel.</li>
+<li>Nothing is asked of the owner that is the team's to decide; routine decisions are made and logged.</li>
+</ul>
+<footer>Source: <code>PRODUCT.md</code>, rendered by <code>build-docs.py</code>.</footer>
+</div></body></html>

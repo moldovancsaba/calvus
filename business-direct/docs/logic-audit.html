@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>business.direct — the business-logic audit (history) — business.direct docs</title>
+<link rel="stylesheet" href="../assets/tokens.css">
+<style>/* business.direct — documentation pages on the product tokens (GDS roles, teal accent). */
+:root{--ground:var(--gds-bg-canvas,#f8fafc);--card:var(--gds-bg-surface,#fff);--ink:var(--gds-text-body,#111827);--text:#1f2937;--muted:var(--gds-text-meta,#64748b);--accent:var(--gds-brand-accent,#0f766e);--accent-deep:var(--gds-brand-accent-strong,#115e59);--line:var(--gds-border-card,#e2e8f0);--line-soft:#eef2f7;--note:var(--gds-brand-accent-tint,#e6f4f2)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--ground);color:var(--text);font-family:var(--gds-font,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif);font-size:15.5px;line-height:1.6;padding-block:0 64px;padding-inline:clamp(16px,4vw,40px)}
+.wrap{max-width:74ch;margin-inline:auto}
+.docnav{display:flex;flex-wrap:wrap;gap:4px 18px;align-items:center;padding:16px 0;border-bottom:1px solid var(--line);font-size:12px;letter-spacing:.06em;text-transform:uppercase}
+.docnav a{color:var(--muted);text-decoration:none;min-height:44px;min-width:44px;display:inline-flex;align-items:center;border-bottom:2px solid transparent}
+.docnav a:hover,.docnav a[aria-current]{color:var(--ink);border-color:var(--accent)}
+.docnav-brand{color:var(--accent-deep);font-weight:800;margin-right:6px}
+.docnav-hub{margin-left:auto}
+header{padding-block:40px 24px;border-bottom:1px solid var(--line);margin-bottom:28px}
+.eyebrow{font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--accent-deep);margin:0 0 12px;font-weight:800}
+h1,h2,h3{color:var(--ink);line-height:1.1;text-wrap:balance;margin:0;letter-spacing:-.02em}
+h1{font-size:clamp(30px,6vw,46px);font-weight:900}
+h2{font-size:clamp(23px,4vw,30px);font-weight:900;margin:48px 0 14px;padding-top:20px;border-top:1px solid var(--line)}
+h3{font-size:18px;margin:30px 0 8px;font-weight:800}
+p{margin:0 0 14px} strong{color:var(--ink);font-weight:800}
+ul,ol{padding-left:22px;margin:0 0 16px} li{margin:5px 0} li>ul{margin:6px 0 0}
+code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.86em;background:var(--note);padding:1px 5px;border-radius:4px;color:var(--ink);overflow-wrap:anywhere}
+.notice{margin:0 0 22px;padding:12px 16px;border-radius:10px;background:var(--gds-brand-accent-tint);border:1px solid var(--gds-border-card);font-size:13.5px;font-weight:600}
+pre{overflow-x:auto;padding:14px 16px;border:1px solid var(--line);border-radius:10px;background:var(--card);font-size:12px;line-height:1.35}
+pre code{background:none;padding:0;font-size:inherit}
+a{color:var(--accent-deep)} :focus-visible{outline:2px solid var(--accent-deep);outline-offset:2px}
+.tbl{overflow-x:auto;margin:14px 0 22px;border:1px solid var(--line);border-radius:10px;background:var(--card)}
+table{border-collapse:collapse;width:100%;font-size:13.5px;min-width:560px}
+th{text-align:left;font-weight:800;color:var(--ink);background:var(--note);padding:10px 12px;border-bottom:1px solid var(--line);font-size:11.5px;letter-spacing:.06em;text-transform:uppercase}
+td{padding:10px 12px;border-top:1px solid var(--line-soft);vertical-align:top;background:var(--card)} td:first-child{color:var(--ink)}
+footer{margin-top:56px;padding-top:18px;border-top:1px solid var(--line);font-size:12px;color:var(--muted)}
+</style>
+</head>
+<body>
+<div class="wrap">
+<nav class="docnav" aria-label="Project documentation"><span class="docnav-brand">business.direct · docs</span><a href="index.html">Overview</a><a href="executive-summary.html">Executive summary</a><a href="product-definition.html">Product definition</a><a href="product-specification.html">Product specification</a><a href="market.html">Market</a><a href="economics.html">Economics</a><a href="business-logic.html">Business logic and SSOT</a><a href="architecture.html">Architecture and blueprint</a><a href="delivery-plan.html">Delivery plan</a><a href="responsible-data.html">Responsible data and legal</a><a href="first-customer-classscout.html">First customer</a><a href="evidence.html">Evidence</a><a href="research.html">Research I</a><a href="research-2.html">Research II</a><a href="research-3.html">Research III</a><a href="research-4.html">Research IV</a><a href="research-5.html">Research V</a><a href="research-6.html">Research VI</a><a href="design-system.html">Design system</a><a href="layouts.html">Layouts</a><a href="05-layout-specs.html">Layout specs</a><a href="decisions.html">Decisions</a><a href="build-log.html">Build log</a><a href="gate.html">Gate</a><a href="register-of-asks.html">Register of asks</a><a href="logic-audit.html" aria-current=page>Logic audit</a><a href="documentation-audit.html">Documentation audit</a></nav>
+<header><p class="eyebrow">Calvus · business.direct · project documentation</p><h1>business.direct — the business-logic audit (history)</h1></header>
+<p><em>Commissioned by the owner 2026-09-19 ("a deep business logic audit of the system to have
+a professional SWOT about the planned service"). Audited: <a href="business-logic.html"><code>business-logic.md</code></a> (§1–§9),
+the SSOT's rules R1–R22 and settings, <a href="economics.html"><code>economics.md</code></a>, the ADRs, and
+the prototype's behaviour (<code>assets/app.js</code>, rounds 1–6). Method: every rule read against
+every other rule, against the prototype, against the real catalogue (253 providers, pulled
+2026-09-19), and against the three research rounds. Findings are numbered A1–A18 with a
+severity (</em><em>critical</em><em> = the service does not work or is unlawful as written; </em><em>major</em><em> =
+a wrong number or a missing mechanism the plan depends on; </em><em>minor</em><em> = a text or model
+inconsistency), and each names the fix. Nothing was changed by the audit except two
+factual errors in our own documents (A1), corrected in the same commit. The SWOT follows in
+§3; the recommendations in §4 are PROPOSED and become D-numbers when the owner decides.</em></p>
+<h2>1. Audit summary</h2>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>Severity</th>
+<th>Count</th>
+<th>Findings</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Critical</td>
+<td>2</td>
+<td>A2 (the cap is consumed by the digest alone), A3 (CAN-SPAM footer lacks a postal address)</td>
+</tr>
+<tr>
+<td>Major</td>
+<td>8</td>
+<td>A4–A11</td>
+</tr>
+<tr>
+<td>Minor</td>
+<td>8</td>
+<td>A1, A12–A18</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Verdict.</strong> The logic is coherent and unusually complete for a prototype — every outbound
+path has a gate, every figure declares its source, the economics model tells the truth
+about itself. It has two rules that cannot both hold (A2), one legal footer that must be
+fixed before the first send (A3), and a set of dependencies on the platform (audiences,
+writes, analytics, prices) that the plan already names but the service cannot ship without.
+The thesis is sound and confirmed by the incumbents' own moves (Yelp's Hatch and
+Receptionist); the economics only work as the platform's growth engine, not as a standalone
+upgrade business at today's catalogue size.</p>
+<h2>2. Findings</h2>
+<h3>2.1 Consistency of the rules</h3>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>#</th>
+<th>Severity</th>
+<th>Finding</th>
+<th>Evidence</th>
+<th>Fix</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>A1</strong></td>
+<td>minor</td>
+<td>Two documents swapped the real counts: 72 providers have a phone and no e-mail, 50 have neither; research II §5.1 and analytics §2.1 said 50 and 72. The economics screen always computed them correctly.</td>
+<td><code>providers.json</code>: e-mail 130, phone-only 72, neither 50</td>
+<td>corrected in this commit</td>
+</tr>
+<tr>
+<td><strong>A2</strong></td>
+<td><strong>critical</strong></td>
+<td><strong>The frequency cap of 4 messages per family per month "across everything — digest, alerts, campaigns, texts", with the weekly digest counting as one, is consumed by the digest alone</strong> (4–5 Sundays a month). As written, no alert, campaign or text can ever be sent to a family with the digest on — the provider campaigns (D22) and the alerts (R3) are dead letters.</td>
+<td>business logic §6, SSOT settings, R3</td>
+<td>decide one: (a) the cap counts provider-originated messages only (campaigns, texts) and the platform's own digest and alerts run on preference — 4 provider messages a month is still the research's number; or (b) raise the cap to 8 and count everything. <strong>Recommended: (a)</strong>, which is what the prototype's inbox already shows</td>
+</tr>
+<tr>
+<td><strong>A3</strong></td>
+<td><strong>critical</strong></td>
+<td>The invitation footer reads "Your Field NYC · Brooklyn · unsubscribe". CAN-SPAM requires a <strong>valid physical postal address</strong> in every commercial e-mail; a borough is not one.</td>
+<td>research I §8, II §5.1; <code>app.js</code> sequence body</td>
+<td>put the platform's registered postal address in every provider e-mail template (a merge field <code>{postal_address}</code> per <code>platform_id</code>); make it a gate check</td>
+</tr>
+<tr>
+<td>A4</td>
+<td>major</td>
+<td>Campaign audiences include "nearby families with a child in the age range", but the family's preference <em>New provider nearby</em> defaults <strong>off</strong> and the inbox only shows campaigns from <em>saved</em> providers. The audience count sells the provider a reach the preferences would not allow.</td>
+<td>business logic §4, <code>campaignsFor</code> audience, <code>family.prefs.nearby = false</code></td>
+<td>the nearby audience is resolved through the platform's saves <strong>and</strong> the <code>nearby</code> preference; the campaign card shows the reachable count, not the nearby population (R11 stated explicitly)</td>
+</tr>
+<tr>
+<td>A5</td>
+<td>major</td>
+<td>A family can ask an <strong>unclaimed</strong> provider a question (Saved → <em>Ask about a trial</em> works for any saved provider), but the machine only answers for managing providers. The enquiry vanishes — the worst experience for the family and a wasted signal for sales.</td>
+<td><code>provider.conversations</code> locked until managing; <code>data-ask</code> on every saved provider</td>
+<td>route an enquiry to an unclaimed provider into the <strong>sales sequence's step 2</strong> ("a family asked about you — answer her in one click") and tell the family the provider has been notified; this is the strongest touch the research describes (58 % of replies come from the first relevant message)</td>
+</tr>
+<tr>
+<td>A6</td>
+<td>major</td>
+<td>R9 says stages move forward only on events; the drawer's stage chips let the operator move a provider forward by hand, logged as an override. The two are reconcilable but the rule text is not: "forward on events only" vs "operator moves by hand".</td>
+<td>SSOT R9; <code>data-setstage</code></td>
+<td>R9 reworded: forward automatically only on events; a person may move any stage in either direction and the move is logged with the reason</td>
+</tr>
+<tr>
+<td>A7</td>
+<td>major</td>
+<td><strong>R19 gates the upgrade on delivered value &gt; the cheapest product's annual price, but delivered value is computed from sample trials</strong> (<code>hash(pid) % 4</code>); with real numbers most providers will sit below the gate for months, and the product cards — the only revenue — never appear.</td>
+<td><code>provider.today</code> R19 block; analytics §2.4</td>
+<td>keep R19 as the <em>pitch</em> rule but add a floor: after 60 days managing, show the products with the honest line "the machine has delivered $X so far" — the provider can still buy; the number stays truthful</td>
+</tr>
+<tr>
+<td>A8</td>
+<td>major</td>
+<td>The propensity score rewards <em>unclaimed</em> +10 and <em>e-mail</em> +30, so the first recipients are exactly the providers the platform's enrichment already marked and reached with its own claim prompt. There is no signal for "has not been contacted by the platform before" and no penalty for a bounce or a "not my program".</td>
+<td><code>score()</code></td>
+<td>add: −40 after "not my program", −100 after unsubscribe (excluded), −20 after a bounce, +15 when a family saved or asked; take the platform's own claim-prompt history through the connector when keyed</td>
+</tr>
+<tr>
+<td>A9</td>
+<td>major</td>
+<td>The sending guard (warm-up day, daily cap 60, bounce &lt; 2 %) exists as state and a card but <strong>no rule in the SSOT says the outbox refuses a send past it</strong> — R-numbers cover consent and caps for families, not for the sending domain.</td>
+<td><code>S.sending</code>; SSOT rules</td>
+<td>add <strong>R23</strong>: the outbox refuses any send past the warm-up cap or the bounce limit and alerts; bounce &gt; 2 % pauses the sequence</td>
+</tr>
+<tr>
+<td>A10</td>
+<td>major</td>
+<td>The economics model prices operator time at 2 minutes per approval, but the prototype puts <strong>every</strong> post, sequence, reply, comment, campaign and enquiry through a person. At 5 posts + 3 comments + 130-recipient sequence + replies + campaigns a week, the operator's minutes, not the tooling, are the dominant cost — and the model's cost line understates it.</td>
+<td>analytics §2.2; the approvals count reaches 14+ in a session</td>
+<td>model approvals as a rate (events × minutes) and show "operator hours this week" as a tile; R1 stays — but batch approvals (approve a whole week's anchor cuts at once) become a product rule</td>
+</tr>
+<tr>
+<td>A11</td>
+<td>major</td>
+<td>The value of an avid family ($42/year to the platform) rests on a 5 % "capture" assumption with no mechanism behind it: upgrades are bought by providers, and nothing in the logic ties a provider's purchase to the families delivered except R19's pitch.</td>
+<td>analytics §3.1</td>
+<td>define capture as a measurable: upgrades bought within 30 days of a campaign result or an answered enquiry ÷ all upgrades; log it (<code>entitlement.started</code> with the attributed event)</td>
+</tr>
+</tbody>
+</table></div>
+<h3>2.2 Legal and trust</h3>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>#</th>
+<th>Severity</th>
+<th>Finding</th>
+<th>Evidence</th>
+<th>Fix</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>A12</td>
+<td>minor</td>
+<td>The SMS consent text is "stored verbatim" by rule, but the prototype's consent record is a provider id list with no text, time or source.</td>
+<td><code>smsConsent: ['prov-…']</code>; business logic §6</td>
+<td>the entity in technical design §2 (<code>consents</code>) is right; the prototype should show the proof on the preference row ("consented 2026-09-02 on the booking form") so the rule is visible</td>
+</tr>
+<tr>
+<td>A13</td>
+<td>minor</td>
+<td>Children's first names and ages are stored and shown on every enquiry and campaign ("Leo (5)"). Not consent-gated anywhere. New York's Child Data Protection Act (effective 20 June 2025) restricts processing the personal data of users under 18 unless strictly necessary or consented, and COPPA covers data collected from children under 13; the docs do not say which applies to a parent's account describing a child. <strong>P</strong> <a href="https://ag.ny.gov/child-data-protection-act-guidance">NY Attorney General guidance</a>; <strong>A</strong> <a href="https://www.goodwinlaw.com/en/insights/publications/2025/06/alerts-practices-dpc-new-yorks-child-data-protection-act-now-effect">Goodwin</a></td>
+<td>family entity; enquiry cards</td>
+<td>counsel question added to the asks; until answered, the machine uses the child's <strong>age band</strong> in provider-facing text and the name only in the family's own view</td>
+</tr>
+<tr>
+<td>A14</td>
+<td>minor</td>
+<td>AI-content marking is specified for social posts (R20) but the <strong>drafted replies and campaigns sent by e-mail or SMS</strong> carry no disclosure rule; EU AI Act Art. 50 covers text interactions with people in some cases, and the Hungarian reference instance is in the EU.</td>
+<td>R20 scope</td>
+<td>R20 extended: every AI-drafted message that a person did not edit carries the instance's disclosure line where the market requires it; US: none required today, logged anyway</td>
+</tr>
+</tbody>
+</table></div>
+<p>| A19 | major (found after the audit, D31) | The platform's own privacy policy (2026-09-12) says it does not knowingly collect children's data and does not yet offer e-mail alerts, and records saves only after an explicit opt-in that is off by default. The machine as designed stored children's names, plans a digest and alerts, and sizes audiences from saves. | <code>getyourfield.com/privacy</code>, <code>/terms</code> (read with <code>curl</code>) | no child's name stored (done); policy revision before the digest launches (ask #16); audiences from opted-in accounts only (ask #17) |</p>
+<h3>2.3 The data and the platform dependency</h3>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>#</th>
+<th>Severity</th>
+<th>Finding</th>
+<th>Evidence</th>
+<th>Fix</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>A15</td>
+<td>minor</td>
+<td><strong>Reviews are 0 on all 253 cards and prices known on 28</strong> — the two properties AI answers cite most. The generated-page readiness can never reach 4 of 4 today; the "AI-citation" lever (P5) is a platform product problem before it is ours.</td>
+<td><code>providers.json</code>; pages screen</td>
+<td>ask #12: does the platform plan reviews and price capture? Until then readiness caps at 3 of 4 and the pages carry "no reviews yet" honestly</td>
+</tr>
+<tr>
+<td>A16</td>
+<td>minor</td>
+<td>Six mechanisms depend on the platform's keyed endpoints or data the prototype does not have: claim requests, audiences (saves, location), notifications, card flags for upgrades, sign-up sources, bookings. Each is an ask (#5, #6, #10) — but the plan's Release 1 includes three of them.</td>
+<td>plan B1, B7, B9</td>
+<td>Release 1 re-cut into what ships <strong>read-only</strong> (sales sequence, inbox, provider view, content queue, economics on assumptions) and what waits for the key; the presentation says so</td>
+</tr>
+<tr>
+<td>A17</td>
+<td>minor</td>
+<td>The reference instance (Hungary) needs consent for named-person e-mail addresses; the connector interface has no "address is a named person" flag.</td>
+<td>research I §8b; <code>PlatformConnector</code></td>
+<td>add <code>contactKind: 'role' \| 'person'</code> to the connector's provider record; the sequence job skips <code>person</code> addresses without consent on EU instances</td>
+</tr>
+<tr>
+<td>A18</td>
+<td>minor</td>
+<td>"Never delete a provider's stage history" (business logic §9) has no store: <code>provider_state</code> holds one stage; the history lives in <code>events</code>. Fine in production, but the prototype's drawer shows no history.</td>
+<td>technical design §2</td>
+<td>the drawer lists the last three <code>stage.changed</code> events with who and why</td>
+</tr>
+</tbody>
+</table></div>
+<h2>3. The pilot's SWOT</h2>
+<p>Moved to <a href="first-customer-classscout.html"><code>first-customer-classscout.md</code></a> Part D.</p>
+<h2>4. Recommendations — adopted and implemented as D30 (2026-09-19)</h2>
+<p>The owner adopted all twelve. Each row's implementation is in the prototype (<code>app.js?v=9</code>),
+business logic §8d, the SSOT (R3, R9, R11, R19, R20, R22 revised; R23–R25 new), the
+technical design and the plan (BD-1-12–14, BD-3-9, BD-4-12–13). Two halves stay with the
+platform: A15 (reviews and prices on the cards — ask #12) and A16's keyed endpoints (ask</p>
+<h1>5); the postal address itself is ask #15.</h1>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>#</th>
+<th>Recommendation</th>
+<th>Closes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Q1</td>
+<td>Cap semantics: 4 <strong>provider-originated</strong> messages per family per month; the platform's digest and alerts run on preference</td>
+<td>A2</td>
+</tr>
+<tr>
+<td>Q2</td>
+<td>Postal address merge field in every provider e-mail; gate check on the template</td>
+<td>A3</td>
+</tr>
+<tr>
+<td>Q3</td>
+<td>Campaign audience = saved families + families with <em>nearby</em> on; the card shows the reachable count</td>
+<td>A4</td>
+</tr>
+<tr>
+<td>Q4</td>
+<td>An enquiry to an unclaimed provider becomes sales step 2 ("a family asked about you") and the family is told</td>
+<td>A5</td>
+</tr>
+<tr>
+<td>Q5</td>
+<td>R9 reworded; R19 with a 60-day floor; R23 sending guard; R20 extended to AI-drafted messages</td>
+<td>A6, A7, A9, A14</td>
+</tr>
+<tr>
+<td>Q6</td>
+<td>Propensity score: bounce, not-my-program, unsubscribe, saves and asks as signals</td>
+<td>A8</td>
+</tr>
+<tr>
+<td>Q7</td>
+<td>Operator hours as a modelled cost and a tile; batch approvals; earned auto-approval per department after four clean weeks</td>
+<td>A10, W3</td>
+</tr>
+<tr>
+<td>Q8</td>
+<td>Capture defined as a measurable (upgrades within 30 days of a delivered result)</td>
+<td>A11</td>
+</tr>
+<tr>
+<td>Q9</td>
+<td>Children's data: age band in provider-facing text; counsel question on NY CDPA / COPPA (ask #13)</td>
+<td>A13</td>
+</tr>
+<tr>
+<td>Q10</td>
+<td>Release 1 re-cut into read-only and keyed halves; asks #12 (reviews, prices on the platform) and #13 added</td>
+<td>A15, A16</td>
+</tr>
+<tr>
+<td>Q11</td>
+<td>Connector <code>contactKind</code> for EU instances; stage history in the drawer; consent proof on the preference row</td>
+<td>A12, A17, A18</td>
+</tr>
+<tr>
+<td>Q12</td>
+<td>Strategic: position against Sawyer as "families, not software"; decide bundled vs $99 conversations line in the economics defaults</td>
+<td>S1/T1, W1/O4</td>
+</tr>
+</tbody>
+</table></div>
+<footer>Source: <code>business-direct/docs/logic-audit.md</code> · rendered by <code>docs/build.py</code>.</footer>
+</div>
+</body>
+</html>

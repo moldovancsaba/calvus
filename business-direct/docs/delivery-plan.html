@@ -1,0 +1,861 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>business.direct — delivery plan, operating model and stakeholder sign-off — business.direct docs</title>
+<link rel="stylesheet" href="../assets/tokens.css">
+<style>/* business.direct — documentation pages on the product tokens (GDS roles, teal accent). */
+:root{--ground:var(--gds-bg-canvas,#f8fafc);--card:var(--gds-bg-surface,#fff);--ink:var(--gds-text-body,#111827);--text:#1f2937;--muted:var(--gds-text-meta,#64748b);--accent:var(--gds-brand-accent,#0f766e);--accent-deep:var(--gds-brand-accent-strong,#115e59);--line:var(--gds-border-card,#e2e8f0);--line-soft:#eef2f7;--note:var(--gds-brand-accent-tint,#e6f4f2)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--ground);color:var(--text);font-family:var(--gds-font,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif);font-size:15.5px;line-height:1.6;padding-block:0 64px;padding-inline:clamp(16px,4vw,40px)}
+.wrap{max-width:74ch;margin-inline:auto}
+.docnav{display:flex;flex-wrap:wrap;gap:4px 18px;align-items:center;padding:16px 0;border-bottom:1px solid var(--line);font-size:12px;letter-spacing:.06em;text-transform:uppercase}
+.docnav a{color:var(--muted);text-decoration:none;min-height:44px;min-width:44px;display:inline-flex;align-items:center;border-bottom:2px solid transparent}
+.docnav a:hover,.docnav a[aria-current]{color:var(--ink);border-color:var(--accent)}
+.docnav-brand{color:var(--accent-deep);font-weight:800;margin-right:6px}
+.docnav-hub{margin-left:auto}
+header{padding-block:40px 24px;border-bottom:1px solid var(--line);margin-bottom:28px}
+.eyebrow{font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--accent-deep);margin:0 0 12px;font-weight:800}
+h1,h2,h3{color:var(--ink);line-height:1.1;text-wrap:balance;margin:0;letter-spacing:-.02em}
+h1{font-size:clamp(30px,6vw,46px);font-weight:900}
+h2{font-size:clamp(23px,4vw,30px);font-weight:900;margin:48px 0 14px;padding-top:20px;border-top:1px solid var(--line)}
+h3{font-size:18px;margin:30px 0 8px;font-weight:800}
+p{margin:0 0 14px} strong{color:var(--ink);font-weight:800}
+ul,ol{padding-left:22px;margin:0 0 16px} li{margin:5px 0} li>ul{margin:6px 0 0}
+code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.86em;background:var(--note);padding:1px 5px;border-radius:4px;color:var(--ink);overflow-wrap:anywhere}
+.notice{margin:0 0 22px;padding:12px 16px;border-radius:10px;background:var(--gds-brand-accent-tint);border:1px solid var(--gds-border-card);font-size:13.5px;font-weight:600}
+pre{overflow-x:auto;padding:14px 16px;border:1px solid var(--line);border-radius:10px;background:var(--card);font-size:12px;line-height:1.35}
+pre code{background:none;padding:0;font-size:inherit}
+a{color:var(--accent-deep)} :focus-visible{outline:2px solid var(--accent-deep);outline-offset:2px}
+.tbl{overflow-x:auto;margin:14px 0 22px;border:1px solid var(--line);border-radius:10px;background:var(--card)}
+table{border-collapse:collapse;width:100%;font-size:13.5px;min-width:560px}
+th{text-align:left;font-weight:800;color:var(--ink);background:var(--note);padding:10px 12px;border-bottom:1px solid var(--line);font-size:11.5px;letter-spacing:.06em;text-transform:uppercase}
+td{padding:10px 12px;border-top:1px solid var(--line-soft);vertical-align:top;background:var(--card)} td:first-child{color:var(--ink)}
+footer{margin-top:56px;padding-top:18px;border-top:1px solid var(--line);font-size:12px;color:var(--muted)}
+</style>
+</head>
+<body>
+<div class="wrap">
+<nav class="docnav" aria-label="Project documentation"><span class="docnav-brand">business.direct · docs</span><a href="index.html">Overview</a><a href="executive-summary.html">Executive summary</a><a href="product-definition.html">Product definition</a><a href="product-specification.html">Product specification</a><a href="market.html">Market</a><a href="economics.html">Economics</a><a href="business-logic.html">Business logic and SSOT</a><a href="architecture.html">Architecture and blueprint</a><a href="delivery-plan.html" aria-current=page>Delivery plan</a><a href="responsible-data.html">Responsible data and legal</a><a href="first-customer-classscout.html">First customer</a><a href="evidence.html">Evidence</a><a href="research.html">Research I</a><a href="research-2.html">Research II</a><a href="research-3.html">Research III</a><a href="research-4.html">Research IV</a><a href="research-5.html">Research V</a><a href="research-6.html">Research VI</a><a href="design-system.html">Design system</a><a href="layouts.html">Layouts</a><a href="05-layout-specs.html">Layout specs</a><a href="decisions.html">Decisions</a><a href="build-log.html">Build log</a><a href="gate.html">Gate</a><a href="register-of-asks.html">Register of asks</a><a href="logic-audit.html">Logic audit</a><a href="documentation-audit.html">Documentation audit</a></nav>
+<header><p class="eyebrow">Calvus · business.direct · project documentation</p><h1>business.direct — delivery plan, operating model and stakeholder sign-off</h1></header>
+<p><em>Written 2026-09-19 on the architecture's ADRs; phase 2 (M5) added the same day; re-cut to
+sprint level on 2026-09-20 (D37) from the system blueprint (<a href="architecture.html"><code>architecture.md</code></a>) and the
+service research (<a href="research-6.html"><code>01g-research-real-system.md</code></a>). Estimates are for a team of two developers and
+the owner as product lead; they assume the ADRs (ADR-1 to ADR-25) stand as the build baseline and
+the prerequisites in <a href="first-customer-classscout.html"><code>first-customer-classscout.md</code></a> arrive as §4 says. Every issue has a
+Definition of Done; every sprint has an acceptance test the owner can watch; the blocked register
+is honest about what waits on the client.</em></p>
+<h2>0. Conventions</h2>
+<p>Issue ids <code>BD-&lt;milestone&gt;-&lt;n&gt;</code>. A milestone ships to production behind a feature flag per
+instance (<code>platform_id</code>). "Measured" means a number in the build log, not a claim.</p>
+<h2>1. Global Definition of Done</h2>
+<ul>
+<li>The SSOT term is used in code, UI and docs; new terms are added to <a href="business-logic.html"><code>business-logic.md</code></a> first.</li>
+<li>No outbound path exists outside the outbox (ADR-4); a test proves a Server Action cannot send.</li>
+<li>Every message has a <code>messages</code> row, a <code>why</code>, and an opt-out or preference link.</li>
+<li>Cap and consent checks have tests for the race (enqueue and send).</li>
+<li>Accessibility: 44 px targets below 980, one <code>h1</code>, alt text, keyboard reachable.</li>
+<li>The gate is green: lint, unit, an end-to-end run of the flow the issue touches.</li>
+</ul>
+<h2>2. Milestones</h2>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>M</th>
+<th>Name</th>
+<th>Weeks</th>
+<th>Ships</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>M0</td>
+<td>Foundation</td>
+<td>1–2</td>
+<td>repo, SSO, MongoDB, connector for Your Field with sync, the operator console shell with the three views' navigation, feature flags, <strong>the policy record and gate</strong></td>
+</tr>
+<tr>
+<td>M1</td>
+<td>Provider sales and conversations</td>
+<td>3–5</td>
+<td>sequences, Resend out + inbound, threads, drafted replies (AI optional), pipeline, apply-to-manage through <code>claim-requests</code>, provider view (today, conversations, knowledge), the family's ask</td>
+</tr>
+<tr>
+<td>M2</td>
+<td>Social publishing</td>
+<td>6–8</td>
+<td>post drafts from the catalogue, approval queue, calendar, Meta adapter (IG + FB) publish, comments/DMs inbound, audit snapshots</td>
+</tr>
+<tr>
+<td>M3</td>
+<td>Families</td>
+<td>9–10</td>
+<td>preferences by signed link, consent capture, caps, Sunday digest, saved-provider alerts through platform push, Stop</td>
+</tr>
+<tr>
+<td>M4</td>
+<td>Intelligence and pages</td>
+<td>11–12</td>
+<td>overview tiles on real numbers, the intelligence recap screen, market radar note, generated pages written through the connector, operations dashboards</td>
+</tr>
+<tr>
+<td>M5</td>
+<td>Campaigns, retention and upgrades (phase 2)</td>
+<td>13–15</td>
+<td>provider campaigns from the card with audiences from the platform's saves, results screen, products and Stripe entitlements, the family inbox's reason line, the retention job and screen (D41)</td>
+</tr>
+<tr>
+<td>M6</td>
+<td>Second-instance proof</td>
+<td>17</td>
+<td>a second connector against the reference API's recorded fixtures, a second policy record and instance row, strings from a dictionary; proves ADR-2 without assuming a second client</td>
+</tr>
+</tbody>
+</table></div>
+<h2>2b. Sprints (two weeks each; what ships, what the owner sees at the review, what it needs)</h2>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>Sprint</th>
+<th>Weeks</th>
+<th>Issues</th>
+<th>Acceptance test at the review (run on the console, measured)</th>
+<th>Needs before it starts</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>S0 setup</td>
+<td>0</td>
+<td>—</td>
+<td>the accounts of research VI §14 exist; <code>env.ts</code> boots; <code>/api/health</code> is green; SSO signs the owner in as operator</td>
+<td>Vercel Pro, Atlas M0, Upstash, Resend domain DNS, Claude key, the SSO client; <strong>Meta App Review submitted</strong></td>
+</tr>
+<tr>
+<td>S1 foundation</td>
+<td>1–2</td>
+<td>BD-0-1 … BD-0-11</td>
+<td>253 providers cached by <code>sync</code>; the thirteen screens navigate with empty states; Simple and Advanced modes; the Policy screen shows the first client's record with <code>postal_address</code> marked missing and the features it blocks; a Server Action that tries to import a channel fails the build; the outbox drains a stub row in ≤ 60 s</td>
+<td>—</td>
+</tr>
+<tr>
+<td>S2 provider sales</td>
+<td>3–4</td>
+<td>BD-1-1, 1-2, 1-4, 1-6, 1-10, 1-11, 1-12, 1-14, 1-7</td>
+<td>with a test policy record: step 1 sent by Resend to a test provider in score order; the reply lands in the thread within a minute; stage moves <em>identified → contacted → replied</em> by events only; a template without <code>{postal_address}</code> cannot be approved; bounce ≥ 2 % pauses; "not my program" excludes the address</td>
+<td>a sending domain (P-11 DNS); a test policy record</td>
+</tr>
+<tr>
+<td>S3 conversations</td>
+<td>5–6</td>
+<td>BD-1-3, 1-5, 1-8, 1-9, 1-13</td>
+<td>an inbound e-mail, a platform message and a missed call each become an enquiry with a drafted answer in ≤ 1 min; AI on / off both marked; apply-to-manage writes a claim request when keyed, else an operator task; a family's ask to an unclaimed provider becomes sales step 2</td>
+<td>P-7 for the keyed branch (else the task branch is demonstrated)</td>
+</tr>
+<tr>
+<td>S4 social publishing</td>
+<td>7–8</td>
+<td>BD-2-1, 2-2, 2-3, 2-4, 2-6, 2-5, 2-9</td>
+<td>a draft from a catalogue event → approve → published to the test Page and Instagram account at its slot ± 5 min; the snapshot in Blob; a comment on the post arrives by webhook with a drafted reply; the weekly anchor on the calendar</td>
+<td><strong>Meta App Review approved</strong> (submitted S0); a test Page + Instagram account</td>
+</tr>
+<tr>
+<td>S5 the clip engine</td>
+<td>9–10</td>
+<td>BD-2-7, 2-10, 2-8, 2-11</td>
+<td>a 20-minute recording uploaded on the provider's Media screen → four captioned 9:16 clips with C2PA in the queue in ≤ 10 min (measured); a recording flagged as showing children is refused without the consent confirmation, by the app and by the worker; a draft with "only 3 spots left" is refused</td>
+<td>Fly.io app; Deepgram key; a C2PA certificate (self-signed for the pilot)</td>
+</tr>
+<tr>
+<td>S6 families</td>
+<td>11–12</td>
+<td>BD-3-1 … BD-3-6, 3-8, 3-9</td>
+<td>a family opens a signed link, turns picks on → Sunday's digest arrives; a new session at a saved provider → push within 1 h (keyed) or an operator task; the cap race test (2 sends, 1 slot → 1 sent, 1 refused); Stop cancels queued rows in one transaction; the SMS toggle cannot turn on without a consent row</td>
+<td>P-2 (digest clause) for a real send — the test instance runs with a test record</td>
+</tr>
+<tr>
+<td>S7 intelligence</td>
+<td>13–14</td>
+<td>BD-4-1 … BD-4-13</td>
+<td>every overview tile names its source; <code>metrics</code> rolls yesterday's events; a rate flips to "measured" at 100 observations (seeded); the economics screen reads <code>assumptions</code>; the propensity score changes the sequence order; the holdout experiment configured; a generated page publishes only at readiness ≥ 3 of 4; the five alerts fire in a drill; a department earns auto-approval after four clean weeks (clock-seeded) and loses it on an edit</td>
+<td>P-6 for real tiles (else labelled sample)</td>
+</tr>
+<tr>
+<td>S8 campaigns, retention and upgrades</td>
+<td>15–16</td>
+<td>BD-5-1 … BD-5-6, BD-1-15</td>
+<td>a managing provider sees a campaign draft with the audience count before approval; a family at the cap receives nothing; Stripe test-mode checkout → <code>entitlements</code> → <em>upgraded</em> → card flag (keyed) or task; the results screen from the message log; cancellation within 14 days refunds (R32)</td>
+<td>Stripe test keys; P-12 prices (sample until then)</td>
+</tr>
+<tr>
+<td>S9 second-instance proof</td>
+<td>17</td>
+<td>BD-6-1, 6-2</td>
+<td>a second instance row + policy record + connector against fixtures runs every job without code change; the gate blocks everything on the unfilled record</td>
+<td>—</td>
+</tr>
+</tbody>
+</table></div>
+<p>Two developers, nine sprints, seventeen weeks, matching the milestone table; a sprint that loses
+its external dependency (S4 without Meta's approval) swaps with the next one — S5 and S6 need
+nothing from Meta.</p>
+<h3>Sprint 0 checklist (the day before S1)</h3>
+<ol>
+<li>Repository created (<a href="architecture.html"><code>architecture.md</code></a> §3), <code>main</code> protected, preview deployments on.</li>
+<li>Vercel project with the environment of blueprint §9; <code>CRON_SECRET</code>; the thirteen crons in <code>vercel.json</code>.</li>
+<li>Atlas M0 cluster, the collections and indexes of technical design §2 + blueprint §5 (a <code>scripts/indexes.ts</code>).</li>
+<li>Upstash database in <code>us-east-1</code>; Blob store.</li>
+<li>Resend: domain verified (SPF, DKIM, DMARC), <code>reply.</code> MX, webhook endpoint with the signing secret.</li>
+<li>Meta developer app under the platform's Business Manager; test Page and Instagram professional account; App Review <strong>submitted</strong> with the screencast of the approval → publish flow.</li>
+<li>Claude API key with a spend limit; <code>DRAFTER=template</code> until the knowledge files are loaded.</li>
+<li>Sentry project; Better Stack monitor on <code>/api/health</code>.</li>
+<li>DoneIsBetter SSO client for the machine (owner).</li>
+<li>The first client's policy record entered on the Policy screen from <a href="responsible-data.html"><code>responsible-data.md</code></a> §6 — with <code>postal_address</code> empty until P-1.</li>
+</ol>
+<h2>3. Issues</h2>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>Id</th>
+<th>Issue</th>
+<th>Definition of Done</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>BD-0-1</td>
+<td>Repo, Next.js 15, Mantine + GDS tokens from <a href="architecture.html"><code>architecture.md</code></a></td>
+<td>tokens resolve; the design-system page renders from the same CSS</td>
+</tr>
+<tr>
+<td>BD-0-2</td>
+<td>DoneIsBetter SSO for operator and provider roles</td>
+<td>operator sees all; provider sees only its <code>provider_id</code> (test)</td>
+</tr>
+<tr>
+<td>BD-0-3</td>
+<td>MongoDB models per <a href="architecture.html"><code>architecture.md</code></a> §2 with <code>platform_id</code> and <code>version</code></td>
+<td>migrations; optimistic-concurrency test</td>
+</tr>
+<tr>
+<td>BD-0-4</td>
+<td><code>YourFieldConnector</code> + hourly <code>sync</code></td>
+<td>253 providers cached; a changed <code>updatedAt</code> produces a diff event (test with a fixture)</td>
+</tr>
+<tr>
+<td>BD-0-5</td>
+<td>Console shell: role switch, rail/bottom bar, deep links</td>
+<td>the prototype's 13 screens reachable, empty states</td>
+</tr>
+<tr>
+<td>BD-0-11</td>
+<td>Policy fields R30–R36 and the three gate rows; safeguarding state on the card; delivery audit by neighbourhood (R33)</td>
+<td>fields set or the features stay blocked; the audit report runs weekly</td>
+</tr>
+<tr>
+<td>BD-0-9</td>
+<td>Simple and Advanced modes; Home with recommendations; the one safe press (R29)</td>
+<td>Simple shows Home, Approvals, Providers, Policy, How to use; the press runs only <code>auto</code> recommendations and logs each as the operator's (test)</td>
+</tr>
+<tr>
+<td>BD-0-10</td>
+<td>What-is-this panels, How-to-use screen, Templates with "Use"</td>
+<td>every screen has a panel; a template copies into state and the operator lands on the edited item</td>
+</tr>
+<tr>
+<td>BD-0-7</td>
+<td>Policy record and gate (ADR-14)</td>
+<td>a feature whose policy fields are missing does not run (test per row of framework §3); every message carries its policy basis</td>
+</tr>
+<tr>
+<td>BD-0-8</td>
+<td>Policy screen as onboarding checklist</td>
+<td>the operator sees set / missing / placeholder per field and what each blocks</td>
+</tr>
+<tr>
+<td>BD-0-6</td>
+<td>Outbox + <code>send</code> worker + dead-letter</td>
+<td>a Server Action cannot send (test); retry with backoff; lag metric</td>
+</tr>
+<tr>
+<td>BD-1-1</td>
+<td>Sequence model and editor</td>
+<td>steps, merge fields, opt-out footer mandatory (validation)</td>
+</tr>
+<tr>
+<td>BD-1-2</td>
+<td><code>ResendAdapter</code> out + inbound webhook (signed)</td>
+<td>a reply lands in the right thread within 1 minute (measured)</td>
+</tr>
+<tr>
+<td>BD-1-3</td>
+<td>Drafted replies with the AI switch</td>
+<td>AI on: draft with <code>why</code>; AI off: template; both marked</td>
+</tr>
+<tr>
+<td>BD-1-4</td>
+<td>Pipeline stage machine</td>
+<td>only event-driven forward moves (test per row of §4); operator override logged</td>
+</tr>
+<tr>
+<td>BD-1-5</td>
+<td>Apply-to-manage → <code>claim-requests</code></td>
+<td>needs the platform key (blocked B1); stage <em>applied</em> on 2xx</td>
+</tr>
+<tr>
+<td>BD-1-6</td>
+<td>Provider view: invitation, today, knowledge</td>
+<td>a provider sees its thread, its drafts, edits its files</td>
+</tr>
+<tr>
+<td>BD-1-12</td>
+<td>Postal address merge field and template gate; opt-out register; bounce pause</td>
+<td>a template without <code>{postal_address}</code> cannot be approved (test); bounce ≥ 2 % pauses (test)</td>
+</tr>
+<tr>
+<td>BD-1-13</td>
+<td>A family's ask to an unclaimed provider → sales step 2; the family told</td>
+<td>stage <em>contacted</em> with <code>by: 'family ask'</code>; the family's thread shows the notice</td>
+</tr>
+<tr>
+<td>BD-1-14</td>
+<td>Stage history in the drawer; <code>contactKind</code> on the connector</td>
+<td>last three changes with who and why; EU <code>person</code> addresses skipped without consent</td>
+</tr>
+<tr>
+<td>BD-1-10</td>
+<td>Sending domain per instance with warm-up, cap, bounce guard</td>
+<td>the outbox refuses a send past the limits (test); the sales screen shows the state</td>
+</tr>
+<tr>
+<td>BD-1-11</td>
+<td>Three-touch sequence ordered by the propensity score</td>
+<td>step 2 sends only where a save exists; recipients in score order (test)</td>
+</tr>
+<tr>
+<td>BD-1-8</td>
+<td>Provider conversations: inbound (platform message, Resend inbound, Twilio missed call) → <code>enquiries</code> → drafted answer → approve / edit → same channel</td>
+<td>reply time logged; the family's thread updated (phase 3)</td>
+</tr>
+<tr>
+<td>BD-1-9</td>
+<td>Family "ask about a trial" from a saved provider</td>
+<td>creates an enquiry as a platform message; visible in the provider's inbox within a minute</td>
+</tr>
+<tr>
+<td>BD-1-15</td>
+<td>Retention job and screen (D41, R37): signals, one <code>retain</code> draft per signal from the advertiser's own numbers, renewal reminders under earned auto-approval</td>
+<td>a stale card, a renewal within 14 days and an unanswered enquiry each produce exactly one waiting draft (test); no draft contains a discount (test); kept / lost events roll into <code>metrics_daily.churn</code></td>
+</tr>
+<tr>
+<td>BD-1-7</td>
+<td>"Not my program" and unsubscribe</td>
+<td>the address is excluded from every future sequence (test)</td>
+</tr>
+<tr>
+<td>BD-2-1</td>
+<td><code>draft-social</code> job from catalogue events</td>
+<td>drafts only for providers with news; no duplicate per week</td>
+</tr>
+<tr>
+<td>BD-2-2</td>
+<td>Approval queue with edit diff</td>
+<td>edited copy sets <code>ai=false</code>; the diff is stored</td>
+</tr>
+<tr>
+<td>BD-2-3</td>
+<td>Calendar and slots</td>
+<td>a scheduled post publishes at its slot ± 5 min (measured)</td>
+</tr>
+<tr>
+<td>BD-2-4</td>
+<td><code>MetaAdapter</code> publish + inbound comments/DMs</td>
+<td>OAuth per page; a publish writes <code>messages</code> + a Blob snapshot</td>
+</tr>
+<tr>
+<td>BD-2-7</td>
+<td>Clip engine (<code>MediaAdapter.clips</code>) and the provider's Media screen</td>
+<td>a recording becomes captioned clips with the listing link in the queue, each <code>media.kind = real</code></td>
+</tr>
+<tr>
+<td>BD-2-10</td>
+<td>Media consent on the clip engine; captions; no child's name on a clip</td>
+<td>a recording flagged as showing children is refused without the consent confirmation (test); every clip has captions (R30, R34)</td>
+</tr>
+<tr>
+<td>BD-2-11</td>
+<td>Pattern guard and vulnerability pause</td>
+<td>banned patterns refused (tests per pattern); "not now" pauses all marketing for that person and opens a human task (R32, R36)</td>
+</tr>
+<tr>
+<td>BD-2-8</td>
+<td>Media labels and credentials</td>
+<td>every generated asset has a C2PA credential and the platform label at publish (test per channel); a person-detection check blocks generation (R15)</td>
+</tr>
+<tr>
+<td>BD-2-9</td>
+<td>Weekly anchor plan per neighbourhood × activity</td>
+<td>the calendar shows the anchor and its cuts; <code>rules/social.md</code> keywords enforced in the draft</td>
+</tr>
+<tr>
+<td>BD-2-6</td>
+<td>Drafted replies to comments and DMs with the listing link</td>
+<td>operator approves; reply sent through the adapter; comments-answered metric</td>
+</tr>
+<tr>
+<td>BD-2-5</td>
+<td>AI-content marking</td>
+<td>published AI content carries the mark where Art. 50 applies</td>
+</tr>
+<tr>
+<td>BD-3-1</td>
+<td>Signed preference links from the platform</td>
+<td>a family changes a channel without a password; link expiry</td>
+</tr>
+<tr>
+<td>BD-3-2</td>
+<td>Consent capture and log</td>
+<td>SMS toggle impossible without a consent row (test)</td>
+</tr>
+<tr>
+<td>BD-3-3</td>
+<td>Caps in Redis, double check</td>
+<td>a race of 2 sends against a cap of 1 delivers 1 (test)</td>
+</tr>
+<tr>
+<td>BD-3-4</td>
+<td>Sunday digest</td>
+<td>built from saved + nearby-with-session; sent 18:00 by preference; not counted toward the provider cap (R3)</td>
+</tr>
+<tr>
+<td>BD-3-5</td>
+<td>Saved-provider alerts through platform push</td>
+<td>new session at a saved provider → push within 1 hour (measured)</td>
+</tr>
+<tr>
+<td>BD-3-6</td>
+<td>Stop</td>
+<td>every channel off and queued drafts cancelled in one transaction</td>
+</tr>
+<tr>
+<td>BD-4-1</td>
+<td>Overview tiles on real numbers</td>
+<td>every tile has a source; "sample" disappears</td>
+</tr>
+<tr>
+<td>BD-4-2</td>
+<td>Market radar weekly note</td>
+<td>from catalogue stats; filed by the operator</td>
+</tr>
+<tr>
+<td>BD-4-3</td>
+<td>Generated pages through the connector</td>
+<td>only ≥ 3 providers; JSON-LD; sitemap entry on the platform</td>
+</tr>
+<tr>
+<td>BD-4-4</td>
+<td>Operations dashboards and alerts</td>
+<td>the five alerts in architecture §9 fire in a drill</td>
+</tr>
+<tr>
+<td>BD-4-9</td>
+<td>Propensity score job (ADR-13)</td>
+<td>nightly; the sequence and call-list jobs read it; an audit row per change</td>
+</tr>
+<tr>
+<td>BD-4-10</td>
+<td>Neighbourhood holdout experiment</td>
+<td>two comparable neighbourhoods; read-out replaces "families per post" with a measured rate</td>
+</tr>
+<tr>
+<td>BD-4-11</td>
+<td>Cohort LTV by channel; generated-page readiness</td>
+<td>assumption → measured at 100 observations; a page publishes only at readiness ≥ 3 of 4</td>
+</tr>
+<tr>
+<td>BD-3-9</td>
+<td>Cap semantics: provider-originated only; consent proof on the row; age band in provider-facing text</td>
+<td>digest and alerts do not count (test); the row shows when and where consent was given; no child's name reaches a provider (test)</td>
+</tr>
+<tr>
+<td>BD-4-12</td>
+<td>Operator hours, batch approval, earned auto-approval</td>
+<td>hours tile from events; one decision approves a week's clips; a department earns auto-approval after four clean weeks and loses it on an edit or a complaint (tests)</td>
+</tr>
+<tr>
+<td>BD-4-13</td>
+<td>Capture measured; conversations line in the model</td>
+<td>upgrades attributed to a delivered result within 30 days; the plan's MRR follows the conversations price</td>
+</tr>
+<tr>
+<td>BD-3-8</td>
+<td>Public neighbourhood newsletter</td>
+<td>joinable without an account; cross-recommendation between neighbourhoods; counts in the cap</td>
+</tr>
+<tr>
+<td>BD-4-6</td>
+<td>Event log and nightly metrics (<code>events</code>, <code>metrics_daily</code>, <code>assumptions</code>)</td>
+<td>every leaf of the metrics tree has an event; a rate flips from assumption to measured at 100 observations (test)</td>
+</tr>
+<tr>
+<td>BD-4-7</td>
+<td>Economics screen on real metrics</td>
+<td>the prototype's 23 inputs read from <code>assumptions</code>; measured ones are read-only and labelled</td>
+</tr>
+<tr>
+<td>BD-4-8</td>
+<td>Next-dollar ranking in the recap; R17–R19 as jobs</td>
+<td>cadence, content slots and the upgrade card follow the rules (tests per rule)</td>
+</tr>
+<tr>
+<td>BD-4-5</td>
+<td>Intelligence recap screen</td>
+<td>every tile names its source; "needs you" lists approvals, replied-not-applied, v1 integrations to connect</td>
+</tr>
+<tr>
+<td>BD-5-1</td>
+<td><code>draft-campaigns</code> job and the campaign model</td>
+<td>one draft per kind per card event; kinds per <a href="business-logic.html"><code>business-logic.md</code></a> §4</td>
+</tr>
+<tr>
+<td>BD-5-2</td>
+<td>Provider campaigns screen</td>
+<td>approve / edit / skip; edit drops the AI badge; audience shown before approval</td>
+</tr>
+<tr>
+<td>BD-5-3</td>
+<td>Audience resolution through the connector (<code>savesFor</code>, <code>familiesNear</code>)</td>
+<td>no uploaded lists possible (test); counts logged</td>
+</tr>
+<tr>
+<td>BD-5-4</td>
+<td><code>send-campaigns</code> with preference and cap</td>
+<td>a family at the cap receives nothing (test); the reason line on every message</td>
+</tr>
+<tr>
+<td>BD-5-5</td>
+<td>Products, Stripe Checkout, entitlements webhook</td>
+<td>first <code>active</code> → <em>upgraded</em> → card flag set through the connector</td>
+</tr>
+<tr>
+<td>BD-5-6</td>
+<td>Provider results screen</td>
+<td>what went out from the message log; plan ladder from entitlements</td>
+</tr>
+<tr>
+<td>BD-6-1</td>
+<td>A second <code>PlatformConnector</code> (the reference API's shape, incl. <code>ingest</code>) against recorded fixtures</td>
+<td>431 reference listings cached from fixtures; <code>publishPage</code> exercised against a fixture server; no live write</td>
+</tr>
+<tr>
+<td>BD-6-2</td>
+<td>Instance dictionary and legal footer per policy record</td>
+<td>every user-facing string from the dictionary; the footer (postal address, opt-out wording) comes from the instance's policy record</td>
+</tr>
+</tbody>
+</table></div>
+<h2>4. Blocked register</h2>
+<p>Every row below is an implementation prerequisite (<a href="first-customer-classscout.html"><code>first-customer-classscout.md</code></a>), provided by ClassScout after acceptance; none blocks the presentation or the planning.</p>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>#</th>
+<th>Blocked</th>
+<th>On</th>
+<th>Unblocks</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>B1</td>
+<td>Writes to the platform (claim requests, notifications, pages)</td>
+<td>prerequisite P-7: a key and the write contract</td>
+<td>BD-1-5, BD-3-5, BD-4-3</td>
+</tr>
+<tr>
+<td>B2</td>
+<td>Social publishing</td>
+<td>Meta app review for the platform's pages; prerequisite P-11</td>
+<td>BD-2-4</td>
+</tr>
+<tr>
+<td>B3</td>
+<td>SMS</td>
+<td>Twilio account, consent text approved by counsel; prerequisite P-11</td>
+<td>BD-3-2's SMS branch</td>
+</tr>
+<tr>
+<td>B4</td>
+<td>Real tiles</td>
+<td>prerequisite P-6: platform analytics</td>
+<td>BD-4-1</td>
+</tr>
+<tr>
+<td>B5</td>
+<td>Pilot provider</td>
+<td>prerequisite P-9: one provider's real numbers</td>
+<td>provider-view metrics</td>
+</tr>
+<tr>
+<td>B6</td>
+<td>Product prices</td>
+<td>prerequisites P-6 and P-12: the platform's real prices (assumed bundled base + provider-bought reach, D21)</td>
+<td>BD-5-5</td>
+</tr>
+<tr>
+<td>B7</td>
+<td>Audience data</td>
+<td>the platform's saves and family locations through keyed endpoints</td>
+<td>BD-5-3</td>
+</tr>
+<tr>
+<td>B9</td>
+<td>Family, sign-up-source and booking events</td>
+<td>the platform's analytics (prerequisite P-6)</td>
+<td>BD-4-6's family leaves; the avid-family value</td>
+</tr>
+<tr>
+<td>B8</td>
+<td>Stripe account</td>
+<td>the platform's merchant account and tax setup</td>
+<td>BD-5-5</td>
+</tr>
+</tbody>
+</table></div>
+<h2>5. Risks — with an owner and a trigger (phase E, D42)</h2>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>Risk</th>
+<th>Effect</th>
+<th>Owner</th>
+<th>Trigger (when it becomes an action)</th>
+<th>Mitigation</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Meta App Review takes weeks</td>
+<td>publishing (S4) slips</td>
+<td>delivery lead</td>
+<td>review not approved by the end of S2</td>
+<td>submitted in S0; swap S4 with S5/S6; publish to Facebook first if Instagram lags</td>
+</tr>
+<tr>
+<td>The site's public API changes without notice (no reference page)</td>
+<td>sync breaks</td>
+<td>delivery lead</td>
+<td>schema-drift test fails, or a sync returns &lt; 90 % of the previous count</td>
+<td>contract tests against fixtures; alert on drift; ask the site for a versioned endpoint</td>
+</tr>
+<tr>
+<td>A cap or consent bug</td>
+<td>TCPA exposure</td>
+<td>delivery lead; counsel on wording</td>
+<td>the zero-violation alert fires once</td>
+<td>ADR-3 double check; consent-before-SMS test; SMS stays off until the policy record allows it</td>
+</tr>
+<tr>
+<td>Advertisers read the invitation as spam</td>
+<td>pipeline stalls; domain reputation</td>
+<td>product owner</td>
+<td>bounce ≥ 2 % or complaints ≥ 0.1 % in a week</td>
+<td>the sending guard pauses (R23); the copy names the advertiser's own page and the free claim; "not my program" honoured</td>
+</tr>
+<tr>
+<td>AI drafts off-brand</td>
+<td>operator trust</td>
+<td>product owner</td>
+<td>more than half of a week's drafts edited</td>
+<td>knowledge files first; AI optional per department; edits feed the prompt</td>
+</tr>
+<tr>
+<td>A vendor changes price or limit (claims register V1–V16, dated 2026-09-20)</td>
+<td>cost or cadence</td>
+<td>product owner</td>
+<td>any vendor invoice &gt; 1.5× the register's figure, or a limit hit</td>
+<td>every vendor behind an interface; the register re-read at each contract</td>
+</tr>
+<tr>
+<td>The cron tick (800 s on Pro) or a days-long wait is outgrown</td>
+<td>a job cannot finish</td>
+<td>delivery lead</td>
+<td>a job's tick exceeds 600 s twice in a week</td>
+<td>ADR-18: batching first, then Vercel Workflows, then Inngest on the same outbox rows</td>
+</tr>
+<tr>
+<td>One operator is a bottleneck</td>
+<td>queue grows</td>
+<td>product owner with the first customer</td>
+<td>approvals older than 48 h exceed 20</td>
+<td>Simple mode's press; batch approval; earned auto-approval; the queue shows age</td>
+</tr>
+<tr>
+<td>Counsel's answers change a rule (<a href="responsible-data.html"><code>responsible-data.md</code></a> §6)</td>
+<td>a feature waits or changes</td>
+<td>counsel; product owner</td>
+<td>any answer to §6 differs from the product team's reading</td>
+<td>the gate blocks the feature until the record is updated; rules change in the SSOT first</td>
+</tr>
+<tr>
+<td>The first customer's data is thinner than the pull (reviews, prices, contacts)</td>
+<td>the content and citation levers underperform</td>
+<td>first-customer contact</td>
+<td>readiness &lt; 3 of 4 on more than half of generated pages</td>
+<td>pages publish only at readiness ≥ 3 of 4 (R6); card-quality asks in the onboarding file</td>
+</tr>
+</tbody>
+</table></div>
+<h2>5b. Owners, dates and governance (phase E, D42)</h2>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>Track</th>
+<th>Owner</th>
+<th>Dates (G = the go)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Product (definition, price, rules, the D-register)</td>
+<td>the owner (product lead)</td>
+<td>decisions logged as D-numbers the day they are made</td>
+</tr>
+<tr>
+<td>Delivery (the nine sprints, the acceptance tests, the gate)</td>
+<td>a named delivery lead among the two developers</td>
+<td>S0 at G; S1 G+1 w; S2 G+3 w; S3 G+5 w; S4 G+7 w (or swapped); S5 G+9 w; S6 G+11 w; S7 G+13 w; S8 G+15 w; S9 G+17 w</td>
+</tr>
+<tr>
+<td>First customer (the ClassScout instance)</td>
+<td>the customer's named contact</td>
+<td>onboarding inputs (<a href="first-customer-classscout.html"><code>first-customer-classscout.md</code></a>) by the sprint that needs each: §1 before S2's first real send, §2 before S3/S6's keyed features, §3 at G</td>
+</tr>
+<tr>
+<td>Legal (<a href="responsible-data.html"><code>responsible-data.md</code></a> §6)</td>
+<td>counsel</td>
+<td>answers before S2's first real send; the DPA and terms before the contract</td>
+</tr>
+<tr>
+<td>Claims and sources (<a href="evidence.html"><code>evidence.md</code></a>)</td>
+<td>product lead</td>
+<td>re-verified at every contract and every quarter</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Reviews.</strong> A sprint review every second Friday: the acceptance test of §2b run live on the
+console, the measured numbers written into the build log, the next sprint confirmed or swapped.
+A monthly owner review of the D-register, the risk table and the claims register.</p>
+<p><strong>Decision path.</strong> A product rule changes in the SSOT first, then in the code, then in the
+prototype's copy — never the other order. An instance setting changes in its policy record and
+onboarding file. A legal question goes on <a href="responsible-data.html"><code>responsible-data.md</code></a> §6 and blocks only the feature it concerns. A
+price or packaging decision is a D-number by the owner.</p>
+<p><strong>Change control.</strong> No issue is added to a sprint without removing one of equal size; a new
+integration or vendor is an ADR; a change that touches a rule R1–R37 carries its test.</p>
+<h2>6. Release scope</h2>
+<p><strong>Release 1 (M0–M3, sprints S1–S6, twelve weeks), re-cut by the audit (Q10) into two halves:</strong> <strong>1a, read-only against the platform</strong> — the sales sequence with the sending guard and postal address, the reply inbox, the provider view (today, conversations, media, knowledge), the content queue with labels, economics on assumptions, the family's preferences by signed link; <strong>1b, when the platform's key and events arrive</strong> — claim requests, campaign audiences from saves, notifications, card flags, sign-up sources, bookings. The presentation says which half is which.</p>
+<p><strong>Release 1 as first planned:</strong> Your Field NYC; provider sales end to end; Instagram and
+Facebook publishing with approval; family digest, alerts and preferences; caps and consent;
+the operator's approval queue as the one gate. <strong>Release 1.1 (M4, S7):</strong> real intelligence,
+the recap, generated pages, dashboards. <strong>Release 2 (M5, S8):</strong> provider campaigns, results,
+products and Stripe upgrades. <strong>Release 3 (M6, S9):</strong> the second-instance proof. Out of scope until a
+decision: TikTok and X, Google Business Profile, calendars.</p>
+<h2>7. The operating model — how the product is run for a customer</h2>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>Stage</th>
+<th>What happens</th>
+<th>Who</th>
+<th>Done when</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Onboarding (week 1)</strong></td>
+<td>the policy interview (the Policy screen filled together: identity and postal address, jurisdictions, audience model, channels and consent, defaults, cap, retention, disclosure, the site's privacy-policy clauses); the connector configured against the site's API and the channels connected; the knowledge workshop (voice, rules, offers as plain files, from the templates); the placements and the sending domain loaded; the first week run in Simple mode</td>
+<td>the product team with the site's operator</td>
+<td>the gate shows no blocked feature the pilot needs; the first Monday recap has been read together</td>
+</tr>
+<tr>
+<td><strong>Running</strong></td>
+<td>the operator's twenty minutes a day; the product team reads the health endpoint and the dead-letter tab daily, the sprint metrics weekly</td>
+<td>operator; product team</td>
+<td>—</td>
+</tr>
+<tr>
+<td><strong>Support</strong></td>
+<td>one channel (e-mail to the product team); response within one business day; a fix or a workaround named in the reply; anything touching a rule R1–R37 becomes a D-number before it ships</td>
+<td>product team</td>
+<td>—</td>
+</tr>
+<tr>
+<td><strong>Incidents</strong></td>
+<td>severity 1 (a send that should not have happened, data exposure): stop the outbox for the instance, notify the operator within the hour and per the DPA, runbook, post-mortem within five days; severity 2 (a channel down, a job failing): runbook, notice in the recap; severity 3: the next sprint</td>
+<td>product team</td>
+<td>the post-mortem's actions are issues in the plan</td>
+</tr>
+<tr>
+<td><strong>Change</strong></td>
+<td>a rule changes in the SSOT first, then the code, then the copy; an instance setting changes in its policy record; every change is a D-number or an issue</td>
+<td>owner; delivery lead</td>
+<td>the gate is clean</td>
+</tr>
+<tr>
+<td><strong>Offboarding</strong></td>
+<td>export of the owner's data (listings cache, state, messages, consents, events) within 30 days; deletion per the retention schedule; credentials and tokens revoked; the instance row closed</td>
+<td>product team</td>
+<td>the owner confirms receipt; deletion logged</td>
+</tr>
+</tbody>
+</table></div>
+<h2>8. Stakeholder sign-off — who accepts what, by which criterion</h2>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>Stakeholder</th>
+<th>Accepts</th>
+<th>Criterion</th>
+<th>Evidence</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>The owner</strong> (product lead)</td>
+<td>the product definition and the specification; the rules; the plan</td>
+<td>the definition is in the owner's words; every screen of the prototype has its section in the specification; every rule has its test in the plan</td>
+<td><a href="product-definition.html"><code>product-definition.md</code></a>, <a href="product-specification.html"><code>product-specification.md</code></a>, <a href="business-logic.html"><code>business-logic.md</code></a>, this plan</td>
+</tr>
+<tr>
+<td><strong>The first customer</strong> (ClassScout)</td>
+<td>the value the product computes for them; their instance's policy record; the onboarding inputs and dates</td>
+<td>the Economics screen runs on their listings; the record shows what each missing field blocks; every input has an owner and a sprint</td>
+<td><a href="economics.html"><code>economics.md</code></a> §3, the Policy and Economics screens, <a href="first-customer-classscout.html"><code>first-customer-classscout.md</code></a></td>
+</tr>
+<tr>
+<td><strong>The delivery lead</strong></td>
+<td>the architecture and blueprint; the sprints and acceptance tests; the operating model</td>
+<td>a developer can build from the blueprint; every sprint has an acceptance test the owner can watch; the runbooks exist</td>
+<td><a href="architecture.html"><code>architecture.md</code></a>, this plan §2b, §7</td>
+</tr>
+<tr>
+<td><strong>Counsel</strong></td>
+<td>the responsible-data record, the product's processor position, the ten questions</td>
+<td>every legal sentence carries the disclaimer; the questions are answered or scheduled</td>
+<td><a href="responsible-data.html"><code>responsible-data.md</code></a> §6 (counsel list)</td>
+</tr>
+<tr>
+<td><strong>Every stakeholder</strong></td>
+<td>the evidence</td>
+<td>every figure in the stakeholder documents has a row with its source opened</td>
+<td><a href="evidence.html"><code>evidence.md</code></a></td>
+</tr>
+</tbody>
+</table></div>
+<p>Acceptance is recorded as a D-number with the date and the stakeholder's name; an open point is
+an issue in §3 with an owner, never a footnote.</p>
+<footer>Source: <code>business-direct/docs/delivery-plan.md</code> · rendered by <code>docs/build.py</code>.</footer>
+</div>
+</body>
+</html>

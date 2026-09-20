@@ -1,9 +1,9 @@
-# business.direct — claims register
+# business.direct — evidence: the claims register and the research base
 
 *Every figure the product-facing documents rest on (the presentation, the executive summary,
 the value document, the product definition) and every vendor figure in research VI, with its
 source opened and read on 2026-09-20 (phase A of the transformation programme,
-`21-documentation-audit.md` §8). **Status**: **P** the primary source was opened and says it;
+`documentation-audit.md` §8). **Status**: **P** the primary source was opened and says it;
 **A** a secondary source says it and the primary was not reachable; **corrected** the source
 says something different and the documents were changed; **assumption** ours, marked so where
 used; **owner** stated by the owner. A figure that is not in this register does not belong in
@@ -31,7 +31,7 @@ the gate.*
 | K15 | 96 % of organisations say privacy investment returns more than it costs | [Cisco 2025 Data Privacy Benchmark (PDF)](https://www.cisco.com/c/dam/en_us/about/doing_business/trust-center/docs/cisco-privacy-benchmark-study-2025.pdf) | **A** | PDF not re-opened this round; cited from research IV |
 | K16 | Epic Games: $520 M (a $275 M COPPA penalty + $245 M refunds), Dec 2022 | [FTC press release](https://www.ftc.gov/news-events/news/press-releases/2022/12/fortnite-video-game-maker-epic-games-pay-more-half-billion-dollars-over-ftc-allegations) | **P** | YouTube $170 M and Disney $10 M cited from research IV (**A** this round) |
 | K17 | SMB SaaS monthly churn 3–7 %; healthy SMB activation 35–50 % | [ORM](https://orm-tech.com/blog/saas-churn-rate-benchmarks-by-segment), [PM Toolkit](https://pmtoolkit.ai/benchmarks/activation-rate-benchmarks) | **A** | benchmark aggregators; used as ranges, marked benchmark |
-| K18 | Funnel rates 40 % / 80 % / 25 %, avid 15 %, capture 5 %, 1.5 visitors per post, 5 000 visitors, share kept by a retention touch 30 % | — | **assumption** | marked on the Economics screen and in `22`; replaced by the site's data |
+| K18 | Funnel rates 40 % / 80 % / 25 %, avid 15 %, capture 5 %, 1.5 visitors per post, 5 000 visitors, share kept by a retention touch 30 % | — | **assumption** | marked on the Economics screen and in `economics.md`; replaced by the site's data |
 | K19 | The first customer has thousands of listings still to publish | the owner, 2026-09-20 | **owner** | |
 | K20 | 253 providers, 130 e-mail, 181 phone, 83 next sessions, 72 trial policies, 26 announcements, 0 reviews, 28 prices, 0 managing | `data/providers.json`, pulled 2026-09-19 | **P** (measured) | the demo's pull |
 
@@ -60,7 +60,19 @@ the gate.*
 
 - Presentation §2 and the executive summary: K2, K4, K5, K6, K8 wording replaced by the sources'
   wording; the 2007 date on K3; "agreed to buy" on K11.
-- `22-business-case.md` §2: K4/K5 removed; K1 and K3 stated with their sources.
+- `economics.md` §2: K4/K5 removed; K1 and K3 stated with their sources.
 - `01g-research-real-system.md`: V1, V2, V5, V8, V12, V14 corrected in place; every row's
   status column now says P or A honestly; V16 removed.
-- `11-architecture.md` ADR-12 and ADR-18, `17` T6: V16 and V2.
+- `architecture.md` ADR-12 and ADR-18, `logic-audit.md` T6: V16 and V2.
+
+## 4. The research base (kept as written; every figure the stakeholder documents use is in §1–§2 above)
+
+| Round | File | What it holds |
+|---|---|---|
+| I | `01-research.md` | reputation and claiming, speed to lead, reminders, digests, generated pages, how listing platforms monetise, AI adoption, the law in the US and the EU |
+| II | `01b-research-acquisition-content-sales.md` | acquiring customers for classified media (demand and supply side), content strategies, the AI creation services and their labelling rules, the sales processes |
+| III | `01c-research-data-driven-marketing.md` | the incumbents' cases (Yelp, Angi, Thumbtack), unit-economics practice, attribution and incrementality, next-best-action |
+| IV | `01e-research-responsible-data.md` | children's rights and responsible data: the law by market, the enforcement record, the frameworks, the business value |
+| V | `01f-research-beyond-children.md` | vulnerable people, protected characteristics, accessibility, sensitive categories, dark patterns — the rules R30–R36 |
+| VI | `01g-research-real-system.md` | every external service verified: auth, review, limits, prices (corrected per §2) |
+| VII | `market.md` | the product's market |

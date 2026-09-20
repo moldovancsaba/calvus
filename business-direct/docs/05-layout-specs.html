@@ -37,9 +37,8 @@ footer{margin-top:56px;padding-top:18px;border-top:1px solid var(--line);font-si
 </head>
 <body>
 <div class="wrap">
-<nav class="docnav" aria-label="Project documentation"><span class="docnav-brand">business.direct · docs</span><a href="index.html">Overview</a><a href="brief.html">Brief</a><a href="research.html">Research</a><a href="research-2.html">Research II</a><a href="research-3.html">Research III</a><a href="research-4.html">Research IV</a><a href="research-5.html">Research V</a><a href="research-6.html">Research VI</a><a href="research-7.html">Research VII</a><a href="audit.html">Audit</a><a href="sources.html">Sources</a><a href="design-system.html">Design system</a><a href="layouts.html">Layouts</a><a href="05-layout-specs.html" aria-current=page>Layout specs</a><a href="decisions.html">Decisions</a><a href="build-log.html">Build log</a><a href="gate.html">Gate</a><a href="client-asks.html">Register of asks</a><a href="implementation-prerequisites.html">Prerequisites</a><a href="business-logic.html">Business logic</a><a href="ssot.html">SSOT</a><a href="architecture.html">Architecture</a><a href="technical-design.html">Technical design</a><a href="implementation-plan.html">Plan</a><a href="system-blueprint.html">System blueprint</a><a href="documentation-audit.html">Documentation audit</a><a href="claims-register.html">Claims register</a><a href="legal.html">Legal position</a><a href="token-map.html">Token map</a><a href="executive.html">Executive summary</a><a href="business-case.html">Business case</a><a href="analytics.html">Analytics</a><a href="audit-swot.html">Audit · SWOT</a><a href="policy-framework.html">Policy framework</a></nav>
+<nav class="docnav" aria-label="Project documentation"><span class="docnav-brand">business.direct · docs</span><a href="index.html">Overview</a><a href="executive-summary.html">Executive summary</a><a href="product-definition.html">Product definition</a><a href="product-specification.html">Product specification</a><a href="market.html">Market</a><a href="economics.html">Economics</a><a href="business-logic.html">Business logic and SSOT</a><a href="architecture.html">Architecture and blueprint</a><a href="delivery-plan.html">Delivery plan</a><a href="responsible-data.html">Responsible data and legal</a><a href="first-customer-classscout.html">First customer</a><a href="evidence.html">Evidence</a><a href="research.html">Research I</a><a href="research-2.html">Research II</a><a href="research-3.html">Research III</a><a href="research-4.html">Research IV</a><a href="research-5.html">Research V</a><a href="research-6.html">Research VI</a><a href="design-system.html">Design system</a><a href="layouts.html">Layouts</a><a href="05-layout-specs.html" aria-current=page>Layout specs</a><a href="decisions.html">Decisions</a><a href="build-log.html">Build log</a><a href="gate.html">Gate</a><a href="register-of-asks.html">Register of asks</a><a href="logic-audit.html">Logic audit</a><a href="documentation-audit.html">Documentation audit</a></nav>
 <header><p class="eyebrow">Calvus · business.direct · project documentation</p><h1>business.direct — layout specifications (gate 2)</h1></header>
-<p class="notice" role="note"><b>This documentation set is being replaced (audit D40).</b> business.direct is a standalone product — the one-person sales and marketing team; ClassScout is its first customer. The <a href="presentation.html">presentation</a>, the <a href="executive.html">executive summary</a> and the <a href="business-case.html">business case</a> are written for the product; most other pages still read as the first instance's project until the <a href="documentation-audit.html">transformation programme</a> replaces them.</p>
 <p><em>Four frames composed only from the approved components (<code>assets/components.css</code>, D9) and
 the real providers (<code>data/providers.json</code>). Layout rules live in <code>docs/frames/frame.css</code>
 and nowhere else. Approved 2026-09-19 as gate 2 (D16); the prototype (<code>../index.html</code>) implements them — round 2 measured 768 and 1024 as specified.</em></p>
@@ -97,7 +96,7 @@ knowledge files. Bottom bar: Today · Waiting (2) · Team · More.</p>
 (the B2C flow's landing) — then this week's push and digest built from real providers,
 one provider text with the consent and cap stated, and the channel/frequency controls
 with a one-tap stop. Bottom bar: Find · Saved · Inbox · Account.</p>
-<h2>Assumptions the open asks force (<a href="client-asks.html"><code>08-client-asks.md</code></a>)</h2>
+<h2>Assumptions the open asks force (<code>08-client-asks.md</code>)</h2>
 <ul>
 <li>Provider persona Brooklyn Force Soccer; family persona Maya in Park Slope (D13).</li>
 <li>Integrations shown: Your Field API, Instagram/Facebook, TikTok/X, e-mail (Resend), push, SMS with consent state, Google Business Profile.</li>
@@ -111,7 +110,7 @@ sentence in the frames is sample except the provider data and the site's own phr
 <h2>Phase 2 and 3 screens (D22–D25, 2026-09-19)</h2>
 <p>No new layout. <em>Conversations</em>, <em>Campaigns</em> and <em>Results</em> (provider) and <em>Intelligence</em> (platform) reuse the
 frames' grids: approval cards in a single stack, tiles auto-fit / two-up, the two-column
-body for the recap at ≥ 1024. Measured at 390 and 1440 with the rest (<a href="gate.html"><code>07-gate.md</code></a>).</p>
+body for the recap at ≥ 1024. Measured at 390 and 1440 with the rest (<code>07-gate.md</code>).</p>
 <p>The mode switch (D33) is a second <code>.roles</code> segment in the top bar; on the phone the two
 segments wrap to two rows. <em>Home</em>, <em>Templates</em> and <em>How to use</em> reuse the approval stack,
 the card grid and the two-column body. No new layout.</p>

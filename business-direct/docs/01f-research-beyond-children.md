@@ -6,7 +6,7 @@ answer is yes — eleven of them, in three groups: **people** the law or good pr
 needing more care, **data categories** that may never drive marketing, and **practices**
 that are banned whoever the audience is. Each is anchored in a primary source where one
 exists (**P**), otherwise a law-firm or trade summary (**A**), and each ends with the rule
-it becomes in the framework (`18-responsible-data-policy-framework.md`, rules R30–R36) and
+it becomes in the framework (`responsible-data.md`, rules R30–R36) and
 what the prototype does about it. Two of the eleven are already live in our first client's
 own category and were gaps: real footage of children (§1.2) and the adults who work with
 them (§1.3).*

@@ -1,7 +1,7 @@
 # business.direct — build log
 
 Every round: what was built, from which decision, what was measured. The gate is
-`07-gate.md`; the standard is `PROTOTYPING.md` §5–6.
+`gate.md`; the standard is `PROTOTYPING.md` §5–6.
 
 ## Round 1 — 2026-09-19 — the prototype (D16–D18)
 
@@ -43,7 +43,7 @@ copy lives in the knowledge files); tablet 1024 is the phone layout with wider c
 **Built.** `docs/bemutato.html` (English, the product's tokens, standalone, four steps with
 phone previews and a desktop preview of the prototype, what is real, six asks, what comes
 next). `app.js`: `?view=platform|provider|family&screen=<id>` deep links so the previews
-and the docs open the right screen (`assets/app.js?v=3`). Docs `10`–`14` rendered by
+and the docs open the right screen (`assets/app.js?v=3`). Docs `business-logic.md`–`architecture.md` rendered by
 `build.py`; the two hand-written docs pages gained the package links.
 
 **Measured** (app browser pane, 2026-09-19): presentation at 1440 — five iframes load the
@@ -78,7 +78,7 @@ department reads from state, "Reach more families" with the platform's three pro
 department, market radar from the catalogue, needs-you); the drawer shows a managing
 provider's plan; integrations carry v1 / later (D21). Family inbox: "From providers" shows
 approved campaigns from saved providers with the reason line, by preference. New doc
-`09-business-logic.md`; SSOT, architecture (ADR-9, ADR-10), technical design, plan (M5,
+`business-logic.md`; SSOT, architecture (ADR-9, ADR-10), technical design, plan (M5,
 seven issues, B6–B8), token map, layout spec, brief and presentation updated.
 
 **Measured** (app browser pane, 2026-09-19): at 390 — intelligence, integrations, provider
@@ -282,3 +282,19 @@ browser, fixed before commit.
 **Measured** (390 × 844): overview tile 253, pipeline 253, every platform screen renders
 with one `h1`, `scrollWidth` 390, 0 errors on a fresh load. `python3 check.py` →
 `GATE: CLEAN`.
+
+## Round 11 — 2026-09-20 — the consolidation (D44)
+
+**What changed.** The product specification written; thirty-three documentation files merged and
+renamed into the final set of twelve (plus the design set, six research rounds and the history);
+eighteen redirect pages for the earlier names; the replacement notice removed; the renderer's page
+list and both hand-written navigations regenerated; the gate rewritten for the final set; the app's
+documentation links and comments updated (`app.js?v=23`, links only — no behaviour change).
+
+**Measured** (browser pane, fresh tab, cache-busted): `product-specification.html`,
+`business-logic.html`, `architecture.html` at 390 — scrollWidth 390, one `h1`, no overflowing
+code block, no notice; `delivery-plan.html` at 1440 — scrollWidth 1440, the operating model and
+the sign-off sections present; `ssot.html` → redirects to `business-logic.html`; the prototype in
+Simple mode at 390 — Home with 8 recommendations, scrollWidth 390, no console errors. Gate:
+`python3 check.py` exit 0, `GATE: CLEAN`, 48 files, 1 219 references in the project, 0 broken
+across the repo.

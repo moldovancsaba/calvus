@@ -2,7 +2,7 @@
 
 *Third research round, 2026-09-19, on the owner's ask: "the industry research for it, to have
 the best case studies and best practices as a source of our services" — *it* being the
-data-driven decision flow of D26 (`16-analytics-and-unit-economics.md`). Every figure links
+data-driven decision flow of D26 (`economics.md`). Every figure links
 to where it was read; **P** = primary (filing, the company's own release, the report itself),
 **A** = aggregator or trade article. §6 maps each finding to a business.direct service.*
 

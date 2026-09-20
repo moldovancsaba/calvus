@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>business.direct — the market: who the classified media owners are, what they run, what they buy, what nobody sells them — business.direct docs</title>
+<link rel="stylesheet" href="../assets/tokens.css">
+<style>/* business.direct — documentation pages on the product tokens (GDS roles, teal accent). */
+:root{--ground:var(--gds-bg-canvas,#f8fafc);--card:var(--gds-bg-surface,#fff);--ink:var(--gds-text-body,#111827);--text:#1f2937;--muted:var(--gds-text-meta,#64748b);--accent:var(--gds-brand-accent,#0f766e);--accent-deep:var(--gds-brand-accent-strong,#115e59);--line:var(--gds-border-card,#e2e8f0);--line-soft:#eef2f7;--note:var(--gds-brand-accent-tint,#e6f4f2)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--ground);color:var(--text);font-family:var(--gds-font,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif);font-size:15.5px;line-height:1.6;padding-block:0 64px;padding-inline:clamp(16px,4vw,40px)}
+.wrap{max-width:74ch;margin-inline:auto}
+.docnav{display:flex;flex-wrap:wrap;gap:4px 18px;align-items:center;padding:16px 0;border-bottom:1px solid var(--line);font-size:12px;letter-spacing:.06em;text-transform:uppercase}
+.docnav a{color:var(--muted);text-decoration:none;min-height:44px;min-width:44px;display:inline-flex;align-items:center;border-bottom:2px solid transparent}
+.docnav a:hover,.docnav a[aria-current]{color:var(--ink);border-color:var(--accent)}
+.docnav-brand{color:var(--accent-deep);font-weight:800;margin-right:6px}
+.docnav-hub{margin-left:auto}
+header{padding-block:40px 24px;border-bottom:1px solid var(--line);margin-bottom:28px}
+.eyebrow{font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--accent-deep);margin:0 0 12px;font-weight:800}
+h1,h2,h3{color:var(--ink);line-height:1.1;text-wrap:balance;margin:0;letter-spacing:-.02em}
+h1{font-size:clamp(30px,6vw,46px);font-weight:900}
+h2{font-size:clamp(23px,4vw,30px);font-weight:900;margin:48px 0 14px;padding-top:20px;border-top:1px solid var(--line)}
+h3{font-size:18px;margin:30px 0 8px;font-weight:800}
+p{margin:0 0 14px} strong{color:var(--ink);font-weight:800}
+ul,ol{padding-left:22px;margin:0 0 16px} li{margin:5px 0} li>ul{margin:6px 0 0}
+code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.86em;background:var(--note);padding:1px 5px;border-radius:4px;color:var(--ink);overflow-wrap:anywhere}
+.notice{margin:0 0 22px;padding:12px 16px;border-radius:10px;background:var(--gds-brand-accent-tint);border:1px solid var(--gds-border-card);font-size:13.5px;font-weight:600}
+pre{overflow-x:auto;padding:14px 16px;border:1px solid var(--line);border-radius:10px;background:var(--card);font-size:12px;line-height:1.35}
+pre code{background:none;padding:0;font-size:inherit}
+a{color:var(--accent-deep)} :focus-visible{outline:2px solid var(--accent-deep);outline-offset:2px}
+.tbl{overflow-x:auto;margin:14px 0 22px;border:1px solid var(--line);border-radius:10px;background:var(--card)}
+table{border-collapse:collapse;width:100%;font-size:13.5px;min-width:560px}
+th{text-align:left;font-weight:800;color:var(--ink);background:var(--note);padding:10px 12px;border-bottom:1px solid var(--line);font-size:11.5px;letter-spacing:.06em;text-transform:uppercase}
+td{padding:10px 12px;border-top:1px solid var(--line-soft);vertical-align:top;background:var(--card)} td:first-child{color:var(--ink)}
+footer{margin-top:56px;padding-top:18px;border-top:1px solid var(--line);font-size:12px;color:var(--muted)}
+</style>
+</head>
+<body>
+<div class="wrap">
+<nav class="docnav" aria-label="Project documentation"><span class="docnav-brand">business.direct · docs</span><a href="index.html">Overview</a><a href="executive-summary.html">Executive summary</a><a href="product-definition.html">Product definition</a><a href="product-specification.html">Product specification</a><a href="market.html" aria-current=page>Market</a><a href="economics.html">Economics</a><a href="business-logic.html">Business logic and SSOT</a><a href="architecture.html">Architecture and blueprint</a><a href="delivery-plan.html">Delivery plan</a><a href="responsible-data.html">Responsible data and legal</a><a href="first-customer-classscout.html">First customer</a><a href="evidence.html">Evidence</a><a href="research.html">Research I</a><a href="research-2.html">Research II</a><a href="research-3.html">Research III</a><a href="research-4.html">Research IV</a><a href="research-5.html">Research V</a><a href="research-6.html">Research VI</a><a href="design-system.html">Design system</a><a href="layouts.html">Layouts</a><a href="05-layout-specs.html">Layout specs</a><a href="decisions.html">Decisions</a><a href="build-log.html">Build log</a><a href="gate.html">Gate</a><a href="register-of-asks.html">Register of asks</a><a href="logic-audit.html">Logic audit</a><a href="documentation-audit.html">Documentation audit</a></nav>
+<header><p class="eyebrow">Calvus · business.direct · project documentation</p><h1>business.direct — the market: who the classified media owners are, what they run, what they buy, what nobody sells them</h1></header>
+<p><em>For the stakeholders. What this document holds: the product's own market — the segment, how it
+earns, the software owners run, the tools they buy for the pieces, the gap the product fills, the
+product's SWOT. Written as research round VII on 2026-09-20 (phase B of the audit's programme);
+the first customer's category evidence is in research I–III (<a href="evidence.html"><code>evidence.md</code></a>). Questions: how large is the classified-media segment and how
+does it earn; what software do owners run their sites on and what does it not do; what do they
+buy today for the pieces of sales and marketing, at what price; where is the gap business.direct
+fills; and the product's own SWOT. </em><em>P</em><em> primary source opened, </em><em>A</em><em> secondary; market-size
+figures are vendor research and conflict with each other — they are given as ranges and never
+used as a claim in the top layer. The first customer's category evidence stays in research I–III.</em></p>
+<h2>1. The segment — classified media owners</h2>
+<ul>
+<li><strong>Size and growth (A, conflicting).</strong> Vendor forecasts put the online classified ad platform
+  market between <strong>$33.9 B (2026, 6.2 % CAGR to 2034)</strong> and <strong>$43.8 B (2026, 13.4 % CAGR)</strong>;
+  vertical classifieds (real estate, automotive, jobs, services) ≈ 57 % of revenue;
+  advertisement-based models ≈ 62 % of revenue. <strong>A</strong> <a href="https://www.intelmarketresearch.com/online-classified-ad-platform-market-36029">Intel Market Research</a>,
+  <a href="https://www.technavio.com/report/online-classified-ad-platform-market-industry-analysis">Technavio</a>,
+  <a href="https://www.persistencemarketresearch.com/market-research/classified-platform-market.asp">Persistence</a>,
+  <a href="https://www.statista.com/outlook/dmo/digital-advertising/classifieds/worldwide">Statista outlook</a>.
+  The number that matters for the product is not the market's size but its <strong>shape</strong>: thousands
+  of vertical and local sites, most run by one to five people.</li>
+<li><strong>How they earn.</strong> Pay-per-listing and subscription fees, premium placement (featured, top of
+  category, badges), performance fees tied to leads, banner and sponsored content; the
+  directory-software vendors' own guidance shows the typical tiers — <strong>free · $29 · $79 a month</strong>
+  — and that "telemarketing has the highest conversion for selling premium listings; one yes in
+  ten calls is a good start", and that "showing businesses views, clicks and leads makes them
+  renew and upgrade". <strong>A</strong> <a href="https://www.edirectory.com/updates/how-directory-websites-make-money/">eDirectory: how directory websites make money</a>,
+  <a href="https://www.edirectory.com/newsletter/how-to-monetize-your-directory.php">eDirectory: how to monetize</a>,
+  <a href="https://directorist.com/blog/how-to-monetize-a-directory-website/">Directorist</a>,
+  <a href="https://wpgeodirectory.com/the-6-rules-to-monetize-a-directory-website/">GeoDirectory: six rules</a>.
+  A small niche directory earns <strong>$100–500 a month</strong>; an established one <strong>$5 000–50 000+</strong> from
+  premium listings, ads and lead fees. <strong>A</strong> <a href="https://www.edirectory.com/updates/how-directory-websites-make-money/">eDirectory</a></li>
+<li><strong>The three jobs, in the vendors' own words.</strong> Sell the listings (premium tiers, by phone and
+  e-mail), fill the site (SEO, content, social — every guide's second chapter), keep the
+  advertisers (analytics that show results at renewal). The vendors describe the jobs; they do
+  not do them.</li>
+</ul>
+<h2>2. What owners run their sites on — and what it does not do</h2>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>Software</th>
+<th>Price (read 2026-09-20)</th>
+<th>Does</th>
+<th>Does not</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Brilliant Directories</strong> (SaaS)</td>
+<td>from <strong>$95 / month</strong> <strong>A</strong> <a href="https://www.brilliantdirectories.com/online-directory-pricing">pricing</a>, <a href="https://www.capterra.com/p/133173/Brilliant-Directories/pricing/">Capterra</a></td>
+<td>listings, member plans, payments, claim, lead forms, e-mail broadcasts, SEO pages</td>
+<td>contact and work every listed business through a pipeline; publish to social from the listings; watch for churn</td>
+</tr>
+<tr>
+<td><strong>eDirectory</strong> (SaaS / licence)</td>
+<td><strong>$99 / month</strong> Professional, $199 Enterprise Cloud, $1 499 licence <strong>A</strong> <a href="https://www.capterra.com/p/149786/eDirectory/">Capterra</a></td>
+<td>listing levels, advertising management, payments, mobile app, API</td>
+<td>the same</td>
+</tr>
+<tr>
+<td><strong>Directorist / GeoDirectory</strong> (WordPress)</td>
+<td>$103–400 first year <strong>A</strong> <a href="https://directorist.com/blog/how-much-does-it-cost-to-build-a-directory/">Directorist</a>, <a href="https://wpgeodirectory.com/business-directory-software/">GeoDirectory</a></td>
+<td>listings, claim, pricing plans, featured</td>
+<td>the same</td>
+</tr>
+<tr>
+<td><strong>Custom stacks</strong> (Next.js / Rails marketplaces; Sharetribe, Mirakl, Origami for larger operators)</td>
+<td>varies <strong>A</strong> <a href="https://origami-marketplace.com/en-gb/saas-marketplace-solutions-comparison/">Origami comparison</a></td>
+<td>the site</td>
+<td>the team</td>
+</tr>
+</tbody>
+</table></div>
+<p>Every one of them is the <strong>site</strong>: inventory, plans, checkout. None is the <strong>team</strong> that sells the
+inventory, brings the visitors and keeps the advertisers. That is the product's position.</p>
+<h2>3. What owners buy today for the pieces — and what it costs</h2>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>Job</th>
+<th>What they buy</th>
+<th>Price (read 2026-09-20)</th>
+<th>Gap</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Content and publishing</td>
+<td>schedulers (Buffer, Later, Metricool, Hootsuite); clip cutters (OpusClip); design (Canva)</td>
+<td>$15–200 / month per tool <strong>A</strong> research II §4</td>
+<td>the owner still writes, cuts, schedules; nothing reads the listings</td>
+</tr>
+<tr>
+<td>Drafting</td>
+<td>Jasper, Copy.ai</td>
+<td>$39–69 / seat / month <strong>A</strong> <a href="https://www.velocity.li/blog/best-ai-marketing-tools-small-business-2026">Velocity</a></td>
+<td>copy, not a department</td>
+</tr>
+<tr>
+<td>"AI marketing agents"</td>
+<td>HubSpot Breeze (Marketing Hub Starter $20 / seat; Professional $890; agents priced per outcome: $0.50 per resolved conversation, $1.00 per recommended lead), Lindy ($49.99–199.99), Relevance AI, Gumloop, Salesforce Agentforce</td>
+<td>$29 to $800+ / month <strong>A</strong> <a href="https://www.default.com/post/hubspot-breeze-ai-review-and-pricing">Default on Breeze</a>, <a href="https://talktoyourcmo.com/blog/best-ai-marketing-agents-small-business/">Talk To Your CMO</a>, <a href="https://www.hireemma.ai/blog/ai-marketing-agent-for-startups-buying-guide">Hire Emma</a></td>
+<td>generic CRM agents; no notion of a listing, an advertiser or a visitor; no human gate as the operating rule; no policy gate</td>
+</tr>
+<tr>
+<td>Answering and reviews for a local business</td>
+<td>Podium ($249–399 + $99 for AI replies), Birdeye (≈ $299), Thryv ($75–200), Yelp Receptionist ($99)</td>
+<td>$75–700 / month <strong>A</strong> <a href="https://checkthat.ai/brands/podium/pricing">Podium pricing</a>, <a href="https://revioreputation.com/blog/birdeye-vs-podium-2026-honest-comparison/">Birdeye vs Podium</a>; <strong>P</strong> <a href="https://blog.yelp.com/news/yelp-host-yelp-receptionist-launch/">Yelp launch post</a></td>
+<td>sold to the <em>advertiser</em>, one business at a time — the media owner cannot buy it for its whole supply side</td>
+</tr>
+<tr>
+<td>Outbound sales</td>
+<td>cold-e-mail tools (Instantly, Apollo), "AI SDR" products</td>
+<td>$30–500+ / month <strong>A</strong> research II §5</td>
+<td>a sequence, not a pipeline tied to the listing, the claim and the placement</td>
+</tr>
+<tr>
+<td>Retention</td>
+<td>none — "analytics at renewal" is the vendors' advice, done by hand</td>
+<td>—</td>
+<td>nobody watches the signals</td>
+</tr>
+</tbody>
+</table></div>
+<p>Stacked, an owner pays <strong>$200–400 a month</strong> for the pieces and remains the person who runs them
+(research II §4; the anchors above). A managing advertiser on the site would pay another
+$99–400 for its own answering and review tools — which the product gives it inside the site.</p>
+<h2>4. The gap business.direct fills</h2>
+<p>Nobody sells the classified media owner <strong>the team</strong>: supply-side sales that works every listing
+through claim → placement, demand-side content generated from the listings and delivered to
+every medium, retention that watches the advertisers, and the owner's economics as a screen —
+operated as departments with a human gate and a policy gate, on the site's own data, with each
+managing advertiser getting its own team inside the site. The directory software vendors say
+what the owner should do; the agent platforms sell generic agents; the local-business platforms
+sell to the advertiser, not the owner. The product sits between them and is bought by the
+one who owns the inventory.</p>
+<h2>5. The product's SWOT (the first instance's pilot SWOT is <a href="logic-audit.html"><code>logic-audit.md</code></a> §3)</h2>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th></th>
+<th>Evidenced</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Strengths</strong></td>
+<td>S1 the buyer owns the inventory and the data — one contract covers every listing; S2 the human gate and the policy gate are the operating rule, not a feature (research IV, the enforcement record); S3 the economics screen is the argument — the product proves its own ROI to the owner from the first cohort; S4 the second site is a policy record and a connector (ADR-2); S5 a managing advertiser gets what Podium and Yelp sell it, inside the owner's site — the reason it claims, stays and upgrades</td>
+</tr>
+<tr>
+<td><strong>Weaknesses</strong></td>
+<td>W1 no customer beyond the first; the product's own funnel and CAC are unmeasured; W2 the product depends on each site's API and data quality (reviews, prices, contacts) it does not control (<a href="logic-audit.html"><code>logic-audit.md</code></a> A15, A16); W3 the operator is the bottleneck by design until departments earn auto-approval (<a href="logic-audit.html"><code>logic-audit.md</code></a> A10); W4 the vendor stack is behind interfaces but the clip engine and Meta publishing carry external review and rate limits (research VI)</td>
+</tr>
+<tr>
+<td><strong>Opportunities</strong></td>
+<td>O1 a fragmented segment of thousands of vertical and local sites run by one to five people, sold software that describes the jobs; O2 incumbents validate the willingness to pay for answering and lead management ($99–400 a month per business — K12, §3) — the owner-level product aggregates it; O3 AI answers and social search reward the structured, published source (K7–K9): the content job has a measurable payoff; O4 outcome-priced agents (Breeze) set an expectation the product can meet with measured events</td>
+</tr>
+<tr>
+<td><strong>Threats</strong></td>
+<td>T1 the directory-software vendors add "AI marketing" to the site product; T2 HubSpot / Salesforce agents grow a marketplace vocabulary; T3 platform rules and law move under the channels (labels, consent, children's data — research IV, V); T4 deliverability and channel review are single points of failure for two of the three jobs</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>What the SWOT says to do:</strong> measure the product's own funnel from the first customer (W1);
+make the policy gate and the economics screen the demo (S2, S3); the stack the owner replaces and
+the per-business tools the advertisers would otherwise buy (O2) are the comparison the owner will
+make; keep every channel behind an adapter and every vendor behind an interface (T4, W4).</p>
+<h2>6. What was not found</h2>
+<ul>
+<li>No primary data on advertiser churn or renewal rates for classified sites; the vendors' guides
+  say "retention is cheaper than acquisition" without numbers. The product measures it.</li>
+<li>No independent survey of classified media owners' spend on marketing and sales tools; the
+  $200–400 stack is a sum of list prices, not a measured basket.</li>
+<li>Market-size figures differ by 30 % between research vendors and are not used as claims.</li>
+</ul>
+<footer>Source: <code>business-direct/docs/market.md</code> · rendered by <code>docs/build.py</code>.</footer>
+</div>
+</body>
+</html>

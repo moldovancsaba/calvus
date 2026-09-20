@@ -37,14 +37,13 @@ footer{margin-top:56px;padding-top:18px;border-top:1px solid var(--line);font-si
 </head>
 <body>
 <div class="wrap">
-<nav class="docnav" aria-label="Project documentation"><span class="docnav-brand">business.direct · docs</span><a href="index.html">Overview</a><a href="brief.html">Brief</a><a href="research.html" aria-current=page>Research</a><a href="research-2.html">Research II</a><a href="research-3.html">Research III</a><a href="research-4.html">Research IV</a><a href="research-5.html">Research V</a><a href="research-6.html">Research VI</a><a href="research-7.html">Research VII</a><a href="audit.html">Audit</a><a href="sources.html">Sources</a><a href="design-system.html">Design system</a><a href="layouts.html">Layouts</a><a href="05-layout-specs.html">Layout specs</a><a href="decisions.html">Decisions</a><a href="build-log.html">Build log</a><a href="gate.html">Gate</a><a href="client-asks.html">Register of asks</a><a href="implementation-prerequisites.html">Prerequisites</a><a href="business-logic.html">Business logic</a><a href="ssot.html">SSOT</a><a href="architecture.html">Architecture</a><a href="technical-design.html">Technical design</a><a href="implementation-plan.html">Plan</a><a href="system-blueprint.html">System blueprint</a><a href="documentation-audit.html">Documentation audit</a><a href="claims-register.html">Claims register</a><a href="legal.html">Legal position</a><a href="token-map.html">Token map</a><a href="executive.html">Executive summary</a><a href="business-case.html">Business case</a><a href="analytics.html">Analytics</a><a href="audit-swot.html">Audit · SWOT</a><a href="policy-framework.html">Policy framework</a></nav>
+<nav class="docnav" aria-label="Project documentation"><span class="docnav-brand">business.direct · docs</span><a href="index.html">Overview</a><a href="executive-summary.html">Executive summary</a><a href="product-definition.html">Product definition</a><a href="product-specification.html">Product specification</a><a href="market.html">Market</a><a href="economics.html">Economics</a><a href="business-logic.html">Business logic and SSOT</a><a href="architecture.html">Architecture and blueprint</a><a href="delivery-plan.html">Delivery plan</a><a href="responsible-data.html">Responsible data and legal</a><a href="first-customer-classscout.html">First customer</a><a href="evidence.html">Evidence</a><a href="research.html" aria-current=page>Research I</a><a href="research-2.html">Research II</a><a href="research-3.html">Research III</a><a href="research-4.html">Research IV</a><a href="research-5.html">Research V</a><a href="research-6.html">Research VI</a><a href="design-system.html">Design system</a><a href="layouts.html">Layouts</a><a href="05-layout-specs.html">Layout specs</a><a href="decisions.html">Decisions</a><a href="build-log.html">Build log</a><a href="gate.html">Gate</a><a href="register-of-asks.html">Register of asks</a><a href="logic-audit.html">Logic audit</a><a href="documentation-audit.html">Documentation audit</a></nav>
 <header><p class="eyebrow">Calvus · business.direct · project documentation</p><h1>business.direct — research</h1></header>
-<p class="notice" role="note"><b>This documentation set is being replaced (audit D40).</b> business.direct is a standalone product — the one-person sales and marketing team; ClassScout is its first customer. The <a href="presentation.html">presentation</a>, the <a href="executive.html">executive summary</a> and the <a href="business-case.html">business case</a> are written for the product; most other pages still read as the first instance's project until the <a href="documentation-audit.html">transformation programme</a> replaces them.</p>
 <p><em>What the evidence says about the four automations and the one-person machine, with the
 source behind every figure. Searched 2026-09-19. Primary sources (studies, platform
 disclosures, regulators) are marked </em><em>P</em><em>; industry aggregators are marked </em><em>A</em><em> and carry
 less weight — several repeat each other and cite older data. Nothing here was measured by
-us except the two reference platforms (<a href="audit.html"><code>02-audit.md</code></a>).</em></p>
+us except the two reference platforms (<a href="first-customer-classscout.html"><code>first-customer-classscout.md</code></a>).</em></p>
 <h2>1. The listed business that does nothing loses to the one that does</h2>
 <ul>
 <li>A one-star increase in a Yelp rating raises an independent restaurant's revenue by
@@ -123,7 +122,7 @@ and the week's sessions, with click rate as the metric — not opens.</p>
   organic visits a month</strong>; the pattern is one page tree: country › region › city ›
   neighbourhood › category. <strong>A</strong> <a href="https://gracker.ai/case-studies/zillow">GrackerAI on Zillow</a>, <a href="https://practicalprogrammatic.com/examples/tripadvisor">Practical Programmatic on Tripadvisor</a>, <a href="https://backlinko.com/programmatic-seo">Backlinko</a></li>
 <li>The sport platform already has the tree: 8 categories × 20 counties × 147 localities × 7
-  age bands, with counts per facet from <code>/api/public/browse-facets</code> (<a href="audit.html"><code>02-audit.md</code></a>).</li>
+  age bands, with counts per facet from <code>/api/public/browse-facets</code> (<a href="first-customer-classscout.html"><code>first-customer-classscout.md</code></a>).</li>
 </ul>
 <p><strong>Reading.</strong> The generated-pages automation is the platform's own SEO department; every
 page must have real listings behind it (no empty category × place pages — a thin-content
@@ -187,7 +186,7 @@ the digests; SMS only where a parent opted in for a specific provider.</p>
 <code>info@</code>-type addresses and not to a named owner without consent; the digital-skills gap
 is the reason the machine must run with "nobody logs in" on any instance.</p>
 <h2>9. What the two reference videos add (owner-supplied, 2026-09-19)</h2>
-<p>Not evidence — a target shape, read from 42 extracted frames (<a href="audit.html"><code>02-audit.md</code></a> §3):
+<p>Not evidence — a target shape, read from 42 extracted frames (<a href="first-customer-classscout.html"><code>first-customer-classscout.md</code></a> §3):
 departments as the unit of automation; a brand knowledge layer as plain files
 (<code>voice-guide.md</code>, <code>positioning.md</code>, <code>offer.md</code>, <code>leads.md</code>); an orchestrator; an access
 control plane; reviews and reputation answered first; a market radar that turns a

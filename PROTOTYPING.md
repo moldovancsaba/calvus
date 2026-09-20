@@ -8,6 +8,8 @@ rule below has a project behind it; the project is named where it matters. This 
 standard for the next prototype. `README.md` says why this repo exists; `CLAUDE.md` says
 how to act in it; this file says what to build and how to know it is good.*
 
+> **For a product, not a client's site**, read `PRODUCT.md` first: the premise, the twelve documents, the acceptance criteria. This standard still governs the prototype inside a product.
+
 ## 1. What a prototype is here, and is not
 
 A prototype is **the cheapest thing a client can click through and argue with**, built to

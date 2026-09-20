@@ -8,39 +8,32 @@ collide with the .html files GitHub Pages' Jekyll pass generates from the same m
 import re, pathlib, markdown
 
 HERE = pathlib.Path(__file__).parent
-PAGES = [  # (source, output, nav label)
-    ("README.md", "index.html", "Overview"),
-    ("00-brief.md", "brief.html", "Brief"),
-    ("01-research.md", "research.html", "Research"),
-    ("01b-research-acquisition-content-sales.md", "research-2.html", "Research II"),
-    ("01c-research-data-driven-marketing.md", "research-3.html", "Research III"),
-    ("01e-research-responsible-data.md", "research-4.html", "Research IV"),
-    ("01f-research-beyond-children.md", "research-5.html", "Research V"),
-    ("01g-research-real-system.md", "research-6.html", "Research VI"),
-    ("01h-research-product-market.md", "research-7.html", "Research VII"),
-    ("02-audit.md", "audit.html", "Audit"),
-    ("03-sources.md", "sources.html", "Sources"),
-    ("05-layout-specs.md", "05-layout-specs.html", "Layout specs"),
-    ("04-decisions.md", "decisions.html", "Decisions"),
-    ("06-build-log.md", "build-log.html", "Build log"),
-    ("07-gate.md", "gate.html", "Gate"),
-    ("08-client-asks.md", "client-asks.html", "Register of asks"),
-    ("19-implementation-prerequisites.md", "implementation-prerequisites.html", "Prerequisites"),
-    ("09-business-logic.md", "business-logic.html", "Business logic"),
-    ("10-ssot.md", "ssot.html", "SSOT"),
-    ("11-architecture.md", "architecture.html", "Architecture"),
-    ("12-technical-design.md", "technical-design.html", "Technical design"),
-    ("13-implementation-plan.md", "implementation-plan.html", "Plan"),
-    ("20-system-blueprint.md", "system-blueprint.html", "System blueprint"),
-    ("21-documentation-audit.md", "documentation-audit.html", "Documentation audit"),
-    ("23-claims-register.md", "claims-register.html", "Claims register"),
-    ("24-legal-and-data-processing.md", "legal.html", "Legal position"),
-    ("14-token-map.md", "token-map.html", "Token map"),
-    ("15-executive-summary.md", "executive.html", "Executive summary"),
-    ("22-business-case.md", "business-case.html", "Business case"),
-    ("16-analytics-and-unit-economics.md", "analytics.html", "Analytics"),
-    ("17-business-logic-audit-and-swot.md", "audit-swot.html", "Audit · SWOT"),
-    ("18-responsible-data-policy-framework.md", "policy-framework.html", "Policy framework"),
+PAGES = [  # (source, output, nav label) — the final set (D44)
+    ('README.md', 'index.html', 'Overview'),
+    ('executive-summary.md', 'executive-summary.html', 'Executive summary'),
+    ('product-definition.md', 'product-definition.html', 'Product definition'),
+    ('product-specification.md', 'product-specification.html', 'Product specification'),
+    ('market.md', 'market.html', 'Market'),
+    ('economics.md', 'economics.html', 'Economics'),
+    ('business-logic.md', 'business-logic.html', 'Business logic and SSOT'),
+    ('architecture.md', 'architecture.html', 'Architecture and blueprint'),
+    ('delivery-plan.md', 'delivery-plan.html', 'Delivery plan'),
+    ('responsible-data.md', 'responsible-data.html', 'Responsible data and legal'),
+    ('first-customer-classscout.md', 'first-customer-classscout.html', 'First customer'),
+    ('evidence.md', 'evidence.html', 'Evidence'),
+    ('01-research.md', 'research.html', 'Research I'),
+    ('01b-research-acquisition-content-sales.md', 'research-2.html', 'Research II'),
+    ('01c-research-data-driven-marketing.md', 'research-3.html', 'Research III'),
+    ('01e-research-responsible-data.md', 'research-4.html', 'Research IV'),
+    ('01f-research-beyond-children.md', 'research-5.html', 'Research V'),
+    ('01g-research-real-system.md', 'research-6.html', 'Research VI'),
+    ('05-layout-specs.md', '05-layout-specs.html', 'Layout specs'),
+    ('decisions.md', 'decisions.html', 'Decisions'),
+    ('build-log.md', 'build-log.html', 'Build log'),
+    ('gate.md', 'gate.html', 'Gate'),
+    ('register-of-asks.md', 'register-of-asks.html', 'Register of asks'),
+    ('logic-audit.md', 'logic-audit.html', 'Logic audit'),
+    ('documentation-audit.md', 'documentation-audit.html', 'Documentation audit'),
 ]
 CSS = (HERE / "docs.css").read_text(encoding="utf-8")
 
@@ -68,7 +61,6 @@ def render(src, out, label):
 <div class="wrap">
 <nav class="docnav" aria-label="Project documentation"><span class="docnav-brand">business.direct · docs</span>{nav}</nav>
 <header><p class="eyebrow">Calvus · business.direct · project documentation</p><h1>{title}</h1></header>
-<p class="notice" role="note"><b>This documentation set is being replaced (audit D40).</b> business.direct is a standalone product — the one-person sales and marketing team; ClassScout is its first customer. The <a href="presentation.html">presentation</a>, the <a href="executive.html">executive summary</a> and the <a href="business-case.html">business case</a> are written for the product; most other pages still read as the first instance's project until the <a href="documentation-audit.html">transformation programme</a> replaces them.</p>
 {body}
 <footer>Source: <code>business-direct/docs/{src}</code> · rendered by <code>docs/build.py</code>.</footer>
 </div>
