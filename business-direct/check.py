@@ -87,7 +87,7 @@ for r in sorted(rules - cited, key=lambda x: int(x[1:])): findings.append(f"unma
 
 # 11. the top layer never frames the product as one customer's project; 12. the claims register has no unverified row (D42)
 TOP = ["docs/presentation.html", "docs/executive-summary.md", "docs/economics.md", "docs/product-definition.md", "docs/product-specification.md", "docs/market.md"]
-BANNED = ["the client accepts", "proposal for classscout", "after the client accepts", "one-man army for anybody", "the one-person sales and marketing team for anybody", "developer rate", "developer-week", "pricing hypothesis", "the product's run cost", "sign the legal"]
+BANNED = ["253 ", "253-", "0 of 253", "130 e-mail", "181 phone", "0 managing", "0 manage their page", "28 prices", "0 reviews", "the client accepts", "proposal for classscout", "after the client accepts", "one-man army for anybody", "the one-person sales and marketing team for anybody", "developer rate", "developer-week", "pricing hypothesis", "the product's run cost", "sign the legal"]
 for rel in TOP:
     low = (HERE / rel).read_text(encoding="utf-8").lower()
     for ph in BANNED:
@@ -103,7 +103,7 @@ for n in sorted(FINAL - have): findings.append(f"set  docs/{n} is missing from t
 js = (HERE / "assets/app.js").read_text(encoding="utf-8")
 for m in _re.finditer(r'<button class="btn[^"]*\binert\b[^"]*"([^>]*)>', js):
     if 'aria-disabled="true"' not in m.group(1) or "title=" not in m.group(1): findings.append("inert control  assets/app.js: an .inert button without aria-disabled and a title")
-if 'class="proto-note">Clickable prototype — real providers from getyourfield.com' not in (HERE / "index.html").read_text(encoding="utf-8"):
+if 'class="proto-note">Clickable prototype — a demo sample of the first customer' not in (HERE / "index.html").read_text(encoding="utf-8"):
     findings.append("banner  index.html does not carry the current prototype banner")
 
 if shutil.which("node"):

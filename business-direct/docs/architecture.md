@@ -43,8 +43,8 @@ and the message log.
 | Platform stack | Next.js + Mantine on Vercel, v0.201.105 | the machine can be a module of the same deployment or a sibling app on the same stack (ADR-1) |
 | Public API | 12 endpoints found in the site's bundles; no reference page; read-only without a key; the catalogue changes daily (one provider and 51 record updates between two pulls on the same day) | connector first, own copy of the catalogue second (ADR-2) |
 | Home | 118 KB HTML, 24 scripts, TTFB 0.53 s | no performance debt to inherit |
-| Providers | 253; 130 with e-mail, 181 with phone, 83 with a next session, 72 with a trial policy | the sales flow's reach and the digest's input are known numbers |
-| Claims | 0 of 253 managing their page | the pipeline starts with everyone at *identified* |
+| The demo sample | 253 listings pulled from the public API on 2026-09-19 — the prototype's fixture, not the customer's catalogue, which is far larger — with contact channels, sessions and trial policies on the cards | the connector's fixture set; the sales flow's reach on a real instance is read from the site's own data at sync |
+| Claim state on the sample | none of the sampled listings managed its page at the pull | the pipeline starts every listing at *identified* |
 | Reference instance | same stack, 431 listings, documented API incl. `POST /api/ingest` | the connector interface must fit two instances (ADR-2) |
 
 ## 3. Quality attributes
@@ -1354,7 +1354,7 @@ stateless; a job that fails is retried once by the app, then surfaces as a task.
 |---|---|---|
 | Static | no import of `channels/*` outside `outbox` and the webhook routes | ESLint `no-restricted-imports` (fails the build) |
 | Unit | `policy.gate` per feature × missing field (framework §3, ten rows); `patternGuard` per banned pattern; `pipeline.setStage` illegal moves; `score`; `econ.*` against the prototype's numbers (the 24 inputs → LTV : CAC 0.7 at defaults); `findMoments` drops utterances with a name | Vitest |
-| Contract | `YourFieldConnector` against recorded fixtures from `first-customer-classscout.md` (253 providers; a changed `updatedAt` → one diff event); schema-drift test fails when a field disappears | Vitest + fixtures |
+| Contract | `YourFieldConnector` against recorded fixtures from `first-customer-classscout.md` (the demo sample; a changed `updatedAt` → one diff event); schema-drift test fails when a field disappears | Vitest + fixtures |
 | Integration | webhook routes with recorded payloads (Resend received/bounced, Meta comment + verification GET, Twilio STOP, Stripe `checkout.session.completed`) → the right row and no duplicate on replay; `families.stop` cancels queued rows in one transaction; the cap race (two sends, one slot → one sent, one refused) | Vitest against a MongoDB Memory Server + Upstash test db |
 | End-to-end | the operator's routine on the console: approve a post → it appears `scheduled` → `publish` run with a stub adapter → `messages` row + snapshot; a provider approves a campaign → audience count shown before approval; a family opens the signed link and turns picks off → the next digest run skips them; Simple mode's press runs only `auto` recommendations | Playwright, against `next start` with `DRAFTER=template` and stub adapters |
 | Load | 5 000 outbox rows drained within an hour at 100/minute; `send` tick < 60 s | a script, measured in the build log |

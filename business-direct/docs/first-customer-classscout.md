@@ -3,8 +3,10 @@
 *Everything specific to the first customer's instance in one place: their site measured, what in
 the prototype is real and what is sample, the onboarding inputs by the feature each unblocks, the
 pilot's SWOT and the closed register of asks. ClassScout is the example that makes the persona
-concrete and the first buyer; the product is defined in `product-definition.md`. Assembled
-2026-09-20 (D44).*
+concrete and the first buyer; the product is defined in `product-definition.md`. **The counts in
+Part A and Part B describe the demo sample pulled from the site's public API on 2026-09-19 — the
+prototype's data — and say nothing about the size or state of the customer's business, whose
+catalogue is far larger; they appear in no stakeholder document (D45).** Assembled 2026-09-20 (D44).*
 
 ## Part A — the site measured (audit of the starting point)
 

@@ -42,12 +42,11 @@ footer{margin-top:56px;padding-top:18px;border-top:1px solid var(--line);font-si
 <p><em>For a classified media owner. What this page answers: what business.direct computes for you,
 on your numbers, every night — what a listing sells for and earns, what an advertiser costs to
 win and is worth, what a visitor costs to bring in and is worth, what churn costs and retention
-keeps, all costs and incomes, and where the next dollar goes — and what it read on the first
-customer's listings. Every input is marked </em><em>measured</em><em> (from the site's own data), </em><em>benchmark</em><em>
+keeps, all costs and incomes, and where the next dollar goes. Every input is marked </em><em>measured</em><em> (from the site's own data), </em><em>benchmark</em><em>
 (sourced) or </em><em>assumption</em><em> (a placeholder on the screen until your data replaces it). The
 formulas are the ones the product's Economics screen computes; Part B below is the department's
-specification (the model, the events, the decision rules). Written 2026-09-20 (D41). ClassScout (Your Field NYC) is
-the worked example.</em></p>
+specification (the model, the events, the decision rules). No customer's numbers appear here: §3 is
+an illustration on placeholders; the owner's numbers live on the owner's screen. Written 2026-09-20 (D41, D45).</em></p>
 <h2>1. What the product computes for the owner</h2>
 <div class="tbl"><table>
 <thead>
@@ -160,68 +159,18 @@ the worked example.</em></p>
 </tr>
 </tbody>
 </table></div>
-<h2>3. The worked example — what the product read on the first customer's listings (2026-09-19 pull)</h2>
-<p>Your Field NYC, 253 providers pulled (the demo's data; the customer's catalogue is far larger):
-130 reachable by e-mail, 73 by phone only, 50 by website only; 0 managing; sample prices $49 /
-$29 / $149 per season.</p>
-<div class="tbl"><table>
-<thead>
-<tr>
-<th>The screen says</th>
-<th>Value</th>
-<th>Reading</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>CAC · managing advertiser</td>
-<td>≈ $300</td>
-<td>one quarter of outbound (three touches, the call list, the operator's minutes, $150 tooling) wins ≈ 2 managing advertisers</td>
-</tr>
-<tr>
-<td>CAC · paying advertiser</td>
-<td>≈ $1 200</td>
-<td>≈ 0.6 paying per quarter at the assumed rates</td>
-</tr>
-<tr>
-<td>LTV · paying advertiser</td>
-<td>$784</td>
-<td>$49 × 80 % margin ÷ 5 % churn</td>
-</tr>
-<tr>
-<td><strong>LTV : CAC</strong></td>
-<td><strong>0.7</strong> — below the 3 : 1 line</td>
-<td>outbound alone, on this pull at sample prices, does not pay for a $49 placement; payback 31 months</td>
-</tr>
-<tr>
-<td>Cost per new visitor from content</td>
-<td>≈ $4</td>
-<td>$120 content stack ÷ (5 posts × 1.5 new visitors per post)</td>
-</tr>
-<tr>
-<td>Value of an engaged visitor</td>
-<td>≈ $42 a year to the site; ≈ $813 to the advertisers it reaches</td>
-<td>2 enquiries × 40 % conversion × $1 016 (Project Play: family spend per child per sport); 5 % capture</td>
-</tr>
-<tr>
-<td>Advertisers at risk (sample cohort)</td>
-<td>4 of 7 managing</td>
-<td>LTV at risk ≈ $3 100; expected kept at 30 % ≈ $940</td>
-</tr>
-<tr>
-<td>Next dollar</td>
-<td>retention touches, then one more e-mail touch</td>
-<td>keeping an advertiser costs a touch; replacing one costs the CAC above</td>
-</tr>
-</tbody>
-</table></div>
-<p><strong>What turns it — three inputs on the same screen.</strong> (a) <strong>Scale</strong>: at 1 000 listings the
-tooling is spread and CAC falls under $400 (LTV : CAC ≈ 2, payback ≈ 10 months). (b) <strong>Price for
-the category</strong>: a placement mix at $89 with annual plans (3 % churn) makes LTV $2 373 (≈ 2 at
-253 listings, ≈ 6 at 1 000). (c) <strong>Count the demand side</strong>: the same outbound also produces
-managing advertisers who answer enquiries and visitors who come back — at 5 000 visitors and
-15 % engaged, ≈ $610 k a year of advertiser revenue flows through the site's introductions, the
-number the placements are priced against. The owner chooses which; the product shows each.</p>
+<h2>3. An illustration on placeholder inputs (not any customer's numbers)</h2>
+<p>To show what the screen does, run it on placeholders: a site with a few hundred reachable
+listings, placements at $49 a month, 5 % monthly churn, the benchmark reply rate and the assumed
+funnel rates above, a $150 tooling line and $120 of content stack. On those placeholders the screen
+reports a CAC per paying advertiser near $1 200 against an LTV of $784 — <strong>an LTV : CAC below 1</strong>,
+with a payback beyond two years — and says so plainly; it then shows the three inputs that turn
+it: <strong>scale</strong> (four times the listings spreads the fixed tooling and cuts CAC under $400), <strong>price
+and term</strong> (a placement mix near $90 with annual plans triples LTV), and <strong>counting the demand
+side</strong> (the same outbound also produces answered enquiries and returning visitors, whose value the
+screen computes separately). None of this is a statement about any customer: the owner's
+Economics screen runs on the owner's listings, prices and events, and every figure carries its
+status — measured, benchmark or placeholder — until the site's data replaces it.</p>
 <h2>4. Sensitivity (what moves the owner's answer most)</h2>
 <div class="tbl"><table>
 <thead>
@@ -239,7 +188,7 @@ number the placements are priced against. The owner chooses which; the product s
 <td>2.75 %</td>
 <td>5.5 %</td>
 <td>10.7 %</td>
-<td>LTV : CAC 0.35 → 0.7 → 1.3 at 253 listings; the largest lever the product controls (propensity order, the visitor's enquiry as a touch, the call list)</td>
+<td>LTV : CAC roughly halves or doubles with it; the largest lever the product controls (propensity order, the visitor's enquiry as a touch, the call list)</td>
 </tr>
 <tr>
 <td>Applied → managing → paying</td>
@@ -264,17 +213,17 @@ number the placements are priced against. The owner chooses which; the product s
 </tr>
 <tr>
 <td>Listings</td>
-<td>253</td>
-<td>253</td>
-<td>1 000</td>
-<td>CAC $1 200 → &lt; $400; fixed tooling spread</td>
+<td>×1</td>
+<td>×1</td>
+<td>×4</td>
+<td>CAC falls by about two thirds as the fixed tooling is spread</td>
 </tr>
 <tr>
 <td>Share kept by a retention touch</td>
 <td>15 %</td>
 <td>30 %</td>
 <td>45 %</td>
-<td>expected kept ≈ $470 → $940 → $1 400 on the sample cohort</td>
+<td>the expected kept value scales linearly with it</td>
 </tr>
 </tbody>
 </table></div>
@@ -352,7 +301,7 @@ from its own events, every week:</p>
 <thead>
 <tr>
 <th>Stage</th>
-<th>Count today (real)</th>
+<th>Count</th>
 <th>Rate to next</th>
 <th>Source of the rate</th>
 </tr>
@@ -360,25 +309,25 @@ from its own events, every week:</p>
 <tbody>
 <tr>
 <td>Identified</td>
-<td>253</td>
+<td>from the instance's listings</td>
 <td>—</td>
-<td>catalogue</td>
+<td>the site</td>
 </tr>
 <tr>
 <td>Reachable by e-mail</td>
-<td>130</td>
+<td>from the listings</td>
 <td>reply <strong>5.5 %</strong> (top-quartile benchmark; 3.43 % average, 10.7 % top decile)</td>
 <td><a href="https://instantly.ai/cold-email-benchmark-report-2026">Instantly 2026 benchmark</a> (research II §5.1)</td>
 </tr>
 <tr>
 <td>Phone only</td>
-<td>73</td>
+<td>from the listings</td>
 <td>a call converts ~3× an e-mail; half are reached</td>
 <td>assumption; multi-channel +40 % (research II §5.1)</td>
 </tr>
 <tr>
 <td>Website only</td>
-<td>50</td>
+<td>from the listings</td>
 <td>not in the model until a form step exists</td>
 <td>—</td>
 </tr>
@@ -419,12 +368,12 @@ A <strong>conversations line</strong> input (default 0 = bundled per D21; Yelp R
 same thing at $99) adds revenue per <em>managing</em> provider to the plan's MRR (Q12) — the
 owner's pricing decision is one number on the screen.</p>
 <h4>2.4 What the defaults say (the first data-driven finding)</h4>
-<p>With the defaults, one quarter of outbound to the current catalogue yields about 2 managing
-and 0.6 upgraded providers for ~$720 — <strong>CAC (upgraded) ≈ $1,200 against an LTV of $784:
-LTV : CAC 0.7, payback 31 months.</strong> Raising the reply rate to the top decile (10.7 %) only
-reaches 1.3 : 1. The model is telling the truth about the business: <em>outbound e-mail to a
-253-provider catalogue cannot pay for itself on $49 upgrades.</em> It pays in one of three
-ways, and the plan should say which:</p>
+<p>On placeholder inputs (a few hundred reachable listings, $49 placements, 5 % churn, the
+benchmark reply rate), one quarter of outbound yields about 2 managing and 0.6 paying advertisers
+for ~$720 — <strong>CAC (paying) ≈ $1,200 against an LTV of $784: LTV : CAC below 1, payback beyond two
+years.</strong> Raising the reply rate to the top decile (10.7 %) only reaches 1.3 : 1. That is the model
+reporting an unfavourable lever honestly — on placeholders, not on any customer's numbers. On a
+real instance it pays in one of three ways, and the screen shows which:</p>
 <ul>
 <li><strong>the base machine is the platform's growth engine, not a profit centre</strong> (D21: bundled;
   its return is families and managed pages, valued below), or</li>
@@ -600,7 +549,7 @@ purchase (P8) — both recorded, neither double-counted in revenue.</p>
 </tbody>
 </table></div>
 <h3>8. What is real, what is assumed (2026-09-19)</h3>
-<p>Real: 253 · 130 · 73 · 50 (catalogue — e-mail · phone only · neither; the screen computes them from the file); this session's stage counts. Benchmarks: reply rates
+<p>Real on a connected instance: the listing counts by contact channel (the screen computes them from the site's data) and the stage counts. Benchmarks: reply rates
 (Instantly), activation range and churn range (research II), $1,016 per child per sport
 (Project Play). Assumptions: every conversion rate after reply, ARPA, margin, cost per
 touch and call, operator minutes, tooling, family count, avid share, trials, enrolment,

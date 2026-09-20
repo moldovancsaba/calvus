@@ -36,8 +36,8 @@ New York, families on one side, activity providers on the other, a catalogue gat
 pipeline with thousands of listings still to publish, one founder as the department. ClassScout
 is the **example** every document uses to make the persona concrete and the **first buyer** of
 the product. In the product's terms its visitors are "families" and its advertisers are
-"providers" — the product shows each site's own words. The prototype runs on 253 of its
-providers pulled from its public API: the demo's data, not the size of the customer's business.
+"providers" — the product shows each site's own words. The prototype runs on a demo sample of its public listings — demo data, never a statement about
+the size or state of the customer's business.
 *Most én sportolok!* (sport.doneisbetter.com) is a second directory pulled through the same
 connector shape to prove the second instance.
 
@@ -53,11 +53,10 @@ is 21× more likely to qualify in the first five minutes); the material that exi
 dates, news, footage) is never published; a paying advertiser leaves for reasons visible weeks
 earlier; the numbers are a feeling (research I, II). The tools on sale each do one job.
 
-The first customer shows the shape: measured on its public API (2026-09-19) for the demo, of
-253 providers pulled, 0 manage their page, 130 have an e-mail and 181 a phone, 83 next
-sessions and 72 trial policies sit unpublished, 0 reviews and 28 prices are on the cards —
-the demo's data; the customer's catalogue is far larger. The owner's own case, as the product
-computes it, is `economics.md`.
+The first customer shows the shape: a marketplace whose prospects are the listed providers
+and whose audience is families, with thousands of listings to publish and one founder as the
+department. What the product computes for an owner, and how, is `economics.md`; the owner's
+own numbers appear on the Economics screen once the site is connected.
 
 **Where the shape came from.** The two videos the owner shared show the target: **the one-person sales and
 marketing team** — an orchestrator over departments (research and intelligence, content,
@@ -94,15 +93,14 @@ phone/SMS) are part of the first build.
 
 ## What is real
 
-The data: **253 real providers** from Your Field's public API (`data/fetch-yourfield.py`,
-never edited by hand, D4/D11): name, category, borough, neighbourhood, address, 246 with
-coordinates, every one with a website, 181 phones, 130 e-mails, 28 stated prices with
-evidence, 74 with sessions, 83 with a next occurrence, 72 with a trial policy, 26 with an
-announcement, 10 with booking enabled, claim state, verified fields. The site copy
-(hero, how it works, trust pillars, newsletter, "List your program") is the platform's
-own. Everything that is not on the platform — a provider's brand voice, a campaign's
-results, the parent persona and her saved items — is **sample** and is declared as sample
-in the page. No provider or family is contacted by the prototype.
+The prototype's data is a **demo sample of the first customer's public listings**, pulled by
+`data/fetch-yourfield.py` and never edited by hand: on each listing the name, category, area,
+address, contact, sessions, trial policy, announcement, claim state and verified fields are the
+site's own, and the site copy is the site's own. The sample's size and coverage are described in
+the first-customer file (`first-customer-classscout.md`), not here, because they describe the demo,
+not the customer's business. Everything that is not on the site — an advertiser's brand voice, a
+campaign's results, the visitor persona and her saved items, the managing cohort — is **sample**
+and is declared as sample on the page. No advertiser or visitor is contacted by the prototype.
 
 ## What is inert
 

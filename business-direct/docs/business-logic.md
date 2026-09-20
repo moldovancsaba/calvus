@@ -357,7 +357,7 @@ is the reference implementation of the enumerations and state machines below.*
 | `department` (platform) | `social` · `sales` · `retention` · `picks` · `pages` · `radar` | `S.ai` keys; the Retention screen |
 | `department` (provider) | `conversations` · `reminders` · `campaigns` · `page` | provider today |
 | `integrationState` | `ok` (connected) · `off` (not connected) | `S.integrations` |
-| `claimStatus` (platform's) | `unclaimed` · unset (238 of 253); the platform's own enumeration has more values we have not seen | `providers.json` |
+| `claimStatus` (platform's) | `unclaimed` · unset (most of the demo sample); the platform's own enumeration has more values we have not seen | `providers.json` |
 | `activityType` | 20 values as the platform's `browse-facets` lists them (Martial Arts, Dance, Swimming, Soccer, …) | `platform.json` |
 | `borough` | `Manhattan` · `Brooklyn` (today) | facets |
 
@@ -365,7 +365,7 @@ is the reference implementation of the enumerations and state machines below.*
 
 | Entity | Fields (prototype) | Notes |
 |---|---|---|
-| **Provider** | `id`, `name`, `category`, `borough`, `neighborhood`, `address`, `lat`, `lng`, `activityTypes[]`, `primaryActivityType`, `ageRanges[]`, `ageMinMonths`, `ageMaxMonths`, `shortDescription`, `longDescription`, `price{amount,currency,unit,evidence}`, `website`, `phone`, `email`, `image`, `dayTimeTags[]`, `venueModel`, `sessions[{id,title,registration}]`, `nextOccurrence`, `announcement{title,description,badge}`, `bookingEnabled`, `trial{available,free,text}`, `rating`, `reviewCount`, `badges[]`, `claimStatus`, `verifiedFields[]`, `updatedAt`, `publishedAt`, `sourceCount` | the platform owns it; business.direct reads it (`fetch-yourfield.py`). One of 253 has no neighbourhood; the borough stands in |
+| **Provider** | `id`, `name`, `category`, `borough`, `neighborhood`, `address`, `lat`, `lng`, `activityTypes[]`, `primaryActivityType`, `ageRanges[]`, `ageMinMonths`, `ageMaxMonths`, `shortDescription`, `longDescription`, `price{amount,currency,unit,evidence}`, `website`, `phone`, `email`, `image`, `dayTimeTags[]`, `venueModel`, `sessions[{id,title,registration}]`, `nextOccurrence`, `announcement{title,description,badge}`, `bookingEnabled`, `trial{available,free,text}`, `rating`, `reviewCount`, `badges[]`, `claimStatus`, `verifiedFields[]`, `updatedAt`, `publishedAt`, `sourceCount` | the platform owns it; business.direct reads it (`fetch-yourfield.py`). One listing in the demo sample has no neighbourhood; the borough stands in |
 | **ProviderState** (ours) | `providerId`, `stage`, `stageChangedAt`, `stageChangedBy` (`sequence` / `reply` / `operator` / `provider`), `thread[]` | in memory today (`S.stage`, `S.threads`) |
 | **Draft** | `id`, `kind` (`post` / `sequence` / `reply` / `digest`), `providerId?`, `channels[]`, `copy`, `media{kind: real / generated, src}` (posts, D28), `state`, `ai` (bool: AI-drafted), `editing?`, `scheduledFor?`, `why?` | `S.posts`, `S.sequences`, `S.replies` |
 | **Sequence** | `id`, `name`, `to[providerId]`, `steps[]`, `subject`, `body` (merge fields `{name}`, `{first name}`, `{neighborhood}`, `{activity}`, `{link}`), `state`, `why` | `S.sequences` |
@@ -410,7 +410,7 @@ is the reference implementation of the enumerations and state machines below.*
 
 ### 5. Decision register
 
-`decisions.md` holds D1–D44. The ones the engineering documents rest on: D2 (three
+`decisions.md` holds D1–D45. The ones the engineering documents rest on: D2 (three
 views), D5 (DiscountDirect sibling), D6 (departments, knowledge layer, human-in-the-loop,
 optional AI, dashboard, integrations), D11 (Your Field first), D14 (two flows), D15
 (post card and pipeline strip), D17 (one page, in-memory state), D18 (sample generated
@@ -463,7 +463,7 @@ baseline since D37; the owner flips any with a decision.
 
 | Metric | Definition | View |
 |---|---|---|
-| Providers managing | providers in `managing` or `upgraded` / all providers | platform overview (real: 0 / 253 today) |
+| Providers managing | providers in `managing` or `upgraded` / all providers | platform overview (the demo sample: none managing at the pull) |
 | Contactable | providers with e-mail / with phone | overview (130 / 180) |
 | Families from social | sign-ups whose first session had a social referrer | overview (sample until a channel is connected) |
 | Posts scheduled | approved posts this week / drafted | overview, calendar |
@@ -489,7 +489,7 @@ baseline since D37; the owner flips any with a decision.
 | `01-research.md` | sourced evidence, legal by market |
 | `first-customer-classscout.md` | the platform measured, the catalogue's coverage, the videos, DiscountDirect's contribution |
 | `first-customer-classscout.md` | real vs sample |
-| `decisions.md` | D1–D44 |
+| `decisions.md` | D1–D45 |
 | `05-layout-specs.md`, `design-system.html`, `layouts.html` | gates 1 and 2 |
 | `build-log.md`, `gate.md` | rounds and the measured pass |
 | `register-of-asks.md` | the register of asks, with states |

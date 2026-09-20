@@ -26,7 +26,7 @@ process log.
 | `product-definition.md` | the product in the owner's words: the three jobs, the departments, the vocabulary, the persona, ClassScout as example and first buyer, the problem, what is built, what is real |
 | `product-specification.md` | how it works and how the customer uses it, screen by screen and role by role; what runs alone, what needs a person; onboarding; what it never does; the benefits, measured |
 | `market.md` | the classified-media segment, what owners run and buy, the gap, the product's SWOT |
-| `economics.md` | the Economics department: what the product computes for the owner, the funnel and rates, the first customer's worked example, sensitivity; Part B the model, the events, the decision rules |
+| `economics.md` | the Economics department: what the product computes for the owner, the funnel and rates, an illustration on placeholders, sensitivity; Part B the model, the events, the decision rules |
 | `business-logic.md` | the rules R1–R37 end to end; Part B the SSOT: the product layer, glossary, enumerations, entities, settings, the rules register, metrics |
 | `architecture.md` | context, quality attributes, containers, the ADRs; Part B the technical design; Part C the system blueprint with pseudo code; the token map as appendix |
 | `delivery-plan.md` | milestones, the nine sprints with acceptance tests, the sprint-0 checklist, issues with a Definition of Done, the blocked register, risks with owners and triggers, governance, the operating model, the stakeholder sign-off sheet |

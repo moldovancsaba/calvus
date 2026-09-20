@@ -96,14 +96,14 @@ and the message log.</p>
 <td>no performance debt to inherit</td>
 </tr>
 <tr>
-<td>Providers</td>
-<td>253; 130 with e-mail, 181 with phone, 83 with a next session, 72 with a trial policy</td>
-<td>the sales flow's reach and the digest's input are known numbers</td>
+<td>The demo sample</td>
+<td>253 listings pulled from the public API on 2026-09-19 — the prototype's fixture, not the customer's catalogue, which is far larger — with contact channels, sessions and trial policies on the cards</td>
+<td>the connector's fixture set; the sales flow's reach on a real instance is read from the site's own data at sync</td>
 </tr>
 <tr>
-<td>Claims</td>
-<td>0 of 253 managing their page</td>
-<td>the pipeline starts with everyone at <em>identified</em></td>
+<td>Claim state on the sample</td>
+<td>none of the sampled listings managed its page at the pull</td>
+<td>the pipeline starts every listing at <em>identified</em></td>
 </tr>
 <tr>
 <td>Reference instance</td>
@@ -1962,7 +1962,7 @@ stateless; a job that fails is retried once by the app, then surfaces as a task.
 </tr>
 <tr>
 <td>Contract</td>
-<td><code>YourFieldConnector</code> against recorded fixtures from <a href="first-customer-classscout.html"><code>first-customer-classscout.md</code></a> (253 providers; a changed <code>updatedAt</code> → one diff event); schema-drift test fails when a field disappears</td>
+<td><code>YourFieldConnector</code> against recorded fixtures from <a href="first-customer-classscout.html"><code>first-customer-classscout.md</code></a> (the demo sample; a changed <code>updatedAt</code> → one diff event); schema-drift test fails when a field disappears</td>
 <td>Vitest + fixtures</td>
 </tr>
 <tr>

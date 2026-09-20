@@ -937,7 +937,7 @@ is the reference implementation of the enumerations and state machines below.</e
 </tr>
 <tr>
 <td><code>claimStatus</code> (platform's)</td>
-<td><code>unclaimed</code> · unset (238 of 253); the platform's own enumeration has more values we have not seen</td>
+<td><code>unclaimed</code> · unset (most of the demo sample); the platform's own enumeration has more values we have not seen</td>
 <td><code>providers.json</code></td>
 </tr>
 <tr>
@@ -965,7 +965,7 @@ is the reference implementation of the enumerations and state machines below.</e
 <tr>
 <td><strong>Provider</strong></td>
 <td><code>id</code>, <code>name</code>, <code>category</code>, <code>borough</code>, <code>neighborhood</code>, <code>address</code>, <code>lat</code>, <code>lng</code>, <code>activityTypes[]</code>, <code>primaryActivityType</code>, <code>ageRanges[]</code>, <code>ageMinMonths</code>, <code>ageMaxMonths</code>, <code>shortDescription</code>, <code>longDescription</code>, <code>price{amount,currency,unit,evidence}</code>, <code>website</code>, <code>phone</code>, <code>email</code>, <code>image</code>, <code>dayTimeTags[]</code>, <code>venueModel</code>, <code>sessions[{id,title,registration}]</code>, <code>nextOccurrence</code>, <code>announcement{title,description,badge}</code>, <code>bookingEnabled</code>, <code>trial{available,free,text}</code>, <code>rating</code>, <code>reviewCount</code>, <code>badges[]</code>, <code>claimStatus</code>, <code>verifiedFields[]</code>, <code>updatedAt</code>, <code>publishedAt</code>, <code>sourceCount</code></td>
-<td>the platform owns it; business.direct reads it (<code>fetch-yourfield.py</code>). One of 253 has no neighbourhood; the borough stands in</td>
+<td>the platform owns it; business.direct reads it (<code>fetch-yourfield.py</code>). One listing in the demo sample has no neighbourhood; the borough stands in</td>
 </tr>
 <tr>
 <td><strong>ProviderState</strong> (ours)</td>
@@ -1162,7 +1162,7 @@ is the reference implementation of the enumerations and state machines below.</e
 </tbody>
 </table></div>
 <h3>5. Decision register</h3>
-<p><a href="decisions.html"><code>decisions.md</code></a> holds D1–D44. The ones the engineering documents rest on: D2 (three
+<p><a href="decisions.html"><code>decisions.md</code></a> holds D1–D45. The ones the engineering documents rest on: D2 (three
 views), D5 (DiscountDirect sibling), D6 (departments, knowledge layer, human-in-the-loop,
 optional AI, dashboard, integrations), D11 (Your Field first), D14 (two flows), D15
 (post card and pipeline strip), D17 (one page, in-memory state), D18 (sample generated
@@ -1378,7 +1378,7 @@ baseline since D37; the owner flips any with a decision.</p>
 <tr>
 <td>Providers managing</td>
 <td>providers in <code>managing</code> or <code>upgraded</code> / all providers</td>
-<td>platform overview (real: 0 / 253 today)</td>
+<td>platform overview (the demo sample: none managing at the pull)</td>
 </tr>
 <tr>
 <td>Contactable</td>
@@ -1489,7 +1489,7 @@ baseline since D37; the owner flips any with a decision.</p>
 </tr>
 <tr>
 <td><a href="decisions.html"><code>decisions.md</code></a></td>
-<td>D1–D44</td>
+<td>D1–D45</td>
 </tr>
 <tr>
 <td><a href="05-layout-specs.html"><code>05-layout-specs.md</code></a>, <code>design-system.html</code>, <code>layouts.html</code></td>
