@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Bízd ránk a zöldet — sources and assets — Bízd ránk a zöldet docs</title><style>:root{--bg:#f6f8f4;--surface:#fff;--text:#1d2a22;--muted:#5d6b62;--line:#dfe6dc;--accent:#0f7f74;--accent-2:#3a8f3f}
+*{box-sizing:border-box}body{margin:0;font-family:Inter,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;background:var(--bg);color:var(--text);font-size:15.5px;line-height:1.6;padding:0 clamp(16px,4vw,40px) 64px}
+.wrap{max-width:78ch;margin:0 auto}
+.docnav{display:flex;flex-wrap:wrap;gap:4px 14px;align-items:center;padding:14px 0;border-bottom:1px solid var(--line);font-size:12px;letter-spacing:.06em;text-transform:uppercase}
+.docnav a{color:var(--accent);text-decoration:none;min-height:44px;display:inline-flex;align-items:center;font-weight:700}.docnav a[aria-current]{border-bottom:2px solid var(--accent)}
+.docnav-brand{font-weight:800;color:var(--text);margin-right:8px}
+header .eyebrow{margin:28px 0 6px;font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);font-weight:700}
+h1{font-size:clamp(28px,5vw,40px);line-height:1.1;margin:0 0 14px;letter-spacing:-.01em}h2{font-size:22px;margin:44px 0 10px;padding-top:18px;border-top:1px solid var(--line)}h3{font-size:17px;margin:26px 0 8px}
+p{margin:0 0 12px}li{margin:4px 0}strong{font-weight:700}em{color:var(--muted)}a{color:var(--accent)}
+code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.86em;background:#e9efe7;padding:1px 5px;border-radius:5px;overflow-wrap:anywhere}
+.tbl{overflow-x:auto;margin:12px 0 20px;border:1px solid var(--line);border-radius:12px;background:var(--surface)}table{border-collapse:collapse;width:100%;font-size:13.5px;min-width:560px}
+th{text-align:left;font-weight:700;background:var(--bg);padding:10px 12px;border-bottom:1px solid var(--line);font-size:12px;letter-spacing:.04em;text-transform:uppercase;color:var(--muted)}td{padding:10px 12px;border-top:1px solid var(--line);vertical-align:top}
+pre{overflow-x:auto;padding:14px 16px;border:1px solid var(--line);border-radius:10px;background:var(--surface);font-size:12px;line-height:1.35}
+footer{margin-top:48px;padding-top:16px;border-top:1px solid var(--line);font-size:12px;color:var(--muted)}
+</style></head>
+<body><div class="wrap"><nav class="docnav" aria-label="Project documentation"><span class="docnav-brand">Bízd ránk a zöldet · docs</span><a href="index.html">Overview</a><a href="brief.html">Brief</a><a href="research.html">Research</a><a href="audit.html">Audit</a><a href="sources.html" aria-current=page>Sources</a></nav>
+<header><p class="eyebrow">Calvus · Bízd ránk a zöldet · project documentation</p><h1>Bízd ránk a zöldet — sources and assets</h1></header>
+<p><em>What every page of the prototype is built from, and what is real versus sample. Written
+2026-09-20.</em></p>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>Content</th>
+<th>Source</th>
+<th>Real or sample</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>The brand name, claim ("Bízd ránk a zöldet!"), the round badge logo (plant in a hand, teal)</td>
+<td>bizdrankazoldet.hu; Instagram profile picture</td>
+<td><strong>real</strong></td>
+</tr>
+<tr>
+<td>The site's copy: the home page, <code>novenygondozas</code>, <code>novenyberles</code>, the FAQ, the quote form fields (name, e-mail, phone, office photos, message)</td>
+<td><code>curl</code> of the three pages, 2026-09-20 (<a href="audit.html"><code>02-audit.md</code></a>)</td>
+<td><strong>real</strong></td>
+</tr>
+<tr>
+<td>Phone +36 70 850 8888; the privacy notice PDF (Gourmet Garden Kft., 2026-03-19)</td>
+<td>the site's footer</td>
+<td>real</td>
+</tr>
+<tr>
+<td>Instagram: 70 followers, 11 following, posts 1–17 September 2026, four of five Reels, a collaborator (Szendrői Csaba), meme-style humour</td>
+<td>the public profile read in the browser pane, 2026-09-20 (a login wall hides the rest)</td>
+<td>real (partial)</td>
+</tr>
+<tr>
+<td>The parent brand's numbers: 100+ projects, 10+ years, 30+ maintenance sites, 100 % evergreen guarantee; services (green walls, hydroculture, moss walls)</td>
+<td>grofiezoldfal.com, 2026-09-20</td>
+<td>real (the parent's claims, not verified by us)</td>
+</tr>
+<tr>
+<td>Competitors: CityPlant (since 1992), Plantart, Greenin, Bloom and Go, Arborica — none publishes prices or shows reviews on the site</td>
+<td>their home pages, <code>curl</code> 2026-09-20</td>
+<td>real (measured)</td>
+</tr>
+<tr>
+<td>Research figures (biophilic effect, B2B trust, humour, social channels, the EU green-claims rules)</td>
+<td><a href="research.html"><code>01-research.md</code></a>, each with its link and a P/A mark</td>
+<td>real, cited</td>
+</tr>
+<tr>
+<td>Installation photos, reference client names, prices, the team's names and faces, Google reviews</td>
+<td>not on the site; the client provides</td>
+<td><strong>sample</strong> in the prototype, declared on the page</td>
+</tr>
+</tbody>
+</table></div>
+<p>No client, employee or follower is contacted by the prototype.</p>
+<footer>Source: <code>bizdrankazoldet/docs/03-sources.md</code> · rendered by <code>docs/build.py</code>.</footer></div></body></html>

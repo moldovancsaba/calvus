@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Bízd ránk a zöldet — project documentation — Bízd ránk a zöldet docs</title><style>:root{--bg:#f6f8f4;--surface:#fff;--text:#1d2a22;--muted:#5d6b62;--line:#dfe6dc;--accent:#0f7f74;--accent-2:#3a8f3f}
+*{box-sizing:border-box}body{margin:0;font-family:Inter,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;background:var(--bg);color:var(--text);font-size:15.5px;line-height:1.6;padding:0 clamp(16px,4vw,40px) 64px}
+.wrap{max-width:78ch;margin:0 auto}
+.docnav{display:flex;flex-wrap:wrap;gap:4px 14px;align-items:center;padding:14px 0;border-bottom:1px solid var(--line);font-size:12px;letter-spacing:.06em;text-transform:uppercase}
+.docnav a{color:var(--accent);text-decoration:none;min-height:44px;display:inline-flex;align-items:center;font-weight:700}.docnav a[aria-current]{border-bottom:2px solid var(--accent)}
+.docnav-brand{font-weight:800;color:var(--text);margin-right:8px}
+header .eyebrow{margin:28px 0 6px;font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);font-weight:700}
+h1{font-size:clamp(28px,5vw,40px);line-height:1.1;margin:0 0 14px;letter-spacing:-.01em}h2{font-size:22px;margin:44px 0 10px;padding-top:18px;border-top:1px solid var(--line)}h3{font-size:17px;margin:26px 0 8px}
+p{margin:0 0 12px}li{margin:4px 0}strong{font-weight:700}em{color:var(--muted)}a{color:var(--accent)}
+code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.86em;background:#e9efe7;padding:1px 5px;border-radius:5px;overflow-wrap:anywhere}
+.tbl{overflow-x:auto;margin:12px 0 20px;border:1px solid var(--line);border-radius:12px;background:var(--surface)}table{border-collapse:collapse;width:100%;font-size:13.5px;min-width:560px}
+th{text-align:left;font-weight:700;background:var(--bg);padding:10px 12px;border-bottom:1px solid var(--line);font-size:12px;letter-spacing:.04em;text-transform:uppercase;color:var(--muted)}td{padding:10px 12px;border-top:1px solid var(--line);vertical-align:top}
+pre{overflow-x:auto;padding:14px 16px;border:1px solid var(--line);border-radius:10px;background:var(--surface);font-size:12px;line-height:1.35}
+footer{margin-top:48px;padding-top:16px;border-top:1px solid var(--line);font-size:12px;color:var(--muted)}
+</style></head>
+<body><div class="wrap"><nav class="docnav" aria-label="Project documentation"><span class="docnav-brand">Bízd ránk a zöldet · docs</span><a href="index.html" aria-current=page>Overview</a><a href="brief.html">Brief</a><a href="research.html">Research</a><a href="audit.html">Audit</a><a href="sources.html">Sources</a></nav>
+<header><p class="eyebrow">Calvus · Bízd ránk a zöldet · project documentation</p><h1>Bízd ránk a zöldet — project documentation</h1></header>
+<p><strong>Bízd ránk a zöldet!</strong> (bizdrankazoldet.hu, @bizdrankazoldet) is the playful office-plant brand
+of Gourmet Garden Kft. / Grofie (Budapest): office plant design, rental and care for companies,
+with maintenance as part of the service. The owner's brief: research how a silly-but-professional
+green service should be presented in 2026 to earn trust, show reliability, own an identity and
+sell through its customer journey; then prototype it. Built to the prototyping standard
+(<code>PROTOTYPING.md</code>); this index is also the process log.</p>
+<h2>The set</h2>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>Document</th>
+<th>What it holds</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="brief.html"><code>00-brief.md</code></a></td>
+<td>the client, what they sell, the brief, what will be built, what is real</td>
+</tr>
+<tr>
+<td><a href="research.html"><code>01-research.md</code></a></td>
+<td>the research: trust, reliability, identity, the customer journey, the green-claims rules, the competitors; proposals P1–P12</td>
+</tr>
+<tr>
+<td><a href="audit.html"><code>02-audit.md</code></a></td>
+<td>the site, the Instagram account, the parent brand and five competitors, measured</td>
+</tr>
+<tr>
+<td><a href="sources.html"><code>03-sources.md</code></a></td>
+<td>what is real and what is sample</td>
+</tr>
+</tbody>
+</table></div>
+<p>Rendered by <code>build.py</code> (<code>python3 bizdrankazoldet/docs/build.py</code>); gate <code>python3 bizdrankazoldet/check.py</code>
+(also run by the root <code>check.py</code>).</p>
+<h2>Process log</h2>
+<p><strong>2026-09-20 — stages 0–2.</strong> The owner named the project and the brief ("the full research on how
+a silly but professional green project should be presented in 2026 to give trust, reliability
+and a strong identity and a customer journey that sells"). The site was measured with <code>curl</code>
+(WordPress + Elementor, 292 KB, 51 scripts, 10.5 s cold TTFB, no prices, no reviews, no
+impresszum, no guarantee, no link to Instagram, ten of sixteen images without alt); the Instagram
+account read behind its login wall (70 followers, three weeks old, four Reels, the brand's voice
+already there); the parent brand found (Grofie — 100+ projects, 10+ years, 30+ maintenance
+sites, 100 % evergreen guarantee, same phone) and five competitors measured (none publishes a
+price, a review or a guarantee). The research read the evidence on B2B trust (rep-free buying,
+thought leadership, named people, specificity), on the biophilic effect (honest ranges), on
+humour in B2B (works when related to the product; needs rules), on character systems in 2026,
+on Hungarian channels (Facebook 6.97 M, Instagram 2.74 M, LinkedIn for the decision) and on the
+EU green-claims rules from 27 September 2026 — and wrote the journey step by step and twelve
+proposals.</p>
+<p><strong>Next.</strong> The owner reads <a href="research.html"><code>01-research.md</code></a> and says "direction approved" (or corrects it); then
+the design system (gate 1) from the badge, the teal, the voice.</p>
+<footer>Source: <code>bizdrankazoldet/docs/README.md</code> · rendered by <code>docs/build.py</code>.</footer></div></body></html>

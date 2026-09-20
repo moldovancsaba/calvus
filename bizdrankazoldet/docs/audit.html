@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Bízd ránk a zöldet — audit of the starting point — Bízd ránk a zöldet docs</title><style>:root{--bg:#f6f8f4;--surface:#fff;--text:#1d2a22;--muted:#5d6b62;--line:#dfe6dc;--accent:#0f7f74;--accent-2:#3a8f3f}
+*{box-sizing:border-box}body{margin:0;font-family:Inter,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;background:var(--bg);color:var(--text);font-size:15.5px;line-height:1.6;padding:0 clamp(16px,4vw,40px) 64px}
+.wrap{max-width:78ch;margin:0 auto}
+.docnav{display:flex;flex-wrap:wrap;gap:4px 14px;align-items:center;padding:14px 0;border-bottom:1px solid var(--line);font-size:12px;letter-spacing:.06em;text-transform:uppercase}
+.docnav a{color:var(--accent);text-decoration:none;min-height:44px;display:inline-flex;align-items:center;font-weight:700}.docnav a[aria-current]{border-bottom:2px solid var(--accent)}
+.docnav-brand{font-weight:800;color:var(--text);margin-right:8px}
+header .eyebrow{margin:28px 0 6px;font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);font-weight:700}
+h1{font-size:clamp(28px,5vw,40px);line-height:1.1;margin:0 0 14px;letter-spacing:-.01em}h2{font-size:22px;margin:44px 0 10px;padding-top:18px;border-top:1px solid var(--line)}h3{font-size:17px;margin:26px 0 8px}
+p{margin:0 0 12px}li{margin:4px 0}strong{font-weight:700}em{color:var(--muted)}a{color:var(--accent)}
+code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.86em;background:#e9efe7;padding:1px 5px;border-radius:5px;overflow-wrap:anywhere}
+.tbl{overflow-x:auto;margin:12px 0 20px;border:1px solid var(--line);border-radius:12px;background:var(--surface)}table{border-collapse:collapse;width:100%;font-size:13.5px;min-width:560px}
+th{text-align:left;font-weight:700;background:var(--bg);padding:10px 12px;border-bottom:1px solid var(--line);font-size:12px;letter-spacing:.04em;text-transform:uppercase;color:var(--muted)}td{padding:10px 12px;border-top:1px solid var(--line);vertical-align:top}
+pre{overflow-x:auto;padding:14px 16px;border:1px solid var(--line);border-radius:10px;background:var(--surface);font-size:12px;line-height:1.35}
+footer{margin-top:48px;padding-top:16px;border-top:1px solid var(--line);font-size:12px;color:var(--muted)}
+</style></head>
+<body><div class="wrap"><nav class="docnav" aria-label="Project documentation"><span class="docnav-brand">Bízd ránk a zöldet · docs</span><a href="index.html">Overview</a><a href="brief.html">Brief</a><a href="research.html">Research</a><a href="audit.html" aria-current=page>Audit</a><a href="sources.html">Sources</a></nav>
+<header><p class="eyebrow">Calvus · Bízd ránk a zöldet · project documentation</p><h1>Bízd ránk a zöldet — audit of the starting point</h1></header>
+<p><em>Measured 2026-09-20 with <code>curl</code> (the site) and the browser pane (Instagram, behind a cookie and
+login wall). Every number is what the tool returned; nothing is estimated.</em></p>
+<h2>1. The site — bizdrankazoldet.hu</h2>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>Measure</th>
+<th>Value</th>
+<th>What it means</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Stack</td>
+<td>WordPress 6.9, Elementor 3.35.9 + Elementor Pro, Royal Elementor Addons, Yoast (sitemap index), a Cloudflare e-mail obfuscator</td>
+<td>a page-builder site; heavy by construction</td>
+</tr>
+<tr>
+<td>Home</td>
+<td><strong>292 KB HTML, 51 scripts, 24 stylesheets, 16 images</strong></td>
+<td>four to five times the weight a page like this needs; the scripts and stylesheets are Elementor's per-widget files</td>
+</tr>
+<tr>
+<td>Time to first byte</td>
+<td><strong>10.5 s on a cold hit</strong> (the two service pages and the sitemap on first request), <strong>0.04–0.09 s warm</strong></td>
+<td>a page cache exists but expires; the first visitor after expiry waits ten seconds — on a phone from an Instagram link that is a lost visitor</td>
+</tr>
+<tr>
+<td>Pages</td>
+<td><code>/</code> (Irodai növények), <code>/novenygondozas/</code>, <code>/novenyberles/</code>, a leftover "Hello világ" post and an "Egyéb" category in the sitemap</td>
+<td>three real pages; the leftovers should go</td>
+</tr>
+<tr>
+<td><code>h1</code></td>
+<td>"Irodai növények azoknak, akik már nyírtak ki kaktuszt" — twice on the home page (desktop and mobile copies of the hero)</td>
+<td>the headline is the brand's best line; two <code>h1</code>s is a defect</td>
+</tr>
+<tr>
+<td><code>h2</code>s on the home page</td>
+<td>13, all in the brand's voice ("Ne a gyakornok locsoljon", "jobb, mint egy csocsóasztal")</td>
+<td>the tone of voice already exists and is consistent</td>
+</tr>
+<tr>
+<td>Images</td>
+<td>10 of 16 without alt text; the references block ("Akik már ránk bízták a zöldet") shows images with no client names or captions</td>
+<td>the proof is present as pictures and absent as evidence</td>
+</tr>
+<tr>
+<td>Prices</td>
+<td>none on any page; competitors publish none either</td>
+<td>the whole category hides the price; the first to say "from X Ft" wins the comparison</td>
+</tr>
+<tr>
+<td>Reviews, ratings, Google Business Profile</td>
+<td>none linked or shown</td>
+<td>no third-party proof on the site</td>
+</tr>
+<tr>
+<td>Company identity</td>
+<td>only the phone and an obfuscated e-mail in the footer; the company name appears only in the privacy-notice PDF's filename; no registered seat, company number or tax number</td>
+<td>Hungarian law (Ekertv. 2001/CVIII §4) requires the provider's name, seat, e-mail and registration data on the site — the team's reading, counsel confirms; also the first trust signal a B2B buyer looks for</td>
+</tr>
+<tr>
+<td>Guarantee</td>
+<td>none stated on the site; the parent brand states "100 % örökzöld garancia"</td>
+<td>the strongest reliability promise the company has is not on this brand's site</td>
+</tr>
+<tr>
+<td>Parent brand</td>
+<td>not mentioned; the same phone number is on grofiezoldfal.com ("100+ projects, 10+ years, 30+ maintenance sites")</td>
+<td>ten years of proof invisible to the visitor</td>
+</tr>
+<tr>
+<td>Instagram</td>
+<td>not linked from the site; the site is linked from Instagram</td>
+<td>one-way</td>
+</tr>
+<tr>
+<td>Forms</td>
+<td>one Elementor form: name, e-mail, phone, office photos (upload), message, "Ajánlatot kérek"</td>
+<td>the right ask — photos of the office — already in place</td>
+</tr>
+<tr>
+<td>Tracking</td>
+<td>Facebook pixel and gtag present; a cookie banner</td>
+<td>consent before the pixel fires: to verify in the build (GDPR / ePrivacy)</td>
+</tr>
+<tr>
+<td>Schema</td>
+<td>WebPage, ImageObject, BreadcrumbList, WebSite (Yoast defaults); no <code>LocalBusiness</code> / <code>Service</code> / <code>FAQPage</code> / <code>Review</code></td>
+<td>search engines and AI answers see a web page, not a business with a service and an FAQ</td>
+</tr>
+<tr>
+<td>Mobile</td>
+<td>the hero duplicated for desktop and mobile; 44 px targets and contrast not measured here (stage 6)</td>
+<td>to measure in the sweep</td>
+</tr>
+</tbody>
+</table></div>
+<h2>2. The copy — what is strong and what is missing</h2>
+<p><strong>Strong.</strong> The voice: self-aware, specific, funny about the <em>problem</em> (the dead cactus, the
+intern with the watering can, the foosball table), never about the customer; every joke lands
+on a real objection. The argument: plants are a system, not a decoration; maintenance is part
+of the service; small offices work too; rental fits a changing office. The FAQ answers the
+five questions a buyer actually asks.</p>
+<p><strong>Missing.</strong> Any <em>evidence</em>: who the clients are, what an installation looks like before and
+after, how many sites are maintained, since when, by whom; what it costs, even as a range; what
+happens if a plant dies (the guarantee); who the people are (a name, a face, the founder); how
+fast a proposal comes; what a maintenance visit contains and how often. The site persuades and
+then asks for trust it has not yet shown.</p>
+<h2>3. Instagram — @bizdrankazoldet (read 2026-09-20)</h2>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>Measure</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Followers / following</td>
+<td>70 / 11</td>
+</tr>
+<tr>
+<td>Bio</td>
+<td>"Bízd ránk a zöldet!" + the site link; no what-we-do line, no city, no call to action</td>
+</tr>
+<tr>
+<td>Posts visible before the login wall</td>
+<td>5 (1–17 September 2026): four Reels, one photo; two published by a collaborator (Szendrői Csaba)</td>
+</tr>
+<tr>
+<td>Content</td>
+<td>meme-style humour ("NEMTOM, OLYAN"), people in an office with plants, text on video</td>
+</tr>
+<tr>
+<td>Cadence</td>
+<td>roughly two a week in the first three weeks</td>
+</tr>
+<tr>
+<td>Link to the site</td>
+<td>yes; the site does not link back</td>
+</tr>
+</tbody>
+</table></div>
+<p>The account is three weeks old and already has the brand's voice. It has no proof formats yet
+(before/after, a maintenance visit, a client's office) and no way to buy from it.</p>
+<h2>4. The parent brand — Grofie / Gourmet Garden Kft. (grofiezoldfal.com)</h2>
+<p>Services: indoor plant decoration, hydroculture, plant rental, vertical gardens, living green
+walls, moss and lichen walls, plant care, "Örökzöld garancia" (evergreen guarantee), references.
+Claims on the home page: <strong>100+ projects, 10+ years, 30+ maintenance sites, 100 % evergreen
+guarantee</strong>; clients: offices, hospitality, hotels, retail. Same phone as the new brand. Public
+record: a Portfolio.hu article (2020) on a 57 m² green wall in a WELL-certified office, the
+managing director named. This is the trust the new brand can inherit in one sentence and one
+logo — today it inherits none of it.</p>
+<h2>5. Five Hungarian competitors, measured the same way</h2>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>Competitor</th>
+<th>Since / claim</th>
+<th>Prices on site</th>
+<th>Reviews on site</th>
+<th>Guarantee</th>
+<th>Weight (scripts)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>CityPlant (cityplant.hu)</td>
+<td>"since 1992"; showroom; green walls; air-cleaning plants</td>
+<td>none</td>
+<td>none</td>
+<td>none stated</td>
+<td>28</td>
+</tr>
+<tr>
+<td>Plantart (plantart.hu)</td>
+<td>catalogues, webshop, references (5 mentions)</td>
+<td>none</td>
+<td>none</td>
+<td>none stated</td>
+<td>108</td>
+</tr>
+<tr>
+<td>Greenin (greenin.hu)</td>
+<td>rental "without paying anything up front"</td>
+<td>none</td>
+<td>none</td>
+<td>none stated</td>
+<td>144</td>
+</tr>
+<tr>
+<td>Bloom and Go (bloomandgo.hu)</td>
+<td>decoration, rental, care; herbs</td>
+<td>none</td>
+<td>none</td>
+<td>none stated</td>
+<td>92</td>
+</tr>
+<tr>
+<td>Arborica (arboricakft.hu)</td>
+<td>care, replacement, consulting</td>
+<td>none</td>
+<td>none</td>
+<td>none stated</td>
+<td>13</td>
+</tr>
+</tbody>
+</table></div>
+<p>Nobody in the category publishes a price, shows a review, states a guarantee on the page, or
+names a response time. The category sells on "contact us". That is the opening.</p>
+<footer>Source: <code>bizdrankazoldet/docs/02-audit.md</code> · rendered by <code>docs/build.py</code>.</footer></div></body></html>
