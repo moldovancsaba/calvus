@@ -2,11 +2,13 @@
 
 *Written 2026-09-20 on the owner's instruction after reading the live presentation: "the
 presentation is about the client's problem, how to solve it and how we help with the solution
-we provide — nobody cares about what to push on the UI"; and on the URL: no Hungarian word in a
-URL for an English-speaking client. The instruction: a Big4-level audit of the project's
-documentation, and a plan to transform it from content, meaning and quality into an executable,
-result-oriented set. Every finding names the file and the sentence it rests on. The plan is
-executed in phases; §6 records what shipped with this document.*
+we provide — nobody cares about what to push on the UI"; on the URL: no Hungarian word in a URL
+for an English-speaking client; and, after the first rewrite still centred on one customer's
+listing count: "business.direct is a standalone PRODUCT for anybody who wants a one-man army —
+ClassScout is just the first user who will pay for the service". The instruction: a Big4-level
+audit of the project's documentation and a plan to transform it from content, meaning and
+quality into an executable, result-oriented set. Every finding names the file and the sentence
+it rests on. §6 records what shipped with this document (D38, then D39 the same day).*
 
 ## 1. Scope, standard and method
 
@@ -57,6 +59,7 @@ the client decision, with a root cause and a fix.
 
 | # | Severity | Finding | Evidence | Root cause | Fix |
 |---|---|---|---|---|---|
+| F0 | **Critical** | **The product is presented as one customer's project, and a data-pull artefact as the problem.** The presentation's first rewrite was titled "A proposal for ClassScout · Your Field NYC", its hero numbers were "0 of 253", "83 sessions", the business case's §1 was "the situation in the client's numbers" and the brief's first heading was "The client". business.direct is a standalone product — the one-person sales and marketing team for anyone who is their whole department; ClassScout is the first paying user, and the 253 providers are the demo's pull, not the customer's situation (their catalogue is far larger) | `presentation.html` (first rewrite), `15` §"The situation", `22` §1, `00-brief.md` §"The client", the hub row | the standard is a *client-prototype* standard ("Stage 0: client, problem"); D11 "Your Field first" was read as "Your Field is the subject"; the catalogue pull, being the only measured thing, became the story | every product-facing document rebuilt from the product outward: the customer segment and its pain → the product → the value and the price → proof (the first customer) → delivery → the decision; ClassScout a section, never the subject; catalogue counts demo facts at most; the standard gains a product-brief rule |
 | F1 | **Critical** | **The presentation is a demo script, not a client presentation.** Its second section is titled "What to click, in this order"; five of its eight sections describe screens and buttons; the client's problem appears in one clause of the hero ("markets the businesses to families … drafts everything") and its cost nowhere; there is no business case, no delivery plan, no cost | `bemutato.html` §"What to click, in this order", cards 1–5 ("Click Approve and schedule on a post…") | the standard's presentation slot prescribes "the pages in a recommended order with previews and open buttons" (`PROTOTYPING.md` §4, slot *Presentation*) — a wireframe-review format applied to a service proposal | **rebuild** as `presentation.html`: situation → complication → question → answer; the client's problem in the client's numbers; the cost of doing nothing; the solution in one loop; the business case with scenarios and the honest finding; proof; risk and compliance as mitigation; delivery plan and cost; the one decision; the demo moved to an appendix |
 | F2 | **Critical** | **The presentation's URL is a Hungarian word** (`bemutato.html`) for an English-speaking US client | the live URL | the standard names the slot after the Hungarian projects' file | `presentation.html`; `bemutato.html` stays as a redirect (a live URL is never deleted); every link updated; the standard names the file in the client's language |
 | F3 | High | **The executive summary argues the thesis, not the client's case.** It opens with "A listing platform has three parties …" (our model), gives evidence about Yelp and Google, and reaches the client in section three; it has no investment, no return, no timeline | `15-executive-summary.md` §"The thesis", §"The evidence" | written as "the argument in prose", not as the page a decision-maker reads | rewrite SCQA: the client's situation and the complication in the first paragraph; the answer; the business case in three numbers; the plan in one line; the decision |
@@ -103,20 +106,22 @@ link to the evidence layer; the honest finding stated, not softened; the decisio
 | Phase | Deliverable | Acceptance | Status |
 |---|---|---|---|
 | **1 — the top of the pyramid** | `presentation.html` (SCQA; the demo as an appendix); `bemutato.html` → redirect; `15-executive-summary.md` rewritten; **`22-business-case.md`** new; `00-brief.md` §"The problem" quantified; hub row rewritten; every link updated; the standard's presentation slot rewritten (structure and filename in the client's language) | a reader who opens only the presentation can state the client's problem in numbers, the answer, the return by scenario, the cost, the timeline and the decision; no Hungarian word in any business.direct URL; gate clean | **shipped with this document (D38)** |
-| **2 — executable** | owners and target dates (A+n) in `13` §2b and `19`; risk owners and triggers in `13` §5; a governance section (weekly review, decision path, change control) in `13`; the evidence index in `03` | every sprint, prerequisite and risk has an owner and a date or trigger; every figure in the top layer resolves to one row of the evidence index | next |
+| **2 — executable** | owners and target dates (A+n) in `13` §2b and `19`; risk owners and triggers in `13` §5; a governance section (weekly review, decision path, change control) in `13`; the evidence index in `03`; **the product's vocabulary in the SSOT and the business logic** (operator · prospect · audience member as the generic terms; platform · provider · family as the first customer's instance of them) | every sprint, prerequisite and risk has an owner and a date or trigger; every figure in the top layer resolves to one row of the evidence index | next |
 | **3 — the reading paths and the voice** | `README.md` split into the three paths; the purpose sentence first in every document; internal vocabulary removed from the top layer | each document's first sentence says what it is for and who reads it; the top layer contains no D-, R-, gate- or SSOT-reference | next |
 | **4 — the gate** | `check.py` verifies the top layer: `presentation.html` exists and carries the six sections in order; the executive summary and the business case cite the same three headline numbers; no `bemutato` link remains in business.direct | gate rows added; `GATE: CLEAN` | next |
 
-## 6. What shipped with this document (phase 1)
+## 6. What shipped with this document (phase 1 — D38, corrected by D39 the same day)
 
-- `presentation.html` — the client presentation, rebuilt: **Situation** (Your Field NYC today,
-  measured) → **Complication** (what the gaps cost, sourced) → **The question** → **The answer**
-  (the machine in one loop, the human gate) → **The value** (the business case in three
-  scenarios with the honest finding) → **Proof** (real data, the prototype) → **Responsible by
-  design** (risk removed, value added) → **Delivery** (nine sprints, the run cost, what we need
-  from you) → **The decision**; the demo script as the last section, one paragraph.
+- `presentation.html` — the **product's** presentation: **The customer** (the one-person army:
+  the week they have, the week they get, what they want) → **The complication** (what doing it
+  alone costs, sourced; the market sells pieces, not a team) → **The question** → **The
+  product** (marketing, sales, conversations; the human gate, the loop, the hands) → **The
+  value** (what changes in a week; the pricing hypothesis; the honest finding as the product's
+  virtue) → **Proof — the first customer** (ClassScout; the prototype on their real data; what
+  it already found for them; built for the second customer) → **Responsible by design** →
+  **Delivery** → **The decision**; the demo as a one-paragraph appendix.
 - `bemutato.html` — a redirect to `presentation.html` (the URL stays live).
-- `15-executive-summary.md` — rewritten in SCQA with the three headline numbers of the business case.
-- `22-business-case.md` — new: investment, return by scenario, sensitivity, break-even, the cost of doing nothing.
-- `00-brief.md` — §"The problem" quantified with the measured catalogue; the videos moved to their own paragraph.
-- Hub row, docs index, navigation, renderer, gate, standard — updated; links to `bemutato.html` replaced.
+- `15-executive-summary.md` — the product in SCQA; three numbers: the price and margin, the build, the first customer.
+- `22-business-case.md` — the product's cost side, the pricing hypothesis, economics by customer count, the customer's case, the first customer's instance as the worked example, sensitivity.
+- `00-brief.md` — §"The product", §"The customer", §"The first customer"; §"The problem" is the operator's, with the first customer's measured instance as the example and the pull declared demo data.
+- Hub row, docs index, navigation, renderer, gate, standard (stage 0 product rule, stage 7 structure and filename) — updated; links to `bemutato.html` replaced.

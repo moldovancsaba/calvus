@@ -1,37 +1,59 @@
 # business.direct — brief
 
-*Stage 0 of the prototyping standard (`PROTOTYPING.md`). Written 2026-09-19, revised the same
-day when the owner named the first client. Everything here is what the owner said, what the
-client platform exposes, and what the two reference videos show — nothing else.*
+*Stage 0 of the prototyping standard (`PROTOTYPING.md`). Written 2026-09-19; revised 2026-09-20
+for the product (D39): business.direct is a standalone product, ClassScout its first customer.
+Everything here is what the owner said, what the first customer's platform exposes, and what
+the two reference videos show — nothing else.*
 
-## The client
+## The product
+
+**business.direct is a standalone product**: sales and marketing automation for the one-person
+operator — the founder, owner or marketer who is the whole department. Seven departments as
+automations (research and intelligence, content, distribution, creative, leads and
+conversations, reviews and reputation, results), the operator's knowledge as plain files, two
+flows at the front door (marketing that brings the audience in, sales that works every prospect
+through a pipeline), conversations answered within the hour, a human gate on everything, one
+loop that ranks the next dollar, a Monday recap. Sold as a subscription per operator instance;
+every instance carries its own responsible-data policy record (D32), so the second customer is a
+record and a connector, not a rebuild.
+
+## The customer
+
+Anyone who is their own sales and marketing team: a marketplace founder with thousands of
+listings and nobody to sell to the businesses on them or publish to the people who use them; a
+studio owner; a consultant; an agency of one. The pain is the same — enquiries unanswered,
+follow-up unsent, content unpublished, numbers a feeling — and so is the machine.
+
+## The first customer
 
 **ClassScout**, operator of **Your Field NYC** (getyourfield.com; contact info@classscout.ai)
-— "youth sports discovery, starting with your neighborhood": 253 providers of kids' classes, camps and drop-in activities across
-Manhattan (108) and Brooklyn (145), 83 neighbourhoods on the cards, 20 activity types, saved items, a
-family plan with cost estimates, a newsletter, and a "List your program" pitch to
-providers. It is the owner's own product (Next.js + Mantine on Vercel), the **first
-platform business.direct will run on** (D11); the system is built for any later client —
-every instance carries its own responsible-data policy record (D32). *Most én sportolok!* (sport.doneisbetter.com,
-Hungary) and job portals / classifieds are reference ideas: the same pattern, other
-instances.
+— "youth sports discovery, starting with your neighborhood": a children's-activity marketplace
+in New York with families on one side, providers on the other, a catalogue gathered by a
+pipeline with thousands of listings still to publish, and a founder who is the sales and
+marketing team. It is the **first platform business.direct runs on** (D11) and the first paying
+user. The prototype runs on 253 of its providers pulled from its public API — the demo's data,
+not the customer's situation. *Most én sportolok!* (sport.doneisbetter.com, Hungary) is a
+reference connector that proves the second instance; job portals and classifieds are the same
+pattern, other instances.
 
 **business.direct is a sibling of DiscountDirect** (D5): DiscountDirect retains a web shop's
-customers; business.direct markets a *listed business* to the families on the platform —
-and markets the platform to the business.
+customers; business.direct is the operator's sales and marketing team.
 
 ## The problem
 
-A listing platform is B2B2C: **platform → listed business → consumer**. Measured on Your
-Field's public API (2026-09-19): **253 providers, 0 managing their page** (15 marked
-`unclaimed`, 237 with no claim state); 130 with an e-mail, 181 with a phone, 50 with only a
-website; **0 reviews and 28 prices** on the cards; **83 next sessions, 72 trial policies and
-26 announcements** published nowhere. The providers are small operations — a soccer club run
-by one coach, a taekwondo school, a dance studio — and small businesses lose 62 % of their
-calls and the customer to whoever answers first (research I). Families can save and plan, and
-are told nothing when something starts near them; the platform records saves only after an
-opt-in and offers no alerts yet. The cost of leaving it so, and the return of changing it, are
-on one page: `22-business-case.md`.
+One person cannot run seven departments. In a small business the money is lost exactly where
+one person cannot be: 62 % of calls go unanswered and 78 % of customers buy from the first
+responder; a lead is 21× more likely to qualify in the first five minutes; the second and
+third touch — where reply rates triple — never get sent; the material that exists (offers,
+dates, news, footage) is never published; the numbers are a feeling (research I, II). The tools
+on sale each do one job and leave the person to be the team.
+
+The first customer shows the shape on a marketplace: prospects are the listed providers,
+the audience is families, and one founder is both departments for both sides. Measured on the
+public API (2026-09-19) for the demo: of 253 providers pulled, 0 manage their page, 130 have an
+e-mail and 181 a phone, 83 next sessions and 72 trial policies sit on the cards unpublished —
+numbers that describe the demo's data, not the size of the customer's catalogue, which is far
+larger. The customer's own case is in `22-business-case.md` §7.
 
 **Where the shape came from.** The two videos the owner shared show the target: **the one-person sales and
 marketing team** — an orchestrator over departments (research and intelligence, content,

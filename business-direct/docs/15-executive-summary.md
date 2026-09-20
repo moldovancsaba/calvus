@@ -1,68 +1,57 @@
-# business.direct — executive summary for ClassScout
+# business.direct — executive summary
 
-*One page for the decision-maker. What it supports: the decision to build. Every figure is
-measured on the platform's public API, sourced in the research, or marked as an assumption to
-be replaced by the platform's own numbers; the full case is `22-business-case.md`, the plan
-`13-implementation-plan.md`. Written 2026-09-20 (D38).*
+*One page for the decision-maker — the owner deciding to build, a prospect deciding to become a
+customer. Every figure is sourced in the research, measured by the prototype, or marked as a
+hypothesis; the case is `22-business-case.md`, the plan `13-implementation-plan.md`. Written
+2026-09-20 (D39).*
 
 ## The situation
 
-Your Field NYC has gathered 253 children's-activity providers and built the tools families use
-to save and plan. **None of the 253 manages its page**; the cards carry 0 reviews and 28 prices;
-83 next sessions, 72 trial policies and 26 announcements sit on them unpublished; families who
-save a provider are told nothing when something starts near them. The platform has the supply
-and the demand and no team working either side.
+In every small business, marketplace and one-founder company one person is the whole sales
+and marketing department — research, content, distribution, creative, leads and conversations,
+reviews, results — while also running the business. The tools they can buy each do one job
+(a scheduler, a clip cutter, an answering service, a CRM) and leave the person to be the team.
 
 ## The complication
 
-Small providers lose the enquiries the platform sends them — 62 % of calls to small businesses
-go unanswered, and the customer buys from whoever answers first. Discovery is moving to social
-and to AI answers that cite reviewed, structured sources — which a catalogue without reviews or
-prices is not. The category's money ($1 016 per child per sport, up 46 % in five years) flows
-past a platform whose providers are unmanaged. And the incumbents already sell the fix: Yelp
-bought Hatch for $270 M and charges $99 a month for "answer, follow up, convert".
+Doing it alone loses the money where it is made: 62 % of calls to small businesses go
+unanswered and 78 % of customers buy from whoever answers first; a lead is 21× more likely to
+qualify in the first five minutes; follow-up — where reply rates triple — is the message that
+never gets sent; content that is not published does not exist in a market that now searches
+social and AI answers first. The incumbents see it: Yelp paid $270 M for Hatch and sells one
+piece of the job for $99 a month.
 
 ## The question
 
-How does a platform with no sales team and no content team turn 253 listings into managed
-pages, paying providers and families who come back — without breaking the law, a parent's
-trust or its own privacy policy?
+How does one person run a seven-department sales and marketing team every day — without
+hiring, without losing control of what goes out under their name, and without breaking the
+law or their customers' trust?
 
-## The answer
+## The answer — business.direct
 
-**business.direct**: a marketing and sales machine the platform runs on its own data. Two
-flows at the front door — real content that brings families to the listing page, and a lawful,
-capped invitation sequence that brings providers to manage their page — and behind them the
-provider's own one-person team (conversations answered within the hour, campaigns to the
-families who saved it, clips from one recording, results on one screen) and the platform's
-reach products offered once the machine has delivered more than they cost. One loop decides
-where the next dollar goes; **a person approves everything**; every message says why it was
-sent; a child is an age, never a name.
+A standalone product: the departments as automations; the operator's voice, rules and offers
+as plain files the machine reads before every draft; two flows at the front door (marketing
+that brings the audience in, sales that works every prospect through a pipeline); conversations
+answered within the hour; a human gate on everything — it drafts, it cannot send, it stops and
+asks; one loop that turns events into metrics and ranks the next dollar; a Monday recap. Simple
+mode for the operator with twenty minutes, Advanced for the professional. Responsible by
+design for every customer: one policy record and a gate in the code, a child an age and never a
+name, no dark patterns, disclosure when a machine made something.
 
 ## The three numbers
 
-1. **Today's honest finding: LTV : CAC 0.7.** Outbound e-mail alone, on 253 providers at $49,
-   does not pay for itself. The machine pays as the platform's growth engine from day one
-   (a new family for ≈ $4 against ≈ $6 of expected value; ≈ $610 k a year of provider revenue
-   through the platform's introductions at 5 000 families), and as a profit centre at 1 000
-   providers (LTV : CAC ≈ 2) or priced for the category (≈ 6).
-2. **Seventeen weeks, two developers**, nine sprints with an acceptance test each; Meta's
-   review submitted in the first week.
-3. **≈ $50–75 a month to run at pilot**, ≈ $280–400 at 1 000 providers — every vendor's price
-   read on the day; covered by two upgraded providers at pilot.
-
-## What is different
-
-Responsible by design for every client — one policy record and a gate in the code, no
-profiling of minors, no dark patterns, disclosure when a machine made something; two
-interfaces — Simple shows what needs you with one button, Advanced shows everything; honest
-data — 253 real providers, every figure labelled real, sample or assumption, an audit that
-found and fixed its own contradictions.
+1. **$249 / $449 a month per operator instance** (pricing hypothesis, anchored on the $200–400
+   stack it replaces), at a run cost of ≈ $50–75 — a 76–80 % contribution margin. The product
+   is a business at twenty to fifty customers.
+2. **Seventeen weeks, two developers**: nine sprints, an acceptance test at each, every service
+   verified, seventeen modules specified with pseudo code.
+3. **First customer: ClassScout (Your Field NYC).** The prototype runs on their real data; its
+   own model already told them the honest thing — outbound e-mail alone on that data returns 0.7
+   of its cost, and which three inputs turn it — which is what a customer buys: a team that
+   tells the truth about the next dollar.
 
 ## The decision
 
-Go ahead. Nothing is needed from ClassScout before it; what the build needs after it — the
-postal address, one privacy-policy paragraph, the policy record confirmed, counsel's wording,
-later the platform's events and a pilot provider — is a checklist with owners and dates
-(`19-implementation-prerequisites.md`). The first measured numbers replace the assumptions at
-the end of sprint 2.
+Build the product and run it for the first customer. Sprint 0 starts on the decision; the
+first measured cohort replaces every hypothesis on this page at the end of sprint 2. The price
+is set from the hypothesis before the first invoice.

@@ -36,7 +36,7 @@ and it is dated.
 
 | # | Stage | Output | Gate (who approves) |
 |---|---|---|---|
-| 0 | **Brief** | `00-brief.md`: client, problem, what will be built, what is real | owner reads it |
+| 0 | **Brief** | `00-brief.md`: for a client site — client, problem, what will be built, what is real; **for a product — the product, the customer segment and its pain, then the first customer as a section, never the subject** (business.direct D39: a data pull is demo material, not the problem) | owner reads it |
 | 1 | **Research and audit** | `01-research.md` (benchmarks with sources, or "none, because…"), `02-audit.md` (the client's current site/data/brand, **measured**) | owner: "direction approved" (Holdvölgy D10) |
 | 2 | **Sources** | `03-sources…md`: every input file, what it contributed, every gap between the ask and the data | — |
 | 3 | **Design system** | tokens + a live components page | **owner approves before any layout** (Holdvölgy D11/D12 — the order was corrected once and is now fixed) |

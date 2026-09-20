@@ -1,118 +1,118 @@
-# business.direct — business case for ClassScout (Your Field NYC)
+# business.direct — business case
 
-*For the decision-maker at ClassScout and the owner. What this page answers: what the machine
-costs to build and run, what it returns under three scenarios, where the break-even is, and what
-doing nothing costs. Every input is marked **measured** (from the platform's own catalogue),
-**benchmark** (a sourced industry figure) or **assumption** (ours, to be replaced by the
-platform's numbers under prerequisite P-6). The formulas are the ones the prototype's Economics
-screen computes (`16-analytics-and-unit-economics.md`); the run costs are the vendors' own
-prices read on 2026-09-20 (`01g-research-real-system.md` §15). Written 2026-09-20 (D38).*
+*For the owner (the product's economics) and for a prospective customer (what an operator pays
+and gets). What this page answers: what the product costs to build and run, what it can be sold
+for, how many customers pay it back, what a customer gains against the price, and what the first
+customer's instance already shows. Every input is marked **measured**, **benchmark** (sourced) or
+**hypothesis** (ours, the owner's decision). Formulas are the ones the product's Economics screen
+computes (`16-analytics-and-unit-economics.md`); run costs are the vendors' own prices read on
+2026-09-20 (`01g-research-real-system.md` §15). Written 2026-09-20, rewritten the same day for the
+product, not the first customer (D39).*
 
-## 1. The situation in the client's numbers (measured, 2026-09-19 pull)
+## 1. The product in one line
 
-| Measure | Value | What it means |
+Sales and marketing automation for the one-person operator: seven departments as automations,
+the operator's knowledge as plain files, a human gate on everything, one loop that ranks the next
+dollar. Sold as a subscription per operator instance. First paying customer: ClassScout
+(Your Field NYC).
+
+## 2. The market the customer is in (benchmarks)
+
+| Fact | Figure | Source |
 |---|---|---|
-| Providers listed | 253 | the supply side the platform has gathered |
-| Providers managing their own page | **0** | nobody on the supply side is a customer yet; no reviews, no photos of their own, no answers |
-| Reachable by e-mail / by phone / by website only | 130 / 73 / 50 | the sales flow's reach without any data the platform does not already hold |
-| With a next session on the card / a trial policy / an announcement | 83 / 72 / 26 | the demand-side content that exists today and is not published anywhere |
-| Reviews / prices on the cards | 0 / 28 | the two fields AI answers and families look for first |
-| Registered families | not disclosed (prerequisite P-6); 5 000 assumed | every family-side figure below scales with it |
+| Enquiries a small business loses | 62 % of calls unanswered; 78 % of customers buy from the first responder; 21× qualification within five minutes vs thirty | research I §2 |
+| Follow-up | reminders cut no-shows 29 %; a three-touch sequence in order lifts reply rates from ~3 % to ~10 % | research I §3, II §5 |
+| What the operator pays today for pieces of the job | scheduler $29–200/mo; clip cutter $15–29; avatar video $29; design $15; Yelp Receptionist (answering only) $99; stacked ≈ $200–400/mo, and the person still runs the department | research II §4, III |
+| The incumbents' bet on the same job | Yelp bought Hatch (AI lead management) for $270 M, January 2026 | research III |
 
-## 2. The cost of doing nothing (benchmarks, sourced in `01-research.md` and `01b`)
-
-- **The enquiry economics of a small provider**: 62 % of calls to small businesses go
-  unanswered; 78 % of customers buy from the business that responds first; a lead contacted
-  within five minutes is 21× more likely to qualify than after thirty. An unclaimed, unanswered
-  card sends the family to the next provider — or off the platform.
-- **The discovery shift**: organic Google sends 19 % fewer clicks to the same rankings; AI
-  answers cite the structured, reviewed source; nearly half of Gen Z searches social before
-  Google. A catalogue with 0 reviews and 28 prices is not the source that gets cited.
-- **The category's money**: US families spend $1 016 per child per sport, up 46 % in five
-  years. The platform captures none of it while providers stay unmanaged.
-- **The incumbents' move**: Yelp bought Hatch for $270 M (January 2026) and sells Receptionist
-  at $99 a month — the same "answer, follow up, convert" service, to the same small businesses.
-
-Doing nothing keeps the platform a directory: supply gathered by a pipeline, demand served a
-list, nobody paid.
-
-## 3. What the machine changes (the answer, in one loop)
-
-Events → nightly metrics → the next dollar ranked → a person approves → measure. Two flows at
-the front door — **families brought to the listing page** by published real content, and
-**providers brought to manage their page** by a sales sequence that honours the law and a cap —
-and behind them provider campaigns, conversations and upgrades on the platform's own products.
-Nothing leaves without a person; every message says why it was sent.
-
-## 4. Investment
+## 3. What it costs to build and run (the product's cost side)
 
 | Line | Amount | Basis |
 |---|---|---|
-| Build effort | **34 developer-weeks** (two developers × nine two-week sprints, seventeen weeks) + the owner as product lead | `13-implementation-plan.md` §2b |
-| Build cost | 34 × blended rate per developer-week — **the rate is the commercial input, set by the owner**; illustration at $2 500 / $4 000 / $6 000 → $85 k / $136 k / $204 k | assumption (illustration only, not a quote) |
-| Run cost, pilot (≤ 300 providers, ≤ 5 000 families) | **≈ $50–75 a month** | vendor prices, `01g` §15 |
-| Run cost, sizing target (1 000 providers, 50 000 families) | **≈ $280–400 a month** | vendor prices, `01g` §15 |
-| Operator time | 2 minutes per approval at $40/h; ~10 hours a month at pilot volume, falling with batch approval and earned auto-approval | assumption; `16` §2.2 |
-| Sales tooling | $150 a month (sending domain, warm-up, enrichment) | assumption; `16` §2.2 |
-| External lead times | Meta App Review two to four weeks (starts sprint 0); Twilio registration one to two weeks (only when SMS is switched on) | `01g` §14 |
+| Build | **34 developer-weeks** (two developers, nine two-week sprints) + the owner as product lead | `13-implementation-plan.md` §2b |
+| Build cost | 34 × the blended rate per developer-week — **the owner's commercial input**; illustration at $2 500 / $4 000 / $6 000 → **$85 k / $136 k / $204 k** | hypothesis (illustration, not a quote) |
+| Run cost per instance, pilot volume (≤ 300 prospects, ≤ 5 000 audience) | **≈ $50–75 / month** | vendor prices, `01g` §15 |
+| Run cost per instance, sizing target (1 000 prospects, 50 000 audience) | **≈ $280–400 / month** | vendor prices, `01g` §15 |
+| Shared platform cost (Vercel team, monitoring, one worker) | ≈ $30–60 / month regardless of customer count | `01g` §15 |
+| Support and onboarding per customer | the policy record, the connector, the knowledge files: ≈ 2 days at onboarding, ≈ 2 hours a month after | hypothesis |
 
-## 5. Return — three scenarios (the model's formulas at the stated inputs)
+## 4. What it sells for (the pricing hypothesis — the owner decides)
 
-The unit economics (`16` §2): contribution = ARPA × margin; LTV = contribution ÷ monthly churn;
-CAC = outbound cost ÷ new paying providers; healthy at LTV : CAC ≥ 3 and payback ≤ 12 months.
-Defaults: reply 5.5 % (benchmark, top quartile), applied 40 % (assumption), managing 80 %
-(assumption), upgraded 25 % (assumption), ARPA $49 (sample prices), margin 80 %, churn 5 %/month
-(benchmark range 3–7 %).
-
-| Scenario | What changes | Outbound cost / quarter | New managing / upgraded per quarter | CAC (upgraded) | LTV | LTV : CAC | Payback |
-|---|---|---|---|---|---|---|---|
-| **0 · Defaults (the honest finding)** | 253 providers, $49 ARPA, 5 % churn | ≈ $720 | ≈ 2 / 0.6 | ≈ $1 200 | $784 | **0.7** | 31 months |
-| **A · Growth engine** (recommended framing, D21) | the base machine is bundled by the platform; its return is counted in managed pages and families, not in upgrades | ≈ $720 + $120 content | ≈ 2 managing; ≈ 32 new families a month from content at 1.5 families per post (assumption) | — | — | content: **$4 per new family against $6 expected value** (thin, positive, measured by the connected channel); each managing provider answers enquiries within the hour instead of losing 62 % of calls | — |
-| **B · Larger catalogue** | 1 000 providers, same rates and prices | cost mostly fixed tooling | ≈ 8 / 2 | **< $400** | $784 | **≈ 2** | ≈ 10 months |
-| **C · Higher ARPA, lower churn** | mix ARPA $89 (camp placement $149/season in the mix), annual plans → churn 3 % | as 0 | as 0 | ≈ $1 200 (253) · < $400 (1 000) | **$2 373** | **≈ 2 (253) · ≈ 6 (1 000)** | 17 months (253) · 6 months (1 000) |
-
-Reading: outbound e-mail alone, on today's catalogue and sample prices, does not pay for itself
-— the model says so and the presentation says so. The machine pays as the platform's growth
-engine (A) from day one, and as a profit centre once the catalogue grows (B) or the products are
-priced for the category (C); the platform decides which, and each is one input on the Economics
-screen.
-
-**The family side (the marketing value the platform is building).** An avid family — saved ≥ 3
-providers, opens the digest, has asked a provider — is worth ≈ $813 a year to the providers it
-reaches (2 trials × 40 % enrolment × $1 016) and ≈ $42 a year to the platform at a 5 % capture
-plus referrals (assumptions until measured). At 5 000 families and 15 % avid, that is ≈ $610 k a
-year of provider revenue flowing through the platform's introductions — the number the upgrade
-products are priced against.
-
-## 6. Sensitivity (what moves the answer most)
-
-| Input | −50 % | Default | +50 % / top decile | Effect on LTV : CAC (scenario 0 → B) |
+| Tier | Includes | Price / month | Run cost / month | Contribution |
 |---|---|---|---|---|
-| Reply rate | 2.75 % | 5.5 % | 10.7 % (top decile) | 0.35 → 1.3 at 253; the largest lever the machine controls (propensity order, the family's ask as a touch, the call list) |
-| Applied → managing → upgraded | 0.5× | 40 % · 80 % · 25 % | 1.5× | linear in CAC; measured from the first cohort (R16, at 100 observations) |
-| Monthly churn | 7 % | 5 % | 3 % | LTV $560 → $784 → $1 307; annual plans are the lever |
-| ARPA | $29 | $49 | $89 | LTV $464 → $784 → $1 424; the platform's pricing decision |
-| Catalogue size | 253 | 253 | 1 000 | CAC $1 200 → < $400; the fixed tooling is spread |
+| **Machine** | all departments with template drafting, the pipeline, conversations, the human gate, the recap, one instance | **$249** | ≈ $60 | ≈ $190 (76 %) |
+| **Machine + AI** | + AI drafting per department, the clip engine, generated media with credentials | **$449** | ≈ $90 (AI and transcription) | ≈ $360 (80 %) |
+| **Second instance** | another brand or platform on the same account | + $149 | ≈ $60 | ≈ $90 |
 
-## 7. Break-even
+Anchors: the tools replaced ($200–400 stacked), Yelp Receptionist ($99 for one job), the
+category's SMB SaaS norms. Churn hypothesis 5 % / month (SMB SaaS 3–7 %), annual plans at 3 %.
 
-- **Growth engine (A)**: the run cost at pilot (≈ $60 a month) is covered by **two** upgraded
-  providers at $49; at the sizing target (≈ $340 a month) by **eight**.
-- **Profit centre (B or C)**: LTV : CAC crosses 3 : 1 at roughly 1 000 providers with ARPA ≈ $70
-  and churn ≤ 4 % — or at 253 providers only with ARPA ≥ $135 and churn ≤ 3 %.
-- **Build cost**: recovered from upgrades alone only in B or C; in A it is the platform's
-  investment in becoming the source that gets cited and the place families come back to —
-  measured as new families per post, managed pages and answered enquiries from the first sprint.
+## 5. The product's economics by customer count (hypothesis prices, pilot run cost)
 
-## 8. What we need from the client, and when
+| Customers (Machine + AI mix 50/50) | MRR | Contribution / month | Months to recover a $136 k build | Months to recover $85 k |
+|---|---|---|---|---|
+| 1 (the first customer) | $349 | ≈ $275 − $45 shared ≈ $230 | — (a reference customer, not a business) | — |
+| 5 | $1 745 | ≈ $1 330 | ≈ 100 | ≈ 64 |
+| 20 | $6 980 | ≈ $5 450 | ≈ 25 | ≈ 16 |
+| 50 | $17 450 | ≈ $13 700 | ≈ 10 | ≈ 6 |
+| 100 | $34 900 | ≈ $27 500 | ≈ 5 | ≈ 3 |
 
-Nothing before the decision. After it: the postal address, the privacy-policy paragraph, the
-policy record confirmed and counsel's wording before the first real message; the opted-in share,
-the analytics events, the write key and a pilot provider before the keyed release; the personas,
-the integrations and the money model confirmed at acceptance (`19-implementation-prerequisites.md`).
+Reading: the product is a business at **twenty to fifty customers**; the first customer is the
+reference case that proves the machine on real data and pays the run cost. The unit is
+attractive — a 76–80 % contribution margin on a subscription that replaces a $200–400 stack and
+a person's week — and the customer acquisition cost for the product itself is the open number:
+the product's own machine will run its own sales flow (research II §5's sequences, the same
+pipeline), and the first measured CAC is one cohort away.
 
-## 9. The decision
+## 6. The customer's case (what an operator pays and gets)
 
-Go ahead with the build (sprint 0 starts on the decision; Meta's review is submitted the same
-week), or do not. The first measured numbers — reply rate, families per post, enquiries answered
-— arrive at the end of sprint 2 and replace the assumptions above on the Economics screen.
+| Line | Value | Basis |
+|---|---|---|
+| Pays | $249 or $449 / month | §4 |
+| Replaces | $200–400 / month of single-job tools | research II §4 |
+| Time | seven departments' output for ≈ 20 minutes of approvals a day (≈ 7 h / month) against the ≈ 10–20 h / week a one-person operator spends on sales and marketing — or does not spend | hypothesis; the product measures the operator's hours from its own events (audit A10) |
+| Response time | every enquiry drafted within a minute, answered within the hour; the single largest revenue lever in a small business | research I §2 |
+| Pipeline | every prospect scored and touched three times in order; reply rate benchmark 5.5 % top-quartile, 10.7 % top-decile | research II §5 |
+| Content | the week's posts, digest and clips from material that already exists; cost per new audience member measured per post | research II §3 |
+| Control and exposure | nothing sent without approval; one policy record and a gate; an audit trail on every send | `18-responsible-data-policy-framework.md` |
+
+Break-even for the customer: one enquiry a month answered that would otherwise have been lost,
+in any category where a customer is worth more than the subscription.
+
+## 7. The first customer's instance (measured; the worked example)
+
+ClassScout runs Your Field NYC, a children's-activity marketplace: prospects are the listed
+providers, the audience is families. The prototype runs on 253 of their providers pulled from
+their public API (their catalogue is far larger; the pull is the demo's data, not their
+situation). What the product's own model already told them, at their sample prices ($49 ARPA,
+5 % churn) and the benchmark reply rate: outbound e-mail alone to that pull returns **0.7** of its
+cost (CAC ≈ $1 200 against LTV $784; payback 31 months), and it turns positive as their catalogue
+grows (≈ 2 at 1 000 prospects), as their products are priced for a category where families spend
+$1 016 per child (≈ 6), or as the machine is treated as their growth engine (a new family for
+≈ $4 against ≈ $6 of expected value; ≈ $610 k a year of provider revenue through their
+introductions at 5 000 families). Every input is on their Economics screen; the first measured
+numbers replace the assumptions at the end of sprint 2. That the product tells its customer this
+is the product.
+
+## 8. Sensitivity (the product)
+
+| Input | Pessimistic | Hypothesis | Optimistic | Effect |
+|---|---|---|---|---|
+| Price (Machine) | $149 | $249 | $349 | contribution per customer $90 → $190 → $290 |
+| Churn / month | 7 % | 5 % | 3 % | customer lifetime 14 → 20 → 33 months; LTV at $249: $2 700 → $3 800 → $6 300 |
+| Run cost per instance | $120 | $60 | $40 | margin 52 % → 76 % → 84 % |
+| Customers at month 12 | 5 | 20 | 50 | build recovered in ≈ 100 / 25 / 10 months (at $136 k) |
+| Product CAC | $2 000 | $1 000 | $500 | LTV : CAC at hypothesis 1.9 → 3.8 → 7.6 |
+
+## 9. What we need, and when
+
+From the owner: the price (from the hypothesis), the developer rate, the go. From the first
+customer, after the decision: a postal address for the legal footer, one privacy-policy
+paragraph (drafted by us), the policy record confirmed, counsel's wording; later their analytics
+events, a write key and a pilot prospect (`19-implementation-prerequisites.md`).
+
+## 10. The decision
+
+Build the product and run it for the first customer. The product's own first cohort — reply
+rate, enquiries answered, audience per post, the operator's hours — is measured by the machine
+itself from sprint 2 and replaces every hypothesis on this page.

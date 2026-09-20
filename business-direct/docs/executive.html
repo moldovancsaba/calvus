@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>business.direct — executive summary for ClassScout — business.direct docs</title>
+<title>business.direct — executive summary — business.direct docs</title>
 <link rel="stylesheet" href="../assets/tokens.css">
 <style>/* business.direct — documentation pages on the product tokens (GDS roles, teal accent). */
 :root{--ground:var(--gds-bg-canvas,#f8fafc);--card:var(--gds-bg-surface,#fff);--ink:var(--gds-text-body,#111827);--text:#1f2937;--muted:var(--gds-text-meta,#64748b);--accent:var(--gds-brand-accent,#0f766e);--accent-deep:var(--gds-brand-accent-strong,#115e59);--line:var(--gds-border-card,#e2e8f0);--line-soft:#eef2f7;--note:var(--gds-brand-accent-tint,#e6f4f2)}
@@ -37,61 +37,52 @@ footer{margin-top:56px;padding-top:18px;border-top:1px solid var(--line);font-si
 <body>
 <div class="wrap">
 <nav class="docnav" aria-label="Project documentation"><span class="docnav-brand">business.direct · docs</span><a href="index.html">Overview</a><a href="brief.html">Brief</a><a href="research.html">Research</a><a href="research-2.html">Research II</a><a href="research-3.html">Research III</a><a href="research-4.html">Research IV</a><a href="research-5.html">Research V</a><a href="research-6.html">Research VI</a><a href="audit.html">Audit</a><a href="sources.html">Sources</a><a href="design-system.html">Design system</a><a href="layouts.html">Layouts</a><a href="05-layout-specs.html">Layout specs</a><a href="decisions.html">Decisions</a><a href="build-log.html">Build log</a><a href="gate.html">Gate</a><a href="client-asks.html">Register of asks</a><a href="implementation-prerequisites.html">Prerequisites</a><a href="business-logic.html">Business logic</a><a href="ssot.html">SSOT</a><a href="architecture.html">Architecture</a><a href="technical-design.html">Technical design</a><a href="implementation-plan.html">Plan</a><a href="system-blueprint.html">System blueprint</a><a href="documentation-audit.html">Documentation audit</a><a href="token-map.html">Token map</a><a href="executive.html" aria-current=page>Executive summary</a><a href="business-case.html">Business case</a><a href="analytics.html">Analytics</a><a href="audit-swot.html">Audit · SWOT</a><a href="policy-framework.html">Policy framework</a></nav>
-<header><p class="eyebrow">Calvus · business.direct · project documentation</p><h1>business.direct — executive summary for ClassScout</h1></header>
-<p><em>One page for the decision-maker. What it supports: the decision to build. Every figure is
-measured on the platform's public API, sourced in the research, or marked as an assumption to
-be replaced by the platform's own numbers; the full case is <a href="business-case.html"><code>22-business-case.md</code></a>, the plan
-<a href="implementation-plan.html"><code>13-implementation-plan.md</code></a>. Written 2026-09-20 (D38).</em></p>
+<header><p class="eyebrow">Calvus · business.direct · project documentation</p><h1>business.direct — executive summary</h1></header>
+<p><em>One page for the decision-maker — the owner deciding to build, a prospect deciding to become a
+customer. Every figure is sourced in the research, measured by the prototype, or marked as a
+hypothesis; the case is <a href="business-case.html"><code>22-business-case.md</code></a>, the plan <a href="implementation-plan.html"><code>13-implementation-plan.md</code></a>. Written
+2026-09-20 (D39).</em></p>
 <h2>The situation</h2>
-<p>Your Field NYC has gathered 253 children's-activity providers and built the tools families use
-to save and plan. <strong>None of the 253 manages its page</strong>; the cards carry 0 reviews and 28 prices;
-83 next sessions, 72 trial policies and 26 announcements sit on them unpublished; families who
-save a provider are told nothing when something starts near them. The platform has the supply
-and the demand and no team working either side.</p>
+<p>In every small business, marketplace and one-founder company one person is the whole sales
+and marketing department — research, content, distribution, creative, leads and conversations,
+reviews, results — while also running the business. The tools they can buy each do one job
+(a scheduler, a clip cutter, an answering service, a CRM) and leave the person to be the team.</p>
 <h2>The complication</h2>
-<p>Small providers lose the enquiries the platform sends them — 62 % of calls to small businesses
-go unanswered, and the customer buys from whoever answers first. Discovery is moving to social
-and to AI answers that cite reviewed, structured sources — which a catalogue without reviews or
-prices is not. The category's money ($1 016 per child per sport, up 46 % in five years) flows
-past a platform whose providers are unmanaged. And the incumbents already sell the fix: Yelp
-bought Hatch for $270 M and charges $99 a month for "answer, follow up, convert".</p>
+<p>Doing it alone loses the money where it is made: 62 % of calls to small businesses go
+unanswered and 78 % of customers buy from whoever answers first; a lead is 21× more likely to
+qualify in the first five minutes; follow-up — where reply rates triple — is the message that
+never gets sent; content that is not published does not exist in a market that now searches
+social and AI answers first. The incumbents see it: Yelp paid $270 M for Hatch and sells one
+piece of the job for $99 a month.</p>
 <h2>The question</h2>
-<p>How does a platform with no sales team and no content team turn 253 listings into managed
-pages, paying providers and families who come back — without breaking the law, a parent's
-trust or its own privacy policy?</p>
-<h2>The answer</h2>
-<p><strong>business.direct</strong>: a marketing and sales machine the platform runs on its own data. Two
-flows at the front door — real content that brings families to the listing page, and a lawful,
-capped invitation sequence that brings providers to manage their page — and behind them the
-provider's own one-person team (conversations answered within the hour, campaigns to the
-families who saved it, clips from one recording, results on one screen) and the platform's
-reach products offered once the machine has delivered more than they cost. One loop decides
-where the next dollar goes; <strong>a person approves everything</strong>; every message says why it was
-sent; a child is an age, never a name.</p>
+<p>How does one person run a seven-department sales and marketing team every day — without
+hiring, without losing control of what goes out under their name, and without breaking the
+law or their customers' trust?</p>
+<h2>The answer — business.direct</h2>
+<p>A standalone product: the departments as automations; the operator's voice, rules and offers
+as plain files the machine reads before every draft; two flows at the front door (marketing
+that brings the audience in, sales that works every prospect through a pipeline); conversations
+answered within the hour; a human gate on everything — it drafts, it cannot send, it stops and
+asks; one loop that turns events into metrics and ranks the next dollar; a Monday recap. Simple
+mode for the operator with twenty minutes, Advanced for the professional. Responsible by
+design for every customer: one policy record and a gate in the code, a child an age and never a
+name, no dark patterns, disclosure when a machine made something.</p>
 <h2>The three numbers</h2>
 <ol>
-<li><strong>Today's honest finding: LTV : CAC 0.7.</strong> Outbound e-mail alone, on 253 providers at $49,
-   does not pay for itself. The machine pays as the platform's growth engine from day one
-   (a new family for ≈ $4 against ≈ $6 of expected value; ≈ $610 k a year of provider revenue
-   through the platform's introductions at 5 000 families), and as a profit centre at 1 000
-   providers (LTV : CAC ≈ 2) or priced for the category (≈ 6).</li>
-<li><strong>Seventeen weeks, two developers</strong>, nine sprints with an acceptance test each; Meta's
-   review submitted in the first week.</li>
-<li><strong>≈ $50–75 a month to run at pilot</strong>, ≈ $280–400 at 1 000 providers — every vendor's price
-   read on the day; covered by two upgraded providers at pilot.</li>
+<li><strong>$249 / $449 a month per operator instance</strong> (pricing hypothesis, anchored on the $200–400
+   stack it replaces), at a run cost of ≈ $50–75 — a 76–80 % contribution margin. The product
+   is a business at twenty to fifty customers.</li>
+<li><strong>Seventeen weeks, two developers</strong>: nine sprints, an acceptance test at each, every service
+   verified, seventeen modules specified with pseudo code.</li>
+<li><strong>First customer: ClassScout (Your Field NYC).</strong> The prototype runs on their real data; its
+   own model already told them the honest thing — outbound e-mail alone on that data returns 0.7
+   of its cost, and which three inputs turn it — which is what a customer buys: a team that
+   tells the truth about the next dollar.</li>
 </ol>
-<h2>What is different</h2>
-<p>Responsible by design for every client — one policy record and a gate in the code, no
-profiling of minors, no dark patterns, disclosure when a machine made something; two
-interfaces — Simple shows what needs you with one button, Advanced shows everything; honest
-data — 253 real providers, every figure labelled real, sample or assumption, an audit that
-found and fixed its own contradictions.</p>
 <h2>The decision</h2>
-<p>Go ahead. Nothing is needed from ClassScout before it; what the build needs after it — the
-postal address, one privacy-policy paragraph, the policy record confirmed, counsel's wording,
-later the platform's events and a pilot provider — is a checklist with owners and dates
-(<a href="implementation-prerequisites.html"><code>19-implementation-prerequisites.md</code></a>). The first measured numbers replace the assumptions at
-the end of sprint 2.</p>
+<p>Build the product and run it for the first customer. Sprint 0 starts on the decision; the
+first measured cohort replaces every hypothesis on this page at the end of sprint 2. The price
+is set from the hypothesis before the first invoice.</p>
 <footer>Source: <code>business-direct/docs/15-executive-summary.md</code> · rendered by <code>docs/build.py</code>.</footer>
 </div>
 </body>
