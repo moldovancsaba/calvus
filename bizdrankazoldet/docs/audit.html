@@ -14,8 +14,13 @@ code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.86em;bac
 th{text-align:left;font-weight:700;background:var(--bg);padding:10px 12px;border-bottom:1px solid var(--line);font-size:12px;letter-spacing:.04em;text-transform:uppercase;color:var(--muted)}td{padding:10px 12px;border-top:1px solid var(--line);vertical-align:top}
 pre{overflow-x:auto;padding:14px 16px;border:1px solid var(--line);border-radius:10px;background:var(--surface);font-size:12px;line-height:1.35}
 footer{margin-top:48px;padding-top:16px;border-top:1px solid var(--line);font-size:12px;color:var(--muted)}
+
+.frames{display:grid;gap:24px;margin:16px 0 24px}figure{margin:0}figcaption{font-size:13px;color:var(--muted);margin-bottom:8px}
+.scale-p{width:100%;max-width:390px;aspect-ratio:390/844;position:relative;overflow:hidden;border:1px solid var(--line);border-radius:14px;background:#fff}.scale-p iframe{position:absolute;top:0;left:0;width:390px;height:844px;border:0;transform-origin:0 0;transform:scale(calc(min(100vw - 32px, 390px) / 390))}
+.scale-d{width:100%;aspect-ratio:1440/900;position:relative;overflow:hidden;border:1px solid var(--line);border-radius:14px;background:#fff}.scale-d iframe{position:absolute;top:0;left:0;width:1440px;height:900px;border:0;transform-origin:0 0;transform:scale(calc((min(100vw - 32px, 78ch * 1)) / 1440))}
+@media(min-width:1024px){.scale-d iframe{transform:scale(calc(78ch / 1440))}}
 </style></head>
-<body><div class="wrap"><nav class="docnav" aria-label="Project documentation"><span class="docnav-brand">Bízd ránk a zöldet · docs</span><a href="index.html">Overview</a><a href="brief.html">Brief</a><a href="research.html">Research</a><a href="audit.html" aria-current=page>Audit</a><a href="sources.html">Sources</a></nav>
+<body><div class="wrap"><nav class="docnav" aria-label="Project documentation"><span class="docnav-brand">Bízd ránk a zöldet · docs</span><a href="index.html">Overview</a><a href="brief.html">Brief</a><a href="research.html">Research</a><a href="audit.html" aria-current=page>Audit</a><a href="sources.html">Sources</a><a href="design-system.html">Design system</a><a href="05-layout-specs.html">Layouts</a><a href="decisions.html">Decisions</a><a href="build-log.html">Build log</a><a href="gate.html">Gate</a><a href="bemutato.html">Bemutató (HU)</a></nav>
 <header><p class="eyebrow">Calvus · Bízd ránk a zöldet · project documentation</p><h1>Bízd ránk a zöldet — audit of the starting point</h1></header>
 <p><em>Measured 2026-09-20 with <code>curl</code> (the site) and the browser pane (Instagram, behind a cookie and
 login wall). Every number is what the tool returned; nothing is estimated.</em></p>

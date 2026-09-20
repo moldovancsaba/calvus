@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Build log — Bízd ránk a zöldet docs</title><style>:root{--bg:#f6f8f4;--surface:#fff;--text:#1d2a22;--muted:#5d6b62;--line:#dfe6dc;--accent:#0f7f74;--accent-2:#3a8f3f}
+*{box-sizing:border-box}body{margin:0;font-family:Inter,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;background:var(--bg);color:var(--text);font-size:15.5px;line-height:1.6;padding:0 clamp(16px,4vw,40px) 64px}
+.wrap{max-width:78ch;margin:0 auto}
+.docnav{display:flex;flex-wrap:wrap;gap:4px 14px;align-items:center;padding:14px 0;border-bottom:1px solid var(--line);font-size:12px;letter-spacing:.06em;text-transform:uppercase}
+.docnav a{color:var(--accent);text-decoration:none;min-height:44px;display:inline-flex;align-items:center;font-weight:700}.docnav a[aria-current]{border-bottom:2px solid var(--accent)}
+.docnav-brand{font-weight:800;color:var(--text);margin-right:8px}
+header .eyebrow{margin:28px 0 6px;font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);font-weight:700}
+h1{font-size:clamp(28px,5vw,40px);line-height:1.1;margin:0 0 14px;letter-spacing:-.01em}h2{font-size:22px;margin:44px 0 10px;padding-top:18px;border-top:1px solid var(--line)}h3{font-size:17px;margin:26px 0 8px}
+p{margin:0 0 12px}li{margin:4px 0}strong{font-weight:700}em{color:var(--muted)}a{color:var(--accent)}
+code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.86em;background:#e9efe7;padding:1px 5px;border-radius:5px;overflow-wrap:anywhere}
+.tbl{overflow-x:auto;margin:12px 0 20px;border:1px solid var(--line);border-radius:12px;background:var(--surface)}table{border-collapse:collapse;width:100%;font-size:13.5px;min-width:560px}
+th{text-align:left;font-weight:700;background:var(--bg);padding:10px 12px;border-bottom:1px solid var(--line);font-size:12px;letter-spacing:.04em;text-transform:uppercase;color:var(--muted)}td{padding:10px 12px;border-top:1px solid var(--line);vertical-align:top}
+pre{overflow-x:auto;padding:14px 16px;border:1px solid var(--line);border-radius:10px;background:var(--surface);font-size:12px;line-height:1.35}
+footer{margin-top:48px;padding-top:16px;border-top:1px solid var(--line);font-size:12px;color:var(--muted)}
+
+.frames{display:grid;gap:24px;margin:16px 0 24px}figure{margin:0}figcaption{font-size:13px;color:var(--muted);margin-bottom:8px}
+.scale-p{width:100%;max-width:390px;aspect-ratio:390/844;position:relative;overflow:hidden;border:1px solid var(--line);border-radius:14px;background:#fff}.scale-p iframe{position:absolute;top:0;left:0;width:390px;height:844px;border:0;transform-origin:0 0;transform:scale(calc(min(100vw - 32px, 390px) / 390))}
+.scale-d{width:100%;aspect-ratio:1440/900;position:relative;overflow:hidden;border:1px solid var(--line);border-radius:14px;background:#fff}.scale-d iframe{position:absolute;top:0;left:0;width:1440px;height:900px;border:0;transform-origin:0 0;transform:scale(calc((min(100vw - 32px, 78ch * 1)) / 1440))}
+@media(min-width:1024px){.scale-d iframe{transform:scale(calc(78ch / 1440))}}
+</style></head>
+<body><div class="wrap"><nav class="docnav" aria-label="Project documentation"><span class="docnav-brand">Bízd ránk a zöldet · docs</span><a href="index.html">Overview</a><a href="brief.html">Brief</a><a href="research.html">Research</a><a href="audit.html">Audit</a><a href="sources.html">Sources</a><a href="design-system.html">Design system</a><a href="05-layout-specs.html">Layouts</a><a href="decisions.html">Decisions</a><a href="build-log.html" aria-current=page>Build log</a><a href="gate.html">Gate</a><a href="bemutato.html">Bemutató (HU)</a></nav>
+<header><p class="eyebrow">Calvus · Bízd ránk a zöldet · project documentation</p><h1>Build log</h1></header>
+<h2>Round 1 — 2026-09-20 — the prototype, seven pages (D1–D9)</h2>
+<p><strong>Built.</strong> <code>build.py</code> generates seven Hungarian pages from one content source: <code>index.html</code>,
+<code>irodai-novenyek.html</code>, <code>novenygondozas.html</code>, <code>novenyberles.html</code>, <code>referenciak.html</code>,
+<code>arak.html</code>, <code>rolunk.html</code>, <code>ajanlat.html</code>. Shared blocks: the proof band, the three offers,
+the guarantee with the care rhythm and the response promise, the packages with "-tól" prices,
+the four steps, the references (before/after), the team, the Instagram strip, the FAQ (the
+client's own questions plus the guarantee and the response time), the quote form with the photo
+drop zone. The character in four states. <code>LocalBusiness</code> JSON-LD with the three offers and the
+Instagram / Grofie <code>sameAs</code>. No JavaScript beyond the menu sheet and the inert form.</p>
+<p><strong>Measured</strong> (browser pane, cache-busted).
+- Phone 390: <code>index.html</code> scrollWidth 390, one <code>h1</code>, no element past the viewport, no console errors; every button ≥ 48 px; the two inline phone links were 16 and 38 px tall and were raised to 44 px (<code>.promise a</code>, <code>.imp a</code>).
+- Desktop 1440: scrollWidth 1440, the header navigation shown and the dock hidden, one <code>h1</code>, no console errors; the guarantee heading reduced to 30 px so the three lists sit beside it.
+- Weight: <code>index.html</code> 29 KB HTML, one stylesheet inline, one token file, two Google Fonts families, no images (the character is inline SVG) — against the client's live 292 KB and 51 scripts.</p>
+<p><strong>Sample, declared</strong>: prices, references, team names, the Google rating, the impresszum's fields.</p>
+<h2>Round 2 — 2026-09-20 — the client's own material (D5, D6, D10)</h2>
+<p><strong>Changed.</strong> The owner rejected round 1's look as generic ("Claude AI design") and asked for the
+client's real photos, videos and visual elements. Rebuilt: the tokens are now the site's Elementor
+kit (colours, Baloo 2 / Roboto Slab / Roboto, the 50 px pill); sixteen real installation
+photographs, the logo and the hand-drawn illustration set pulled from the client's uploads into
+<code>assets/img/</code> (alpha preserved, photographs at 1600 and 800 wide); the four Instagram Reels
+embedded; the invented character, the shadowed cards, the uppercase eyebrow labels and the emoji
+removed; a "Spoiler" section with the client's planters-with-faces photograph. Grammar pass on
+every string.</p>
+<p><strong>Measured</strong> (browser pane, cache-busted, fresh navigation).
+- Phone 390: scrollWidth 390, one <code>h1</code>, 15 images all loading, no console errors; every tap target ≥ 44 px after the brand link and the footer phone were raised.
+- Desktop 1440: scrollWidth 1440, one <code>h1</code>, no target under 44 px, no console errors; transferred weight 1.65 MB with the four Instagram embeds (each loads Instagram's own scripts) — the page's own assets are ≈ 0.5 MB; the embeds are <code>loading="lazy"</code>.</p>
+<footer>Source: <code>bizdrankazoldet/docs/06-build-log.md</code> · rendered by <code>docs/build.py</code>.</footer></div></body></html>

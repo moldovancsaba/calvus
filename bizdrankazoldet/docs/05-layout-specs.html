@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Layout specifications — phone 390 and desktop 1440 — Bízd ránk a zöldet docs</title><style>:root{--bg:#f6f8f4;--surface:#fff;--text:#1d2a22;--muted:#5d6b62;--line:#dfe6dc;--accent:#0f7f74;--accent-2:#3a8f3f}
+*{box-sizing:border-box}body{margin:0;font-family:Inter,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;background:var(--bg);color:var(--text);font-size:15.5px;line-height:1.6;padding:0 clamp(16px,4vw,40px) 64px}
+.wrap{max-width:78ch;margin:0 auto}
+.docnav{display:flex;flex-wrap:wrap;gap:4px 14px;align-items:center;padding:14px 0;border-bottom:1px solid var(--line);font-size:12px;letter-spacing:.06em;text-transform:uppercase}
+.docnav a{color:var(--accent);text-decoration:none;min-height:44px;display:inline-flex;align-items:center;font-weight:700}.docnav a[aria-current]{border-bottom:2px solid var(--accent)}
+.docnav-brand{font-weight:800;color:var(--text);margin-right:8px}
+header .eyebrow{margin:28px 0 6px;font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);font-weight:700}
+h1{font-size:clamp(28px,5vw,40px);line-height:1.1;margin:0 0 14px;letter-spacing:-.01em}h2{font-size:22px;margin:44px 0 10px;padding-top:18px;border-top:1px solid var(--line)}h3{font-size:17px;margin:26px 0 8px}
+p{margin:0 0 12px}li{margin:4px 0}strong{font-weight:700}em{color:var(--muted)}a{color:var(--accent)}
+code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.86em;background:#e9efe7;padding:1px 5px;border-radius:5px;overflow-wrap:anywhere}
+.tbl{overflow-x:auto;margin:12px 0 20px;border:1px solid var(--line);border-radius:12px;background:var(--surface)}table{border-collapse:collapse;width:100%;font-size:13.5px;min-width:560px}
+th{text-align:left;font-weight:700;background:var(--bg);padding:10px 12px;border-bottom:1px solid var(--line);font-size:12px;letter-spacing:.04em;text-transform:uppercase;color:var(--muted)}td{padding:10px 12px;border-top:1px solid var(--line);vertical-align:top}
+pre{overflow-x:auto;padding:14px 16px;border:1px solid var(--line);border-radius:10px;background:var(--surface);font-size:12px;line-height:1.35}
+footer{margin-top:48px;padding-top:16px;border-top:1px solid var(--line);font-size:12px;color:var(--muted)}
+
+.frames{display:grid;gap:24px;margin:16px 0 24px}figure{margin:0}figcaption{font-size:13px;color:var(--muted);margin-bottom:8px}
+.scale-p{width:100%;max-width:390px;aspect-ratio:390/844;position:relative;overflow:hidden;border:1px solid var(--line);border-radius:14px;background:#fff}.scale-p iframe{position:absolute;top:0;left:0;width:390px;height:844px;border:0;transform-origin:0 0;transform:scale(calc(min(100vw - 32px, 390px) / 390))}
+.scale-d{width:100%;aspect-ratio:1440/900;position:relative;overflow:hidden;border:1px solid var(--line);border-radius:14px;background:#fff}.scale-d iframe{position:absolute;top:0;left:0;width:1440px;height:900px;border:0;transform-origin:0 0;transform:scale(calc((min(100vw - 32px, 78ch * 1)) / 1440))}
+@media(min-width:1024px){.scale-d iframe{transform:scale(calc(78ch / 1440))}}
+</style></head>
+<body><div class="wrap"><nav class="docnav" aria-label="Project documentation"><span class="docnav-brand">Bízd ránk a zöldet · docs</span><a href="index.html">Overview</a><a href="brief.html">Brief</a><a href="research.html">Research</a><a href="audit.html">Audit</a><a href="sources.html">Sources</a><a href="design-system.html">Design system</a><a href="05-layout-specs.html" aria-current=page>Layouts</a><a href="decisions.html">Decisions</a><a href="build-log.html">Build log</a><a href="gate.html">Gate</a><a href="bemutato.html">Bemutató (HU)</a></nav>
+<header><p class="eyebrow">Calvus · Bízd ránk a zöldet · project documentation</p><h1>Layout specifications — phone 390 and desktop 1440</h1></header>
+<p><em>Gate 2. Two designed experiences, not one layout reflowed (D2): the phone is where the buyer
+arrives from Instagram; the desktop is where the decision is checked from Google or LinkedIn.
+Each is specified at its reference size; tablet (768–1023) resolves between them. The frames
+below are the built pages at the two sizes — the prototype is its own frame.</em></p>
+<div class="frames">
+<figure><figcaption>Phone · 390 — <a href="../index.html">open the page</a></figcaption><div class="scale-p"><iframe src="../index.html" title="Phone frame, 390 wide" loading="lazy"></iframe></div></figure>
+<figure><figcaption>Desktop · 1440 — <a href="../index.html">open the page</a></figcaption><div class="scale-d"><iframe src="../index.html" title="Desktop frame, 1440 wide" loading="lazy"></iframe></div></figure>
+</div>
+
+<h2>Shared rules</h2>
+<ul>
+<li>Palette and type from <code>../assets/tokens.css</code> — the client's kit: primary <code>#007982</code>, secondary <code>#66F5FF</code>, text <code>#0F3F43</code>, accent <code>#B3FF66</code>, the pale lime and cyan tints; Baloo 2 for titles and the funny line, Roboto Slab for subheads, Roboto for everything else. Every photograph and illustration is the client's (<code>../assets/img/</code>).</li>
+<li>Breakpoints: phone ≤ 767 (designed at 390), tablet 768–1023, desktop ≥ 1024 (designed at 1440). Each has its own navigation and its own hero composition.</li>
+<li>One <code>h1</code> per page; 44 px minimum on every tap target; every number that is the client's to give is badged <em>minta</em>.</li>
+<li>The order of every page: hook → proof → offer → guarantee → price → process → references → people → questions → the quote form. Proof before persuasion on every device.</li>
+</ul>
+<h2>Phone · 390 — Instagram-first</h2>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>Block</th>
+<th>Composition</th>
+<th>Why</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Banner + header</td>
+<td>the prototype banner; the badge, the wordmark, a <em>Menü</em> button opening a sheet with the six pages and the quote link</td>
+<td>one thumb, one hand</td>
+</tr>
+<tr>
+<td>Hero</td>
+<td>a real photograph full-width at 4 : 5, then the kicker, the <code>h1</code> in Baloo 2 at 36 px (15 ch), the lede, two full-width buttons (photos → quote; prices)</td>
+<td>the office first, the joke second, the action within reach</td>
+</tr>
+<tr>
+<td>Proof band</td>
+<td>teal, 2 × 2 numbers, one line naming the parent</td>
+<td>the parent's ten years in the first screen and a half</td>
+</tr>
+<tr>
+<td>Offers</td>
+<td>three stacked offers: a real photograph at 3 : 2, the funny line, the professional sentence, a text link</td>
+<td>scan by thumb</td>
+</tr>
+<tr>
+<td>Guarantee</td>
+<td>the pale-cyan block: the client's care-ring illustration, the rule, two lists stacked</td>
+<td>the reliability promise, readable in one scroll</td>
+</tr>
+<tr>
+<td>Packages</td>
+<td>three stacked cards, the middle one highlighted; "-tól" prices badged <em>minta</em></td>
+<td>the price the category hides</td>
+</tr>
+<tr>
+<td>Steps, references, team, Instagram, FAQ, form</td>
+<td>single column; references as before/after halves; FAQ as <code>details</code>; the form in one column with the photo drop zone</td>
+<td>the journey in the order it happens</td>
+</tr>
+<tr>
+<td>Dock</td>
+<td>fixed bottom bar: "3 fotó → ajánlat 2 munkanapon belül" + a call button; 88 px of bottom padding on <code>main</code></td>
+<td>the one action, always one tap away</td>
+</tr>
+</tbody>
+</table></div>
+<h2>Desktop · 1440 — Google/LinkedIn-first</h2>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>Block</th>
+<th>Composition</th>
+<th>Why</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Header</td>
+<td>badge and wordmark left, six pages centre, "Kérek ajánlatot" right; the sheet and the dock are gone</td>
+<td>the decision-maker checks the menu first</td>
+</tr>
+<tr>
+<td>Hero</td>
+<td>two columns without a gutter: the photograph 640 px tall on the left, the <code>h1</code> at 62 px (13 ch), the lede and two buttons on the right</td>
+<td>the office and the joke, side by side</td>
+</tr>
+<tr>
+<td>Proof band</td>
+<td>four numbers at 40 px in one row, the parent named beneath</td>
+<td>proof before the persuasion, above the fold with the hero</td>
+</tr>
+<tr>
+<td>Offers</td>
+<td>three photographs in a row, 28 px funny lines</td>
+<td>the three doors at once</td>
+</tr>
+<tr>
+<td>Guarantee</td>
+<td>260 px + three columns: the care-ring illustration, the rule, the two lists</td>
+<td>the promise and its mechanism on one screen</td>
+</tr>
+<tr>
+<td>Packages</td>
+<td>three columns, the middle one raised; 34 px prices</td>
+<td>the comparison the buyer came for</td>
+</tr>
+<tr>
+<td>Steps</td>
+<td>four columns, the client's step icons above the text</td>
+<td>the process as one line</td>
+</tr>
+<tr>
+<td>References, team, Instagram</td>
+<td>three photographs, three people, four embedded Reels</td>
+<td>proof in breadth</td>
+</tr>
+<tr>
+<td>Form</td>
+<td>two columns with the photo drop zone and the message full-width; the promise next to the button</td>
+<td>quick to complete at a desk</td>
+</tr>
+</tbody>
+</table></div>
+<h2>Tablet · 768–1023</h2>
+<p>Two- and three-column grids where they fit, the phone navigation and the dock kept, the hero as two columns with the photograph beside the copy.</p>
+<footer>Source: <code>bizdrankazoldet/docs/05-layout-specs.md</code> · rendered by <code>docs/build.py</code>.</footer></div></body></html>

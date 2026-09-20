@@ -1,0 +1,18 @@
+/* Bízd ránk a zöldet — design tokens (gate 1): the client's own Elementor kit, read from the live site 2026-09-20. */
+:root{
+  --bz-primary:#007982;     /* e-global-color-primary */
+  --bz-secondary:#66F5FF;   /* e-global-color-secondary — the cyan brush ring */
+  --bz-text:#0F3F43;        /* e-global-color-text */
+  --bz-accent:#B3FF66;      /* e-global-color-accent — the lime of the logo's leaf */
+  --bz-lime-tint:#F2FFE5;   /* the kit's pale lime */
+  --bz-cyan-tint:#E5FDFF;   /* the kit's pale cyan */
+  --bz-peach:#FFBC7D;       /* the kit's peach */
+  --bz-white:#FFFFFF;
+  --bz-grey:#F4F2F0;        /* the site's warm grey */
+  --bz-line:#D0D5D2;        /* the site's rule colour */
+  --bz-muted:#4E6A66;
+  --bz-display:"Baloo 2","Roboto Slab",Georgia,serif;   /* the kit's playful display face */
+  --bz-slab:"Roboto Slab",Georgia,serif;                  /* the kit's heading face */
+  --bz-sans:"Roboto","Open Sans",system-ui,sans-serif;    /* the kit's body face */
+  --bz-pill:50px;                                         /* the site's own button radius */
+}

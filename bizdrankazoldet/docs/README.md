@@ -15,6 +15,12 @@ sell through its customer journey; then prototype it. Built to the prototyping s
 | `01-research.md` | the research: trust, reliability, identity, the customer journey, the green-claims rules, the competitors; proposals P1–P12 |
 | `02-audit.md` | the site, the Instagram account, the parent brand and five competitors, measured |
 | `03-sources.md` | what is real and what is sample |
+| `design-system.html` | gate 1: the client's own kit — colours, faces, illustrations, photographs, the button — one source (`../assets/tokens.css`) |
+| `05-layout-specs.md` | gate 2: phone 390 and desktop 1440 as two designed experiences; the built pages as the frames |
+| `04-decisions.md` | D1–D10 |
+| `06-build-log.md` | the rounds, measured |
+| `07-gate.md` + `../check.py` | what the gate checks |
+| `bemutato.html` | the client presentation, in Hungarian: what was measured, what the research says, the proposed structure, phone and desktop, the identity, what is real, the one decision |
 
 Rendered by `build.py` (`python3 bizdrankazoldet/docs/build.py`); gate `python3 bizdrankazoldet/check.py`
 (also run by the root `check.py`).
@@ -36,5 +42,13 @@ on Hungarian channels (Facebook 6.97 M, Instagram 2.74 M, LinkedIn for the decis
 EU green-claims rules from 27 September 2026 — and wrote the journey step by step and twelve
 proposals.
 
-**Next.** The owner reads `01-research.md` and says "direction approved" (or corrects it); then
-the design system (gate 1) from the badge, the teal, the voice.
+**2026-09-20 — the prototype, two rounds (D1–D10).** The owner: "create the best possible version of
+the page, with the Holdvölgy initiative of different phone and desktop experiences, and the
+presentation for the client on why we propose the new site and structure". Round 1 was rejected
+as generic AI design; round 2 rebuilt everything from the client's own material — the Elementor
+kit's colours and fonts, sixteen real installation photographs, the logo and the hand-drawn
+illustrations, the Reels embedded — and passed a Hungarian grammar check. Seven pages generated
+from one source; measured at 390 and 1440; the presentation in Hungarian.
+
+**Next.** The client's material for the samples: three references with names, the team's names
+and faces, the package prices, the impresszum's data, the Google Business Profile.

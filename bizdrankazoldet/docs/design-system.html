@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Design system — Bízd ránk a zöldet docs</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700;800&family=Roboto+Slab:wght@500;600&family=Roboto:wght@400;500;700&display=swap">
+<link rel="stylesheet" href="../assets/tokens.css"><link rel="stylesheet" href="docs.css">
+<style>.sw{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px}.sw div{border:1px solid var(--line);border-radius:12px;overflow:hidden;background:#fff}.sw i{display:block;height:64px}.sw b{display:block;padding:8px 10px;font-size:12px}.sw span{display:block;padding:0 10px 10px;font-size:11px;color:var(--muted)}
+.demo{background:var(--bz-ground);border:1px solid var(--line);border-radius:12px;padding:20px;margin:12px 0 20px;font-family:var(--bz-sans);color:var(--bz-soil)}.demo h1,.demo h2,.demo h3{font-family:var(--bz-display);font-weight:600;line-height:1.08;margin:0 0 8px}
+.btn{display:inline-flex;align-items:center;justify-content:center;min-height:48px;padding:12px 20px;border-radius:999px;background:var(--bz-teal);color:#fff;text-decoration:none;font-weight:700;border:0;font-size:15px;margin:4px 6px 4px 0}.btn.alt{background:#fff;color:var(--bz-teal-deep);border:2px solid var(--bz-teal)}.btn.sun{background:var(--bz-sun);color:var(--bz-soil)}
+.sample{display:inline-block;font-size:11px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;background:var(--bz-leaf-soft);color:var(--bz-teal-deep);padding:3px 8px;border-radius:999px}
+.gallery{display:flex;flex-wrap:wrap;gap:20px;align-items:flex-end}.gallery img{display:block}.gallery figure{margin:0;text-align:center;font-size:12px}
+.card{background:#fff;border:1px solid var(--bz-line);border-radius:14px;padding:18px;box-shadow:0 10px 30px rgba(31,42,36,.08);max-width:320px}.card .fun{font-family:var(--bz-display);font-size:22px;line-height:1.15;margin:0 0 8px}.card .pro{color:var(--bz-muted);font-size:14.5px;margin:0 0 12px}
+.proof{background:var(--bz-teal);color:#fff;padding:18px;border-radius:12px;display:grid;grid-template-columns:repeat(4,1fr);gap:12px}.proof b{display:block;font-family:var(--bz-display);font-size:28px;line-height:1}.proof span{font-size:12px}
+</style></head>
+<body><div class="wrap">
+<nav class="docnav" aria-label="Project documentation"><span class="docnav-brand">Bízd ránk a zöldet · docs</span><a href="index.html">Overview</a><a href="brief.html">Brief</a><a href="research.html">Research</a><a href="audit.html">Audit</a><a href="sources.html">Sources</a><a href="design-system.html" aria-current="page">Design system</a><a href="05-layout-specs.html">Layouts</a><a href="decisions.html">Decisions</a><a href="build-log.html">Build log</a><a href="gate.html">Gate</a><a href="bemutato.html">Bemutató (HU)</a></nav>
+<header><p class="eyebrow">Calvus · Bízd ránk a zöldet · gate 1</p><h1>Design system — the client's own kit, one source</h1></header>
+<p><em>Nothing here is invented: the colours are the site's Elementor global colours, the fonts the kit's families, the illustrations and photographs the client's own uploads, the button shape the site's 50 px pill. The tokens are <code>assets/tokens.css</code>; the site, this page and the presentation load the same file. Approved with the build (D1, D6).</em></p>
+
+<h2>1. Colour — the kit's global colours (read from the live site 2026-09-20)</h2>
+<div class="sw">
+<div><i style="background:var(--bz-primary)"></i><b>primary #007982</b><span>buttons, links, headlines on white</span></div>
+<div><i style="background:var(--bz-secondary)"></i><b>secondary #66F5FF</b><span>the cyan brush ring of the illustrations; the "minta" badge</span></div>
+<div><i style="background:var(--bz-text)"></i><b>text #0F3F43</b><span>body text; the footer</span></div>
+<div><i style="background:var(--bz-accent)"></i><b>accent #B3FF66</b><span>the leaf of the logo; the proof band's rules; the banner</span></div>
+<div><i style="background:var(--bz-lime-tint)"></i><b>pale lime #F2FFE5</b><span>the proof band, the form, the highlighted package</span></div>
+<div><i style="background:var(--bz-cyan-tint)"></i><b>pale cyan #E5FDFF</b><span>the guarantee block</span></div>
+<div><i style="background:var(--bz-peach)"></i><b>peach #FFBC7D</b><span>in the kit; reserved</span></div>
+<div><i style="background:var(--bz-grey)"></i><b>warm grey #F4F2F0</b><span>embeds' placeholder</span></div>
+</div>
+<p><em>Contrast: primary on white 5.3 : 1; text on white 12.6 : 1; text on pale lime 11.4 : 1; white on primary 5.3 : 1; text on accent 9.1 : 1 — all ≥ 4.5 : 1 (computed from the hex values).</em></p>
+
+<h2>2. Type — the kit's families</h2>
+<div class="demo"><h1 style="font-size:44px;font-family:var(--bz-display);color:var(--bz-primary)">Irodai növények azoknak, akik már nyírtak ki kaktuszt</h1><h3 style="font-family:var(--bz-slab);font-size:22px">Ne a gyakornok locsoljon</h3><p style="font-size:17px;color:var(--bz-muted)">Baloo 2 (700) for the funny line and every page title — the kit's playful display face; Roboto Slab (600) for subheads and the FAQ questions; Roboto (400–700) for everything else. Three families, all the client's.</p></div>
+
+<h2>3. The client's own visual material</h2>
+<p>The logo (the hand with the leaf), the hand-drawn illustration set in the kit's lime and cyan (the plant cloud, the three step icons, the care ring, the checklist doodle, the two icons), the planters with faces — the client's own way of being silly — and sixteen real photographs of the team's installations. All in <code>../assets/img/</code>, alpha preserved, photographs resized to 1600 and 800 wide.</p>
+<div class="gallery">
+<figure><img src="../assets/img/logo-kez.png" alt="The logo: a hand with a leaf" width="120" style="background:var(--bz-primary);padding:12px;border-radius:12px"><figcaption>the logo</figcaption></figure>
+<figure><img src="../assets/img/ill-gondozas-kor.png" alt="Plant in a pot with the care icons around it" width="110"><figcaption>the care ring</figcaption></figure>
+<figure><img src="../assets/img/ill-lepesek.png" alt="Three step icons" width="50"><figcaption>the steps</figcaption></figure>
+<figure><img src="../assets/img/ill-noveny-felho.png" alt="Plant cloud illustration" width="130"><figcaption>the plant cloud</figcaption></figure>
+<figure><img src="../assets/img/ill-checklist.png" alt="Checklist doodle" width="90"><figcaption>the checklist</figcaption></figure>
+<figure><img src="../assets/img/kaspok-arcokkal-800.jpg" alt="Planters with faces" width="200" style="border-radius:8px"><figcaption>the planters with faces — the silly, theirs</figcaption></figure>
+</div>
+
+<h2>4. Components</h2>
+<div class="demo"><a class="btn" href="#">Küldj el 3 fotót az irodáról</a><a class="btn alt" href="#">Nézd meg az árakat</a> <span class="sample">minta</span><p style="font-size:13px;color:var(--bz-muted);margin:8px 0 0">Buttons: the site's own 50 px pill, primary teal, one primary per view; the "minta" badge (the kit's cyan) marks every number that is the client's to replace.</p></div>
+<div class="demo"><div class="proof" style="background:var(--bz-lime-tint);color:var(--bz-text);border-top:3px solid var(--bz-accent);border-bottom:3px solid var(--bz-accent);border-radius:0"><div><b style="color:var(--bz-primary)">10+</b><span>év</span></div><div><b style="color:var(--bz-primary)">100+</b><span>projekt</span></div><div><b style="color:var(--bz-primary)">30+</b><span>iroda gondozás alatt</span></div><div><b style="color:var(--bz-primary)">100%</b><span>örökzöld garancia</span></div></div><p style="font-size:13px;color:var(--bz-muted);margin:8px 0 0">The proof band — the parent brand's numbers on the kit's pale lime between two lime rules, on every page after the hero (P1, P2).</p></div>
+<div class="demo"><article style="max-width:320px"><img src="../assets/img/asztalok-kaspok-800.jpg" alt="" style="aspect-ratio:3/2;object-fit:cover;width:100%"><p style="font-family:var(--bz-display);font-size:24px;line-height:1.1;margin:10px 0 6px;color:var(--bz-primary)">Ne a gyakornok locsoljon</p><p style="color:var(--bz-muted);margin:0 0 6px">Kéthetente vagy hetente jövünk: víz, tápanyag, metszés.</p><a href="#" style="font-weight:700;color:var(--bz-primary);text-decoration:none">Növénygondozás →</a></article><p style="font-size:13px;color:var(--bz-muted);margin:8px 0 0">The offer: a real photograph, the funny line in Baloo 2, the professional sentence in Roboto, a text link — no card, no shadow (P8).</p></div>
+
+<h2>5. Rules that never move</h2>
+<ul><li>Nothing invented: every colour, face, illustration and photograph is the client's; a new element is drawn in their illustration style or not at all.</li><li>One <code>h1</code> per page; the funny line is always followed by the professional sentence.</li><li>44 px minimum on every tap target; the phone has a fixed quote dock, the desktop a header button.</li><li>Every number that is not the client's is badged <span class="sample">minta</span>.</li><li>"Zöld" means plants — no environmental claim on any page (P12).</li></ul>
+<footer>Source: <code>bizdrankazoldet/docs/design-system.html</code> (hand-written) · tokens <code>assets/tokens.css</code>.</footer>
+</div></body></html>

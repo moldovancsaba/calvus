@@ -3,7 +3,7 @@
 Run from anywhere:  python3 bizdrankazoldet/docs/build.py   (needs the `markdown` package)."""
 import re, pathlib, markdown
 HERE = pathlib.Path(__file__).parent
-PAGES = [("README.md", "index.html", "Overview"), ("00-brief.md", "brief.html", "Brief"), ("01-research.md", "research.html", "Research"), ("02-audit.md", "audit.html", "Audit"), ("03-sources.md", "sources.html", "Sources")]
+PAGES = [("README.md", "index.html", "Overview"), ("00-brief.md", "brief.html", "Brief"), ("01-research.md", "research.html", "Research"), ("02-audit.md", "audit.html", "Audit"), ("03-sources.md", "sources.html", "Sources"), ("05-layout-specs.md", "05-layout-specs.html", "Layouts"), ("04-decisions.md", "decisions.html", "Decisions"), ("06-build-log.md", "build-log.html", "Build log"), ("07-gate.md", "gate.html", "Gate")]
 CSS = (HERE / "docs.css").read_text(encoding="utf-8")
 for src, out, label in PAGES:
     md = (HERE / src).read_text(encoding="utf-8")
@@ -11,6 +11,7 @@ for src, out, label in PAGES:
     body = markdown.markdown(md, extensions=["tables", "sane_lists", "fenced_code"]).replace("<table>", '<div class="tbl"><table>').replace("</table>", "</table></div>")
     for s, o, _ in PAGES: body = body.replace(f"<code>{s}</code>", f'<a href="{o}"><code>{s}</code></a>')
     nav = "".join(f'<a href="{o}"{" aria-current=page" if o == out else ""}>{l}</a>' for _, o, l in PAGES)
+    nav = nav.replace('<a href="05-layout-specs.html"', '<a href="design-system.html">Design system</a><a href="05-layout-specs.html"', 1) + '<a href="bemutato.html">Bemutató (HU)</a>'
     html = f"""<!DOCTYPE html>
 <html lang="en">
 <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>{title} — Bízd ránk a zöldet docs</title><style>{CSS}</style></head>

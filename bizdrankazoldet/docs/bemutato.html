@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Bízd ránk a zöldet — miért javasolunk új oldalt és szerkezetet</title>
+<meta name="description" content="Bemutató a Bízd ránk a zöldet csapatának: mit mér a mostani oldal, mi hiányzik, mit mond a kutatás 2026-ról, és milyen új szerkezetet javaslunk — telefonra és asztali gépre külön megtervezve.">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700;800&family=Roboto+Slab:wght@500;600&family=Roboto:wght@400;500;700&display=swap">
+<link rel="stylesheet" href="../assets/tokens.css">
+<style>
+*{box-sizing:border-box}body{margin:0;background:var(--bz-white);color:var(--bz-text);font:16px/1.6 var(--bz-sans)}a{color:inherit}img,svg{max-width:100%;height:auto}
+.wrap{width:min(100% - 32px,1040px);margin-inline:auto}
+.hero{background:var(--bz-primary);color:#fff;padding:36px 0 32px}.hero .eyebrow{color:#DCEBD2}.hero h1{font-family:var(--bz-display);font-size:clamp(30px,5.5vw,52px);line-height:1.05;margin:0 0 12px;max-width:22ch}.hero p{max-width:64ch;font-size:17px;opacity:.95;margin:0}
+.eyebrow{font-size:12px;letter-spacing:.08em;text-transform:uppercase;font-weight:800;color:var(--bz-primary);margin:0 0 8px}
+.nums{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px;margin:24px 0 0}.num{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);border-radius:14px;padding:16px 18px}.num b{display:block;font-family:var(--bz-display);font-size:30px;line-height:1}.num span{font-size:13px;opacity:.9}
+section{padding:40px 0 8px}h2{font-family:var(--bz-display);font-size:clamp(24px,3.6vw,36px);line-height:1.08;margin:0 0 8px}.lede{color:var(--bz-muted);max-width:66ch;margin:0 0 20px;font-size:16px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px}.card{background:#fff;border:1px solid var(--bz-line);border-radius:14px;padding:20px}.card h3{font-family:var(--bz-display);font-size:19px;margin:0 0 8px}.card p,.card li{font-size:14.5px;margin:0 0 8px}.card ul{margin:0;padding-left:18px}
+.tbl{overflow-x:auto;border:1px solid var(--bz-line);border-radius:12px;background:#fff;margin:8px 0 16px}table{border-collapse:collapse;width:100%;font-size:13.5px;min-width:560px}th{text-align:left;background:var(--bz-white);padding:10px 12px;font-size:12px;letter-spacing:.04em;text-transform:uppercase;color:var(--bz-muted)}td{padding:10px 12px;border-top:1px solid var(--bz-line);vertical-align:top}
+.btn{display:inline-flex;align-items:center;justify-content:center;min-height:48px;padding:10px 18px;border-radius:999px;background:var(--bz-primary);color:#fff;text-decoration:none;font-weight:700;font-size:14px;margin:4px 6px 4px 0}.btn.alt{background:#fff;color:var(--bz-primary);border:2px solid var(--bz-primary)}
+.two{display:grid;grid-template-columns:1fr;gap:16px}@media(min-width:860px){.two{grid-template-columns:390px 1fr;align-items:start}}
+.phone{width:100%;max-width:390px;aspect-ratio:390/760;position:relative;overflow:hidden;border-radius:18px;border:1px solid var(--bz-line);background:#fff}.phone iframe{position:absolute;top:0;left:0;width:390px;height:1400px;border:0;transform-origin:0 0;transform:scale(calc(var(--pw,390) / 390));pointer-events:none}
+.desk{width:100%;aspect-ratio:1440/900;position:relative;overflow:hidden;border-radius:14px;border:1px solid var(--bz-line);background:#fff}.desk iframe{position:absolute;top:0;left:0;width:1440px;height:900px;border:0;transform-origin:0 0;transform:scale(calc(var(--dw,1000) / 1440));pointer-events:none}
+.decision{background:var(--bz-text);color:#fff;border-radius:14px;padding:26px 24px;margin:16px 0}.decision h2{color:#fff}.decision p{color:#DCE5DD}
+footer{margin:40px 0 24px;padding-top:16px;border-top:1px solid var(--bz-line);font-size:12px;color:var(--bz-muted)}footer a{display:inline-flex;align-items:center;min-height:44px}
+</style>
+</head>
+<body>
+<header class="hero"><div class="wrap">
+<p class="eyebrow">Bemutató · Bízd ránk a zöldet · 2026</p>
+<h1>A hang már megvan. Ami hiányzik, az a bizonyíték, az ár és a folyamat.</h1>
+<p>A bizdrankazoldet.hu ma az a ritka cégoldal, amelyik jól ír: „irodai növények azoknak, akik már nyírtak ki kaktuszt” — ezt nem kell újraírni. Amit nem mutat meg: ki csinálja (tíz év Grofie-tapasztalat), mi történik, ha egy növény elpusztul (garancia), mennyibe kerül (ár), és mikor jön a válasz (két munkanap). A javasolt új oldal ezt a négy hiányt tölti ki — a mostani hangon, telefonra és asztali gépre külön megtervezve.</p>
+<div class="nums">
+<div class="num"><b>10,5 mp</b><span>a mostani oldal első betöltése hideg gyorsítótárral (mértük); Instagramról érkező telefonon ez egy elvesztett látogató</span></div>
+<div class="num"><b>0</b><span>ár, értékelés, garancia, impresszum és referencianév a mostani oldalon — és a versenytársak öt oldalán is</span></div>
+<div class="num"><b>10+ év</b><span>a Grofie tapasztalata, 100+ projekt, 30+ gondozott iroda, 100 % örökzöld garancia — ma egyik sincs az új márka oldalán</span></div>
+</div>
+</div></header>
+
+<main class="wrap">
+<section>
+<p class="eyebrow">1 · Mit mértünk</p>
+<h2>A mostani oldal és az Instagram, számokkal</h2>
+<div class="grid">
+<article class="card"><h3>Az oldal</h3><ul><li>WordPress + Elementor: 292 KB HTML, 51 szkript, 24 stíluslap — négy-ötszöröse annak, amire egy ilyen oldalnak szüksége van</li><li>Első betöltés: 10,5 másodperc hideg gyorsítótárral, 0,04–0,09 mp melegen — a gyorsítótár lejár, és az első látogató vár</li><li>Nincs ár, nincs értékelés, nincs garancia, nincs impresszum (cégnév, székhely, cégjegyzékszám — a törvény kéri), nincs Instagram-link</li><li>A referenciák képek felirat és név nélkül; 16 képből 10 alt szöveg nélkül; két <code>h1</code></li></ul></article>
+<article class="card"><h3>Az Instagram</h3><ul><li>@bizdrankazoldet: 70 követő, három hete indult, négy Reel — a hang már ott van</li><li>Nincs bizonyíték-formátum (előtte/utána, gondozási kör, ügyfél irodája), és az oldal nem linkel vissza</li></ul></article>
+<article class="card"><h3>A versenytársak (öt oldal)</h3><ul><li>CityPlant, Plantart, Greenin, Bloom and Go, Arborica: egyik sem ír árat, egyik sem mutat értékelést, egyik sem mond garanciát, egyik sem mond válaszidőt</li><li>A kategória a „kérj ajánlatot”-ra épül — aki először ír árat és garanciát, az nyeri az összehasonlítást</li></ul></article>
+</div>
+</section>
+
+<section>
+<p class="eyebrow">2 · Mit mond a kutatás 2026-ról</p>
+<h2>Bizalom, megbízhatóság, identitás, ügyfélút</h2>
+<div class="grid">
+<article class="card"><h3>Bizalom = bizonyíték, korán</h3><p>A B2B vevők 61 %-a szívesebben dönt úgy, hogy nem beszél értékesítővel (Gartner, 2025) — az oldal győz meg. A döntéshozók 73 %-a a szakértői tartalmat hihetőbbnek tartja a marketingnél (Edelman–LinkedIn). Nevek, arcok, számok, garancia, ár.</p></article>
+<article class="card"><h3>Megbízhatóság = ígéret mechanizmussal</h3><p>Az Ambius, a kategória globális vezetője, díjmentesen cseréli a növényt az élettartama végén és havi szolgáltatásban garantálja az állapotát. A Grofie „100 % örökzöld garanciája” ugyanez — csak ki kell írni. Mellé a látogatás ritmusa, tartalma és a válaszidő.</p></article>
+<article class="card"><h3>Identitás = a vicc a problémáról, sosem az ügyfélről</h3><p>A humor B2B-ben működik, ha a termékről szól (Journal of Business Research, 2025; a vicces hirdetés 28 %-kal erősebb kötődést hoz — Magna × LinkedIn). Kell hozzá az ügyfél saját rajzi világa és szabályok, hogy az oldalon, a Reelsben és az ajánlat PDF-jén ugyanaz legyen.</p></article>
+<article class="card"><h3>Ügyfélút = rövid és fotózott</h3><p>Instagram → az oldal telefonon → „küldj három fotót” → látványterv és ajánlat két munkanapon belül → telepítés egy délelőtt → látható gondozás → értékelés és ajánlás. Magyarországon 6,97 M Facebook- és 2,74 M Instagram-felhasználó; a döntés LinkedInen és Google-ön születik.</p></article>
+<article class="card"><h3>A „zöld” szó</h3><p>2026. szeptember 27-től az EU tiltja az általános környezeti állításokat bizonyíték nélkül. Nálunk a zöld növényt jelent — ezt az oldal egy mondatban ki is mondja, és nem ígér klímasemleges irodát.</p></article>
+</div>
+<a class="btn alt" href="research.html">A teljes kutatás (angolul, forrásokkal)</a><a class="btn alt" href="audit.html">A mérések</a>
+</section>
+
+<section>
+<p class="eyebrow">3 · Mit javaslunk</p>
+<h2>Hét oldal, egy sorrend, két külön megtervezett élmény</h2>
+<p class="lede">Minden oldal ugyanabban a sorrendben mondja el: a horog → a bizonyíték → az ajánlat → a garancia → az ár → a folyamat → a referenciák → az emberek → a kérdések → az űrlap. A bizonyíték mindig a meggyőzés előtt jön.</p>
+<div class="tbl"><table><thead><tr><th>Oldal</th><th>Mit tölt ki</th></tr></thead><tbody>
+<tr><td><b>Főoldal</b></td><td>a mostani főcím és hang; a Grofie számai a második képernyőn; a három ajánlat; a garancia szabályként; „-tól” árak; négy lépés; referenciák előtte/utána; a csapat; GYIK; az űrlap fotófeltöltéssel</td></tr>
+<tr><td><b>Irodai növények · Növénygondozás · Növénybérlés</b></td><td>a három szolgáltatás egy-egy oldalon, a mostani szövegek legjobb soraival, a garanciával és a GYIK odaillő kérdéseivel</td></tr>
+<tr><td><b>Referenciák</b></td><td>irodák előtte és utána, névvel és egy mondattal az irodavezetőtől; Google-értékelések bekötve</td></tr>
+<tr><td><b>Árak és folyamat</b></td><td>csomagok „-tól” árakkal (a kategória egyetlen árat sem ír), ami benne van, a garancia, a négy lépés</td></tr>
+<tr><td><b>Rólunk</b></td><td>tíz év Grofie, a csapat névvel és arccal, impresszum — és a mondat, hogy a zöld növényt jelent</td></tr>
+<tr><td><b>Ajánlatkérés</b></td><td>három fotó, két munkanap; telefon a türelmetleneknek</td></tr>
+</tbody></table></div>
+</section>
+
+<section>
+<p class="eyebrow">4 · Telefonra és asztali gépre külön</p>
+<h2>Nem egy elrendezés összenyomva, hanem két megtervezett élmény</h2>
+<div class="two">
+<div><div class="phone"><iframe src="../index.html" title="Telefon, 390 px" loading="lazy" tabindex="-1"></iframe></div><p class="lede" style="margin-top:10px"><b>Telefon (Instagramról érkezik):</b> a vicc, aztán egy hüvelykujjnyira a gomb; a Grofie számai másfél képernyőn belül; alul egy rögzített sáv: „3 fotó → ajánlat 2 munkanapon belül” és a telefon. Egy oszlop, semmi menüvadászat.</p></div>
+<div><div class="desk"><iframe src="../index.html" title="Asztali gép, 1440 px" loading="lazy" tabindex="-1"></iframe></div><p class="lede" style="margin-top:10px"><b>Asztali gép (Google-ről vagy LinkedInről ellenőrzi):</b> a hat oldal a fejlécben, a karakter a főcím mellett, a bizonyíték-sáv a hajtás felett, a csomagok egymás mellett, az űrlap két oszlopban. A döntéshozó itt hasonlít össze.</p></div>
+</div>
+<a class="btn" href="../index.html">A prototípus megnyitása</a><a class="btn alt" href="design-system.html">Arculat</a><a class="btn alt" href="05-layout-specs.html">Elrendezések</a>
+</section>
+
+<section>
+<p class="eyebrow">5 · Az identitás</p>
+<h2>Az ügyfél saját arculata, nem kitalált elemek</h2>
+<p class="lede">Semmit nem találtunk ki: a színek az oldal saját arculati készletéből valók (a teal, a cián, a lime és a halvány tónusok), a betűk a készlet családjai (Baloo 2 a címekhez, Roboto Slab és Roboto), a rajzolt ikonok, a gondozási kör, a növényfelhő és az arcos kaspók az oldal saját feltöltései, a fotók a csapat valódi munkái, a videók a saját Reelek beágyazva. A vicc az ügyfél hangja és az ügyfél rajzai viszik; a szöveg szakmai marad.</p>
+</section>
+
+<section>
+<p class="eyebrow">6 · Mi valódi, mi minta</p>
+<h2>Semmit nem találunk ki, amit az ügyfél tud</h2>
+<div class="grid">
+<article class="card"><h3>Valódi</h3><p>A mostani oldal szövege és hangja; a telefonszám; az Instagram adatai; a Grofie számai és garanciája; a versenytársak mérései; minden kutatási szám a forrásával.</p></article>
+<article class="card"><h3>Minta — „minta” jelöléssel az oldalon</h3><p>Az árak, a referenciák nevei és képei, a csapat nevei, a Google-értékelés, az impresszum mezői. Az ügyfél anyagával cserélődnek; az oldal szerkezete nem változik tőlük.</p></article>
+<article class="card"><h3>Nem küld semmit</h3><p>Az űrlap, a telefon-gomb és a linkek prototípus-állapotban vannak; senkit nem keresünk meg.</p></article>
+</div>
+</section>
+
+<section>
+<div class="decision"><p class="eyebrow" style="color:#DCEBD2">7 · Amit ma kérünk</p><h2>Egy döntés: ezen az úton menjünk tovább</h2><p>Ha igen, a következő lépés az ügyfél anyaga: három iroda fotói előtte/utána névvel, a csapat nevei és arcai, a csomagárak, az impresszum adatai, a Google Cégprofil — és a karakter neve. Ezek kitöltik a mintákat; a szerkezet és a hang marad.</p></div>
+</section>
+
+<footer>Calvus · Bízd ránk a zöldet · <a href="index.html">projektdokumentáció</a> · <a href="research.html">kutatás</a> · <a href="audit.html">mérések</a> · <a href="decisions.html">döntések</a></footer>
+</main>
+<script>(function(){function f(){document.querySelectorAll('.phone').forEach(function(e){e.style.setProperty('--pw',e.clientWidth)});document.querySelectorAll('.desk').forEach(function(e){e.style.setProperty('--dw',e.clientWidth)})}f();addEventListener('resize',f)})();</script>
+</body>
+</html>

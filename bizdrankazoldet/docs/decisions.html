@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Decisions — Bízd ránk a zöldet docs</title><style>:root{--bg:#f6f8f4;--surface:#fff;--text:#1d2a22;--muted:#5d6b62;--line:#dfe6dc;--accent:#0f7f74;--accent-2:#3a8f3f}
+*{box-sizing:border-box}body{margin:0;font-family:Inter,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;background:var(--bg);color:var(--text);font-size:15.5px;line-height:1.6;padding:0 clamp(16px,4vw,40px) 64px}
+.wrap{max-width:78ch;margin:0 auto}
+.docnav{display:flex;flex-wrap:wrap;gap:4px 14px;align-items:center;padding:14px 0;border-bottom:1px solid var(--line);font-size:12px;letter-spacing:.06em;text-transform:uppercase}
+.docnav a{color:var(--accent);text-decoration:none;min-height:44px;display:inline-flex;align-items:center;font-weight:700}.docnav a[aria-current]{border-bottom:2px solid var(--accent)}
+.docnav-brand{font-weight:800;color:var(--text);margin-right:8px}
+header .eyebrow{margin:28px 0 6px;font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);font-weight:700}
+h1{font-size:clamp(28px,5vw,40px);line-height:1.1;margin:0 0 14px;letter-spacing:-.01em}h2{font-size:22px;margin:44px 0 10px;padding-top:18px;border-top:1px solid var(--line)}h3{font-size:17px;margin:26px 0 8px}
+p{margin:0 0 12px}li{margin:4px 0}strong{font-weight:700}em{color:var(--muted)}a{color:var(--accent)}
+code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.86em;background:#e9efe7;padding:1px 5px;border-radius:5px;overflow-wrap:anywhere}
+.tbl{overflow-x:auto;margin:12px 0 20px;border:1px solid var(--line);border-radius:12px;background:var(--surface)}table{border-collapse:collapse;width:100%;font-size:13.5px;min-width:560px}
+th{text-align:left;font-weight:700;background:var(--bg);padding:10px 12px;border-bottom:1px solid var(--line);font-size:12px;letter-spacing:.04em;text-transform:uppercase;color:var(--muted)}td{padding:10px 12px;border-top:1px solid var(--line);vertical-align:top}
+pre{overflow-x:auto;padding:14px 16px;border:1px solid var(--line);border-radius:10px;background:var(--surface);font-size:12px;line-height:1.35}
+footer{margin-top:48px;padding-top:16px;border-top:1px solid var(--line);font-size:12px;color:var(--muted)}
+
+.frames{display:grid;gap:24px;margin:16px 0 24px}figure{margin:0}figcaption{font-size:13px;color:var(--muted);margin-bottom:8px}
+.scale-p{width:100%;max-width:390px;aspect-ratio:390/844;position:relative;overflow:hidden;border:1px solid var(--line);border-radius:14px;background:#fff}.scale-p iframe{position:absolute;top:0;left:0;width:390px;height:844px;border:0;transform-origin:0 0;transform:scale(calc(min(100vw - 32px, 390px) / 390))}
+.scale-d{width:100%;aspect-ratio:1440/900;position:relative;overflow:hidden;border:1px solid var(--line);border-radius:14px;background:#fff}.scale-d iframe{position:absolute;top:0;left:0;width:1440px;height:900px;border:0;transform-origin:0 0;transform:scale(calc((min(100vw - 32px, 78ch * 1)) / 1440))}
+@media(min-width:1024px){.scale-d iframe{transform:scale(calc(78ch / 1440))}}
+</style></head>
+<body><div class="wrap"><nav class="docnav" aria-label="Project documentation"><span class="docnav-brand">Bízd ránk a zöldet · docs</span><a href="index.html">Overview</a><a href="brief.html">Brief</a><a href="research.html">Research</a><a href="audit.html">Audit</a><a href="sources.html">Sources</a><a href="design-system.html">Design system</a><a href="05-layout-specs.html">Layouts</a><a href="decisions.html" aria-current=page>Decisions</a><a href="build-log.html">Build log</a><a href="gate.html">Gate</a><a href="bemutato.html">Bemutató (HU)</a></nav>
+<header><p class="eyebrow">Calvus · Bízd ránk a zöldet · project documentation</p><h1>Decisions</h1></header>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>#</th>
+<th>Date</th>
+<th>Decision</th>
+<th>Source</th>
+<th>Effect</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>D1</td>
+<td>2026-09-20</td>
+<td><strong>Direction approved by the owner's "create the best possible version"</strong>: the research's twelve proposals (P1–P12) are the brief of the build; the prototype is built on them without a separate approval round</td>
+<td>owner</td>
+<td>stages 3–7 in one round</td>
+</tr>
+<tr>
+<td>D2</td>
+<td>2026-09-20</td>
+<td><strong>Two designed experiences</strong> (the Holdvölgy initiative, D5 there): phone ≤ 767 designed at 390 — Instagram-first, one column, a fixed quote dock; desktop ≥ 1024 designed at 1440 — Google/LinkedIn-first, the proof band with the hero, the header button; tablet resolves between</td>
+<td>owner: "use the structure and initiative we made for Holdvölgy"</td>
+<td><a href="05-layout-specs.html"><code>05-layout-specs.md</code></a></td>
+</tr>
+<tr>
+<td>D3</td>
+<td>2026-09-20</td>
+<td><strong>The structure</strong>: home + three service pages (irodai növények, növénygondozás, növénybérlés) + Referenciák + Árak és folyamat + Rólunk (with the impresszum) + Ajánlatkérés; every page in the same order — hook → proof → offer → guarantee → price → process → references → people → questions → form</td>
+<td>the research's journey (§4) and the audit's gaps</td>
+<td>seven pages generated from one source (<code>build.py</code>)</td>
+</tr>
+<tr>
+<td>D4</td>
+<td>2026-09-20</td>
+<td><strong>The voice rule</strong>: funny about the problem, never the customer; every funny line is followed by the professional sentence; the client's own lines are kept where they exist ("azoknak, akik már nyírtak ki kaktuszt", "Ne a gyakornok locsoljon", "amíg a kávéfőző sem végleges")</td>
+<td>research §3, P8</td>
+<td>every card on the site</td>
+</tr>
+<tr>
+<td>D5</td>
+<td>2026-09-20</td>
+<td><strong>The client's own visual material, nothing invented</strong> (owner, after the first round: no generic AI design elements; real photos, videos and visual elements from the source): sixteen real installation photographs, the logo, the hand-drawn illustration set (the care ring, the step icons, the plant cloud, the checklist) and the planters with faces from bizdrankazoldet.hu; the brand's own Reels embedded from Instagram. The first round's invented SVG character was removed</td>
+<td>owner</td>
+<td><code>assets/img/</code>, <code>build.py</code></td>
+</tr>
+<tr>
+<td>D6</td>
+<td>2026-09-20</td>
+<td><strong>Tokens = the client's Elementor kit</strong>, read from the live site: primary #007982, secondary #66F5FF, text #0F3F43, accent #B3FF66, the pale lime and cyan tints, peach; Baloo 2 / Roboto Slab / Roboto; the site's own 50 px pill buttons; contrast ≥ 4.5 : 1 on every pair used</td>
+<td>gate 1</td>
+<td><code>assets/tokens.css</code></td>
+</tr>
+<tr>
+<td>D7</td>
+<td>2026-09-20</td>
+<td><strong>The proof is the parent's</strong>: the proof band carries Grofie's numbers (10+ years, 100+ projects, 30+ sites, 100 % evergreen guarantee) named as such; the guarantee is stated as a rule on every page; the response promise is two working days</td>
+<td>research P1, P2, P5, P7; the audit §4</td>
+<td>every page</td>
+</tr>
+<tr>
+<td>D8</td>
+<td>2026-09-20</td>
+<td><strong>Prices, references, team and reviews are sample until the client's</strong> — badged <em>minta</em> on the page, described in <a href="sources.html"><code>03-sources.md</code></a>; the impresszum's fields are placeholders for the company's data</td>
+<td>the standard's honesty rule</td>
+<td>the banner, the badges</td>
+</tr>
+<tr>
+<td>D9</td>
+<td>2026-09-20</td>
+<td><strong>"Zöld" means plants</strong>: no environmental claim anywhere on the site; the impresszum says so in one sentence</td>
+<td>research §5, P12</td>
+<td><code>rolunk.html</code></td>
+</tr>
+<tr>
+<td>D10</td>
+<td>2026-09-20</td>
+<td><strong>Hungarian grammar and wording checked</strong> across every string: indefinite object → indefinite conjugation ("Küldj el 3 fotót", not "Küldd el"), "havi 24 900 Ft-tól", "aznapi válasz", "hogy ne legyen ciki az iroda"</td>
+<td>owner: "no grammar errors"</td>
+<td><code>build.py</code></td>
+</tr>
+</tbody>
+</table></div>
+<footer>Source: <code>bizdrankazoldet/docs/04-decisions.md</code> · rendered by <code>docs/build.py</code>.</footer></div></body></html>
