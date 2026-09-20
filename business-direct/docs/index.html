@@ -24,6 +24,7 @@ h3{font-size:18px;margin:30px 0 8px;font-weight:800}
 p{margin:0 0 14px} strong{color:var(--ink);font-weight:800}
 ul,ol{padding-left:22px;margin:0 0 16px} li{margin:5px 0} li>ul{margin:6px 0 0}
 code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.86em;background:var(--note);padding:1px 5px;border-radius:4px;color:var(--ink);overflow-wrap:anywhere}
+.notice{margin:0 0 22px;padding:12px 16px;border-radius:10px;background:var(--gds-brand-accent-tint);border:1px solid var(--gds-border-card);font-size:13.5px;font-weight:600}
 pre{overflow-x:auto;padding:14px 16px;border:1px solid var(--line);border-radius:10px;background:var(--card);font-size:12px;line-height:1.35}
 pre code{background:none;padding:0;font-size:inherit}
 a{color:var(--accent-deep)} :focus-visible{outline:2px solid var(--accent-deep);outline-offset:2px}
@@ -38,6 +39,7 @@ footer{margin-top:56px;padding-top:18px;border-top:1px solid var(--line);font-si
 <div class="wrap">
 <nav class="docnav" aria-label="Project documentation"><span class="docnav-brand">business.direct · docs</span><a href="index.html" aria-current=page>Overview</a><a href="brief.html">Brief</a><a href="research.html">Research</a><a href="research-2.html">Research II</a><a href="research-3.html">Research III</a><a href="research-4.html">Research IV</a><a href="research-5.html">Research V</a><a href="research-6.html">Research VI</a><a href="audit.html">Audit</a><a href="sources.html">Sources</a><a href="design-system.html">Design system</a><a href="layouts.html">Layouts</a><a href="05-layout-specs.html">Layout specs</a><a href="decisions.html">Decisions</a><a href="build-log.html">Build log</a><a href="gate.html">Gate</a><a href="client-asks.html">Register of asks</a><a href="implementation-prerequisites.html">Prerequisites</a><a href="business-logic.html">Business logic</a><a href="ssot.html">SSOT</a><a href="architecture.html">Architecture</a><a href="technical-design.html">Technical design</a><a href="implementation-plan.html">Plan</a><a href="system-blueprint.html">System blueprint</a><a href="documentation-audit.html">Documentation audit</a><a href="token-map.html">Token map</a><a href="executive.html">Executive summary</a><a href="business-case.html">Business case</a><a href="analytics.html">Analytics</a><a href="audit-swot.html">Audit · SWOT</a><a href="policy-framework.html">Policy framework</a></nav>
 <header><p class="eyebrow">Calvus · business.direct · project documentation</p><h1>business.direct — project documentation</h1></header>
+<p class="notice" role="note"><b>This documentation set is being replaced (audit D40).</b> business.direct is a standalone product — the one-person sales and marketing team; ClassScout is its first customer. The <a href="presentation.html">presentation</a>, the <a href="executive.html">executive summary</a> and the <a href="business-case.html">business case</a> are written for the product; most other pages still read as the first instance's project until the <a href="documentation-audit.html">transformation programme</a> replaces them.</p>
 <p>An automated marketing machine for B2B2C listing platforms — the one-person sales and
 marketing team for a listed business, run by the platform, with the consumer as the
 third role. First client: <strong>ClassScout</strong>, operator of <strong>Your Field NYC</strong> (getyourfield.com);
@@ -105,7 +107,7 @@ Built to the prototyping standard (<code>PROTOTYPING.md</code>); this index is t
 <tr>
 <td>04 decisions</td>
 <td><a href="decisions.html"><code>04-decisions.md</code></a></td>
-<td>D1–D39</td>
+<td>D1–D40</td>
 </tr>
 <tr>
 <td>05 design</td>
@@ -188,9 +190,9 @@ Built to the prototyping standard (<code>PROTOTYPING.md</code>); this index is t
 <td>The document a developer builds from: drawings (context, deployment, module map, the two pipelines, the clip engine, the state machines), the repository layout, seventeen modules with what each owns and pseudo code, data contracts, the cron table, the outbox in full, security, configuration, the media worker, the test plan, operations, the prototype → module map (D37)</td>
 </tr>
 <tr>
-<td>21 documentation audit</td>
+<td>21 deep audit</td>
 <td><a href="documentation-audit.html"><code>21-documentation-audit.md</code></a></td>
-<td>The Big4-standard audit of this documentation: ten criteria, a scorecard per document, thirteen findings with evidence, root cause and fix (F0: the product presented as one customer's project), the target state, the transformation plan in four phases and what shipped (D38, D39)</td>
+<td>The deep audit of all thirty files by error class (premise, vocabulary, assumption, unverified claim, contradiction, gap, sprawl) with file-level evidence; what survives; the scorecard; the eleven-document target state; the six owner decisions; the seven-phase transformation programme (D40)</td>
 </tr>
 <tr>
 <td>22 business case</td>
@@ -390,7 +392,15 @@ one-person sales and marketing team for anybody who is their whole department; C
 the first paying user. The presentation, executive summary, business case and brief were
 rebuilt from the product outward, with a pricing hypothesis for the owner to set and the first
 customer as proof; the audit gained F0; the standard gained the product rule.</p>
-<p><strong>Next.</strong> The owner sets the price and the rate; present. After the decision, sprint 0.</p>
+<p><strong>2026-09-20 — the deep audit (D40).</strong> The owner opened one page at random and found the
+first instance's frame intact ("after the client accepts the prototype"): D38 and D39 were
+band-aids. Every file was read and classed by the kind of error; the audit names my own
+unverified vendor figures and A-grade hero numbers, the gaps a product needs (its own legal
+position, market, business model, operating model, roadmap), and a seven-phase programme with
+six decisions that are the owner's. Every rendered page now carries a replacement notice.</p>
+<p><strong>Next.</strong> The owner answers Q1–Q3 (ownership of the first instance, price and rate, code
+identifiers) and confirms the product definition (Q4); phase A (truth) and B (root) start on
+the go.</p>
 <footer>Source: <code>business-direct/docs/README.md</code> · rendered by <code>docs/build.py</code>.</footer>
 </div>
 </body>

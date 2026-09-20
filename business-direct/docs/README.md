@@ -18,7 +18,7 @@ Built to the prototyping standard (`PROTOTYPING.md`); this index is the process 
 | 01g research VI | `01g-research-real-system.md` | The real system's services verified on the day: hosting, database, cache, files, jobs, e-mail, Meta, SMS, payments, drafting, transcription, the media worker, credentials, sign-in, observability — auth, review, limits, prices, alternatives; what each needs before the first run; the monthly cost at pilot and at the sizing target; what is assumed |
 | 02 audit | `02-audit.md` | Your Field measured: API, 253 providers, field coverage, site copy, the platform's own policy and terms; the Hungarian reference instance; the two videos frame by frame; what DiscountDirect provides |
 | 03 sources | `03-sources.md` | What is real (the platform's public data), what is sample (generated from real cards), what is inherited |
-| 04 decisions | `04-decisions.md` | D1–D39 |
+| 04 decisions | `04-decisions.md` | D1–D40 |
 | 05 design | `design-system.html` + `../assets/tokens.css` + `../assets/components.css` | **Gate 1 approved (D9)**: tokens and components, one source |
 | 05 layouts | `05-layout-specs.md` + `layouts.html` + `frames/` | **Gate 2 approved (D16)**: platform 1440 / 390, provider 390, family 390; the later screens reuse the same grids |
 | 06 build log | `06-build-log.md` | Ten rounds and a re-pull: the prototype; presentation and package; editors and tablet; campaigns, upgrades, recap; conversations; economics; the research implemented; the audit implemented; the policy screen; the two interfaces; beyond children; the catalogue re-pulled |
@@ -35,7 +35,7 @@ Built to the prototyping standard (`PROTOTYPING.md`); this index is the process 
 | 17 audit · SWOT | `17-business-logic-audit-and-swot.md` | Audit of the business logic: 19 findings with fixes; the SWOT with evidence; the recommendations Q1–Q12 (adopted and implemented, D30) |
 | 18 policy framework | `18-responsible-data-policy-framework.md` | Seventeen principles, the policy record per instance, the gate (ten rows), onboarding, the client's value, two worked instances, how it generalises (D32, D35) |
 | 20 system blueprint | `20-system-blueprint.md` | The document a developer builds from: drawings (context, deployment, module map, the two pipelines, the clip engine, the state machines), the repository layout, seventeen modules with what each owns and pseudo code, data contracts, the cron table, the outbox in full, security, configuration, the media worker, the test plan, operations, the prototype → module map (D37) |
-| 21 documentation audit | `21-documentation-audit.md` | The Big4-standard audit of this documentation: ten criteria, a scorecard per document, thirteen findings with evidence, root cause and fix (F0: the product presented as one customer's project), the target state, the transformation plan in four phases and what shipped (D38, D39) |
+| 21 deep audit | `21-documentation-audit.md` | The deep audit of all thirty files by error class (premise, vocabulary, assumption, unverified claim, contradiction, gap, sprawl) with file-level evidence; what survives; the scorecard; the eleven-document target state; the six owner decisions; the seven-phase transformation programme (D40) |
 | 22 business case | `22-business-case.md` | The product's business case: the market, the cost to build and run, the pricing hypothesis, economics by customer count, the customer's case, the first customer's instance as the worked example, sensitivity, what we need, the decision (D39) |
 | 19 prerequisites | `19-implementation-prerequisites.md` | What the implementation needs from ClassScout after acceptance — before the first send, before Release 1b, to confirm at acceptance — not required for the presentation or the planning (D34) |
 
@@ -256,4 +256,13 @@ the first paying user. The presentation, executive summary, business case and br
 rebuilt from the product outward, with a pricing hypothesis for the owner to set and the first
 customer as proof; the audit gained F0; the standard gained the product rule.
 
-**Next.** The owner sets the price and the rate; present. After the decision, sprint 0.
+**2026-09-20 — the deep audit (D40).** The owner opened one page at random and found the
+first instance's frame intact ("after the client accepts the prototype"): D38 and D39 were
+band-aids. Every file was read and classed by the kind of error; the audit names my own
+unverified vendor figures and A-grade hero numbers, the gaps a product needs (its own legal
+position, market, business model, operating model, roadmap), and a seven-phase programme with
+six decisions that are the owner's. Every rendered page now carries a replacement notice.
+
+**Next.** The owner answers Q1–Q3 (ownership of the first instance, price and rate, code
+identifiers) and confirms the product definition (Q4); phase A (truth) and B (root) start on
+the go.

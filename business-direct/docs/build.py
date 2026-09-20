@@ -65,6 +65,7 @@ def render(src, out, label):
 <div class="wrap">
 <nav class="docnav" aria-label="Project documentation"><span class="docnav-brand">business.direct · docs</span>{nav}</nav>
 <header><p class="eyebrow">Calvus · business.direct · project documentation</p><h1>{title}</h1></header>
+<p class="notice" role="note"><b>This documentation set is being replaced (audit D40).</b> business.direct is a standalone product — the one-person sales and marketing team; ClassScout is its first customer. The <a href="presentation.html">presentation</a>, the <a href="executive.html">executive summary</a> and the <a href="business-case.html">business case</a> are written for the product; most other pages still read as the first instance's project until the <a href="documentation-audit.html">transformation programme</a> replaces them.</p>
 {body}
 <footer>Source: <code>business-direct/docs/{src}</code> · rendered by <code>docs/build.py</code>.</footer>
 </div>

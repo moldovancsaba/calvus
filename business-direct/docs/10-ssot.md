@@ -115,7 +115,7 @@ implementation of the enumerations and state machines below.*
 
 ## 5. Decision register
 
-`04-decisions.md` holds D1–D39. The ones the engineering documents rest on: D2 (three
+`04-decisions.md` holds D1–D40. The ones the engineering documents rest on: D2 (three
 views), D5 (DiscountDirect sibling), D6 (departments, knowledge layer, human-in-the-loop,
 optional AI, dashboard, integrations), D11 (Your Field first), D14 (two flows), D15
 (post card and pipeline strip), D17 (one page, in-memory state), D18 (sample generated
@@ -193,7 +193,7 @@ baseline since D37; the owner flips any with a decision.
 | `01-research.md` | sourced evidence, legal by market |
 | `02-audit.md` | the platform measured, the catalogue's coverage, the videos, DiscountDirect's contribution |
 | `03-sources.md` | real vs sample |
-| `04-decisions.md` | D1–D39 |
+| `04-decisions.md` | D1–D40 |
 | `05-layout-specs.md`, `design-system.html`, `layouts.html` | gates 1 and 2 |
 | `06-build-log.md`, `07-gate.md` | rounds and the measured pass |
 | `08-client-asks.md` | the register of asks, with states |
@@ -202,7 +202,7 @@ baseline since D37; the owner flips any with a decision.
 | `16-analytics-and-unit-economics.md` | CAC, LTV, avid value, content ROI, next dollar, metrics tree, events, attribution |
 | `15-executive-summary.md` | one page for the decision-maker: the product in SCQA, three numbers, the decision |
 | `22-business-case.md` | the product's cost side, the pricing hypothesis, economics by customer count, the customer's case, the first customer's instance |
-| `21-documentation-audit.md` | the documentation audited against the consulting standard; the transformation plan |
+| `21-documentation-audit.md` | the deep audit by error class; the owner's decisions; the transformation programme |
 | `18-responsible-data-policy-framework.md` | principles, the policy record, the gate, onboarding, the client's value, worked instances |
 | `10-ssot.md` (this) | terms, enumerations, entities, rules, metrics |
 | `11-architecture.md` | context, quality attributes, containers, flows, stack, ADRs |

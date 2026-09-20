@@ -1,127 +1,241 @@
-# business.direct — documentation audit and transformation plan
+# business.direct — the deep audit and the transformation programme
 
-*Written 2026-09-20 on the owner's instruction after reading the live presentation: "the
-presentation is about the client's problem, how to solve it and how we help with the solution
-we provide — nobody cares about what to push on the UI"; on the URL: no Hungarian word in a URL
-for an English-speaking client; and, after the first rewrite still centred on one customer's
-listing count: "business.direct is a standalone PRODUCT for anybody who wants a one-man army —
-ClassScout is just the first user who will pay for the service". The instruction: a Big4-level
-audit of the project's documentation and a plan to transform it from content, meaning and
-quality into an executable, result-oriented set. Every finding names the file and the sentence
-it rests on. §6 records what shipped with this document (D38, then D39 the same day).*
+*For the owner. What this document is: the audit of everything written for business.direct —
+30 files, 469 KB, the prototype's copy, the hub's rows and the standard the project followed —
+against what the product actually is, and the programme that replaces the set rather than
+patching it. What went before it: two same-day rewrites of the top layer (D38, D39) that the
+owner correctly called band-aids. The root of the damage is one wrong premise carried through
+every document from the first commit; the programme starts from the premise, not from the pages.
+Written 2026-09-20 (D40). Nothing in this document is executed yet: §7 lists the decisions that
+are the owner's, and §8 the phases that follow the go.*
 
-## 1. Scope, standard and method
+## 1. The premise that was wrong, and how it spread
 
-**Scope.** The 30 files of `business-direct/docs/` (27 rendered documents, the presentation,
-the design system and the layout frames), the project's row on the hub, and the standard the
-project followed (`PROTOTYPING.md`).
+**What the product is.** business.direct is a standalone product: the one-person sales and
+marketing team — automation for anybody who is their whole department, with a human gate.
+ClassScout (Your Field NYC) is its first paying user.
 
-**Standard applied** — what a consulting deliverable (PwC / Accenture / a bank's strategy team)
-is held to:
+**What the documentation assumed.** From the first commit (`d47e6bd`, 2026-09-19) the brief
+opened with "The owner's own product family … Your Field NYC"; D11 the same day made "Your Field
+NYC the first client"; from then on every document — brief, research, audit, business logic,
+SSOT, economics, SWOT, plan, prerequisites, presentation, hub row — was written as **a project
+to market one listing platform's providers to its families**, with the platform's vocabulary
+(platform · provider · family), the platform's monetisation (D21: "bundled by the platform,
+providers buy reach"), the platform's catalogue as "the situation", and the platform's
+competitors (Sawyer) as the threat. The product's own price, market, competitors, go-to-market,
+legal position and operating model were never written, because the documents never had a
+product as their subject.
 
-| # | Criterion | Test |
+**How it happened.** Three perception errors of mine, in sequence: (1) the only thing I could
+measure — the catalogue pull — became the story; (2) "first client" was read as "the subject";
+(3) the prototyping standard (`PROTOTYPING.md`) is a *client-site* standard (stage 0: "client,
+problem"), and I followed it literally for a product. Each later round (research II–VI, the
+audit and SWOT, the policy framework, the blueprint) inherited the premise and deepened it; the
+gate could not catch it because it checks consistency, not truth.
+
+**Why band-aids cannot fix it.** Nine of the thirty files are built on the premise in their
+structure, not in their wording (§3, class A); a further eleven carry it in their vocabulary and
+examples (class B); the prototype's roles and copy are the first instance's. Rewriting the top
+three pages (D38, D39) left the reader one click from the old frame — the owner found it on the
+first random click (`implementation-prerequisites.html`: "after the client accepts the
+prototype").
+
+## 2. Method and the standard applied
+
+Every file was read in full on 2026-09-20 (the `.md` sources, the presentation, the two design
+pages, `assets/app.js`'s user-facing strings, the hub rows, `PROTOTYPING.md`). Each finding names
+the file and the sentence. Findings are classed by *what kind of error* they are — the owner's
+words: assumptions, hallucinations, perceptions, misunderstandings — because the fix differs by
+class:
+
+| Class | Meaning | Fix |
 |---|---|---|
-| C1 | **Audience and decision first** | the first screen states who it is for and what decision it supports; the "so what" precedes the "what" |
-| C2 | **Client problem before our solution** | the client's situation and its cost are quantified in the client's numbers before any feature is named |
-| C3 | **Business case** | investment, return, scenarios, sensitivity, break-even, the cost of doing nothing — with sources and marked assumptions |
-| C4 | **Executable** | a reader can act without asking: owners, dates, acceptance criteria, dependencies, a next step |
-| C5 | **One fact, one place** | a number or rule is stated once and referenced elsewhere; no drift between documents |
-| C6 | **Evidence** | every figure carries its source and the date it was read; every measurement says what tool measured it |
-| C7 | **Language and naming** | the client's language throughout — text, filenames, URLs; no internal jargon or foreign words |
-| C8 | **Proportion** | the length matches the decision; research and engineering detail sit behind the summary, not in front of it |
-| C9 | **Risk and governance** | risks with owners and triggers; who decides what; how the work is reviewed |
-| C10 | **Consistency of state** | nothing describes a state that is no longer true |
+| **A — wrong premise (misunderstanding)** | the document's structure rests on "business.direct = the first customer's project" | rewrite from the product outward, or replace |
+| **B — wrong vocabulary and examples (perception)** | the content is right but stated in the first instance's terms, so it reads as instance-specific | generalise the terms; keep the instance as the worked example |
+| **C — assumption stated as fact** | a figure or claim that is ours, presented without its status | mark it, source it, or remove it |
+| **D — unverified claim (hallucination risk)** | a figure written from memory or from a search summary and labelled as read from the source | open the source and verify, or downgrade the label |
+| **E — contradiction or stale state** | two documents disagree, or a document describes a state that is no longer true | one fact, one place |
+| **F — gap** | something a product needs that no document holds | write it |
+| **G — sprawl** | the same content in several places; length beyond the decision | consolidate |
 
-**Method.** Every document was read in full on the day; each is scored against the ten criteria
-(✔ meets · ◐ partly · ✘ fails · — not applicable); the findings are ranked by the harm they do to
-the client decision, with a root cause and a fix.
+The standard is the one a consulting deliverable is held to (§2 of the previous version, kept
+as C1–C10 in §5): audience and decision first; the customer's problem before our solution; a
+business case; executable; one fact, one place; evidence; the customer's language; proportion;
+risk and governance; consistency of state — and, added after D39, **the right subject**.
 
-## 2. Scorecard
+## 3. Findings
 
-| Document | Purpose today | C1 | C2 | C3 | C4 | C5 | C6 | C7 | C8 | C9 | C10 | Verdict |
-|---|---|---|---|---|---|---|---|---|---|---|---|---|
-| `bemutato.html` (presentation) | a guided tour of the prototype | ✘ | ✘ | ✘ | ◐ | ◐ | ◐ | **✘** | ✘ | ✘ | ✔ | **rebuild** (F1, F2) |
-| `15-executive-summary.md` | the argument in prose | ◐ | ◐ | ✘ | ◐ | ✔ | ✔ | ✔ | ✔ | ✘ | ✔ | **rewrite** (F3) |
-| `00-brief.md` | client, problem, what is built | ◐ | ◐ | — | ◐ | ✔ | ✔ | ✔ | ✔ | — | ✔ | reframe (F4) |
-| `16-analytics-and-unit-economics.md` | the model behind the Economics screen | ✔ | ◐ | ◐ | ✔ | ✔ | ✔ | ✔ | ✔ | — | ✔ | keep; feeds the business case (F5) |
-| `17-business-logic-audit-and-swot.md` | audit of the logic; SWOT | ✔ | ◐ | — | ✔ | ✔ | ✔ | ✔ | ✔ | ◐ | ✔ | keep |
-| `01`–`01g` research (seven files) | evidence rounds | ◐ | ✔ | — | — | ◐ | ✔ | ✔ | ✘ | — | ✔ | keep behind the summary; one evidence index (F6) |
-| `02-audit.md`, `03-sources.md` | the platform measured; real vs sample | ✔ | ✔ | — | ✔ | ✔ | ✔ | ✔ | ✔ | — | ✔ | keep |
-| `04-decisions.md`, `06-build-log.md`, `07-gate.md`, `08-client-asks.md` | registers | ✔ | — | — | ✔ | ✔ | ✔ | ✔ | ◐ | — | ✔ | keep (history) |
-| `09-business-logic.md`, `10-ssot.md` | rules and terms | ✔ | — | — | ✔ | ✔ | ✔ | ✔ | ◐ | — | ✔ | keep |
-| `11`–`14`, `20` engineering set | architecture, design, plan, tokens, blueprint | ✔ | — | ◐ | ✔ | ✔ | ✔ | ✔ | ✔ | ◐ | ✔ | keep; add owners and a governance section (F7) |
-| `18-responsible-data-policy-framework.md` | principles, record, gate | ✔ | ◐ | ◐ | ✔ | ✔ | ✔ | ✔ | ✔ | — | ✔ | keep; the client-value section moves up (F8) |
-| `19-implementation-prerequisites.md` | what the client provides | ✔ | — | — | ✔ | ✔ | ✔ | ✔ | ✔ | ◐ | ✔ | keep; add dates and owners (F7) |
-| `README.md` (docs index) | the index and the process log | ◐ | — | — | ◐ | ✔ | ✔ | ✔ | ✘ | — | ✔ | split the reading paths (F9) |
-| hub row (`../../index.html`, `../../README.md`) | one paragraph | ◐ | ✘ | — | — | ✔ | — | ✔ | ✘ | — | ✔ | rewrite to the client's problem (F10) |
+### 3.1 Class A — the premise, document by document
 
-## 3. Findings (ranked by harm to the client decision)
+| # | File | Evidence | What is wrong | Fix |
+|---|---|---|---|---|
+| A1 | `19-implementation-prerequisites.md` | title: "after the client accepts; not needed for the presentation"; §1 "before the first real message"; every row "Who provides: ClassScout" | a product's first customer does not "accept a prototype"; they onboard. The document mixes three different things: the **product's own launch prerequisites** (none written — see F-findings), the **first customer's onboarding inputs** (postal address, policy record, key) and **the owner's product decisions** (P-10–P-12 personas, integrations, money) | split into the product launch checklist (new), the first-customer onboarding file (instance) and the owner's decision register; the word "accept" disappears |
+| A2 | `08-client-asks.md` | "every item that once needed the owner or the client"; eighteen numbered items | a register of asks to a *client* about a *client project*; for a product these are owner decisions or customer onboarding inputs | close the register into history; owner decisions live in `04`, onboarding inputs in the instance file |
+| A3 | `09-business-logic.md` | §1 "The three parties … Platform (Your Field NYC) · Provider · Family"; §5 "the base machine is bundled by the platform … the provider buys reach"; §7 "US (first market)"; §8 "the operator reads one screen: providers contacted…" | the product's rules are written as the first instance's rules: the parties, the money, the market and the recap are the instance's. The product's parties are *operator · prospect / customer · audience member*; the product's money is the subscription; the instance's monetisation is a feature inside it (the operator's own products) | rewrite as the product's business logic with the instance as the worked example in every section; the rules R1–R36 survive with generic wording |
+| A4 | `10-ssot.md` | §1 "Client: ClassScout first"; "Platform / instance"; "Provider: the platform's own word"; "Family: the consumer on Your Field"; §2 `role = platform · provider · family`; §3 entities `Provider`, `Family` | the glossary has no product layer; the instance's roles are the enumeration | add the product layer (operator, instance, prospect, customer, audience member, channel, department) and map the first instance's terms to it; entities generic with instance mapping |
+| A5 | `16-analytics-and-unit-economics.md` | "The B2B model: providers (the platform's B2B clients)"; "The B2C model: families" | the model is the *operator's* economics (their prospects, their audience) — right as the product's Economics feature, wrong as the product's business case; the product's own CAC / LTV / churn is absent | keep as the feature specification, retitle "the operator's economics — the Economics department"; the product's economics live in `22` |
+| A6 | `17-business-logic-audit-and-swot.md` | §3 "SWOT of the planned service": S6 "the owner owns the platform"; T1 "Sawyer already sells booking … to kids'-activity providers"; W1 "unit economics do not close at today's scale (253 providers)" | the SWOT is of the first instance's deployment; the product's competitors (AI marketing-team products, agent platforms, all-in-one SMB suites) are absent; S6 contradicts "ClassScout will pay" | new SWOT of the product; the first-instance SWOT moves to the instance file as "what the pilot faces" |
+| A7 | `01-research.md`, `01b`, `01c` | 01 §1 "the listed business that does nothing…", §6 "how listing platforms monetise", §8 "first market: New York", §8b "reference market: Hungary"; 01b §2 "how to find and acquire customers for classified media sites"; 01c §1 "the incumbents in our category" (Yelp, Angi, Thumbtack) | evidence gathered for a listing platform's growth, not for a product sold to operators; the incumbents named are the first customer's category's incumbents. Much of it stays valid *as evidence for what the operator's departments must do* — but there is no research on the product's market (who buys "an AI marketing team", at what price, from whom) | keep as the operator-side evidence base (one consolidated file with an index); add the product-market research (F1) |
+| A8 | `04-decisions.md` D21 | "Money: the base machine bundled by the platform; providers buy reach" | defines the first instance's monetisation as "the money model"; the product's price was undecided until D39's hypothesis | D21 re-scoped to "the operator's products feature"; the product's pricing decision is the owner's (§7) |
+| A9 | `13-implementation-plan.md` | §4 "Blocked register: … provided by ClassScout after acceptance"; §6 "Release 1a read-only against the platform … the presentation says which half is which" | releases are cut by the first customer's key, not by the product's value; the second-instance milestone proves generality but no *second customer onboarding* is planned | plan rewritten as the product's roadmap (releases by capability) with the first instance's pilot as one track |
+| A10 | `assets/app.js`, `index.html` | role switch "Platform · Provider · Family"; HELP `platform/sales`: "every provider through the pipeline"; 21 × "Your Field", 9 × "getyourfield" in copy; `<title>` fixed today | the prototype presents the instance's roles as the product's roles; a second customer would see "Family" for their audience | product copy generalised (Operator · Customer · Audience) with the instance's names shown as labels from the instance record; code identifiers: owner's decision (§7) |
+| A11 | `README.md` (docs), hub row, `HUB-AUDIT.md` matrix | docs README's 27-row index and process log narrate a client project; hub audit compares it as one | history stays; the index becomes the product's reading paths (client · delivery · evidence · history) | in the consolidation (§8, phase D) |
 
-| # | Severity | Finding | Evidence | Root cause | Fix |
-|---|---|---|---|---|---|
-| F0 | **Critical** | **The product is presented as one customer's project, and a data-pull artefact as the problem.** The presentation's first rewrite was titled "A proposal for ClassScout · Your Field NYC", its hero numbers were "0 of 253", "83 sessions", the business case's §1 was "the situation in the client's numbers" and the brief's first heading was "The client". business.direct is a standalone product — the one-person sales and marketing team for anyone who is their whole department; ClassScout is the first paying user, and the 253 providers are the demo's pull, not the customer's situation (their catalogue is far larger) | `presentation.html` (first rewrite), `15` §"The situation", `22` §1, `00-brief.md` §"The client", the hub row | the standard is a *client-prototype* standard ("Stage 0: client, problem"); D11 "Your Field first" was read as "Your Field is the subject"; the catalogue pull, being the only measured thing, became the story | every product-facing document rebuilt from the product outward: the customer segment and its pain → the product → the value and the price → proof (the first customer) → delivery → the decision; ClassScout a section, never the subject; catalogue counts demo facts at most; the standard gains a product-brief rule |
-| F1 | **Critical** | **The presentation is a demo script, not a client presentation.** Its second section is titled "What to click, in this order"; five of its eight sections describe screens and buttons; the client's problem appears in one clause of the hero ("markets the businesses to families … drafts everything") and its cost nowhere; there is no business case, no delivery plan, no cost | `bemutato.html` §"What to click, in this order", cards 1–5 ("Click Approve and schedule on a post…") | the standard's presentation slot prescribes "the pages in a recommended order with previews and open buttons" (`PROTOTYPING.md` §4, slot *Presentation*) — a wireframe-review format applied to a service proposal | **rebuild** as `presentation.html`: situation → complication → question → answer; the client's problem in the client's numbers; the cost of doing nothing; the solution in one loop; the business case with scenarios and the honest finding; proof; risk and compliance as mitigation; delivery plan and cost; the one decision; the demo moved to an appendix |
-| F2 | **Critical** | **The presentation's URL is a Hungarian word** (`bemutato.html`) for an English-speaking US client | the live URL | the standard names the slot after the Hungarian projects' file | `presentation.html`; `bemutato.html` stays as a redirect (a live URL is never deleted); every link updated; the standard names the file in the client's language |
-| F3 | High | **The executive summary argues the thesis, not the client's case.** It opens with "A listing platform has three parties …" (our model), gives evidence about Yelp and Google, and reaches the client in section three; it has no investment, no return, no timeline | `15-executive-summary.md` §"The thesis", §"The evidence" | written as "the argument in prose", not as the page a decision-maker reads | rewrite SCQA: the client's situation and the complication in the first paragraph; the answer; the business case in three numbers; the plan in one line; the decision |
-| F4 | High | **The brief describes the problem qualitatively** ("answer late, do not follow up trials") and moves to "the two videos the owner shared" — an internal reference a client cannot use | `00-brief.md` §"The problem" | written for the owner at the start of the project | reframe §"The problem" with the measured numbers (0 of 253 managing; 130 with e-mail; 83 with a next session; 0 reviews; 28 prices) and the sourced cost of each gap; the videos move to §"Where the shape came from" |
-| F5 | High | **There is no business case document.** The unit economics exist (`16`) and are honest (LTV : CAC 0.7 at defaults), but nothing states the client's investment, the return by scenario, the break-even and the cost of doing nothing on one page | absence; `16` §2.4 gives the finding and three ways out but no scenario table | economics were built for the machine's decisions, not for the client's | **new `22-business-case.md`**: investment (build effort, run cost from research VI §15, the operator's hours), return by scenario (growth engine · larger catalogue · higher ARPA), sensitivity on the three rates, break-even, the cost of doing nothing; every input marked measured / benchmark / assumption |
-| F6 | Medium | **Seven research documents, ~220 KB, with no single evidence index.** A reader who needs "the figure behind X" opens seven files | `01`, `01b`, `01c`, `01e`, `01f`, `01g` and `02` | rounds were added as the owner asked; each is sound on its own | an evidence index at the top of `03-sources.md` (claim → figure → file § → source) in the next phase; the research files unchanged |
-| F7 | Medium | **Executable documents lack owners and dates.** The plan names sprints and acceptance tests but no sprint owner or review date; the prerequisites name "who provides" but not "by when"; risks have no trigger or owner | `13` §2b, `19` §1–3, `13` §5 | written before a delivery organisation existed | add an owner column (client · calvus · counsel), target dates relative to acceptance (A+n days), a risk owner and trigger; a governance section: weekly review, decision path, change control |
-| F8 | Medium | **Responsible-data framework leads with principles; the client's value is §5.** A client reads seventeen principles before "what you get" | `18` §1 vs §5 | written as a framework for every client | in the presentation and the executive summary the value leads (exposure, audience quality, trust, auditability); the framework keeps its order as the reference |
-| F9 | Medium | **The docs index is one 27-row table** for every reader; the client, the delivery team and the owner need three different paths | `README.md` §"Documents" | grew one row per document | split the index: *For the client* (presentation, executive summary, business case, prerequisites) · *For delivery* (SSOT, architecture, design, blueprint, plan, policy framework) · *Evidence and history* (research, audit, sources, decisions, build log, gate, asks) |
-| F10 | Medium | **The hub row sells features, not the client's problem** ("B2C social publishing … B2B sales pipeline … optional AI; intelligence dashboard; integrations") | `../../index.html`, `../../README.md` | copied from the brief's "what is built" | one sentence on the client's problem, one on the result, one on the state |
-| F11 | Low | **Internal vocabulary leaks into client-facing text**: "gate 1 / gate 2", "D-numbers", "R-numbers", "SSOT", "prototype banner", "inert" | presentation §"What is real"; executive summary §"What is different" ("rules R24–R36") | the engineering set's vocabulary is exact and was reused | client-facing documents use plain words; the numbers stay in the engineering set |
-| F12 | Low | **Every document opens with a dated italic paragraph on how it came to be** ("Written 2026-09-19 on the owner's directive …") | every `.md` | the process log's habit, useful for the owner | keep the provenance line but after the purpose sentence: *what this is for, who reads it, what decision it supports*; then the provenance |
+### 3.2 Class B — vocabulary and examples
 
-What the audit found sound: the engineering set (`10`–`14`, `20`) is complete, consistent and
-executable (17 modules with pseudo code, 65 issues with a Definition of Done, 9 sprints with
-acceptance tests, every service verified with dates and links); the registers are honest; the
-gate keeps the set consistent (decision ranges, issue counts, stale phrases); the economics do
-not hide the unfavourable finding. The failure is at the top of the pyramid — the two documents
-a client opens first — and in the standard that shaped them.
-
-## 4. Target state — the document set a decision-maker expects
-
-```
-                       ┌──────────────────────────────┐
- the client opens ──▶  │ presentation.html             │  20 minutes: problem → answer → value → plan → decision
-                       │ 15 executive summary          │  one page, SCQA, the three numbers
-                       │ 22 business case              │  investment, return by scenario, break-even, cost of doing nothing
-                       │ 19 prerequisites              │  what we need from you, when, why
-                       └──────────────┬───────────────┘
- the delivery team ──▶ ┌──────────────┴───────────────┐
-                       │ 10 SSOT · 11 architecture · 12 design · 20 blueprint · 13 plan · 18 policy framework · 14 tokens │
-                       └──────────────┬───────────────┘
- the evidence ───────▶ ┌──────────────┴───────────────┐
-                       │ 03 sources (evidence index) · 01–01g research · 02 audit · 16 economics · 17 audit and SWOT │
-                       │ 04 decisions · 06 build log · 07 gate · 08 asks · 21 this audit                             │
-                       └──────────────────────────────┘
-```
-
-Rules for the top layer: the client's numbers before ours; plain words; every claim sourced by
-link to the evidence layer; the honest finding stated, not softened; the decision asked once.
-
-## 5. Transformation plan
-
-| Phase | Deliverable | Acceptance | Status |
+| # | File | Evidence | Fix |
 |---|---|---|---|
-| **1 — the top of the pyramid** | `presentation.html` (SCQA; the demo as an appendix); `bemutato.html` → redirect; `15-executive-summary.md` rewritten; **`22-business-case.md`** new; `00-brief.md` §"The problem" quantified; hub row rewritten; every link updated; the standard's presentation slot rewritten (structure and filename in the client's language) | a reader who opens only the presentation can state the client's problem in numbers, the answer, the return by scenario, the cost, the timeline and the decision; no Hungarian word in any business.direct URL; gate clean | **shipped with this document (D38)** |
-| **2 — executable** | owners and target dates (A+n) in `13` §2b and `19`; risk owners and triggers in `13` §5; a governance section (weekly review, decision path, change control) in `13`; the evidence index in `03`; **the product's vocabulary in the SSOT and the business logic** (operator · prospect · audience member as the generic terms; platform · provider · family as the first customer's instance of them) | every sprint, prerequisite and risk has an owner and a date or trigger; every figure in the top layer resolves to one row of the evidence index | next |
-| **3 — the reading paths and the voice** | `README.md` split into the three paths; the purpose sentence first in every document; internal vocabulary removed from the top layer | each document's first sentence says what it is for and who reads it; the top layer contains no D-, R-, gate- or SSOT-reference | next |
-| **4 — the gate** | `check.py` verifies the top layer: `presentation.html` exists and carries the six sections in order; the executive summary and the business case cite the same three headline numbers; no `bemutato` link remains in business.direct | gate rows added; `GATE: CLEAN` | next |
+| B1 | `11-architecture.md`, `12-technical-design.md`, `20-system-blueprint.md` | context drawing "Families … Your Field NYC … Providers"; collections `families_prefs`, `provider_state`; Zod `FamilyPrefs`, `provider_id`; job `digest` "per family" | the engineering is generic in structure (`platform_id` on every record, a policy record per instance, a connector interface) but instance-named in every identifier and drawing. Two options in §7: rename to product terms, or keep and document the mapping |
+| B2 | `18-responsible-data-policy-framework.md` | worked examples "Your Field NYC" and "Most én sportolok!"; "the family, the candidate, the buyer" | framework is already for every customer; wording generalised, examples kept |
+| B3 | `01e`, `01f` research | "a parent's account describing a child", "the provider" | evidence stands; the rules it becomes are generic |
+| B4 | `14-token-map.md`, `05-layout-specs.md`, design pages | "platform 1440 / provider 390 / family 390" | fine as the first instance's frames; label them so |
+| B5 | `presentation.html`, `15`, `22` (D39 versions) | product-first now, but §6 "Proof" and the appendix still explain the demo in instance terms without saying "these are the first customer's names for operator · customer · audience" | one sentence of mapping in each |
 
-## 6. What shipped with this document (phase 1 — D38, corrected by D39 the same day)
+### 3.3 Class C — assumptions stated as facts
 
-- `presentation.html` — the **product's** presentation: **The customer** (the one-person army:
-  the week they have, the week they get, what they want) → **The complication** (what doing it
-  alone costs, sourced; the market sells pieces, not a team) → **The question** → **The
-  product** (marketing, sales, conversations; the human gate, the loop, the hands) → **The
-  value** (what changes in a week; the pricing hypothesis; the honest finding as the product's
-  virtue) → **Proof — the first customer** (ClassScout; the prototype on their real data; what
-  it already found for them; built for the second customer) → **Responsible by design** →
-  **Delivery** → **The decision**; the demo as a one-paragraph appendix.
-- `bemutato.html` — a redirect to `presentation.html` (the URL stays live).
-- `15-executive-summary.md` — the product in SCQA; three numbers: the price and margin, the build, the first customer.
-- `22-business-case.md` — the product's cost side, the pricing hypothesis, economics by customer count, the customer's case, the first customer's instance as the worked example, sensitivity.
-- `00-brief.md` — §"The product", §"The customer", §"The first customer"; §"The problem" is the operator's, with the first customer's measured instance as the example and the pull declared demo data.
-- Hub row, docs index, navigation, renderer, gate, standard (stage 0 product rule, stage 7 structure and filename) — updated; links to `bemutato.html` replaced.
+| # | Where | The statement | Status | Fix |
+|---|---|---|---|---|
+| C1 | `13` §2b, `22` §3, presentation §8 | "two developers, nine sprints, seventeen weeks" | my estimate; never validated against a team, a velocity or the blueprint's 65 issues | label "estimate (unvalidated)"; validate with whoever builds it before it is quoted |
+| C2 | `22` §4, presentation §5 | "$249 / $449 a month" | my hypothesis, declared as such — but anchored on two figures of class D (below) | keep as hypothesis; anchors verified first |
+| C3 | `16` §2.1, `22` §7 | applied 40 %, managing 80 %, upgraded 25 %, churn 5 %, ARPA $49, avid 15 %, capture 5 %, families per post 1.5, 5 000 families | declared assumptions; but they drive every "finding" quoted in the top layer ("LTV : CAC 0.7", "$610 k") as if they were results | the top layer quotes a *model on assumptions*, never a finding; the phrase "already found" is removed |
+| C4 | `00` (original), `17` S6 | "the owner's own product family … Your Field"; "the owner owns the platform" | contradicts "ClassScout is the first paying user"; **ownership of Your Field / ClassScout is not known to me** | owner's answer (§7, Q1); until then no document states who owns the platform |
+| C5 | `01g` §12, `11` ADR-5 | "DoneIsBetter SSO — the owner's own identity provider" | assumption from the reference site; whether the product uses it, and for whose users, depends on Q1 | mark; resolve with Q1 |
+| C6 | `02` §4, `00` | "the two reference videos show the target shape" — the departments list, "nobody logs in" | owner-supplied input, correctly cited; but the product definition rests on 42 frames I read, not on a written product brief from the owner | the product definition (F2) is written and the owner confirms it |
+| C7 | `19` P-10 | personas "Brooklyn Force Soccer", "a Park Slope parent, a child of 5 and a child of 9" | invented for the demo; declared | stays declared demo material in the instance file |
+| C8 | `09` §7, `10` §4 | "Hungary (reference): corporate addresses without consent" | legal reading of Act XLVIII §6 by me, not counsel; the same for every legal sentence in `01e`, `01f`, `18` | every legal statement carries "not legal advice; counsel confirms per market" once at the top of the legal file (F5) |
+
+### 3.4 Class D — unverified claims (hallucination risk)
+
+| # | Where | The claim | What actually happened | Fix |
+|---|---|---|---|---|
+| D1 | `01g` throughout | 22 vendor rows marked **P "read 2026-09-20"** | for most rows I did not open the vendor page; the figures come from search-result summaries or from memory. Known conflict: Twilio 10DLC brand registration was recorded as "$44 brand + $15 vetting" in the search notes and written as "$4 one-time … secondary vetting $40" in the document. Better Stack (10 monitors, 3-minute checks), Sentry (5 000 errors), Fly.io (~$0.007/h), MongoDB M10 (~$57), Stripe Billing 0.7 % are from memory | **re-verify every row by opening the page**; relabel "P" only where the page was read; where a figure cannot be verified, remove the number and keep the vendor and the link |
+| D2 | presentation hero, `22` §2, `15` | "62 % of calls to small businesses go unanswered" | source is an aggregator quoting a 2016 study of 85 businesses (research I marks it **A**); it is a hero number on the product's first screen | replace with a **P**-grade figure or drop it from the hero; hero numbers are primary-source only |
+| D3 | presentation, `22` | "78 % of customers buy from the business that responds first" | research I cites it via two vendor blogs (**A**), the original source (Lead Connect / Vendasta) not opened | verify or drop from the hero |
+| D4 | `11` ADR-12, `17` T6 | "Sora's shutdown in 2026 showed vendors churn"; "Sora died in five months" | I cannot point to the source in the research files that establishes it; `01b` §4 only says "Sora already did" | verify with a primary source or remove |
+| D5 | `22` §2, presentation §2 | "the tools stack to $200–400 a month" | my sum of the class-D price points in `01b` §4.1 (Buffer/Later "$29–200", OpusClip, HeyGen, Canva) | recompute from verified prices; state the basket |
+| D6 | `01g` §6 | Meta: "100 API-published posts per account per rolling 24 hours"; App Review "two to four weeks" | the limit is from a search summary (plausible, unopened); the review duration is developer folklore | open the Meta page; label the duration "reported, no SLA" (already done) |
+| D7 | `01`–`01f` | ~150 figures with links, gathered over five rounds | links exist; I did not re-open them in the audit. The gate checks links resolve, not that the page says what we cite | phase A opens every link cited in the top layer; the rest sampled (20 %) with the result recorded in the claims register |
+| D8 | `02` §1 | "public API … found in the site's own JS bundles"; endpoint list | measured with `curl` at the time — verifiable; keep, but it is the first instance's, not the product's |
+| D9 | `06-build-log.md`, `07-gate.md` | "measured at 390 / 768 / 1024 / 1440", "no console errors" | measured in the browser pane at the time; recorded honestly; keep |
+
+### 3.5 Class E — contradictions and stale state (found in this reading)
+
+| # | Documents | Contradiction | Fix |
+|---|---|---|---|
+| E1 | `09` §6 "Default: picks and alerts on"; `10` §4 "weekly picks on, saved-provider alerts on" ↔ R28 (`10` §6, `18` principle 4) "every switch … starts off"; `20` §5 Zod `prefs` all `false` | the family defaults are stated both ways | R28 wins; `09` and `10` §4 corrected; the prototype's family persona re-seeded |
+| E2 | `09` §6b "Ten principles" ↔ `18` §1 seventeen principles | count stale since D35 | one sentence in `09` |
+| E3 | `17` S7 "28 decisions, 22 rules, three research rounds" | stale (39, 36, six) — a history document quoting live counts | history documents never quote live counts; the gate adds the check |
+| E4 | `01g` Twilio figures ↔ the search notes (D1) | two different prices | verify |
+| E5 | `22` §7 vs `16` §2.4 | both compute the first instance's economics; `22` says "0.7", `16` says "≈ 0.7 … 1.3 at top decile" — same, but two places | `22` cites `16`, never restates |
+| E6 | `13` §2b S2 "with a test policy record" ↔ `19` §1 "the policy record confirmed before the first real message" | the sprint plan sends test e-mails before the record is confirmed; consistent only if "test" means to our own addresses | say so in the plan |
+| E7 | README (docs) "27 rendered documents" / hub README "six research rounds" / `21` "30 files" | counts drift with every addition | counts computed by the renderer, not written |
+| E8 | `bemutato.html` → redirect; `06` build log and `README` process log still describe it as the presentation | history; acceptable if labelled | the process log entry of D38 says it |
+
+### 3.6 Class F — gaps a product needs (nothing written)
+
+| # | Gap | Why it matters | Where it goes |
+|---|---|---|---|
+| F1 | **Product-market research**: who buys "an AI sales and marketing team" today (HubSpot Breeze agents, Jasper, Lindy, Relevance AI, ManyChat, Metricool, OpusClip, Hatch/Yelp, agency retainers), at what price, with what churn, through which channels; what they lack (the human gate, the policy gate, the recap) | the product's positioning and price rest on it; today they rest on my hypothesis | new research round VII → the product definition |
+| F2 | **Product definition and positioning**: the segment, the jobs, the promise, what it is not, the name of each part in the customer's words | the one document every other document should derive from | new `00` (replaces the brief) |
+| F3 | **The product's business model and go-to-market**: pricing (decided), packaging, how business.direct acquires operators (its own machine on its own pipeline; partners; the calvus network), onboarding, support, SLA | a product without a channel is a prototype | new, with `22` |
+| F4 | **The product's legal position**: business.direct processes the operator's prospect and audience data — it is a **processor** (GDPR) / service provider (CCPA) for the operator; it needs its own terms of service, privacy policy, data-processing agreement, sub-processor list (Vercel, MongoDB, Upstash, Resend, Meta, Twilio, Stripe, Anthropic, Deepgram, Fly), security statement, retention and deletion commitments, and — because the first instance's audience includes parents describing children — the children's-data stance in its own policy, not only the customer's | the responsible-data framework (`18`) governs *the customer's* record; nothing governs *the product's* obligations | new legal file; counsel |
+| F5 | **Legal disclaimer and counsel path** for every legal statement in `01e`, `01f`, `18`, `09` §7 | today they read as legal advice | one file, one disclaimer, one list of the questions for counsel |
+| F6 | **Operating model**: who runs the product (support, incident response, the runbooks exist in `20` §12), onboarding steps for a customer, the policy-record interview, the knowledge-file workshop, offboarding and data return | the customer buys an operated service, not code | new, short |
+| F7 | **Roadmap by capability** (not by the first customer's key): what ships for every operator in R1, R2, R3; what is instance-specific | `13` is a build plan for one instance's pilot | rewritten `13` |
+| F8 | **A claims register**: every figure in the top layer with its status (P / A / assumption / hypothesis / owner-stated / unverified) and the date verified | the only defence against class D recurring | new, machine-checked by the gate |
+| F9 | **Product standard**: `PROTOTYPING.md` is for client sites; a product needs the stages above (definition, market, price, legal, operating model, roadmap) | the standard caused A-class errors | `PRODUCT.md` or a section |
+
+### 3.7 Class G — sprawl
+
+30 files, 469 KB. The rules are stated in `09`, `10` §6, `18` §1–3 and `20` §4; "what the research
+changed" and "what the audit changed" tables repeat in `09` §8c–§8d, `04`, `17` §4 and `01b` §6;
+three audits (`17`, `21`, `../../HUB-AUDIT.md`); seven research files with no index; the
+process log in `README.md` repeats the decisions. A reader who wants "what is the product and
+what does it cost" opens six files. The target set is eleven documents (§6).
+
+## 4. What survives the audit unchanged
+
+The engineering is sound and generic in structure: `platform_id` on every record, one policy
+record per instance, the connector and adapter interfaces, the outbox as the only sender, the
+policy gate, the seventeen modules with pseudo code, the test plan. The responsible-data
+framework and rules R1–R36 are right for every customer once their wording is generic. The
+research on what the operator's departments must do (speed to lead, follow-up, content, labels,
+children's rights, the law by market) is evidence the product needs. The prototype works and
+is measured. The registers (decisions, build log, gate) are honest history. None of this is
+thrown away; it is re-homed under the product.
+
+## 5. Scorecard against the standard (after D39; before the programme)
+
+| Document | Subject right? | C1 audience | C2 problem | C3 case | C4 executable | C5 one fact | C6 evidence | C7 language | C8 proportion | C9 governance | C10 state | Verdict |
+|---|---|---|---|---|---|---|---|---|---|---|---|---|
+| `presentation.html` | ✔ (D39) | ✔ | ✔ | ◐ | ◐ | ◐ | ◐ (D2, D3, D5) | ✔ | ✔ | ✘ | ✔ | keep; hero numbers re-sourced; mapping sentence |
+| `15-executive-summary.md` | ✔ (D39) | ✔ | ✔ | ◐ | ◐ | ✔ | ◐ | ✔ | ✔ | ✘ | ✔ | keep; C3 clause |
+| `22-business-case.md` | ✔ (D39) | ✔ | ✔ | ◐ (hypothesis) | ◐ | ◐ (E5) | ◐ (D5) | ✔ | ✔ | ✘ | ✔ | keep; anchors verified; §7 cites `16` |
+| `00-brief.md` | ✔ (D39) | ◐ | ✔ | — | ◐ | ✔ | ✔ | ✔ | ◐ | — | ✔ | replaced by the product definition (F2) |
+| `19-implementation-prerequisites.md` | **✘** | ✘ | — | — | ◐ | ✔ | ✔ | ✘ | ✔ | ✘ | ✘ | split (A1) |
+| `08-client-asks.md` | **✘** | — | — | — | ✔ | ✔ | ✔ | ✘ | ✔ | — | ✔ | closed into history (A2) |
+| `09-business-logic.md` | **✘** | ✔ | — | — | ✔ | ✔ | ✔ | ✘ | ◐ | — | ◐ (E1, E2) | rewritten (A3) |
+| `10-ssot.md` | **✘** | ✔ | — | — | ✔ | ✔ | ✔ | ✘ | ◐ | — | ◐ (E1) | product layer added (A4) |
+| `16-analytics-and-unit-economics.md` | ◐ (feature, not case) | ✔ | ◐ | ◐ | ✔ | ✔ | ✔ | ◐ | ✔ | — | ✔ | retitled (A5) |
+| `17-business-logic-audit-and-swot.md` | **✘** (instance SWOT) | ✔ | ◐ | — | ✔ | ✔ | ✔ | ◐ | ✔ | ◐ | ✘ (E3) | product SWOT new; this one to history (A6) |
+| `01`–`01f` research | ◐ (operator-side evidence) | ◐ | ✔ | — | — | ◐ (D7) | ✔ | ✔ | ✘ | — | ✔ | consolidated evidence base (A7, G) |
+| `01g-research-real-system.md` | ✔ | ✔ | — | ◐ | ✔ | ✔ | **✘** (D1) | ✔ | ✔ | — | ✔ | every row re-verified |
+| `02-audit.md`, `03-sources.md` | ◐ (first instance) | ✔ | ✔ | — | ✔ | ✔ | ✔ | ✔ | ✔ | — | ✔ | moved into the instance file |
+| `11`, `12`, `20` | ◐ (B1) | ✔ | — | ◐ | ✔ | ✔ | ✔ | ◐ | ✔ | ◐ | ✔ | merged into one architecture + blueprint; identifiers per §7 Q3 |
+| `13-implementation-plan.md` | **✘** (A9) | ✔ | — | — | ◐ | ✔ | ✔ | ◐ | ✔ | ✘ | ◐ (E6) | rewritten as the roadmap + the pilot track |
+| `18-responsible-data-policy-framework.md` | ✔ | ✔ | ◐ | ◐ | ✔ | ✔ | ✔ | ◐ | ✔ | — | ✔ | wording generic; joined by the product's own legal file (F4) |
+| `04`, `06`, `07` | history | ✔ | — | — | ✔ | ✔ | ✔ | ✔ | ◐ | — | ✔ | keep; no live counts (E3) |
+| `README.md` (docs), hub rows | ◐ | ◐ | — | — | ◐ | ✔ | ✔ | ✔ | ✘ | — | ✔ | reading paths (A11) |
+| `assets/app.js` copy | **✘** (A10) | — | — | — | — | — | — | ✘ | — | — | ✔ | generalised copy; identifiers per Q3 |
+
+## 6. Target state — the product's document set (eleven documents; every old URL redirects)
+
+```
+ the customer / a prospect ─▶  1 presentation.html            the customer's problem → the product → value → price → first customer → decision
+                               2 executive summary            one page, SCQA
+                               3 product definition           segment, jobs, promise, what it is not, the vocabulary (replaces 00)
+                               4 business case                the product's economics; pricing (decided); the customer's case; the first instance as example
+                               5 legal and responsible data   the product's own position (ToS, privacy, DPA, sub-processors) + the customer policy record and gate (18) + the counsel list
+ the delivery team ──────────▶  6 business logic and SSOT      one file: the product's rules R1–R36 in product terms, glossary, entities, settings; the first instance's mapping
+                               7 architecture and blueprint   one file: 11 + 12 + 20, identifiers per Q3
+                               8 roadmap and plan             releases by capability; the pilot track; owners, dates, governance, risks with triggers
+                               9 operating model              onboarding, support, incidents, offboarding, the policy interview, the knowledge workshop
+ the evidence ───────────────▶ 10 evidence base               01–01g consolidated with an index and the claims register (status per figure)
+ the first customer ─────────▶ 11 instance: ClassScout        their platform measured (02), sources (03), onboarding inputs (from 19), the pilot's SWOT, personas — everything instance-specific in one place
+ history ────────────────────▶    decisions · build log · gate · this audit · the closed register of asks
+```
+
+## 7. Decisions that are the owner's (the programme cannot start without Q1–Q3; Q4–Q6 shape it)
+
+| # | Question | Why it is yours | What changes with the answer |
+|---|---|---|---|
+| Q1 | **Who owns Your Field NYC / ClassScout?** The first brief called it "the owner's own product family"; you call ClassScout the first paying user | if it is yours, the first instance is in-house and "customer" is a role you play; if it is a client, the product needs the DPA, the API key negotiation and the data-ownership terms of F4 from day one | the instance file, the legal file, ADR-5 (SSO), the blocked register |
+| Q2 | **The price and packaging** (the hypothesis: $249 / $449 / +$149) and **the developer rate** | commercial | the business case stops being a hypothesis |
+| Q3 | **Code identifiers**: rename `provider_id` / `family_id` / `platform` to product terms (`prospect`, `audience_member`, `operator`) throughout the blueprint and the prototype, or keep the first instance's names in code with a documented mapping | cost vs clarity: renaming touches the prototype (90 KB of JS), the blueprint's pseudo code and every schema; keeping them means every future customer's developer reads "family" for their audience | the blueprint, the prototype's copy and code, the SSOT's entity table |
+| Q4 | **The product definition** (F2): the seven departments as I read them from the videos, the two flows, the human gate — confirm or correct in your words before it becomes the root document | every other document derives from it | everything |
+| Q5 | **Consolidation to eleven documents** with redirects from every old URL | thirty files become eleven; history stays | the whole set |
+| Q6 | **The product's go-to-market**: does business.direct sell itself through its own machine (its own pipeline of operators), through the calvus network, through partners — or is the first year the first customer only? | the product's CAC, the roadmap's order, the second instance's date | the business case §5, the roadmap |
+
+## 8. The programme (after the go; every phase ends in a gate-clean push and a review)
+
+| Phase | Deliverable | Acceptance | Depends on |
+|---|---|---|---|
+| **A — truth** | the claims register (F8): every figure in the presentation, `15`, `22` and `01g` opened at its source and marked P / A / assumption / hypothesis / owner-stated; class-D rows fixed or removed; the ownership question answered; the estimate labelled | no "unverified" in the top layer; the gate reads the register | Q1 |
+| **B — the root** | product definition (F2) in the owner's words; product-market research VII (F1); the product's business model and go-to-market (F3) with the decided price; the product SWOT (A6) | the owner signs the definition; every later document cites it | Q2, Q4, Q6 |
+| **C — the rules in product terms** | business logic + SSOT merged and rewritten (A3, A4); the first instance as the worked example; E1–E2 fixed; the prototype's copy generalised and, per Q3, identifiers renamed | every rule R1–R36 reads without "family" or "provider" except in the instance example; the prototype shows the instance's names as labels | Q3 |
+| **D — the product's legal position** | the legal file (F4, F5): ToS, privacy policy, DPA, sub-processor list, the children's-data stance, the counsel question list; the customer's policy record and gate (18) folded in | counsel has the list; every legal sentence carries the disclaimer once | Q1 |
+| **E — delivery** | architecture + blueprint merged (B1); the roadmap by capability with the pilot track, owners, dates, governance, risk triggers (A9, F7); the operating model (F6) | a developer and a customer-success person can each act from their file | C |
+| **F — consolidation** | the eleven-document set; every old URL a redirect; the evidence base with its index; the instance file for ClassScout (A1, A2, A7, G); reading paths on the index; the hub rows | thirty files → eleven + history; no broken or Hungarian URL; the renderer computes every count | A–E |
+| **G — the gate and the standard** | gate checks: banned framing phrases ("the client accepts", "proposal for", instance terms in the top layer), the claims register's statuses, no live counts in history files; `PRODUCT.md` (F9) so the next product starts from the right premise | `GATE: CLEAN` with the new checks; the standard names the product stages | F |
+
+Order of work after the go: A and B together (a week of research and verification), then C, D
+and E in parallel, then F, then G. Nothing is published as "done" until F; until then the live set
+carries a banner on every page: *this set is being replaced — the product is defined in
+`presentation.html` and `22-business-case.md`; the rest still reads as the first instance's
+project*.
+
+## 9. What this audit itself gets wrong if unread
+
+It is written by the person who made the errors, on the same day, without the owner's product
+definition in hand. Q4 exists for that reason: the definition in §1 is my reading of the videos
+and the owner's messages, and it is the first thing to confirm or correct.
