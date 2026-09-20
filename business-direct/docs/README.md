@@ -21,7 +21,7 @@ process log.
 |---|---|
 | The rules and the vocabulary | `business-logic.md` (Part B §1a first) |
 | The system | `architecture.md` (Part A the decisions, Part C the modules with pseudo code) |
-| The work, the governance, the operating model | `delivery-plan.md` (§2b sprints, §3 issues, §5b governance, §7 operating model) |
+| The work, the governance, the operating model | `delivery-plan.md` (§2c the deliverable pieces, §2b sprints, §3 issues, §5b governance, §7 operating model) |
 | What the product must never do, and its legal position | `responsible-data.md` |
 | The first instance | `first-customer-classscout.md` (their site, onboarding inputs by feature) |
 | The screens | the prototype (`../index.html`) with `product-specification.md` beside it; the design set |
@@ -46,7 +46,7 @@ process log.
 | `economics.md` | the Economics department: what the product computes for the owner, the funnel and rates, an illustration on placeholders, sensitivity; Part B the model, the events, the decision rules |
 | `business-logic.md` | the rules R1–R37 end to end; Part B the SSOT: the product layer, glossary, enumerations, entities, settings, the rules register, metrics |
 | `architecture.md` | context, quality attributes, containers, the ADRs; Part B the technical design; Part C the system blueprint with pseudo code; the token map as appendix |
-| `delivery-plan.md` | milestones, the nine sprints with acceptance tests, the sprint-0 checklist, issues with a Definition of Done, the blocked register, risks with owners and triggers, governance, the operating model, the stakeholder sign-off sheet |
+| `delivery-plan.md` | milestones, the nine sprints with acceptance tests, **the development broken into nineteen deliverable pieces with dependencies and increments**, the sprint-0 checklist, issues with a Definition of Done, the blocked register, risks with owners and triggers, governance, the operating model, the stakeholder sign-off sheet (the first customer's approval recorded) |
 | `responsible-data.md` | the seventeen principles, the policy record per site, the gate, onboarding, the customer's value; Part B the product's processor position, the documents it must have, sub-processors, the counsel list |
 | `first-customer-classscout.md` | their site measured, what is real and sample, the onboarding inputs by feature, the pilot's SWOT, the closed asks |
 | `evidence.md` | the claims register — every figure with its source opened and its status — and the research base |

@@ -1,7 +1,8 @@
 # business.direct — delivery plan, operating model and stakeholder sign-off
 
 *For the delivery lead, the owner and the stakeholders who sign off. What this document holds:
-the milestones and the nine sprints with an acceptance test each (§2, §2b), the sprint-0 checklist,
+the milestones and the nine sprints with an acceptance test each (§2, §2b), the development broken
+into deliverable pieces with dependencies and increments (§2c), the sprint-0 checklist,
 every issue with a Definition of Done (§3), the blocked register (§4), risks with owners and
 triggers (§5), owners, dates relative to the go, reviews, the decision path and change control
 (§5b), the release scope (§6), the operating model — onboarding, running, support, incidents,
@@ -67,6 +68,72 @@ nothing from Meta.
 8. Sentry project; Better Stack monitor on `/api/health`.
 9. DoneIsBetter SSO client for the machine (owner).
 10. The first customer's policy record entered on the Policy screen from `responsible-data.md` §6 — with `postal_address` empty until P-1.
+
+## 2c. The development, broken into deliverable pieces (the work breakdown, D49)
+
+*Approved by the first customer on 2026-09-20 (D48). Every piece below is a vertical slice that a
+stakeholder can see working at its review: what it delivers, the modules it is built from
+(`architecture.md` Part C §4), the issues it closes (§3), the sprint it lands in (§2b), what it
+depends on, the acceptance test, and its size (S ≈ 2 developer-days, M ≈ 5, L ≈ 10; unvalidated
+until the team is named). A piece is done when its acceptance test passes on the console, the
+gate is clean, and the measured result is in the build log. Each piece is one branch and one
+pull request set; nothing is merged without its test.*
+
+| # | Piece | Delivers (what the review shows) | Modules | Issues | Sprint | Depends on | Acceptance test | Size |
+|---|---|---|---|---|---|---|---|---|
+| **P0** | **Foundation** | the repository, SSO for the operator and the advertiser roles, the database models with `platform_id` and versions, the instance record, the console shell with every screen reachable in Simple and Advanced mode, the outbox skeleton with a stub adapter, the health endpoint | `lib/`, `db/`, `app/(console)`, `outbox` (skeleton) | BD-0-1, 0-2, 0-3, 0-5, 0-6, 0-9 | S1 | S0 accounts | an operator signs in and sees every screen with empty states; an advertiser sees only its own record (test); a Server Action that imports a channel fails the build; a stub outbox row drains in ≤ 60 s; `/api/health` is green | L |
+| **P1** | **Policy record and gate** | the Policy screen as the onboarding checklist; the gate that blocks every feature whose fields are missing and says why; the policy basis on every message | `policy` | BD-0-7, 0-8, 0-11 | S1 | P0 | each of the ten gate rows blocks its feature when its field is missing (test per row); the screen shows set / missing / placeholder per field | M |
+| **P2** | **Listings connector and sync** | the first customer's listings cached hourly with diff events; the listings table with contact chips, propensity score, stage and the drawer (card, history, thread) | `catalogue`, `pipeline` (score, stages) | BD-0-4, 1-4, 1-14 | S1 | P0 | the demo sample cached; a changed `updatedAt` produces one diff event (fixture test); an illegal stage move is refused, an override is logged with who and why; the score orders the table | M |
+| **P3** | **Simple mode: Home, approvals, templates, knowledge, help** | the owner's twenty minutes: ranked recommendations with the reason and one button, the one safe press, the approvals list, templates that copy into the product, the knowledge files editor, the What-is-this panels and How to use | `recommend`, `approvals`, `knowledge`, `drafting` (templates) | BD-0-9, 0-10, 2-2 | S1 | P0, P1 | the press runs only recommendations marked safe and logs each as the operator's (test); an edit removes the AI badge and stores the diff; a template copies into state and lands the operator on the edited item | M |
+| **P4** | **Sales sequences and the sending guard** | the three-touch invitation in propensity order sent by e-mail to test addresses; the sending card (domain, warm-up, daily cap, bounce); the postal-address and opt-out footer enforced; "not my program" and unsubscribe honoured | `sequences`, `outbox` (checks), `channels/resend` (out) | BD-1-1, 1-2 (out), 1-10, 1-11, 1-12, 1-7 | S2 | P1, P2, P3; a sending domain | step 1 goes to the first batch in score order; a template without `{postal_address}` cannot be approved; bounce ≥ 2 % pauses; step 2 only where a save exists; an opted-out address is excluded from every later run (tests) | L |
+| **P5** | **The reply inbox** | replies land in the thread within a minute with a drafted answer; the operator approves or edits; the stage moves to *replied* on the event; the classifier's vulnerability flag pauses marketing for that person | `channels/resend` (inbound), `conversations` (replies), `drafting` (answers) | BD-1-2 (inbound), 1-3 | S2 | P4 | an inbound e-mail lands in the right thread in ≤ 60 s (measured); AI on / off both produce a marked draft; "not now" pauses and opens a human task (test) | M |
+| **P6** | **Enquiries: the advertiser's inbox** | a visitor's message, an e-mail and a missed call each become an enquiry with a drafted answer within a minute; the advertiser approves; reply time logged; a visitor's ask to an unclaimed listing becomes sales step 2 and the visitor is told | `conversations` (enquiries), `channels/twilio` (missed-call capture), `drafting` | BD-1-8, 1-9, 1-13 | S3 | P5 | three inbound kinds → three enquiries with drafts in ≤ 60 s; the ask to an unclaimed listing moves it to *contacted* with `by: family ask` and the visitor's thread shows the notice (tests) | L |
+| **P7** | **Apply-to-manage and the advertiser's Today** | the invitation's *Apply* creates a claim request through the connector (keyed) or an operator task (unkeyed); the platform's confirmation moves the stage to *managing*; the advertiser's Today, Knowledge and Results shell | `catalogue` (writes), `pipeline`, advertiser screens | BD-1-5, 1-6 | S3 | P2, P5 | keyed: a claim request is written and *applied* set on 2xx; unkeyed: a task is written; the confirmation event sets *managing* (tests); the advertiser sees its thread, drafts and files | M |
+| **P8** | **Social publishing** | drafts from catalogue events; the calendar and slots; publish to the test Page and Instagram account at the slot; comments and DMs arrive by webhook with a drafted reply; the audit snapshot; AI-content marking; the weekly anchor | `drafting` (social), `channels/meta`, `outbox` (publish), `conversations` (comments) | BD-2-1, 2-3, 2-4, 2-5, 2-6, 2-9 | S4 (or swapped with S5/S6) | P3; **Meta App Review approved**; a test Page and account | a draft exists only for a listing with news and never twice a week; a scheduled post publishes at its slot ± 5 min (measured) with a `messages` row and a Blob snapshot; a comment arrives with a drafted reply; the anchor and its cuts on the calendar | L |
+| **P9** | **The clip engine and the pattern guard** | the media worker; a recording uploaded on the advertiser's Media screen becomes captioned 9:16 clips with C2PA in the queue; the consent confirmation for footage that shows children, enforced twice; the banned-pattern guard on every draft | `media`, `worker/`, `drafting` (patternGuard) | BD-2-7, 2-8, 2-10, 2-11 | S5 | P3; Fly.io, Deepgram, a C2PA certificate | a 20-minute recording → four clips with captions and credentials in ≤ 10 min (measured); a recording flagged as showing children is refused without consent by the app and by the worker; a draft with "only 3 spots left" is refused (tests per pattern) | L |
+| **P10** | **Visitors: preferences, consents, caps, digest, alerts, Stop** | the signed preference link; consent capture with proof; the cap in Redis checked twice; the Sunday digest built and sent by preference; alerts on a saved listing's new session; Stop in one transaction; the public neighbourhood newsletter | `families`, `outbox` (caps), `channels/platformPush` | BD-3-1 … 3-6, 3-8, 3-9 | S6 | P1, P4; P-2 for a real send | a visitor changes a channel without a password; the SMS toggle is impossible without a consent row; two sends against one slot → one sent, one refused; the digest is built from saved + nearby and does not count toward the cap; Stop cancels queued rows in one transaction; no child's name reaches an advertiser (tests) | L |
+| **P11** | **Events, metrics and the Economics screen** | the append-only event log; the nightly metrics with assumption → measured at 100 observations; the propensity score job; the Economics screen reading `assumptions`; operator hours; the holdout experiment; earned auto-approval; capture measured | `analytics`, `pipeline` (score job), `approvals` (autoApprove) | BD-4-6, 4-7, 4-8, 4-9, 4-10, 4-11, 4-12, 4-13 | S7 | P4, P5, P10 | every leaf of the metrics tree has an event; a seeded rate flips to measured at 100 (test); the score changes the sequence order; a department earns auto-approval after four clean weeks and loses it on an edit (clock-seeded test); the experiment is configured | L |
+| **P12** | **The Monday recap and the overview on real numbers** | every tile names its source and "sample" disappears where a real number exists; *needs you* lists approvals, replied-not-applied, advertisers at risk, integrations, the next dollar, the gate; the market radar note | `analytics` (recap), `recommend` | BD-4-1, 4-2, 4-5 | S7 | P11 | every tile has a source; the radar note is filed by the operator; the five alerts fire in a drill | M |
+| **P13** | **Generated pages** | category × area pages computed with readiness; published only at ≥ 3 listings and readiness ≥ 3 of 4 through the connector | `pages` | BD-4-3, 4-11 (readiness) | S7 | P2, P7 (key) | a page publishes only at readiness ≥ 3 of 4 with JSON-LD and a sitemap entry (test); below it the screen says why not | S |
+| **P14** | **Operations** | Sentry, Better Stack on `/api/health`, the dashboards and alerts, the retention (TTL) job, the weekly delivery audit by neighbourhood, the runbooks | `lib/log`, `analytics` (audit), ops | BD-4-4, 0-11 (audit) | S7 | P0 | the five alerts of `architecture.md` §9 fire in a drill; the delivery audit runs weekly; a dead outbox row appears in the failed tab | S |
+| **P15** | **Retention** | the nightly signals; one drafted touch per signal from the advertiser's own numbers; renewal reminders in Home's safe press; kept / lost into the churn rate; the Retention screen | `retention`, `drafting` (retain) | BD-1-15 | S8 | P7, P11 | a stale card, a renewal within 14 days and an unanswered enquiry each produce exactly one waiting draft; no draft contains a discount; kept / lost roll into `metrics_daily.churn` (tests) | M |
+| **P16** | **Campaigns, placements and payments** | campaign drafts per card event with the audience shown before approval; audiences from the site's saves only; sending under preference and cap with the reason line; the placements, Stripe Checkout on the owner's account, entitlements, the card flag through the connector; the advertiser's Results | `campaigns`, `billing`, `catalogue` (audiences, flags) | BD-5-1 … 5-6 | S8 | P7, P10; Stripe test keys; P-12 prices | one draft per kind per card event; no uploaded list is possible (test); a visitor at the cap receives nothing; test-mode checkout → entitlement → *upgraded* → card flag or task; cancellation within 14 days refunds | L |
+| **P17** | **Second-instance proof** | a second connector against the reference API's fixtures, a second policy record and instance row, strings from a dictionary; every job runs without a code change | `catalogue` (connector 2), i18n | BD-6-1, 6-2 | S9 | P1, P2 | the fixtures cached; every job runs on the second instance; the gate blocks everything on the unfilled record (tests) | M |
+| **P18** | **First-customer onboarding** (runs alongside S0–S6, with the customer) | the policy record filled from `first-customer-classscout.md` Part C; the sending domain's DNS; the Meta app and review; the knowledge files from the workshop; the placements loaded; the first week in Simple mode; the first Monday recap read together | — (the operating model, §7) | — | S0–S6 | the customer's inputs by the sprint that needs each | the gate shows no blocked feature the pilot needs; the first recap read together; the first measured cohort on Economics at the end of S2 | M |
+
+### Dependencies (what must exist before what)
+
+```
+ P0 foundation ─┬─▶ P1 policy gate ─┬─▶ P3 Simple mode ─┬─▶ P4 sequences ─▶ P5 reply inbox ─▶ P6 enquiries ─▶ P7 apply-to-manage
+                │                   │                   ├─▶ P8 social publishing (Meta review)      │
+                │                   │                   └─▶ P9 clip engine                          ▼
+                ├─▶ P2 listings ────┘                   P10 visitors ◀────────────────────── P11 events & economics ─▶ P12 recap
+                │                                        │                                            │
+                └─▶ P14 operations                       └─▶ P16 campaigns & payments ◀──────────────┴─▶ P15 retention
+                                                                                                 P13 pages · P17 second instance
+ P18 first-customer onboarding runs beside everything from S0 and feeds P1, P4, P8, P10 their real inputs
+```
+
+### What is usable when (the increments)
+
+| After | Usable for the first customer |
+|---|---|
+| S1 (P0–P3) | the console on their listings: the policy checklist, the listings worked in propensity order, the owner's Home with recommendations — nothing sends yet |
+| S2 (P4, P5) | the sales flow end to end on test addresses: invitation, replies, drafted answers, the sending guard |
+| S3 (P6, P7) | every enquiry answered from the advertiser's inbox; apply-to-manage; the first managing advertisers |
+| S4–S5 (P8, P9) | the week's content published to the channels; clips from real footage |
+| S6 (P10) | visitors' preferences, the Sunday digest, alerts, Stop — the demand side live |
+| S7 (P11–P14) | the owner's economics on measured numbers; the Monday recap; generated pages; operations |
+| S8 (P15, P16) | retention running; campaigns and placements sold; the three jobs complete |
+| S9 (P17) | the second site provable as a record and a connector |
+
+### Rules for every piece
+
+1. One branch, one pull request set, the acceptance test in the description; merged only when the gate is clean and the test passed on the console.
+2. The rule behind the piece (R-number) changes in `business-logic.md` first, then in the code, then in the copy.
+3. A piece that loses its external dependency (Meta's review, a key, a certificate) swaps with the next one that does not need it; the swap is a line in the build log, not a re-plan.
+4. The measured result of the acceptance test — the number, the time, the count — goes into the build log the day the piece is done.
+5. Nothing sends to a real address until the policy record's fields for that feature are set and counsel has answered the question that concerns it (`responsible-data.md` Part B §6).
 
 ## 3. Issues
 
@@ -225,4 +292,5 @@ decision: TikTok and X, Google Business Profile, calendars.
 | **Every stakeholder** | the evidence | every figure in the stakeholder documents has a row with its source opened | `evidence.md` |
 
 Acceptance is recorded as a D-number with the date and the stakeholder's name; an open point is
-an issue in §3 with an owner, never a footnote.
+an issue in §3 with an owner, never a footnote. **Recorded: the first customer (ClassScout) approved
+on 2026-09-20 (D48), reported by the owner.**

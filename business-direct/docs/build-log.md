@@ -539,3 +539,6 @@ gate rewritten for the final set; the product standard recorded at the hub (`PRO
 
 **Next.** Present to the stakeholders with the sign-off sheet (`delivery-plan.md` §8).
 
+**2026-09-20 — approved; the development broken down (D48, D49).** The first customer approved the product as presented. The delivery plan gained §2c: nineteen deliverable pieces with modules, issues, sprints, dependencies, acceptance tests and sizes, the dependency drawing, what is usable after each sprint, and the rules for every piece.
+
+**Next.** Sprint 0: the accounts and the environment; the first customer's onboarding (P18) starts the same week.

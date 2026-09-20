@@ -374,7 +374,7 @@ is the reference implementation of the enumerations and state machines below.*
 
 ### 5. Decision register
 
-`decisions.md` holds D1–D47; every rule below names the decision behind it.
+`decisions.md` holds D1–D49; every rule below names the decision behind it.
 
 ### 6. Rules register
 
