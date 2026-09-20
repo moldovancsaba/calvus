@@ -52,7 +52,7 @@ def render(src, out, label):
 <nav class="docnav" aria-label="Project documentation"><span class="docnav-brand">Lexodont · docs</span>{nav}</nav>
 <header><p class="eyebrow">Lexodont · project documentation</p><h1>{title}</h1></header>
 {body}
-<footer>Source: <code>lexodont.hu/docs/{src}</code> · rendered by <code>docs/build.py</code>.</footer>
+<footer>Lexodont · dokumentáció, 2026</footer>
 </div>
 </body>
 </html>

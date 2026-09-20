@@ -18,6 +18,6 @@ for src, out, label in PAGES:
 <body><div class="wrap"><nav class="docnav" aria-label="Project documentation"><span class="docnav-brand">Bízd ránk a zöldet · docs</span>{nav}</nav>
 <header><p class="eyebrow">Bízd ránk a zöldet · project documentation</p><h1>{title}</h1></header>
 {body}
-<footer>Source: <code>bizdrankazoldet/docs/{src}</code> · rendered by <code>docs/build.py</code>.</footer></div></body></html>
+<footer>Bízd ránk a zöldet · dokumentáció, 2026</footer></div></body></html>
 """
     (HERE / out).write_text(html, encoding="utf-8"); print(f"{out:16s} {len(html):6d} bytes")

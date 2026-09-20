@@ -62,7 +62,7 @@ def render(src, out, label):
 <nav class="docnav" aria-label="Project documentation"><span class="docnav-brand">business.direct · docs</span>{nav}</nav>
 <header><p class="eyebrow">business.direct · project documentation</p><h1>{title}</h1></header>
 {body}
-<footer>Source: <code>business-direct/docs/{src}</code> · rendered by <code>docs/build.py</code>.</footer>
+<footer>business.direct · documentation, 2026</footer>
 </div>
 </body>
 </html>

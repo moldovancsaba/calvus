@@ -52,7 +52,7 @@ def render(src, out, label):
 <nav class="docnav" aria-label="Project documentation"><span class="docnav-brand">IDBC Salary Guide · docs</span>{nav}</nav>
 <header><p class="eyebrow">IDBC Salary Guide · project documentation</p><h1>{title}</h1></header>
 {body}
-<footer>Source: <code>idbc-salary-guide/{"docs/" if not src.startswith("../") else ""}{src.replace("../", "")}</code> · rendered by <code>docs/build.py</code>.</footer>
+<footer>IDBC Talent Market &amp; Salary Guide 2026 · documentation</footer>
 </div>
 </body>
 </html>
