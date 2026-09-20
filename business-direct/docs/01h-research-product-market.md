@@ -84,10 +84,9 @@ one who owns the inventory.
 | **Threats** | T1 the directory-software vendors add "AI marketing" to the site product; T2 HubSpot / Salesforce agents grow a marketplace vocabulary; T3 platform rules and law move under the channels (labels, consent, children's data — research IV, V); T4 deliverability and channel review are single points of failure for two of the three jobs |
 
 **What the SWOT says to do:** measure the product's own funnel from the first customer (W1);
-make the policy gate and the economics screen the demo (S2, S3); price against the stack the
-owner replaces and the per-business tools the advertisers would otherwise buy (O2) — the price
-is the owner's decision; keep every channel behind an adapter and every vendor behind an
-interface (T4, W4).
+make the policy gate and the economics screen the demo (S2, S3); the stack the owner replaces and
+the per-business tools the advertisers would otherwise buy (O2) are the comparison the owner will
+make; keep every channel behind an adapter and every vendor behind an interface (T4, W4).
 
 ## 6. What was not found
 

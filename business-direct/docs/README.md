@@ -266,8 +266,7 @@ follow.
 listing count the story. The owner's correction: business.direct is a standalone product — the
 one-person sales and marketing team for anybody who is their whole department; ClassScout is
 the first paying user. The presentation, executive summary, business case and brief were
-rebuilt from the product outward, with a pricing hypothesis for the owner to set and the first
-customer as proof; the audit gained F0; the standard gained the product rule.
+rebuilt from the product outward with the first customer as proof; the audit gained F0; the standard gained the product rule.
 
 **2026-09-20 — the deep audit (D40).** The owner opened one page at random and found the
 first instance's frame intact ("after the client accepts the prototype"): D38 and D39 were

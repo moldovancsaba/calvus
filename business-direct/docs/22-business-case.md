@@ -81,7 +81,6 @@ number the placements are priced against. The owner chooses which; the product s
 | Operator time | 2 minutes per approval at $40 / hour; measured on the screen as "operator hours this week"; falls as departments earn auto-approval | measured in use |
 | Sales tooling | $150 / month (sending domain, warm-up, enrichment) | assumption |
 | Content stack | $120 / month (clip engine, image, audio) | assumption; research II §4 |
-| The product's run cost per site | ≈ $50–75 / month at pilot volume; ≈ $280–400 at 1 000 listings and 50 000 visitors | vendors' prices, `01g` §15 — carried by the product, not the owner |
 
 ## 6. What the owner provides, and when
 
