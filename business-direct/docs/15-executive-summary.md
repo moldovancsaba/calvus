@@ -17,9 +17,11 @@ visible weeks earlier.
 ## The complication
 
 Doing it alone loses the money where it is made. Listings nobody contacts earn nothing;
-outbound works only if the second and third touch go out in order and within the law; a
-lead answered in the first five minutes is 21× more likely to qualify; content that is not
-published does not exist in a market that searches social and AI answers first; replacing a
+outbound works only if the follow-ups go out — 42 % of replies come from them — in order and
+within the law; a lead contacted in the first five minutes is 21× more likely to qualify
+(InsideSales / MIT, 2007); content that is not published does not exist in a market where Gen Z
+searches Instagram and TikTok ahead of Google for local businesses and AI answers cite the
+reviewed, structured source; replacing a
 churned advertiser costs a full acquisition where keeping one costs a touch. The tools on sale
 do one job each and leave the owner as the team.
 

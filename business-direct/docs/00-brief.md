@@ -48,7 +48,7 @@ customers; business.direct sells, fills and keeps a classified media site.
 
 One person cannot run marketing, sales and retention for thousands of listings. The money is
 lost where nobody is: listings nobody contacted earn nothing; the second and third touch —
-where reply rates triple — never get sent; enquiries the site forwards die unanswered (a lead
+which bring 42 % of all replies — never get sent; enquiries the site forwards die unanswered (a lead
 is 21× more likely to qualify in the first five minutes); the material that exists (offers,
 dates, news, footage) is never published; a paying advertiser leaves for reasons visible weeks
 earlier; the numbers are a feeling (research I, II). The tools on sale each do one job.

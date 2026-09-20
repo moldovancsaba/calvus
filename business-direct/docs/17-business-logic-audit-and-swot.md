@@ -70,8 +70,7 @@ upgrade business at today's catalogue size.
 
 *Note (D41): this SWOT was written when the documentation treated the first instance as the
 project; it reads as the pilot's SWOT — the first customer's market, competitors (Sawyer) and
-catalogue. The product's own market and competitors are the subject of research round VII in
-the transformation programme (`21-documentation-audit.md` §8, phase B).*
+catalogue. The product's own market, competitors and SWOT are research VII (`01h-research-product-market.md`).*
 
 ### Strengths (internal, evidenced)
 
@@ -118,7 +117,7 @@ the transformation programme (`21-documentation-audit.md` §8, phase B).*
 | T3 | **Law is moving under the service**: TCPA damages $500–1,500 per text; EU AI Act Art. 50 live since August 2026 with four different platform label systems; children's-data statutes in New York; CAN-SPAM's address rule (A3). | research I §8, II §4.3; A13 |
 | T4 | **Platform rules on AI content** — TikTok cuts reach ~60 % for 30 days after three unlabelled AI videos; Meta labels above the post. A labelling slip costs the channel, not just a post. | research II §4.3 |
 | T5 | **Google's enforcement on generated pages** (50–80 % traffic loss for thin programmatic sites) — the generated-pages lever is one algorithm update from a penalty if readiness is not real. | research II §2.1 |
-| T6 | **Vendor churn in generation**: Sora died in five months; Higgsfield's pricing could not even be read from its own page. Anything built on one vendor's API is fragile. | research II §4.1 |
+| T6 | **Vendor churn in generation**: generative-video vendors change quickly (K/V16: the earlier "Sora died in five months" had no source and was removed); Higgsfield's pricing could not even be read from its own page. Anything built on one vendor's API is fragile. | research II §4.1 |
 | T7 | **The provider is one coach with a phone.** Adoption depends on a claim that costs one click and a tool that works alone; any onboarding friction and the supply side — where two-thirds of marketplaces die — stays unclaimed. | research II §2.2 |
 
 ### The cross-reads (what the SWOT says to do)

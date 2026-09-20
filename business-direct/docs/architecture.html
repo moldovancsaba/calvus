@@ -37,7 +37,7 @@ footer{margin-top:56px;padding-top:18px;border-top:1px solid var(--line);font-si
 </head>
 <body>
 <div class="wrap">
-<nav class="docnav" aria-label="Project documentation"><span class="docnav-brand">business.direct · docs</span><a href="index.html">Overview</a><a href="brief.html">Brief</a><a href="research.html">Research</a><a href="research-2.html">Research II</a><a href="research-3.html">Research III</a><a href="research-4.html">Research IV</a><a href="research-5.html">Research V</a><a href="research-6.html">Research VI</a><a href="audit.html">Audit</a><a href="sources.html">Sources</a><a href="design-system.html">Design system</a><a href="layouts.html">Layouts</a><a href="05-layout-specs.html">Layout specs</a><a href="decisions.html">Decisions</a><a href="build-log.html">Build log</a><a href="gate.html">Gate</a><a href="client-asks.html">Register of asks</a><a href="implementation-prerequisites.html">Prerequisites</a><a href="business-logic.html">Business logic</a><a href="ssot.html">SSOT</a><a href="architecture.html" aria-current=page>Architecture</a><a href="technical-design.html">Technical design</a><a href="implementation-plan.html">Plan</a><a href="system-blueprint.html">System blueprint</a><a href="documentation-audit.html">Documentation audit</a><a href="token-map.html">Token map</a><a href="executive.html">Executive summary</a><a href="business-case.html">Business case</a><a href="analytics.html">Analytics</a><a href="audit-swot.html">Audit · SWOT</a><a href="policy-framework.html">Policy framework</a></nav>
+<nav class="docnav" aria-label="Project documentation"><span class="docnav-brand">business.direct · docs</span><a href="index.html">Overview</a><a href="brief.html">Brief</a><a href="research.html">Research</a><a href="research-2.html">Research II</a><a href="research-3.html">Research III</a><a href="research-4.html">Research IV</a><a href="research-5.html">Research V</a><a href="research-6.html">Research VI</a><a href="research-7.html">Research VII</a><a href="audit.html">Audit</a><a href="sources.html">Sources</a><a href="design-system.html">Design system</a><a href="layouts.html">Layouts</a><a href="05-layout-specs.html">Layout specs</a><a href="decisions.html">Decisions</a><a href="build-log.html">Build log</a><a href="gate.html">Gate</a><a href="client-asks.html">Register of asks</a><a href="implementation-prerequisites.html">Prerequisites</a><a href="business-logic.html">Business logic</a><a href="ssot.html">SSOT</a><a href="architecture.html" aria-current=page>Architecture</a><a href="technical-design.html">Technical design</a><a href="implementation-plan.html">Plan</a><a href="system-blueprint.html">System blueprint</a><a href="documentation-audit.html">Documentation audit</a><a href="claims-register.html">Claims register</a><a href="legal.html">Legal position</a><a href="token-map.html">Token map</a><a href="executive.html">Executive summary</a><a href="business-case.html">Business case</a><a href="analytics.html">Analytics</a><a href="audit-swot.html">Audit · SWOT</a><a href="policy-framework.html">Policy framework</a></nav>
 <header><p class="eyebrow">Calvus · business.direct · project documentation</p><h1>business.direct — architecture</h1></header>
 <p class="notice" role="note"><b>This documentation set is being replaced (audit D40).</b> business.direct is a standalone product — the one-person sales and marketing team; ClassScout is its first customer. The <a href="presentation.html">presentation</a>, the <a href="executive.html">executive summary</a> and the <a href="business-case.html">business case</a> are written for the product; most other pages still read as the first instance's project until the <a href="documentation-audit.html">transformation programme</a> replaces them.</p>
 <p><em>Written 2026-09-19 for the first client, Your Field NYC (D11); phase 2 (campaigns, upgrades, recap — D21–D23) added the same day; on 2026-09-20 the stack became the </em><em>build baseline</em><em> (D37): every
@@ -403,8 +403,8 @@ a family's deletion request.</p>
 </tr>
 <tr>
 <td>Jobs</td>
-<td>Vercel Cron (Pro: one-minute granularity, 300 s per tick) + durable outbox in MongoDB; Inngest is the named upgrade path</td>
-<td>proven in DiscountDirect; no separate queue to run; the outbox row is Inngest-shaped (ADR-18)</td>
+<td>Vercel Cron (Pro: one-minute granularity, 100 crons, 800 s per tick) + durable outbox in MongoDB; Vercel Workflows then Inngest are the named upgrade path</td>
+<td>proven in DiscountDirect; no separate queue to run; the outbox row is event-shaped (ADR-18)</td>
 </tr>
 <tr>
 <td>Media processing</td>
@@ -517,7 +517,7 @@ a family's deletion request.</p>
 <td>ADR-12</td>
 <td><strong>Media generation behind one <code>MediaAdapter</code> interface with the clip engine as the only v1 service</strong>; vendors are configuration (a Higgsfield-class aggregator or Runway for video, Ideogram / Nano Banana / Firefly for image, ElevenLabs for audio)</td>
 <td>(a) one vendor SDK in the app; (b) one interface, vendors as config; (c) no generation</td>
-<td>(b): Sora's shutdown in 2026 showed vendors churn; human-first evidence puts the clip engine first; credentials and labels are the interface's job, not each vendor's</td>
+<td>(b): generative-video vendors change quickly (the register removed an unsourced claim, V16); human-first evidence puts the clip engine first; credentials and labels are the interface's job, not each vendor's</td>
 </tr>
 <tr>
 <td>ADR-13</td>
@@ -563,9 +563,9 @@ a family's deletion request.</p>
 </tr>
 <tr>
 <td>ADR-18</td>
-<td><strong>Vercel Cron + a MongoDB outbox; Inngest when a measured limit is hit</strong> (a tick &gt; 300 s that cannot be batched, &gt; 40 schedules, or a workflow that must wait days on an external event)</td>
-<td>(a) cron + outbox; (b) Inngest now; (c) Trigger.dev</td>
-<td>(a): everything the machine needs today is a durable row and a one-minute drain; the row is kept event-shaped so (b) is a new consumer, not a migration</td>
+<td><strong>Vercel Cron + a MongoDB outbox; Vercel Workflows, then Inngest, when a measured limit is hit</strong> (a tick past 800 s that cannot be batched, or a workflow that must wait days on an external event)</td>
+<td>(a) cron + outbox; (b) Vercel Workflows; (c) Inngest; (d) Trigger.dev</td>
+<td>(a): everything the machine needs today is a durable row and a one-minute drain; 100 crons per project and 800 s per tick on Pro (V1, V2); the row is kept event-shaped so (b) or (c) is a new consumer, not a migration</td>
 </tr>
 <tr>
 <td>ADR-19</td>

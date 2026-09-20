@@ -153,18 +153,42 @@ Every row below is an implementation prerequisite (`19-implementation-prerequisi
 | B9 | Family, sign-up-source and booking events | the platform's analytics (prerequisite P-6) | BD-4-6's family leaves; the avid-family value |
 | B8 | Stripe account | the platform's merchant account and tax setup | BD-5-5 |
 
-## 5. Risks
+## 5. Risks — with an owner and a trigger (phase E, D42)
 
-| Risk | Effect | Mitigation |
+| Risk | Effect | Owner | Trigger (when it becomes an action) | Mitigation |
+|---|---|---|---|---|
+| Meta App Review takes weeks | publishing (S4) slips | delivery lead | review not approved by the end of S2 | submitted in S0; swap S4 with S5/S6; publish to Facebook first if Instagram lags |
+| The site's public API changes without notice (no reference page) | sync breaks | delivery lead | schema-drift test fails, or a sync returns < 90 % of the previous count | contract tests against fixtures; alert on drift; ask the site for a versioned endpoint |
+| A cap or consent bug | TCPA exposure | delivery lead; counsel on wording | the zero-violation alert fires once | ADR-3 double check; consent-before-SMS test; SMS stays off until the policy record allows it |
+| Advertisers read the invitation as spam | pipeline stalls; domain reputation | product owner | bounce ≥ 2 % or complaints ≥ 0.1 % in a week | the sending guard pauses (R23); the copy names the advertiser's own page and the free claim; "not my program" honoured |
+| AI drafts off-brand | operator trust | product owner | more than half of a week's drafts edited | knowledge files first; AI optional per department; edits feed the prompt |
+| A vendor changes price or limit (claims register V1–V16, dated 2026-09-20) | cost or cadence | product owner | any vendor invoice > 1.5× the register's figure, or a limit hit | every vendor behind an interface; the register re-read at each contract |
+| The cron tick (800 s on Pro) or a days-long wait is outgrown | a job cannot finish | delivery lead | a job's tick exceeds 600 s twice in a week | ADR-18: batching first, then Vercel Workflows, then Inngest on the same outbox rows |
+| One operator is a bottleneck | queue grows | product owner with the first customer | approvals older than 48 h exceed 20 | Simple mode's press; batch approval; earned auto-approval; the queue shows age |
+| Counsel's answers change a rule (`24-legal-and-data-processing.md` §6) | a feature waits or changes | counsel; product owner | any answer to §6 differs from the product team's reading | the gate blocks the feature until the record is updated; rules change in the SSOT first |
+| The first customer's data is thinner than the pull (reviews, prices, contacts) | the content and citation levers underperform | first-customer contact | readiness < 3 of 4 on more than half of generated pages | pages publish only at readiness ≥ 3 of 4 (R6); card-quality asks in the onboarding file |
+
+## 5b. Owners, dates and governance (phase E, D42)
+
+| Track | Owner | Dates (G = the go) |
 |---|---|---|
-| Meta review takes weeks | M2 slips | start the review in M0; publish to Facebook first if Instagram lags |
-| The public API changes without notice (no reference page) | sync breaks | contract tests against fixtures; alert on schema drift; ask the platform for a versioned endpoint |
-| A cap or consent bug | TCPA exposure | ADR-3 double check; consent-before-SMS test; zero-violation alert |
-| Providers see the invitation as spam | pipeline stalls | the copy names the provider's own page and the free claim; one reminder only; "not my program" honoured |
-| AI drafts off-brand | operator trust | knowledge files first; AI optional; every draft edited is a training signal for the prompt |
-| A vendor changes price or limit (research VI's numbers are dated 2026-09-20) | cost or cadence | every vendor is behind an interface (connector, adapter, drafter, media adapter); the cost table is re-read at contract |
-| The cron cadence or the 300 s tick is outgrown | a job cannot finish in a tick | ADR-18's upgrade path: Inngest consumes the same outbox rows; batching first |
-| One operator is a bottleneck | queue grows | departments with AI on produce fewer, better drafts; the queue shows age; nothing sends unapproved anyway |
+| Product (definition, price, rules, the D-register) | the owner (product lead) | decisions logged as D-numbers the day they are made |
+| Delivery (the nine sprints, the acceptance tests, the gate) | a named delivery lead among the two developers | S0 at G; S1 G+1 w; S2 G+3 w; S3 G+5 w; S4 G+7 w (or swapped); S5 G+9 w; S6 G+11 w; S7 G+13 w; S8 G+15 w; S9 G+17 w |
+| First customer (the ClassScout instance) | the customer's named contact | onboarding inputs (`19`) by the sprint that needs each: §1 before S2's first real send, §2 before S3/S6's keyed features, §3 at G |
+| Legal (`24` §6) | counsel | answers before S2's first real send; the DPA and terms before the contract |
+| Claims and sources (`23`) | product lead | re-verified at every contract and every quarter |
+
+**Reviews.** A sprint review every second Friday: the acceptance test of §2b run live on the
+console, the measured numbers written into the build log, the next sprint confirmed or swapped.
+A monthly owner review of the D-register, the risk table and the claims register.
+
+**Decision path.** A product rule changes in the SSOT first, then in the code, then in the
+prototype's copy — never the other order. An instance setting changes in its policy record and
+onboarding file. A legal question goes on `24` §6 and blocks only the feature it concerns. A
+price or packaging decision is a D-number by the owner.
+
+**Change control.** No issue is added to a sprint without removing one of equal size; a new
+integration or vendor is an ADR; a change that touches a rule R1–R37 carries its test.
 
 ## 6. Release scope
 

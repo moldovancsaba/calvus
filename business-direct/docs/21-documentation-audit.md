@@ -233,6 +233,17 @@ it, and what benefits they have. Everything below is executed in that order.
 
 ## 8. The programme (executed from the owner's answers; every phase ends in a gate-clean push)
 
+**Done 2026-09-20 (D42, the same evening):** phase A — the claims register (`23`): 36 figures opened at
+their source, seven corrected in the documents (Vercel's limits, Resend's domains, Twilio's fees,
+Fly's price, Better Stack's checks, the reminder review's actual finding, the Gen Z figure), two
+A-grade hero numbers removed, one unsourced claim (Sora) removed; phase B — research VII (`01h`) and
+the product SWOT; phase C — the business logic's headings and parties in product terms; phase D —
+the product's legal position and the counsel list (`24`); phase E — risk owners and triggers,
+dates relative to the go, the governance section (`13` §5, §5b); phase F — the reading paths on
+the index and the evidence pointer in `03` (the eleven-document consolidation with redirects is
+the remaining step); phase G — two gate checks (banned framing phrases in the top layer; no
+unverified row in the register).
+
 **Done 2026-09-20 (D41), same day as the answers:** the product definition (`00`); the presentation,
 executive summary and value document rewritten for the classified media owner; the product layer
 in the SSOT (§1a) with the instance mapping; the business logic's parties and the **retention**
@@ -246,13 +257,13 @@ Remaining phases follow.
 
 | Phase | Deliverable | Acceptance | Depends on |
 |---|---|---|---|
-| **A — truth** | the claims register (F8): every figure in the presentation, `15`, `22` and `01g` opened at its source and marked P / A / assumption / owner-stated; class-D rows fixed or removed | no "unverified" in the top layer; the gate reads the register | — |
-| **B — the root** | product definition (F2) — **done**; product-market research VII (F1): who the classified media owners are, what they run today, what they pay for the pieces; the product SWOT (A6) | every later document cites the definition | — |
-| **C — the rules in product terms** | the product layer and the parties — **done** (SSOT §1a, business logic §1, §2c, R37; E1–E2 fixed; the prototype's roles labelled); the remaining sections of the business logic rewritten with the product term first and the instance's word second | every rule reads in product terms with the instance as the example | — |
-| **D — the product's legal position** | the legal file (F4, F5): the product as processor for the media owner — terms, privacy policy, DPA, sub-processor list, the children's-data stance, the counsel question list; the customer's policy record and gate (18) folded in | counsel has the list; every legal sentence carries the disclaimer once | — |
-| **E — delivery** | architecture + blueprint merged (B1); the roadmap by capability with the pilot track, owners, dates, governance, risk triggers (A9, F7); the operating model (F6) | a developer and a customer-success person can each act from their file | C |
-| **F — consolidation** | the eleven-document set; every old URL a redirect; the evidence base with its index; the instance file for ClassScout (A1, A2, A7, G); reading paths on the index; the hub rows | thirty files → eleven + history; no broken or Hungarian URL; the renderer computes every count | A–E |
-| **G — the gate and the standard** | gate checks: banned framing phrases ("the client accepts", "proposal for", instance terms in the top layer), the claims register's statuses, no live counts in history files; `PRODUCT.md` (F9) so the next product starts from the right premise | `GATE: CLEAN` with the new checks; the standard names the product stages | F |
+| **A — truth** | **done** — `23-claims-register.md` | no "unverified" in the top layer; the gate reads the register | — |
+| **B — the root** | **done** — the definition (`00`), research VII and the product SWOT (`01h`) | every later document cites the definition | — |
+| **C — the rules in product terms** | **done** — SSOT §1a, the business logic's parties, headings and §2c, R37, E1–E2, the prototype's role labels; the instance's words stay inside the sections as the worked example | every rule reads in product terms with the instance as the example | — |
+| **D — the product's legal position** | **done** — `24-legal-and-data-processing.md` (roles, L1–L8, sub-processors, security, the children's-data stance, ten questions for counsel); `18` stays the customer's record | counsel has the list | — |
+| **E — delivery** | **done in part** — risk owners and triggers, dates relative to the go, reviews, the decision path and change control (`13` §5, §5b); the operating model for onboarding and support (F6) and the architecture + blueprint merge (B1) remain | a developer and a customer-success person can each act from their file | C |
+| **F — consolidation** | **done in part** — the reading paths on the index (client · delivery · first instance · evidence · history) and the evidence pointer in `03`; the eleven-document merge with redirects remains | thirty files → eleven + history; no broken or Hungarian URL; the renderer computes every count | A–E |
+| **G — the gate and the standard** | **done in part** — two gate checks (banned framing phrases in the top layer; no unverified row in the register); the product standard (F9) remains | `GATE: CLEAN` with the new checks; the standard names the product stages | F |
 
 Order of work: A and B together, then the rest of C, D and E, then F, then G. Until F the live
 set carries a banner on every page: *this set is being replaced — the product is defined in

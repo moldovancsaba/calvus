@@ -4,7 +4,7 @@
 first customer's onboarding inputs are `19-implementation-prerequisites.md`, the owner's
 decisions are `04-decisions.md`. Kept as history. Every item that once needed the owner or the
 first customer, with its state. Since 2026-09-19 (D34)
-the open items are **implementation prerequisites** — tasks for the day the client accepts —
+the open items became **onboarding inputs of the first customer's instance** —
 and live in `19-implementation-prerequisites.md`; none is required for the presentation or
 the planning. Nothing on this page is open for the presentation.*
 

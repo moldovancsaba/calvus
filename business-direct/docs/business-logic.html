@@ -37,7 +37,7 @@ footer{margin-top:56px;padding-top:18px;border-top:1px solid var(--line);font-si
 </head>
 <body>
 <div class="wrap">
-<nav class="docnav" aria-label="Project documentation"><span class="docnav-brand">business.direct · docs</span><a href="index.html">Overview</a><a href="brief.html">Brief</a><a href="research.html">Research</a><a href="research-2.html">Research II</a><a href="research-3.html">Research III</a><a href="research-4.html">Research IV</a><a href="research-5.html">Research V</a><a href="research-6.html">Research VI</a><a href="audit.html">Audit</a><a href="sources.html">Sources</a><a href="design-system.html">Design system</a><a href="layouts.html">Layouts</a><a href="05-layout-specs.html">Layout specs</a><a href="decisions.html">Decisions</a><a href="build-log.html">Build log</a><a href="gate.html">Gate</a><a href="client-asks.html">Register of asks</a><a href="implementation-prerequisites.html">Prerequisites</a><a href="business-logic.html" aria-current=page>Business logic</a><a href="ssot.html">SSOT</a><a href="architecture.html">Architecture</a><a href="technical-design.html">Technical design</a><a href="implementation-plan.html">Plan</a><a href="system-blueprint.html">System blueprint</a><a href="documentation-audit.html">Documentation audit</a><a href="token-map.html">Token map</a><a href="executive.html">Executive summary</a><a href="business-case.html">Business case</a><a href="analytics.html">Analytics</a><a href="audit-swot.html">Audit · SWOT</a><a href="policy-framework.html">Policy framework</a></nav>
+<nav class="docnav" aria-label="Project documentation"><span class="docnav-brand">business.direct · docs</span><a href="index.html">Overview</a><a href="brief.html">Brief</a><a href="research.html">Research</a><a href="research-2.html">Research II</a><a href="research-3.html">Research III</a><a href="research-4.html">Research IV</a><a href="research-5.html">Research V</a><a href="research-6.html">Research VI</a><a href="research-7.html">Research VII</a><a href="audit.html">Audit</a><a href="sources.html">Sources</a><a href="design-system.html">Design system</a><a href="layouts.html">Layouts</a><a href="05-layout-specs.html">Layout specs</a><a href="decisions.html">Decisions</a><a href="build-log.html">Build log</a><a href="gate.html">Gate</a><a href="client-asks.html">Register of asks</a><a href="implementation-prerequisites.html">Prerequisites</a><a href="business-logic.html" aria-current=page>Business logic</a><a href="ssot.html">SSOT</a><a href="architecture.html">Architecture</a><a href="technical-design.html">Technical design</a><a href="implementation-plan.html">Plan</a><a href="system-blueprint.html">System blueprint</a><a href="documentation-audit.html">Documentation audit</a><a href="claims-register.html">Claims register</a><a href="legal.html">Legal position</a><a href="token-map.html">Token map</a><a href="executive.html">Executive summary</a><a href="business-case.html">Business case</a><a href="analytics.html">Analytics</a><a href="audit-swot.html">Audit · SWOT</a><a href="policy-framework.html">Policy framework</a></nav>
 <header><p class="eyebrow">Calvus · business.direct · project documentation</p><h1>business.direct — business logic</h1></header>
 <p class="notice" role="note"><b>This documentation set is being replaced (audit D40).</b> business.direct is a standalone product — the one-person sales and marketing team; ClassScout is its first customer. The <a href="presentation.html">presentation</a>, the <a href="executive.html">executive summary</a> and the <a href="business-case.html">business case</a> are written for the product; most other pages still read as the first instance's project until the <a href="documentation-audit.html">transformation programme</a> replaces them.</p>
 <p><em>Written 2026-09-19 with phase 2 (D21–D23); the product's parties and the retention job added
@@ -75,13 +75,13 @@ the worked example, because every rule was built and tested on its data. Terms a
 </tr>
 </tbody>
 </table></div>
-<h2>2. The two flows at the front door (D14)</h2>
-<p><strong>B2C social publishing → families.</strong> Every provider with news (announcement, trial, next
+<h2>2. The two flows at the front door (D14) — marketing to visitors, sales to advertisers</h2>
+<p><strong>B2C social publishing → visitors (families).</strong> Every provider with news (announcement, trial, next
 session) becomes a post draft with the link back to its page. The operator approves,
 edits or skips; approved posts publish at their calendar slot through the platform's
 channels. Families arrive on the listing page; the platform's sign-up captures them.
 <em>Nothing publishes unapproved.</em></p>
-<p><strong>B2B provider sales → providers.</strong> Every provider enters the pipeline at <em>identified</em>.
+<p><strong>B2B sales → advertisers (providers).</strong> Every provider enters the pipeline at <em>identified</em>.
 The invitation sequence (one approval for the whole run) moves those with an e-mail to
 <em>contacted</em>; a reply moves to <em>replied</em> and lands in the inbox with a drafted answer;
 "Apply to manage" (or a confirmed yes) → <em>applied</em>; the platform's confirmation →
@@ -176,7 +176,7 @@ replacing one costs a CAC.</p>
 <p>Nothing leaves without a person's approval or an earned auto-approval (R1, R25). AI is optional per department (R10). With it off, every draft is the listing's own text or
 a template with merge fields; with it on, the knowledge files are the prompt and the draft
 carries the ✦ badge until a person edits it.</p>
-<h2>4. Provider campaigns (phase 2, D22)</h2>
+<h2>4. Advertiser campaigns to visitors (provider campaigns, phase 2, D22)</h2>
 <p>A campaign is a provider's message to families, built from the provider's own card (R11):</p>
 <div class="tbl"><table>
 <thead>
@@ -218,7 +218,7 @@ carries the ✦ badge until a person edits it.</p>
 and never past the cap (R3). A family sees why she received it (she saved the provider),
 on which channel, and that it counts toward her monthly four. Audience sizes are sample in
 the prototype (prerequisite P-5 — the platform's saves data).</p>
-<h2>4b. Conversations (phase 3, D25)</h2>
+<h2>4b. Conversations — the advertiser's own team answers visitors (phase 3, D25)</h2>
 <p>An <strong>enquiry</strong> is a family's message to a provider on any channel the provider exposes:
 the platform's message, e-mail, a missed call (the machine texts back). The machine drafts
 the answer from the provider's <code>knowledge/faq.md</code> and <code>offer.md</code> (R8) and the card (next
@@ -233,7 +233,7 @@ family is told the provider has been notified (Q4). The machine stores no child'
 platform's own policy says it does not collect children's data — so every party, the family
 included, sees "a child of 6" (R24, D31). On the platform side, a <strong>comment or DM</strong> on a published post gets
 a drafted reply that links to the listing; the operator approves it.</p>
-<h2>5. Upgrades and money (D21: bundled base, provider-bought upgrades)</h2>
+<h2>5. Placements and money — what the owner sells to advertisers (D21)</h2>
 <p>The base machine is <strong>bundled by the platform</strong> for every listing — the invitation, the
 replies, the reminders, the campaigns — because its job is the platform's own growth. The
 <strong>provider buys reach</strong>, and the products are the platform's own, from its "List your
@@ -267,7 +267,7 @@ program" copy:</p>
 <p>Choosing one moves the provider to <em>upgraded</em>; it changes where the provider appears, never
 what a family receives (R12); the platform's intelligence screen sums the sample revenue. Billing is Stripe Checkout on the platform's account (ADR-9); the platform invoices, business.direct
 records the entitlement. No discounting logic — that is DiscountDirect's domain (D5, R13).</p>
-<h2>6. Families: preferences, consent, cap, stop</h2>
+<h2>6. Visitors (families): preferences, consent, cap, stop</h2>
 <ul>
 <li><strong>Preferences</strong> per channel: weekly picks (e-mail), saved-provider alerts (push), new
   provider nearby (push), texts from providers (SMS). Default: every channel off until the
@@ -309,7 +309,7 @@ neighbourhood is audited (R33). <strong>Accessibility</strong>: WCAG 2.2 AA on e
 every clip (R34). <strong>Sensitive categories</strong> — health, location tracks, biometrics, Article 9,
 hardship — are answered, never stored (R35). <strong>Dark patterns and AI manipulation</strong>: a banned
 list on every draft and screen; Stop is one tap (R36).</p>
-<h2>7. Providers: the law on the sales side</h2>
+<h2>7. Advertisers (providers): the law on the sales side</h2>
 <p>US (first market): commercial e-mail to a business needs no prior consent (CAN-SPAM);
 every message carries the platform's <strong>registered postal address</strong> (a merge field, checked
 by the gate — Q2; prerequisite P-1 for the address itself) and a working opt-out honoured within 10
@@ -319,7 +319,7 @@ domain is paced and guarded: warm-up, a daily cap, and a bounce rate above 2 % p
 sequence (R23). Hungary (reference): corporate addresses without
 consent; a named person's address needs consent — the reference connector flags which is
 which. SMS to providers is not used.</p>
-<h2>8. The intelligence recap (D23)</h2>
+<h2>8. The owner's Monday recap (D23)</h2>
 <p>Every Monday the operator reads one screen: providers contacted, replies answered, applied
 · managing · upgraded, posts published, families reached by campaigns, upgrade revenue; by
 department; the market radar from the catalogue (largest activity, free trials, unknown

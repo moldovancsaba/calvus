@@ -1,6 +1,8 @@
 # business.direct — research VI: the real system — every service verified, what it costs, what it needs, what it limits
 
-*Sixth research round, 2026-09-20, on the owner's instruction: "step to the next phase … make a
+*Sixth research round, 2026-09-20; every row re-read against the vendor's page the same evening and
+corrected where it was wrong — the status of each figure is in `23-claims-register.md` §2 (V1–V16),
+which is the authority where this file and the register differ. Originally written on the owner's instruction: "step to the next phase … make a
 research and plan how we can make it a real system … exact services, what module goes where,
 how it works, the architecture, the system drawings, everything with pseudo code." This document
 is the research half: for every external service the machine depends on, the vendor's own terms
@@ -9,7 +11,7 @@ alternative considered. The plan half is `20-system-blueprint.md` (modules, draw
 code) and `13-implementation-plan.md` (sprints, acceptance tests). **P** marks a primary source
 (the vendor's own documentation or pricing page), **A** a secondary summary. Prices and limits
 change; every number carries the date it was read and is re-checked at contract signature. The
-client is ClassScout (Your Field NYC); everything is English and US-first; a second instance is a
+first customer is ClassScout (Your Field NYC); everything is English and US-first; a second instance is a
 policy record and a connector (ADR-2), nothing here assumes one.*
 
 ## 0. What the machine needs from outside (the dependency list)
@@ -20,7 +22,7 @@ policy record and a connector (ADR-2), nothing here assumes one.*
 | Database | MongoDB Atlas | Postgres on Neon | ADR-16 (stays D26) |
 | Caps, rate limits, idempotency, locks | Upstash Redis | MongoDB counters | ADR-3 (stays) |
 | Files (media, snapshots, exports) | Vercel Blob | Cloudflare R2 | ADR-17 |
-| Jobs | Vercel Cron + a MongoDB outbox (§4) | Inngest when the cron cadence or 300 s is hit | ADR-18 |
+| Jobs | Vercel Cron + a MongoDB outbox (§4) | Vercel Workflows, then Inngest, when a tick past 800 s or a days-long wait is needed | ADR-18 |
 | E-mail out and inbound | Resend | Postmark | ADR-19 |
 | Instagram + Facebook publishing and inbound | Meta Graph API (Instagram API with Facebook Login) | Buffer / Later API as a proxy | ADR-20 |
 | SMS (later, families only, consent) | Twilio with A2P 10DLC registration | Telnyx | ADR-21 |
@@ -38,11 +40,12 @@ policy record and a connector (ADR-2), nothing here assumes one.*
 **P** [Vercel cron jobs: usage and pricing](https://vercel.com/docs/cron-jobs/usage-and-pricing),
 [Vercel functions limits](https://vercel.com/docs/functions/limitations) — read 2026-09-20.
 
-- **Cron**: Hobby 2 crons/project, once a day, unreliable timing; **Pro: 40 crons per project, one-minute
-  granularity** (the cron *invokes* an HTTP route; the route's own duration limit applies). Pro is $20 per
-  member per month.
-- **Function duration**: 300 s maximum on Pro with `maxDuration` set (default lower); memory up to 3 GB;
-  request body 4.5 MB; response streaming allowed. A single cron tick therefore drains a batch, never
+- **Cron**: **100 cron jobs per project on every plan**; Hobby once a day with ±59 min precision; **Pro and
+  Enterprise once a minute, per-minute precision** (the cron *invokes* an HTTP route; the route's own duration
+  limit applies) — V1. Pro is $20 per member per month.
+- **Function duration**: 300 s default on every plan; **Pro maximum 800 s, 1 800 s in beta** with
+  `maxDuration`; memory up to 4 GB on Pro; request body 4.5 MB; bundle 250 MB (5 GB in beta); Vercel
+  Workflows exist for runs without a duration limit — V2. A single cron tick still drains a batch, never
   "everything". The outbox `send` job (every minute, batch of 100) sends 6 000 messages an hour, twelve
   times the sizing target of 5 000 a day (architecture §3).
 - **Preview per branch** and production on `main` — the repo's existing model.
@@ -93,9 +96,9 @@ functions without a persistent socket).
   plus one cron tick a minute gives all of it** (blueprint §7) and adds no vendor, no second dashboard
   and no event-shape to keep in sync. Sequences do not need "sleep for three days" — the
   `sequence-step` job computes what is due from `sent_at + delay_days` every morning.
-- **Decision (ADR-18)**: Vercel Cron + outbox. Move to Inngest when any of these is measured: a job
-  needs more than 300 s per tick and cannot be batched; more than 40 schedules are needed; a workflow
-  needs to wait on an external event for days with state that is awkward to keep in a document.
+- **Decision (ADR-18)**: Vercel Cron + outbox. Move to Vercel Workflows (the same platform, no new vendor)
+  or Inngest when either is measured: a job needs more than 800 s per tick and cannot be batched; a
+  workflow needs to wait on an external event for days with state that is awkward to keep in a document.
   The outbox row shape is kept Inngest-compatible (an event name and a JSON payload) so the move is a
   new consumer, not a migration.
 
@@ -104,8 +107,8 @@ functions without a persistent socket).
 **P** [Resend pricing](https://resend.com/pricing), [Resend inbound](https://resend.com/docs/dashboard/receiving/introduction),
 [Resend webhooks](https://resend.com/docs/dashboard/webhooks/introduction) — read 2026-09-20.
 
-- **Free: 3 000 e-mails a month, 100 a day, one custom domain**; Pro from $20 a month for 50 000
-  e-mails and unlimited domains; dedicated IP from the Scale tier.
+- **Free: 3 000 e-mails a month, 100 a day, 3 domains**; Pro $20 a month for 50 000 e-mails, $35 for
+  100 000; inbound on every plan — V5.
 - **Inbound**: an MX record on a subdomain (`reply.<sending domain>`) delivers every incoming e-mail as
   a webhook (`email.received`) with the parsed headers and body; replies to a sequence therefore land
   in `threads` without polling. Webhooks are signed (Svix headers `svix-id`, `svix-timestamp`,
@@ -162,9 +165,9 @@ functions without a persistent socket).
 **P** [Twilio A2P 10DLC overview](https://www.twilio.com/docs/messaging/compliance/a2p-10dlc),
 [Twilio messaging pricing (US)](https://www.twilio.com/en-us/sms/pricing/us) — read 2026-09-20.
 
-- **Registration before any US SMS**: a Brand ($4 one-time for a standard brand plus vetting fees;
-  secondary vetting $40 when a higher throughput is needed) and a Campaign use case ($15 monthly for a
-  standard campaign — "Low volume mixed" ~$1.50/month for small senders); campaign registration
+- **Registration before any US SMS**: a Brand (low-volume standard $4 one-time, ≈ $4.41 with tax; a
+  standard brand costs more and adds secondary vetting) and a Campaign use case ($15 one-time vetting;
+  $2–10 a month by use case) — V8, re-checked at registration; campaign registration
   requires the sender's **privacy-policy URL and terms URL and sample messages**, and a described
   opt-in flow — the consent text the policy record stores (`consentText.sms`). Unregistered traffic is
   blocked by US carriers.
@@ -228,8 +231,9 @@ API, Node 22+, signs with an X.509 certificate), [Fly.io Machines pricing](https
   Word timestamps drive the caption file (SRT/WebVTT, R34) and the "moment" finder (blueprint §10).
 - **Cutting and captions**: ffmpeg (`-ss/-to` cuts, `subtitles=` burn-in, `scale=1080:1920` for
   9:16). It does not fit a Vercel function well (250 MB bundle limit, 300 s, no persistent scratch)
-  — **one container worker** runs it: a Fly.io Machine (shared-cpu-1x, 1 GB, ~$0.007/hour while
-  running, stopped otherwise; auto-start on request) or Railway (from $5/month) — the blueprint
+  — **one container worker** runs it: a Fly.io Machine (shared-cpu-1x, 1 GB, $0.0082/hour ≈ $5.92 a month while
+  running; a stopped machine pays only its root file system, $0.15 per GB per 30 days; auto-start on
+  request — V12) or Railway (from $5/month) — the blueprint
   picks Fly.io with `auto_stop_machines` so the pilot pays cents. Modal (per-second GPU/CPU billing,
   Python-first) is the alternative if the clip engine later adds a vision model.
 - **Credentials**: `c2pa-node` builds a manifest (`c2pa.actions`: created / edited, `c2pa.ai_generated`
@@ -261,7 +265,7 @@ fallback is Auth.js with e-mail magic links, which changes one file.
 ## 13. Observability
 
 **P** [Sentry pricing](https://sentry.io/pricing/) (developer tier free: 5 000 errors a month),
-[Better Stack uptime](https://betterstack.com/uptime) (free: 10 monitors, 3-minute checks) — read 2026-09-20.
+[Better Stack uptime pricing](https://betterstack.com/uptime/pricing) (free: 10 monitors, checks up to every 30 s — V14) — read 2026-09-20.
 
 - Vercel's own logs and function metrics cover requests; Sentry catches exceptions in Server Actions,
   routes and the worker with the `platform_id` tag; Better Stack polls `/api/health` (which reports
@@ -289,7 +293,7 @@ fallback is Auth.js with e-mail magic links, which changes one file.
 
 | Line | Pilot (Your Field, ≤ 300 providers, ≤ 5 000 families) | Sizing target (1 000 providers, 50 000 families) |
 |---|---|---|
-| Vercel Pro | $20 (one member) | $40 (two) |
+| Vercel Pro | $20 (one member) | $40 (two) — V1, V2 |
 | MongoDB Atlas | $0 (M0) | ~$57 (M10) |
 | Upstash | $0 | ~$5 |
 | Vercel Blob | ~$1 | ~$10 |

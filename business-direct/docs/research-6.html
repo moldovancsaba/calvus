@@ -37,10 +37,12 @@ footer{margin-top:56px;padding-top:18px;border-top:1px solid var(--line);font-si
 </head>
 <body>
 <div class="wrap">
-<nav class="docnav" aria-label="Project documentation"><span class="docnav-brand">business.direct · docs</span><a href="index.html">Overview</a><a href="brief.html">Brief</a><a href="research.html">Research</a><a href="research-2.html">Research II</a><a href="research-3.html">Research III</a><a href="research-4.html">Research IV</a><a href="research-5.html">Research V</a><a href="research-6.html" aria-current=page>Research VI</a><a href="audit.html">Audit</a><a href="sources.html">Sources</a><a href="design-system.html">Design system</a><a href="layouts.html">Layouts</a><a href="05-layout-specs.html">Layout specs</a><a href="decisions.html">Decisions</a><a href="build-log.html">Build log</a><a href="gate.html">Gate</a><a href="client-asks.html">Register of asks</a><a href="implementation-prerequisites.html">Prerequisites</a><a href="business-logic.html">Business logic</a><a href="ssot.html">SSOT</a><a href="architecture.html">Architecture</a><a href="technical-design.html">Technical design</a><a href="implementation-plan.html">Plan</a><a href="system-blueprint.html">System blueprint</a><a href="documentation-audit.html">Documentation audit</a><a href="token-map.html">Token map</a><a href="executive.html">Executive summary</a><a href="business-case.html">Business case</a><a href="analytics.html">Analytics</a><a href="audit-swot.html">Audit · SWOT</a><a href="policy-framework.html">Policy framework</a></nav>
+<nav class="docnav" aria-label="Project documentation"><span class="docnav-brand">business.direct · docs</span><a href="index.html">Overview</a><a href="brief.html">Brief</a><a href="research.html">Research</a><a href="research-2.html">Research II</a><a href="research-3.html">Research III</a><a href="research-4.html">Research IV</a><a href="research-5.html">Research V</a><a href="research-6.html" aria-current=page>Research VI</a><a href="research-7.html">Research VII</a><a href="audit.html">Audit</a><a href="sources.html">Sources</a><a href="design-system.html">Design system</a><a href="layouts.html">Layouts</a><a href="05-layout-specs.html">Layout specs</a><a href="decisions.html">Decisions</a><a href="build-log.html">Build log</a><a href="gate.html">Gate</a><a href="client-asks.html">Register of asks</a><a href="implementation-prerequisites.html">Prerequisites</a><a href="business-logic.html">Business logic</a><a href="ssot.html">SSOT</a><a href="architecture.html">Architecture</a><a href="technical-design.html">Technical design</a><a href="implementation-plan.html">Plan</a><a href="system-blueprint.html">System blueprint</a><a href="documentation-audit.html">Documentation audit</a><a href="claims-register.html">Claims register</a><a href="legal.html">Legal position</a><a href="token-map.html">Token map</a><a href="executive.html">Executive summary</a><a href="business-case.html">Business case</a><a href="analytics.html">Analytics</a><a href="audit-swot.html">Audit · SWOT</a><a href="policy-framework.html">Policy framework</a></nav>
 <header><p class="eyebrow">Calvus · business.direct · project documentation</p><h1>business.direct — research VI: the real system — every service verified, what it costs, what it needs, what it limits</h1></header>
 <p class="notice" role="note"><b>This documentation set is being replaced (audit D40).</b> business.direct is a standalone product — the one-person sales and marketing team; ClassScout is its first customer. The <a href="presentation.html">presentation</a>, the <a href="executive.html">executive summary</a> and the <a href="business-case.html">business case</a> are written for the product; most other pages still read as the first instance's project until the <a href="documentation-audit.html">transformation programme</a> replaces them.</p>
-<p><em>Sixth research round, 2026-09-20, on the owner's instruction: "step to the next phase … make a
+<p><em>Sixth research round, 2026-09-20; every row re-read against the vendor's page the same evening and
+corrected where it was wrong — the status of each figure is in <a href="claims-register.html"><code>23-claims-register.md</code></a> §2 (V1–V16),
+which is the authority where this file and the register differ. Originally written on the owner's instruction: "step to the next phase … make a
 research and plan how we can make it a real system … exact services, what module goes where,
 how it works, the architecture, the system drawings, everything with pseudo code." This document
 is the research half: for every external service the machine depends on, the vendor's own terms
@@ -49,7 +51,7 @@ alternative considered. The plan half is <a href="system-blueprint.html"><code>2
 code) and <a href="implementation-plan.html"><code>13-implementation-plan.md</code></a> (sprints, acceptance tests). </em><em>P</em><em> marks a primary source
 (the vendor's own documentation or pricing page), </em><em>A</em><em> a secondary summary. Prices and limits
 change; every number carries the date it was read and is re-checked at contract signature. The
-client is ClassScout (Your Field NYC); everything is English and US-first; a second instance is a
+first customer is ClassScout (Your Field NYC); everything is English and US-first; a second instance is a
 policy record and a connector (ADR-2), nothing here assumes one.</em></p>
 <h2>0. What the machine needs from outside (the dependency list)</h2>
 <div class="tbl"><table>
@@ -89,7 +91,7 @@ policy record and a connector (ADR-2), nothing here assumes one.</em></p>
 <tr>
 <td>Jobs</td>
 <td>Vercel Cron + a MongoDB outbox (§4)</td>
-<td>Inngest when the cron cadence or 300 s is hit</td>
+<td>Vercel Workflows, then Inngest, when a tick past 800 s or a days-long wait is needed</td>
 <td>ADR-18</td>
 </tr>
 <tr>
@@ -164,11 +166,12 @@ policy record and a connector (ADR-2), nothing here assumes one.</em></p>
 <p><strong>P</strong> <a href="https://vercel.com/docs/cron-jobs/usage-and-pricing">Vercel cron jobs: usage and pricing</a>,
 <a href="https://vercel.com/docs/functions/limitations">Vercel functions limits</a> — read 2026-09-20.</p>
 <ul>
-<li><strong>Cron</strong>: Hobby 2 crons/project, once a day, unreliable timing; <strong>Pro: 40 crons per project, one-minute
-  granularity</strong> (the cron <em>invokes</em> an HTTP route; the route's own duration limit applies). Pro is $20 per
-  member per month.</li>
-<li><strong>Function duration</strong>: 300 s maximum on Pro with <code>maxDuration</code> set (default lower); memory up to 3 GB;
-  request body 4.5 MB; response streaming allowed. A single cron tick therefore drains a batch, never
+<li><strong>Cron</strong>: <strong>100 cron jobs per project on every plan</strong>; Hobby once a day with ±59 min precision; <strong>Pro and
+  Enterprise once a minute, per-minute precision</strong> (the cron <em>invokes</em> an HTTP route; the route's own duration
+  limit applies) — V1. Pro is $20 per member per month.</li>
+<li><strong>Function duration</strong>: 300 s default on every plan; <strong>Pro maximum 800 s, 1 800 s in beta</strong> with
+  <code>maxDuration</code>; memory up to 4 GB on Pro; request body 4.5 MB; bundle 250 MB (5 GB in beta); Vercel
+  Workflows exist for runs without a duration limit — V2. A single cron tick still drains a batch, never
   "everything". The outbox <code>send</code> job (every minute, batch of 100) sends 6 000 messages an hour, twelve
   times the sizing target of 5 000 a day (architecture §3).</li>
 <li><strong>Preview per branch</strong> and production on <code>main</code> — the repo's existing model.</li>
@@ -216,9 +219,9 @@ functions without a persistent socket).</p>
   plus one cron tick a minute gives all of it</strong> (blueprint §7) and adds no vendor, no second dashboard
   and no event-shape to keep in sync. Sequences do not need "sleep for three days" — the
   <code>sequence-step</code> job computes what is due from <code>sent_at + delay_days</code> every morning.</li>
-<li><strong>Decision (ADR-18)</strong>: Vercel Cron + outbox. Move to Inngest when any of these is measured: a job
-  needs more than 300 s per tick and cannot be batched; more than 40 schedules are needed; a workflow
-  needs to wait on an external event for days with state that is awkward to keep in a document.
+<li><strong>Decision (ADR-18)</strong>: Vercel Cron + outbox. Move to Vercel Workflows (the same platform, no new vendor)
+  or Inngest when either is measured: a job needs more than 800 s per tick and cannot be batched; a
+  workflow needs to wait on an external event for days with state that is awkward to keep in a document.
   The outbox row shape is kept Inngest-compatible (an event name and a JSON payload) so the move is a
   new consumer, not a migration.</li>
 </ul>
@@ -226,8 +229,8 @@ functions without a persistent socket).</p>
 <p><strong>P</strong> <a href="https://resend.com/pricing">Resend pricing</a>, <a href="https://resend.com/docs/dashboard/receiving/introduction">Resend inbound</a>,
 <a href="https://resend.com/docs/dashboard/webhooks/introduction">Resend webhooks</a> — read 2026-09-20.</p>
 <ul>
-<li><strong>Free: 3 000 e-mails a month, 100 a day, one custom domain</strong>; Pro from $20 a month for 50 000
-  e-mails and unlimited domains; dedicated IP from the Scale tier.</li>
+<li><strong>Free: 3 000 e-mails a month, 100 a day, 3 domains</strong>; Pro $20 a month for 50 000 e-mails, $35 for
+  100 000; inbound on every plan — V5.</li>
 <li><strong>Inbound</strong>: an MX record on a subdomain (<code>reply.&lt;sending domain&gt;</code>) delivers every incoming e-mail as
   a webhook (<code>email.received</code>) with the parsed headers and body; replies to a sequence therefore land
   in <code>threads</code> without polling. Webhooks are signed (Svix headers <code>svix-id</code>, <code>svix-timestamp</code>,
@@ -282,9 +285,9 @@ functions without a persistent socket).</p>
 <p><strong>P</strong> <a href="https://www.twilio.com/docs/messaging/compliance/a2p-10dlc">Twilio A2P 10DLC overview</a>,
 <a href="https://www.twilio.com/en-us/sms/pricing/us">Twilio messaging pricing (US)</a> — read 2026-09-20.</p>
 <ul>
-<li><strong>Registration before any US SMS</strong>: a Brand ($4 one-time for a standard brand plus vetting fees;
-  secondary vetting $40 when a higher throughput is needed) and a Campaign use case ($15 monthly for a
-  standard campaign — "Low volume mixed" ~$1.50/month for small senders); campaign registration
+<li><strong>Registration before any US SMS</strong>: a Brand (low-volume standard $4 one-time, ≈ $4.41 with tax; a
+  standard brand costs more and adds secondary vetting) and a Campaign use case ($15 one-time vetting;
+  $2–10 a month by use case) — V8, re-checked at registration; campaign registration
   requires the sender's <strong>privacy-policy URL and terms URL and sample messages</strong>, and a described
   opt-in flow — the consent text the policy record stores (<code>consentText.sms</code>). Unregistered traffic is
   blocked by US carriers.</li>
@@ -345,8 +348,9 @@ API, Node 22+, signs with an X.509 certificate), <a href="https://fly.io/docs/ab
   Word timestamps drive the caption file (SRT/WebVTT, R34) and the "moment" finder (blueprint §10).</li>
 <li><strong>Cutting and captions</strong>: ffmpeg (<code>-ss/-to</code> cuts, <code>subtitles=</code> burn-in, <code>scale=1080:1920</code> for
   9:16). It does not fit a Vercel function well (250 MB bundle limit, 300 s, no persistent scratch)
-  — <strong>one container worker</strong> runs it: a Fly.io Machine (shared-cpu-1x, 1 GB, ~$0.007/hour while
-  running, stopped otherwise; auto-start on request) or Railway (from $5/month) — the blueprint
+  — <strong>one container worker</strong> runs it: a Fly.io Machine (shared-cpu-1x, 1 GB, $0.0082/hour ≈ $5.92 a month while
+  running; a stopped machine pays only its root file system, $0.15 per GB per 30 days; auto-start on
+  request — V12) or Railway (from $5/month) — the blueprint
   picks Fly.io with <code>auto_stop_machines</code> so the pilot pays cents. Modal (per-second GPU/CPU billing,
   Python-first) is the alternative if the clip engine later adds a vision model.</li>
 <li><strong>Credentials</strong>: <code>c2pa-node</code> builds a manifest (<code>c2pa.actions</code>: created / edited, <code>c2pa.ai_generated</code>
@@ -373,7 +377,7 @@ per client id; the machine keeps a <code>users</code> collection mapping <code>s
 fallback is Auth.js with e-mail magic links, which changes one file.</p>
 <h2>13. Observability</h2>
 <p><strong>P</strong> <a href="https://sentry.io/pricing/">Sentry pricing</a> (developer tier free: 5 000 errors a month),
-<a href="https://betterstack.com/uptime">Better Stack uptime</a> (free: 10 monitors, 3-minute checks) — read 2026-09-20.</p>
+<a href="https://betterstack.com/uptime/pricing">Better Stack uptime pricing</a> (free: 10 monitors, checks up to every 30 s — V14) — read 2026-09-20.</p>
 <ul>
 <li>Vercel's own logs and function metrics cover requests; Sentry catches exceptions in Server Actions,
   routes and the worker with the <code>platform_id</code> tag; Better Stack polls <code>/api/health</code> (which reports
@@ -465,7 +469,7 @@ fallback is Auth.js with e-mail magic links, which changes one file.</p>
 <tr>
 <td>Vercel Pro</td>
 <td>$20 (one member)</td>
-<td>$40 (two)</td>
+<td>$40 (two) — V1, V2</td>
 </tr>
 <tr>
 <td>MongoDB Atlas</td>

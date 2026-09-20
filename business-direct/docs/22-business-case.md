@@ -29,7 +29,7 @@ the worked example.*
 | Stage | Rate to next | Status | Source |
 |---|---|---|---|
 | Listed → reachable | by e-mail, by phone, by website only — from the listings | measured | the site's own data |
-| Reachable → replied | 5.5 % (top quartile); 3.4 % average; 10.7 % top decile | benchmark | research II §5.1 |
+| Reachable → replied | 5.5 % (top quartile); 3.4 % average; 10.7 % top decile; 42 % of replies come from the follow-ups | benchmark (K1) | `23-claims-register.md` |
 | Replied → applied | 40 % | assumption | — |
 | Applied → managing | 80 % (the site confirms the claim) | assumption | — |
 | Managing → paying within 3 months | 25 % | assumption; SMB activation 35–50 % | research II §2.2 |

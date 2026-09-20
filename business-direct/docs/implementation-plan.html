@@ -37,7 +37,7 @@ footer{margin-top:56px;padding-top:18px;border-top:1px solid var(--line);font-si
 </head>
 <body>
 <div class="wrap">
-<nav class="docnav" aria-label="Project documentation"><span class="docnav-brand">business.direct · docs</span><a href="index.html">Overview</a><a href="brief.html">Brief</a><a href="research.html">Research</a><a href="research-2.html">Research II</a><a href="research-3.html">Research III</a><a href="research-4.html">Research IV</a><a href="research-5.html">Research V</a><a href="research-6.html">Research VI</a><a href="audit.html">Audit</a><a href="sources.html">Sources</a><a href="design-system.html">Design system</a><a href="layouts.html">Layouts</a><a href="05-layout-specs.html">Layout specs</a><a href="decisions.html">Decisions</a><a href="build-log.html">Build log</a><a href="gate.html">Gate</a><a href="client-asks.html">Register of asks</a><a href="implementation-prerequisites.html">Prerequisites</a><a href="business-logic.html">Business logic</a><a href="ssot.html">SSOT</a><a href="architecture.html">Architecture</a><a href="technical-design.html">Technical design</a><a href="implementation-plan.html" aria-current=page>Plan</a><a href="system-blueprint.html">System blueprint</a><a href="documentation-audit.html">Documentation audit</a><a href="token-map.html">Token map</a><a href="executive.html">Executive summary</a><a href="business-case.html">Business case</a><a href="analytics.html">Analytics</a><a href="audit-swot.html">Audit · SWOT</a><a href="policy-framework.html">Policy framework</a></nav>
+<nav class="docnav" aria-label="Project documentation"><span class="docnav-brand">business.direct · docs</span><a href="index.html">Overview</a><a href="brief.html">Brief</a><a href="research.html">Research</a><a href="research-2.html">Research II</a><a href="research-3.html">Research III</a><a href="research-4.html">Research IV</a><a href="research-5.html">Research V</a><a href="research-6.html">Research VI</a><a href="research-7.html">Research VII</a><a href="audit.html">Audit</a><a href="sources.html">Sources</a><a href="design-system.html">Design system</a><a href="layouts.html">Layouts</a><a href="05-layout-specs.html">Layout specs</a><a href="decisions.html">Decisions</a><a href="build-log.html">Build log</a><a href="gate.html">Gate</a><a href="client-asks.html">Register of asks</a><a href="implementation-prerequisites.html">Prerequisites</a><a href="business-logic.html">Business logic</a><a href="ssot.html">SSOT</a><a href="architecture.html">Architecture</a><a href="technical-design.html">Technical design</a><a href="implementation-plan.html" aria-current=page>Plan</a><a href="system-blueprint.html">System blueprint</a><a href="documentation-audit.html">Documentation audit</a><a href="claims-register.html">Claims register</a><a href="legal.html">Legal position</a><a href="token-map.html">Token map</a><a href="executive.html">Executive summary</a><a href="business-case.html">Business case</a><a href="analytics.html">Analytics</a><a href="audit-swot.html">Audit · SWOT</a><a href="policy-framework.html">Policy framework</a></nav>
 <header><p class="eyebrow">Calvus · business.direct · project documentation</p><h1>business.direct — implementation plan</h1></header>
 <p class="notice" role="note"><b>This documentation set is being replaced (audit D40).</b> business.direct is a standalone product — the one-person sales and marketing team; ClassScout is its first customer. The <a href="presentation.html">presentation</a>, the <a href="executive.html">executive summary</a> and the <a href="business-case.html">business case</a> are written for the product; most other pages still read as the first instance's project until the <a href="documentation-audit.html">transformation programme</a> replaces them.</p>
 <p><em>Written 2026-09-19 on the architecture's ADRs; phase 2 (M5) added the same day; re-cut to
@@ -624,58 +624,136 @@ nothing from Meta.</p>
 </tr>
 </tbody>
 </table></div>
-<h2>5. Risks</h2>
+<h2>5. Risks — with an owner and a trigger (phase E, D42)</h2>
 <div class="tbl"><table>
 <thead>
 <tr>
 <th>Risk</th>
 <th>Effect</th>
+<th>Owner</th>
+<th>Trigger (when it becomes an action)</th>
 <th>Mitigation</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>Meta review takes weeks</td>
-<td>M2 slips</td>
-<td>start the review in M0; publish to Facebook first if Instagram lags</td>
+<td>Meta App Review takes weeks</td>
+<td>publishing (S4) slips</td>
+<td>delivery lead</td>
+<td>review not approved by the end of S2</td>
+<td>submitted in S0; swap S4 with S5/S6; publish to Facebook first if Instagram lags</td>
 </tr>
 <tr>
-<td>The public API changes without notice (no reference page)</td>
+<td>The site's public API changes without notice (no reference page)</td>
 <td>sync breaks</td>
-<td>contract tests against fixtures; alert on schema drift; ask the platform for a versioned endpoint</td>
+<td>delivery lead</td>
+<td>schema-drift test fails, or a sync returns &lt; 90 % of the previous count</td>
+<td>contract tests against fixtures; alert on drift; ask the site for a versioned endpoint</td>
 </tr>
 <tr>
 <td>A cap or consent bug</td>
 <td>TCPA exposure</td>
-<td>ADR-3 double check; consent-before-SMS test; zero-violation alert</td>
+<td>delivery lead; counsel on wording</td>
+<td>the zero-violation alert fires once</td>
+<td>ADR-3 double check; consent-before-SMS test; SMS stays off until the policy record allows it</td>
 </tr>
 <tr>
-<td>Providers see the invitation as spam</td>
-<td>pipeline stalls</td>
-<td>the copy names the provider's own page and the free claim; one reminder only; "not my program" honoured</td>
+<td>Advertisers read the invitation as spam</td>
+<td>pipeline stalls; domain reputation</td>
+<td>product owner</td>
+<td>bounce ≥ 2 % or complaints ≥ 0.1 % in a week</td>
+<td>the sending guard pauses (R23); the copy names the advertiser's own page and the free claim; "not my program" honoured</td>
 </tr>
 <tr>
 <td>AI drafts off-brand</td>
 <td>operator trust</td>
-<td>knowledge files first; AI optional; every draft edited is a training signal for the prompt</td>
+<td>product owner</td>
+<td>more than half of a week's drafts edited</td>
+<td>knowledge files first; AI optional per department; edits feed the prompt</td>
 </tr>
 <tr>
-<td>A vendor changes price or limit (research VI's numbers are dated 2026-09-20)</td>
+<td>A vendor changes price or limit (claims register V1–V16, dated 2026-09-20)</td>
 <td>cost or cadence</td>
-<td>every vendor is behind an interface (connector, adapter, drafter, media adapter); the cost table is re-read at contract</td>
+<td>product owner</td>
+<td>any vendor invoice &gt; 1.5× the register's figure, or a limit hit</td>
+<td>every vendor behind an interface; the register re-read at each contract</td>
 </tr>
 <tr>
-<td>The cron cadence or the 300 s tick is outgrown</td>
-<td>a job cannot finish in a tick</td>
-<td>ADR-18's upgrade path: Inngest consumes the same outbox rows; batching first</td>
+<td>The cron tick (800 s on Pro) or a days-long wait is outgrown</td>
+<td>a job cannot finish</td>
+<td>delivery lead</td>
+<td>a job's tick exceeds 600 s twice in a week</td>
+<td>ADR-18: batching first, then Vercel Workflows, then Inngest on the same outbox rows</td>
 </tr>
 <tr>
 <td>One operator is a bottleneck</td>
 <td>queue grows</td>
-<td>departments with AI on produce fewer, better drafts; the queue shows age; nothing sends unapproved anyway</td>
+<td>product owner with the first customer</td>
+<td>approvals older than 48 h exceed 20</td>
+<td>Simple mode's press; batch approval; earned auto-approval; the queue shows age</td>
+</tr>
+<tr>
+<td>Counsel's answers change a rule (<a href="legal.html"><code>24-legal-and-data-processing.md</code></a> §6)</td>
+<td>a feature waits or changes</td>
+<td>counsel; product owner</td>
+<td>any answer to §6 differs from the product team's reading</td>
+<td>the gate blocks the feature until the record is updated; rules change in the SSOT first</td>
+</tr>
+<tr>
+<td>The first customer's data is thinner than the pull (reviews, prices, contacts)</td>
+<td>the content and citation levers underperform</td>
+<td>first-customer contact</td>
+<td>readiness &lt; 3 of 4 on more than half of generated pages</td>
+<td>pages publish only at readiness ≥ 3 of 4 (R6); card-quality asks in the onboarding file</td>
 </tr>
 </tbody>
 </table></div>
+<h2>5b. Owners, dates and governance (phase E, D42)</h2>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>Track</th>
+<th>Owner</th>
+<th>Dates (G = the go)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Product (definition, price, rules, the D-register)</td>
+<td>the owner (product lead)</td>
+<td>decisions logged as D-numbers the day they are made</td>
+</tr>
+<tr>
+<td>Delivery (the nine sprints, the acceptance tests, the gate)</td>
+<td>a named delivery lead among the two developers</td>
+<td>S0 at G; S1 G+1 w; S2 G+3 w; S3 G+5 w; S4 G+7 w (or swapped); S5 G+9 w; S6 G+11 w; S7 G+13 w; S8 G+15 w; S9 G+17 w</td>
+</tr>
+<tr>
+<td>First customer (the ClassScout instance)</td>
+<td>the customer's named contact</td>
+<td>onboarding inputs (<code>19</code>) by the sprint that needs each: §1 before S2's first real send, §2 before S3/S6's keyed features, §3 at G</td>
+</tr>
+<tr>
+<td>Legal (<code>24</code> §6)</td>
+<td>counsel</td>
+<td>answers before S2's first real send; the DPA and terms before the contract</td>
+</tr>
+<tr>
+<td>Claims and sources (<code>23</code>)</td>
+<td>product lead</td>
+<td>re-verified at every contract and every quarter</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Reviews.</strong> A sprint review every second Friday: the acceptance test of §2b run live on the
+console, the measured numbers written into the build log, the next sprint confirmed or swapped.
+A monthly owner review of the D-register, the risk table and the claims register.</p>
+<p><strong>Decision path.</strong> A product rule changes in the SSOT first, then in the code, then in the
+prototype's copy — never the other order. An instance setting changes in its policy record and
+onboarding file. A legal question goes on <code>24</code> §6 and blocks only the feature it concerns. A
+price or packaging decision is a D-number by the owner.</p>
+<p><strong>Change control.</strong> No issue is added to a sprint without removing one of equal size; a new
+integration or vendor is an ADR; a change that touches a rule R1–R37 carries its test.</p>
 <h2>6. Release scope</h2>
 <p><strong>Release 1 (M0–M3, sprints S1–S6, twelve weeks), re-cut by the audit (Q10) into two halves:</strong> <strong>1a, read-only against the platform</strong> — the sales sequence with the sending guard and postal address, the reply inbox, the provider view (today, conversations, media, knowledge), the content queue with labels, economics on assumptions, the family's preferences by signed link; <strong>1b, when the platform's key and events arrive</strong> — claim requests, campaign audiences from saves, notifications, card flags, sign-up sources, bookings. The presentation says which half is which.</p>
 <p><strong>Release 1 as first planned:</strong> Your Field NYC; provider sales end to end; Instagram and

@@ -1,5 +1,9 @@
 # business.direct — sources and assets
 
+*Every figure used in the product-facing documents has a row in `23-claims-register.md` with its
+source opened and its status (P · A · corrected · assumption · owner); the research rounds
+(`01`–`01h`) hold the full evidence behind each.*
+
 | Content | Source | Real or sample |
 |---|---|---|
 | 253 providers with every field listed in `02-audit.md` §2 | `data/fetch-yourfield.py` → `data/providers.json`, from getyourfield.com's public API, 2026-09-19 (re-pulled the same evening) | **real** — public data only; re-run to refresh |

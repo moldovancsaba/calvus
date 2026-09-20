@@ -78,6 +78,16 @@ rules = set(_re.findall(r"^\| (R\d+) \|", (docs / "10-ssot.md").read_text(encodi
 cited = set(_re.findall(r"\b(R\d+)\b", (docs / "09-business-logic.md").read_text(encoding="utf-8")))
 for r in sorted(rules - cited, key=lambda x: int(x[1:])): findings.append(f"unmapped rule  SSOT {r} is not stated in docs/09-business-logic.md")
 
+# 11. the top layer never frames the product as one customer's project; 12. the claims register has no unverified row (D42)
+TOP = ["docs/presentation.html", "docs/15-executive-summary.md", "docs/22-business-case.md", "docs/00-brief.md"]
+BANNED = ["the client accepts", "proposal for classscout", "after the client accepts", "one-man army for anybody", "the one-person sales and marketing team for anybody"]
+for rel in TOP:
+    low = (HERE / rel).read_text(encoding="utf-8").lower()
+    for ph in BANNED:
+        if ph in low: findings.append(f"framing  {rel}: \"{ph}\"")
+reg = (HERE / "docs/23-claims-register.md").read_text(encoding="utf-8")
+for line in reg.splitlines():
+    if line.startswith("| ") and "| **unverified**" in line and "removed" not in line: findings.append(f"claims  unverified row without removal: {line[:60]}")
 # 9. inert controls carry aria-disabled and a title; 10. the page carries the current prototype banner (hub audit 2026-09-20)
 js = (HERE / "assets/app.js").read_text(encoding="utf-8")
 for m in _re.finditer(r'<button class="btn[^"]*\binert\b[^"]*"([^>]*)>', js):

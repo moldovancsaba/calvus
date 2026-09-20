@@ -17,15 +17,15 @@ the worked example, because every rule was built and tested on its data. Terms a
 | **Advertiser** · **Provider** (a listed business) | its own one-person team the day it manages its page: replies, reminders, campaigns to families who saved it, results; a free page and paid reach | a claim, its knowledge files, its approvals, and — if it upgrades — a monthly or seasonal fee |
 | **Visitor** · **Family** | what starts near them this week, alerts from providers they saved, offers only from providers they chose, one cap, one Stop | preferences, and consent where the law requires it |
 
-## 2. The two flows at the front door (D14)
+## 2. The two flows at the front door (D14) — marketing to visitors, sales to advertisers
 
-**B2C social publishing → families.** Every provider with news (announcement, trial, next
+**B2C social publishing → visitors (families).** Every provider with news (announcement, trial, next
 session) becomes a post draft with the link back to its page. The operator approves,
 edits or skips; approved posts publish at their calendar slot through the platform's
 channels. Families arrive on the listing page; the platform's sign-up captures them.
 *Nothing publishes unapproved.*
 
-**B2B provider sales → providers.** Every provider enters the pipeline at *identified*.
+**B2B sales → advertisers (providers).** Every provider enters the pipeline at *identified*.
 The invitation sequence (one approval for the whole run) moves those with an e-mail to
 *contacted*; a reply moves to *replied* and lands in the inbox with a drafted answer;
 "Apply to manage" (or a confirmed yes) → *applied*; the platform's confirmation →
@@ -79,7 +79,7 @@ Nothing leaves without a person's approval or an earned auto-approval (R1, R25).
 a template with merge fields; with it on, the knowledge files are the prompt and the draft
 carries the ✦ badge until a person edits it.
 
-## 4. Provider campaigns (phase 2, D22)
+## 4. Advertiser campaigns to visitors (provider campaigns, phase 2, D22)
 
 A campaign is a provider's message to families, built from the provider's own card (R11):
 
@@ -95,7 +95,7 @@ and never past the cap (R3). A family sees why she received it (she saved the pr
 on which channel, and that it counts toward her monthly four. Audience sizes are sample in
 the prototype (prerequisite P-5 — the platform's saves data).
 
-## 4b. Conversations (phase 3, D25)
+## 4b. Conversations — the advertiser's own team answers visitors (phase 3, D25)
 
 An **enquiry** is a family's message to a provider on any channel the provider exposes:
 the platform's message, e-mail, a missed call (the machine texts back). The machine drafts
@@ -112,7 +112,7 @@ platform's own policy says it does not collect children's data — so every part
 included, sees "a child of 6" (R24, D31). On the platform side, a **comment or DM** on a published post gets
 a drafted reply that links to the listing; the operator approves it.
 
-## 5. Upgrades and money (D21: bundled base, provider-bought upgrades)
+## 5. Placements and money — what the owner sells to advertisers (D21)
 
 The base machine is **bundled by the platform** for every listing — the invitation, the
 replies, the reminders, the campaigns — because its job is the platform's own growth. The
@@ -129,7 +129,7 @@ Choosing one moves the provider to *upgraded*; it changes where the provider app
 what a family receives (R12); the platform's intelligence screen sums the sample revenue. Billing is Stripe Checkout on the platform's account (ADR-9); the platform invoices, business.direct
 records the entitlement. No discounting logic — that is DiscountDirect's domain (D5, R13).
 
-## 6. Families: preferences, consent, cap, stop
+## 6. Visitors (families): preferences, consent, cap, stop
 
 - **Preferences** per channel: weekly picks (e-mail), saved-provider alerts (push), new
   provider nearby (push), texts from providers (SMS). Default: every channel off until the
@@ -175,7 +175,7 @@ every clip (R34). **Sensitive categories** — health, location tracks, biometri
 hardship — are answered, never stored (R35). **Dark patterns and AI manipulation**: a banned
 list on every draft and screen; Stop is one tap (R36).
 
-## 7. Providers: the law on the sales side
+## 7. Advertisers (providers): the law on the sales side
 
 US (first market): commercial e-mail to a business needs no prior consent (CAN-SPAM);
 every message carries the platform's **registered postal address** (a merge field, checked
@@ -187,7 +187,7 @@ sequence (R23). Hungary (reference): corporate addresses without
 consent; a named person's address needs consent — the reference connector flags which is
 which. SMS to providers is not used.
 
-## 8. The intelligence recap (D23)
+## 8. The owner's Monday recap (D23)
 
 Every Monday the operator reads one screen: providers contacted, replies answered, applied
 · managing · upgraded, posts published, families reached by campaigns, upgrade revenue; by

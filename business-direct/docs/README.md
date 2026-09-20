@@ -16,9 +16,10 @@ Built to the prototyping standard (`PROTOTYPING.md`); this index is the process 
 | 01e research IV | `01e-research-responsible-data.md` | Responsible data and children's rights: the law by market (COPPA 2025, NY CDPA, California and the states, GDPR Art. 8, DSA Art. 28, the UK Children's Code), the enforcement record, the frameworks (privacy by design, ICO, ISO 27701, NIST, LEGO), the business value of doing it properly |
 | 01f research V | `01f-research-beyond-children.md` | Beyond children: children in real footage, the adults who work with them, people in vulnerable circumstances, protected characteristics, accessibility, sensitive data categories, dark patterns and AI manipulation — the law and the enforcement behind each, the rule it becomes (R30–R36), how it generalises |
 | 01g research VI | `01g-research-real-system.md` | The real system's services verified on the day: hosting, database, cache, files, jobs, e-mail, Meta, SMS, payments, drafting, transcription, the media worker, credentials, sign-in, observability — auth, review, limits, prices, alternatives; what each needs before the first run; the monthly cost at pilot and at the sizing target; what is assumed |
+| 01h research VII | `01h-research-product-market.md` | The product's market: the classified-media segment and how it earns, the site software owners run and what it does not do, what they buy for the pieces and at what price, the gap the product fills, the product's SWOT, what was not found (phase B) |
 | 02 audit | `02-audit.md` | Your Field measured: API, 253 providers, field coverage, site copy, the platform's own policy and terms; the Hungarian reference instance; the two videos frame by frame; what DiscountDirect provides |
 | 03 sources | `03-sources.md` | What is real (the platform's public data), what is sample (generated from real cards), what is inherited |
-| 04 decisions | `04-decisions.md` | D1–D41 |
+| 04 decisions | `04-decisions.md` | D1–D42 |
 | 05 design | `design-system.html` + `../assets/tokens.css` + `../assets/components.css` | **Gate 1 approved (D9)**: tokens and components, one source |
 | 05 layouts | `05-layout-specs.md` + `layouts.html` + `frames/` | **Gate 2 approved (D16)**: platform 1440 / 390, provider 390, family 390; the later screens reuse the same grids |
 | 06 build log | `06-build-log.md` | Ten rounds and a re-pull: the prototype; presentation and package; editors and tablet; campaigns, upgrades, recap; conversations; economics; the research implemented; the audit implemented; the policy screen; the two interfaces; beyond children; the catalogue re-pulled |
@@ -37,11 +38,23 @@ Built to the prototyping standard (`PROTOTYPING.md`); this index is the process 
 | 20 system blueprint | `20-system-blueprint.md` | The document a developer builds from: drawings (context, deployment, module map, the two pipelines, the clip engine, the state machines), the repository layout, seventeen modules with what each owns and pseudo code, data contracts, the cron table, the outbox in full, security, configuration, the media worker, the test plan, operations, the prototype → module map (D37) |
 | 21 deep audit | `21-documentation-audit.md` | The deep audit of all thirty files by error class (premise, vocabulary, assumption, unverified claim, contradiction, gap, sprawl) with file-level evidence; what survives; the scorecard; the eleven-document target state; the six owner decisions; the seven-phase transformation programme (D40) |
 | 22 value | `22-business-case.md` | The value for the media owner — the economics as a service: what the product computes (listing price, advertiser CAC and LTV, visitor cost and value, churn and retention, the next dollar, the plan), the funnel and rates, the first customer's worked example, sensitivity, the costs the owner carries (D41) |
+| 23 claims register | `23-claims-register.md` | Every figure in the top layer and every vendor figure in research VI, with its source opened on 2026-09-20 and its status — P · A · corrected · assumption · owner; what the register changed (phase A) |
+| 24 legal position | `24-legal-and-data-processing.md` | The product as processor for the media owner: roles per data class, the documents the product must have (terms, DPA, privacy policy, sub-processors, security, retention, AI disclosure), the children's-data stance, the ten questions for counsel (phase D) |
 | 19 first-customer onboarding | `19-implementation-prerequisites.md` | The ClassScout instance's onboarding inputs by the feature each unblocks — before the first message, before the keyed features, the instance settings to confirm; nothing needed for the presentation (D34, D41) |
 
 Rendered by `build.py` (`python3 business-direct/docs/build.py`); gate `python3 business-direct/check.py`
 (also run by the root `check.py`). Data: `python3 business-direct/data/fetch-yourfield.py`
 (client) and `fetch-sportolok.py` (reference).
+
+## Reading paths (phase F)
+
+| Reader | Start here | Then |
+|---|---|---|
+| **A classified media owner / a prospect** | `presentation.html` | `15-executive-summary.md` · `22-business-case.md` · `00-brief.md` (the product definition) · `18-responsible-data-policy-framework.md` §5 |
+| **The delivery team** | `10-ssot.md` (§1a the product layer) | `09-business-logic.md` · `11-architecture.md` · `12-technical-design.md` · `20-system-blueprint.md` · `13-implementation-plan.md` (§2b sprints, §5b governance) · `24-legal-and-data-processing.md` · `14-token-map.md` |
+| **The first customer's instance (ClassScout · Your Field NYC)** | `19-implementation-prerequisites.md` (onboarding inputs) | `02-audit.md` (their site measured) · `03-sources.md` (what is real) · `17-business-logic-audit-and-swot.md` §3 (the pilot's SWOT) · the Policy and Economics screens |
+| **Evidence** | `23-claims-register.md` | research I–VII (`01`–`01h`) · `16-analytics-and-unit-economics.md` (the Economics department's specification) |
+| **History** | `04-decisions.md` | `06-build-log.md` · `07-gate.md` · `08-client-asks.md` (closed) · `21-documentation-audit.md` |
 
 ## Process log
 
