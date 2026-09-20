@@ -137,6 +137,7 @@ must actually happen before every push, not just be claimed:
   the change (a background curl-poll loop for a unique marker in the new
   content, per the established pattern) before reporting success.
 
+- The product's code lives in `business-direct/app/` (TypeScript, Vitest; `npm test` there is its gate; `node_modules` is ignored by git and by the link audit) until it moves to its own repository.
 - **One command for everything: `python3 check.py`** runs the four project gates (Holdvölgy,
   IDBC, Lexodont, business.direct) plus a repo-wide link audit over every HTML file, and
   `python3 build-docs.py` renders every project's docs and `PROTOTYPING.md` (added

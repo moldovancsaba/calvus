@@ -127,6 +127,19 @@ pull request set; nothing is merged without its test.*
 | S8 (P15, P16) | retention running; campaigns and placements sold; the three jobs complete |
 | S9 (P17) | the second site provable as a record and a connector |
 
+### Status (kept current; the measured results are in `build-log.md`)
+
+| Piece | Status | Where |
+|---|---|---|
+| P1 policy gate | **done in code, proven** (10 gate rows tested) | `../app/src/modules/policy`, `../app/tests/policy.test.ts` |
+| P2 listings and sync; stage machine; score | **done in code, proven** against the demo sample | `../app/src/modules/catalogue`, `pipeline` |
+| P3 template drafter and pattern guard | **done in code, proven**; Home, approvals, templates UI: not started | `../app/src/modules/drafting` |
+| P4 outbox core (double check, cap race, sending guard, message log) | **done in code, proven**; the Resend adapter and the sequence job: not started | `../app/src/modules/outbox` |
+| P10 Stop; the visitor schema | **done in code, proven** | `../app/src/modules/families`, `../app/src/db/schemas.ts` |
+| P15 retention signals and drafts | **done in code, proven** | `../app/src/modules/retention` |
+| P0 foundation (console, SSO, database, health) | not started — needs sprint 0's accounts | — |
+| P5–P9, P11–P14, P16–P18 | not started | — |
+
 ### Rules for every piece
 
 1. One branch, one pull request set, the acceptance test in the description; merged only when the gate is clean and the test passed on the console.

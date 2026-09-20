@@ -515,6 +515,22 @@ gate rewritten for the final set; the product standard recorded at the hub (<cod
 <p><strong>Next.</strong> Present to the stakeholders with the sign-off sheet (<a href="delivery-plan.html"><code>delivery-plan.md</code></a> §8).</p>
 <p><strong>2026-09-20 — approved; the development broken down (D48, D49).</strong> The first customer approved the product as presented. The delivery plan gained §2c: nineteen deliverable pieces with modules, issues, sprints, dependencies, acceptance tests and sizes, the dependency drawing, what is usable after each sprint, and the rules for every piece.</p>
 <p><strong>Next.</strong> Sprint 0: the accounts and the environment; the first customer's onboarding (P18) starts the same week.</p>
+<h2>Round 12 — 2026-09-20 — the build starts: the core modules (D50)</h2>
+<p><strong>Delivered</strong> in <code>business-direct/app/</code>: <code>src/modules/policy</code> (the gate, every row), <code>catalogue</code>
+(connector interface, fixture connector, sync with diff events), <code>pipeline</code> (stage machine, score),
+<code>drafting</code> (pattern guard, template drafter), <code>outbox</code> (checks at enqueue and send, lock, backoff,
+dead-letter, message log with the policy basis, cancel on Stop), <code>families</code> (Stop), <code>retention</code>
+(signals, drafts); <code>src/db/schemas.ts</code> (Policy, FamilyPrefs, OutboxRow).</p>
+<p><strong>Measured</strong>: <code>npm test</code> — 6 files, <strong>37 tests passed</strong>, 0 failed (vitest 3, 0.34 s); <code>npm run
+typecheck</code> clean (TypeScript 5.6, strict). The cap race test delivers exactly one of two sends
+against one slot; the gate test covers all ten rows; the retention test produces exactly one
+draft per signal and none with a discount. Gate: <code>python3 check.py</code> exit 0 (the repo-wide link
+audit skips <code>node_modules</code>).</p>
+<p><strong>Enabled</strong>: every rule in the table of D50 runs as code against in-memory stores and the demo
+sample. <strong>Not enabled</strong> (needs the owner's accounts): sending through a real channel, the
+console, sign-in — sprint 0's checklist.</p>
+<p><strong>Next.</strong> Sprint 0's accounts; then the console shell (P0) and the Resend adapter (P4) on the
+real instance.</p>
 <footer>Source: <code>business-direct/docs/build-log.md</code> · rendered by <code>docs/build.py</code>.</footer>
 </div>
 </body>

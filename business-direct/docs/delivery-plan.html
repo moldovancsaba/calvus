@@ -503,6 +503,58 @@ pull request set; nothing is merged without its test.</em></p>
 </tr>
 </tbody>
 </table></div>
+<h3>Status (kept current; the measured results are in <a href="build-log.html"><code>build-log.md</code></a>)</h3>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>Piece</th>
+<th>Status</th>
+<th>Where</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>P1 policy gate</td>
+<td><strong>done in code, proven</strong> (10 gate rows tested)</td>
+<td><code>../app/src/modules/policy</code>, <code>../app/tests/policy.test.ts</code></td>
+</tr>
+<tr>
+<td>P2 listings and sync; stage machine; score</td>
+<td><strong>done in code, proven</strong> against the demo sample</td>
+<td><code>../app/src/modules/catalogue</code>, <code>pipeline</code></td>
+</tr>
+<tr>
+<td>P3 template drafter and pattern guard</td>
+<td><strong>done in code, proven</strong>; Home, approvals, templates UI: not started</td>
+<td><code>../app/src/modules/drafting</code></td>
+</tr>
+<tr>
+<td>P4 outbox core (double check, cap race, sending guard, message log)</td>
+<td><strong>done in code, proven</strong>; the Resend adapter and the sequence job: not started</td>
+<td><code>../app/src/modules/outbox</code></td>
+</tr>
+<tr>
+<td>P10 Stop; the visitor schema</td>
+<td><strong>done in code, proven</strong></td>
+<td><code>../app/src/modules/families</code>, <code>../app/src/db/schemas.ts</code></td>
+</tr>
+<tr>
+<td>P15 retention signals and drafts</td>
+<td><strong>done in code, proven</strong></td>
+<td><code>../app/src/modules/retention</code></td>
+</tr>
+<tr>
+<td>P0 foundation (console, SSO, database, health)</td>
+<td>not started — needs sprint 0's accounts</td>
+<td>—</td>
+</tr>
+<tr>
+<td>P5–P9, P11–P14, P16–P18</td>
+<td>not started</td>
+<td>—</td>
+</tr>
+</tbody>
+</table></div>
 <h3>Rules for every piece</h3>
 <ol>
 <li>One branch, one pull request set, the acceptance test in the description; merged only when the gate is clean and the test passed on the console.</li>

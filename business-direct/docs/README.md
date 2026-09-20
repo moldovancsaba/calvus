@@ -25,6 +25,7 @@ process log.
 | What the product must never do, and its legal position | `responsible-data.md` |
 | The first instance | `first-customer-classscout.md` (their site, onboarding inputs by feature) |
 | The screens | the prototype (`../index.html`) with `product-specification.md` beside it; the design set |
+| The code | `../app/` — the core modules with their tests (`npm test`); the status per piece in `delivery-plan.md` §2c |
 
 ## The set
 

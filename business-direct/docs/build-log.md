@@ -542,3 +542,24 @@ gate rewritten for the final set; the product standard recorded at the hub (`PRO
 **2026-09-20 — approved; the development broken down (D48, D49).** The first customer approved the product as presented. The delivery plan gained §2c: nineteen deliverable pieces with modules, issues, sprints, dependencies, acceptance tests and sizes, the dependency drawing, what is usable after each sprint, and the rules for every piece.
 
 **Next.** Sprint 0: the accounts and the environment; the first customer's onboarding (P18) starts the same week.
+
+## Round 12 — 2026-09-20 — the build starts: the core modules (D50)
+
+**Delivered** in `business-direct/app/`: `src/modules/policy` (the gate, every row), `catalogue`
+(connector interface, fixture connector, sync with diff events), `pipeline` (stage machine, score),
+`drafting` (pattern guard, template drafter), `outbox` (checks at enqueue and send, lock, backoff,
+dead-letter, message log with the policy basis, cancel on Stop), `families` (Stop), `retention`
+(signals, drafts); `src/db/schemas.ts` (Policy, FamilyPrefs, OutboxRow).
+
+**Measured**: `npm test` — 6 files, **37 tests passed**, 0 failed (vitest 3, 0.34 s); `npm run
+typecheck` clean (TypeScript 5.6, strict). The cap race test delivers exactly one of two sends
+against one slot; the gate test covers all ten rows; the retention test produces exactly one
+draft per signal and none with a discount. Gate: `python3 check.py` exit 0 (the repo-wide link
+audit skips `node_modules`).
+
+**Enabled**: every rule in the table of D50 runs as code against in-memory stores and the demo
+sample. **Not enabled** (needs the owner's accounts): sending through a real channel, the
+console, sign-in — sprint 0's checklist.
+
+**Next.** Sprint 0's accounts; then the console shell (P0) and the Resend adapter (P4) on the
+real instance.

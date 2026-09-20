@@ -23,7 +23,7 @@ for g in GATES:
 # Every HTML file in the repo, outside .git and the worktrees, whether or not a project gate
 # already read it: relative href/src must resolve. Cheap, and it catches a new folder nobody
 # wired a gate for yet.
-skip = (".git", ".claude")
+skip = (".git", ".claude", "node_modules")
 files = [p for p in ROOT.rglob("*.html") if not any(s in p.parts for s in skip)]
 broken, refs = [], 0
 for f in files:
