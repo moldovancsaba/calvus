@@ -1044,6 +1044,200 @@ project</em>.</p>
 <p>It is written by the person who made the errors, on the same day, without the owner's product
 definition in hand. Q4 exists for that reason: the definition in §1 is my reading of the videos
 and the owner's messages, and it is the first thing to confirm or correct.</p>
+<h2>10. The plan to fix all documentation and plans (the consolidation programme, D43)</h2>
+<p><em>The audit's finding was one wrong premise spread through thirty-three files. Phases A–G repaired the
+content in place; this plan replaces the set. It is the plan the owner asked for on 2026-09-20: what
+each existing file becomes, what the final set is, in what order the work runs, and what "done" means
+for every page. Out of this phase by the owner's instruction: the product's own price, costs and
+legal paperwork, and go-to-market.</em></p>
+<h3>10.1 The final set — twelve documents, the prototype, the design set, the evidence, the history</h3>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>#</th>
+<th>Final document (file)</th>
+<th>Reader</th>
+<th>What it holds</th>
+<th>Built from</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td><strong>The presentation</strong> <code>presentation.html</code></td>
+<td>a classified media owner; the stakeholders</td>
+<td>the customer → the complication → the question → the product → how the owner uses it → the benefits → the first customer → delivery → the decision; the demo as an appendix</td>
+<td>rewritten D41; final pass for the sign-off shape</td>
+</tr>
+<tr>
+<td>2</td>
+<td><strong>Executive summary</strong> <code>executive-summary.md</code></td>
+<td>the stakeholders</td>
+<td>one page, SCQA, the decision</td>
+<td><code>15</code></td>
+</tr>
+<tr>
+<td>3</td>
+<td><strong>Product definition</strong> <code>product-definition.md</code></td>
+<td>everyone</td>
+<td>the product for classified media owners: the three jobs, the departments, the human gate, the loop, the vocabulary (media owner · advertiser · visitor · listing · instance), what it is not, the persona, the first customer as example</td>
+<td><code>00</code>, SSOT §1a</td>
+</tr>
+<tr>
+<td>4</td>
+<td><strong>Product specification</strong> <code>product-specification.md</code> — <em>new</em></td>
+<td>the stakeholders; the delivery team</td>
+<td><strong>how it works and how the customer uses it</strong>, screen by screen and role by role: the owner's day (Home, the inbox, the recap, Economics, Policy, Templates, How to use), the advertiser's team (today, conversations, campaigns, media, results, knowledge), the visitor's side (inbox, saved, preferences, Stop); every state, every approval, what each department does alone and what needs a person; <strong>the benefits per role, measured on the screen</strong>; the prototype as the reference for every screen</td>
+<td>the prototype's screens and help texts, <code>09</code> §2b–§4b, <code>05</code>, the presentation §5–§6</td>
+</tr>
+<tr>
+<td>5</td>
+<td><strong>The market</strong> <code>market.md</code></td>
+<td>the stakeholders</td>
+<td>the classified-media segment and how it earns, what owners run and buy today, the gap, the product's SWOT; the first customer's category evidence referenced, not repeated</td>
+<td><code>01h</code>; the reusable parts of <code>01b</code> §2 and <code>01c</code> §1</td>
+</tr>
+<tr>
+<td>6</td>
+<td><strong>The value — the Economics department</strong> <code>economics.md</code></td>
+<td>the stakeholders; the delivery team</td>
+<td>what the product computes for the owner about the owner's services (listing price, advertiser CAC and LTV, visitor cost and value, churn and retention, costs, incomes, the next dollar, the plan), the formulas, the inputs and their status, the events, the decision rules R16–R19, the first customer's worked example, sensitivity</td>
+<td><code>22</code> + <code>16</code> merged</td>
+</tr>
+<tr>
+<td>7</td>
+<td><strong>Business logic and SSOT</strong> <code>business-logic.md</code></td>
+<td>the delivery team</td>
+<td>the product layer and glossary, enumerations, entities, settings, the rules R1–R37 end to end with the first instance as the worked example, the rules map, what the product never does</td>
+<td><code>09</code> + <code>10</code> merged</td>
+</tr>
+<tr>
+<td>8</td>
+<td><strong>Architecture and blueprint</strong> <code>architecture.md</code></td>
+<td>the delivery team</td>
+<td>context, quality attributes, containers, the ADRs (the build baseline), the content model and state machines, connectors and adapters, the module catalogue with pseudo code, data contracts, the cron table, the outbox, security, configuration, the media worker, tests, operations; the token map as an appendix</td>
+<td><code>11</code> + <code>12</code> + <code>20</code> + <code>14</code> merged</td>
+</tr>
+<tr>
+<td>9</td>
+<td><strong>Delivery plan and operating model</strong> <code>delivery-plan.md</code></td>
+<td>the delivery team; the owner</td>
+<td>milestones, the nine sprints with acceptance tests, the sprint-0 checklist, issues with a Definition of Done, owners, dates relative to the go, reviews, decision path, change control, risks with triggers; <strong>the operating model</strong> — onboarding a site (the policy interview, the connector, the knowledge workshop), support, incidents, offboarding and data return; the <strong>stakeholder sign-off sheet</strong> — who accepts what, by which criterion, with the evidence link</td>
+<td><code>13</code> + new</td>
+</tr>
+<tr>
+<td>10</td>
+<td><strong>Responsible data and the legal position</strong> <code>responsible-data.md</code></td>
+<td>the delivery team; counsel</td>
+<td>the seventeen principles, the policy record per site, the gate, onboarding checklist, the customer's value; the product's own position as processor, the documents it must have, sub-processors, security, the children's-data stance, the counsel list — with the one disclaimer at the top</td>
+<td><code>18</code> + <code>24</code> merged; <code>01e</code>, <code>01f</code> as evidence</td>
+</tr>
+<tr>
+<td>11</td>
+<td><strong>First customer: ClassScout · Your Field NYC</strong> <code>first-customer-classscout.md</code></td>
+<td>the first customer; the delivery team</td>
+<td>their site measured, what is real and what is sample, the onboarding inputs by the feature each unblocks, the pilot's SWOT, the personas, the closed asks — everything instance-specific in one place</td>
+<td><code>02</code> + <code>03</code> + <code>19</code> + <code>17</code> §3 + <code>08</code></td>
+</tr>
+<tr>
+<td>12</td>
+<td><strong>Evidence</strong> <code>evidence.md</code></td>
+<td>anyone checking a figure</td>
+<td>the claims register (every figure, source opened, status) and the index to research I–VII</td>
+<td><code>23</code> + an index; research <code>01</code>–<code>01h</code> kept as the evidence base</td>
+</tr>
+<tr>
+<td>—</td>
+<td><strong>The prototype</strong> <code>../index.html</code></td>
+<td>everyone</td>
+<td>the reference for every screen; product role labels with the instance's words</td>
+<td>v22; a copy pass (product terms first in help texts)</td>
+</tr>
+<tr>
+<td>—</td>
+<td><strong>The design set</strong> <code>design-system.html</code>, <code>layouts.html</code>, <a href="05-layout-specs.html"><code>05-layout-specs.md</code></a>, <code>frames/</code></td>
+<td>the delivery team</td>
+<td>tokens, components, the approved frames</td>
+<td>unchanged; labelled the first instance's frames</td>
+</tr>
+<tr>
+<td>—</td>
+<td><strong>History</strong> <code>decisions.md</code> (D-register), <code>build-log.md</code>, <code>gate.md</code>, the closed register of asks, this audit</td>
+<td>the owner</td>
+<td>never edited except to append</td>
+<td><code>04</code>, <code>06</code>, <code>07</code>, <code>08</code>, <code>21</code></td>
+</tr>
+</tbody>
+</table></div>
+<p>Every current rendered URL keeps working: each old page becomes a redirect to its section in the
+new set (<code>bemutato.html</code> → <code>presentation.html</code> is the model). Filenames are English and say what
+the document is; numbers go.</p>
+<h3>10.2 What "done" means for every document (the acceptance criteria)</h3>
+<ol>
+<li>The first paragraph says what the document is for, who reads it and what decision it supports.</li>
+<li>The subject is the product; the first customer appears as the example and is named as such.</li>
+<li>Product terms first (media owner · advertiser · visitor · listing); the instance's words in brackets or in the worked example only.</li>
+<li>Every figure has a row in the evidence document with its source opened; none of the product's own price, costs or legal paperwork appears.</li>
+<li>One fact, one place: a number or rule is stated once and linked elsewhere; counts are computed by the renderer.</li>
+<li>Internal vocabulary (D-numbers, R-numbers, gate names) stays in the delivery and history documents; the stakeholder documents use plain words with links.</li>
+<li>Measured at 390 and 1440: no horizontal scroll, one <code>h1</code>, 44 px targets, no console errors.</li>
+<li>The gate is clean: links, anchors, the framing check, the register check, the redirect check, the decision range.</li>
+<li>A stakeholder can act from the document alone: owners, dates, criteria, a next step.</li>
+<li>Nothing describes a state that is no longer true.</li>
+</ol>
+<h3>10.3 The order of work</h3>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>Step</th>
+<th>Deliverable</th>
+<th>Why this order</th>
+<th>Done when</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td><strong>Product specification</strong> (4) and the presentation's final pass (1)</td>
+<td>the two things the owner asked for by name — how it works, how customers use it, the benefits — and the pages a stakeholder opens first</td>
+<td>every screen of the prototype has its section; the presentation links to it; criteria 1–7</td>
+</tr>
+<tr>
+<td>2</td>
+<td><strong>Business logic and SSOT</strong> (7), <strong>Economics</strong> (6)</td>
+<td>the rules and the numbers everything else cites; the merges remove the duplicated rule statements</td>
+<td>one rules register, one glossary, one economics model; criteria 3–6</td>
+</tr>
+<tr>
+<td>3</td>
+<td><strong>Architecture and blueprint</strong> (8), <strong>Delivery plan and operating model</strong> (9) with the sign-off sheet</td>
+<td>the delivery team's two files; the operating model and the sign-off sheet are new</td>
+<td>a developer builds from 8 and a customer-success person onboards from 9; the sign-off sheet names every stakeholder</td>
+</tr>
+<tr>
+<td>4</td>
+<td><strong>Responsible data and the legal position</strong> (10), <strong>First customer</strong> (11), <strong>Market</strong> (5), <strong>Evidence</strong> (12)</td>
+<td>merges of finished content</td>
+<td>every instance-specific sentence lives in 11; every figure in 12</td>
+</tr>
+<tr>
+<td>5</td>
+<td><strong>Redirects, index, hub, notice, gate, standard</strong></td>
+<td>the cut-over: every old URL redirects, the index is the five reading paths, the hub row and root README name the final set, the replacement notice is removed, the gate checks the final set (redirects, counts, framing, register), <code>PRODUCT.md</code> records the product stages so the next product starts right</td>
+<td><code>GATE: CLEAN</code>; every old URL answers 200 and lands on its new home; nothing on the site says "being replaced"</td>
+</tr>
+<tr>
+<td>6</td>
+<td><strong>Final review</strong></td>
+<td>every document read once more against §10.2 in a single sitting; the prototype's help texts in product terms; every page measured; the live site checked with curl</td>
+<td>a dated entry in the build log with the measurements; D-number closing the programme</td>
+</tr>
+</tbody>
+</table></div>
+<h3>10.4 What the plan deliberately leaves out</h3>
+<p>The product's own price and packaging, its build and run costs, its legal documents' signature, and
+its go-to-market — by the owner's instruction, not this phase. The research files stay as evidence
+and are not rewritten. The design set is not redesigned.</p>
 <footer>Source: <code>business-direct/docs/21-documentation-audit.md</code> · rendered by <code>docs/build.py</code>.</footer>
 </div>
 </body>

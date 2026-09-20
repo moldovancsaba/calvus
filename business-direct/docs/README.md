@@ -19,7 +19,7 @@ Built to the prototyping standard (`PROTOTYPING.md`); this index is the process 
 | 01h research VII | `01h-research-product-market.md` | The product's market: the classified-media segment and how it earns, the site software owners run and what it does not do, what they buy for the pieces and at what price, the gap the product fills, the product's SWOT, what was not found (phase B) |
 | 02 audit | `02-audit.md` | Your Field measured: API, 253 providers, field coverage, site copy, the platform's own policy and terms; the Hungarian reference instance; the two videos frame by frame; what DiscountDirect provides |
 | 03 sources | `03-sources.md` | What is real (the platform's public data), what is sample (generated from real cards), what is inherited |
-| 04 decisions | `04-decisions.md` | D1–D42 |
+| 04 decisions | `04-decisions.md` | D1–D43 |
 | 05 design | `design-system.html` + `../assets/tokens.css` + `../assets/components.css` | **Gate 1 approved (D9)**: tokens and components, one source |
 | 05 layouts | `05-layout-specs.md` + `layouts.html` + `frames/` | **Gate 2 approved (D16)**: platform 1440 / 390, provider 390, family 390; the later screens reuse the same grids |
 | 06 build log | `06-build-log.md` | Ten rounds and a re-pull: the prototype; presentation and package; editors and tablet; campaigns, upgrades, recap; conversations; economics; the research implemented; the audit implemented; the policy screen; the two interfaces; beyond children; the catalogue re-pulled |
@@ -36,7 +36,7 @@ Built to the prototyping standard (`PROTOTYPING.md`); this index is the process 
 | 17 audit · SWOT | `17-business-logic-audit-and-swot.md` | Audit of the business logic: 19 findings with fixes; the SWOT with evidence; the recommendations Q1–Q12 (adopted and implemented, D30) |
 | 18 policy framework | `18-responsible-data-policy-framework.md` | Seventeen principles, the policy record per instance, the gate (ten rows), onboarding, the client's value, two worked instances, how it generalises (D32, D35) |
 | 20 system blueprint | `20-system-blueprint.md` | The document a developer builds from: drawings (context, deployment, module map, the two pipelines, the clip engine, the state machines), the repository layout, seventeen modules with what each owns and pseudo code, data contracts, the cron table, the outbox in full, security, configuration, the media worker, the test plan, operations, the prototype → module map (D37) |
-| 21 deep audit | `21-documentation-audit.md` | The deep audit of all thirty files by error class (premise, vocabulary, assumption, unverified claim, contradiction, gap, sprawl) with file-level evidence; what survives; the scorecard; the eleven-document target state; the six owner decisions; the seven-phase transformation programme (D40) |
+| 21 deep audit and the plan | `21-documentation-audit.md` | The deep audit of every file by error class with file-level evidence; what survives; the scorecard; the owner's answers; the transformation programme's status; **§10 the consolidation plan (D43): the final twelve documents, what each existing file becomes, the acceptance criteria per document, the six steps in order** |
 | 22 value | `22-business-case.md` | The value for the media owner — the economics as a service: what the product computes (listing price, advertiser CAC and LTV, visitor cost and value, churn and retention, the next dollar, the plan), the funnel and rates, the first customer's worked example, sensitivity, the costs the owner carries (D41) |
 | 23 claims register | `23-claims-register.md` | Every figure in the top layer and every vendor figure in research VI, with its source opened on 2026-09-20 and its status — P · A · corrected · assumption · owner; what the register changed (phase A) |
 | 24 legal position | `24-legal-and-data-processing.md` | The product as processor for the media owner: roles per data class, the documents the product must have (terms, DPA, privacy policy, sub-processors, security, retention, AI disclosure), the children's-data stance, the ten questions for counsel (phase D) |
@@ -285,7 +285,11 @@ was built into the prototype (screen, recommendations, the churn lever and tile,
 and specified in the rules (R37), the architecture, the design, the blueprint and the plan; the
 onboarding file was reframed and the register of asks closed.
 
-**Next.** The programme's remaining phases (`21-documentation-audit.md` §8): the claims register
+**2026-09-20 — the plan to fix all documentation and plans (D43).** Audit §10: the final set of
+twelve documents (a product specification new among them), the disposition of every existing
+file, ten acceptance criteria per document, six steps in order.
+
+**Next.** Step 1 of the consolidation on the owner's go. The programme's earlier phases (`21-documentation-audit.md` §8): the claims register
 and source verification (A), product-market research VII and the product SWOT (B), the rest of
 the business logic in product terms (C), the product's legal position (D), owners and dates in
 the plan (E), consolidation (F), the gate rows (G).

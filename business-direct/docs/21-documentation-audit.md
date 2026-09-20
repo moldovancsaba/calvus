@@ -275,3 +275,66 @@ project*.
 It is written by the person who made the errors, on the same day, without the owner's product
 definition in hand. Q4 exists for that reason: the definition in §1 is my reading of the videos
 and the owner's messages, and it is the first thing to confirm or correct.
+
+## 10. The plan to fix all documentation and plans (the consolidation programme, D43)
+
+*The audit's finding was one wrong premise spread through thirty-three files. Phases A–G repaired the
+content in place; this plan replaces the set. It is the plan the owner asked for on 2026-09-20: what
+each existing file becomes, what the final set is, in what order the work runs, and what "done" means
+for every page. Out of this phase by the owner's instruction: the product's own price, costs and
+legal paperwork, and go-to-market.*
+
+### 10.1 The final set — twelve documents, the prototype, the design set, the evidence, the history
+
+| # | Final document (file) | Reader | What it holds | Built from |
+|---|---|---|---|---|
+| 1 | **The presentation** `presentation.html` | a classified media owner; the stakeholders | the customer → the complication → the question → the product → how the owner uses it → the benefits → the first customer → delivery → the decision; the demo as an appendix | rewritten D41; final pass for the sign-off shape |
+| 2 | **Executive summary** `executive-summary.md` | the stakeholders | one page, SCQA, the decision | `15` |
+| 3 | **Product definition** `product-definition.md` | everyone | the product for classified media owners: the three jobs, the departments, the human gate, the loop, the vocabulary (media owner · advertiser · visitor · listing · instance), what it is not, the persona, the first customer as example | `00`, SSOT §1a |
+| 4 | **Product specification** `product-specification.md` — *new* | the stakeholders; the delivery team | **how it works and how the customer uses it**, screen by screen and role by role: the owner's day (Home, the inbox, the recap, Economics, Policy, Templates, How to use), the advertiser's team (today, conversations, campaigns, media, results, knowledge), the visitor's side (inbox, saved, preferences, Stop); every state, every approval, what each department does alone and what needs a person; **the benefits per role, measured on the screen**; the prototype as the reference for every screen | the prototype's screens and help texts, `09` §2b–§4b, `05`, the presentation §5–§6 |
+| 5 | **The market** `market.md` | the stakeholders | the classified-media segment and how it earns, what owners run and buy today, the gap, the product's SWOT; the first customer's category evidence referenced, not repeated | `01h`; the reusable parts of `01b` §2 and `01c` §1 |
+| 6 | **The value — the Economics department** `economics.md` | the stakeholders; the delivery team | what the product computes for the owner about the owner's services (listing price, advertiser CAC and LTV, visitor cost and value, churn and retention, costs, incomes, the next dollar, the plan), the formulas, the inputs and their status, the events, the decision rules R16–R19, the first customer's worked example, sensitivity | `22` + `16` merged |
+| 7 | **Business logic and SSOT** `business-logic.md` | the delivery team | the product layer and glossary, enumerations, entities, settings, the rules R1–R37 end to end with the first instance as the worked example, the rules map, what the product never does | `09` + `10` merged |
+| 8 | **Architecture and blueprint** `architecture.md` | the delivery team | context, quality attributes, containers, the ADRs (the build baseline), the content model and state machines, connectors and adapters, the module catalogue with pseudo code, data contracts, the cron table, the outbox, security, configuration, the media worker, tests, operations; the token map as an appendix | `11` + `12` + `20` + `14` merged |
+| 9 | **Delivery plan and operating model** `delivery-plan.md` | the delivery team; the owner | milestones, the nine sprints with acceptance tests, the sprint-0 checklist, issues with a Definition of Done, owners, dates relative to the go, reviews, decision path, change control, risks with triggers; **the operating model** — onboarding a site (the policy interview, the connector, the knowledge workshop), support, incidents, offboarding and data return; the **stakeholder sign-off sheet** — who accepts what, by which criterion, with the evidence link | `13` + new |
+| 10 | **Responsible data and the legal position** `responsible-data.md` | the delivery team; counsel | the seventeen principles, the policy record per site, the gate, onboarding checklist, the customer's value; the product's own position as processor, the documents it must have, sub-processors, security, the children's-data stance, the counsel list — with the one disclaimer at the top | `18` + `24` merged; `01e`, `01f` as evidence |
+| 11 | **First customer: ClassScout · Your Field NYC** `first-customer-classscout.md` | the first customer; the delivery team | their site measured, what is real and what is sample, the onboarding inputs by the feature each unblocks, the pilot's SWOT, the personas, the closed asks — everything instance-specific in one place | `02` + `03` + `19` + `17` §3 + `08` |
+| 12 | **Evidence** `evidence.md` | anyone checking a figure | the claims register (every figure, source opened, status) and the index to research I–VII | `23` + an index; research `01`–`01h` kept as the evidence base |
+| — | **The prototype** `../index.html` | everyone | the reference for every screen; product role labels with the instance's words | v22; a copy pass (product terms first in help texts) |
+| — | **The design set** `design-system.html`, `layouts.html`, `05-layout-specs.md`, `frames/` | the delivery team | tokens, components, the approved frames | unchanged; labelled the first instance's frames |
+| — | **History** `decisions.md` (D-register), `build-log.md`, `gate.md`, the closed register of asks, this audit | the owner | never edited except to append | `04`, `06`, `07`, `08`, `21` |
+
+Every current rendered URL keeps working: each old page becomes a redirect to its section in the
+new set (`bemutato.html` → `presentation.html` is the model). Filenames are English and say what
+the document is; numbers go.
+
+### 10.2 What "done" means for every document (the acceptance criteria)
+
+1. The first paragraph says what the document is for, who reads it and what decision it supports.
+2. The subject is the product; the first customer appears as the example and is named as such.
+3. Product terms first (media owner · advertiser · visitor · listing); the instance's words in brackets or in the worked example only.
+4. Every figure has a row in the evidence document with its source opened; none of the product's own price, costs or legal paperwork appears.
+5. One fact, one place: a number or rule is stated once and linked elsewhere; counts are computed by the renderer.
+6. Internal vocabulary (D-numbers, R-numbers, gate names) stays in the delivery and history documents; the stakeholder documents use plain words with links.
+7. Measured at 390 and 1440: no horizontal scroll, one `h1`, 44 px targets, no console errors.
+8. The gate is clean: links, anchors, the framing check, the register check, the redirect check, the decision range.
+9. A stakeholder can act from the document alone: owners, dates, criteria, a next step.
+10. Nothing describes a state that is no longer true.
+
+### 10.3 The order of work
+
+| Step | Deliverable | Why this order | Done when |
+|---|---|---|---|
+| 1 | **Product specification** (4) and the presentation's final pass (1) | the two things the owner asked for by name — how it works, how customers use it, the benefits — and the pages a stakeholder opens first | every screen of the prototype has its section; the presentation links to it; criteria 1–7 |
+| 2 | **Business logic and SSOT** (7), **Economics** (6) | the rules and the numbers everything else cites; the merges remove the duplicated rule statements | one rules register, one glossary, one economics model; criteria 3–6 |
+| 3 | **Architecture and blueprint** (8), **Delivery plan and operating model** (9) with the sign-off sheet | the delivery team's two files; the operating model and the sign-off sheet are new | a developer builds from 8 and a customer-success person onboards from 9; the sign-off sheet names every stakeholder |
+| 4 | **Responsible data and the legal position** (10), **First customer** (11), **Market** (5), **Evidence** (12) | merges of finished content | every instance-specific sentence lives in 11; every figure in 12 |
+| 5 | **Redirects, index, hub, notice, gate, standard** | the cut-over: every old URL redirects, the index is the five reading paths, the hub row and root README name the final set, the replacement notice is removed, the gate checks the final set (redirects, counts, framing, register), `PRODUCT.md` records the product stages so the next product starts right | `GATE: CLEAN`; every old URL answers 200 and lands on its new home; nothing on the site says "being replaced" |
+| 6 | **Final review** | every document read once more against §10.2 in a single sitting; the prototype's help texts in product terms; every page measured; the live site checked with curl | a dated entry in the build log with the measurements; D-number closing the programme |
+
+### 10.4 What the plan deliberately leaves out
+
+The product's own price and packaging, its build and run costs, its legal documents' signature, and
+its go-to-market — by the owner's instruction, not this phase. The research files stay as evidence
+and are not rewritten. The design set is not redesigned.
+
