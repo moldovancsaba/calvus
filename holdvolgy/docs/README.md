@@ -32,7 +32,7 @@ record. Each file is dated inside; this index is the process log.
 
 ## The standard documentation structure
 
-Every Calvus project carries the same set next to its prototype (owner decision
+Every project carries the same set next to its prototype (owner decision
 2026-09-18). Where this folder predates the standard, the slot maps to the existing file:
 
 | Slot | Here |

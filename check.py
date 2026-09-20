@@ -21,6 +21,20 @@ for g in GATES:
     if r.returncode != 0:
         failed.append(g); print(r.stdout)
 
+# Client-facing presentations (bemutato.html / presentation.html) carry no company name and no
+# internal-documentation link — the client sees the product, not the workshop (owner rule, 2026-09-20).
+import re as _re2
+for p in list(ROOT.rglob("bemutato.html")) + list(ROOT.rglob("presentation.html")):
+    if "node_modules" in p.parts: continue
+    t2 = p.read_text(encoding="utf-8")
+    if "Calvus" in t2: failed.append(f"{p.relative_to(ROOT)}: company name in a client-facing document")
+    for m in _re2.finditer(r'href="([^"]+)"', t2):
+        h = m.group(1)
+        if h.startswith(("http", "mailto:", "tel:", "#", "../")) or h.endswith((".css", ".pdf")): continue
+        if p.parent.name != "docs" and h == "index.html": continue  # a flat project links its own prototype
+        if _re2.search(r"(index|research|audit|decisions|design-system|layouts|gate|build-log|executive|business-logic|ssot|architecture|plan|sources|evidence|market|economics|responsible|first-customer|product-|documentation|brief|benchmarks|assets|sweep|token|client-asks|prerequisites)", h) and h.endswith(".html"):
+            failed.append(f"{p.relative_to(ROOT)}: internal documentation link {h} in a client-facing document"); break
+
 # Every HTML file in the repo, outside .git and the worktrees, whether or not a project gate
 # already read it: relative href/src must resolve. Cheap, and it catches a new folder nobody
 # wired a gate for yet.

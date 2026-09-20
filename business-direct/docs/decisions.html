@@ -38,7 +38,7 @@ footer{margin-top:56px;padding-top:18px;border-top:1px solid var(--line);font-si
 <body>
 <div class="wrap">
 <nav class="docnav" aria-label="Project documentation"><span class="docnav-brand">business.direct · docs</span><a href="index.html">Overview</a><a href="executive-summary.html">Executive summary</a><a href="product-definition.html">Product definition</a><a href="product-specification.html">Product specification</a><a href="market.html">Market</a><a href="economics.html">Economics</a><a href="business-logic.html">Business logic and SSOT</a><a href="architecture.html">Architecture and blueprint</a><a href="delivery-plan.html">Delivery plan</a><a href="responsible-data.html">Responsible data and legal</a><a href="first-customer-classscout.html">First customer</a><a href="evidence.html">Evidence</a><a href="research.html">Evidence · Research I</a><a href="research-2.html">Evidence · Research II</a><a href="research-3.html">Evidence · Research III</a><a href="research-4.html">Evidence · Research IV</a><a href="research-5.html">Evidence · Research V</a><a href="research-6.html">Evidence · Research VI</a><a href="design-system.html">Design system</a><a href="layouts.html">Layouts</a><a href="05-layout-specs.html">Layout specs</a><a href="decisions.html" aria-current=page>History · Decisions</a><a href="build-log.html">History · Build log</a><a href="gate.html">History · Gate</a><a href="register-of-asks.html">History · Register of asks</a><a href="logic-audit.html">History · Logic audit</a><a href="documentation-audit.html">History · Documentation audit</a></nav>
-<header><p class="eyebrow">Calvus · business.direct · project documentation</p><h1>business.direct — decision register</h1></header>
+<header><p class="eyebrow">business.direct · project documentation</p><h1>business.direct — decision register</h1></header>
 <div class="tbl"><table>
 <thead>
 <tr>
@@ -103,7 +103,7 @@ footer{margin-top:56px;padding-top:18px;border-top:1px solid var(--line);font-si
 <td>D8</td>
 <td>2026-09-19</td>
 <td>Tokens: GDS role names shared with DiscountDirect; product accent teal <code>#0f766e</code></td>
-<td>Calvus, proposed</td>
+<td>The studio, proposed</td>
 <td>siblings share a system and differ by one accent</td>
 </tr>
 <tr>
@@ -130,7 +130,7 @@ footer{margin-top:56px;padding-top:18px;border-top:1px solid var(--line);font-si
 <tr>
 <td>D12</td>
 <td>2026-09-19</td>
-<td>No "Calvus Hub" link on any user-facing page or document, in any project</td>
+<td>No hub link on any user-facing page or document, in any project</td>
 <td>owner</td>
 <td>removed from every generator, renderer and hand-written page repo-wide</td>
 </tr>
@@ -138,7 +138,7 @@ footer{margin-top:56px;padding-top:18px;border-top:1px solid var(--line);font-si
 <td>D13</td>
 <td>2026-09-19</td>
 <td>Demo personas: provider <strong>Brooklyn Force Soccer</strong> (Park Slope, explicitly unclaimed, e-mail and phone on the card, Saturday sessions, trial by appointment); family: a Park Slope parent with two children</td>
-<td>Calvus, on the data</td>
+<td>The studio, on the data</td>
 <td>the owner asks #2–3 default to these until answered</td>
 </tr>
 <tr>
@@ -152,7 +152,7 @@ footer{margin-top:56px;padding-top:18px;border-top:1px solid var(--line);font-si
 <td>D15</td>
 <td>2026-09-19</td>
 <td>Two components added for D14 — the <strong>social post card</strong> (channel, listing, copy, media slot, state) and the <strong>pipeline stage strip</strong> (identified → contacted → replied → applied → managing → upgraded) — PROPOSED, reviewed with gate 2</td>
-<td>Calvus</td>
+<td>The studio</td>
 <td>the approved set had no social or pipeline component</td>
 </tr>
 <tr>
@@ -166,21 +166,21 @@ footer{margin-top:56px;padding-top:18px;border-top:1px solid var(--line);font-si
 <td>D17</td>
 <td>2026-09-19</td>
 <td>The prototype is <strong>one page, three views</strong> (<code>index.html</code> + <code>assets/app.js</code>): the role switch and a persona select in the top bar; every screen rendered from <code>data/providers.json</code>; approvals, pipeline stages, replies, saves and preferences live in memory and reset on reload; nothing sends, publishes or connects</td>
-<td>Calvus</td>
+<td>The studio</td>
 <td>one page keeps the frames' shell and the state in one place; a per-view page set would need shared state anyway</td>
 </tr>
 <tr>
 <td>D18</td>
 <td>2026-09-19</td>
 <td><strong>Sample activity is generated from the real catalogue, not invented rows</strong>: social drafts come from providers that have an image and an announcement, a trial offer or a next session; the invitation goes to the 130 providers with an e-mail on their card; the three sample replies carry real provider names and our invented words; the family digest is her saved providers plus real Park Slope providers with a published next session</td>
-<td>Calvus</td>
+<td>The studio</td>
 <td>keeps "what is real / what is sample" checkable (<a href="first-customer-classscout.html"><code>first-customer-classscout.md</code></a>)</td>
 </tr>
 <tr>
 <td>D19</td>
 <td>2026-09-19</td>
 <td>The technical package (<a href="business-logic.html"><code>business-logic.md</code></a>–<a href="architecture.html"><code>architecture.md</code></a>) is written on <strong>DiscountDirect's decided stack as PROPOSED ADRs</strong> (Next.js 15, MongoDB Atlas, Vercel, Upstash, Blob, Resend, DoneIsBetter SSO), business.direct as a <strong>sibling app</strong> with <strong>one platform-connector interface</strong> for Your Field and the reference instance, the <strong>outbox as the only sender</strong> and <strong>families without accounts here</strong> (ADR-1 to ADR-8)</td>
-<td>Calvus, PROPOSED</td>
+<td>The studio, PROPOSED</td>
 <td>the client platform runs on the same family (<a href="first-customer-classscout.html"><code>first-customer-classscout.md</code></a> §1); the owner or client flips an ADR and the flip is the next D-number</td>
 </tr>
 <tr>
@@ -194,7 +194,7 @@ footer{margin-top:56px;padding-top:18px;border-top:1px solid var(--line);font-si
 <td>D21</td>
 <td>2026-09-19</td>
 <td><strong>Assumed until the owner answers asks #4–6</strong>: v1 integrations are the platform API, e-mail (Resend), Instagram + Facebook and platform push — TikTok, X, SMS, Google Business Profile and calendars come later; the base machine is <strong>bundled by the platform</strong>, the provider <strong>buys reach</strong> (the platform's own products: featured listing, camp placement, local discovery profile — sample prices); the prototype stays <strong>read-only</strong> against the platform</td>
-<td>Calvus, assumed</td>
+<td>The studio, assumed</td>
 <td>the owner said continue with no answers; each assumption is one line to flip</td>
 </tr>
 <tr>
@@ -208,7 +208,7 @@ footer{margin-top:56px;padding-top:18px;border-top:1px solid var(--line);font-si
 <td>D23</td>
 <td>2026-09-19</td>
 <td><strong>The intelligence recap is its own screen</strong> on the platform (week, by department, market radar from the catalogue, needs-you), computed from real data and this session's approvals; the overview keeps the tiles</td>
-<td>Calvus</td>
+<td>The studio</td>
 <td>D6's "intelligence dashboard" was only tiles on the overview</td>
 </tr>
 <tr>
@@ -264,7 +264,7 @@ footer{margin-top:56px;padding-top:18px;border-top:1px solid var(--line);font-si
 <td>D31</td>
 <td>2026-09-19</td>
 <td><strong>The platform's own privacy policy and terms (last updated 2026-09-12, read with <code>curl</code>) bind the machine</strong>: the service is "intended for adults (18+)" and "does not knowingly collect personal information from children" → the machine stores <strong>no child's name at all</strong>, only ages (R24 strengthened; the family persona is now "a child of 5, a child of 9"); "we do not yet offer email alerts; if we add them, the preferences you set will be described here" → the digest and alerts need a policy update before launch (ask #16); account activity (views, saves, contacts) is recorded "only after you explicitly opt in, off by default" → campaign audiences come only from opted-in accounts (ask #17); claim and update requests are an existing platform feature (e-1) → apply-to-manage rides on it; sign-in is doneisbetter (ADR-5 confirmed); no postal address is published — the contact is info@classscout.ai → ask #15 stays open</td>
-<td>Calvus, on the platform's own pages; owner: "please do"</td>
+<td>The studio, on the platform's own pages; owner: "please do"</td>
 <td>audit A19 added</td>
 </tr>
 <tr>

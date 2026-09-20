@@ -13,7 +13,7 @@ that assumption is examined, not adopted blindly. Written 2026-09-18.*
 | IDBC marketing | supplies data and copy; receives leads; wants usage numbers |
 | IDBC recruiters | answer Ajánlatkérés and community joins |
 | Site maintainer (idbc.hu's developer) | runs WordPress + WPML; would host the guide |
-| Calvus | built the prototype and the data pipeline; wrote this package |
+| The studio | built the prototype and the data pipeline; wrote this package |
 
 External: Google Drive/Sheets (where the client's workbooks live), LinkedIn Talent
 Insight (numbers delivered as a workbook, no API), IDBC's CRM (unknown — to ask),

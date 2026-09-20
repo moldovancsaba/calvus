@@ -13,7 +13,7 @@ are defined in `10-ssot.md`. Written 2026-09-18.*
 | Guest | sends a booking request for a tasting or cellar programme |
 | Estate staff | edits content and prices, answers booking requests, fulfils orders, runs the club and the newsletter |
 | Incumbent developer (KM Építő / kiszervezettmarketing.hu, per the live `generator` tag) | maintains the current WordPress; has a priced offer for the rebuild |
-| Calvus | designed and built the prototype; wrote this package |
+| The studio | designed and built the prototype; wrote this package |
 
 External systems the live site already talks to: WooCommerce payment and shipping
 providers (not identified from the front end), Mailchimp (newsletter, `mailchimp-for-

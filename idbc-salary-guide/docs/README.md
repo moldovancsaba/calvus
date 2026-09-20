@@ -3,7 +3,7 @@
 The whole project next to the prototype: what it is, what the client gave, what was
 decided, what was measured, what production needs. Each file is dated inside; this index
 is the process log. Standard structure (owner decision 2026-09-18) — the same slots as
-every Calvus project.
+every project.
 
 | Slot | File | What it holds |
 |---|---|---|

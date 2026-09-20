@@ -11,7 +11,7 @@ iteration would change — those parts are PROPOSED. Written 2026-09-18.*
 | Patient (HU, EN) | reads specialties, prices, team, cases; books via Flexi-Dent; calls or e-mails |
 | Practice staff | edit pages in WordPress; manage bookings in Flexi-Dent |
 | Client's developer | built and maintains the custom theme |
-| Calvus | supplied the wireframe (the specification) |
+| The studio | supplied the wireframe (the specification) |
 
 External: Flexi-Dent (practice management + booking widget), Google Analytics 4, Google
 Maps, Google Fonts (Outfit), jsDelivr (Bootstrap Icons), WPML.

@@ -1,7 +1,7 @@
 # DiscountDirect — project documentation
 
 Everything next to the prototype: the idea and its evidence, the rules, the engineering
-package, and — added 2026-09-18 — the customer side that the standard Calvus structure
+package, and — added 2026-09-18 — the customer side that the standard structure
 requires. Files stay flat in this folder (every rendered URL is live and stays); this index
 maps the standard slots onto them and is the process log.
 

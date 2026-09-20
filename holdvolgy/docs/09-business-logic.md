@@ -13,7 +13,7 @@ behind each rule are in `04-decisions.md`; every rule below is stated where the 
 |---|---|---|
 | **The estate** (Holdvölgy, Mád) | a site that tells the estate first and sells second (R1), in HU and EN from one source (R3); booking requests; club members; orders (when the shop is live) | the catalogue, the prices, the photography, the visit programmes, the club terms |
 | **The visitor** (18+, R8/R12) | the story of the estate, the wines with the estate's own prices, a visit to request, a club to join, a shop | an age confirmation; a booking request with contact details; consent for the newsletter and the club |
-| **Calvus** | — | the generator, the pages, the documentation |
+| **The studio** | — | the generator, the pages, the documentation |
 
 ## 2. What the site sells, and what it only presents (R2)
 

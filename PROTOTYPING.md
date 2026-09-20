@@ -1,4 +1,4 @@
-# Prototyping at Calvus — requirements and method
+# Prototyping — requirements and method
 
 *How a client prototype is built here, what it must contain, and what "done" means at each
 stage. Distilled on 2026-09-18 from the four projects in this repo — Holdvölgy (the

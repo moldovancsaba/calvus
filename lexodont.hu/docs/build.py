@@ -50,7 +50,7 @@ def render(src, out, label):
 <body>
 <div class="wrap">
 <nav class="docnav" aria-label="Project documentation"><span class="docnav-brand">Lexodont · docs</span>{nav}</nav>
-<header><p class="eyebrow">Calvus · Lexodont · project documentation</p><h1>{title}</h1></header>
+<header><p class="eyebrow">Lexodont · project documentation</p><h1>{title}</h1></header>
 {body}
 <footer>Source: <code>lexodont.hu/docs/{src}</code> · rendered by <code>docs/build.py</code>.</footer>
 </div>

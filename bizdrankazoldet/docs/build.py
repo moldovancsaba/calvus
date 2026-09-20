@@ -14,9 +14,9 @@ for src, out, label in PAGES:
     nav = nav.replace('<a href="05-layout-specs.html"', '<a href="design-system.html">Design system</a><a href="05-layout-specs.html"', 1) + '<a href="bemutato.html">Bemutató (HU)</a>'
     html = f"""<!DOCTYPE html>
 <html lang="en">
-<head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>{title} — Bízd ránk a zöldet docs</title><style>{CSS}</style></head>
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>{title} — Bízd ránk a zöldet docs</title><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700;800&family=Roboto+Slab:wght@500;600&family=Roboto:wght@400;500;700&display=swap"><link rel="stylesheet" href="../assets/tokens.css"><style>{CSS}</style></head>
 <body><div class="wrap"><nav class="docnav" aria-label="Project documentation"><span class="docnav-brand">Bízd ránk a zöldet · docs</span>{nav}</nav>
-<header><p class="eyebrow">Calvus · Bízd ránk a zöldet · project documentation</p><h1>{title}</h1></header>
+<header><p class="eyebrow">Bízd ránk a zöldet · project documentation</p><h1>{title}</h1></header>
 {body}
 <footer>Source: <code>bizdrankazoldet/docs/{src}</code> · rendered by <code>docs/build.py</code>.</footer></div></body></html>
 """

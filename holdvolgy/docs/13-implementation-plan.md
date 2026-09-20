@@ -1,7 +1,7 @@
 # Holdvölgy 2026 — implementation plan
 
 *Milestones, issues with a Definition of Done, what is blocked and on whom, risks. Sized
-for whoever builds — the incumbent developer, Calvus, or both — under the PROPOSED stack
+for whoever builds — the incumbent developer, the studio, or both — under the PROPOSED stack
 (`11-architecture.md`). Nothing here is scheduled until the blocked register is empty.
 Written 2026-09-18.*
 
@@ -99,7 +99,7 @@ About twelve weeks, comfortably inside the freeze window if M0 starts by early N
 |---|---|---|
 | ADR-1..9 status | owner / client decision on the stack | everything from M0 |
 | A1 (freeze binds production only) | client | M0–M5 timing |
-| Who builds | client (incumbent's offer vs Calvus vs both) | M0 |
+| Who builds | client (incumbent's offer vs the studio vs both) | M0 |
 | Admin access to production/hosting | client | HV-001, HV-002 |
 | Multilingual plugin choice | builder (HV-005) | M4 |
 | HV-080..084 | client | content completeness, not the build |

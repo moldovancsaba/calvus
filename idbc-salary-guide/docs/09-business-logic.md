@@ -11,7 +11,7 @@ does. Terms are the SSOT's (`10-ssot.md`); the decisions are in `04-decisions.md
 |---|---|---|
 | **IDBC** (the client) | a research guide that presents its 2026 survey and its bértábla as a product: market trends by area, salary bands, the SAP guide, the Expert Community, case studies; leads through registration | the survey workbook, the bértábla sheet, the Talent Insight counts, the copy, the design demos |
 | **A reader** — a company representative or a candidate | the trends and the bands behind a registration | an account (company / candidate), a privacy-notice acknowledgement; marketing consent only separately (R12) |
-| **Calvus** | — | the converters, the pages, the documentation |
+| **The studio** | — | the converters, the pages, the documentation |
 
 ## 2. The data — what is real, and how a figure reaches a page (R1, R6, R10)
 

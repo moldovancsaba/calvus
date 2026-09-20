@@ -315,7 +315,7 @@ moved into `assets/components.css` as the single source for the page and the fra
 is English; **Your Field NYC** is the first platform; the Hungarian data became the
 reference. A second converter pulled Your Field's 252 providers through the public API its
 own front end uses (facets, site copy, provider list and full records). The US legal
-section joined the research. The "Calvus Hub" link was removed from every user-facing page
+section joined the research. The hub link was removed from every user-facing page
 in every project. The design-system page was re-issued in English on the client's data,
 tokens and components unchanged. Personas fixed on the data (D13).
 
