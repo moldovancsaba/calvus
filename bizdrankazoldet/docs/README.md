@@ -17,7 +17,7 @@ sell through its customer journey; then prototype it. Built to the prototyping s
 | `03-sources.md` | what is real and what is sample |
 | `design-system.html` | gate 1: the client's own kit — colours, faces, illustrations, photographs, the button — one source (`../assets/tokens.css`) |
 | `05-layout-specs.md` | gate 2: phone 390 and desktop 1440 as two designed experiences; the built pages as the frames |
-| `04-decisions.md` | D1–D10 |
+| `04-decisions.md` | D1–D11 |
 | `06-build-log.md` | the rounds, measured |
 | `07-gate.md` + `../check.py` | what the gate checks |
 | `bemutato.html` | the client presentation, in Hungarian: what was measured, what the research says, the proposed structure, phone and desktop, the identity, what is real, the one decision |
