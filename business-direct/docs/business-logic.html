@@ -39,13 +39,14 @@ footer{margin-top:56px;padding-top:18px;border-top:1px solid var(--line);font-si
 <div class="wrap">
 <nav class="docnav" aria-label="Project documentation"><span class="docnav-brand">business.direct · docs</span><a href="index.html">Overview</a><a href="executive-summary.html">Executive summary</a><a href="product-definition.html">Product definition</a><a href="product-specification.html">Product specification</a><a href="market.html">Market</a><a href="economics.html">Economics</a><a href="business-logic.html" aria-current=page>Business logic and SSOT</a><a href="architecture.html">Architecture and blueprint</a><a href="delivery-plan.html">Delivery plan</a><a href="responsible-data.html">Responsible data and legal</a><a href="first-customer-classscout.html">First customer</a><a href="evidence.html">Evidence</a><a href="research.html">Research I</a><a href="research-2.html">Research II</a><a href="research-3.html">Research III</a><a href="research-4.html">Research IV</a><a href="research-5.html">Research V</a><a href="research-6.html">Research VI</a><a href="design-system.html">Design system</a><a href="layouts.html">Layouts</a><a href="05-layout-specs.html">Layout specs</a><a href="decisions.html">Decisions</a><a href="build-log.html">Build log</a><a href="gate.html">Gate</a><a href="register-of-asks.html">Register of asks</a><a href="logic-audit.html">Logic audit</a><a href="documentation-audit.html">Documentation audit</a></nav>
 <header><p class="eyebrow">Calvus · business.direct · project documentation</p><h1>business.direct — business logic and single source of truth</h1></header>
-<p><em>Written 2026-09-19 with phase 2 (D21–D23); the product's parties and the retention job added
-2026-09-20 (D41). The product's rules end to end, in the order money and messages move: who
+<p><em>For the delivery team. What this document holds: Part A — the product's rules end to end, in the order money and messages move: who
 the parties are, what each department does, what leaves, who approves, what it costs, what
-stops it. The product's terms are </em><em>media owner · advertiser · visitor · listing</em><em> (SSOT §1a);
-the sections below keep the first instance's words — platform · provider · family · card — as
-the worked example, because every rule was built and tested on its data. Terms are defined in Part B (the SSOT); the decisions behind each rule are in <a href="decisions.html"><code>decisions.md</code></a>; the prototype
-(<code>../index.html</code>) implements every rule below in memory.</em></p>
+stops it; Part B — the single source of truth: the product layer, glossary, enumerations, entities,
+settings, the rules register R1–R37, metrics. The product's terms are </em><em>media owner · advertiser ·
+visitor · listing</em><em> (Part B §1a); the sections keep the first instance's words — platform ·
+provider · family · card — as the worked example, because every rule was built and tested on its
+data. The decisions behind each rule are in <a href="decisions.html"><code>decisions.md</code></a>; the prototype (<code>../index.html</code>)
+implements every rule in memory. A rule changes here first, then in the code, then in the copy.</em></p>
 <h2>1. The three parties and what each gets</h2>
 <div class="tbl"><table>
 <thead>
@@ -1162,7 +1163,7 @@ is the reference implementation of the enumerations and state machines below.</e
 </tbody>
 </table></div>
 <h3>5. Decision register</h3>
-<p><a href="decisions.html"><code>decisions.md</code></a> holds D1–D45. The ones the engineering documents rest on: D2 (three
+<p><a href="decisions.html"><code>decisions.md</code></a> holds D1–D46. The ones the engineering documents rest on: D2 (three
 views), D5 (DiscountDirect sibling), D6 (departments, knowledge layer, human-in-the-loop,
 optional AI, dashboard, integrations), D11 (Your Field first), D14 (two flows), D15
 (post card and pipeline strip), D17 (one page, in-memory state), D18 (sample generated
@@ -1489,7 +1490,7 @@ baseline since D37; the owner flips any with a decision.</p>
 </tr>
 <tr>
 <td><a href="decisions.html"><code>decisions.md</code></a></td>
-<td>D1–D45</td>
+<td>D1–D46</td>
 </tr>
 <tr>
 <td><a href="05-layout-specs.html"><code>05-layout-specs.md</code></a>, <code>design-system.html</code>, <code>layouts.html</code></td>

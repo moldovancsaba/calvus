@@ -3,8 +3,8 @@
 *Part A is the framework every customer's site runs under; Part B is the product's own position as
 processor and the list of questions for counsel. **Nothing here is legal advice**: every legal
 sentence in this document and in the research is the product team's reading, written so counsel
-can confirm or correct it. Part A written 2026-09-19 (D32). The first client is ClassScout, operator of Your Field NYC; the
-framework is written so that the second, third and any later client — a sports directory, a
+can confirm or correct it. The first customer is ClassScout, operator of Your Field NYC; the
+framework is written so that the second, third and any later customer — a sports directory, a
 job portal, a classifieds site — gets the same protection by configuration, not by a new
 build. The research behind it is `01e-research-responsible-data.md`; the reference
 implementation is the platform's *Policy* screen (`../index.html?view=platform&screen=policy`)

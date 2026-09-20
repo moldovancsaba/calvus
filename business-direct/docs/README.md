@@ -9,6 +9,23 @@ economics as a service. Example persona and first buyer: **ClassScout**, operato
 NYC**; the prototype runs on their real listings. Sibling of DiscountDirect. This index is also the
 process log.
 
+## The decision pack
+
+| To decide (about an hour) | In this order |
+|---|---|
+| What the product is and why it matters to a classified media owner | [`presentation.html`](presentation.html) (20 min) → `executive-summary.md` (5 min) → `product-definition.md` (10 min) |
+| What it computes for the owner and how it is used day to day | `economics.md` §1–§4 (10 min) → `product-specification.md` §1–§3 (15 min) |
+| Who accepts what, by which criterion | `delivery-plan.md` §8 — the sign-off sheet (5 min); every figure's source: `evidence.md` |
+
+| To build (the hand-over to the delivery team) | Read in this order |
+|---|---|
+| The rules and the vocabulary | `business-logic.md` (Part B §1a first) |
+| The system | `architecture.md` (Part A the decisions, Part C the modules with pseudo code) |
+| The work, the governance, the operating model | `delivery-plan.md` (§2b sprints, §3 issues, §5b governance, §7 operating model) |
+| What the product must never do, and its legal position | `responsible-data.md` |
+| The first instance | `first-customer-classscout.md` (their site, onboarding inputs by feature) |
+| The screens | the prototype (`../index.html`) with `product-specification.md` beside it; the design set |
+
 ## The set
 
 | Reader | Start here | Then |

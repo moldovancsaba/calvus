@@ -1,12 +1,13 @@
 # business.direct — business logic and single source of truth
 
-*Written 2026-09-19 with phase 2 (D21–D23); the product's parties and the retention job added
-2026-09-20 (D41). The product's rules end to end, in the order money and messages move: who
+*For the delivery team. What this document holds: Part A — the product's rules end to end, in the order money and messages move: who
 the parties are, what each department does, what leaves, who approves, what it costs, what
-stops it. The product's terms are **media owner · advertiser · visitor · listing** (SSOT §1a);
-the sections below keep the first instance's words — platform · provider · family · card — as
-the worked example, because every rule was built and tested on its data. Terms are defined in Part B (the SSOT); the decisions behind each rule are in `decisions.md`; the prototype
-(`../index.html`) implements every rule below in memory.*
+stops it; Part B — the single source of truth: the product layer, glossary, enumerations, entities,
+settings, the rules register R1–R37, metrics. The product's terms are **media owner · advertiser ·
+visitor · listing** (Part B §1a); the sections keep the first instance's words — platform ·
+provider · family · card — as the worked example, because every rule was built and tested on its
+data. The decisions behind each rule are in `decisions.md`; the prototype (`../index.html`)
+implements every rule in memory. A rule changes here first, then in the code, then in the copy.*
 
 ## 1. The three parties and what each gets
 
@@ -410,7 +411,7 @@ is the reference implementation of the enumerations and state machines below.*
 
 ### 5. Decision register
 
-`decisions.md` holds D1–D45. The ones the engineering documents rest on: D2 (three
+`decisions.md` holds D1–D46. The ones the engineering documents rest on: D2 (three
 views), D5 (DiscountDirect sibling), D6 (departments, knowledge layer, human-in-the-loop,
 optional AI, dashboard, integrations), D11 (Your Field first), D14 (two flows), D15
 (post card and pipeline strip), D17 (one page, in-memory state), D18 (sample generated
@@ -489,7 +490,7 @@ baseline since D37; the owner flips any with a decision.
 | `01-research.md` | sourced evidence, legal by market |
 | `first-customer-classscout.md` | the platform measured, the catalogue's coverage, the videos, DiscountDirect's contribution |
 | `first-customer-classscout.md` | real vs sample |
-| `decisions.md` | D1–D45 |
+| `decisions.md` | D1–D46 |
 | `05-layout-specs.md`, `design-system.html`, `layouts.html` | gates 1 and 2 |
 | `build-log.md`, `gate.md` | rounds and the measured pass |
 | `register-of-asks.md` | the register of asks, with states |

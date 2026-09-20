@@ -1,9 +1,8 @@
 # business.direct — evidence: the claims register and the research base
 
-*Every figure the product-facing documents rest on (the presentation, the executive summary,
-the value document, the product definition) and every vendor figure in research VI, with its
-source opened and read on 2026-09-20 (phase A of the transformation programme,
-`documentation-audit.md` §8). **Status**: **P** the primary source was opened and says it;
+*For anyone checking a figure. Every figure the stakeholder documents rest on (the presentation,
+the executive summary, the product definition, the specification, the market, the economics) and
+every vendor figure in the engineering research, with its source opened and read on 2026-09-20. **Status**: **P** the primary source was opened and says it;
 **A** a secondary source says it and the primary was not reachable; **corrected** the source
 says something different and the documents were changed; **assumption** ours, marked so where
 used; **owner** stated by the owner. A figure that is not in this register does not belong in

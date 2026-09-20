@@ -1,9 +1,8 @@
 # business.direct — executive summary
 
-*One page for a classified media owner deciding to use the product, and for the owner deciding
-to build it. Every figure is sourced in the research, computed by the prototype on the first
-customer's real listings, or marked as an assumption; the value with the numbers is
-`economics.md`. Written 2026-09-20 (D41).*
+*One page for the stakeholders who decide: a classified media owner deciding to use the product,
+the owner deciding to build it. Every figure is sourced in `evidence.md` or marked as a placeholder;
+what the product computes for an owner is `economics.md`; how it works is `product-specification.md`.*
 
 ## The situation
 
@@ -21,8 +20,7 @@ outbound works only if the follow-ups go out — 42 % of replies come from them 
 within the law; a lead contacted in the first five minutes is 21× more likely to qualify
 (InsideSales / MIT, 2007); content that is not published does not exist in a market where Gen Z
 searches Instagram and TikTok ahead of Google for local businesses and AI answers cite the
-reviewed, structured source; replacing a
-churned advertiser costs a full acquisition where keeping one costs a touch. The tools on sale
+reviewed, structured source; replacing a churned advertiser costs a full acquisition where keeping one costs a touch. The tools on sale
 do one job each and leave the owner as the team.
 
 ## The question

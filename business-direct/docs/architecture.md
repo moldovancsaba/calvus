@@ -1,11 +1,18 @@
 # business.direct — architecture and system blueprint
 
-*Written 2026-09-19 for the first client, Your Field NYC (D11); phase 2 (campaigns, upgrades, recap — D21–D23) added the same day; on 2026-09-20 the stack became the **build baseline** (D37): every
-service was verified against the vendor's own terms (`01g-research-real-system.md`), the modules,
-drawings and pseudo code are in `architecture.md`, and ADR-15 to ADR-25 record the service
-choices. The stack follows DiscountDirect's decided stack (D26 there) because the client platform
-runs on the same family (`first-customer-classscout.md` §1); the owner flips any ADR with a decision. Terms are the
-SSOT's (`business-logic.md`).*
+*For the delivery team: the document a developer builds from. Part A — the architecture: context,
+the target measured, quality attributes, containers, flows, integrations, security, deployment, the
+stack and the architecture decision records (ADR-1 to ADR-25, the build baseline — the owner flips
+any with a decision). Part B — the technical design: screens, content model, data mapping, state
+machines, jobs, connectors and adapters, drafting, forms, i18n, URLs, media, performance,
+operations. Part C — the system blueprint: drawings, repository layout, the module catalogue with
+pseudo code, data contracts, the cron table, the outbox in full, security, configuration, the
+media worker, tests, operations, the prototype → module map. Appendix — the token map. Every
+external service is verified in `01g-research-real-system.md` and `evidence.md` §2. The stack
+follows DiscountDirect's decided stack because the first customer's site runs on the same family.
+Terms are `business-logic.md`'s; the drawings and identifiers use the first instance's words
+(platform · provider · family · card) because the system was specified on its data — one
+instance's labels, not the product's roles.*
 
 ## 1. System context
 

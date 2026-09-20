@@ -1,12 +1,14 @@
 # business.direct — delivery plan, operating model and stakeholder sign-off
 
-*Written 2026-09-19 on the architecture's ADRs; phase 2 (M5) added the same day; re-cut to
-sprint level on 2026-09-20 (D37) from the system blueprint (`architecture.md`) and the
-service research (`01g-research-real-system.md`). Estimates are for a team of two developers and
-the owner as product lead; they assume the ADRs (ADR-1 to ADR-25) stand as the build baseline and
-the prerequisites in `first-customer-classscout.md` arrive as §4 says. Every issue has a
-Definition of Done; every sprint has an acceptance test the owner can watch; the blocked register
-is honest about what waits on the client.*
+*For the delivery lead, the owner and the stakeholders who sign off. What this document holds:
+the milestones and the nine sprints with an acceptance test each (§2, §2b), the sprint-0 checklist,
+every issue with a Definition of Done (§3), the blocked register (§4), risks with owners and
+triggers (§5), owners, dates relative to the go, reviews, the decision path and change control
+(§5b), the release scope (§6), the operating model — onboarding, running, support, incidents,
+change, offboarding (§7) — and the stakeholder sign-off sheet (§8). Estimates are for a team of
+two developers with the owner as product lead and are unvalidated until the team is named; they
+assume the ADRs in `architecture.md` stand and the first customer's onboarding inputs
+(`first-customer-classscout.md`) arrive as §4 says.*
 
 ## 0. Conventions
 

@@ -39,12 +39,19 @@ footer{margin-top:56px;padding-top:18px;border-top:1px solid var(--line);font-si
 <div class="wrap">
 <nav class="docnav" aria-label="Project documentation"><span class="docnav-brand">business.direct · docs</span><a href="index.html">Overview</a><a href="executive-summary.html">Executive summary</a><a href="product-definition.html">Product definition</a><a href="product-specification.html">Product specification</a><a href="market.html">Market</a><a href="economics.html">Economics</a><a href="business-logic.html">Business logic and SSOT</a><a href="architecture.html" aria-current=page>Architecture and blueprint</a><a href="delivery-plan.html">Delivery plan</a><a href="responsible-data.html">Responsible data and legal</a><a href="first-customer-classscout.html">First customer</a><a href="evidence.html">Evidence</a><a href="research.html">Research I</a><a href="research-2.html">Research II</a><a href="research-3.html">Research III</a><a href="research-4.html">Research IV</a><a href="research-5.html">Research V</a><a href="research-6.html">Research VI</a><a href="design-system.html">Design system</a><a href="layouts.html">Layouts</a><a href="05-layout-specs.html">Layout specs</a><a href="decisions.html">Decisions</a><a href="build-log.html">Build log</a><a href="gate.html">Gate</a><a href="register-of-asks.html">Register of asks</a><a href="logic-audit.html">Logic audit</a><a href="documentation-audit.html">Documentation audit</a></nav>
 <header><p class="eyebrow">Calvus · business.direct · project documentation</p><h1>business.direct — architecture and system blueprint</h1></header>
-<p><em>Written 2026-09-19 for the first client, Your Field NYC (D11); phase 2 (campaigns, upgrades, recap — D21–D23) added the same day; on 2026-09-20 the stack became the </em><em>build baseline</em><em> (D37): every
-service was verified against the vendor's own terms (<a href="research-6.html"><code>01g-research-real-system.md</code></a>), the modules,
-drawings and pseudo code are in <a href="architecture.html"><code>architecture.md</code></a>, and ADR-15 to ADR-25 record the service
-choices. The stack follows DiscountDirect's decided stack (D26 there) because the client platform
-runs on the same family (<a href="first-customer-classscout.html"><code>first-customer-classscout.md</code></a> §1); the owner flips any ADR with a decision. Terms are the
-SSOT's (<a href="business-logic.html"><code>business-logic.md</code></a>).</em></p>
+<p><em>For the delivery team: the document a developer builds from. Part A — the architecture: context,
+the target measured, quality attributes, containers, flows, integrations, security, deployment, the
+stack and the architecture decision records (ADR-1 to ADR-25, the build baseline — the owner flips
+any with a decision). Part B — the technical design: screens, content model, data mapping, state
+machines, jobs, connectors and adapters, drafting, forms, i18n, URLs, media, performance,
+operations. Part C — the system blueprint: drawings, repository layout, the module catalogue with
+pseudo code, data contracts, the cron table, the outbox in full, security, configuration, the
+media worker, tests, operations, the prototype → module map. Appendix — the token map. Every
+external service is verified in <a href="research-6.html"><code>01g-research-real-system.md</code></a> and <a href="evidence.html"><code>evidence.md</code></a> §2. The stack
+follows DiscountDirect's decided stack because the first customer's site runs on the same family.
+Terms are <a href="business-logic.html"><code>business-logic.md</code></a>'s; the drawings and identifiers use the first instance's words
+(platform · provider · family · card) because the system was specified on its data — one
+instance's labels, not the product's roles.</em></p>
 <h2>1. System context</h2>
 <pre><code> Families (web, e-mail, push, SMS)        Social channels (Instagram, Facebook, TikTok, X)
         ▲            ▲                              ▲

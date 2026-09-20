@@ -7,7 +7,7 @@ keeps, all costs and incomes, and where the next dollar goes. Every input is mar
 (sourced) or **assumption** (a placeholder on the screen until your data replaces it). The
 formulas are the ones the product's Economics screen computes; Part B below is the department's
 specification (the model, the events, the decision rules). No customer's numbers appear here: §3 is
-an illustration on placeholders; the owner's numbers live on the owner's screen. Written 2026-09-20 (D41, D45).*
+an illustration on placeholders; the owner's numbers live on the owner's screen.*
 
 ## 1. What the product computes for the owner
 
@@ -86,8 +86,7 @@ shows the owner's numbers, says which are real, and ranks the next dollar every 
 
 ## Part B — the department's specification: the model, the events, the decision rules
 
-*This is the specification of the Economics screen — the owner's economics as a service (D41): the
-value it delivers is `economics.md`. Written 2026-09-19 on the owner's directive: "we will need ROI calculations and planning for
+*The specification of the Economics screen — the owner's economics as a service. Written on the owner's directive: "we will need ROI calculations and planning for
 CAC and LTV for B2B clients, marketing value for the avid users, and all the other analytics
 information that helps the system deliver data-driven marketing decisions." This is the
 model the *Economics* screen (`../index.html?view=platform&screen=economics`) computes; the
@@ -138,9 +137,9 @@ managing providers; **CAC (upgraded)** = cost ÷ new paying providers.
 `contribution = ARPA × gross margin` · `LTV = contribution ÷ monthly churn` ·
 `payback = CAC ÷ contribution` · **healthy when LTV : CAC ≥ 3 and payback ≤ 12 months**.
 
-Defaults: ARPA $49/month (the platform's three products at sample prices: $49, $29,
-$149/season), margin 80 %, churn 5 %/month (SMB SaaS range 3–7 %, research II §2.2).
-A **conversations line** input (default 0 = bundled per D21; Yelp Receptionist sells the
+Defaults: ARPA $49/month (the first instance's three placements at placeholder prices: $49, $29,
+$149 per season), margin 80 %, churn 5 %/month (SMB SaaS range 3–7 %, research II §2.2).
+A **conversations line** input (default 0 = included in the placement; Yelp Receptionist sells the
 same thing at $99) adds revenue per *managing* provider to the plan's MRR (Q12) — the
 owner's pricing decision is one number on the screen.
 
@@ -153,11 +152,11 @@ years.** Raising the reply rate to the top decile (10.7 %) only reaches 1.3 : 1.
 reporting an unfavourable lever honestly — on placeholders, not on any customer's numbers. On a
 real instance it pays in one of three ways, and the screen shows which:
 
-- **the base machine is the platform's growth engine, not a profit centre** (D21: bundled;
-  its return is families and managed pages, valued below), or
-- **a larger catalogue** (the cost is mostly fixed tooling; at 1,000 providers CAC falls
-  under $400 with the same rates), or
-- **higher ARPA** (camp placement at $149/season, bundles) and lower churn (annual plans).
+- **the marketing and sales departments as the site's growth engine, not a profit centre** (their
+  return is visitors and managing advertisers, valued below), or
+- **more listings** (the cost is mostly fixed tooling; at four times the listings CAC falls by
+  about two thirds with the same rates), or
+- **higher ARPA** (a seasonal placement, bundles) and lower churn (annual plans).
 
 The screen makes each of these one input away.
 
@@ -193,7 +192,7 @@ Every week the system ranks three actions by **expected LTV gained per dollar**:
 
 | Action | Cost | Expected gain |
 |---|---|---|
-| Retention touches to the at-risk advertisers (D41) | at risk × (cost per touch + operator minutes) | at risk × share kept (`churnSaved`, 30 % assumed, measured from the retention log) × LTV |
+| Retention touches to the at-risk advertisers | at risk × (cost per touch + operator minutes) | at risk × share kept (`churnSaved`, 30 % assumed, measured from the retention log) × LTV |
 | One more e-mail touch to the unreplied | unreplied × cost per touch | unreplied × reply rate × 42 % (share of replies after step one) × apply × managing × upgrade × LTV |
 | Call the phone-only providers | phone-only × cost per call | phone-only × ½ reached × reply rate × 3 × apply × managing × upgrade × LTV |
 | A week of the content engine | content stack ÷ 4.33 | posts per week × families per post × expected value of a new family |

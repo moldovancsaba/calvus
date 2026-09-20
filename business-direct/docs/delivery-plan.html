@@ -39,13 +39,15 @@ footer{margin-top:56px;padding-top:18px;border-top:1px solid var(--line);font-si
 <div class="wrap">
 <nav class="docnav" aria-label="Project documentation"><span class="docnav-brand">business.direct · docs</span><a href="index.html">Overview</a><a href="executive-summary.html">Executive summary</a><a href="product-definition.html">Product definition</a><a href="product-specification.html">Product specification</a><a href="market.html">Market</a><a href="economics.html">Economics</a><a href="business-logic.html">Business logic and SSOT</a><a href="architecture.html">Architecture and blueprint</a><a href="delivery-plan.html" aria-current=page>Delivery plan</a><a href="responsible-data.html">Responsible data and legal</a><a href="first-customer-classscout.html">First customer</a><a href="evidence.html">Evidence</a><a href="research.html">Research I</a><a href="research-2.html">Research II</a><a href="research-3.html">Research III</a><a href="research-4.html">Research IV</a><a href="research-5.html">Research V</a><a href="research-6.html">Research VI</a><a href="design-system.html">Design system</a><a href="layouts.html">Layouts</a><a href="05-layout-specs.html">Layout specs</a><a href="decisions.html">Decisions</a><a href="build-log.html">Build log</a><a href="gate.html">Gate</a><a href="register-of-asks.html">Register of asks</a><a href="logic-audit.html">Logic audit</a><a href="documentation-audit.html">Documentation audit</a></nav>
 <header><p class="eyebrow">Calvus · business.direct · project documentation</p><h1>business.direct — delivery plan, operating model and stakeholder sign-off</h1></header>
-<p><em>Written 2026-09-19 on the architecture's ADRs; phase 2 (M5) added the same day; re-cut to
-sprint level on 2026-09-20 (D37) from the system blueprint (<a href="architecture.html"><code>architecture.md</code></a>) and the
-service research (<a href="research-6.html"><code>01g-research-real-system.md</code></a>). Estimates are for a team of two developers and
-the owner as product lead; they assume the ADRs (ADR-1 to ADR-25) stand as the build baseline and
-the prerequisites in <a href="first-customer-classscout.html"><code>first-customer-classscout.md</code></a> arrive as §4 says. Every issue has a
-Definition of Done; every sprint has an acceptance test the owner can watch; the blocked register
-is honest about what waits on the client.</em></p>
+<p><em>For the delivery lead, the owner and the stakeholders who sign off. What this document holds:
+the milestones and the nine sprints with an acceptance test each (§2, §2b), the sprint-0 checklist,
+every issue with a Definition of Done (§3), the blocked register (§4), risks with owners and
+triggers (§5), owners, dates relative to the go, reviews, the decision path and change control
+(§5b), the release scope (§6), the operating model — onboarding, running, support, incidents,
+change, offboarding (§7) — and the stakeholder sign-off sheet (§8). Estimates are for a team of
+two developers with the owner as product lead and are unvalidated until the team is named; they
+assume the ADRs in <a href="architecture.html"><code>architecture.md</code></a> stand and the first customer's onboarding inputs
+(<a href="first-customer-classscout.html"><code>first-customer-classscout.md</code></a>) arrive as §4 says.</em></p>
 <h2>0. Conventions</h2>
 <p>Issue ids <code>BD-&lt;milestone&gt;-&lt;n&gt;</code>. A milestone ships to production behind a feature flag per
 instance (<code>platform_id</code>). "Measured" means a number in the build log, not a claim.</p>

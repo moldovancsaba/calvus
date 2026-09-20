@@ -7,7 +7,8 @@ on the screen. The prototype (`../index.html`) is the reference for every screen
 the rules behind every behaviour are in `business-logic.md`; the numbers the Economics screen
 computes are in `economics.md`. Product terms are used first — **media owner · advertiser ·
 visitor · listing** — with the first customer's words (platform · provider · family · card) in
-brackets, because the prototype runs on that instance. Written 2026-09-20 (D44).*
+brackets, because the prototype runs on that instance. R-numbers point at the rules register in
+`business-logic.md`.*
 
 ## 1. The product in one screen
 

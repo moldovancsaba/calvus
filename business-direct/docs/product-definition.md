@@ -1,120 +1,115 @@
 # business.direct — product definition
 
-*The product definition. Written 2026-09-19; rewritten 2026-09-20 in the owner's definition
-(D41): a standalone product for classified media owners — content generated and delivered to
-every medium, the B2B sales process (contact, acquire, reduce churn), the owner's economics as a
-service; ClassScout is the persona example and the first buyer. Everything here is what the
-owner said, what the first customer's site exposes, and what the two reference videos show.*
+*For everyone who decides on, builds or sells business.direct. What this document holds: what the
+product is, for whom, the three jobs it does, how it is operated, what it is not, the vocabulary
+every other document uses, and the first customer as the example. It is the root document: the
+presentation, the specification, the rules and the plan derive from it.*
 
-## The product
+## 1. What business.direct is
 
-**business.direct is a standalone product for classified media owners** — listing platforms,
-directories, marketplaces of local businesses — to run the three jobs their business never
-stops needing: **marketing** (content generated from the listings and delivered to every
-medium, so visitors come and come back), **B2B sales** (every listed business contacted and
-acquired as a paying advertiser through a lawful pipeline) and **retention** (churn seen weeks
-ahead and answered with a touch). It runs as departments the owner approves, on the owner's
-own data and plain-text knowledge files, with a human gate on everything, one loop that ranks
-the next dollar, and **the owner's economics as a service** — what a listing sells for, what an
-advertiser costs to win and is worth, what a visitor costs to bring in, what churn costs and
-retention keeps, all costs and incomes, on one screen. Every site is an instance with its own
-policy record; the second site is a record and a connector.
+**business.direct is a standalone product for classified media owners** — the owners of listing
+platforms, directories and marketplaces of local businesses — that runs the three jobs their
+business never stops needing, every day, from their own data:
 
-## The customer persona
-
-The classified media owner: one person (or a very small team) who gathered the supply,
-built the site, and is now the whole sales and marketing department for both sides of it —
-thousands of listings not yet sold to the businesses on them, visitors who save and hear
-nothing, advertisers who leave for reasons visible weeks earlier. The pain and the machine are
-the same whether the listings are children's activities, sports clubs, jobs or second-hand goods.
-
-## The example and first customer
-
-**ClassScout**, operator of **Your Field NYC** (getyourfield.com; contact info@classscout.ai) —
-"youth sports discovery, starting with your neighborhood": a children's-activity directory in
-New York, families on one side, activity providers on the other, a catalogue gathered by a
-pipeline with thousands of listings still to publish, one founder as the department. ClassScout
-is the **example** every document uses to make the persona concrete and the **first buyer** of
-the product. In the product's terms its visitors are "families" and its advertisers are
-"providers" — the product shows each site's own words. The prototype runs on a demo sample of its public listings — demo data, never a statement about
-the size or state of the customer's business.
-*Most én sportolok!* (sport.doneisbetter.com) is a second directory pulled through the same
-connector shape to prove the second instance.
-
-**business.direct is a sibling of DiscountDirect** (D5): DiscountDirect retains a web shop's
-customers; business.direct sells, fills and keeps a classified media site.
-
-## The problem
-
-One person cannot run marketing, sales and retention for thousands of listings. The money is
-lost where nobody is: listings nobody contacted earn nothing; the second and third touch —
-which bring 42 % of all replies — never get sent; enquiries the site forwards die unanswered (a lead
-is 21× more likely to qualify in the first five minutes); the material that exists (offers,
-dates, news, footage) is never published; a paying advertiser leaves for reasons visible weeks
-earlier; the numbers are a feeling (research I, II). The tools on sale each do one job.
-
-The first customer shows the shape: a marketplace whose prospects are the listed providers
-and whose audience is families, with thousands of listings to publish and one founder as the
-department. What the product computes for an owner, and how, is `economics.md`; the owner's
-own numbers appear on the Economics screen once the site is connected.
-
-**Where the shape came from.** The two videos the owner shared show the target: **the one-person sales and
-marketing team** — an orchestrator over departments (research and intelligence, content,
-distribution, creative, leads and conversations, reviews and reputation, results), a
-**brand knowledge layer** kept as plain files, **human-in-the-loop** ("it drafts, it can't
-post, it stops and asks, the owner still owns"), an intelligence recap, and integrations
-that make the machine run while "nobody logs in".
-
-## What is built
-
-A clickable prototype in English with **three views** (D2, D10):
-
-| View | Who | What they see |
+| Job | What the product does | Result for the owner |
 |---|---|---|
-| Media owner ("Platform" on Your Field) | the classified media owner | the machine across every listing: marketing, sales, retention, the approval queue, economics, the recap, integrations, the policy record |
-| Advertiser ("Provider" on Your Field) | a listed business after claiming its page | its own one-person team: conversations with visitors, campaigns, the site's advertising products, results, knowledge files |
-| Visitor ("Family" on Your Field) | a person using the site | what arrives: the weekly digest, saved-listing alerts, an advertiser's offer, and the controls over channel and frequency |
+| **Marketing** | reads the listings for what is new — offers, dates, news, photos, footage — and generates the content: posts for every social channel, a weekly digest and alerts for the visitors who opted in, search pages per category and area, clips cut from real footage; delivers each to its medium at the slot after the owner approves; answers comments with a drafted reply; reports what each piece brought | visitors come, and come back |
+| **B2B sales** | scores every listed business and works it through a pipeline — identified → contacted → replied → applied → managing → upgraded — with a lawful three-touch sequence, a drafted answer to every reply, a call list for the phone-only, a visitor's enquiry turned into the strongest touch, and the site's placements offered once the product has delivered more than they cost | listings become managing, then paying, advertisers |
+| **Retention** | watches every paying advertiser for the signals that precede a cancellation — a renewal due, a stale page, an unanswered enquiry, a listing that stopped surfacing — and drafts a touch from the advertiser's own numbers, never a discount; logs kept and lost | advertisers stay |
 
-Three jobs: two flows at the front door (D14) and retention behind the pipeline (D41):
+Around the three jobs: **the owner's economics as a service** — one screen that computes, on the
+owner's own numbers, what a listing sells for, what an advertiser costs to win and is worth, what
+a visitor costs to bring in and is worth, what churn costs and retention keeps, all costs and
+incomes, the twelve-month plan, and where the next dollar goes; **a Monday recap** of what moved
+and what needs a decision; and **a policy record and gate** per site that make the wrong default
+impossible to ship.
 
-| Flow | What the machine does | Who approves |
+## 2. How it is operated
+
+- **Departments, not people.** Each job runs as departments that draft, schedule, watch and
+  compute on their own. The owner's voice, rules and offers are plain-text files the departments
+  read before every draft; edit a file and every department changes.
+- **A human gate on everything.** It drafts, it cannot send, it stops and asks. Nothing reaches
+  a visitor, an advertiser or a channel without an approval. A department that runs four clean
+  weeks earns auto-approval for its routine messages — every one still logged and stoppable.
+- **Two interfaces, one product.** *Simple* shows the owner only what needs a person, ranked,
+  with the reason and one button, and one press for everything safe; *Advanced* shows every
+  screen and input.
+- **One loop.** Every touch, reply, post, save, enquiry, renewal and payment is an event; nightly
+  the metrics; weekly four levers ranked by expected value per dollar; the owner approves; the
+  product measures and adjusts its cadence, its content slots and the moment a placement is offered.
+- **The advertiser's own team.** A business that manages its page gets, inside the owner's
+  product, its own team: every enquiry answered within the hour from its own files, reminders,
+  campaigns to the visitors who saved it, clips from one recording, results on one screen. That is
+  why it claims, why it stays and why it upgrades.
+- **Visitors never log in to the product.** Their preferences reach it by signed link; every
+  channel is off until they turn it on; Stop is one tap; a child is an age, never a name.
+- **One site is one instance.** Its policy record (jurisdictions and laws, audience model,
+  consent per channel, cap, retention, disclosure), its connector, its sending domain and its
+  placements. The second site is a record and a connector, not a rebuild.
+
+## 3. Who it is for
+
+The **classified media owner**: one person or a very small team who gathered the supply, built
+the site the visitors use, and is now the whole sales and marketing department for both sides
+of it — thousands of listings not yet sold to the businesses on them, visitors who save and hear
+nothing, advertisers who leave for reasons visible weeks earlier. The pain and the product are
+the same whether the listings are children's activities, sports clubs, jobs, homes or
+second-hand goods.
+
+## 4. What it is not
+
+Not a directory or marketplace platform (the owner keeps their site; the product connects to
+it). Not a tool sold to the listed businesses one at a time (they get their team inside the
+owner's product). Not a generic marketing agent (every department knows what a listing, an
+advertiser and a visitor are). Not an autopilot (nothing sends without a person). Not a
+discounting engine (retention runs on results, never on price cuts).
+
+## 5. The vocabulary
+
+| Product term | Meaning | The first customer's word |
 |---|---|---|
-| **B2C social** | Turns listings, updates and news into posts for Instagram, Facebook, TikTok and X — a provider spotlight, "this week in Park Slope", a new-camp announcement, a parent tip — scheduled, drafted (AI optional), and published only after approval, each with the link back to the listing page. Goal: new families on the platform. | platform operator |
-| **B2B sales** | Works every listed provider through a pipeline — identified → contacted → replied → applied → managing → upgraded — with e-mail and phone from the card, sequences with human sign-off, the reply inbox, and the upsell ("and more": featured listing, camp placement, campaigns). Goal: providers who manage their own listing and buy more. | platform operator; the provider on their side |
+| **Media owner** | the classified media owner who runs the product; the operator is the person who approves | platform |
+| **Listing** | a business's page on the site; the inventory the owner sells | card |
+| **Advertiser** | a listed business — a prospect until it manages its page, a customer once it pays for a placement | provider |
+| **Visitor** | a person using the site; an engaged visitor saves, opens the digest and enquires | family |
+| **Placement** | what the owner sells to an advertiser — featured, category, discovery profile | reach product |
+| **Instance** | one site with its own policy record, connector, sending domain and placements | Your Field NYC |
+| **Department** | a bounded automation with its own approvals and an optional AI switch | — |
+| **The human gate** | nothing leaves without an approval or an earned auto-approval | — |
 
-**Retention (reduce churn)**: every managing advertiser watched for a renewal, a stale page, an unanswered enquiry, a listing that stopped surfacing; a touch drafted from its own numbers; kept and lost logged into the churn rate (D41). Behind them: **family digests and alerts**, **generated landing pages and SEO** (activity ×
-neighbourhood × age), **provider campaigns** (trial classes, open spots, announcements,
-registration — built from the card, approved by the provider, sent by the family's
-preferences under the cap; phase 2, D22), **upgrades** (the platform's own products, D21)
-and **activation** as the pipeline's first stages. Optional AI support is a layer the operator or provider switches
-on per department, never a requirement (D6). An **intelligence dashboard** and an
-**integrations** screen (the platform's own API first, then the social channels, e-mail,
-phone/SMS) are part of the first build.
+The product shows each site its own words; the prototype, built on the first customer's data,
+shows theirs.
 
-## What is real
+## 6. The first customer, as the example
 
-The prototype's data is a **demo sample of the first customer's public listings**, pulled by
-`data/fetch-yourfield.py` and never edited by hand: on each listing the name, category, area,
-address, contact, sessions, trial policy, announcement, claim state and verified fields are the
-site's own, and the site copy is the site's own. The sample's size and coverage are described in
-the first-customer file (`first-customer-classscout.md`), not here, because they describe the demo,
-not the customer's business. Everything that is not on the site — an advertiser's brand voice, a
-campaign's results, the visitor persona and her saved items, the managing cohort — is **sample**
-and is declared as sample on the page. No advertiser or visitor is contacted by the prototype.
+**ClassScout**, operator of **Your Field NYC** (getyourfield.com): a children's-activity
+directory in New York — families on one side, activity providers on the other, a catalogue
+gathered by a pipeline with thousands of listings still to publish, one founder as the
+department. ClassScout is the example every document uses to make the persona concrete, and the
+first buyer. Everything specific to their instance — their site measured, what in the prototype
+is real and what is sample, their onboarding inputs, the pilot's SWOT — is in
+`first-customer-classscout.md`. A second, unrelated directory has been pulled through the same
+connector shape to prove that the second instance is a record and a connector.
 
-## What is inert
+business.direct is a sibling of DiscountDirect: DiscountDirect retains a web shop's customers;
+business.direct sells, fills and keeps a classified media site.
 
-Sending (e-mail, push, SMS, social), publishing generated pages, claiming a card,
-connecting an integration with a key. Each is shown in place, visibly inert, with the reason.
+## 7. What exists today
 
-## Where it stands
+- **The prototype** (`../index.html`): one page, three roles, every screen of the specification,
+  every approval moving state, the policy gate, the Economics screen, Simple and Advanced modes —
+  on a demo sample of the first customer's public listings, with the activity generated from those
+  listings and labelled sample. Nothing sends, publishes or connects; the sample says nothing
+  about the size or state of the customer's business.
+- **The specification** (`product-specification.md`): how it works and how the customer uses it,
+  screen by screen and role by role.
+- **The rules** (`business-logic.md`), **the architecture and blueprint** (`architecture.md`),
+  **the delivery plan with the operating model and the sign-off sheet** (`delivery-plan.md`),
+  **responsible data and the legal position** (`responsible-data.md`), **the market**
+  (`market.md`), **the economics** (`economics.md`), **the evidence** (`evidence.md`).
 
-Every stage of the standard is done (2026-09-19). Gates 1 and 2 approved (D9, D16); the
-prototype built in nine rounds (`build-log.md`) — the two flows, campaigns and upgrades,
-conversations, economics, the research implemented, the audit implemented, the
-responsible-data policy record and gate, the Simple and Advanced interfaces — and measured
-(`gate.md`); the presentation, the business logic, the technical package (the stack
-verified service by service and the system blueprint with modules and pseudo code, D37), the
-audit and SWOT, and the policy framework written. Nothing is open for the presentation; what
-the implementation needs after acceptance is `first-customer-classscout.md`; the build
-starts with the sprint-0 checklist in `delivery-plan.md`. **Next: present.**
+## 8. The decision this document supports
+
+Build business.direct as defined here and run it for the first customer. The sign-off sheet —
+who accepts what, by which criterion — is in `delivery-plan.md`.

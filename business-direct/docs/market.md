@@ -2,8 +2,9 @@
 
 *For the stakeholders. What this document holds: the product's own market — the segment, how it
 earns, the software owners run, the tools they buy for the pieces, the gap the product fills, the
-product's SWOT. Written as research round VII on 2026-09-20 (phase B of the audit's programme);
-the first customer's category evidence is in research I–III (`evidence.md`). Questions: how large is the classified-media segment and how
+product's SWOT. Every figure is a list price or a vendor's own
+statement read on 2026-09-20 and marked so; the first customer's category evidence is in the
+research rounds indexed in `evidence.md`. Questions: how large is the classified-media segment and how
 does it earn; what software do owners run their sites on and what does it not do; what do they
 buy today for the pieces of sales and marketing, at what price; where is the gap business.direct
 fills; and the product's own SWOT. **P** primary source opened, **A** secondary; market-size
