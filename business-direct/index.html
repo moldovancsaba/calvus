@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>business.direct — the one-person sales and marketing team (first customer: Your Field NYC)</title>
+<title>business.direct — sales and marketing automation for classified media owners · instance: Your Field NYC</title>
 <meta name="description" content="Clickable prototype: an automated marketing machine for a B2B2C listing platform — B2C social publishing, a B2B provider sales pipeline, optional AI, an intelligence dashboard, integrations. Real providers from Your Field NYC; nothing sends.">
 <link rel="stylesheet" href="assets/tokens.css?v=1">
 <link rel="stylesheet" href="assets/components.css?v=1">
@@ -13,10 +13,10 @@
 <div class="shell">
 <header class="topbar">
   <div class="brand">business<span>.direct</span></div>
-  <div class="roles" role="tablist" aria-label="View"><button id="roleP" class="on" role="tab" aria-selected="true">Platform</button><button id="roleV" role="tab" aria-selected="false">Provider</button><button id="roleF" role="tab" aria-selected="false">Family</button></div>
+  <div class="roles" role="tablist" aria-label="View"><button id="roleP" class="on" role="tab" aria-selected="true" title="The classified media owner — Your Field calls it the platform">Media owner</button><button id="roleV" role="tab" aria-selected="false" title="A listed business — Your Field calls it a provider">Advertiser</button><button id="roleF" role="tab" aria-selected="false" title="A visitor — Your Field calls them a family">Visitor</button></div>
   <div class="roles" role="tablist" aria-label="Interface"><button id="modeS" class="on" role="tab" aria-selected="true" title="Guided: what needs you, with recommendations">Simple</button><button id="modeA" role="tab" aria-selected="false" title="Every screen and every input">Advanced</button></div>
-  <label class="persona" id="personaWrap" hidden><span id="personaLabel">Provider:</span><select id="persona" aria-label="Who you are looking as"></select></label>
-  <span class="topnote">Your Field NYC (ClassScout) · <span id="nProv">253</span> providers · v1</span>
+  <label class="persona" id="personaWrap" hidden><span id="personaLabel">Advertiser:</span><select id="persona" aria-label="Who you are looking as"></select></label>
+  <span class="topnote">Instance: Your Field NYC (ClassScout) · <span id="nProv">253</span> advertisers ("providers") · visitors ("families") · v1</span>
 </header>
 <div class="proto-note">Clickable prototype — real providers from getyourfield.com (public data, 2026-09-19), sample activity. Nothing sends, publishes or connects. Approvals change state in this page only and reset on reload.</div>
 
@@ -28,6 +28,6 @@
 <aside class="drawer" id="drawer" hidden aria-label="Provider"></aside>
 <div class="toast" id="toast" role="status"></div>
 </div>
-<script src="assets/app.js?v=20"></script>
+<script src="assets/app.js?v=22"></script>
 </body>
 </html>

@@ -8,8 +8,8 @@ Built to the prototyping standard (`PROTOTYPING.md`); this index is the process 
 
 | Slot | File | What it holds |
 |---|---|---|
-| presentation | `presentation.html` | The product's presentation, standalone, in the customer's language: the one-person operator and their week, what doing it alone costs, the question, the product, the value and the pricing hypothesis, the first customer as proof, responsible by design, delivery, the decision; the demo as an appendix (`bemutato.html` redirects here — a live URL is never deleted) |
-| 00 brief | `00-brief.md` | The product, the customer, the first customer (ClassScout · Your Field NYC), the problem, the three views and the flows, what is real, where it stands |
+| presentation | `presentation.html` | The product's presentation for a classified media owner: the customer and their week, what they lose, the question, the product (marketing · B2B sales · retention, the advertiser's own team, the human gate, the loop), how the owner uses it, the benefits with the economics in the product, the first customer as proof, delivery, the decision; the demo as an appendix (`bemutato.html` redirects here) |
+| 00 product definition | `00-brief.md` | business.direct in the owner's words: for classified media owners — content to every medium, B2B sales (contact, acquire, reduce churn), the owner's economics as a service; the persona; ClassScout as the example and first buyer; the problem; what is built; what is real |
 | 01 research | `01-research.md` | Sourced: reputation and claiming, speed to lead, reminders, digests, generated pages, marketplace monetisation, AI adoption and human-in-the-loop, EU AI Act Art. 50, US CAN-SPAM and TCPA, the Hungarian reference market |
 | 01b research II | `01b-research-acquisition-content-sales.md` | Acquiring customers for classified media (demand and supply side), content strategies, the AI creation services (Higgsfield and the video / image / audio / design / scheduling landscape with prices and the labelling rules), the sales processes with benchmarks; P1–P9 (implemented, D28) |
 | 01c research III | `01c-research-data-driven-marketing.md` | Case studies and practices behind the data-driven decision flow: Yelp (Receptionist, Hatch, revenue per location), Angi, Thumbtack, Rover; LTV : CAC and payback lines; attribution → incrementality → MMM; Booking.com; next-best-action; P10–P12 (implemented, D28) |
@@ -18,26 +18,26 @@ Built to the prototyping standard (`PROTOTYPING.md`); this index is the process 
 | 01g research VI | `01g-research-real-system.md` | The real system's services verified on the day: hosting, database, cache, files, jobs, e-mail, Meta, SMS, payments, drafting, transcription, the media worker, credentials, sign-in, observability — auth, review, limits, prices, alternatives; what each needs before the first run; the monthly cost at pilot and at the sizing target; what is assumed |
 | 02 audit | `02-audit.md` | Your Field measured: API, 253 providers, field coverage, site copy, the platform's own policy and terms; the Hungarian reference instance; the two videos frame by frame; what DiscountDirect provides |
 | 03 sources | `03-sources.md` | What is real (the platform's public data), what is sample (generated from real cards), what is inherited |
-| 04 decisions | `04-decisions.md` | D1–D40 |
+| 04 decisions | `04-decisions.md` | D1–D41 |
 | 05 design | `design-system.html` + `../assets/tokens.css` + `../assets/components.css` | **Gate 1 approved (D9)**: tokens and components, one source |
 | 05 layouts | `05-layout-specs.md` + `layouts.html` + `frames/` | **Gate 2 approved (D16)**: platform 1440 / 390, provider 390, family 390; the later screens reuse the same grids |
 | 06 build log | `06-build-log.md` | Ten rounds and a re-pull: the prototype; presentation and package; editors and tablet; campaigns, upgrades, recap; conversations; economics; the research implemented; the audit implemented; the policy screen; the two interfaces; beyond children; the catalogue re-pulled |
 | 07 gate | `07-gate.md` + `../check.py` | What the script checks (links, anchors, docs cross-links, data, script, stale phrases); the measured pass at 390, 768, 1024 and 1440 |
-| 08 register of asks | `08-client-asks.md` | Every item that once needed the owner, with its state: none open for the presentation; the rest are prerequisites; four closed |
+| 08 register of asks | `08-client-asks.md` | Closed (D41) — history: every item that once needed the owner or the first customer, with where it went |
 | 09 business logic | `09-business-logic.md` | The rules end to end: parties, the two flows, the two interfaces, departments, campaigns, conversations, money, families, responsible data for every client, law, the recap, data-driven decisions, what the research and the audit changed, what the machine never does |
 | 10 SSOT | `10-ssot.md` | glossary, enumerations, entities, settings, rules R1–R36, metrics, document map |
 | 11 architecture | `11-architecture.md` | context, the platform measured, quality attributes, containers (incl. the media worker), flows, integrations, stack and ADR-1–25 — the build baseline (D37) |
 | 12 technical design | `12-technical-design.md` | screens, content model, state machines, jobs, connector, media and channel adapter interfaces, drafting, i18n, operations |
-| 13 plan | `13-implementation-plan.md` | seven milestones, nine two-week sprints with an acceptance test each and a sprint-0 checklist, 65 issues with a Definition of Done, blocked register (the prerequisites), risks, release scope in two halves |
+| 13 plan | `13-implementation-plan.md` | seven milestones, nine two-week sprints with an acceptance test each and a sprint-0 checklist, 66 issues with a Definition of Done, blocked register (the prerequisites), risks, release scope in two halves |
 | 14 token map | `14-token-map.md` | tokens and components → GDS + Mantine; contrast computed |
-| 15 executive summary | `15-executive-summary.md` | One page for the decision-maker: the one-person department, what doing it alone costs, the question, the product, the three numbers (price and margin, the build, the first customer), the decision (D39) |
-| 16 analytics | `16-analytics-and-unit-economics.md` | CAC / LTV / payback for providers, the marketing value of an avid family, content ROI, the next-dollar rule, the metrics tree, events and attribution, rules R16–R19; what is real vs assumed (D26) |
+| 15 executive summary | `15-executive-summary.md` | One page: the classified media owner's situation and complication, the question, the product, how the owner uses it, the benefits, the proof, the decision (D41) |
+| 16 economics department | `16-analytics-and-unit-economics.md` | CAC / LTV / payback for providers, the marketing value of an avid family, content ROI, the next-dollar rule, the metrics tree, events and attribution, rules R16–R19; what is real vs assumed (D26) |
 | 17 audit · SWOT | `17-business-logic-audit-and-swot.md` | Audit of the business logic: 19 findings with fixes; the SWOT with evidence; the recommendations Q1–Q12 (adopted and implemented, D30) |
 | 18 policy framework | `18-responsible-data-policy-framework.md` | Seventeen principles, the policy record per instance, the gate (ten rows), onboarding, the client's value, two worked instances, how it generalises (D32, D35) |
 | 20 system blueprint | `20-system-blueprint.md` | The document a developer builds from: drawings (context, deployment, module map, the two pipelines, the clip engine, the state machines), the repository layout, seventeen modules with what each owns and pseudo code, data contracts, the cron table, the outbox in full, security, configuration, the media worker, the test plan, operations, the prototype → module map (D37) |
 | 21 deep audit | `21-documentation-audit.md` | The deep audit of all thirty files by error class (premise, vocabulary, assumption, unverified claim, contradiction, gap, sprawl) with file-level evidence; what survives; the scorecard; the eleven-document target state; the six owner decisions; the seven-phase transformation programme (D40) |
-| 22 business case | `22-business-case.md` | The product's business case: the market, the cost to build and run, the pricing hypothesis, economics by customer count, the customer's case, the first customer's instance as the worked example, sensitivity, what we need, the decision (D39) |
-| 19 prerequisites | `19-implementation-prerequisites.md` | What the implementation needs from ClassScout after acceptance — before the first send, before Release 1b, to confirm at acceptance — not required for the presentation or the planning (D34) |
+| 22 value | `22-business-case.md` | The value for the media owner — the economics as a service: what the product computes (listing price, advertiser CAC and LTV, visitor cost and value, churn and retention, the next dollar, the plan), the funnel and rates, the first customer's worked example, sensitivity, the costs the owner carries (D41) |
+| 19 first-customer onboarding | `19-implementation-prerequisites.md` | The ClassScout instance's onboarding inputs by the feature each unblocks — before the first message, before the keyed features, the instance settings to confirm; nothing needed for the presentation (D34, D41) |
 
 Rendered by `build.py` (`python3 business-direct/docs/build.py`); gate `python3 business-direct/check.py`
 (also run by the root `check.py`). Data: `python3 business-direct/data/fetch-yourfield.py`
@@ -263,6 +263,17 @@ unverified vendor figures and A-grade hero numbers, the gaps a product needs (it
 position, market, business model, operating model, roadmap), and a seven-phase programme with
 six decisions that are the owner's. Every rendered page now carries a replacement notice.
 
-**Next.** The owner answers Q1–Q3 (ownership of the first instance, price and rate, code
-identifiers) and confirms the product definition (Q4); phase A (truth) and B (root) start on
-the go.
+**2026-09-20 — the product in the owner's words; retention added (D41).** The owner answered:
+a standalone product for classified media owners — content to every medium, B2B sales (contact,
+acquire, reduce churn), the owner's economics in the product as a service; ClassScout the persona
+example and first buyer; developer costs are not the owner's concern. The product definition,
+presentation, executive summary and value document were rewritten accordingly; the product layer
+went into the SSOT with the instance mapping; **retention** — the third job, missing until now —
+was built into the prototype (screen, recommendations, the churn lever and tile, a sample cohort)
+and specified in the rules (R37), the architecture, the design, the blueprint and the plan; the
+onboarding file was reframed and the register of asks closed.
+
+**Next.** The programme's remaining phases (`21-documentation-audit.md` §8): the claims register
+and source verification (A), product-market research VII and the product SWOT (B), the rest of
+the business logic in product terms (C), the product's legal position (D), owners and dates in
+the plan (E), consolidation (F), the gate rows (G).

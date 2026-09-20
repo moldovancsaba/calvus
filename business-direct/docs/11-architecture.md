@@ -29,7 +29,9 @@ SSOT's (`10-ssot.md`).*
    Operator (platform)                 Providers (e-mail, phone, their own view)
 ```
 
-Three actors, one gate: nothing reaches a family, a provider or a channel without an
+The product's terms are media owner · advertiser · visitor · listing (SSOT §1a); the drawings
+and identifiers use the first instance's words (platform · provider · family · card) because the
+system was specified on its data — one instance's labels, not the product's roles. Three actors, one gate: nothing reaches a family, a provider or a channel without an
 approval (R1). The platform stays the system of record for providers and families;
 business.direct owns drafts, approvals, pipeline state, knowledge files, consent records
 and the message log.
@@ -132,6 +134,13 @@ provider's knowledge files + card → provider view → approve / edit → outbo
 channel + the family's inbox thread; reply time logged. A family's "ask about a trial"
 is a platform message to a saved provider. Comments and DMs on published posts arrive by
 the channel adapter's webhook → drafted reply with the listing link → operator approves.
+
+**Retention (D41).** Nightly `retention` job: for every managing or upgraded provider, read the
+signals (entitlement renewal within 14 days, no card change in 30 days, an enquiry waiting > 48 h,
+no saves in 30 days) → one draft per signal from the provider's own numbers → queue *waiting*
+(renewal reminders under the department's earned auto-approval) → outbox → message log with
+`kind: retain`; `entitlement.renewed` / `subscription.deleted` events close the loop as kept /
+lost → `metrics_daily.churn`.
 
 **Upgrades.** Provider chooses a product → Stripe Checkout (the platform's account) →
 webhook → `entitlements` row → stage *upgraded* → the platform connector sets the

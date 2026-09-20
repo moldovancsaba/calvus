@@ -1,18 +1,21 @@
 # business.direct — business logic
 
-*Written 2026-09-19 with phase 2 (D21–D23). The machine's rules end to end, in the order
-money and messages move: who the parties are, what each department does, what leaves, who
-approves, what it costs, what stops it. Terms are the SSOT's (`10-ssot.md`); the decisions
-behind each rule are in `04-decisions.md`; the prototype (`../index.html`) implements every
-rule below in memory.*
+*Written 2026-09-19 with phase 2 (D21–D23); the product's parties and the retention job added
+2026-09-20 (D41). The product's rules end to end, in the order money and messages move: who
+the parties are, what each department does, what leaves, who approves, what it costs, what
+stops it. The product's terms are **media owner · advertiser · visitor · listing** (SSOT §1a);
+the sections below keep the first instance's words — platform · provider · family · card — as
+the worked example, because every rule was built and tested on its data. Terms are the SSOT's
+(`10-ssot.md`); the decisions behind each rule are in `04-decisions.md`; the prototype
+(`../index.html`) implements every rule below in memory.*
 
 ## 1. The three parties and what each gets
 
-| Party | Gets | Gives |
+| Party (product term · the first instance's word) | Gets | Gives |
 |---|---|---|
-| **Platform** (Your Field NYC) | more families (B2C social), providers who manage their page and buy upgrades (B2B sales), a machine that runs while nobody logs in, one approval queue | the catalogue, the family accounts and preferences, the channels' authority, the operator's approvals |
-| **Provider** (a listed business) | its own one-person team the day it manages its page: replies, reminders, campaigns to families who saved it, results; a free page and paid reach | a claim, its knowledge files, its approvals, and — if it upgrades — a monthly or seasonal fee |
-| **Family** | what starts near them this week, alerts from providers they saved, offers only from providers they chose, one cap, one Stop | preferences, and consent where the law requires it |
+| **Media owner** · **Platform** (Your Field NYC) | more families (B2C social), providers who manage their page and buy upgrades (B2B sales), a machine that runs while nobody logs in, one approval queue | the catalogue, the family accounts and preferences, the channels' authority, the operator's approvals |
+| **Advertiser** · **Provider** (a listed business) | its own one-person team the day it manages its page: replies, reminders, campaigns to families who saved it, results; a free page and paid reach | a claim, its knowledge files, its approvals, and — if it upgrades — a monthly or seasonal fee |
+| **Visitor** · **Family** | what starts near them this week, alerts from providers they saved, offers only from providers they chose, one cap, one Stop | preferences, and consent where the law requires it |
 
 ## 2. The two flows at the front door (D14)
 
@@ -43,12 +46,27 @@ every rule. Both carry a *What is this?* panel per screen, a *How to use* screen
 client types — that copy into the machine with one press. The same rules apply in both;
 Simple changes what is shown, not what may happen (R29).
 
+## 2c. Retention — reduce churn (D41)
+
+The third job of B2B sales. Every managing or paying advertiser is watched for the signals that
+precede a cancellation: a renewal due, no session or trial update for 30 days, an enquiry
+unanswered for two days, no saves in 30 days (the listing stopped surfacing). For each signal the
+machine drafts one touch from the advertiser's own numbers — a renewal reminder that arrives with
+results (families saved, enquiries, enrolments), a nudge that names the stale field and the
+families searching that activity in that neighbourhood — never a discount (R13, R37). The
+operator approves; renewal reminders are safe to run from Home and may earn auto-approval (R25);
+at-risk touches need judgement. Kept and lost are logged; the churn rate on the Economics screen
+is measured from that log, and the retention lever (at risk × share kept × LTV against a touch's
+cost) is ranked against acquisition every week (R16). Keeping an advertiser costs a touch;
+replacing one costs a CAC.
+
 ## 3. The departments (D6) and what each may do alone
 
 | Department | Runs alone | Needs a person |
 |---|---|---|
 | Social publishing (platform) | draft, schedule slots, read comments and DMs, draft the reply with the link to the listing | publish, send the reply — "someone tags you — first, not a queue" (D25) |
 | Provider sales (platform) | draft the sequence and the reply, move stages on events, build the call list | send, override a stage |
+| Retention (platform) | watch renewals, page freshness, enquiry response and saves; draft the touch from the advertiser's numbers; log kept and lost | send — renewal reminders may earn auto-approval; at-risk touches need judgement (R37) |
 | Weekly picks (platform → families) | build the Sunday digest and saved-provider alerts within the cap | nothing — the family's preferences are the approval (R2, R3) |
 | Generated pages (platform) | compute activity × neighbourhood pages with ≥ 3 providers | publish through the platform |
 | Market radar (platform) | the weekly note from the catalogue | read and file |
@@ -114,7 +132,8 @@ records the entitlement. No discounting logic — that is DiscountDirect's domai
 ## 6. Families: preferences, consent, cap, stop
 
 - **Preferences** per channel: weekly picks (e-mail), saved-provider alerts (push), new
-  provider nearby (push), texts from providers (SMS). Default: picks and alerts on.
+  provider nearby (push), texts from providers (SMS). Default: every channel off until the
+  family turns it on (R28); the demo family has picks and alerts on.
 - **Consent**: SMS only with written consent per provider, stored verbatim with its time
   and source (TCPA). E-mail and push run on preference.
 - **Cap**: 4 **provider-originated** messages a month per family — campaigns and texts,
@@ -127,7 +146,7 @@ records the entitlement. No discounting logic — that is DiscountDirect's domai
 ## 6b. Responsible data — for every client (D32)
 
 The machine carries one **policy record per instance** and a **gate** that reads it before
-every send and every draft (`18-responsible-data-policy-framework.md`). Ten principles hold
+every send and every draft (`18-responsible-data-policy-framework.md`). Seventeen principles hold
 whatever the client: know who the service is for; a child is an age, never a name (R24); no
 profiling or targeted advertising on a minor's data, not even with consent (R27);
 high-privacy defaults that the person turns on (R28); consent that names channel and sender,
@@ -246,10 +265,11 @@ The model and its events are `16-analytics-and-unit-economics.md`.
 | R31 safeguarding shown as verified only | §6c | R32 no pressure; "not now" pauses | §6c |
 | R33 no protected characteristic or proxy | §6c | R34 accessible by default | §6c |
 | R35 sensitive categories answered, never stored | §6c | R36 no dark pattern, no AI manipulation | §6c |
+| R37 retention on the advertiser's own numbers, never a discount; kept and lost logged | §2c | | |
 
 ## 9. What the machine never does
 
-Sends without an approval or a preference; answers a family without the provider's approval; texts without consent; sends past the domain's warm-up cap or bounce limit (R23); sends a provider e-mail without the postal address; shows a child's name to anyone (R24); profiles or targets a minor (R27); cuts a clip that shows a child without written parental consent (R30); claims safety it has not verified (R31); pressures anyone (R32, R36); builds an audience on a protected characteristic (R33); stores a sensitive category (R35); runs a feature its policy record does not allow (R26); publishes generated media unlabelled; generates a person or a child; exceeds the cap; deletes
+Sends without an approval or a preference; discounts to keep an advertiser (R37); answers a family without the provider's approval; texts without consent; sends past the domain's warm-up cap or bounce limit (R23); sends a provider e-mail without the postal address; shows a child's name to anyone (R24); profiles or targets a minor (R27); cuts a clip that shows a child without written parental consent (R30); claims safety it has not verified (R31); pressures anyone (R32, R36); builds an audience on a protected characteristic (R33); stores a sensitive category (R35); runs a feature its policy record does not allow (R26); publishes generated media unlabelled; generates a person or a child; exceeds the cap; deletes
 a provider's stage history; discounts; publishes a generated page with fewer than three
 providers; speaks as an AI to a family or a provider — the product speaks as the platform
 or the provider.

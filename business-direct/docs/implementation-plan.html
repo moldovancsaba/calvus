@@ -102,9 +102,9 @@ instance (<code>platform_id</code>). "Measured" means a number in the build log,
 </tr>
 <tr>
 <td>M5</td>
-<td>Campaigns and upgrades (phase 2)</td>
+<td>Campaigns, retention and upgrades (phase 2)</td>
 <td>13–15</td>
-<td>provider campaigns from the card with audiences from the platform's saves, results screen, products and Stripe entitlements, the family inbox's reason line</td>
+<td>provider campaigns from the card with audiences from the platform's saves, results screen, products and Stripe entitlements, the family inbox's reason line, the retention job and screen (D41)</td>
 </tr>
 <tr>
 <td>M6</td>
@@ -183,9 +183,9 @@ instance (<code>platform_id</code>). "Measured" means a number in the build log,
 <td>P-6 for real tiles (else labelled sample)</td>
 </tr>
 <tr>
-<td>S8 campaigns and upgrades</td>
+<td>S8 campaigns, retention and upgrades</td>
 <td>15–16</td>
-<td>BD-5-1 … BD-5-6</td>
+<td>BD-5-1 … BD-5-6, BD-1-15</td>
 <td>a managing provider sees a campaign draft with the audience count before approval; a family at the cap receives nothing; Stripe test-mode checkout → <code>entitlements</code> → <em>upgraded</em> → card flag (keyed) or task; the results screen from the message log; cancellation within 14 days refunds (R32)</td>
 <td>Stripe test keys; P-12 prices (sample until then)</td>
 </tr>
@@ -343,6 +343,11 @@ nothing from Meta.</p>
 <td>BD-1-9</td>
 <td>Family "ask about a trial" from a saved provider</td>
 <td>creates an enquiry as a platform message; visible in the provider's inbox within a minute</td>
+</tr>
+<tr>
+<td>BD-1-15</td>
+<td>Retention job and screen (D41, R37): signals, one <code>retain</code> draft per signal from the advertiser's own numbers, renewal reminders under earned auto-approval</td>
+<td>a stale card, a renewal within 14 days and an unanswered enquiry each produce exactly one waiting draft (test); no draft contains a discount (test); kept / lost events roll into <code>metrics_daily.churn</code></td>
 </tr>
 <tr>
 <td>BD-1-7</td>

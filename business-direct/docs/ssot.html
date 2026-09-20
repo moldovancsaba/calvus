@@ -40,10 +40,69 @@ footer{margin-top:56px;padding-top:18px;border-top:1px solid var(--line);font-si
 <nav class="docnav" aria-label="Project documentation"><span class="docnav-brand">business.direct · docs</span><a href="index.html">Overview</a><a href="brief.html">Brief</a><a href="research.html">Research</a><a href="research-2.html">Research II</a><a href="research-3.html">Research III</a><a href="research-4.html">Research IV</a><a href="research-5.html">Research V</a><a href="research-6.html">Research VI</a><a href="audit.html">Audit</a><a href="sources.html">Sources</a><a href="design-system.html">Design system</a><a href="layouts.html">Layouts</a><a href="05-layout-specs.html">Layout specs</a><a href="decisions.html">Decisions</a><a href="build-log.html">Build log</a><a href="gate.html">Gate</a><a href="client-asks.html">Register of asks</a><a href="implementation-prerequisites.html">Prerequisites</a><a href="business-logic.html">Business logic</a><a href="ssot.html" aria-current=page>SSOT</a><a href="architecture.html">Architecture</a><a href="technical-design.html">Technical design</a><a href="implementation-plan.html">Plan</a><a href="system-blueprint.html">System blueprint</a><a href="documentation-audit.html">Documentation audit</a><a href="token-map.html">Token map</a><a href="executive.html">Executive summary</a><a href="business-case.html">Business case</a><a href="analytics.html">Analytics</a><a href="audit-swot.html">Audit · SWOT</a><a href="policy-framework.html">Policy framework</a></nav>
 <header><p class="eyebrow">Calvus · business.direct · project documentation</p><h1>business.direct — single source of truth</h1></header>
 <p class="notice" role="note"><b>This documentation set is being replaced (audit D40).</b> business.direct is a standalone product — the one-person sales and marketing team; ClassScout is its first customer. The <a href="presentation.html">presentation</a>, the <a href="executive.html">executive summary</a> and the <a href="business-case.html">business case</a> are written for the product; most other pages still read as the first instance's project until the <a href="documentation-audit.html">transformation programme</a> replaces them.</p>
-<p><em>Written 2026-09-19 after gate 2 and the first build round (D16–D18). Every term the
-other engineering documents use is defined here; where a term is DiscountDirect's, it
-says so (D5). The prototype (<code>../index.html</code>, <code>assets/app.js</code>) is the reference
-implementation of the enumerations and state machines below.</em></p>
+<p><em>Written 2026-09-19 after gate 2 and the first build round (D16–D18); the product layer
+added 2026-09-20 (D41). Every term the other documents use is defined here; where a term is
+DiscountDirect's, it says so (D5). </em><em>The product's terms</em><em> are media owner · advertiser ·
+visitor · listing · instance; </em><em>the first instance's words</em><em> for them are platform · provider ·
+family · card · Your Field NYC, and because the prototype and the engineering documents were
+written on the first instance's data they use the instance's words in identifiers and
+examples — the mapping in §1a is the rule. The prototype (<code>../index.html</code>, <code>assets/app.js</code>)
+is the reference implementation of the enumerations and state machines below.</em></p>
+<h2>1a. The product layer (D41)</h2>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>Product term</th>
+<th>Meaning</th>
+<th>The first instance's word (Your Field NYC)</th>
+<th>In code</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Media owner</strong></td>
+<td>the classified media owner who buys and runs business.direct; the operator is the person at the owner who approves</td>
+<td>platform</td>
+<td><code>role = platform</code>, <code>platform_id</code></td>
+</tr>
+<tr>
+<td><strong>Listing</strong></td>
+<td>a business's page on the site, built by the site from public data; the unit of inventory the owner sells</td>
+<td>card</td>
+<td><code>providers_cache</code></td>
+</tr>
+<tr>
+<td><strong>Advertiser</strong></td>
+<td>a listed business — a prospect until it manages its page, a customer once it pays for a placement</td>
+<td>provider</td>
+<td><code>provider_id</code>, <code>provider_state</code></td>
+</tr>
+<tr>
+<td><strong>Visitor</strong></td>
+<td>a person using the site; an engaged visitor saves, opens the digest and enquires</td>
+<td>family</td>
+<td><code>family_id</code>, <code>families_prefs</code></td>
+</tr>
+<tr>
+<td><strong>Instance</strong></td>
+<td>one site with its own policy record, connector, sending domain and products</td>
+<td>Your Field NYC</td>
+<td><code>instances</code>, <code>policies</code></td>
+</tr>
+<tr>
+<td><strong>The three jobs</strong></td>
+<td>marketing (content → media → visitors), B2B sales (contact → acquire), retention (reduce churn)</td>
+<td>the two flows (D14) + retention (D41)</td>
+<td>departments <code>social</code>, <code>picks</code>, <code>pages</code>, <code>radar</code> · <code>sales</code> · <code>retention</code></td>
+</tr>
+<tr>
+<td><strong>Placement / advertising product</strong></td>
+<td>what the owner sells to an advertiser — featured, category, discovery profile</td>
+<td>reach product</td>
+<td><code>products</code>, <code>entitlements</code></td>
+</tr>
+</tbody>
+</table></div>
 <h2>1. Glossary</h2>
 <div class="tbl"><table>
 <thead>
@@ -225,6 +284,16 @@ implementation of the enumerations and state machines below.</em></p>
 <td><code>HELP</code></td>
 </tr>
 <tr>
+<td><strong>Retention</strong></td>
+<td>the department that watches every managing advertiser for the signals before a cancellation (a renewal due, a stale page, an unanswered enquiry, a listing that stopped surfacing) and drafts a touch from the advertiser's own numbers; kept and lost are logged (D41)</td>
+<td>the Retention screen; <code>retentionFor()</code></td>
+</tr>
+<tr>
+<td><strong>At risk</strong></td>
+<td>a managing or paying advertiser with at least one retention signal this week</td>
+<td>Retention watch list; economics tile</td>
+</tr>
+<tr>
 <td><strong>Recap</strong></td>
 <td>the weekly intelligence screen: what moved, by department, the market radar, what needs the operator (D23)</td>
 <td>intelligence</td>
@@ -298,8 +367,8 @@ implementation of the enumerations and state machines below.</em></p>
 </tr>
 <tr>
 <td><code>department</code> (platform)</td>
-<td><code>social</code> · <code>sales</code> · <code>picks</code> · <code>pages</code> · <code>radar</code></td>
-<td><code>S.ai</code> keys</td>
+<td><code>social</code> · <code>sales</code> · <code>retention</code> · <code>picks</code> · <code>pages</code> · <code>radar</code></td>
+<td><code>S.ai</code> keys; the Retention screen</td>
 </tr>
 <tr>
 <td><code>department</code> (provider)</td>
@@ -443,6 +512,11 @@ implementation of the enumerations and state machines below.</em></p>
 <td><code>id</code>, <code>what</code>, <code>why</code>, <code>auto</code> (safe to run), <code>go?</code>, <code>act?</code></td>
 <td><code>recommend()</code> (D33)</td>
 </tr>
+<tr>
+<td><strong>RetentionTouch</strong></td>
+<td>a <code>Draft</code> of kind <code>retain</code>: <code>providerId</code>, <code>renewal</code> (bool), <code>incoming</code> (the signals), <code>draft</code>, <code>state</code>; approving it marks the advertiser kept</td>
+<td><code>S.replies</code> with <code>kind: 'retain'</code>, <code>S.retained</code></td>
+</tr>
 </tbody>
 </table></div>
 <h2>4. Settings the prototype fixes</h2>
@@ -511,8 +585,8 @@ implementation of the enumerations and state machines below.</em></p>
 <td>D22, D30 (Q3)</td>
 </tr>
 <tr>
-<td>Family defaults</td>
-<td>weekly picks on, saved-provider alerts on, nearby off, SMS off until written consent for a provider (the demo family consented on 2026-09-02)</td>
+<td>Visitor defaults</td>
+<td>every channel off until the visitor turns it on (R28); the demo visitor turned picks and alerts on and consented to one provider's SMS on 2026-09-02</td>
 <td>R28, policy <code>defaults</code></td>
 </tr>
 <tr>
@@ -533,7 +607,7 @@ implementation of the enumerations and state machines below.</em></p>
 </tbody>
 </table></div>
 <h2>5. Decision register</h2>
-<p><a href="decisions.html"><code>04-decisions.md</code></a> holds D1–D40. The ones the engineering documents rest on: D2 (three
+<p><a href="decisions.html"><code>04-decisions.md</code></a> holds D1–D41. The ones the engineering documents rest on: D2 (three
 views), D5 (DiscountDirect sibling), D6 (departments, knowledge layer, human-in-the-loop,
 optional AI, dashboard, integrations), D11 (Your Field first), D14 (two flows), D15
 (post card and pipeline strip), D17 (one page, in-memory state), D18 (sample generated
@@ -693,6 +767,11 @@ baseline since D37; the owner flips any with a decision.</p>
 <td>R35</td>
 <td>No health, location-track, biometric, Article 9 or financial-hardship data is stored about a person; when one arrives in a message it is answered, not recorded; no audience, slot or score uses one (D35)</td>
 <td>policy <code>sensitive</code></td>
+</tr>
+<tr>
+<td>R37</td>
+<td>Retention runs on the advertiser's own numbers, never on a discount: a managing or paying advertiser at risk gets one drafted touch per signal, approved by the operator (renewal reminders may run under an earned auto-approval); kept and lost are logged and feed the churn rate; the retention lever is ranked against acquisition every week</td>
+<td>Retention screen; <code>retentionFor</code>, <code>retentionDrafts</code>; economics <code>churnSaved</code></td>
 </tr>
 <tr>
 <td>R36</td>
@@ -855,7 +934,7 @@ baseline since D37; the owner flips any with a decision.</p>
 </tr>
 <tr>
 <td><a href="decisions.html"><code>04-decisions.md</code></a></td>
-<td>D1–D40</td>
+<td>D1–D41</td>
 </tr>
 <tr>
 <td><a href="05-layout-specs.html"><code>05-layout-specs.md</code></a>, <code>design-system.html</code>, <code>layouts.html</code></td>
@@ -883,11 +962,11 @@ baseline since D37; the owner flips any with a decision.</p>
 </tr>
 <tr>
 <td><a href="executive.html"><code>15-executive-summary.md</code></a></td>
-<td>one page for the decision-maker: the product in SCQA, three numbers, the decision</td>
+<td>one page: the classified media owner's situation, the product, how they use it, the benefits, the proof, the decision</td>
 </tr>
 <tr>
 <td><a href="business-case.html"><code>22-business-case.md</code></a></td>
-<td>the product's cost side, the pricing hypothesis, economics by customer count, the customer's case, the first customer's instance</td>
+<td>the value for the media owner: what the product computes, the funnel and rates, the first customer's worked example, sensitivity, costs</td>
 </tr>
 <tr>
 <td><a href="documentation-audit.html"><code>21-documentation-audit.md</code></a></td>

@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>business.direct — implementation prerequisites (after the client accepts; not needed for the presentation) — business.direct docs</title>
+<title>business.direct — first-customer onboarding: what the ClassScout instance provides, and when — business.direct docs</title>
 <link rel="stylesheet" href="../assets/tokens.css">
 <style>/* business.direct — documentation pages on the product tokens (GDS roles, teal accent). */
 :root{--ground:var(--gds-bg-canvas,#f8fafc);--card:var(--gds-bg-surface,#fff);--ink:var(--gds-text-body,#111827);--text:#1f2937;--muted:var(--gds-text-meta,#64748b);--accent:var(--gds-brand-accent,#0f766e);--accent-deep:var(--gds-brand-accent-strong,#115e59);--line:var(--gds-border-card,#e2e8f0);--line-soft:#eef2f7;--note:var(--gds-brand-accent-tint,#e6f4f2)}
@@ -38,15 +38,16 @@ footer{margin-top:56px;padding-top:18px;border-top:1px solid var(--line);font-si
 <body>
 <div class="wrap">
 <nav class="docnav" aria-label="Project documentation"><span class="docnav-brand">business.direct · docs</span><a href="index.html">Overview</a><a href="brief.html">Brief</a><a href="research.html">Research</a><a href="research-2.html">Research II</a><a href="research-3.html">Research III</a><a href="research-4.html">Research IV</a><a href="research-5.html">Research V</a><a href="research-6.html">Research VI</a><a href="audit.html">Audit</a><a href="sources.html">Sources</a><a href="design-system.html">Design system</a><a href="layouts.html">Layouts</a><a href="05-layout-specs.html">Layout specs</a><a href="decisions.html">Decisions</a><a href="build-log.html">Build log</a><a href="gate.html">Gate</a><a href="client-asks.html">Register of asks</a><a href="implementation-prerequisites.html" aria-current=page>Prerequisites</a><a href="business-logic.html">Business logic</a><a href="ssot.html">SSOT</a><a href="architecture.html">Architecture</a><a href="technical-design.html">Technical design</a><a href="implementation-plan.html">Plan</a><a href="system-blueprint.html">System blueprint</a><a href="documentation-audit.html">Documentation audit</a><a href="token-map.html">Token map</a><a href="executive.html">Executive summary</a><a href="business-case.html">Business case</a><a href="analytics.html">Analytics</a><a href="audit-swot.html">Audit · SWOT</a><a href="policy-framework.html">Policy framework</a></nav>
-<header><p class="eyebrow">Calvus · business.direct · project documentation</p><h1>business.direct — implementation prerequisites (after the client accepts; not needed for the presentation)</h1></header>
+<header><p class="eyebrow">Calvus · business.direct · project documentation</p><h1>business.direct — first-customer onboarding: what the ClassScout instance provides, and when</h1></header>
 <p class="notice" role="note"><b>This documentation set is being replaced (audit D40).</b> business.direct is a standalone product — the one-person sales and marketing team; ClassScout is its first customer. The <a href="presentation.html">presentation</a>, the <a href="executive.html">executive summary</a> and the <a href="business-case.html">business case</a> are written for the product; most other pages still read as the first instance's project until the <a href="documentation-audit.html">transformation programme</a> replaces them.</p>
-<p><em>Written 2026-09-19 on the owner's instruction: the open items are tasks for the day the
-client accepts the prototype, not for the presentation or the planning. Nothing in this
-list is required to present, to plan, or to build the prototype further — every item is
-defaulted or sampled in the prototype and declared as such on the screen. The register of
-asks (<a href="client-asks.html"><code>08-client-asks.md</code></a>) keeps the history; this document is the checklist the
-implementation starts from.</em></p>
-<h2>1. Before the first real message can be sent (legal and policy)</h2>
+<p><em>The onboarding inputs of the first customer's instance (Your Field NYC), grouped by the
+feature each unblocks. Nothing here is needed to present or to plan the product: every item is
+defaulted or sampled in the prototype and declared on the screen, and the policy gate blocks
+the feature until the field is set. Every later customer has the same list with its own values
+— it is the product's onboarding checklist (<a href="policy-framework.html"><code>18-responsible-data-policy-framework.md</code></a> §4)
+filled for one site. Written 2026-09-19; reframed 2026-09-20 (D41). The closed register of asks
+(<a href="client-asks.html"><code>08-client-asks.md</code></a>) is history.</em></p>
+<h2>1. Before the first real message from this instance (legal and policy)</h2>
 <div class="tbl"><table>
 <thead>
 <tr>
@@ -60,7 +61,7 @@ implementation starts from.</em></p>
 <tbody>
 <tr>
 <td>P-1 (ask #15)</td>
-<td>The platform's registered <strong>postal address</strong> for every provider e-mail</td>
+<td>The site's registered <strong>postal address</strong> for every advertiser e-mail</td>
 <td>ClassScout</td>
 <td>CAN-SPAM requires a physical address; the site publishes only info@classscout.ai</td>
 <td>the policy gate's "provider e-mail" row; the sequences</td>
@@ -88,7 +89,7 @@ implementation starts from.</em></p>
 </tr>
 </tbody>
 </table></div>
-<h2>2. Before Release 1b (the keyed half — data and writes from the platform)</h2>
+<h2>2. Before the keyed features (data and writes from the site)</h2>
 <div class="tbl"><table>
 <thead>
 <tr>
@@ -137,7 +138,7 @@ implementation starts from.</em></p>
 </tr>
 </tbody>
 </table></div>
-<h2>3. To confirm at acceptance (assumptions the prototype runs on; a "yes" closes each)</h2>
+<h2>3. Instance settings the prototype assumes (a "yes" at onboarding closes each)</h2>
 <div class="tbl"><table>
 <thead>
 <tr>
@@ -159,14 +160,14 @@ implementation starts from.</em></p>
 </tr>
 <tr>
 <td>P-12 (ask #5)</td>
-<td>Money: the base machine bundled by the platform; providers buy reach (featured listing, camp placement, discovery profile — sample prices); the conversations line at 0 (bundled) or priced</td>
+<td>The site's advertising products and prices (featured listing, camp placement, discovery profile — sample prices today) and whether a conversations service line is priced (0 = included)</td>
 <td>economics inputs; provider today</td>
 </tr>
 </tbody>
 </table></div>
-<h2>4. What the presentation needs from the owner today</h2>
-<p>Nothing. The prototype, the presentation and the plan stand on defaults and samples that
-are declared on every screen. The decision to present is the only decision open.</p>
+<h2>4. What the presentation needs today</h2>
+<p>Nothing. The prototype, the presentation and the plan stand on defaults and samples that are
+declared on every screen; the gate shows what each missing field blocks.</p>
 <footer>Source: <code>business-direct/docs/19-implementation-prerequisites.md</code> · rendered by <code>docs/build.py</code>.</footer>
 </div>
 </body>

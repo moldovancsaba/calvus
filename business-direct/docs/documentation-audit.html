@@ -49,9 +49,12 @@ every document from the first commit; the programme starts from the premise, not
 Written 2026-09-20 (D40). Nothing in this document is executed yet: §7 lists the decisions that
 are the owner's, and §8 the phases that follow the go.</em></p>
 <h2>1. The premise that was wrong, and how it spread</h2>
-<p><strong>What the product is.</strong> business.direct is a standalone product: the one-person sales and
-marketing team — automation for anybody who is their whole department, with a human gate.
-ClassScout (Your Field NYC) is its first paying user.</p>
+<p><strong>What the product is</strong> (the owner's definition, 2026-09-20): a standalone product for
+<strong>classified media owners</strong> to manage their businesses — it generates content and delivers it to
+different media, and it runs the B2B sales process: contact, acquire, and reduce churn — with the
+owner's economics (what a listing costs to advertise, an advertiser's LTV and CAC, the cost to
+acquire visitors, all costs and incomes) delivered <strong>in the product as a service</strong>. ClassScout
+(Your Field NYC) is the example that makes the persona concrete and the first buyer.</p>
 <p><strong>What the documentation assumed.</strong> From the first commit (<code>d47e6bd</code>, 2026-09-19) the brief
 opened with "The owner's own product family … Your Field NYC"; D11 the same day made "Your Field
 NYC the first client"; from then on every document — brief, research, audit, business logic,
@@ -876,7 +879,41 @@ thrown away; it is re-homed under the product.</p>
  the first customer ─────────▶ 11 instance: ClassScout        their platform measured (02), sources (03), onboarding inputs (from 19), the pilot's SWOT, personas — everything instance-specific in one place
  history ────────────────────▶    decisions · build log · gate · this audit · the closed register of asks
 </code></pre>
-<h2>7. Decisions that are the owner's (the programme cannot start without Q1–Q3; Q4–Q6 shape it)</h2>
+<h2>7. The owner's answers (2026-09-20) and what they settled</h2>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>#</th>
+<th>Question</th>
+<th>The owner's answer</th>
+<th>Consequence</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Q1</td>
+<td>who owns Your Field / ClassScout</td>
+<td><em>not the question</em>: ClassScout is an example of the client persona — a classified media owner — and the first buyer/user of the product</td>
+<td>the product definition is the classified media owner; ownership is irrelevant to the documents; every "the owner's own product" claim about Your Field is removed</td>
+</tr>
+<tr>
+<td>Q2</td>
+<td>price and developer rate</td>
+<td><em>"why on earth should I care about developer costs?"</em> — the value, the ROI, listing price, LTV, CAC, visitor acquisition cost, all costs and incomes must be <strong>in the product as a service, for the user</strong></td>
+<td>the developer rate and build-cost illustration are deleted; <code>22</code> is rewritten as the media owner's value with the Economics screen as the product; the product's own price is not a document (the owner sets it when they choose)</td>
+</tr>
+<tr>
+<td>Q3–Q6</td>
+<td>identifiers, definition, consolidation, go-to-market</td>
+<td><em>no sense</em> — not the owner's questions</td>
+<td>decided here: identifiers stay the first instance's with the mapping in SSOT §1a; the product definition is <a href="brief.html"><code>00-brief.md</code></a> in the owner's words; consolidation proceeds without asking; go-to-market is out of scope</td>
+</tr>
+</tbody>
+</table></div>
+<p>The owner's standing instruction: business.direct is built anyway — deliver the product
+prototype, the presentation, how it works, how it serves its customers, how the customers use
+it, and what benefits they have. Everything below is executed in that order.</p>
+<h3>7a. The original questions (kept for the record)</h3>
 <div class="tbl"><table>
 <thead>
 <tr>
@@ -925,7 +962,16 @@ thrown away; it is re-homed under the product.</p>
 </tr>
 </tbody>
 </table></div>
-<h2>8. The programme (after the go; every phase ends in a gate-clean push and a review)</h2>
+<h2>8. The programme (executed from the owner's answers; every phase ends in a gate-clean push)</h2>
+<p><strong>Done 2026-09-20 (D41), same day as the answers:</strong> the product definition (<code>00</code>); the presentation,
+executive summary and value document rewritten for the classified media owner; the product layer
+in the SSOT (§1a) with the instance mapping; the business logic's parties and the <strong>retention</strong>
+job (R37) — the third job the owner named and the documentation had not had; retention built
+into the prototype (screen, department, recommendations, the economics lever and tile, product
+role labels); the first-customer onboarding file reframed; the register of asks closed; the
+economics document retitled as the department's specification; the pilot SWOT labelled; the
+architecture, design, blueprint and plan given the retention job and the mapping sentence.
+Remaining phases follow.</p>
 <div class="tbl"><table>
 <thead>
 <tr>
@@ -938,27 +984,27 @@ thrown away; it is re-homed under the product.</p>
 <tbody>
 <tr>
 <td><strong>A — truth</strong></td>
-<td>the claims register (F8): every figure in the presentation, <code>15</code>, <code>22</code> and <code>01g</code> opened at its source and marked P / A / assumption / hypothesis / owner-stated; class-D rows fixed or removed; the ownership question answered; the estimate labelled</td>
+<td>the claims register (F8): every figure in the presentation, <code>15</code>, <code>22</code> and <code>01g</code> opened at its source and marked P / A / assumption / owner-stated; class-D rows fixed or removed</td>
 <td>no "unverified" in the top layer; the gate reads the register</td>
-<td>Q1</td>
+<td>—</td>
 </tr>
 <tr>
 <td><strong>B — the root</strong></td>
-<td>product definition (F2) in the owner's words; product-market research VII (F1); the product's business model and go-to-market (F3) with the decided price; the product SWOT (A6)</td>
-<td>the owner signs the definition; every later document cites it</td>
-<td>Q2, Q4, Q6</td>
+<td>product definition (F2) — <strong>done</strong>; product-market research VII (F1): who the classified media owners are, what they run today, what they pay for the pieces; the product SWOT (A6)</td>
+<td>every later document cites the definition</td>
+<td>—</td>
 </tr>
 <tr>
 <td><strong>C — the rules in product terms</strong></td>
-<td>business logic + SSOT merged and rewritten (A3, A4); the first instance as the worked example; E1–E2 fixed; the prototype's copy generalised and, per Q3, identifiers renamed</td>
-<td>every rule R1–R36 reads without "family" or "provider" except in the instance example; the prototype shows the instance's names as labels</td>
-<td>Q3</td>
+<td>the product layer and the parties — <strong>done</strong> (SSOT §1a, business logic §1, §2c, R37; E1–E2 fixed; the prototype's roles labelled); the remaining sections of the business logic rewritten with the product term first and the instance's word second</td>
+<td>every rule reads in product terms with the instance as the example</td>
+<td>—</td>
 </tr>
 <tr>
 <td><strong>D — the product's legal position</strong></td>
-<td>the legal file (F4, F5): ToS, privacy policy, DPA, sub-processor list, the children's-data stance, the counsel question list; the customer's policy record and gate (18) folded in</td>
+<td>the legal file (F4, F5): the product as processor for the media owner — terms, privacy policy, DPA, sub-processor list, the children's-data stance, the counsel question list; the customer's policy record and gate (18) folded in</td>
 <td>counsel has the list; every legal sentence carries the disclaimer once</td>
-<td>Q1</td>
+<td>—</td>
 </tr>
 <tr>
 <td><strong>E — delivery</strong></td>
@@ -980,9 +1026,8 @@ thrown away; it is re-homed under the product.</p>
 </tr>
 </tbody>
 </table></div>
-<p>Order of work after the go: A and B together (a week of research and verification), then C, D
-and E in parallel, then F, then G. Nothing is published as "done" until F; until then the live set
-carries a banner on every page: <em>this set is being replaced — the product is defined in
+<p>Order of work: A and B together, then the rest of C, D and E, then F, then G. Until F the live
+set carries a banner on every page: <em>this set is being replaced — the product is defined in
 <code>presentation.html</code> and <a href="business-case.html"><code>22-business-case.md</code></a>; the rest still reads as the first instance's
 project</em>.</p>
 <h2>9. What this audit itself gets wrong if unread</h2>

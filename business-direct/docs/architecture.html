@@ -65,7 +65,9 @@ SSOT's (<a href="ssot.html"><code>10-ssot.md</code></a>).</em></p>
          │ approves, edits, reads             │ invitation, replies, apply-to-manage
    Operator (platform)                 Providers (e-mail, phone, their own view)
 </code></pre>
-<p>Three actors, one gate: nothing reaches a family, a provider or a channel without an
+<p>The product's terms are media owner · advertiser · visitor · listing (SSOT §1a); the drawings
+and identifiers use the first instance's words (platform · provider · family · card) because the
+system was specified on its data — one instance's labels, not the product's roles. Three actors, one gate: nothing reaches a family, a provider or a channel without an
 approval (R1). The platform stays the system of record for providers and families;
 business.direct owns drafts, approvals, pipeline state, knowledge files, consent records
 and the message log.</p>
@@ -268,6 +270,12 @@ provider's knowledge files + card → provider view → approve / edit → outbo
 channel + the family's inbox thread; reply time logged. A family's "ask about a trial"
 is a platform message to a saved provider. Comments and DMs on published posts arrive by
 the channel adapter's webhook → drafted reply with the listing link → operator approves.</p>
+<p><strong>Retention (D41).</strong> Nightly <code>retention</code> job: for every managing or upgraded provider, read the
+signals (entitlement renewal within 14 days, no card change in 30 days, an enquiry waiting &gt; 48 h,
+no saves in 30 days) → one draft per signal from the provider's own numbers → queue <em>waiting</em>
+(renewal reminders under the department's earned auto-approval) → outbox → message log with
+<code>kind: retain</code>; <code>entitlement.renewed</code> / <code>subscription.deleted</code> events close the loop as kept /
+lost → <code>metrics_daily.churn</code>.</p>
 <p><strong>Upgrades.</strong> Provider chooses a product → Stripe Checkout (the platform's account) →
 webhook → <code>entitlements</code> row → stage <em>upgraded</em> → the platform connector sets the
 featured / camp / profile flag on the card.</p>

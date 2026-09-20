@@ -520,6 +520,25 @@ export async function onWorkerCallback(p) {                                     
   await db.media_jobs.updateOne({_id: p.job_id}, {$set: {state: 'done'}});
 }
 </code></pre>
+<h3>4.12b <code>retention</code> — reduce churn (D41, R37)</h3>
+<p>Owns nothing new (drafts of kind <code>retain</code> in <code>drafts</code>; kept / lost in <code>events</code>). Reads
+<code>provider_state</code>, <code>entitlements</code>, <code>providers_cache</code>, <code>enquiries</code>, <code>families_prefs.saved</code>. Exposes
+the job <code>retention</code> (nightly 03:30) and <code>atRisk(platformId)</code> for the screen and the recommendations.</p>
+<pre><code class="language-ts">export async function retention(platformId) {
+  for (const st of await pipeline.byStage(platformId, ['managing', 'upgraded'])) {
+    const p = await catalogue.get(st.provider_id), ent = await db.entitlements.findOne({provider_id: p.id, until: null});
+    const signals = [];
+    if (ent &amp;&amp; daysUntil(ent.renews_at) &lt;= 14) signals.push({kind: 'renewal', at: ent.renews_at});
+    if (daysSince(p.updatedAt) &gt;= 30) signals.push({kind: 'stale'});
+    if (await db.enquiries.exists({provider_id: p.id, state: 'waiting', received_at: {$lt: hoursAgo(48)}})) signals.push({kind: 'unanswered'});
+    if ((await db.events.countDocuments({name: 'save', provider_id: p.id, at: {$gt: daysAgo(30)}})) === 0) signals.push({kind: 'no_saves'});
+    for (const s of signals)
+      if (!(await db.drafts.exists({kind: 'retain', provider_id: p.id, 'props.signal': s.kind, state: {$in: ['waiting', 'scheduled']}})))
+        await drafting.draft('retain', {platformId, provider_id: p.id, signal: s, numbers: await results.forProvider(p.id, 90)});   // the advertiser's own numbers; never a discount (R13, R37)
+  }
+}
+// kept / lost: onStripeEvent → events 'retention.kept' (renewed after a retain touch within 30 d) | 'retention.lost' (subscription.deleted); metrics() rolls them into churn and churnSaved
+</code></pre>
 <h3>4.13 <code>billing</code> — products, Stripe Checkout, entitlements (ADR-9, R32 cooling-off)</h3>
 <p>Owns <code>products</code>, <code>entitlements</code>. Exposes the provider's <code>checkout(productId)</code> Server Action, the
 webhook handler <code>onStripeEvent</code>, <code>cancelWithinCoolingOff</code>.</p>
@@ -694,6 +713,12 @@ query's fallback, <code>events (platform_id, at)</code>, <code>media_jobs (state
 <td>all providers</td>
 </tr>
 <tr>
+<td><code>30 3 * * *</code></td>
+<td><code>retention</code></td>
+<td>retention</td>
+<td>managing and upgraded providers</td>
+</tr>
+<tr>
 <td><code>0 3 * * *</code></td>
 <td><code>retention</code> + <code>tokens</code></td>
 <td>analytics / channels</td>
@@ -715,7 +740,7 @@ query's fallback, <code>events (platform_id, at)</code>, <code>media_jobs (state
 </table></div>
 <p>Event-driven (no cron): <code>alerts</code> (from <code>sync</code>'s <code>provider.new_session</code>), <code>draft-answers</code> (from the
 webhook routes), <code>autoApprove</code> (after a draft is created), <code>entitlements</code> (Stripe webhook),
-<code>clips</code> (upload → worker → callback). Thirteen schedules, under Pro's forty.</p>
+<code>clips</code> (upload → worker → callback). Fourteen schedules, under Pro's forty.</p>
 <p>The cron route:</p>
 <pre><code class="language-ts">export async function GET(req, {params}) {
   if (req.headers.get('authorization') !== `Bearer ${CRON_SECRET}`) return new Response('no', {status: 401});
@@ -997,6 +1022,10 @@ rules map (<a href="business-logic.html"><code>09-business-logic.md</code></a>) 
 <tr>
 <td><code>S.products</code>, <code>S.bought</code></td>
 <td><code>billing</code></td>
+</tr>
+<tr>
+<td><code>retentionFor()</code>, <code>retentionDrafts()</code>, <code>S.retained</code>, the Retention screen</td>
+<td><code>retention</code></td>
 </tr>
 <tr>
 <td>generated pages screen</td>

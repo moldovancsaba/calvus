@@ -1,59 +1,63 @@
 # business.direct — brief
 
-*Stage 0 of the prototyping standard (`PROTOTYPING.md`). Written 2026-09-19; revised 2026-09-20
-for the product (D39): business.direct is a standalone product, ClassScout its first customer.
-Everything here is what the owner said, what the first customer's platform exposes, and what
-the two reference videos show — nothing else.*
+*The product definition. Written 2026-09-19; rewritten 2026-09-20 in the owner's definition
+(D41): a standalone product for classified media owners — content generated and delivered to
+every medium, the B2B sales process (contact, acquire, reduce churn), the owner's economics as a
+service; ClassScout is the persona example and the first buyer. Everything here is what the
+owner said, what the first customer's site exposes, and what the two reference videos show.*
 
 ## The product
 
-**business.direct is a standalone product**: sales and marketing automation for the one-person
-operator — the founder, owner or marketer who is the whole department. Seven departments as
-automations (research and intelligence, content, distribution, creative, leads and
-conversations, reviews and reputation, results), the operator's knowledge as plain files, two
-flows at the front door (marketing that brings the audience in, sales that works every prospect
-through a pipeline), conversations answered within the hour, a human gate on everything, one
-loop that ranks the next dollar, a Monday recap. Sold as a subscription per operator instance;
-every instance carries its own responsible-data policy record (D32), so the second customer is a
-record and a connector, not a rebuild.
+**business.direct is a standalone product for classified media owners** — listing platforms,
+directories, marketplaces of local businesses — to run the three jobs their business never
+stops needing: **marketing** (content generated from the listings and delivered to every
+medium, so visitors come and come back), **B2B sales** (every listed business contacted and
+acquired as a paying advertiser through a lawful pipeline) and **retention** (churn seen weeks
+ahead and answered with a touch). It runs as departments the owner approves, on the owner's
+own data and plain-text knowledge files, with a human gate on everything, one loop that ranks
+the next dollar, and **the owner's economics as a service** — what a listing sells for, what an
+advertiser costs to win and is worth, what a visitor costs to bring in, what churn costs and
+retention keeps, all costs and incomes, on one screen. Every site is an instance with its own
+policy record; the second site is a record and a connector.
 
-## The customer
+## The customer persona
 
-Anyone who is their own sales and marketing team: a marketplace founder with thousands of
-listings and nobody to sell to the businesses on them or publish to the people who use them; a
-studio owner; a consultant; an agency of one. The pain is the same — enquiries unanswered,
-follow-up unsent, content unpublished, numbers a feeling — and so is the machine.
+The classified media owner: one person (or a very small team) who gathered the supply,
+built the site, and is now the whole sales and marketing department for both sides of it —
+thousands of listings not yet sold to the businesses on them, visitors who save and hear
+nothing, advertisers who leave for reasons visible weeks earlier. The pain and the machine are
+the same whether the listings are children's activities, sports clubs, jobs or second-hand goods.
 
-## The first customer
+## The example and first customer
 
-**ClassScout**, operator of **Your Field NYC** (getyourfield.com; contact info@classscout.ai)
-— "youth sports discovery, starting with your neighborhood": a children's-activity marketplace
-in New York with families on one side, providers on the other, a catalogue gathered by a
-pipeline with thousands of listings still to publish, and a founder who is the sales and
-marketing team. It is the **first platform business.direct runs on** (D11) and the first paying
-user. The prototype runs on 253 of its providers pulled from its public API — the demo's data,
-not the customer's situation. *Most én sportolok!* (sport.doneisbetter.com, Hungary) is a
-reference connector that proves the second instance; job portals and classifieds are the same
-pattern, other instances.
+**ClassScout**, operator of **Your Field NYC** (getyourfield.com; contact info@classscout.ai) —
+"youth sports discovery, starting with your neighborhood": a children's-activity directory in
+New York, families on one side, activity providers on the other, a catalogue gathered by a
+pipeline with thousands of listings still to publish, one founder as the department. ClassScout
+is the **example** every document uses to make the persona concrete and the **first buyer** of
+the product. In the product's terms its visitors are "families" and its advertisers are
+"providers" — the product shows each site's own words. The prototype runs on 253 of its
+providers pulled from its public API: the demo's data, not the size of the customer's business.
+*Most én sportolok!* (sport.doneisbetter.com) is a second directory pulled through the same
+connector shape to prove the second instance.
 
 **business.direct is a sibling of DiscountDirect** (D5): DiscountDirect retains a web shop's
-customers; business.direct is the operator's sales and marketing team.
+customers; business.direct sells, fills and keeps a classified media site.
 
 ## The problem
 
-One person cannot run seven departments. In a small business the money is lost exactly where
-one person cannot be: 62 % of calls go unanswered and 78 % of customers buy from the first
-responder; a lead is 21× more likely to qualify in the first five minutes; the second and
-third touch — where reply rates triple — never get sent; the material that exists (offers,
-dates, news, footage) is never published; the numbers are a feeling (research I, II). The tools
-on sale each do one job and leave the person to be the team.
+One person cannot run marketing, sales and retention for thousands of listings. The money is
+lost where nobody is: listings nobody contacted earn nothing; the second and third touch —
+where reply rates triple — never get sent; enquiries the site forwards die unanswered (a lead
+is 21× more likely to qualify in the first five minutes); the material that exists (offers,
+dates, news, footage) is never published; a paying advertiser leaves for reasons visible weeks
+earlier; the numbers are a feeling (research I, II). The tools on sale each do one job.
 
-The first customer shows the shape on a marketplace: prospects are the listed providers,
-the audience is families, and one founder is both departments for both sides. Measured on the
-public API (2026-09-19) for the demo: of 253 providers pulled, 0 manage their page, 130 have an
-e-mail and 181 a phone, 83 next sessions and 72 trial policies sit on the cards unpublished —
-numbers that describe the demo's data, not the size of the customer's catalogue, which is far
-larger. The customer's own case is in `22-business-case.md` §7.
+The first customer shows the shape: measured on its public API (2026-09-19) for the demo, of
+253 providers pulled, 0 manage their page, 130 have an e-mail and 181 a phone, 83 next
+sessions and 72 trial policies sit unpublished, 0 reviews and 28 prices are on the cards —
+the demo's data; the customer's catalogue is far larger. The owner's own case, as the product
+computes it, is `22-business-case.md`.
 
 **Where the shape came from.** The two videos the owner shared show the target: **the one-person sales and
 marketing team** — an orchestrator over departments (research and intelligence, content,
@@ -68,18 +72,18 @@ A clickable prototype in English with **three views** (D2, D10):
 
 | View | Who | What they see |
 |---|---|---|
-| Platform | Your Field's operator | the machine across every provider: automations, audiences, the approval queue, the intelligence dashboard, integrations |
-| Provider | a listed business after claiming its card | its own one-person team: conversations with families, campaigns, the platform's reach products, results, knowledge files, departments |
-| Family | a parent using Your Field | what arrives: the weekly "near you" digest, saved-item alerts, a provider's trial offer or announcement, and the controls over channel and frequency |
+| Media owner ("Platform" on Your Field) | the classified media owner | the machine across every listing: marketing, sales, retention, the approval queue, economics, the recap, integrations, the policy record |
+| Advertiser ("Provider" on Your Field) | a listed business after claiming its page | its own one-person team: conversations with visitors, campaigns, the site's advertising products, results, knowledge files |
+| Visitor ("Family" on Your Field) | a person using the site | what arrives: the weekly digest, saved-listing alerts, an advertiser's offer, and the controls over channel and frequency |
 
-Two flows are the front door (D14), and four automations sit behind them (D3):
+Three jobs: two flows at the front door (D14) and retention behind the pipeline (D41):
 
 | Flow | What the machine does | Who approves |
 |---|---|---|
 | **B2C social** | Turns listings, updates and news into posts for Instagram, Facebook, TikTok and X — a provider spotlight, "this week in Park Slope", a new-camp announcement, a parent tip — scheduled, drafted (AI optional), and published only after approval, each with the link back to the listing page. Goal: new families on the platform. | platform operator |
 | **B2B sales** | Works every listed provider through a pipeline — identified → contacted → replied → applied → managing → upgraded — with e-mail and phone from the card, sequences with human sign-off, the reply inbox, and the upsell ("and more": featured listing, camp placement, campaigns). Goal: providers who manage their own listing and buy more. | platform operator; the provider on their side |
 
-Behind them: **family digests and alerts**, **generated landing pages and SEO** (activity ×
+**Retention (reduce churn)**: every managing advertiser watched for a renewal, a stale page, an unanswered enquiry, a listing that stopped surfacing; a touch drafted from its own numbers; kept and lost logged into the churn rate (D41). Behind them: **family digests and alerts**, **generated landing pages and SEO** (activity ×
 neighbourhood × age), **provider campaigns** (trial classes, open spots, announcements,
 registration — built from the card, approved by the provider, sent by the family's
 preferences under the cap; phase 2, D22), **upgrades** (the platform's own products, D21)

@@ -1,118 +1,98 @@
-# business.direct — business case
+# business.direct — the value for the media owner: the economics as a service
 
-*For the owner (the product's economics) and for a prospective customer (what an operator pays
-and gets). What this page answers: what the product costs to build and run, what it can be sold
-for, how many customers pay it back, what a customer gains against the price, and what the first
-customer's instance already shows. Every input is marked **measured**, **benchmark** (sourced) or
-**hypothesis** (ours, the owner's decision). Formulas are the ones the product's Economics screen
-computes (`16-analytics-and-unit-economics.md`); run costs are the vendors' own prices read on
-2026-09-20 (`01g-research-real-system.md` §15). Written 2026-09-20, rewritten the same day for the
-product, not the first customer (D39).*
+*For a classified media owner. What this page answers: what business.direct computes for you,
+on your numbers, every night — what a listing sells for and earns, what an advertiser costs to
+win and is worth, what a visitor costs to bring in and is worth, what churn costs and retention
+keeps, all costs and incomes, and where the next dollar goes — and what it read on the first
+customer's listings. Every input is marked **measured** (from the site's own data), **benchmark**
+(sourced) or **assumption** (a placeholder on the screen until your data replaces it). The
+formulas are the ones the product's Economics screen computes (`16-analytics-and-unit-economics.md`
+is the department's specification). Written 2026-09-20 (D41). ClassScout (Your Field NYC) is
+the worked example.*
 
-## 1. The product in one line
+## 1. What the product computes for the owner
 
-Sales and marketing automation for the one-person operator: seven departments as automations,
-the operator's knowledge as plain files, a human gate on everything, one loop that ranks the next
-dollar. Sold as a subscription per operator instance. First paying customer: ClassScout
-(Your Field NYC).
-
-## 2. The market the customer is in (benchmarks)
-
-| Fact | Figure | Source |
+| Question the owner asks | The product's answer | Inputs |
 |---|---|---|
-| Enquiries a small business loses | 62 % of calls unanswered; 78 % of customers buy from the first responder; 21× qualification within five minutes vs thirty | research I §2 |
-| Follow-up | reminders cut no-shows 29 %; a three-touch sequence in order lifts reply rates from ~3 % to ~10 % | research I §3, II §5 |
-| What the operator pays today for pieces of the job | scheduler $29–200/mo; clip cutter $15–29; avatar video $29; design $15; Yelp Receptionist (answering only) $99; stacked ≈ $200–400/mo, and the person still runs the department | research II §4, III |
-| The incumbents' bet on the same job | Yelp bought Hatch (AI lead management) for $270 M, January 2026 | research III |
+| **What does a listing sell for?** | the site's advertising products and their prices — featured placement, category placement, discovery profile — with the plan ladder every advertiser is on | the site's products (Your Field: $49 / month, $149 / season, $29 / month — sample until the site sets them) |
+| **What does an advertiser cost to win?** | **CAC** = outbound cost (touches, calls, operator minutes, tooling) ÷ new managing advertisers; and ÷ new paying advertisers | touches per prospect, cost per touch, cost per call, operator minutes per approval and rate, tooling |
+| **What is an advertiser worth?** | **LTV** = monthly contribution (price × margin) ÷ monthly churn; **payback** = CAC ÷ contribution; healthy at LTV : CAC ≥ 3 and payback ≤ 12 months | price, margin, churn |
+| **What does a visitor cost to bring in?** | cost per new visitor from content = content stack ÷ (posts × new visitors per post); compared with what an engaged visitor is worth | posts per week, new visitors per post (measured once a channel is connected), content stack |
+| **What is a visitor worth?** | value delivered to advertisers per engaged visitor per year (enquiries × conversion × the advertiser's revenue per conversion) and the site's share of it (capture, measured as placements bought within 30 days of a delivered result) | engaged share, enquiries per year, conversion, revenue per conversion, capture, referrals |
+| **What does churn cost, what does retention keep?** | LTV at risk = advertisers at risk × LTV; expected kept = at risk × share kept by a touch × LTV; keeping costs a touch, replacing costs a CAC | churn, share kept (measured from the retention log) |
+| **Where does the next dollar go?** | four levers ranked weekly by expected value per dollar: one more touch to the unreplied, the call list, a week of content, retention touches to the at-risk | all of the above |
+| **What is the plan?** | twelve months of managing and paying advertisers, monthly revenue (placements + any priced service line), cost and cumulative cash — every month follows the inputs | the funnel rates, churn, price |
+| **Which numbers are real?** | every tile says measured / benchmark / assumption; a rate flips to measured at 100 observations | the event log |
 
-## 3. What it costs to build and run (the product's cost side)
+## 2. The funnel and its rates (what the owner sees on the sales side)
 
-| Line | Amount | Basis |
+| Stage | Rate to next | Status | Source |
+|---|---|---|---|
+| Listed → reachable | by e-mail, by phone, by website only — from the listings | measured | the site's own data |
+| Reachable → replied | 5.5 % (top quartile); 3.4 % average; 10.7 % top decile | benchmark | research II §5.1 |
+| Replied → applied | 40 % | assumption | — |
+| Applied → managing | 80 % (the site confirms the claim) | assumption | — |
+| Managing → paying within 3 months | 25 % | assumption; SMB activation 35–50 % | research II §2.2 |
+| Paying → churned per month | 5 % (3–7 % range) | benchmark | research II §2.2 |
+| At risk → kept by a retention touch | 30 % | assumption; measured from the retention log | — |
+
+## 3. The worked example — what the product read on the first customer's listings (2026-09-19 pull)
+
+Your Field NYC, 253 providers pulled (the demo's data; the customer's catalogue is far larger):
+130 reachable by e-mail, 73 by phone only, 50 by website only; 0 managing; sample prices $49 /
+$29 / $149 per season.
+
+| The screen says | Value | Reading |
 |---|---|---|
-| Build | **34 developer-weeks** (two developers, nine two-week sprints) + the owner as product lead | `13-implementation-plan.md` §2b |
-| Build cost | 34 × the blended rate per developer-week — **the owner's commercial input**; illustration at $2 500 / $4 000 / $6 000 → **$85 k / $136 k / $204 k** | hypothesis (illustration, not a quote) |
-| Run cost per instance, pilot volume (≤ 300 prospects, ≤ 5 000 audience) | **≈ $50–75 / month** | vendor prices, `01g` §15 |
-| Run cost per instance, sizing target (1 000 prospects, 50 000 audience) | **≈ $280–400 / month** | vendor prices, `01g` §15 |
-| Shared platform cost (Vercel team, monitoring, one worker) | ≈ $30–60 / month regardless of customer count | `01g` §15 |
-| Support and onboarding per customer | the policy record, the connector, the knowledge files: ≈ 2 days at onboarding, ≈ 2 hours a month after | hypothesis |
+| CAC · managing advertiser | ≈ $300 | one quarter of outbound (three touches, the call list, the operator's minutes, $150 tooling) wins ≈ 2 managing advertisers |
+| CAC · paying advertiser | ≈ $1 200 | ≈ 0.6 paying per quarter at the assumed rates |
+| LTV · paying advertiser | $784 | $49 × 80 % margin ÷ 5 % churn |
+| **LTV : CAC** | **0.7** — below the 3 : 1 line | outbound alone, on this pull at sample prices, does not pay for a $49 placement; payback 31 months |
+| Cost per new visitor from content | ≈ $4 | $120 content stack ÷ (5 posts × 1.5 new visitors per post) |
+| Value of an engaged visitor | ≈ $42 a year to the site; ≈ $813 to the advertisers it reaches | 2 enquiries × 40 % conversion × $1 016 (Project Play: family spend per child per sport); 5 % capture |
+| Advertisers at risk (sample cohort) | 4 of 7 managing | LTV at risk ≈ $3 100; expected kept at 30 % ≈ $940 |
+| Next dollar | retention touches, then one more e-mail touch | keeping an advertiser costs a touch; replacing one costs the CAC above |
 
-## 4. What it sells for (the pricing hypothesis — the owner decides)
+**What turns it — three inputs on the same screen.** (a) **Scale**: at 1 000 listings the
+tooling is spread and CAC falls under $400 (LTV : CAC ≈ 2, payback ≈ 10 months). (b) **Price for
+the category**: a placement mix at $89 with annual plans (3 % churn) makes LTV $2 373 (≈ 2 at
+253 listings, ≈ 6 at 1 000). (c) **Count the demand side**: the same outbound also produces
+managing advertisers who answer enquiries and visitors who come back — at 5 000 visitors and
+15 % engaged, ≈ $610 k a year of advertiser revenue flows through the site's introductions, the
+number the placements are priced against. The owner chooses which; the product shows each.
 
-| Tier | Includes | Price / month | Run cost / month | Contribution |
+## 4. Sensitivity (what moves the owner's answer most)
+
+| Input | −50 % | Default | +50 % / top decile | Effect |
 |---|---|---|---|---|
-| **Machine** | all departments with template drafting, the pipeline, conversations, the human gate, the recap, one instance | **$249** | ≈ $60 | ≈ $190 (76 %) |
-| **Machine + AI** | + AI drafting per department, the clip engine, generated media with credentials | **$449** | ≈ $90 (AI and transcription) | ≈ $360 (80 %) |
-| **Second instance** | another brand or platform on the same account | + $149 | ≈ $60 | ≈ $90 |
+| Reply rate | 2.75 % | 5.5 % | 10.7 % | LTV : CAC 0.35 → 0.7 → 1.3 at 253 listings; the largest lever the product controls (propensity order, the visitor's enquiry as a touch, the call list) |
+| Applied → managing → paying | 0.5× | 40 · 80 · 25 % | 1.5× | linear in CAC; measured from the first cohort |
+| Monthly churn | 7 % | 5 % | 3 % | LTV $560 → $784 → $1 307; retention and annual plans are the levers |
+| Placement price | $29 | $49 | $89 | LTV $464 → $784 → $1 424; the owner's pricing decision |
+| Listings | 253 | 253 | 1 000 | CAC $1 200 → < $400; fixed tooling spread |
+| Share kept by a retention touch | 15 % | 30 % | 45 % | expected kept ≈ $470 → $940 → $1 400 on the sample cohort |
 
-Anchors: the tools replaced ($200–400 stacked), Yelp Receptionist ($99 for one job), the
-category's SMB SaaS norms. Churn hypothesis 5 % / month (SMB SaaS 3–7 %), annual plans at 3 %.
+## 5. The costs the owner carries, as the product counts them
 
-## 5. The product's economics by customer count (hypothesis prices, pilot run cost)
-
-| Customers (Machine + AI mix 50/50) | MRR | Contribution / month | Months to recover a $136 k build | Months to recover $85 k |
-|---|---|---|---|---|
-| 1 (the first customer) | $349 | ≈ $275 − $45 shared ≈ $230 | — (a reference customer, not a business) | — |
-| 5 | $1 745 | ≈ $1 330 | ≈ 100 | ≈ 64 |
-| 20 | $6 980 | ≈ $5 450 | ≈ 25 | ≈ 16 |
-| 50 | $17 450 | ≈ $13 700 | ≈ 10 | ≈ 6 |
-| 100 | $34 900 | ≈ $27 500 | ≈ 5 | ≈ 3 |
-
-Reading: the product is a business at **twenty to fifty customers**; the first customer is the
-reference case that proves the machine on real data and pays the run cost. The unit is
-attractive — a 76–80 % contribution margin on a subscription that replaces a $200–400 stack and
-a person's week — and the customer acquisition cost for the product itself is the open number:
-the product's own machine will run its own sales flow (research II §5's sequences, the same
-pipeline), and the first measured CAC is one cohort away.
-
-## 6. The customer's case (what an operator pays and gets)
-
-| Line | Value | Basis |
+| Line | Default | Status |
 |---|---|---|
-| Pays | $249 or $449 / month | §4 |
-| Replaces | $200–400 / month of single-job tools | research II §4 |
-| Time | seven departments' output for ≈ 20 minutes of approvals a day (≈ 7 h / month) against the ≈ 10–20 h / week a one-person operator spends on sales and marketing — or does not spend | hypothesis; the product measures the operator's hours from its own events (audit A10) |
-| Response time | every enquiry drafted within a minute, answered within the hour; the single largest revenue lever in a small business | research I §2 |
-| Pipeline | every prospect scored and touched three times in order; reply rate benchmark 5.5 % top-quartile, 10.7 % top-decile | research II §5 |
-| Content | the week's posts, digest and clips from material that already exists; cost per new audience member measured per post | research II §3 |
-| Control and exposure | nothing sent without approval; one policy record and a gate; an audit trail on every send | `18-responsible-data-policy-framework.md` |
+| E-mail touches | 3 per prospect at $0.05 | assumption; sending domain and warm-up in tooling |
+| Call tasks | $5 per phone-only prospect (operator minutes) | assumption |
+| Operator time | 2 minutes per approval at $40 / hour; measured on the screen as "operator hours this week"; falls as departments earn auto-approval | measured in use |
+| Sales tooling | $150 / month (sending domain, warm-up, enrichment) | assumption |
+| Content stack | $120 / month (clip engine, image, audio) | assumption; research II §4 |
+| The product's run cost per site | ≈ $50–75 / month at pilot volume; ≈ $280–400 at 1 000 listings and 50 000 visitors | vendors' prices, `01g` §15 — carried by the product, not the owner |
 
-Break-even for the customer: one enquiry a month answered that would otherwise have been lost,
-in any category where a customer is worth more than the subscription.
+## 6. What the owner provides, and when
 
-## 7. The first customer's instance (measured; the worked example)
+At onboarding: the site's API and channels; the policy record (jurisdictions, consent per
+channel, the cap, the postal address, the privacy-policy clauses); the knowledge files. Then, as
+they exist: the site's analytics events (visitors, sign-ups with source, saves, opens,
+bookings), the real placement prices, a write key for claims and card flags, and one pilot
+advertiser's numbers — each replaces an assumption on the screen. For the first customer the
+list is `19-implementation-prerequisites.md`.
 
-ClassScout runs Your Field NYC, a children's-activity marketplace: prospects are the listed
-providers, the audience is families. The prototype runs on 253 of their providers pulled from
-their public API (their catalogue is far larger; the pull is the demo's data, not their
-situation). What the product's own model already told them, at their sample prices ($49 ARPA,
-5 % churn) and the benchmark reply rate: outbound e-mail alone to that pull returns **0.7** of its
-cost (CAC ≈ $1 200 against LTV $784; payback 31 months), and it turns positive as their catalogue
-grows (≈ 2 at 1 000 prospects), as their products are priced for a category where families spend
-$1 016 per child (≈ 6), or as the machine is treated as their growth engine (a new family for
-≈ $4 against ≈ $6 of expected value; ≈ $610 k a year of provider revenue through their
-introductions at 5 000 families). Every input is on their Economics screen; the first measured
-numbers replace the assumptions at the end of sprint 2. That the product tells its customer this
-is the product.
+## 7. The decision
 
-## 8. Sensitivity (the product)
-
-| Input | Pessimistic | Hypothesis | Optimistic | Effect |
-|---|---|---|---|---|
-| Price (Machine) | $149 | $249 | $349 | contribution per customer $90 → $190 → $290 |
-| Churn / month | 7 % | 5 % | 3 % | customer lifetime 14 → 20 → 33 months; LTV at $249: $2 700 → $3 800 → $6 300 |
-| Run cost per instance | $120 | $60 | $40 | margin 52 % → 76 % → 84 % |
-| Customers at month 12 | 5 | 20 | 50 | build recovered in ≈ 100 / 25 / 10 months (at $136 k) |
-| Product CAC | $2 000 | $1 000 | $500 | LTV : CAC at hypothesis 1.9 → 3.8 → 7.6 |
-
-## 9. What we need, and when
-
-From the owner: the price (from the hypothesis), the developer rate, the go. From the first
-customer, after the decision: a postal address for the legal footer, one privacy-policy
-paragraph (drafted by us), the policy record confirmed, counsel's wording; later their analytics
-events, a write key and a pilot prospect (`19-implementation-prerequisites.md`).
-
-## 10. The decision
-
-Build the product and run it for the first customer. The product's own first cohort — reply
-rate, enquiries answered, audience per post, the operator's hours — is measured by the machine
-itself from sprint 2 and replaces every hypothesis on this page.
+Use the product; let the first cohort replace the assumptions. The screen is the argument: it
+shows the owner's numbers, says which are real, and ranks the next dollar every week.

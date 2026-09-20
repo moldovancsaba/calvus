@@ -146,6 +146,7 @@ cannot turn SMS on without a consent row.
 | `draft-answers` | on inbound webhook | enquiry or comment → draft from the knowledge files and the card within a minute (R14) |
 | `entitlements` | webhook-driven | Stripe events → entitlements → stage → card flag through the connector |
 | `clips` | on upload | refuse unless the provider confirmed written parental consent for a recording that shows children (R30); run `MediaAdapter.clips`; captions on every clip (R34); each clip becomes a post draft with `media.kind = 'real'` and the consent record attached |
+| `retention` | nightly 03:30 | for every managing / upgraded provider: signals (renewal ≤ 14 d, card unchanged 30 d, enquiry waiting > 48 h, no saves 30 d) → one `retain` draft per signal from the provider's own numbers; kept / lost from entitlement events → `metrics_daily.churn` (R37) |
 | `score` | nightly 02:30 | propensity per provider → `provider_state.score`; the sequence and call-list jobs read it (ADR-13) |
 | `pattern-guard` | on every draft | refuse a draft with a banned pattern (false urgency, scarcity, confirmshaming, pressure on a stated vulnerability) or inaccessible output (R32, R34, R36) |
 | `policy-gate` | before every send and draft; at schema validation | refuse a feature whose policy fields are missing; write the policy basis (clause, consent, cap) on every message (R26) |

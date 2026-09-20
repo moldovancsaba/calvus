@@ -66,7 +66,12 @@ upgrade business at today's catalogue size.
 | A17 | minor | The reference instance (Hungary) needs consent for named-person e-mail addresses; the connector interface has no "address is a named person" flag. | research I §8b; `PlatformConnector` | add `contactKind: 'role' \| 'person'` to the connector's provider record; the sequence job skips `person` addresses without consent on EU instances |
 | A18 | minor | "Never delete a provider's stage history" (business logic §9) has no store: `provider_state` holds one stage; the history lives in `events`. Fine in production, but the prototype's drawer shows no history. | technical design §2 | the drawer lists the last three `stage.changed` events with who and why |
 
-## 3. SWOT of the planned service
+## 3. SWOT of the first instance's deployment (Your Field NYC)
+
+*Note (D41): this SWOT was written when the documentation treated the first instance as the
+project; it reads as the pilot's SWOT — the first customer's market, competitors (Sawyer) and
+catalogue. The product's own market and competitors are the subject of research round VII in
+the transformation programme (`21-documentation-audit.md` §8, phase B).*
 
 ### Strengths (internal, evidenced)
 

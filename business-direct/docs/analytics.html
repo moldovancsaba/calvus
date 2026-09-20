@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>business.direct — analytics and unit economics — business.direct docs</title>
+<title>business.direct — the Economics department: the media owner's analytics and unit economics (specification) — business.direct docs</title>
 <link rel="stylesheet" href="../assets/tokens.css">
 <style>/* business.direct — documentation pages on the product tokens (GDS roles, teal accent). */
 :root{--ground:var(--gds-bg-canvas,#f8fafc);--card:var(--gds-bg-surface,#fff);--ink:var(--gds-text-body,#111827);--text:#1f2937;--muted:var(--gds-text-meta,#64748b);--accent:var(--gds-brand-accent,#0f766e);--accent-deep:var(--gds-brand-accent-strong,#115e59);--line:var(--gds-border-card,#e2e8f0);--line-soft:#eef2f7;--note:var(--gds-brand-accent-tint,#e6f4f2)}
@@ -38,9 +38,10 @@ footer{margin-top:56px;padding-top:18px;border-top:1px solid var(--line);font-si
 <body>
 <div class="wrap">
 <nav class="docnav" aria-label="Project documentation"><span class="docnav-brand">business.direct · docs</span><a href="index.html">Overview</a><a href="brief.html">Brief</a><a href="research.html">Research</a><a href="research-2.html">Research II</a><a href="research-3.html">Research III</a><a href="research-4.html">Research IV</a><a href="research-5.html">Research V</a><a href="research-6.html">Research VI</a><a href="audit.html">Audit</a><a href="sources.html">Sources</a><a href="design-system.html">Design system</a><a href="layouts.html">Layouts</a><a href="05-layout-specs.html">Layout specs</a><a href="decisions.html">Decisions</a><a href="build-log.html">Build log</a><a href="gate.html">Gate</a><a href="client-asks.html">Register of asks</a><a href="implementation-prerequisites.html">Prerequisites</a><a href="business-logic.html">Business logic</a><a href="ssot.html">SSOT</a><a href="architecture.html">Architecture</a><a href="technical-design.html">Technical design</a><a href="implementation-plan.html">Plan</a><a href="system-blueprint.html">System blueprint</a><a href="documentation-audit.html">Documentation audit</a><a href="token-map.html">Token map</a><a href="executive.html">Executive summary</a><a href="business-case.html">Business case</a><a href="analytics.html" aria-current=page>Analytics</a><a href="audit-swot.html">Audit · SWOT</a><a href="policy-framework.html">Policy framework</a></nav>
-<header><p class="eyebrow">Calvus · business.direct · project documentation</p><h1>business.direct — analytics and unit economics</h1></header>
+<header><p class="eyebrow">Calvus · business.direct · project documentation</p><h1>business.direct — the Economics department: the media owner's analytics and unit economics (specification)</h1></header>
 <p class="notice" role="note"><b>This documentation set is being replaced (audit D40).</b> business.direct is a standalone product — the one-person sales and marketing team; ClassScout is its first customer. The <a href="presentation.html">presentation</a>, the <a href="executive.html">executive summary</a> and the <a href="business-case.html">business case</a> are written for the product; most other pages still read as the first instance's project until the <a href="documentation-audit.html">transformation programme</a> replaces them.</p>
-<p><em>Written 2026-09-19 on the owner's directive: "we will need ROI calculations and planning for
+<p><em>This is the specification of the Economics screen — the owner's economics as a service (D41): the
+value it delivers is <a href="business-case.html"><code>22-business-case.md</code></a>. Written 2026-09-19 on the owner's directive: "we will need ROI calculations and planning for
 CAC and LTV for B2B clients, marketing value for the avid users, and all the other analytics
 information that helps the system deliver data-driven marketing decisions." This is the
 model the </em>Economics<em> screen (<code>../index.html?view=platform&amp;screen=economics</code>) computes; the
@@ -180,6 +181,11 @@ the one number a connected channel measures (research II §3).</p>
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>Retention touches to the at-risk advertisers (D41)</td>
+<td>at risk × (cost per touch + operator minutes)</td>
+<td>at risk × share kept (<code>churnSaved</code>, 30 % assumed, measured from the retention log) × LTV</td>
+</tr>
 <tr>
 <td>One more e-mail touch to the unreplied</td>
 <td>unreplied × cost per touch</td>

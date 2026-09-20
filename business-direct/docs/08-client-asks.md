@@ -1,6 +1,9 @@
-# business.direct — the register of asks
+# business.direct — the register of asks (closed; history)
 
-*Every item that once needed the owner or the client, with its state. Since 2026-09-19 (D34)
+*Closed 2026-09-20 (D41): business.direct is a product, so there are no "client asks" — the
+first customer's onboarding inputs are `19-implementation-prerequisites.md`, the owner's
+decisions are `04-decisions.md`. Kept as history. Every item that once needed the owner or the
+first customer, with its state. Since 2026-09-19 (D34)
 the open items are **implementation prerequisites** — tasks for the day the client accepts —
 and live in `19-implementation-prerequisites.md`; none is required for the presentation or
 the planning. Nothing on this page is open for the presentation.*

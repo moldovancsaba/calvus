@@ -11,9 +11,12 @@ are the owner's, and §8 the phases that follow the go.*
 
 ## 1. The premise that was wrong, and how it spread
 
-**What the product is.** business.direct is a standalone product: the one-person sales and
-marketing team — automation for anybody who is their whole department, with a human gate.
-ClassScout (Your Field NYC) is its first paying user.
+**What the product is** (the owner's definition, 2026-09-20): a standalone product for
+**classified media owners** to manage their businesses — it generates content and delivers it to
+different media, and it runs the B2B sales process: contact, acquire, and reduce churn — with the
+owner's economics (what a listing costs to advertise, an advertiser's LTV and CAC, the cost to
+acquire visitors, all costs and incomes) delivered **in the product as a service**. ClassScout
+(Your Field NYC) is the example that makes the persona concrete and the first buyer.
 
 **What the documentation assumed.** From the first commit (`d47e6bd`, 2026-09-19) the brief
 opened with "The owner's own product family … Your Field NYC"; D11 the same day made "Your Field
@@ -205,7 +208,19 @@ thrown away; it is re-homed under the product.
  history ────────────────────▶    decisions · build log · gate · this audit · the closed register of asks
 ```
 
-## 7. Decisions that are the owner's (the programme cannot start without Q1–Q3; Q4–Q6 shape it)
+## 7. The owner's answers (2026-09-20) and what they settled
+
+| # | Question | The owner's answer | Consequence |
+|---|---|---|---|
+| Q1 | who owns Your Field / ClassScout | *not the question*: ClassScout is an example of the client persona — a classified media owner — and the first buyer/user of the product | the product definition is the classified media owner; ownership is irrelevant to the documents; every "the owner's own product" claim about Your Field is removed |
+| Q2 | price and developer rate | *"why on earth should I care about developer costs?"* — the value, the ROI, listing price, LTV, CAC, visitor acquisition cost, all costs and incomes must be **in the product as a service, for the user** | the developer rate and build-cost illustration are deleted; `22` is rewritten as the media owner's value with the Economics screen as the product; the product's own price is not a document (the owner sets it when they choose) |
+| Q3–Q6 | identifiers, definition, consolidation, go-to-market | *no sense* — not the owner's questions | decided here: identifiers stay the first instance's with the mapping in SSOT §1a; the product definition is `00-brief.md` in the owner's words; consolidation proceeds without asking; go-to-market is out of scope |
+
+The owner's standing instruction: business.direct is built anyway — deliver the product
+prototype, the presentation, how it works, how it serves its customers, how the customers use
+it, and what benefits they have. Everything below is executed in that order.
+
+### 7a. The original questions (kept for the record)
 
 | # | Question | Why it is yours | What changes with the answer |
 |---|---|---|---|
@@ -216,21 +231,31 @@ thrown away; it is re-homed under the product.
 | Q5 | **Consolidation to eleven documents** with redirects from every old URL | thirty files become eleven; history stays | the whole set |
 | Q6 | **The product's go-to-market**: does business.direct sell itself through its own machine (its own pipeline of operators), through the calvus network, through partners — or is the first year the first customer only? | the product's CAC, the roadmap's order, the second instance's date | the business case §5, the roadmap |
 
-## 8. The programme (after the go; every phase ends in a gate-clean push and a review)
+## 8. The programme (executed from the owner's answers; every phase ends in a gate-clean push)
+
+**Done 2026-09-20 (D41), same day as the answers:** the product definition (`00`); the presentation,
+executive summary and value document rewritten for the classified media owner; the product layer
+in the SSOT (§1a) with the instance mapping; the business logic's parties and the **retention**
+job (R37) — the third job the owner named and the documentation had not had; retention built
+into the prototype (screen, department, recommendations, the economics lever and tile, product
+role labels); the first-customer onboarding file reframed; the register of asks closed; the
+economics document retitled as the department's specification; the pilot SWOT labelled; the
+architecture, design, blueprint and plan given the retention job and the mapping sentence.
+Remaining phases follow.
+
 
 | Phase | Deliverable | Acceptance | Depends on |
 |---|---|---|---|
-| **A — truth** | the claims register (F8): every figure in the presentation, `15`, `22` and `01g` opened at its source and marked P / A / assumption / hypothesis / owner-stated; class-D rows fixed or removed; the ownership question answered; the estimate labelled | no "unverified" in the top layer; the gate reads the register | Q1 |
-| **B — the root** | product definition (F2) in the owner's words; product-market research VII (F1); the product's business model and go-to-market (F3) with the decided price; the product SWOT (A6) | the owner signs the definition; every later document cites it | Q2, Q4, Q6 |
-| **C — the rules in product terms** | business logic + SSOT merged and rewritten (A3, A4); the first instance as the worked example; E1–E2 fixed; the prototype's copy generalised and, per Q3, identifiers renamed | every rule R1–R36 reads without "family" or "provider" except in the instance example; the prototype shows the instance's names as labels | Q3 |
-| **D — the product's legal position** | the legal file (F4, F5): ToS, privacy policy, DPA, sub-processor list, the children's-data stance, the counsel question list; the customer's policy record and gate (18) folded in | counsel has the list; every legal sentence carries the disclaimer once | Q1 |
+| **A — truth** | the claims register (F8): every figure in the presentation, `15`, `22` and `01g` opened at its source and marked P / A / assumption / owner-stated; class-D rows fixed or removed | no "unverified" in the top layer; the gate reads the register | — |
+| **B — the root** | product definition (F2) — **done**; product-market research VII (F1): who the classified media owners are, what they run today, what they pay for the pieces; the product SWOT (A6) | every later document cites the definition | — |
+| **C — the rules in product terms** | the product layer and the parties — **done** (SSOT §1a, business logic §1, §2c, R37; E1–E2 fixed; the prototype's roles labelled); the remaining sections of the business logic rewritten with the product term first and the instance's word second | every rule reads in product terms with the instance as the example | — |
+| **D — the product's legal position** | the legal file (F4, F5): the product as processor for the media owner — terms, privacy policy, DPA, sub-processor list, the children's-data stance, the counsel question list; the customer's policy record and gate (18) folded in | counsel has the list; every legal sentence carries the disclaimer once | — |
 | **E — delivery** | architecture + blueprint merged (B1); the roadmap by capability with the pilot track, owners, dates, governance, risk triggers (A9, F7); the operating model (F6) | a developer and a customer-success person can each act from their file | C |
 | **F — consolidation** | the eleven-document set; every old URL a redirect; the evidence base with its index; the instance file for ClassScout (A1, A2, A7, G); reading paths on the index; the hub rows | thirty files → eleven + history; no broken or Hungarian URL; the renderer computes every count | A–E |
 | **G — the gate and the standard** | gate checks: banned framing phrases ("the client accepts", "proposal for", instance terms in the top layer), the claims register's statuses, no live counts in history files; `PRODUCT.md` (F9) so the next product starts from the right premise | `GATE: CLEAN` with the new checks; the standard names the product stages | F |
 
-Order of work after the go: A and B together (a week of research and verification), then C, D
-and E in parallel, then F, then G. Nothing is published as "done" until F; until then the live set
-carries a banner on every page: *this set is being replaced — the product is defined in
+Order of work: A and B together, then the rest of C, D and E, then F, then G. Until F the live
+set carries a banner on every page: *this set is being replaced — the product is defined in
 `presentation.html` and `22-business-case.md`; the rest still reads as the first instance's
 project*.
 

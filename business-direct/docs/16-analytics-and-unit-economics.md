@@ -1,6 +1,7 @@
-# business.direct — analytics and unit economics
+# business.direct — the Economics department: the media owner's analytics and unit economics (specification)
 
-*Written 2026-09-19 on the owner's directive: "we will need ROI calculations and planning for
+*This is the specification of the Economics screen — the owner's economics as a service (D41): the
+value it delivers is `22-business-case.md`. Written 2026-09-19 on the owner's directive: "we will need ROI calculations and planning for
 CAC and LTV for B2B clients, marketing value for the avid users, and all the other analytics
 information that helps the system deliver data-driven marketing decisions." This is the
 model the *Economics* screen (`../index.html?view=platform&screen=economics`) computes; the
@@ -106,6 +107,7 @@ Every week the system ranks three actions by **expected LTV gained per dollar**:
 
 | Action | Cost | Expected gain |
 |---|---|---|
+| Retention touches to the at-risk advertisers (D41) | at risk × (cost per touch + operator minutes) | at risk × share kept (`churnSaved`, 30 % assumed, measured from the retention log) × LTV |
 | One more e-mail touch to the unreplied | unreplied × cost per touch | unreplied × reply rate × 42 % (share of replies after step one) × apply × managing × upgrade × LTV |
 | Call the phone-only providers | phone-only × cost per call | phone-only × ½ reached × reply rate × 3 × apply × managing × upgrade × LTV |
 | A week of the content engine | content stack ÷ 4.33 | posts per week × families per post × expected value of a new family |

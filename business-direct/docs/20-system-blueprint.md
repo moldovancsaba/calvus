@@ -561,6 +561,29 @@ export async function onWorkerCallback(p) {                                     
 }
 ```
 
+### 4.12b `retention` — reduce churn (D41, R37)
+
+Owns nothing new (drafts of kind `retain` in `drafts`; kept / lost in `events`). Reads
+`provider_state`, `entitlements`, `providers_cache`, `enquiries`, `families_prefs.saved`. Exposes
+the job `retention` (nightly 03:30) and `atRisk(platformId)` for the screen and the recommendations.
+
+```ts
+export async function retention(platformId) {
+  for (const st of await pipeline.byStage(platformId, ['managing', 'upgraded'])) {
+    const p = await catalogue.get(st.provider_id), ent = await db.entitlements.findOne({provider_id: p.id, until: null});
+    const signals = [];
+    if (ent && daysUntil(ent.renews_at) <= 14) signals.push({kind: 'renewal', at: ent.renews_at});
+    if (daysSince(p.updatedAt) >= 30) signals.push({kind: 'stale'});
+    if (await db.enquiries.exists({provider_id: p.id, state: 'waiting', received_at: {$lt: hoursAgo(48)}})) signals.push({kind: 'unanswered'});
+    if ((await db.events.countDocuments({name: 'save', provider_id: p.id, at: {$gt: daysAgo(30)}})) === 0) signals.push({kind: 'no_saves'});
+    for (const s of signals)
+      if (!(await db.drafts.exists({kind: 'retain', provider_id: p.id, 'props.signal': s.kind, state: {$in: ['waiting', 'scheduled']}})))
+        await drafting.draft('retain', {platformId, provider_id: p.id, signal: s, numbers: await results.forProvider(p.id, 90)});   // the advertiser's own numbers; never a discount (R13, R37)
+  }
+}
+// kept / lost: onStripeEvent → events 'retention.kept' (renewed after a retain touch within 30 d) | 'retention.lost' (subscription.deleted); metrics() rolls them into churn and churnSaved
+```
+
 ### 4.13 `billing` — products, Stripe Checkout, entitlements (ADR-9, R32 cooling-off)
 
 Owns `products`, `entitlements`. Exposes the provider's `checkout(productId)` Server Action, the
@@ -697,13 +720,14 @@ query's fallback, `events (platform_id, at)`, `media_jobs (state)`, `sync_runs (
 | `0 17 * * 0` / `0 18 * * 0` | `digest build` / `digest send` | families | all families with picks |
 | `0 2 * * *` | `metrics` | analytics | yesterday |
 | `30 2 * * *` | `score` | pipeline | all providers |
+| `30 3 * * *` | `retention` | retention | managing and upgraded providers |
 | `0 3 * * *` | `retention` + `tokens` | analytics / channels | report TTL; refresh Meta long-lived tokens < 10 days from expiry |
 | `0 4 * * 1` | `delivery-audit` | analytics | weekly R33 report |
 | `0 */6 * * *` | `health-rollup` | ops | outbox lag, dead rows, webhook failures → `/api/health` |
 
 Event-driven (no cron): `alerts` (from `sync`'s `provider.new_session`), `draft-answers` (from the
 webhook routes), `autoApprove` (after a draft is created), `entitlements` (Stripe webhook),
-`clips` (upload → worker → callback). Thirteen schedules, under Pro's forty.
+`clips` (upload → worker → callback). Fourteen schedules, under Pro's forty.
 
 The cron route:
 
@@ -885,6 +909,7 @@ rules map (`09-business-logic.md`) can be checked against the test names by the 
 | `S.family` (kids as ages, prefs, saved, smsConsent), Stop | `families` |
 | `S.media` (consent, uploads, adapters) | `media` + the worker |
 | `S.products`, `S.bought` | `billing` |
+| `retentionFor()`, `retentionDrafts()`, `S.retained`, the Retention screen | `retention` |
 | generated pages screen | `pages` |
 | `econ()`, `S.econ` (24 inputs), `S.experiment`, `S.attributed` | `analytics` |
 | `recommend()`, `runSafe`, Home | `recommend` |

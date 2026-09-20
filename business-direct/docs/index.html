@@ -57,12 +57,12 @@ Built to the prototyping standard (<code>PROTOTYPING.md</code>); this index is t
 <tr>
 <td>presentation</td>
 <td><code>presentation.html</code></td>
-<td>The product's presentation, standalone, in the customer's language: the one-person operator and their week, what doing it alone costs, the question, the product, the value and the pricing hypothesis, the first customer as proof, responsible by design, delivery, the decision; the demo as an appendix (<code>bemutato.html</code> redirects here — a live URL is never deleted)</td>
+<td>The product's presentation for a classified media owner: the customer and their week, what they lose, the question, the product (marketing · B2B sales · retention, the advertiser's own team, the human gate, the loop), how the owner uses it, the benefits with the economics in the product, the first customer as proof, delivery, the decision; the demo as an appendix (<code>bemutato.html</code> redirects here)</td>
 </tr>
 <tr>
-<td>00 brief</td>
+<td>00 product definition</td>
 <td><a href="brief.html"><code>00-brief.md</code></a></td>
-<td>The product, the customer, the first customer (ClassScout · Your Field NYC), the problem, the three views and the flows, what is real, where it stands</td>
+<td>business.direct in the owner's words: for classified media owners — content to every medium, B2B sales (contact, acquire, reduce churn), the owner's economics as a service; the persona; ClassScout as the example and first buyer; the problem; what is built; what is real</td>
 </tr>
 <tr>
 <td>01 research</td>
@@ -107,7 +107,7 @@ Built to the prototyping standard (<code>PROTOTYPING.md</code>); this index is t
 <tr>
 <td>04 decisions</td>
 <td><a href="decisions.html"><code>04-decisions.md</code></a></td>
-<td>D1–D40</td>
+<td>D1–D41</td>
 </tr>
 <tr>
 <td>05 design</td>
@@ -132,7 +132,7 @@ Built to the prototyping standard (<code>PROTOTYPING.md</code>); this index is t
 <tr>
 <td>08 register of asks</td>
 <td><a href="client-asks.html"><code>08-client-asks.md</code></a></td>
-<td>Every item that once needed the owner, with its state: none open for the presentation; the rest are prerequisites; four closed</td>
+<td>Closed (D41) — history: every item that once needed the owner or the first customer, with where it went</td>
 </tr>
 <tr>
 <td>09 business logic</td>
@@ -157,7 +157,7 @@ Built to the prototyping standard (<code>PROTOTYPING.md</code>); this index is t
 <tr>
 <td>13 plan</td>
 <td><a href="implementation-plan.html"><code>13-implementation-plan.md</code></a></td>
-<td>seven milestones, nine two-week sprints with an acceptance test each and a sprint-0 checklist, 65 issues with a Definition of Done, blocked register (the prerequisites), risks, release scope in two halves</td>
+<td>seven milestones, nine two-week sprints with an acceptance test each and a sprint-0 checklist, 66 issues with a Definition of Done, blocked register (the prerequisites), risks, release scope in two halves</td>
 </tr>
 <tr>
 <td>14 token map</td>
@@ -167,10 +167,10 @@ Built to the prototyping standard (<code>PROTOTYPING.md</code>); this index is t
 <tr>
 <td>15 executive summary</td>
 <td><a href="executive.html"><code>15-executive-summary.md</code></a></td>
-<td>One page for the decision-maker: the one-person department, what doing it alone costs, the question, the product, the three numbers (price and margin, the build, the first customer), the decision (D39)</td>
+<td>One page: the classified media owner's situation and complication, the question, the product, how the owner uses it, the benefits, the proof, the decision (D41)</td>
 </tr>
 <tr>
-<td>16 analytics</td>
+<td>16 economics department</td>
 <td><a href="analytics.html"><code>16-analytics-and-unit-economics.md</code></a></td>
 <td>CAC / LTV / payback for providers, the marketing value of an avid family, content ROI, the next-dollar rule, the metrics tree, events and attribution, rules R16–R19; what is real vs assumed (D26)</td>
 </tr>
@@ -195,14 +195,14 @@ Built to the prototyping standard (<code>PROTOTYPING.md</code>); this index is t
 <td>The deep audit of all thirty files by error class (premise, vocabulary, assumption, unverified claim, contradiction, gap, sprawl) with file-level evidence; what survives; the scorecard; the eleven-document target state; the six owner decisions; the seven-phase transformation programme (D40)</td>
 </tr>
 <tr>
-<td>22 business case</td>
+<td>22 value</td>
 <td><a href="business-case.html"><code>22-business-case.md</code></a></td>
-<td>The product's business case: the market, the cost to build and run, the pricing hypothesis, economics by customer count, the customer's case, the first customer's instance as the worked example, sensitivity, what we need, the decision (D39)</td>
+<td>The value for the media owner — the economics as a service: what the product computes (listing price, advertiser CAC and LTV, visitor cost and value, churn and retention, the next dollar, the plan), the funnel and rates, the first customer's worked example, sensitivity, the costs the owner carries (D41)</td>
 </tr>
 <tr>
-<td>19 prerequisites</td>
+<td>19 first-customer onboarding</td>
 <td><a href="implementation-prerequisites.html"><code>19-implementation-prerequisites.md</code></a></td>
-<td>What the implementation needs from ClassScout after acceptance — before the first send, before Release 1b, to confirm at acceptance — not required for the presentation or the planning (D34)</td>
+<td>The ClassScout instance's onboarding inputs by the feature each unblocks — before the first message, before the keyed features, the instance settings to confirm; nothing needed for the presentation (D34, D41)</td>
 </tr>
 </tbody>
 </table></div>
@@ -398,9 +398,19 @@ band-aids. Every file was read and classed by the kind of error; the audit names
 unverified vendor figures and A-grade hero numbers, the gaps a product needs (its own legal
 position, market, business model, operating model, roadmap), and a seven-phase programme with
 six decisions that are the owner's. Every rendered page now carries a replacement notice.</p>
-<p><strong>Next.</strong> The owner answers Q1–Q3 (ownership of the first instance, price and rate, code
-identifiers) and confirms the product definition (Q4); phase A (truth) and B (root) start on
-the go.</p>
+<p><strong>2026-09-20 — the product in the owner's words; retention added (D41).</strong> The owner answered:
+a standalone product for classified media owners — content to every medium, B2B sales (contact,
+acquire, reduce churn), the owner's economics in the product as a service; ClassScout the persona
+example and first buyer; developer costs are not the owner's concern. The product definition,
+presentation, executive summary and value document were rewritten accordingly; the product layer
+went into the SSOT with the instance mapping; <strong>retention</strong> — the third job, missing until now —
+was built into the prototype (screen, recommendations, the churn lever and tile, a sample cohort)
+and specified in the rules (R37), the architecture, the design, the blueprint and the plan; the
+onboarding file was reframed and the register of asks closed.</p>
+<p><strong>Next.</strong> The programme's remaining phases (<a href="documentation-audit.html"><code>21-documentation-audit.md</code></a> §8): the claims register
+and source verification (A), product-market research VII and the product SWOT (B), the rest of
+the business logic in product terms (C), the product's legal position (D), owners and dates in
+the plan (E), consolidation (F), the gate rows (G).</p>
 <footer>Source: <code>business-direct/docs/README.md</code> · rendered by <code>docs/build.py</code>.</footer>
 </div>
 </body>

@@ -40,33 +40,36 @@ footer{margin-top:56px;padding-top:18px;border-top:1px solid var(--line);font-si
 <nav class="docnav" aria-label="Project documentation"><span class="docnav-brand">business.direct · docs</span><a href="index.html">Overview</a><a href="brief.html">Brief</a><a href="research.html">Research</a><a href="research-2.html">Research II</a><a href="research-3.html">Research III</a><a href="research-4.html">Research IV</a><a href="research-5.html">Research V</a><a href="research-6.html">Research VI</a><a href="audit.html">Audit</a><a href="sources.html">Sources</a><a href="design-system.html">Design system</a><a href="layouts.html">Layouts</a><a href="05-layout-specs.html">Layout specs</a><a href="decisions.html">Decisions</a><a href="build-log.html">Build log</a><a href="gate.html">Gate</a><a href="client-asks.html">Register of asks</a><a href="implementation-prerequisites.html">Prerequisites</a><a href="business-logic.html" aria-current=page>Business logic</a><a href="ssot.html">SSOT</a><a href="architecture.html">Architecture</a><a href="technical-design.html">Technical design</a><a href="implementation-plan.html">Plan</a><a href="system-blueprint.html">System blueprint</a><a href="documentation-audit.html">Documentation audit</a><a href="token-map.html">Token map</a><a href="executive.html">Executive summary</a><a href="business-case.html">Business case</a><a href="analytics.html">Analytics</a><a href="audit-swot.html">Audit · SWOT</a><a href="policy-framework.html">Policy framework</a></nav>
 <header><p class="eyebrow">Calvus · business.direct · project documentation</p><h1>business.direct — business logic</h1></header>
 <p class="notice" role="note"><b>This documentation set is being replaced (audit D40).</b> business.direct is a standalone product — the one-person sales and marketing team; ClassScout is its first customer. The <a href="presentation.html">presentation</a>, the <a href="executive.html">executive summary</a> and the <a href="business-case.html">business case</a> are written for the product; most other pages still read as the first instance's project until the <a href="documentation-audit.html">transformation programme</a> replaces them.</p>
-<p><em>Written 2026-09-19 with phase 2 (D21–D23). The machine's rules end to end, in the order
-money and messages move: who the parties are, what each department does, what leaves, who
-approves, what it costs, what stops it. Terms are the SSOT's (<a href="ssot.html"><code>10-ssot.md</code></a>); the decisions
-behind each rule are in <a href="decisions.html"><code>04-decisions.md</code></a>; the prototype (<code>../index.html</code>) implements every
-rule below in memory.</em></p>
+<p><em>Written 2026-09-19 with phase 2 (D21–D23); the product's parties and the retention job added
+2026-09-20 (D41). The product's rules end to end, in the order money and messages move: who
+the parties are, what each department does, what leaves, who approves, what it costs, what
+stops it. The product's terms are </em><em>media owner · advertiser · visitor · listing</em><em> (SSOT §1a);
+the sections below keep the first instance's words — platform · provider · family · card — as
+the worked example, because every rule was built and tested on its data. Terms are the SSOT's
+(<a href="ssot.html"><code>10-ssot.md</code></a>); the decisions behind each rule are in <a href="decisions.html"><code>04-decisions.md</code></a>; the prototype
+(<code>../index.html</code>) implements every rule below in memory.</em></p>
 <h2>1. The three parties and what each gets</h2>
 <div class="tbl"><table>
 <thead>
 <tr>
-<th>Party</th>
+<th>Party (product term · the first instance's word)</th>
 <th>Gets</th>
 <th>Gives</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td><strong>Platform</strong> (Your Field NYC)</td>
+<td><strong>Media owner</strong> · <strong>Platform</strong> (Your Field NYC)</td>
 <td>more families (B2C social), providers who manage their page and buy upgrades (B2B sales), a machine that runs while nobody logs in, one approval queue</td>
 <td>the catalogue, the family accounts and preferences, the channels' authority, the operator's approvals</td>
 </tr>
 <tr>
-<td><strong>Provider</strong> (a listed business)</td>
+<td><strong>Advertiser</strong> · <strong>Provider</strong> (a listed business)</td>
 <td>its own one-person team the day it manages its page: replies, reminders, campaigns to families who saved it, results; a free page and paid reach</td>
 <td>a claim, its knowledge files, its approvals, and — if it upgrades — a monthly or seasonal fee</td>
 </tr>
 <tr>
-<td><strong>Family</strong></td>
+<td><strong>Visitor</strong> · <strong>Family</strong></td>
 <td>what starts near them this week, alerts from providers they saved, offers only from providers they chose, one cap, one Stop</td>
 <td>preferences, and consent where the law requires it</td>
 </tr>
@@ -96,6 +99,18 @@ every rule. Both carry a <em>What is this?</em> panel per screen, a <em>How to u
 <em>Templates</em> — sequences, posts, campaigns, knowledge files and policy records for other
 client types — that copy into the machine with one press. The same rules apply in both;
 Simple changes what is shown, not what may happen (R29).</p>
+<h2>2c. Retention — reduce churn (D41)</h2>
+<p>The third job of B2B sales. Every managing or paying advertiser is watched for the signals that
+precede a cancellation: a renewal due, no session or trial update for 30 days, an enquiry
+unanswered for two days, no saves in 30 days (the listing stopped surfacing). For each signal the
+machine drafts one touch from the advertiser's own numbers — a renewal reminder that arrives with
+results (families saved, enquiries, enrolments), a nudge that names the stale field and the
+families searching that activity in that neighbourhood — never a discount (R13, R37). The
+operator approves; renewal reminders are safe to run from Home and may earn auto-approval (R25);
+at-risk touches need judgement. Kept and lost are logged; the churn rate on the Economics screen
+is measured from that log, and the retention lever (at risk × share kept × LTV against a touch's
+cost) is ranked against acquisition every week (R16). Keeping an advertiser costs a touch;
+replacing one costs a CAC.</p>
 <h2>3. The departments (D6) and what each may do alone</h2>
 <div class="tbl"><table>
 <thead>
@@ -115,6 +130,11 @@ Simple changes what is shown, not what may happen (R29).</p>
 <td>Provider sales (platform)</td>
 <td>draft the sequence and the reply, move stages on events, build the call list</td>
 <td>send, override a stage</td>
+</tr>
+<tr>
+<td>Retention (platform)</td>
+<td>watch renewals, page freshness, enquiry response and saves; draft the touch from the advertiser's numbers; log kept and lost</td>
+<td>send — renewal reminders may earn auto-approval; at-risk touches need judgement (R37)</td>
 </tr>
 <tr>
 <td>Weekly picks (platform → families)</td>
@@ -250,7 +270,8 @@ records the entitlement. No discounting logic — that is DiscountDirect's domai
 <h2>6. Families: preferences, consent, cap, stop</h2>
 <ul>
 <li><strong>Preferences</strong> per channel: weekly picks (e-mail), saved-provider alerts (push), new
-  provider nearby (push), texts from providers (SMS). Default: picks and alerts on.</li>
+  provider nearby (push), texts from providers (SMS). Default: every channel off until the
+  family turns it on (R28); the demo family has picks and alerts on.</li>
 <li><strong>Consent</strong>: SMS only with written consent per provider, stored verbatim with its time
   and source (TCPA). E-mail and push run on preference.</li>
 <li><strong>Cap</strong>: 4 <strong>provider-originated</strong> messages a month per family — campaigns and texts,
@@ -262,7 +283,7 @@ records the entitlement. No discounting logic — that is DiscountDirect's domai
 </ul>
 <h2>6b. Responsible data — for every client (D32)</h2>
 <p>The machine carries one <strong>policy record per instance</strong> and a <strong>gate</strong> that reads it before
-every send and every draft (<a href="policy-framework.html"><code>18-responsible-data-policy-framework.md</code></a>). Ten principles hold
+every send and every draft (<a href="policy-framework.html"><code>18-responsible-data-policy-framework.md</code></a>). Seventeen principles hold
 whatever the client: know who the service is for; a child is an age, never a name (R24); no
 profiling or targeted advertising on a minor's data, not even with consent (R27);
 high-privacy defaults that the person turns on (R28); consent that names channel and sender,
@@ -562,10 +583,16 @@ The model and its events are <a href="analytics.html"><code>16-analytics-and-uni
 <td>R36 no dark pattern, no AI manipulation</td>
 <td>§6c</td>
 </tr>
+<tr>
+<td>R37 retention on the advertiser's own numbers, never a discount; kept and lost logged</td>
+<td>§2c</td>
+<td></td>
+<td></td>
+</tr>
 </tbody>
 </table></div>
 <h2>9. What the machine never does</h2>
-<p>Sends without an approval or a preference; answers a family without the provider's approval; texts without consent; sends past the domain's warm-up cap or bounce limit (R23); sends a provider e-mail without the postal address; shows a child's name to anyone (R24); profiles or targets a minor (R27); cuts a clip that shows a child without written parental consent (R30); claims safety it has not verified (R31); pressures anyone (R32, R36); builds an audience on a protected characteristic (R33); stores a sensitive category (R35); runs a feature its policy record does not allow (R26); publishes generated media unlabelled; generates a person or a child; exceeds the cap; deletes
+<p>Sends without an approval or a preference; discounts to keep an advertiser (R37); answers a family without the provider's approval; texts without consent; sends past the domain's warm-up cap or bounce limit (R23); sends a provider e-mail without the postal address; shows a child's name to anyone (R24); profiles or targets a minor (R27); cuts a clip that shows a child without written parental consent (R30); claims safety it has not verified (R31); pressures anyone (R32, R36); builds an audience on a protected characteristic (R33); stores a sensitive category (R35); runs a feature its policy record does not allow (R26); publishes generated media unlabelled; generates a person or a child; exceeds the cap; deletes
 a provider's stage history; discounts; publishes a generated page with fewer than three
 providers; speaks as an AI to a family or a provider — the product speaks as the platform
 or the provider.</p>

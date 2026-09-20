@@ -1,9 +1,26 @@
 # business.direct — single source of truth
 
-*Written 2026-09-19 after gate 2 and the first build round (D16–D18). Every term the
-other engineering documents use is defined here; where a term is DiscountDirect's, it
-says so (D5). The prototype (`../index.html`, `assets/app.js`) is the reference
-implementation of the enumerations and state machines below.*
+*Written 2026-09-19 after gate 2 and the first build round (D16–D18); the product layer
+added 2026-09-20 (D41). Every term the other documents use is defined here; where a term is
+DiscountDirect's, it says so (D5). **The product's terms** are media owner · advertiser ·
+visitor · listing · instance; **the first instance's words** for them are platform · provider ·
+family · card · Your Field NYC, and because the prototype and the engineering documents were
+written on the first instance's data they use the instance's words in identifiers and
+examples — the mapping in §1a is the rule. The prototype (`../index.html`, `assets/app.js`)
+is the reference implementation of the enumerations and state machines below.*
+
+## 1a. The product layer (D41)
+
+| Product term | Meaning | The first instance's word (Your Field NYC) | In code |
+|---|---|---|---|
+| **Media owner** | the classified media owner who buys and runs business.direct; the operator is the person at the owner who approves | platform | `role = platform`, `platform_id` |
+| **Listing** | a business's page on the site, built by the site from public data; the unit of inventory the owner sells | card | `providers_cache` |
+| **Advertiser** | a listed business — a prospect until it manages its page, a customer once it pays for a placement | provider | `provider_id`, `provider_state` |
+| **Visitor** | a person using the site; an engaged visitor saves, opens the digest and enquires | family | `family_id`, `families_prefs` |
+| **Instance** | one site with its own policy record, connector, sending domain and products | Your Field NYC | `instances`, `policies` |
+| **The three jobs** | marketing (content → media → visitors), B2B sales (contact → acquire), retention (reduce churn) | the two flows (D14) + retention (D41) | departments `social`, `picks`, `pages`, `radar` · `sales` · `retention` |
+| **Placement / advertising product** | what the owner sells to an advertiser — featured, category, discovery profile | reach product | `products`, `entitlements` |
+
 
 ## 1. Glossary
 
@@ -43,6 +60,8 @@ implementation of the enumerations and state machines below.*
 | **Recommendation** | a ranked suggestion computed from state — what, why (with the figure), safe to run or needs judgement — shown on Home and run by one press when safe | `recommend()` |
 | **Template** | a starting point the operator copies into the machine: a sequence, a post or campaign pattern, a knowledge file, a policy record for another client type | `TEMPLATES`, the *Templates* screen |
 | **Help** | the *What is this?* panel per screen and the *How to use* screen | `HELP` |
+| **Retention** | the department that watches every managing advertiser for the signals before a cancellation (a renewal due, a stale page, an unanswered enquiry, a listing that stopped surfacing) and drafts a touch from the advertiser's own numbers; kept and lost are logged (D41) | the Retention screen; `retentionFor()` |
+| **At risk** | a managing or paying advertiser with at least one retention signal this week | Retention watch list; economics tile |
 | **Recap** | the weekly intelligence screen: what moved, by department, the market radar, what needs the operator (D23) | intelligence |
 | **Integration** | a connector that gives the machine hands: the platform API, social channels, e-mail, push, SMS, Google Business Profile, calendar | integrations |
 | **Real / sample** | real = from the platform's public API, never edited; sample = generated for the prototype from real providers and declared as such (D18) | every tile's third line |
@@ -60,7 +79,7 @@ implementation of the enumerations and state machines below.*
 | `integrationTier` | `v1` · `later` (D21) | `S.integrations[].v1` |
 | `channel` (B2C) | `Instagram` · `Facebook` · `TikTok` · `X` (posts); `email` · `push` · `sms` (families) | D14; `post.channels`, `family.prefs` |
 | `channel` (B2B) | `email` · `phone` (from the card) · `website form` (neither on the card) | providers table, "Contact on card" |
-| `department` (platform) | `social` · `sales` · `picks` · `pages` · `radar` | `S.ai` keys |
+| `department` (platform) | `social` · `sales` · `retention` · `picks` · `pages` · `radar` | `S.ai` keys; the Retention screen |
 | `department` (provider) | `conversations` · `reminders` · `campaigns` · `page` | provider today |
 | `integrationState` | `ok` (connected) · `off` (not connected) | `S.integrations` |
 | `claimStatus` (platform's) | `unclaimed` · unset (238 of 253); the platform's own enumeration has more values we have not seen | `providers.json` |
@@ -92,6 +111,7 @@ implementation of the enumerations and state machines below.*
 | **Entitlement** | `providerId`, `productId`, `since`, `billingRef?`, `attributedTo?` (the delivered result that preceded the purchase, Q8) | `S.bought`, `S.attributed` |
 | **AutoApproval** | `owner`, `department`, `cleanWeeks`, `earned` (R25) | `S.auto` |
 | **Recommendation** | `id`, `what`, `why`, `auto` (safe to run), `go?`, `act?` | `recommend()` (D33) |
+| **RetentionTouch** | a `Draft` of kind `retain`: `providerId`, `renewal` (bool), `incoming` (the signals), `draft`, `state`; approving it marks the advertiser kept | `S.replies` with `kind: 'retain'`, `S.retained` |
 
 ## 4. Settings the prototype fixes
 
@@ -108,14 +128,14 @@ implementation of the enumerations and state machines below.*
 | SMS to families | only with written consent per provider | TCPA, research §8 |
 | AI drafts | optional per department; default on for social, sales, radar, provider conversations (and so campaigns); off for picks and pages | D6 |
 | Campaign audience | saved families + nearby families in the age range who turned "new provider nearby" on; the provider cannot widen it | D22, D30 (Q3) |
-| Family defaults | weekly picks on, saved-provider alerts on, nearby off, SMS off until written consent for a provider (the demo family consented on 2026-09-02) | R28, policy `defaults` |
+| Visitor defaults | every channel off until the visitor turns it on (R28); the demo visitor turned picks and alerts on and consented to one provider's SMS on 2026-09-02 | R28, policy `defaults` |
 | Products and prices | the platform's three products; prices sample until the platform sets them | D21 |
 | v1 integrations | platform API, Resend, Instagram + Facebook, platform push | D21 |
 | AI-content marking | drafts carry the ✦ AI badge internally; published content is marked per EU AI Act Art. 50 where it applies (from 2 Aug 2026) | research §7 |
 
 ## 5. Decision register
 
-`04-decisions.md` holds D1–D40. The ones the engineering documents rest on: D2 (three
+`04-decisions.md` holds D1–D41. The ones the engineering documents rest on: D2 (three
 views), D5 (DiscountDirect sibling), D6 (departments, knowledge layer, human-in-the-loop,
 optional AI, dashboard, integrations), D11 (Your Field first), D14 (two flows), D15
 (post card and pipeline strip), D17 (one page, in-memory state), D18 (sample generated
@@ -155,6 +175,7 @@ baseline since D37; the owner flips any with a decision.
 | R33 | No audience, content slot or score is built or optimised on a protected characteristic or a proxy for one; neighbourhood delivery is audited for disparity; housing, employment and credit instances add their market's rules (D35) | policy `protected` |
 | R34 | Every message, page and post meets WCAG 2.2 AA; captions on every clip; alt text on every image (D35) | policy `accessibility` |
 | R35 | No health, location-track, biometric, Article 9 or financial-hardship data is stored about a person; when one arrives in a message it is answered, not recorded; no audience, slot or score uses one (D35) | policy `sensitive` |
+| R37 | Retention runs on the advertiser's own numbers, never on a discount: a managing or paying advertiser at risk gets one drafted touch per signal, approved by the operator (renewal reminders may run under an earned auto-approval); kept and lost are logged and feed the churn rate; the retention lever is ranked against acquisition every week | Retention screen; `retentionFor`, `retentionDrafts`; economics `churnSaved` |
 | R36 | A banned-pattern list is enforced on every draft and screen — no false urgency, no pre-ticked consent, no confirmshaming, no obstruction of Stop or unsubscribe, no hidden cost; an AI draft that scores or exploits a person's vulnerability is refused (D35) | `rules/voice.md`, policy `darkPatterns` |
 | R25 | Approvals may be batched (one decision for a week's real-footage clips) and a department may earn auto-approval after four clean weeks (no edits, no complaints); every auto-sent message is logged and the family can stop it (D30) | `approveClips`, `S.auto` |
 | R16 | The next-dollar ranking runs weekly on measured rates where they exist and on the documented assumption where they do not; the recap says which | `econ()`; `16-analytics…` §4 |
@@ -193,15 +214,15 @@ baseline since D37; the owner flips any with a decision.
 | `01-research.md` | sourced evidence, legal by market |
 | `02-audit.md` | the platform measured, the catalogue's coverage, the videos, DiscountDirect's contribution |
 | `03-sources.md` | real vs sample |
-| `04-decisions.md` | D1–D40 |
+| `04-decisions.md` | D1–D41 |
 | `05-layout-specs.md`, `design-system.html`, `layouts.html` | gates 1 and 2 |
 | `06-build-log.md`, `07-gate.md` | rounds and the measured pass |
 | `08-client-asks.md` | the register of asks, with states |
 | `19-implementation-prerequisites.md` | what the implementation needs after acceptance; nothing for the presentation |
 | `09-business-logic.md` | the rules end to end: parties, flows, departments, campaigns, money, families, law, recap |
 | `16-analytics-and-unit-economics.md` | CAC, LTV, avid value, content ROI, next dollar, metrics tree, events, attribution |
-| `15-executive-summary.md` | one page for the decision-maker: the product in SCQA, three numbers, the decision |
-| `22-business-case.md` | the product's cost side, the pricing hypothesis, economics by customer count, the customer's case, the first customer's instance |
+| `15-executive-summary.md` | one page: the classified media owner's situation, the product, how they use it, the benefits, the proof, the decision |
+| `22-business-case.md` | the value for the media owner: what the product computes, the funnel and rates, the first customer's worked example, sensitivity, costs |
 | `21-documentation-audit.md` | the deep audit by error class; the owner's decisions; the transformation programme |
 | `18-responsible-data-policy-framework.md` | principles, the policy record, the gate, onboarding, the client's value, worked instances |
 | `10-ssot.md` (this) | terms, enumerations, entities, rules, metrics |
