@@ -48,7 +48,7 @@ def render(src, out, label):
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>{title} — Holdvölgy 2026 docs</title>
+<title>{title} · Holdvölgy</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:opsz,wght@6..96,400;6..96,500&family=Archivo:wdth,wght@112.5,400;112.5,500;112.5,600&display=swap">
 <link rel="stylesheet" href="../assets/tokens.css">
@@ -56,7 +56,7 @@ def render(src, out, label):
 </head>
 <body>
 <div class="wrap">
-<nav class="docnav" aria-label="Project documentation"><span class="docnav-brand">Holdvölgy 2026 · docs</span>{nav}</nav>
+<nav class="docnav" aria-label="Project documentation"><span class="docnav-brand">Holdvölgy · dokumentáció</span>{nav}</nav>
 <header><p class="eyebrow">Holdvölgy · project documentation</p><h1>{title}</h1></header>
 {body}
 <script>(function(){{function f(){{document.querySelectorAll('.scale-d').forEach(function(e){{e.style.setProperty('--w',e.clientWidth)}});document.querySelectorAll('.scale-p').forEach(function(e){{e.style.setProperty('--pw',e.clientWidth)}})}}f();addEventListener('resize',f)}})();</script>
@@ -77,7 +77,7 @@ def sync_static_nav():
     """Hand-written doc pages (design-system.html) get the same navigation as the generated ones, on every build."""
     for name in ("design-system.html",):
         f = HERE / name; t = f.read_text(encoding="utf-8")
-        new = f'<nav class="docnav" aria-label="Project documentation"><span class="docnav-brand">Holdvölgy 2026 · docs</span>{nav_html(name)}</nav>'
+        new = f'<nav class="docnav" aria-label="Project documentation"><span class="docnav-brand">Holdvölgy · dokumentáció</span>{nav_html(name)}</nav>'
         t2 = re.sub(r'<nav class="docnav".*?</nav>', new, t, count=1, flags=re.S)
         assert t2 != t or nav_html(name) in t, name
         f.write_text(t2, encoding="utf-8"); print("%-16s nav synced" % name)

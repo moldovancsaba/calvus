@@ -52,8 +52,5 @@ process log.
 | `first-customer-classscout.md` | their site measured, what is real and sample, the onboarding inputs by feature, the pilot's SWOT, the closed asks |
 | `evidence.md` | the claims register — every figure with its source opened and its status — and the research base |
 
-Rendered by `build.py` (`python3 business-direct/docs/build.py`); gate `python3 business-direct/check.py`
-(also run by the root `check.py`). Data: `python3 business-direct/data/fetch-yourfield.py`
-(the first customer's listings) and `fetch-sportolok.py` (the reference connector's data).
 
 The process log — every round and decision, dated — is `build-log.md`.

@@ -19,11 +19,9 @@ sell through its customer journey; then prototype it. Built to the prototyping s
 | `05-layout-specs.md` | gate 2: phone 390 and desktop 1440 as two designed experiences; the built pages as the frames |
 | `04-decisions.md` | D1–D11 |
 | `06-build-log.md` | the rounds, measured |
-| `07-gate.md` + `../check.py` | what the gate checks |
+| `07-gate.md` | what the gate checks |
 | `bemutato.html` | the client presentation, in Hungarian: what was measured, what the research says, the proposed structure, phone and desktop, the identity, what is real, the one decision |
 
-Rendered by `build.py` (`python3 bizdrankazoldet/docs/build.py`); gate `python3 bizdrankazoldet/check.py`
-(also run by the root `check.py`).
 
 ## Process log
 

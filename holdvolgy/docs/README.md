@@ -45,22 +45,10 @@ Every project carries the same set next to its prototype (owner decision
 | 04 decisions | `04-decisions.md` |
 | 05 design | `design-system.html`, `05-layout-specs.md`, `frames/` |
 | 06 build log | `06-home-build.md` … `10-shop-build.md` |
-| 07 gate | `11-gate-sweep.md` + `holdvolgy/check.py` (run by the root `check.py`) |
+| 07 gate | `11-gate-sweep.md` |
 | 08 client asks | `00-plan.md` §6 |
 | 10–14 technical | `10-ssot.md`, `11-architecture.md`, `12-technical-design.md`, `13-implementation-plan.md`, `14-token-map.md` |
 
-## Reading these on the web
-
-GitHub Pages serves this folder. The styled, phone-readable versions are the rendered
-pages — one per markdown file, listed in `build.py` (`index.html` for this file,
-`brief.html`, `plan.html`, `benchmarks.html`, `audit.html`, `assets.html`,
-`decisions.html`, `layouts.html`, the five build pages, `gate-sweep.html`, `ssot.html`,
-`architecture.html`, `technical-design.html`, `implementation-plan.html`,
-`token-map.html`) plus the hand-written `design-system.html` and `bemutato.html`. Run
-`python3 holdvolgy/docs/build.py` (or `python3 build-docs.py` at the repo root) after
-editing any `.md`; needs the `markdown` package. The `.md` files stay the source of
-truth. Pages' Jekyll pass also auto-renders each `.md` to an unstyled `<name>.html`; the
-generated names are deliberately different so the two never collide.
 
 ## Process log
 

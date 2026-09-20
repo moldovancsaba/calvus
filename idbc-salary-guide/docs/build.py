@@ -44,12 +44,12 @@ def render(src, out, label):
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>{title} — IDBC Salary Guide docs</title>
+<title>{title} · IDBC Salary Guide</title>
 <style>{CSS}</style>
 </head>
 <body>
 <div class="wrap">
-<nav class="docnav" aria-label="Project documentation"><span class="docnav-brand">IDBC Salary Guide · docs</span>{nav}</nav>
+<nav class="docnav" aria-label="Project documentation"><span class="docnav-brand">IDBC Salary Guide · documentation</span>{nav}</nav>
 <header><p class="eyebrow">IDBC Salary Guide · project documentation</p><h1>{title}</h1></header>
 {body}
 <footer>IDBC Talent Market &amp; Salary Guide 2026 · documentation</footer>

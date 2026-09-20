@@ -44,12 +44,12 @@ def render(src, out, label):
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>{title} — Lexodont docs</title>
+<title>{title} · Lexodont</title>
 <style>{CSS}</style>
 </head>
 <body>
 <div class="wrap">
-<nav class="docnav" aria-label="Project documentation"><span class="docnav-brand">Lexodont · docs</span>{nav}</nav>
+<nav class="docnav" aria-label="Project documentation"><span class="docnav-brand">Lexodont · dokumentáció</span>{nav}</nav>
 <header><p class="eyebrow">Lexodont · project documentation</p><h1>{title}</h1></header>
 {body}
 <footer>Lexodont · dokumentáció, 2026</footer>

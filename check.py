@@ -43,10 +43,10 @@ for p in ROOT.rglob("*.html"):
     if any(s in p.parts for s in (".git", ".claude", "node_modules")) or p.parent == ROOT: continue
     t2 = p.read_text(encoding="utf-8", errors="replace")
     if "Calvus" in t2: failed.append(f"{p.relative_to(ROOT)}: studio name on a project page")
-    for tag in ("footer", "eyebrow"):
-        for m in _re2.finditer(r'<footer[^>]*>(.*?)</footer>' if tag == "footer" else r'class="eyebrow"[^>]*>(.*?)</p>', t2, _re2.S):
-            if _re2.search(r"rendered by|build\.py|build-docs\.py|Source: <code>", m.group(1)):
-                failed.append(f"{p.relative_to(ROOT)}: tooling named in the page {tag}"); break
+    for tag, rx in (("footer", r'<footer[^>]*>(.*?)</footer>'), ("eyebrow", r'class="eyebrow"[^>]*>(.*?)</p>'), ("title", r'<title>(.*?)</title>'), ("nav brand", r'class="docnav-brand"[^>]*>(.*?)</')):
+        for m in _re2.finditer(rx, t2, _re2.S):
+            if _re2.search(r"rendered by|build\.py|build-docs\.py|Source: <code>|\bdocs\b", m.group(1)):
+                failed.append(f"{p.relative_to(ROOT)}: tooling or jargon in the page {tag}"); break
 
 # Every HTML file in the repo, outside .git and the worktrees, whether or not a project gate
 # already read it: relative href/src must resolve. Cheap, and it catches a new folder nobody
@@ -63,6 +63,8 @@ for f in files:
         if not (f.parent / h).exists(): broken.append(f"{f.relative_to(ROOT)} → {h}")
 print(f"{'repo-wide links':28s} {len(files)} files, {refs} references, {len(broken)} broken")
 for b in broken: print("  broken link ", b)
+for x in failed:
+    if ": " in x: print("  failed      ", x)
 if failed or broken:
     print(f"GATE: {len(failed)} gate(s) failed, {len(broken)} broken link(s)"); sys.exit(1)
 print("GATE: CLEAN")

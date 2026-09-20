@@ -14,7 +14,7 @@ The wireframe of Lexodont Dental Studio's website (March–April 2026), and — 
 | 04 decisions | `04-decisions.md` | D1–D16 (the first fourteen reconstructed from the commits, the last two recorded as made); what the live site decided without this repo |
 | 05 design | `05-design.md` | Two fidelities, tokens, layout; what the built site chose instead |
 | 06 build log | `06-build-log.md` | The two build days and the 2026-09-18 measurement |
-| 07 gate | `07-gate.md` + `../check.py` | Links, anchors, docs cross-links, fidelity parity; findings left open and why |
+| 07 gate | `07-gate.md` | Links, anchors, docs cross-links, fidelity parity; findings left open and why |
 | 08 client asks | `08-client-asks.md` | The register of asks — none open for the delivered wireframe; the second iteration's prerequisites are in `19-implementation-prerequisites.md` |
 | 10 SSOT | `10-ssot.md` | Glossary, page kinds, entities, rules, metrics |
 | 11 architecture | `11-architecture.md` | As built, measured; five PROPOSED ADRs for a second iteration, none a rebuild |
@@ -22,10 +22,6 @@ The wireframe of Lexodont Dental Studio's website (March–April 2026), and — 
 | 13 implementation plan | `13-implementation-plan.md` | Closing steps, or LX-001..006 |
 | 14 token map | `14-token-map.md` | Nothing to map, and why |
 
-Rendered: `index.html` (this), `bemutato.html`, `brief.html`, `research.html`, `audit.html`,
-`sources.html`, `decisions.html`, `design.html`, `build-log.html`, `gate.html`,
-`client-asks.html`, `ssot.html`, `architecture.html`, `technical-design.html`,
-`implementation-plan.html`, `token-map.html` — by `build.py` (`python3 lexodont.hu/docs/build.py`).
 The docs serve both fidelities: `../` is the polished set, `../../lexodont.hu_balsamic/` the sketch.
 
 ## Process log

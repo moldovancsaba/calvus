@@ -15,7 +15,7 @@ every project.
 | 04 decisions | `04-decisions.md` | D1–D28, dated, with who and why |
 | 05 design | `05-design.md` | Where the look comes from (the client's mockups), tokens, layout |
 | 06 build log | `../data/SOURCES-AND-GAPS.md` | the dated change notes are the build log |
-| 07 gate | `07-gate.md` + `../check.py` | The one-command gate, the measured pass, deliberate deviations |
+| 07 gate | `07-gate.md` | The one-command gate, the measured pass, deliberate deviations |
 | 19 prerequisites | `19-implementation-prerequisites.md` | The client's pending content deliveries, the decisions before publication (the bértábla banner first), the production-build decisions; nothing is needed for the next review (2026-09-20) |
 | 08 client asks | `08-client-asks.md` | The register of asks with states — none open for the next review; the rest are prerequisites |
 | 09 business logic | `09-business-logic.md` | The rules end to end — parties, the data and how a figure reaches a page, the paywall and registration, inert controls, fine-tuning, the rules mapped, what the guide never does (2026-09-20) |
@@ -25,14 +25,6 @@ every project.
 | 13 implementation plan | `13-implementation-plan.md` | M0–M6, SG-000..081 with DoD, blocked register, risks, Release 1 |
 | 14 token map | `14-token-map.md` | Page tokens → one stylesheet; components → templates |
 
-## Reading these on the web
-
-GitHub Pages serves this folder: `index.html` (this file), `brief.html`, `research.html`,
-`audit.html`, `sources.html`, `decisions.html`, `design.html`, `gate.html`,
-`client-asks.html`, `ssot.html`, `architecture.html`, `technical-design.html`,
-`implementation-plan.html`, `token-map.html` — generated from the markdown by
-`build.py` (run `python3 idbc-salary-guide/docs/build.py` after editing any `.md`;
-needs the `markdown` package). The `.md` files stay the source of truth.
 
 ## Process log
 
@@ -74,7 +66,7 @@ day: tables always complete (D24), case studies as articles (D25), tile alignmen
 The owner set the rule for this phase: fix only the reported item.
 
 **2026-09-18 — documentation standard (D27).** This folder written: brief, research,
-audit, decision register, design, gate (with `check.py`), client asks, and the technical
+audit, decision register, design, gate, client asks, and the technical
 package `10`–`14` with every stack decision PROPOSED. The Hungarian presentation
 `bemutato.html` added. `SOURCES-AND-GAPS.md` stays where CLAUDE.md rule 4 names it and
 is the 03/06 slot.

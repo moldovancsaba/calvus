@@ -53,13 +53,13 @@ def render(src, out, label):
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>{title} — business.direct docs</title>
+<title>{title} · business.direct</title>
 <link rel="stylesheet" href="../assets/tokens.css">
 <style>{CSS}</style>
 </head>
 <body>
 <div class="wrap">
-<nav class="docnav" aria-label="Project documentation"><span class="docnav-brand">business.direct · docs</span>{nav}</nav>
+<nav class="docnav" aria-label="Project documentation"><span class="docnav-brand">business.direct · documentation</span>{nav}</nav>
 <header><p class="eyebrow">business.direct · project documentation</p><h1>{title}</h1></header>
 {body}
 <footer>business.direct · documentation, 2026</footer>
