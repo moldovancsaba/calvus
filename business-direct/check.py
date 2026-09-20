@@ -38,9 +38,9 @@ for f in ALL:
         if tgt is not None and m.group(2) not in ids[tgt]:
             findings.append(f"missing anchor  {f.relative_to(ROOT)} → {m.group(1)}#{m.group(2)}")
 
-names = [p.stem for p in DOCS if p.stem != "bemutato"]
+names = [p.stem for p in DOCS if p.stem not in ("bemutato", "presentation")]
 for p in DOCS:
-    if p.stem == "bemutato": continue
+    if p.stem in ("bemutato", "presentation"): continue
     t = p.read_text(encoding="utf-8")
     for n in names:
         if n != p.stem and f'href="{n}.html"' not in t: findings.append(f"docs nav  {p.name} does not link {n}.html")

@@ -22,16 +22,18 @@ and markets the platform to the business.
 
 ## The problem
 
-A listing platform is B2B2C: **platform → listed business → consumer**. On Your Field every
-provider was gathered from its own website by an enrichment pipeline (field-level
-verification records say which fields were read from where); **none is claimed** — 15 are
-marked `unclaimed` explicitly, 237 carry no claim state at all. The providers are small
-operations — a soccer club run by one coach, a taekwondo school, a dance studio — that
-answer late, do not follow up trials, and do not know the platform sends them families.
-On the consumer side, parents can save and plan, but nobody tells them what starts near
-them this week.
+A listing platform is B2B2C: **platform → listed business → consumer**. Measured on Your
+Field's public API (2026-09-19): **253 providers, 0 managing their page** (15 marked
+`unclaimed`, 237 with no claim state); 130 with an e-mail, 181 with a phone, 50 with only a
+website; **0 reviews and 28 prices** on the cards; **83 next sessions, 72 trial policies and
+26 announcements** published nowhere. The providers are small operations — a soccer club run
+by one coach, a taekwondo school, a dance studio — and small businesses lose 62 % of their
+calls and the customer to whoever answers first (research I). Families can save and plan, and
+are told nothing when something starts near them; the platform records saves only after an
+opt-in and offers no alerts yet. The cost of leaving it so, and the return of changing it, are
+on one page: `22-business-case.md`.
 
-The two videos the owner shared show the target shape: **the one-person sales and
+**Where the shape came from.** The two videos the owner shared show the target: **the one-person sales and
 marketing team** — an orchestrator over departments (research and intelligence, content,
 distribution, creative, leads and conversations, reviews and reputation, results), a
 **brand knowledge layer** kept as plain files, **human-in-the-loop** ("it drafts, it can't

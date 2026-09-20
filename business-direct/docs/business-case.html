@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>business.direct — business case for ClassScout (Your Field NYC) — business.direct docs</title>
+<link rel="stylesheet" href="../assets/tokens.css">
+<style>/* business.direct — documentation pages on the product tokens (GDS roles, teal accent). */
+:root{--ground:var(--gds-bg-canvas,#f8fafc);--card:var(--gds-bg-surface,#fff);--ink:var(--gds-text-body,#111827);--text:#1f2937;--muted:var(--gds-text-meta,#64748b);--accent:var(--gds-brand-accent,#0f766e);--accent-deep:var(--gds-brand-accent-strong,#115e59);--line:var(--gds-border-card,#e2e8f0);--line-soft:#eef2f7;--note:var(--gds-brand-accent-tint,#e6f4f2)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--ground);color:var(--text);font-family:var(--gds-font,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif);font-size:15.5px;line-height:1.6;padding-block:0 64px;padding-inline:clamp(16px,4vw,40px)}
+.wrap{max-width:74ch;margin-inline:auto}
+.docnav{display:flex;flex-wrap:wrap;gap:4px 18px;align-items:center;padding:16px 0;border-bottom:1px solid var(--line);font-size:12px;letter-spacing:.06em;text-transform:uppercase}
+.docnav a{color:var(--muted);text-decoration:none;min-height:44px;min-width:44px;display:inline-flex;align-items:center;border-bottom:2px solid transparent}
+.docnav a:hover,.docnav a[aria-current]{color:var(--ink);border-color:var(--accent)}
+.docnav-brand{color:var(--accent-deep);font-weight:800;margin-right:6px}
+.docnav-hub{margin-left:auto}
+header{padding-block:40px 24px;border-bottom:1px solid var(--line);margin-bottom:28px}
+.eyebrow{font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--accent-deep);margin:0 0 12px;font-weight:800}
+h1,h2,h3{color:var(--ink);line-height:1.1;text-wrap:balance;margin:0;letter-spacing:-.02em}
+h1{font-size:clamp(30px,6vw,46px);font-weight:900}
+h2{font-size:clamp(23px,4vw,30px);font-weight:900;margin:48px 0 14px;padding-top:20px;border-top:1px solid var(--line)}
+h3{font-size:18px;margin:30px 0 8px;font-weight:800}
+p{margin:0 0 14px} strong{color:var(--ink);font-weight:800}
+ul,ol{padding-left:22px;margin:0 0 16px} li{margin:5px 0} li>ul{margin:6px 0 0}
+code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.86em;background:var(--note);padding:1px 5px;border-radius:4px;color:var(--ink);overflow-wrap:anywhere}
+pre{overflow-x:auto;padding:14px 16px;border:1px solid var(--line);border-radius:10px;background:var(--card);font-size:12px;line-height:1.35}
+pre code{background:none;padding:0;font-size:inherit}
+a{color:var(--accent-deep)} :focus-visible{outline:2px solid var(--accent-deep);outline-offset:2px}
+.tbl{overflow-x:auto;margin:14px 0 22px;border:1px solid var(--line);border-radius:10px;background:var(--card)}
+table{border-collapse:collapse;width:100%;font-size:13.5px;min-width:560px}
+th{text-align:left;font-weight:800;color:var(--ink);background:var(--note);padding:10px 12px;border-bottom:1px solid var(--line);font-size:11.5px;letter-spacing:.06em;text-transform:uppercase}
+td{padding:10px 12px;border-top:1px solid var(--line-soft);vertical-align:top;background:var(--card)} td:first-child{color:var(--ink)}
+footer{margin-top:56px;padding-top:18px;border-top:1px solid var(--line);font-size:12px;color:var(--muted)}
+</style>
+</head>
+<body>
+<div class="wrap">
+<nav class="docnav" aria-label="Project documentation"><span class="docnav-brand">business.direct · docs</span><a href="index.html">Overview</a><a href="brief.html">Brief</a><a href="research.html">Research</a><a href="research-2.html">Research II</a><a href="research-3.html">Research III</a><a href="research-4.html">Research IV</a><a href="research-5.html">Research V</a><a href="research-6.html">Research VI</a><a href="audit.html">Audit</a><a href="sources.html">Sources</a><a href="design-system.html">Design system</a><a href="layouts.html">Layouts</a><a href="05-layout-specs.html">Layout specs</a><a href="decisions.html">Decisions</a><a href="build-log.html">Build log</a><a href="gate.html">Gate</a><a href="client-asks.html">Register of asks</a><a href="implementation-prerequisites.html">Prerequisites</a><a href="business-logic.html">Business logic</a><a href="ssot.html">SSOT</a><a href="architecture.html">Architecture</a><a href="technical-design.html">Technical design</a><a href="implementation-plan.html">Plan</a><a href="system-blueprint.html">System blueprint</a><a href="documentation-audit.html">Documentation audit</a><a href="token-map.html">Token map</a><a href="executive.html">Executive summary</a><a href="business-case.html" aria-current=page>Business case</a><a href="analytics.html">Analytics</a><a href="audit-swot.html">Audit · SWOT</a><a href="policy-framework.html">Policy framework</a></nav>
+<header><p class="eyebrow">Calvus · business.direct · project documentation</p><h1>business.direct — business case for ClassScout (Your Field NYC)</h1></header>
+<p><em>For the decision-maker at ClassScout and the owner. What this page answers: what the machine
+costs to build and run, what it returns under three scenarios, where the break-even is, and what
+doing nothing costs. Every input is marked </em><em>measured</em><em> (from the platform's own catalogue),
+</em><em>benchmark</em><em> (a sourced industry figure) or </em><em>assumption</em><em> (ours, to be replaced by the
+platform's numbers under prerequisite P-6). The formulas are the ones the prototype's Economics
+screen computes (<a href="analytics.html"><code>16-analytics-and-unit-economics.md</code></a>); the run costs are the vendors' own
+prices read on 2026-09-20 (<a href="research-6.html"><code>01g-research-real-system.md</code></a> §15). Written 2026-09-20 (D38).</em></p>
+<h2>1. The situation in the client's numbers (measured, 2026-09-19 pull)</h2>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>Measure</th>
+<th>Value</th>
+<th>What it means</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Providers listed</td>
+<td>253</td>
+<td>the supply side the platform has gathered</td>
+</tr>
+<tr>
+<td>Providers managing their own page</td>
+<td><strong>0</strong></td>
+<td>nobody on the supply side is a customer yet; no reviews, no photos of their own, no answers</td>
+</tr>
+<tr>
+<td>Reachable by e-mail / by phone / by website only</td>
+<td>130 / 73 / 50</td>
+<td>the sales flow's reach without any data the platform does not already hold</td>
+</tr>
+<tr>
+<td>With a next session on the card / a trial policy / an announcement</td>
+<td>83 / 72 / 26</td>
+<td>the demand-side content that exists today and is not published anywhere</td>
+</tr>
+<tr>
+<td>Reviews / prices on the cards</td>
+<td>0 / 28</td>
+<td>the two fields AI answers and families look for first</td>
+</tr>
+<tr>
+<td>Registered families</td>
+<td>not disclosed (prerequisite P-6); 5 000 assumed</td>
+<td>every family-side figure below scales with it</td>
+</tr>
+</tbody>
+</table></div>
+<h2>2. The cost of doing nothing (benchmarks, sourced in <a href="research.html"><code>01-research.md</code></a> and <code>01b</code>)</h2>
+<ul>
+<li><strong>The enquiry economics of a small provider</strong>: 62 % of calls to small businesses go
+  unanswered; 78 % of customers buy from the business that responds first; a lead contacted
+  within five minutes is 21× more likely to qualify than after thirty. An unclaimed, unanswered
+  card sends the family to the next provider — or off the platform.</li>
+<li><strong>The discovery shift</strong>: organic Google sends 19 % fewer clicks to the same rankings; AI
+  answers cite the structured, reviewed source; nearly half of Gen Z searches social before
+  Google. A catalogue with 0 reviews and 28 prices is not the source that gets cited.</li>
+<li><strong>The category's money</strong>: US families spend $1 016 per child per sport, up 46 % in five
+  years. The platform captures none of it while providers stay unmanaged.</li>
+<li><strong>The incumbents' move</strong>: Yelp bought Hatch for $270 M (January 2026) and sells Receptionist
+  at $99 a month — the same "answer, follow up, convert" service, to the same small businesses.</li>
+</ul>
+<p>Doing nothing keeps the platform a directory: supply gathered by a pipeline, demand served a
+list, nobody paid.</p>
+<h2>3. What the machine changes (the answer, in one loop)</h2>
+<p>Events → nightly metrics → the next dollar ranked → a person approves → measure. Two flows at
+the front door — <strong>families brought to the listing page</strong> by published real content, and
+<strong>providers brought to manage their page</strong> by a sales sequence that honours the law and a cap —
+and behind them provider campaigns, conversations and upgrades on the platform's own products.
+Nothing leaves without a person; every message says why it was sent.</p>
+<h2>4. Investment</h2>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>Line</th>
+<th>Amount</th>
+<th>Basis</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Build effort</td>
+<td><strong>34 developer-weeks</strong> (two developers × nine two-week sprints, seventeen weeks) + the owner as product lead</td>
+<td><a href="implementation-plan.html"><code>13-implementation-plan.md</code></a> §2b</td>
+</tr>
+<tr>
+<td>Build cost</td>
+<td>34 × blended rate per developer-week — <strong>the rate is the commercial input, set by the owner</strong>; illustration at $2 500 / $4 000 / $6 000 → $85 k / $136 k / $204 k</td>
+<td>assumption (illustration only, not a quote)</td>
+</tr>
+<tr>
+<td>Run cost, pilot (≤ 300 providers, ≤ 5 000 families)</td>
+<td><strong>≈ $50–75 a month</strong></td>
+<td>vendor prices, <code>01g</code> §15</td>
+</tr>
+<tr>
+<td>Run cost, sizing target (1 000 providers, 50 000 families)</td>
+<td><strong>≈ $280–400 a month</strong></td>
+<td>vendor prices, <code>01g</code> §15</td>
+</tr>
+<tr>
+<td>Operator time</td>
+<td>2 minutes per approval at $40/h; ~10 hours a month at pilot volume, falling with batch approval and earned auto-approval</td>
+<td>assumption; <code>16</code> §2.2</td>
+</tr>
+<tr>
+<td>Sales tooling</td>
+<td>$150 a month (sending domain, warm-up, enrichment)</td>
+<td>assumption; <code>16</code> §2.2</td>
+</tr>
+<tr>
+<td>External lead times</td>
+<td>Meta App Review two to four weeks (starts sprint 0); Twilio registration one to two weeks (only when SMS is switched on)</td>
+<td><code>01g</code> §14</td>
+</tr>
+</tbody>
+</table></div>
+<h2>5. Return — three scenarios (the model's formulas at the stated inputs)</h2>
+<p>The unit economics (<code>16</code> §2): contribution = ARPA × margin; LTV = contribution ÷ monthly churn;
+CAC = outbound cost ÷ new paying providers; healthy at LTV : CAC ≥ 3 and payback ≤ 12 months.
+Defaults: reply 5.5 % (benchmark, top quartile), applied 40 % (assumption), managing 80 %
+(assumption), upgraded 25 % (assumption), ARPA $49 (sample prices), margin 80 %, churn 5 %/month
+(benchmark range 3–7 %).</p>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>Scenario</th>
+<th>What changes</th>
+<th>Outbound cost / quarter</th>
+<th>New managing / upgraded per quarter</th>
+<th>CAC (upgraded)</th>
+<th>LTV</th>
+<th>LTV : CAC</th>
+<th>Payback</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>0 · Defaults (the honest finding)</strong></td>
+<td>253 providers, $49 ARPA, 5 % churn</td>
+<td>≈ $720</td>
+<td>≈ 2 / 0.6</td>
+<td>≈ $1 200</td>
+<td>$784</td>
+<td><strong>0.7</strong></td>
+<td>31 months</td>
+</tr>
+<tr>
+<td><strong>A · Growth engine</strong> (recommended framing, D21)</td>
+<td>the base machine is bundled by the platform; its return is counted in managed pages and families, not in upgrades</td>
+<td>≈ $720 + $120 content</td>
+<td>≈ 2 managing; ≈ 32 new families a month from content at 1.5 families per post (assumption)</td>
+<td>—</td>
+<td>—</td>
+<td>content: <strong>$4 per new family against $6 expected value</strong> (thin, positive, measured by the connected channel); each managing provider answers enquiries within the hour instead of losing 62 % of calls</td>
+<td>—</td>
+</tr>
+<tr>
+<td><strong>B · Larger catalogue</strong></td>
+<td>1 000 providers, same rates and prices</td>
+<td>cost mostly fixed tooling</td>
+<td>≈ 8 / 2</td>
+<td><strong>&lt; $400</strong></td>
+<td>$784</td>
+<td><strong>≈ 2</strong></td>
+<td>≈ 10 months</td>
+</tr>
+<tr>
+<td><strong>C · Higher ARPA, lower churn</strong></td>
+<td>mix ARPA $89 (camp placement $149/season in the mix), annual plans → churn 3 %</td>
+<td>as 0</td>
+<td>as 0</td>
+<td>≈ $1 200 (253) · &lt; $400 (1 000)</td>
+<td><strong>$2 373</strong></td>
+<td><strong>≈ 2 (253) · ≈ 6 (1 000)</strong></td>
+<td>17 months (253) · 6 months (1 000)</td>
+</tr>
+</tbody>
+</table></div>
+<p>Reading: outbound e-mail alone, on today's catalogue and sample prices, does not pay for itself
+— the model says so and the presentation says so. The machine pays as the platform's growth
+engine (A) from day one, and as a profit centre once the catalogue grows (B) or the products are
+priced for the category (C); the platform decides which, and each is one input on the Economics
+screen.</p>
+<p><strong>The family side (the marketing value the platform is building).</strong> An avid family — saved ≥ 3
+providers, opens the digest, has asked a provider — is worth ≈ $813 a year to the providers it
+reaches (2 trials × 40 % enrolment × $1 016) and ≈ $42 a year to the platform at a 5 % capture
+plus referrals (assumptions until measured). At 5 000 families and 15 % avid, that is ≈ $610 k a
+year of provider revenue flowing through the platform's introductions — the number the upgrade
+products are priced against.</p>
+<h2>6. Sensitivity (what moves the answer most)</h2>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>Input</th>
+<th>−50 %</th>
+<th>Default</th>
+<th>+50 % / top decile</th>
+<th>Effect on LTV : CAC (scenario 0 → B)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Reply rate</td>
+<td>2.75 %</td>
+<td>5.5 %</td>
+<td>10.7 % (top decile)</td>
+<td>0.35 → 1.3 at 253; the largest lever the machine controls (propensity order, the family's ask as a touch, the call list)</td>
+</tr>
+<tr>
+<td>Applied → managing → upgraded</td>
+<td>0.5×</td>
+<td>40 % · 80 % · 25 %</td>
+<td>1.5×</td>
+<td>linear in CAC; measured from the first cohort (R16, at 100 observations)</td>
+</tr>
+<tr>
+<td>Monthly churn</td>
+<td>7 %</td>
+<td>5 %</td>
+<td>3 %</td>
+<td>LTV $560 → $784 → $1 307; annual plans are the lever</td>
+</tr>
+<tr>
+<td>ARPA</td>
+<td>$29</td>
+<td>$49</td>
+<td>$89</td>
+<td>LTV $464 → $784 → $1 424; the platform's pricing decision</td>
+</tr>
+<tr>
+<td>Catalogue size</td>
+<td>253</td>
+<td>253</td>
+<td>1 000</td>
+<td>CAC $1 200 → &lt; $400; the fixed tooling is spread</td>
+</tr>
+</tbody>
+</table></div>
+<h2>7. Break-even</h2>
+<ul>
+<li><strong>Growth engine (A)</strong>: the run cost at pilot (≈ $60 a month) is covered by <strong>two</strong> upgraded
+  providers at $49; at the sizing target (≈ $340 a month) by <strong>eight</strong>.</li>
+<li><strong>Profit centre (B or C)</strong>: LTV : CAC crosses 3 : 1 at roughly 1 000 providers with ARPA ≈ $70
+  and churn ≤ 4 % — or at 253 providers only with ARPA ≥ $135 and churn ≤ 3 %.</li>
+<li><strong>Build cost</strong>: recovered from upgrades alone only in B or C; in A it is the platform's
+  investment in becoming the source that gets cited and the place families come back to —
+  measured as new families per post, managed pages and answered enquiries from the first sprint.</li>
+</ul>
+<h2>8. What we need from the client, and when</h2>
+<p>Nothing before the decision. After it: the postal address, the privacy-policy paragraph, the
+policy record confirmed and counsel's wording before the first real message; the opted-in share,
+the analytics events, the write key and a pilot provider before the keyed release; the personas,
+the integrations and the money model confirmed at acceptance (<a href="implementation-prerequisites.html"><code>19-implementation-prerequisites.md</code></a>).</p>
+<h2>9. The decision</h2>
+<p>Go ahead with the build (sprint 0 starts on the decision; Meta's review is submitted the same
+week), or do not. The first measured numbers — reply rate, families per post, enquiries answered
+— arrive at the end of sprint 2 and replace the assumptions above on the Economics screen.</p>
+<footer>Source: <code>business-direct/docs/22-business-case.md</code> · rendered by <code>docs/build.py</code>.</footer>
+</div>
+</body>
+</html>

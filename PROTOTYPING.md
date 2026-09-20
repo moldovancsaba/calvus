@@ -43,7 +43,7 @@ and it is dated.
 | 4 | **Layout frames** | desktop 1440 and phone 390 composed from the approved components and real assets | owner approves (D13) |
 | 5 | **Build** | pages, generated where anything repeats; one commit per page or round; build log with measurements | the gate script + measured pass |
 | 6 | **Sweep** | every page at 390 and 1440, zero defects | recorded in the gate doc |
-| 7 | **Presentation** | `bemutato.html` in the client's language and brand | client review |
+| 7 | **Presentation** | the client presentation, in the client's language **including its filename** (`bemutato.html` for a Hungarian client, `presentation.html` for an English one): the client's problem measured, its cost, the question, the answer, the value (business case), proof, risk removed, delivery and cost, the one decision — the demo is an appendix, never the structure (business.direct D38) | client review |
 | 8 | **Fine-tuning** | reported item → minimal fix → measured → URL | client |
 | 9 | **Technical package** | SSOT, architecture, technical design, implementation plan, token map; stack decisions PROPOSED | owner / client flips ADRs |
 | 10 | **Real-system blueprint** (when the owner calls the next phase) | `01g` research: every external service verified against the vendor's own terms on the day (auth, review, limits, prices, alternative, cost); `20-system-blueprint.md`: drawings, repository layout, modules with what each owns and pseudo code, data contracts, jobs, security, tests, operations; the ADRs become the build baseline; the plan re-cut into sprints with an acceptance test each and a sprint-0 checklist — business.direct D37 is the reference | owner: "build" |
@@ -150,7 +150,7 @@ live), indexed by a `README.md` that is also the dated process log:
 
 | Slot | File | Must contain |
 |---|---|---|
-| Presentation | `bemutato.html` | client's language, client's brand tokens, standalone page: one sentence, three numbers, the pages in a recommended order with previews and open buttons, what is real, the asks, what comes next — no documentation chrome. A one-page prototype with views takes `?view=&screen=` deep links so each preview and open button lands on the right screen (business.direct) |
+| Presentation | `presentation.html` (or `bemutato.html` for a Hungarian client — the filename is in the client's language) | client's language, client's brand tokens, standalone page, **in this order**: the client's situation measured in its own numbers; the complication and what it costs (sourced); the question; the answer in outcomes for each party; the value — a business case with scenarios and the honest finding; proof (what is real, what is sample); risk removed and value added (responsible by design); delivery, cost and what we need after the decision; the one decision. The demo script ("what to click") is an appendix of one paragraph with deep links (`?view=&screen=`) — never a section of the argument. No documentation chrome |
 | 00 | `00-brief.md` | client, problem, what the prototype is, what is real / inert / placeholder / not built, where it stands, how to read the folder |
 | 01 | `01-research.md` | benchmarks with sources; or the honest sentence that none was done and what a next round would read |
 | 02 | `02-audit.md` | the client's current site, data or brand, **measured** (platform, plugins, weight, TTFB, page architecture, defects) |
@@ -167,6 +167,8 @@ live), indexed by a `README.md` that is also the dated process log:
 | 14 | `14-token-map.md` | prototype tokens and components → production; or why there is nothing to map |
 | 18 | `18-responsible-data-policy-framework.md` (or the project's equivalent) | **required for any prototype that sends, stores or targets people**: the policy record per client instance (jurisdictions and laws, audience model, child-data rule, consent per channel, high-privacy defaults, cap, opt-out SLA, AI disclosure, retention, the client's published policy clauses) and the gate that blocks a feature until its fields are set — see business.direct for the reference |
 | 19 | `19-implementation-prerequisites.md` | what the client provides after acceptance, grouped by when it blocks; the presentation's "what we ask of you today" is one decision |
+| 22 | `22-business-case.md` | for the decision-maker: the situation in the client's numbers, the cost of doing nothing, the investment, the return by scenario, sensitivity, break-even, what we need and when; every input marked measured / benchmark / assumption; the commercial rate is the owner's input, never a quote |
+| 21 | `21-documentation-audit.md` | when the set is audited: the ten consulting criteria, a scorecard per document, findings with evidence, root cause and fix, the transformation plan and what shipped (business.direct is the reference) |
 | 20 | `20-system-blueprint.md` (+ a research round on the services) | stage 10 only: the document a developer builds from — every service verified and priced on the day, drawings, modules with pseudo code, contracts, jobs, security, tests, operations; the prototype → module map so nothing built in the prototype is lost |
 
 Rules for the set:

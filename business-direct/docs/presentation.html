@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>business.direct — a proposal for ClassScout · Your Field NYC</title>
+<meta name="description" content="Your Field NYC lists 253 providers and none manages its page. business.direct is the machine that turns listings into managed pages, paying providers and families that come back — the problem, the answer, the business case, the plan, the decision.">
+<link rel="stylesheet" href="../assets/tokens.css">
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:var(--gds-bg-canvas);color:var(--gds-text-body);font:15.5px/1.55 var(--gds-font)}
+a{color:inherit}
+img{height:auto}
+.wrap{max-width:1040px;margin-inline:auto;padding-inline:clamp(16px,4vw,32px)}
+.hero{background:var(--gds-bg-inverse);color:#fff;padding:clamp(28px,5vw,56px) 0;border-bottom:6px solid var(--gds-brand-accent)}
+.eyebrow{margin:0 0 10px;font-size:12px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:#5eead4}
+.hero h1{margin:0 0 12px;max-width:20ch;font-size:clamp(30px,5.5vw,54px);line-height:1;letter-spacing:-1.2px}
+.hero p{margin:0;max-width:64ch;font-size:16px;font-weight:600;color:rgba(255,255,255,.82)}
+.nums{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px;margin:26px 0 0}
+.num{padding:18px 20px;border-radius:var(--gds-radius-card);background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.14)}
+.num b{display:block;font-size:30px;letter-spacing:-.8px;line-height:1;color:#fff}
+.num span{font-size:13px;font-weight:600;color:rgba(255,255,255,.75)}
+section{padding:44px 0 8px}
+h2{margin:0 0 8px;font-size:clamp(24px,3.6vw,34px);letter-spacing:-.6px;line-height:1.05}
+.lede{margin:0 0 22px;max-width:66ch;font-size:15px;font-weight:600;color:var(--gds-text-meta)}
+.steps{display:grid;gap:16px}
+.step{display:grid;grid-template-columns:minmax(0,1fr) 260px;gap:22px;align-items:start;padding:22px;border-radius:var(--gds-radius-card);background:var(--gds-bg-surface);border:1px solid var(--gds-border-card);box-shadow:var(--gds-elevation-card)}
+.step h3{margin:0 0 6px;font-size:20px;letter-spacing:-.3px}
+.step h3 small{display:block;font-size:12px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--gds-text-meta);margin-bottom:4px}
+.step p{margin:0 0 10px;font-size:14px;font-weight:500;line-height:1.55}
+.btns{display:flex;flex-wrap:wrap;gap:8px;margin-top:8px}
+.btn{display:inline-flex;align-items:center;min-height:44px;padding:8px 16px;border-radius:999px;background:var(--gds-brand-accent);color:#fff;text-decoration:none;font-size:13px;font-weight:800}
+.btn.alt{background:var(--gds-brand-accent-tint);color:var(--gds-brand-accent-strong)}
+.phone{width:100%;max-width:260px;justify-self:end;aspect-ratio:390/760;position:relative;overflow:hidden;border-radius:14px;border:1px solid var(--gds-border-card);background:var(--gds-bg-canvas)}
+.phone iframe{position:absolute;top:0;left:0;width:390px;height:1140px;border:0;transform-origin:0 0;transform:scale(calc(var(--pw,260) / 390));pointer-events:none}
+.desk{width:100%;aspect-ratio:1440/900;position:relative;overflow:hidden;border-radius:var(--gds-radius-card);border:1px solid var(--gds-border-card);background:var(--gds-bg-canvas);margin:0 0 8px}
+.desk iframe{position:absolute;top:0;left:0;width:1440px;height:900px;border:0;transform-origin:0 0;transform:scale(calc(var(--dw,1000) / 1440));pointer-events:none}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px}
+.card{padding:20px 22px;border-radius:var(--gds-radius-card);background:var(--gds-bg-surface);border:1px solid var(--gds-border-card)}
+.card h3{margin:0 0 8px;font-size:17px;letter-spacing:-.2px}
+.card p,.card li{margin:0;font-size:14px;font-weight:500;line-height:1.55}
+.card ul{margin:0;padding-left:18px}
+.asks{counter-reset:a;display:grid;gap:10px}
+.ask{display:grid;grid-template-columns:36px 1fr;gap:12px;align-items:start;padding:14px 16px;border-radius:12px;background:var(--gds-bg-surface);border:1px solid var(--gds-border-card);font-size:14px;font-weight:500}
+.ask::before{counter-increment:a;content:counter(a);width:32px;height:32px;border-radius:50%;display:grid;place-items:center;background:var(--gds-brand-accent-tint);color:var(--gds-brand-accent-strong);font-weight:800}
+.next{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px}
+.next .card b{display:block;font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--gds-text-meta);margin-bottom:6px}
+footer{margin:44px 0 24px;padding-top:18px;border-top:1px solid var(--gds-border-card);font-size:12px;font-weight:600;color:var(--gds-text-meta)}
+footer a{display:inline-flex;align-items:center;min-height:44px}
+@media (max-width:760px){.step{grid-template-columns:1fr}.phone{justify-self:start;max-width:100%}}
+.scq{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:14px}
+.scq .card b.k{display:block;font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--gds-brand-accent-strong);margin-bottom:6px}
+table{width:100%;border-collapse:collapse;font-size:13.5px;margin:6px 0 14px}
+th,td{padding:9px 10px;border-bottom:1px solid var(--gds-border-card);text-align:left;vertical-align:top}
+th{font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--gds-text-meta)}
+.tbl{overflow-x:auto}
+.finding{padding:18px 20px;border-radius:var(--gds-radius-card);background:var(--gds-brand-accent-tint);border:1px solid var(--gds-border-card);font-size:14.5px;font-weight:600}
+.decision{padding:26px 24px;border-radius:var(--gds-radius-card);background:var(--gds-bg-inverse);color:#fff}
+.decision h2{color:#fff}.decision p{color:rgba(255,255,255,.85)}
+.src{font-size:12px;color:var(--gds-text-meta);font-weight:600}
+</style>
+</head>
+<body>
+<header class="hero">
+  <div class="wrap">
+    <p class="eyebrow">A proposal for ClassScout · Your Field NYC · business.direct</p>
+    <h1>253 providers listed. None manages its page. Families are told nothing. Here is how that changes.</h1>
+    <p>Your Field has gathered the supply side of children's activities in New York and built the demand side's tools. What it does not have is the team that works both sides every day — answering, following up, publishing, selling. business.direct is that team, as a machine the platform runs: it drafts everything, sends nothing until a person approves, and measures every dollar.</p>
+    <div class="nums">
+      <div class="num"><b>0 of 253</b><span>providers manage their own page today — no reviews, no answers, no one paying (measured on the platform's public API, 2026-09-19)</span></div>
+      <div class="num"><b>62 %</b><span>of calls to small businesses go unanswered; 78 % of customers buy from the business that answers first (sourced)</span></div>
+      <div class="num"><b>83</b><span>next sessions, 72 trial policies and 26 announcements sit on the cards and are published nowhere</span></div>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+  <section id="situation">
+    <h2>1 · The situation — Your Field NYC today, measured</h2>
+    <p class="lede">Everything below was read from the platform's own public API on 2026-09-19 and re-pulled the same evening; nothing was edited by hand.</p>
+    <div class="scq">
+      <article class="card"><b class="k">Supply</b><h3>253 providers, gathered by a pipeline</h3><p>Soccer clubs, taekwondo schools, dance studios — most run by one person. 130 have an e-mail on the card, 181 a phone, 50 only a website. Every card was built from the provider's own site; not one provider has claimed it.</p></article>
+      <article class="card"><b class="k">Demand</b><h3>Families can save and plan — and hear nothing</h3><p>The platform records saves only after a family opts in (off by default) and does not yet offer e-mail alerts. Nobody tells a parent what starts near them this week; nobody tells a provider that a family asked.</p></article>
+      <article class="card"><b class="k">The cards</b><h3>0 reviews, 28 prices, no answers</h3><p>The two fields families and AI answers look for first are missing on almost every card. A card that is unclaimed, photo-less and unanswered is measurably worth less than the same business next door with a claimed one.</p></article>
+    </div>
+  </section>
+
+  <section id="complication">
+    <h2>2 · The complication — what the gaps cost</h2>
+    <div class="grid">
+      <article class="card"><h3>Enquiries die</h3><p>A lead contacted within five minutes is 21× more likely to qualify than after thirty; the odds of contacting it at all fall 100× in the same window. A one-coach club does neither. The family goes to the next provider — or off the platform.</p><p class="src">MIT / InsideSales lead-response study; 411 Locals; research I §2</p></article>
+      <article class="card"><h3>Discovery moved</h3><p>Organic Google sends 19 % fewer clicks to the same rankings; AI answers cite the structured, reviewed source; nearly half of Gen Z searches social before Google. A catalogue with no reviews and no prices is not the one that gets cited.</p><p class="src">research II §1, §3</p></article>
+      <article class="card"><h3>The money flows past the platform</h3><p>US families spend $1 016 per child per sport, up 46 % in five years. While providers stay unmanaged, the platform introduces families and captures nothing.</p><p class="src">Project Play 2025; research I</p></article>
+      <article class="card"><h3>The incumbents are already selling it</h3><p>Yelp bought Hatch for $270 M in January 2026 and sells "Receptionist" — answer, follow up, convert — at $99 a month to the same small businesses. Thumbtack lives inside ChatGPT and Claude.</p><p class="src">Yelp IR; research III</p></article>
+    </div>
+    <p class="lede" style="margin-top:18px">Doing nothing keeps Your Field a directory: supply gathered by a pipeline, demand served a list, nobody paid.</p>
+  </section>
+
+  <section id="question">
+    <h2>3 · The question</h2>
+    <p class="finding">How does a platform with no sales team and no content team turn 253 listings into managed pages, paying providers and families who come back every week — without breaking the law, a parent's trust, or the platform's own privacy policy?</p>
+  </section>
+
+  <section id="answer">
+    <h2>4 · The answer — one machine, run by the platform, gated by a person</h2>
+    <p class="lede">business.direct works both sides of the marketplace every day from the platform's own data, and shows the result in one place.</p>
+    <div class="scq">
+      <article class="card"><b class="k">For the platform</b><h3>Two flows at the front door</h3><p><b>Families brought to the listing page</b> by real content: the 83 sessions, 72 trial policies and 26 announcements become the week's posts and a Sunday "this week near you" digest. <b>Providers brought to manage their page</b> by a three-touch invitation in propensity order, from a warmed domain, with the law's footer and a cap — and every family's "ask about a trial" becomes the strongest sales touch of all.</p></article>
+      <article class="card"><b class="k">For the provider</b><h3>A one-person team it did not have</h3><p>Every enquiry — a platform message, an e-mail, a missed call — answered from the coach's own files within the hour; the trial offer, the open Saturday spots and the club's news drafted as campaigns to the families who saved it; one session recording cut into the week's clips; results on one screen; the platform's reach products offered only once the machine has delivered more than they cost.</p></article>
+      <article class="card"><b class="k">For the family</b><h3>What arrives, and control over it</h3><p>Posts and a digest built from what she saved; campaigns only from providers she saved, each saying why; a cap of four provider messages a month; every channel off by default; Stop in one tap. No child's name exists anywhere — a child is an age.</p></article>
+    </div>
+    <article class="card" style="margin-top:14px"><h3>How it decides — the loop</h3><p>Every touch, reply, post, save, ask and payment is an event → nightly metrics (cost per managing and per paying provider, lifetime value, the value of an avid family, cost per family from content) → the next dollar ranked across three levers (one more touch, the call list, a week of content) → <b>a person approves</b> → measure, then adjust the cadence, the content slots and the moment the upgrade is offered. The human gate never moves; it gets lighter — a week's clips are one decision, and a department that runs four clean weeks earns auto-approval for routine messages, every one logged and stoppable.</p><div class="btns"><a class="btn alt" href="business-logic.html">The rules, end to end</a><a class="btn alt" href="analytics.html">The model</a></div></article>
+  </section>
+
+  <section id="value">
+    <h2>5 · The value — the business case</h2>
+    <p class="lede">The prototype's Economics screen computes these from the platform's catalogue and marked assumptions; the full case with sensitivity and break-even is one page (<a href="business-case.html">business case</a>).</p>
+    <div class="tbl"><table>
+      <thead><tr><th>Scenario</th><th>What changes</th><th>Cost per paying provider</th><th>Lifetime value</th><th>LTV : CAC</th><th>Payback</th></tr></thead>
+      <tbody>
+        <tr><td><b>0 · Today's defaults</b></td><td>253 providers, $49 a month, 5 % churn</td><td>≈ $1 200</td><td>$784</td><td><b>0.7</b></td><td>31 months</td></tr>
+        <tr><td><b>A · Growth engine</b></td><td>the base machine bundled by the platform; return counted in managed pages and families</td><td colspan="4">content brings a new family for ≈ $4 against an expected value of ≈ $6; each managing provider answers within the hour instead of losing 62 % of calls; ≈ $610 k a year of provider revenue flows through the platform's introductions at 5 000 families</td></tr>
+        <tr><td><b>B · Larger catalogue</b></td><td>1 000 providers, same rates and prices</td><td>&lt; $400</td><td>$784</td><td><b>≈ 2</b></td><td>≈ 10 months</td></tr>
+        <tr><td><b>C · Priced for the category</b></td><td>mix ARPA $89, annual plans (3 % churn)</td><td>≈ $1 200 · &lt; $400 at 1 000</td><td>$2 373</td><td><b>≈ 2 · ≈ 6 at 1 000</b></td><td>17 · 6 months</td></tr>
+      </tbody>
+    </table></div>
+    <p class="finding">The honest finding: outbound e-mail alone, on today's catalogue at sample prices, does not pay for $49 upgrades. The machine pays as the platform's growth engine from day one, and as a profit centre once the catalogue grows or the products are priced for a category where a family spends $1 016 a child. Each is one input on the screen; the first measured numbers arrive at the end of sprint 2 and replace the assumptions.</p>
+    <div class="btns"><a class="btn" href="business-case.html">The business case</a><a class="btn alt" href="../index.html?view=platform&amp;screen=economics">Change the inputs yourself</a></div>
+  </section>
+
+  <section id="proof">
+    <h2>6 · Proof — it runs on the real catalogue today</h2>
+    <div class="grid">
+      <article class="card"><h3>Real: the platform's data</h3><p>253 providers with name, activity, neighbourhood, contact, next session, trial policy, announcement and claim state — pulled from the public API, never edited. Every tile, pipeline total and digest row is computed from it.</p></article>
+      <article class="card"><h3>Real: the evidence</h3><p>Six research rounds with sources for every figure: lead response, reminders, discovery, how listing platforms monetise, the law in the US and the EU, the incumbents' moves, every vendor's own price and limit.</p><div class="btns"><a class="btn alt" href="research.html">Research</a><a class="btn alt" href="sources.html">What is real, what is sample</a></div></article>
+      <article class="card"><h3>Sample, declared: the activity</h3><p>Post copy, the invitation, the replies, the provider's numbers, audiences, product prices, the family. Each generated from real providers and labelled sample on the page. No provider or family was contacted; nothing sends.</p></article>
+      <article class="card"><h3>The prototype</h3><p>One page, three views — the platform, a provider, a family — with every approval moving state. Open it in Simple mode and the first screen lists what needs you, with the reason and one button.</p><div class="btns"><a class="btn" href="../index.html">Open the prototype</a></div></article>
+    </div>
+  </section>
+
+  <section id="responsible">
+    <h2>7 · Responsible by design — risk removed, value added</h2>
+    <div class="grid">
+      <article class="card"><h3>What you get</h3><ul><li><b>Lower exposure</b>: the enforcement record in this category is a list of defaults and labels (Epic $520 M, YouTube $170 M, Disney $10 M); the machine's policy gate makes the wrong default impossible to ship.</li><li><b>A better audience</b>: every message goes to a person who saved, asked or opted in — volunteered data converts better than inferred data and needs no profiling.</li><li><b>Trust as the channel</b>: half of privacy-aware consumers have switched over data practices; 83 % of small businesses grow on referrals. The trusted platform is the one parents recommend.</li><li><b>An audit trail</b>: every send carries its legal basis, its consent and its cap; a regulator's question is a query.</li></ul></article>
+      <article class="card"><h3>How it is done</h3><ul><li>A child is an age, never a name — matching Your Field's own policy (adults only, no children's data) and holding the line for any later client.</li><li>No profiling or targeting of minors, ever; no audience on a protected characteristic; no dark patterns; disclosure when a machine wrote or made something.</li><li>Real footage of children only with written parental consent; a coach's safeguarding shown as verified or not, never claimed; "not now" pauses everything and gets a human.</li><li>One policy record per client and a gate in the code: provider e-mail needs the postal address, the digest needs the privacy policy to describe it, SMS needs the consent text.</li></ul><div class="btns"><a class="btn alt" href="policy-framework.html">The framework</a><a class="btn alt" href="../index.html?view=platform&amp;screen=policy">The policy screen</a></div></article>
+    </div>
+  </section>
+
+  <section id="delivery">
+    <h2>8 · Delivery — what it takes</h2>
+    <div class="next">
+      <article class="card"><b>Build</b><p>Nine two-week sprints, seventeen weeks, two developers with the owner as product lead; an acceptance test you can watch at every sprint review. Sales and conversations run first (sprint 2–3), social publishing when Meta's review clears (submitted in sprint 0), families and the digest by sprint 6, campaigns and upgrades by sprint 8.</p></article>
+      <article class="card"><b>Run cost</b><p>≈ $50–75 a month at pilot, ≈ $280–400 a month at 1 000 providers and 50 000 families — every vendor's own price, read on the day. Covered by two upgraded providers at pilot, eight at scale.</p></article>
+      <article class="card"><b>Stack</b><p>Your platform's own: Next.js on Vercel, MongoDB Atlas, your sign-in; e-mail, Instagram and Facebook, Stripe on your account; one small worker for video. Every service verified, every module specified with pseudo code.</p></article>
+      <article class="card"><b>What we need from you — after the decision</b><p>Nothing today. Then: the postal address for provider e-mail, one paragraph in the privacy policy (we draft it), the policy record confirmed, counsel's wording on children's data; later the opted-in share, the analytics events, a write key and one pilot provider.</p></article>
+    </div>
+    <div class="btns" style="margin-top:14px"><a class="btn alt" href="implementation-plan.html">The plan</a><a class="btn alt" href="system-blueprint.html">The system blueprint</a><a class="btn alt" href="implementation-prerequisites.html">Prerequisites</a></div>
+  </section>
+
+  <section id="decision">
+    <div class="decision">
+      <h2>9 · The decision</h2>
+      <p>One: go ahead. Sprint 0 starts on the decision and Meta's review is submitted the same week. The first measured numbers — reply rate, families per post, enquiries answered — are on the Economics screen at the end of sprint 2, replacing the assumptions above.</p>
+    </div>
+  </section>
+
+  <section id="demo">
+    <h2>Appendix · Seeing it in ten minutes</h2>
+    <p class="lede">Open <a href="../index.html">the prototype</a>. The top bar switches between the platform, a provider and a family; Simple shows what needs you with one button, Advanced shows everything. Platform: <a href="../index.html?view=platform&amp;screen=sales">provider sales</a> (approve the invitation; three replies arrive), <a href="../index.html?view=platform&amp;screen=intelligence">the Monday recap</a>, <a href="../index.html?view=platform&amp;screen=economics">economics</a>, <a href="../index.html?view=platform&amp;screen=policy">the policy gate</a>. Provider: <a href="../index.html?view=provider">apply to manage the page</a>, then conversations, campaigns, media, results. Family: <a href="../index.html?view=family">the inbox</a>, saved providers with "ask about a trial", <a href="../index.html?view=family&amp;screen=prefs">preferences and Stop</a>. Real providers, sample activity; reload resets everything.</p>
+  </section>
+
+  <footer>Calvus · business.direct · <a href="executive.html">Executive summary</a> · <a href="business-case.html">Business case</a> · <a href="index.html">Full project documentation</a> · <a href="implementation-prerequisites.html">Implementation prerequisites</a> · <a href="business-logic.html">Business logic</a> · <a href="audit-swot.html">Audit · SWOT</a></footer>
+</main>
+</body>
+</html>

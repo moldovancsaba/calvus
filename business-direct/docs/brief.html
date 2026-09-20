@@ -36,7 +36,7 @@ footer{margin-top:56px;padding-top:18px;border-top:1px solid var(--line);font-si
 </head>
 <body>
 <div class="wrap">
-<nav class="docnav" aria-label="Project documentation"><span class="docnav-brand">business.direct · docs</span><a href="index.html">Overview</a><a href="brief.html" aria-current=page>Brief</a><a href="research.html">Research</a><a href="research-2.html">Research II</a><a href="research-3.html">Research III</a><a href="research-4.html">Research IV</a><a href="research-5.html">Research V</a><a href="research-6.html">Research VI</a><a href="audit.html">Audit</a><a href="sources.html">Sources</a><a href="design-system.html">Design system</a><a href="layouts.html">Layouts</a><a href="05-layout-specs.html">Layout specs</a><a href="decisions.html">Decisions</a><a href="build-log.html">Build log</a><a href="gate.html">Gate</a><a href="client-asks.html">Register of asks</a><a href="implementation-prerequisites.html">Prerequisites</a><a href="business-logic.html">Business logic</a><a href="ssot.html">SSOT</a><a href="architecture.html">Architecture</a><a href="technical-design.html">Technical design</a><a href="implementation-plan.html">Plan</a><a href="system-blueprint.html">System blueprint</a><a href="token-map.html">Token map</a><a href="executive.html">Executive summary</a><a href="analytics.html">Analytics</a><a href="audit-swot.html">Audit · SWOT</a><a href="policy-framework.html">Policy framework</a></nav>
+<nav class="docnav" aria-label="Project documentation"><span class="docnav-brand">business.direct · docs</span><a href="index.html">Overview</a><a href="brief.html" aria-current=page>Brief</a><a href="research.html">Research</a><a href="research-2.html">Research II</a><a href="research-3.html">Research III</a><a href="research-4.html">Research IV</a><a href="research-5.html">Research V</a><a href="research-6.html">Research VI</a><a href="audit.html">Audit</a><a href="sources.html">Sources</a><a href="design-system.html">Design system</a><a href="layouts.html">Layouts</a><a href="05-layout-specs.html">Layout specs</a><a href="decisions.html">Decisions</a><a href="build-log.html">Build log</a><a href="gate.html">Gate</a><a href="client-asks.html">Register of asks</a><a href="implementation-prerequisites.html">Prerequisites</a><a href="business-logic.html">Business logic</a><a href="ssot.html">SSOT</a><a href="architecture.html">Architecture</a><a href="technical-design.html">Technical design</a><a href="implementation-plan.html">Plan</a><a href="system-blueprint.html">System blueprint</a><a href="documentation-audit.html">Documentation audit</a><a href="token-map.html">Token map</a><a href="executive.html">Executive summary</a><a href="business-case.html">Business case</a><a href="analytics.html">Analytics</a><a href="audit-swot.html">Audit · SWOT</a><a href="policy-framework.html">Policy framework</a></nav>
 <header><p class="eyebrow">Calvus · business.direct · project documentation</p><h1>business.direct — brief</h1></header>
 <p><em>Stage 0 of the prototyping standard (<code>PROTOTYPING.md</code>). Written 2026-09-19, revised the same
 day when the owner named the first client. Everything here is what the owner said, what the
@@ -55,15 +55,17 @@ instances.</p>
 customers; business.direct markets a <em>listed business</em> to the families on the platform —
 and markets the platform to the business.</p>
 <h2>The problem</h2>
-<p>A listing platform is B2B2C: <strong>platform → listed business → consumer</strong>. On Your Field every
-provider was gathered from its own website by an enrichment pipeline (field-level
-verification records say which fields were read from where); <strong>none is claimed</strong> — 15 are
-marked <code>unclaimed</code> explicitly, 237 carry no claim state at all. The providers are small
-operations — a soccer club run by one coach, a taekwondo school, a dance studio — that
-answer late, do not follow up trials, and do not know the platform sends them families.
-On the consumer side, parents can save and plan, but nobody tells them what starts near
-them this week.</p>
-<p>The two videos the owner shared show the target shape: <strong>the one-person sales and
+<p>A listing platform is B2B2C: <strong>platform → listed business → consumer</strong>. Measured on Your
+Field's public API (2026-09-19): <strong>253 providers, 0 managing their page</strong> (15 marked
+<code>unclaimed</code>, 237 with no claim state); 130 with an e-mail, 181 with a phone, 50 with only a
+website; <strong>0 reviews and 28 prices</strong> on the cards; <strong>83 next sessions, 72 trial policies and
+26 announcements</strong> published nowhere. The providers are small operations — a soccer club run
+by one coach, a taekwondo school, a dance studio — and small businesses lose 62 % of their
+calls and the customer to whoever answers first (research I). Families can save and plan, and
+are told nothing when something starts near them; the platform records saves only after an
+opt-in and offers no alerts yet. The cost of leaving it so, and the return of changing it, are
+on one page: <a href="business-case.html"><code>22-business-case.md</code></a>.</p>
+<p><strong>Where the shape came from.</strong> The two videos the owner shared show the target: <strong>the one-person sales and
 marketing team</strong> — an orchestrator over departments (research and intelligence, content,
 distribution, creative, leads and conversations, reviews and reputation, results), a
 <strong>brand knowledge layer</strong> kept as plain files, <strong>human-in-the-loop</strong> ("it drafts, it can't

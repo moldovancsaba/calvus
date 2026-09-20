@@ -36,7 +36,7 @@ footer{margin-top:56px;padding-top:18px;border-top:1px solid var(--line);font-si
 </head>
 <body>
 <div class="wrap">
-<nav class="docnav" aria-label="Project documentation"><span class="docnav-brand">business.direct · docs</span><a href="index.html" aria-current=page>Overview</a><a href="brief.html">Brief</a><a href="research.html">Research</a><a href="research-2.html">Research II</a><a href="research-3.html">Research III</a><a href="research-4.html">Research IV</a><a href="research-5.html">Research V</a><a href="research-6.html">Research VI</a><a href="audit.html">Audit</a><a href="sources.html">Sources</a><a href="design-system.html">Design system</a><a href="layouts.html">Layouts</a><a href="05-layout-specs.html">Layout specs</a><a href="decisions.html">Decisions</a><a href="build-log.html">Build log</a><a href="gate.html">Gate</a><a href="client-asks.html">Register of asks</a><a href="implementation-prerequisites.html">Prerequisites</a><a href="business-logic.html">Business logic</a><a href="ssot.html">SSOT</a><a href="architecture.html">Architecture</a><a href="technical-design.html">Technical design</a><a href="implementation-plan.html">Plan</a><a href="system-blueprint.html">System blueprint</a><a href="token-map.html">Token map</a><a href="executive.html">Executive summary</a><a href="analytics.html">Analytics</a><a href="audit-swot.html">Audit · SWOT</a><a href="policy-framework.html">Policy framework</a></nav>
+<nav class="docnav" aria-label="Project documentation"><span class="docnav-brand">business.direct · docs</span><a href="index.html" aria-current=page>Overview</a><a href="brief.html">Brief</a><a href="research.html">Research</a><a href="research-2.html">Research II</a><a href="research-3.html">Research III</a><a href="research-4.html">Research IV</a><a href="research-5.html">Research V</a><a href="research-6.html">Research VI</a><a href="audit.html">Audit</a><a href="sources.html">Sources</a><a href="design-system.html">Design system</a><a href="layouts.html">Layouts</a><a href="05-layout-specs.html">Layout specs</a><a href="decisions.html">Decisions</a><a href="build-log.html">Build log</a><a href="gate.html">Gate</a><a href="client-asks.html">Register of asks</a><a href="implementation-prerequisites.html">Prerequisites</a><a href="business-logic.html">Business logic</a><a href="ssot.html">SSOT</a><a href="architecture.html">Architecture</a><a href="technical-design.html">Technical design</a><a href="implementation-plan.html">Plan</a><a href="system-blueprint.html">System blueprint</a><a href="documentation-audit.html">Documentation audit</a><a href="token-map.html">Token map</a><a href="executive.html">Executive summary</a><a href="business-case.html">Business case</a><a href="analytics.html">Analytics</a><a href="audit-swot.html">Audit · SWOT</a><a href="policy-framework.html">Policy framework</a></nav>
 <header><p class="eyebrow">Calvus · business.direct · project documentation</p><h1>business.direct — project documentation</h1></header>
 <p>An automated marketing machine for B2B2C listing platforms — the one-person sales and
 marketing team for a listed business, run by the platform, with the consumer as the
@@ -54,8 +54,8 @@ Built to the prototyping standard (<code>PROTOTYPING.md</code>); this index is t
 <tbody>
 <tr>
 <td>presentation</td>
-<td><code>bemutato.html</code></td>
-<td>Standalone, English, on the product's tokens: one sentence, three numbers, five things to click with previews, how the machine decides, responsible by design, what is real, what we ask today (one decision) and what the implementation will need, what comes next</td>
+<td><code>presentation.html</code></td>
+<td>The client presentation, standalone and in the client's language: the situation measured, the complication and its cost, the question, the answer, the business case with the honest finding, proof, responsible by design as risk removed, delivery and cost, the decision; the demo as an appendix (<code>bemutato.html</code> redirects here — a live URL is never deleted)</td>
 </tr>
 <tr>
 <td>00 brief</td>
@@ -105,7 +105,7 @@ Built to the prototyping standard (<code>PROTOTYPING.md</code>); this index is t
 <tr>
 <td>04 decisions</td>
 <td><a href="decisions.html"><code>04-decisions.md</code></a></td>
-<td>D1–D37</td>
+<td>D1–D38</td>
 </tr>
 <tr>
 <td>05 design</td>
@@ -165,7 +165,7 @@ Built to the prototyping standard (<code>PROTOTYPING.md</code>); this index is t
 <tr>
 <td>15 executive summary</td>
 <td><a href="executive.html"><code>15-executive-summary.md</code></a></td>
-<td>One page in prose: the thesis, the evidence, the first client, what the machine already found, what is different, what we ask today, what comes next (hub audit action 8)</td>
+<td>One page for the decision-maker: situation, complication, question, answer, the three numbers, what is different, the decision (rewritten 2026-09-20, D38)</td>
 </tr>
 <tr>
 <td>16 analytics</td>
@@ -186,6 +186,16 @@ Built to the prototyping standard (<code>PROTOTYPING.md</code>); this index is t
 <td>20 system blueprint</td>
 <td><a href="system-blueprint.html"><code>20-system-blueprint.md</code></a></td>
 <td>The document a developer builds from: drawings (context, deployment, module map, the two pipelines, the clip engine, the state machines), the repository layout, seventeen modules with what each owns and pseudo code, data contracts, the cron table, the outbox in full, security, configuration, the media worker, the test plan, operations, the prototype → module map (D37)</td>
+</tr>
+<tr>
+<td>21 documentation audit</td>
+<td><a href="documentation-audit.html"><code>21-documentation-audit.md</code></a></td>
+<td>The Big4-standard audit of this documentation: ten criteria, a scorecard per document, twelve findings with evidence, root cause and fix, the target state, the transformation plan in four phases and what shipped (D38)</td>
+</tr>
+<tr>
+<td>22 business case</td>
+<td><a href="business-case.html"><code>22-business-case.md</code></a></td>
+<td>For the decision-maker: the situation in the client's numbers, the cost of doing nothing, the investment, the return under three scenarios with the honest finding, sensitivity, break-even, what we need and when, the decision (D38)</td>
 </tr>
 <tr>
 <td>19 prerequisites</td>
@@ -362,6 +372,18 @@ drawings, the modules with pseudo code, the contracts, the crons, the outbox, se
 worker, the tests and the operations; the architecture's ADRs become the build baseline with
 ADR-15–25 for the service choices; the plan is re-cut into nine sprints with an acceptance test
 each and a sprint-0 checklist.</p>
+<p><strong>2026-09-20 — the documentation audited and the top of the pyramid rebuilt (D38).</strong> The
+owner read the live presentation: a guided tour of screens under a Hungarian filename, for an
+English-speaking client whose problem it never quantified. A Big4-standard audit of the whole
+set (<a href="documentation-audit.html"><code>21-documentation-audit.md</code></a>: ten criteria, a scorecard, twelve findings with root causes)
+found the engineering set sound and the two documents a client opens first failing. Shipped
+the same day: <code>presentation.html</code> rebuilt as situation → complication → question → answer →
+value → proof → responsible by design → delivery → decision, with the demo as an appendix;
+<code>bemutato.html</code> left as a redirect; the executive summary rewritten in the same shape; a new
+business case with three scenarios, sensitivity and break-even; the brief's problem quantified;
+the hub row rewritten; the standard's presentation slot corrected (structure, and the filename
+in the client's language). Phases 2–4 of the plan (owners and dates, reading paths, gate rows)
+follow.</p>
 <p><strong>Next.</strong> Present. After acceptance, the prerequisites checklist and sprint 0.</p>
 <footer>Source: <code>business-direct/docs/README.md</code> · rendered by <code>docs/build.py</code>.</footer>
 </div>

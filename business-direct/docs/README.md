@@ -8,7 +8,7 @@ Built to the prototyping standard (`PROTOTYPING.md`); this index is the process 
 
 | Slot | File | What it holds |
 |---|---|---|
-| presentation | `bemutato.html` | Standalone, English, on the product's tokens: one sentence, three numbers, five things to click with previews, how the machine decides, responsible by design, what is real, what we ask today (one decision) and what the implementation will need, what comes next |
+| presentation | `presentation.html` | The client presentation, standalone and in the client's language: the situation measured, the complication and its cost, the question, the answer, the business case with the honest finding, proof, responsible by design as risk removed, delivery and cost, the decision; the demo as an appendix (`bemutato.html` redirects here — a live URL is never deleted) |
 | 00 brief | `00-brief.md` | Client (ClassScout · Your Field NYC), problem, the three views and the flows, what is real, where it stands |
 | 01 research | `01-research.md` | Sourced: reputation and claiming, speed to lead, reminders, digests, generated pages, marketplace monetisation, AI adoption and human-in-the-loop, EU AI Act Art. 50, US CAN-SPAM and TCPA, the Hungarian reference market |
 | 01b research II | `01b-research-acquisition-content-sales.md` | Acquiring customers for classified media (demand and supply side), content strategies, the AI creation services (Higgsfield and the video / image / audio / design / scheduling landscape with prices and the labelling rules), the sales processes with benchmarks; P1–P9 (implemented, D28) |
@@ -18,7 +18,7 @@ Built to the prototyping standard (`PROTOTYPING.md`); this index is the process 
 | 01g research VI | `01g-research-real-system.md` | The real system's services verified on the day: hosting, database, cache, files, jobs, e-mail, Meta, SMS, payments, drafting, transcription, the media worker, credentials, sign-in, observability — auth, review, limits, prices, alternatives; what each needs before the first run; the monthly cost at pilot and at the sizing target; what is assumed |
 | 02 audit | `02-audit.md` | Your Field measured: API, 253 providers, field coverage, site copy, the platform's own policy and terms; the Hungarian reference instance; the two videos frame by frame; what DiscountDirect provides |
 | 03 sources | `03-sources.md` | What is real (the platform's public data), what is sample (generated from real cards), what is inherited |
-| 04 decisions | `04-decisions.md` | D1–D37 |
+| 04 decisions | `04-decisions.md` | D1–D38 |
 | 05 design | `design-system.html` + `../assets/tokens.css` + `../assets/components.css` | **Gate 1 approved (D9)**: tokens and components, one source |
 | 05 layouts | `05-layout-specs.md` + `layouts.html` + `frames/` | **Gate 2 approved (D16)**: platform 1440 / 390, provider 390, family 390; the later screens reuse the same grids |
 | 06 build log | `06-build-log.md` | Ten rounds and a re-pull: the prototype; presentation and package; editors and tablet; campaigns, upgrades, recap; conversations; economics; the research implemented; the audit implemented; the policy screen; the two interfaces; beyond children; the catalogue re-pulled |
@@ -30,11 +30,13 @@ Built to the prototyping standard (`PROTOTYPING.md`); this index is the process 
 | 12 technical design | `12-technical-design.md` | screens, content model, state machines, jobs, connector, media and channel adapter interfaces, drafting, i18n, operations |
 | 13 plan | `13-implementation-plan.md` | seven milestones, nine two-week sprints with an acceptance test each and a sprint-0 checklist, 65 issues with a Definition of Done, blocked register (the prerequisites), risks, release scope in two halves |
 | 14 token map | `14-token-map.md` | tokens and components → GDS + Mantine; contrast computed |
-| 15 executive summary | `15-executive-summary.md` | One page in prose: the thesis, the evidence, the first client, what the machine already found, what is different, what we ask today, what comes next (hub audit action 8) |
+| 15 executive summary | `15-executive-summary.md` | One page for the decision-maker: situation, complication, question, answer, the three numbers, what is different, the decision (rewritten 2026-09-20, D38) |
 | 16 analytics | `16-analytics-and-unit-economics.md` | CAC / LTV / payback for providers, the marketing value of an avid family, content ROI, the next-dollar rule, the metrics tree, events and attribution, rules R16–R19; what is real vs assumed (D26) |
 | 17 audit · SWOT | `17-business-logic-audit-and-swot.md` | Audit of the business logic: 19 findings with fixes; the SWOT with evidence; the recommendations Q1–Q12 (adopted and implemented, D30) |
 | 18 policy framework | `18-responsible-data-policy-framework.md` | Seventeen principles, the policy record per instance, the gate (ten rows), onboarding, the client's value, two worked instances, how it generalises (D32, D35) |
 | 20 system blueprint | `20-system-blueprint.md` | The document a developer builds from: drawings (context, deployment, module map, the two pipelines, the clip engine, the state machines), the repository layout, seventeen modules with what each owns and pseudo code, data contracts, the cron table, the outbox in full, security, configuration, the media worker, the test plan, operations, the prototype → module map (D37) |
+| 21 documentation audit | `21-documentation-audit.md` | The Big4-standard audit of this documentation: ten criteria, a scorecard per document, twelve findings with evidence, root cause and fix, the target state, the transformation plan in four phases and what shipped (D38) |
+| 22 business case | `22-business-case.md` | For the decision-maker: the situation in the client's numbers, the cost of doing nothing, the investment, the return under three scenarios with the honest finding, sensitivity, break-even, what we need and when, the decision (D38) |
 | 19 prerequisites | `19-implementation-prerequisites.md` | What the implementation needs from ClassScout after acceptance — before the first send, before Release 1b, to confirm at acceptance — not required for the presentation or the planning (D34) |
 
 Rendered by `build.py` (`python3 business-direct/docs/build.py`); gate `python3 business-direct/check.py`
@@ -233,5 +235,18 @@ drawings, the modules with pseudo code, the contracts, the crons, the outbox, se
 worker, the tests and the operations; the architecture's ADRs become the build baseline with
 ADR-15–25 for the service choices; the plan is re-cut into nine sprints with an acceptance test
 each and a sprint-0 checklist.
+
+**2026-09-20 — the documentation audited and the top of the pyramid rebuilt (D38).** The
+owner read the live presentation: a guided tour of screens under a Hungarian filename, for an
+English-speaking client whose problem it never quantified. A Big4-standard audit of the whole
+set (`21-documentation-audit.md`: ten criteria, a scorecard, twelve findings with root causes)
+found the engineering set sound and the two documents a client opens first failing. Shipped
+the same day: `presentation.html` rebuilt as situation → complication → question → answer →
+value → proof → responsible by design → delivery → decision, with the demo as an appendix;
+`bemutato.html` left as a redirect; the executive summary rewritten in the same shape; a new
+business case with three scenarios, sensitivity and break-even; the brief's problem quantified;
+the hub row rewritten; the standard's presentation slot corrected (structure, and the filename
+in the client's language). Phases 2–4 of the plan (owners and dates, reading paths, gate rows)
+follow.
 
 **Next.** Present. After acceptance, the prerequisites checklist and sprint 0.

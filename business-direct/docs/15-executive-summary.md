@@ -1,71 +1,68 @@
-# business.direct — executive summary
+# business.direct — executive summary for ClassScout
 
-*One page, 2026-09-20, for a reader who wants the argument in prose rather than the
-presentation's screens. Every figure is sourced in the research (`01`–`01f`) or measured in
-the audit (`02`); every rule is in the SSOT; every decision is numbered.*
+*One page for the decision-maker. What it supports: the decision to build. Every figure is
+measured on the platform's public API, sourced in the research, or marked as an assumption to
+be replaced by the platform's own numbers; the full case is `22-business-case.md`, the plan
+`13-implementation-plan.md`. Written 2026-09-20 (D38).*
 
-## The thesis
+## The situation
 
-A listing platform has three parties — the platform, the listed business, the consumer —
-and two flows it never had a machine for: **B2C social publishing** that turns listings,
-updates and news into posts that bring consumers to the listing page, and a **B2B sales
-flow** that works every listed business through a pipeline — contacted → replied →
-applied → managing → upgraded — until it manages its own page and buys more. business.direct
-is that machine: departments as automations, a knowledge layer of plain files, optional AI
-per department, an intelligence recap, integrations as the machine's hands, and one gate —
-**nothing leaves without a person**.
+Your Field NYC has gathered 253 children's-activity providers and built the tools families use
+to save and plan. **None of the 253 manages its page**; the cards carry 0 reviews and 28 prices;
+83 next sessions, 72 trial policies and 26 announcements sit on them unpublished; families who
+save a provider are told nothing when something starts near them. The platform has the supply
+and the demand and no team working either side.
 
-## The evidence
+## The complication
 
-- The incumbents bought the thesis: Yelp acquired Hatch (AI lead management and scoring)
-  for $270 million in January 2026 and sells "Receptionist" at $99 a month; Thumbtack now
-  lives inside ChatGPT and Claude (research III).
-- Discovery moved: Google organic sends 19 % fewer clicks to the same rankings; AI answers
-  cite the structured, reviewed source (Yelp: 512,680 citations in one quarter); nearly half
-  of Gen Z searches social before Google (research II).
-- The category pays: US families spend $1,016 per child per sport, up 46 % in five years;
-  83 % of small businesses say referrals are their best channel (research I, II).
-- Responsible practice pays: 96 % of organisations say privacy investment returns more than
-  it costs; half of privacy-aware consumers have switched over data practices (research IV).
+Small providers lose the enquiries the platform sends them — 62 % of calls to small businesses
+go unanswered, and the customer buys from whoever answers first. Discovery is moving to social
+and to AI answers that cite reviewed, structured sources — which a catalogue without reviews or
+prices is not. The category's money ($1 016 per child per sport, up 46 % in five years) flows
+past a platform whose providers are unmanaged. And the incumbents already sell the fix: Yelp
+bought Hatch for $270 M and charges $99 a month for "answer, follow up, convert".
 
-## The first client
+## The question
 
-**ClassScout**, operator of **Your Field NYC**: 253 providers pulled from its public API,
-none managing its page, 130 reachable by e-mail, 181 by phone. The prototype runs on that
-catalogue; every activity figure is declared sample until the platform's analytics replace
-it (prerequisites).
+How does a platform with no sales team and no content team turn 253 listings into managed
+pages, paying providers and families who come back — without breaking the law, a parent's
+trust or its own privacy policy?
 
-## What the machine already found
+## The answer
 
-At the defaults, outbound e-mail to a 253-provider catalogue **does not pay for $49
-upgrades** — LTV : CAC 0.7, payback 31 months. The model says the base machine is the
-platform's growth engine, or the catalogue grows, or the price rises; each is one input on
-the Economics screen. The presentation says this rather than hiding it.
+**business.direct**: a marketing and sales machine the platform runs on its own data. Two
+flows at the front door — real content that brings families to the listing page, and a lawful,
+capped invitation sequence that brings providers to manage their page — and behind them the
+provider's own one-person team (conversations answered within the hour, campaigns to the
+families who saved it, clips from one recording, results on one screen) and the platform's
+reach products offered once the machine has delivered more than they cost. One loop decides
+where the next dollar goes; **a person approves everything**; every message says why it was
+sent; a child is an age, never a name.
 
-## What is different about it
+## The three numbers
 
-- **Responsible by design, for every client**: one policy record per instance and a gate in
-  the code; a child is an age, never a name; no profiling of minors; real footage of
-  children only with written parental consent; no dark patterns; disclosure when a machine
-  wrote or made something (rules R24–R36).
-- **Two interfaces, one machine**: Simple shows what needs a person with the reason and one
-  button; Advanced shows everything.
-- **Honest data**: 253 real providers, every tile labelled real / sample / assumption, an
-  audit that found its own two critical contradictions and fixed them.
+1. **Today's honest finding: LTV : CAC 0.7.** Outbound e-mail alone, on 253 providers at $49,
+   does not pay for itself. The machine pays as the platform's growth engine from day one
+   (a new family for ≈ $4 against ≈ $6 of expected value; ≈ $610 k a year of provider revenue
+   through the platform's introductions at 5 000 families), and as a profit centre at 1 000
+   providers (LTV : CAC ≈ 2) or priced for the category (≈ 6).
+2. **Seventeen weeks, two developers**, nine sprints with an acceptance test each; Meta's
+   review submitted in the first week.
+3. **≈ $50–75 a month to run at pilot**, ≈ $280–400 at 1 000 providers — every vendor's price
+   read on the day; covered by two upgraded providers at pilot.
 
-## What we ask today
+## What is different
 
-One decision: go ahead. What the implementation needs after acceptance — the postal
-address, the privacy-policy paragraph, the policy record confirmed, the platform's events
-and a pilot provider — is a checklist, not a condition (`19-implementation-prerequisites.md`).
+Responsible by design for every client — one policy record and a gate in the code, no
+profiling of minors, no dark patterns, disclosure when a machine made something; two
+interfaces — Simple shows what needs you with one button, Advanced shows everything; honest
+data — 253 real providers, every figure labelled real, sample or assumption, an audit that
+found and fixed its own contradictions.
 
-## What comes next
+## The decision
 
-Release 1a, read-only against the platform: the sales sequence with its sending guard, the
-reply inbox, the provider's team, the content queue with labels, economics on assumptions,
-family preferences by signed link. Release 1b, with the platform's key: claim requests,
-audiences from saves, notifications, card flags, sign-up sources, bookings. Then real
-intelligence and generated pages; then campaigns, results and upgrades billed by Stripe. The build
-is specified to implementation grade: every service verified and priced on the day, seventeen
-modules with pseudo code, nine two-week sprints with an acceptance test each
-(`20-system-blueprint.md`, `13-implementation-plan.md`).
+Go ahead. Nothing is needed from ClassScout before it; what the build needs after it — the
+postal address, one privacy-policy paragraph, the policy record confirmed, counsel's wording,
+later the platform's events and a pilot provider — is a checklist with owners and dates
+(`19-implementation-prerequisites.md`). The first measured numbers replace the assumptions at
+the end of sprint 2.
