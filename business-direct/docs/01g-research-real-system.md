@@ -1,5 +1,8 @@
 # business.direct — research VI: the real system — every service verified, what it costs, what it needs, what it limits
 
+> **Status — evidence.** Written while the project was framed around the first customer's site; the vocabulary of that time (client, platform, provider, family) is kept, the product's terms are in `product-definition.md` §5. Every figure the stakeholder documents use from this round was re-verified on 2026-09-20 in `evidence.md`, which is the authority where the two differ.
+
+
 *Sixth research round, 2026-09-20; every row re-read against the vendor's page the same evening and
 corrected where it was wrong — the status of each figure is in `evidence.md` §2 (V1–V16),
 which is the authority where this file and the register differ. Originally written on the owner's instruction: "step to the next phase … make a
@@ -50,7 +53,7 @@ policy record and a connector (ADR-2), nothing here assumes one.*
   times the sizing target of 5 000 a day (architecture §3).
 - **Preview per branch** and production on `main` — the repo's existing model.
 - **Why not Fly.io for everything**: the app is a Next.js console with Server Actions; Vercel is the
-  platform the client already runs on (`first-customer-classscout.md`), the operator learns one dashboard, and the one
+  platform the first customer already runs on (`first-customer-classscout.md`), the operator learns one dashboard, and the one
   thing Vercel cannot do (long ffmpeg runs) goes to one small container (§10).
 
 ## 2. Database — MongoDB Atlas

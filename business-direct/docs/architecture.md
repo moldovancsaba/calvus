@@ -158,13 +158,8 @@ every channel off and cancels queued messages for that family in the same transa
 
 ## 6. Data architecture
 
-MongoDB collections: `providers_cache` (the catalogue copy, refreshed by sync, never
-edited), `provider_state`, `drafts`, `approvals` (append-only), `sequences`, `threads`,
-`families_prefs`, `consents` (append-only, with the proof text), `messages` (append-only
-log of everything sent), `knowledge_files`, `integrations`, `generated_pages`, `campaigns`, `products`, `entitlements`, `enquiries`, `comments`, `events` (append-only, ADR-11) and `metrics_daily` (materialised). Every
-document carries `platform_id` (Your Field, Sportolok) — one deployment, several
-instances (ADR-2). Retention: message log 24 months; consent log for the life of the
-account plus 5 years; drafts 90 days after their final state.
+The collections, indexes and retention are Part B §2 (content model) and Part C §5 (contracts);
+every document carries `platform_id` — one deployment, several instances (ADR-2).
 
 ## 7. Integration architecture
 
@@ -182,28 +177,21 @@ account plus 5 years; drafts 90 days after their final state.
 
 ## 8. Security and privacy
 
-Operator and provider sign-in through DoneIsBetter SSO (ADR-5); provider access is scoped
-to its own `provider_id`. Families never sign in to business.direct — preferences are
-reached through signed links from the platform's account or through the platform's own
-UI (ADR-6). Secrets in Vercel environment; webhooks verified by signature; idempotency
-keys on every inbound event. Personal data: families' names, children's first names and
-ages, saved providers, preferences, consent — minimised, exportable, deletable on the
-platform's account deletion via a webhook. No data leaves the region the platform uses.
+The security table is Part C §8; the product's legal position and the customer's policy record
+are `responsible-data.md`. In one line: SSO for operators and advertisers, scoped per instance;
+visitors by signed link only; secrets in the platform's environment; every webhook verified and
+idempotent; append-only audit collections; personal data minimised, exportable and deletable.
 
 ## 9. Deployment and operations
 
-Vercel preview per branch, production on `main`; MongoDB Atlas with daily backups;
-Upstash and Blob in the same region. Cron schedules: sync hourly, drafting 08:00 daily,
-digest Sunday 17:00/18:00, sequences 09:00 weekdays, retention nightly. Alerting on:
-outbox lag > 30 min, webhook signature failures, cap violations (must be zero), send
-errors per channel. Runbooks for: a channel's token expiry, a provider's "not my program",
-a family's deletion request.
+Preview per branch, production on `main`; the cron table is Part C §6, the health endpoint,
+alerts and runbooks Part C §12; the operating model is `delivery-plan.md` §7.
 
 ## 10. Stack (build baseline, D37; each line verified in `01g-research-real-system.md`)
 
 | Layer | Choice | Reason |
 |---|---|---|
-| App | Next.js 15, React, Mantine with GDS tokens | the client platform's stack; one design system across the family (D5, `architecture.md`) |
+| App | Next.js 15, React, Mantine with GDS tokens | the first customer's site's stack; one design system across the family (D5, `architecture.md`) |
 | Data | MongoDB Atlas (Mongoose) | DiscountDirect D26; document shapes match the platform's JSON |
 | Cache/limits | Upstash Redis | caps and idempotency |
 | Files | Vercel Blob | post media, audit snapshots |
@@ -249,7 +237,7 @@ a family's deletion request.
 
 ## Part B — technical design: screens, content model, state machines, jobs, connectors and adapters
 
-*Written 2026-09-19 on `architecture.md`'s PROPOSED containers. Where the prototype
+*The technical design on Part A's containers. Where the prototype
 already implements a rule, the section names the function in `assets/app.js` so a
 developer can read the behaviour before the code exists.*
 
@@ -476,11 +464,7 @@ the server. Digest build is a job, never a request. Caps in Redis, O(1) per chec
 
 ### 13. Operations
 
-Dashboards: outbox lag, sends per channel per day, cap checks (0 violations), stage
-transitions per day, opt-outs. Runbooks in §9 of the architecture. Backups: Atlas daily,
-Blob versioned. Data deletion: platform webhook → delete `families_prefs`, anonymise
-`messages`, keep `consents` (legal hold) with the id hashed.
-
+Part C §12.
 
 ## Part C — the system blueprint: modules, drawings, contracts, the outbox, security, the worker, tests, operations
 
@@ -1367,7 +1351,7 @@ stateless; a job that fails is retried once by the app, then surfaces as a task.
 | Load | 5 000 outbox rows drained within an hour at 100/minute; `send` tick < 60 s | a script, measured in the build log |
 | Security | signature failure → 401 and no row; cron without secret → 401; provider A cannot read provider B (`assertOwns`) | Vitest |
 
-Every rule R1–R36 that is code has at least one test that names it (`describe('R3 cap …')`), so the
+Every rule R1–R37 that is code has at least one test that names it (`describe('R3 cap …')`), so the
 rules map (`business-logic.md`) can be checked against the test names by the gate.
 
 ### 12. Operations

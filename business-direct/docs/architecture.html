@@ -37,7 +37,7 @@ footer{margin-top:56px;padding-top:18px;border-top:1px solid var(--line);font-si
 </head>
 <body>
 <div class="wrap">
-<nav class="docnav" aria-label="Project documentation"><span class="docnav-brand">business.direct · docs</span><a href="index.html">Overview</a><a href="executive-summary.html">Executive summary</a><a href="product-definition.html">Product definition</a><a href="product-specification.html">Product specification</a><a href="market.html">Market</a><a href="economics.html">Economics</a><a href="business-logic.html">Business logic and SSOT</a><a href="architecture.html" aria-current=page>Architecture and blueprint</a><a href="delivery-plan.html">Delivery plan</a><a href="responsible-data.html">Responsible data and legal</a><a href="first-customer-classscout.html">First customer</a><a href="evidence.html">Evidence</a><a href="research.html">Research I</a><a href="research-2.html">Research II</a><a href="research-3.html">Research III</a><a href="research-4.html">Research IV</a><a href="research-5.html">Research V</a><a href="research-6.html">Research VI</a><a href="design-system.html">Design system</a><a href="layouts.html">Layouts</a><a href="05-layout-specs.html">Layout specs</a><a href="decisions.html">Decisions</a><a href="build-log.html">Build log</a><a href="gate.html">Gate</a><a href="register-of-asks.html">Register of asks</a><a href="logic-audit.html">Logic audit</a><a href="documentation-audit.html">Documentation audit</a></nav>
+<nav class="docnav" aria-label="Project documentation"><span class="docnav-brand">business.direct · docs</span><a href="index.html">Overview</a><a href="executive-summary.html">Executive summary</a><a href="product-definition.html">Product definition</a><a href="product-specification.html">Product specification</a><a href="market.html">Market</a><a href="economics.html">Economics</a><a href="business-logic.html">Business logic and SSOT</a><a href="architecture.html" aria-current=page>Architecture and blueprint</a><a href="delivery-plan.html">Delivery plan</a><a href="responsible-data.html">Responsible data and legal</a><a href="first-customer-classscout.html">First customer</a><a href="evidence.html">Evidence</a><a href="research.html">Evidence · Research I</a><a href="research-2.html">Evidence · Research II</a><a href="research-3.html">Evidence · Research III</a><a href="research-4.html">Evidence · Research IV</a><a href="research-5.html">Evidence · Research V</a><a href="research-6.html">Evidence · Research VI</a><a href="design-system.html">Design system</a><a href="layouts.html">Layouts</a><a href="05-layout-specs.html">Layout specs</a><a href="decisions.html">History · Decisions</a><a href="build-log.html">History · Build log</a><a href="gate.html">History · Gate</a><a href="register-of-asks.html">History · Register of asks</a><a href="logic-audit.html">History · Logic audit</a><a href="documentation-audit.html">History · Documentation audit</a></nav>
 <header><p class="eyebrow">Calvus · business.direct · project documentation</p><h1>business.direct — architecture and system blueprint</h1></header>
 <p><em>For the delivery team: the document a developer builds from. Part A — the architecture: context,
 the target measured, quality attributes, containers, flows, integrations, security, deployment, the
@@ -288,13 +288,8 @@ featured / camp / profile flag on the card.</p>
 <p><strong>Preferences and stop.</strong> A family's change is written first, then the caps; <em>Stop</em> sets
 every channel off and cancels queued messages for that family in the same transaction.</p>
 <h2>6. Data architecture</h2>
-<p>MongoDB collections: <code>providers_cache</code> (the catalogue copy, refreshed by sync, never
-edited), <code>provider_state</code>, <code>drafts</code>, <code>approvals</code> (append-only), <code>sequences</code>, <code>threads</code>,
-<code>families_prefs</code>, <code>consents</code> (append-only, with the proof text), <code>messages</code> (append-only
-log of everything sent), <code>knowledge_files</code>, <code>integrations</code>, <code>generated_pages</code>, <code>campaigns</code>, <code>products</code>, <code>entitlements</code>, <code>enquiries</code>, <code>comments</code>, <code>events</code> (append-only, ADR-11) and <code>metrics_daily</code> (materialised). Every
-document carries <code>platform_id</code> (Your Field, Sportolok) — one deployment, several
-instances (ADR-2). Retention: message log 24 months; consent log for the life of the
-account plus 5 years; drafts 90 days after their final state.</p>
+<p>The collections, indexes and retention are Part B §2 (content model) and Part C §5 (contracts);
+every document carries <code>platform_id</code> — one deployment, several instances (ADR-2).</p>
 <h2>7. Integration architecture</h2>
 <div class="tbl"><table>
 <thead>
@@ -363,20 +358,13 @@ account plus 5 years; drafts 90 days after their final state.</p>
 </tbody>
 </table></div>
 <h2>8. Security and privacy</h2>
-<p>Operator and provider sign-in through DoneIsBetter SSO (ADR-5); provider access is scoped
-to its own <code>provider_id</code>. Families never sign in to business.direct — preferences are
-reached through signed links from the platform's account or through the platform's own
-UI (ADR-6). Secrets in Vercel environment; webhooks verified by signature; idempotency
-keys on every inbound event. Personal data: families' names, children's first names and
-ages, saved providers, preferences, consent — minimised, exportable, deletable on the
-platform's account deletion via a webhook. No data leaves the region the platform uses.</p>
+<p>The security table is Part C §8; the product's legal position and the customer's policy record
+are <a href="responsible-data.html"><code>responsible-data.md</code></a>. In one line: SSO for operators and advertisers, scoped per instance;
+visitors by signed link only; secrets in the platform's environment; every webhook verified and
+idempotent; append-only audit collections; personal data minimised, exportable and deletable.</p>
 <h2>9. Deployment and operations</h2>
-<p>Vercel preview per branch, production on <code>main</code>; MongoDB Atlas with daily backups;
-Upstash and Blob in the same region. Cron schedules: sync hourly, drafting 08:00 daily,
-digest Sunday 17:00/18:00, sequences 09:00 weekdays, retention nightly. Alerting on:
-outbox lag &gt; 30 min, webhook signature failures, cap violations (must be zero), send
-errors per channel. Runbooks for: a channel's token expiry, a provider's "not my program",
-a family's deletion request.</p>
+<p>Preview per branch, production on <code>main</code>; the cron table is Part C §6, the health endpoint,
+alerts and runbooks Part C §12; the operating model is <a href="delivery-plan.html"><code>delivery-plan.md</code></a> §7.</p>
 <h2>10. Stack (build baseline, D37; each line verified in <a href="research-6.html"><code>01g-research-real-system.md</code></a>)</h2>
 <div class="tbl"><table>
 <thead>
@@ -390,7 +378,7 @@ a family's deletion request.</p>
 <tr>
 <td>App</td>
 <td>Next.js 15, React, Mantine with GDS tokens</td>
-<td>the client platform's stack; one design system across the family (D5, <a href="architecture.html"><code>architecture.md</code></a>)</td>
+<td>the first customer's site's stack; one design system across the family (D5, <a href="architecture.html"><code>architecture.md</code></a>)</td>
 </tr>
 <tr>
 <td>Data</td>
@@ -618,7 +606,7 @@ a family's deletion request.</p>
 </tbody>
 </table></div>
 <h2>Part B — technical design: screens, content model, state machines, jobs, connectors and adapters</h2>
-<p><em>Written 2026-09-19 on <a href="architecture.html"><code>architecture.md</code></a>'s PROPOSED containers. Where the prototype
+<p><em>The technical design on Part A's containers. Where the prototype
 already implements a rule, the section names the function in <code>assets/app.js</code> so a
 developer can read the behaviour before the code exists.</em></p>
 <h3>1. Screens and templates</h3>
@@ -1072,10 +1060,7 @@ required; conversion keeps alpha; served resized (1080 × 1350 IG, 1200 × 630 F
 <p>Console: server-rendered lists, paginated at 50 providers; the providers table filters on
 the server. Digest build is a job, never a request. Caps in Redis, O(1) per check.</p>
 <h3>13. Operations</h3>
-<p>Dashboards: outbox lag, sends per channel per day, cap checks (0 violations), stage
-transitions per day, opt-outs. Runbooks in §9 of the architecture. Backups: Atlas daily,
-Blob versioned. Data deletion: platform webhook → delete <code>families_prefs</code>, anonymise
-<code>messages</code>, keep <code>consents</code> (legal hold) with the id hashed.</p>
+<p>Part C §12.</p>
 <h2>Part C — the system blueprint: modules, drawings, contracts, the outbox, security, the worker, tests, operations</h2>
 <p><em>Written 2026-09-20 (D37) from <a href="architecture.html"><code>architecture.md</code></a> (the ADRs), <a href="architecture.html"><code>architecture.md</code></a> (the
 data model, the state machines, the jobs), <a href="research-6.html"><code>01g-research-real-system.md</code></a> (every service verified)
@@ -1994,7 +1979,7 @@ stateless; a job that fails is retried once by the app, then surfaces as a task.
 </tr>
 </tbody>
 </table></div>
-<p>Every rule R1–R36 that is code has at least one test that names it (<code>describe('R3 cap …')</code>), so the
+<p>Every rule R1–R37 that is code has at least one test that names it (<code>describe('R3 cap …')</code>), so the
 rules map (<a href="business-logic.html"><code>business-logic.md</code></a>) can be checked against the test names by the gate.</p>
 <h3>12. Operations</h3>
 <ul>

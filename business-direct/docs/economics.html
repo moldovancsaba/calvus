@@ -37,7 +37,7 @@ footer{margin-top:56px;padding-top:18px;border-top:1px solid var(--line);font-si
 </head>
 <body>
 <div class="wrap">
-<nav class="docnav" aria-label="Project documentation"><span class="docnav-brand">business.direct · docs</span><a href="index.html">Overview</a><a href="executive-summary.html">Executive summary</a><a href="product-definition.html">Product definition</a><a href="product-specification.html">Product specification</a><a href="market.html">Market</a><a href="economics.html" aria-current=page>Economics</a><a href="business-logic.html">Business logic and SSOT</a><a href="architecture.html">Architecture and blueprint</a><a href="delivery-plan.html">Delivery plan</a><a href="responsible-data.html">Responsible data and legal</a><a href="first-customer-classscout.html">First customer</a><a href="evidence.html">Evidence</a><a href="research.html">Research I</a><a href="research-2.html">Research II</a><a href="research-3.html">Research III</a><a href="research-4.html">Research IV</a><a href="research-5.html">Research V</a><a href="research-6.html">Research VI</a><a href="design-system.html">Design system</a><a href="layouts.html">Layouts</a><a href="05-layout-specs.html">Layout specs</a><a href="decisions.html">Decisions</a><a href="build-log.html">Build log</a><a href="gate.html">Gate</a><a href="register-of-asks.html">Register of asks</a><a href="logic-audit.html">Logic audit</a><a href="documentation-audit.html">Documentation audit</a></nav>
+<nav class="docnav" aria-label="Project documentation"><span class="docnav-brand">business.direct · docs</span><a href="index.html">Overview</a><a href="executive-summary.html">Executive summary</a><a href="product-definition.html">Product definition</a><a href="product-specification.html">Product specification</a><a href="market.html">Market</a><a href="economics.html" aria-current=page>Economics</a><a href="business-logic.html">Business logic and SSOT</a><a href="architecture.html">Architecture and blueprint</a><a href="delivery-plan.html">Delivery plan</a><a href="responsible-data.html">Responsible data and legal</a><a href="first-customer-classscout.html">First customer</a><a href="evidence.html">Evidence</a><a href="research.html">Evidence · Research I</a><a href="research-2.html">Evidence · Research II</a><a href="research-3.html">Evidence · Research III</a><a href="research-4.html">Evidence · Research IV</a><a href="research-5.html">Evidence · Research V</a><a href="research-6.html">Evidence · Research VI</a><a href="design-system.html">Design system</a><a href="layouts.html">Layouts</a><a href="05-layout-specs.html">Layout specs</a><a href="decisions.html">History · Decisions</a><a href="build-log.html">History · Build log</a><a href="gate.html">History · Gate</a><a href="register-of-asks.html">History · Register of asks</a><a href="logic-audit.html">History · Logic audit</a><a href="documentation-audit.html">History · Documentation audit</a></nav>
 <header><p class="eyebrow">Calvus · business.direct · project documentation</p><h1>business.direct — the Economics department: the value for the media owner, and the model behind the screen</h1></header>
 <p><em>For a classified media owner. What this page answers: what business.direct computes for you,
 on your numbers, every night — what a listing sells for and earns, what an advertiser costs to
@@ -282,74 +282,9 @@ model the </em>Economics<em> screen (<code>../index.html?view=platform&amp;scree
 screen's inputs are this document's assumptions, and every number that is not from the
 catalogue or a cited benchmark is marked so. Terms are the SSOT's; the decision rules become
 R16–R19 there.</em></p>
-<h3>1. What the numbers are for</h3>
-<p>The machine spends three things — e-mail touches, operator minutes and tool subscriptions —
-and gets back providers who manage their page, providers who pay, and families who come,
-save, ask and enrol. Data-driven marketing here means four questions the system can answer
-from its own events, every week:</p>
-<ol>
-<li><strong>What does a paying provider cost and what is it worth?</strong> (CAC, LTV, payback, LTV:CAC)</li>
-<li><strong>What is a family worth, and an <em>avid</em> one?</strong> (marketing value on the demand side)</li>
-<li><strong>Does content pay?</strong> (cost per family from the content engine vs the value of a family)</li>
-<li><strong>Where does the next dollar go?</strong> (expected LTV gained per dollar, across the three
-   levers: another touch, a call, a week of content)</li>
-</ol>
-<h3>2. The B2B model: providers (the platform's B2B clients)</h3>
+<h3>2. The advertiser side (the owner's B2B model)</h3>
 <h4>2.1 Funnel and rates</h4>
-<div class="tbl"><table>
-<thead>
-<tr>
-<th>Stage</th>
-<th>Count</th>
-<th>Rate to next</th>
-<th>Source of the rate</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Identified</td>
-<td>from the instance's listings</td>
-<td>—</td>
-<td>the site</td>
-</tr>
-<tr>
-<td>Reachable by e-mail</td>
-<td>from the listings</td>
-<td>reply <strong>5.5 %</strong> (top-quartile benchmark; 3.43 % average, 10.7 % top decile)</td>
-<td><a href="https://instantly.ai/cold-email-benchmark-report-2026">Instantly 2026 benchmark</a> (research II §5.1)</td>
-</tr>
-<tr>
-<td>Phone only</td>
-<td>from the listings</td>
-<td>a call converts ~3× an e-mail; half are reached</td>
-<td>assumption; multi-channel +40 % (research II §5.1)</td>
-</tr>
-<tr>
-<td>Website only</td>
-<td>from the listings</td>
-<td>not in the model until a form step exists</td>
-<td>—</td>
-</tr>
-<tr>
-<td>Replied → applied</td>
-<td>—</td>
-<td><strong>40 %</strong></td>
-<td>assumption</td>
-</tr>
-<tr>
-<td>Applied → managing</td>
-<td>—</td>
-<td><strong>80 %</strong> (the platform confirms the claim)</td>
-<td>assumption</td>
-</tr>
-<tr>
-<td>Managing → upgraded within 3 months</td>
-<td>—</td>
-<td><strong>25 %</strong></td>
-<td>assumption; SMB activation 35–50 % (research II §2.2)</td>
-</tr>
-</tbody>
-</table></div>
+<p>The funnel, its rates and their status are §2 above; the counts come from the instance's listings.</p>
 <h4>2.2 Cost of acquisition</h4>
 <p><code>cost = e-mailed × touches × cost per touch + phone-only × cost per call + approvals ×
 operator minutes ÷ 60 × operator rate + tooling × 3 months</code></p>
@@ -366,22 +301,9 @@ $149 per season), margin 80 %, churn 5 %/month (SMB SaaS range 3–7 %, research
 A <strong>conversations line</strong> input (default 0 = included in the placement; Yelp Receptionist sells the
 same thing at $99) adds revenue per <em>managing</em> provider to the plan's MRR (Q12) — the
 owner's pricing decision is one number on the screen.</p>
-<h4>2.4 What the defaults say (the first data-driven finding)</h4>
-<p>On placeholder inputs (a few hundred reachable listings, $49 placements, 5 % churn, the
-benchmark reply rate), one quarter of outbound yields about 2 managing and 0.6 paying advertisers
-for ~$720 — <strong>CAC (paying) ≈ $1,200 against an LTV of $784: LTV : CAC below 1, payback beyond two
-years.</strong> Raising the reply rate to the top decile (10.7 %) only reaches 1.3 : 1. That is the model
-reporting an unfavourable lever honestly — on placeholders, not on any customer's numbers. On a
-real instance it pays in one of three ways, and the screen shows which:</p>
-<ul>
-<li><strong>the marketing and sales departments as the site's growth engine, not a profit centre</strong> (their
-  return is visitors and managing advertisers, valued below), or</li>
-<li><strong>more listings</strong> (the cost is mostly fixed tooling; at four times the listings CAC falls by
-  about two thirds with the same rates), or</li>
-<li><strong>higher ARPA</strong> (a seasonal placement, bundles) and lower churn (annual plans).</li>
-</ul>
-<p>The screen makes each of these one input away.</p>
-<h3>3. The B2C model: families and the value of an avid user</h3>
+<h4>2.4 What the defaults say</h4>
+<p>The illustration on placeholders is §3 above.</p>
+<h3>3. The visitor side: the value of an engaged visitor</h3>
 <h4>3.1 Definitions</h4>
 <ul>
 <li><strong>Family</strong>: an account on the platform (count is the platform's — prerequisite P-6; 5,000 assumed).</li>
@@ -515,7 +437,7 @@ Cost
 attributed to the campaign or enquiry that preceded it within 30 days; an upgrade is
 attributed to the pipeline (always) and to the campaign result shown at the moment of
 purchase (P8) — both recorded, neither double-counted in revenue.</p>
-<h3>7. Decision rules (proposed R16–R19)</h3>
+<h3>7. Decision rules (R16–R19)</h3>
 <div class="tbl"><table>
 <thead>
 <tr>

@@ -94,32 +94,11 @@ screen's inputs are this document's assumptions, and every number that is not fr
 catalogue or a cited benchmark is marked so. Terms are the SSOT's; the decision rules become
 R16–R19 there.*
 
-### 1. What the numbers are for
-
-The machine spends three things — e-mail touches, operator minutes and tool subscriptions —
-and gets back providers who manage their page, providers who pay, and families who come,
-save, ask and enrol. Data-driven marketing here means four questions the system can answer
-from its own events, every week:
-
-1. **What does a paying provider cost and what is it worth?** (CAC, LTV, payback, LTV:CAC)
-2. **What is a family worth, and an *avid* one?** (marketing value on the demand side)
-3. **Does content pay?** (cost per family from the content engine vs the value of a family)
-4. **Where does the next dollar go?** (expected LTV gained per dollar, across the three
-   levers: another touch, a call, a week of content)
-
-### 2. The B2B model: providers (the platform's B2B clients)
+### 2. The advertiser side (the owner's B2B model)
 
 #### 2.1 Funnel and rates
 
-| Stage | Count | Rate to next | Source of the rate |
-|---|---|---|---|
-| Identified | from the instance's listings | — | the site |
-| Reachable by e-mail | from the listings | reply **5.5 %** (top-quartile benchmark; 3.43 % average, 10.7 % top decile) | [Instantly 2026 benchmark](https://instantly.ai/cold-email-benchmark-report-2026) (research II §5.1) |
-| Phone only | from the listings | a call converts ~3× an e-mail; half are reached | assumption; multi-channel +40 % (research II §5.1) |
-| Website only | from the listings | not in the model until a form step exists | — |
-| Replied → applied | — | **40 %** | assumption |
-| Applied → managing | — | **80 %** (the platform confirms the claim) | assumption |
-| Managing → upgraded within 3 months | — | **25 %** | assumption; SMB activation 35–50 % (research II §2.2) |
+The funnel, its rates and their status are §2 above; the counts come from the instance's listings.
 
 #### 2.2 Cost of acquisition
 
@@ -143,24 +122,11 @@ A **conversations line** input (default 0 = included in the placement; Yelp Rece
 same thing at $99) adds revenue per *managing* provider to the plan's MRR (Q12) — the
 owner's pricing decision is one number on the screen.
 
-#### 2.4 What the defaults say (the first data-driven finding)
+#### 2.4 What the defaults say
 
-On placeholder inputs (a few hundred reachable listings, $49 placements, 5 % churn, the
-benchmark reply rate), one quarter of outbound yields about 2 managing and 0.6 paying advertisers
-for ~$720 — **CAC (paying) ≈ $1,200 against an LTV of $784: LTV : CAC below 1, payback beyond two
-years.** Raising the reply rate to the top decile (10.7 %) only reaches 1.3 : 1. That is the model
-reporting an unfavourable lever honestly — on placeholders, not on any customer's numbers. On a
-real instance it pays in one of three ways, and the screen shows which:
+The illustration on placeholders is §3 above.
 
-- **the marketing and sales departments as the site's growth engine, not a profit centre** (their
-  return is visitors and managing advertisers, valued below), or
-- **more listings** (the cost is mostly fixed tooling; at four times the listings CAC falls by
-  about two thirds with the same rates), or
-- **higher ARPA** (a seasonal placement, bundles) and lower churn (annual plans).
-
-The screen makes each of these one input away.
-
-### 3. The B2C model: families and the value of an avid user
+### 3. The visitor side: the value of an engaged visitor
 
 #### 3.1 Definitions
 
@@ -242,7 +208,7 @@ attributed to the campaign or enquiry that preceded it within 30 days; an upgrad
 attributed to the pipeline (always) and to the campaign result shown at the moment of
 purchase (P8) — both recorded, neither double-counted in revenue.
 
-### 7. Decision rules (proposed R16–R19)
+### 7. Decision rules (R16–R19)
 
 | # | Rule | Effect |
 |---|---|---|

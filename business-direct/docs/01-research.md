@@ -1,5 +1,8 @@
 # business.direct — research
 
+> **Status — evidence.** Written while the project was framed around the first customer's site; the vocabulary of that time (client, platform, provider, family) is kept, the product's terms are in `product-definition.md` §5. Every figure the stakeholder documents use from this round was re-verified on 2026-09-20 in `evidence.md`, which is the authority where the two differ.
+
+
 *What the evidence says about the four automations and the one-person machine, with the
 source behind every figure. Searched 2026-09-19. Primary sources (studies, platform
 disclosures, regulators) are marked **P**; industry aggregators are marked **A** and carry

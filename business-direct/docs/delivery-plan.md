@@ -41,7 +41,7 @@ instance (`platform_id`). "Measured" means a number in the build log, not a clai
 | Sprint | Weeks | Issues | Acceptance test at the review (run on the console, measured) | Needs before it starts |
 |---|---|---|---|---|
 | S0 setup | 0 | — | the accounts of research VI §14 exist; `env.ts` boots; `/api/health` is green; SSO signs the owner in as operator | Vercel Pro, Atlas M0, Upstash, Resend domain DNS, Claude key, the SSO client; **Meta App Review submitted** |
-| S1 foundation | 1–2 | BD-0-1 … BD-0-11 | the demo sample cached by `sync`; the thirteen screens navigate with empty states; Simple and Advanced modes; the Policy screen shows the first client's record with `postal_address` marked missing and the features it blocks; a Server Action that tries to import a channel fails the build; the outbox drains a stub row in ≤ 60 s | — |
+| S1 foundation | 1–2 | BD-0-1 … BD-0-11 | the demo sample cached by `sync`; every screen of the specification navigates with empty states; Simple and Advanced modes; the Policy screen shows the first client's record with `postal_address` marked missing and the features it blocks; a Server Action that tries to import a channel fails the build; the outbox drains a stub row in ≤ 60 s | — |
 | S2 provider sales | 3–4 | BD-1-1, 1-2, 1-4, 1-6, 1-10, 1-11, 1-12, 1-14, 1-7 | with a test policy record: step 1 sent by Resend to a test provider in score order; the reply lands in the thread within a minute; stage moves *identified → contacted → replied* by events only; a template without `{postal_address}` cannot be approved; bounce ≥ 2 % pauses; "not my program" excludes the address | a sending domain (P-11 DNS); a test policy record |
 | S3 conversations | 5–6 | BD-1-3, 1-5, 1-8, 1-9, 1-13 | an inbound e-mail, a platform message and a missed call each become an enquiry with a drafted answer in ≤ 1 min; AI on / off both marked; apply-to-manage writes a claim request when keyed, else an operator task; a family's ask to an unclaimed provider becomes sales step 2 | P-7 for the keyed branch (else the task branch is demonstrated) |
 | S4 social publishing | 7–8 | BD-2-1, 2-2, 2-3, 2-4, 2-6, 2-5, 2-9 | a draft from a catalogue event → approve → published to the test Page and Instagram account at its slot ± 5 min; the snapshot in Blob; a comment on the post arrives by webhook with a drafted reply; the weekly anchor on the calendar | **Meta App Review approved** (submitted S0); a test Page + Instagram account |
@@ -58,7 +58,7 @@ nothing from Meta.
 ### Sprint 0 checklist (the day before S1)
 
 1. Repository created (`architecture.md` §3), `main` protected, preview deployments on.
-2. Vercel project with the environment of blueprint §9; `CRON_SECRET`; the thirteen crons in `vercel.json`.
+2. Vercel project with the environment of blueprint §9; `CRON_SECRET`; the crons of the cron table in `vercel.json`.
 3. Atlas M0 cluster, the collections and indexes of technical design §2 + blueprint §5 (a `scripts/indexes.ts`).
 4. Upstash database in `us-east-1`; Blob store.
 5. Resend: domain verified (SPF, DKIM, DMARC), `reply.` MX, webhook endpoint with the signing secret.
@@ -66,7 +66,7 @@ nothing from Meta.
 7. Claude API key with a spend limit; `DRAFTER=template` until the knowledge files are loaded.
 8. Sentry project; Better Stack monitor on `/api/health`.
 9. DoneIsBetter SSO client for the machine (owner).
-10. The first client's policy record entered on the Policy screen from `responsible-data.md` §6 — with `postal_address` empty until P-1.
+10. The first customer's policy record entered on the Policy screen from `responsible-data.md` §6 — with `postal_address` empty until P-1.
 
 ## 3. Issues
 

@@ -1,5 +1,8 @@
 # business.direct — research II: acquiring customers, content, AI creation services, sales processes
 
+> **Status — evidence.** Written while the project was framed around the first customer's site; the vocabulary of that time (client, platform, provider, family) is kept, the product's terms are in `product-definition.md` §5. Every figure the stakeholder documents use from this round was re-verified on 2026-09-20 in `evidence.md`, which is the authority where the two differ.
+
+
 *Second research round, 2026-09-19, on the owner's ask: "based on what we have now and what
 the market says about the trends — how to find and acquire customers for classified media
 sites, what content strategies content providers use, how to deliver those contents (which

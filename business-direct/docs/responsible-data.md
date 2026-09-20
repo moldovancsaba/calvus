@@ -9,8 +9,8 @@ job portal, a classifieds site — gets the same protection by configuration, no
 build. The research behind it is `01e-research-responsible-data.md`; the reference
 implementation is the platform's *Policy* screen (`../index.html?view=platform&screen=policy`)
 and the policy gate in the outbox. The owner's directive: respect children's rights whatever
-the client, care for customers' data, use it commercially but properly, and deliver business
-value for the client.*
+the customer, care for customers' data, use it commercially but properly, and deliver business
+value for the customer.*
 
 ## 1. Principles (the machine's own, for any instance)
 
@@ -89,7 +89,7 @@ missing / placeholder) and every feature it blocks.
 7. Beyond children: media consent, safeguarding, vulnerability, protected characteristics, accessibility, sensitive categories, dark patterns (research V).
 8. The gate report: what is blocked until which field is set.
 
-## 5. What the client gets (the business value, in their words)
+## 5. What the customer gets (the business value, in their words)
 
 - **Lower exposure**: the enforcement record (research IV §2) is a list of defaults, labels
   and nudges; the gate makes the wrong default impossible to ship.

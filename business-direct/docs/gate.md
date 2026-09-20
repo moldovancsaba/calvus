@@ -31,3 +31,12 @@ DOM script; read the console. Pass conditions and the 2026-09-19 result:
 
 The round's findings and fixes are in `build-log.md`. Rounds 3–10 (phase 2 and 3 screens, economics, the research and the audit implemented,
 the policy screen, the two interfaces, beyond children) were measured at 390 and 1440; 768 and 1024 inherit the same grids (`05-layout-specs.md`).
+
+## Redirect pages (why the folder holds more `.html` files than documents)
+
+A URL that has been live is never deleted (hub rule, 2026-09-16). Every page name used before the
+consolidation — `brief`, `executive`, `business-case`, `analytics`, `ssot`, `technical-design`,
+`system-blueprint`, `token-map`, `implementation-plan`, `policy-framework`, `legal`, `audit`,
+`sources`, `implementation-prerequisites`, `audit-swot`, `client-asks`, `claims-register`,
+`research-7`, `bemutato` — is a one-line redirect to its new home. They are not documents, are not
+in the navigation, and the gate checks that each points at a page that exists.

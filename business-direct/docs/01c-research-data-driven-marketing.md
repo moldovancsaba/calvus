@@ -1,5 +1,8 @@
 # business.direct — research III: data-driven marketing decisions — case studies and best practices
 
+> **Status — evidence.** Written while the project was framed around the first customer's site; the vocabulary of that time (client, platform, provider, family) is kept, the product's terms are in `product-definition.md` §5. Every figure the stakeholder documents use from this round was re-verified on 2026-09-20 in `evidence.md`, which is the authority where the two differ.
+
+
 *Third research round, 2026-09-19, on the owner's ask: "the industry research for it, to have
 the best case studies and best practices as a source of our services" — *it* being the
 data-driven decision flow of D26 (`economics.md`). Every figure links

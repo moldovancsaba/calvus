@@ -1,5 +1,8 @@
 # business.direct — research IV: responsible data, children's rights, and the business value of doing it properly
 
+> **Status — evidence.** Written while the project was framed around the first customer's site; the vocabulary of that time (client, platform, provider, family) is kept, the product's terms are in `product-definition.md` §5. Every figure the stakeholder documents use from this round was re-verified on 2026-09-20 in `evidence.md`, which is the authority where the two differ.
+
+
 *Fourth research round, 2026-09-19, on the owner's directive: the first client is ClassScout
 (the operator of Your Field NYC), but the system must serve any client; the machine must
 respect children's rights "in general, whatever clients we work for"; and it must "care about

@@ -37,7 +37,7 @@ footer{margin-top:56px;padding-top:18px;border-top:1px solid var(--line);font-si
 </head>
 <body>
 <div class="wrap">
-<nav class="docnav" aria-label="Project documentation"><span class="docnav-brand">business.direct · docs</span><a href="index.html">Overview</a><a href="executive-summary.html">Executive summary</a><a href="product-definition.html">Product definition</a><a href="product-specification.html">Product specification</a><a href="market.html">Market</a><a href="economics.html">Economics</a><a href="business-logic.html">Business logic and SSOT</a><a href="architecture.html">Architecture and blueprint</a><a href="delivery-plan.html" aria-current=page>Delivery plan</a><a href="responsible-data.html">Responsible data and legal</a><a href="first-customer-classscout.html">First customer</a><a href="evidence.html">Evidence</a><a href="research.html">Research I</a><a href="research-2.html">Research II</a><a href="research-3.html">Research III</a><a href="research-4.html">Research IV</a><a href="research-5.html">Research V</a><a href="research-6.html">Research VI</a><a href="design-system.html">Design system</a><a href="layouts.html">Layouts</a><a href="05-layout-specs.html">Layout specs</a><a href="decisions.html">Decisions</a><a href="build-log.html">Build log</a><a href="gate.html">Gate</a><a href="register-of-asks.html">Register of asks</a><a href="logic-audit.html">Logic audit</a><a href="documentation-audit.html">Documentation audit</a></nav>
+<nav class="docnav" aria-label="Project documentation"><span class="docnav-brand">business.direct · docs</span><a href="index.html">Overview</a><a href="executive-summary.html">Executive summary</a><a href="product-definition.html">Product definition</a><a href="product-specification.html">Product specification</a><a href="market.html">Market</a><a href="economics.html">Economics</a><a href="business-logic.html">Business logic and SSOT</a><a href="architecture.html">Architecture and blueprint</a><a href="delivery-plan.html" aria-current=page>Delivery plan</a><a href="responsible-data.html">Responsible data and legal</a><a href="first-customer-classscout.html">First customer</a><a href="evidence.html">Evidence</a><a href="research.html">Evidence · Research I</a><a href="research-2.html">Evidence · Research II</a><a href="research-3.html">Evidence · Research III</a><a href="research-4.html">Evidence · Research IV</a><a href="research-5.html">Evidence · Research V</a><a href="research-6.html">Evidence · Research VI</a><a href="design-system.html">Design system</a><a href="layouts.html">Layouts</a><a href="05-layout-specs.html">Layout specs</a><a href="decisions.html">History · Decisions</a><a href="build-log.html">History · Build log</a><a href="gate.html">History · Gate</a><a href="register-of-asks.html">History · Register of asks</a><a href="logic-audit.html">History · Logic audit</a><a href="documentation-audit.html">History · Documentation audit</a></nav>
 <header><p class="eyebrow">Calvus · business.direct · project documentation</p><h1>business.direct — delivery plan, operating model and stakeholder sign-off</h1></header>
 <p><em>For the delivery lead, the owner and the stakeholders who sign off. What this document holds:
 the milestones and the nine sprints with an acceptance test each (§2, §2b), the sprint-0 checklist,
@@ -138,7 +138,7 @@ instance (<code>platform_id</code>). "Measured" means a number in the build log,
 <td>S1 foundation</td>
 <td>1–2</td>
 <td>BD-0-1 … BD-0-11</td>
-<td>the demo sample cached by <code>sync</code>; the thirteen screens navigate with empty states; Simple and Advanced modes; the Policy screen shows the first client's record with <code>postal_address</code> marked missing and the features it blocks; a Server Action that tries to import a channel fails the build; the outbox drains a stub row in ≤ 60 s</td>
+<td>the demo sample cached by <code>sync</code>; every screen of the specification navigates with empty states; Simple and Advanced modes; the Policy screen shows the first client's record with <code>postal_address</code> marked missing and the features it blocks; a Server Action that tries to import a channel fails the build; the outbox drains a stub row in ≤ 60 s</td>
 <td>—</td>
 </tr>
 <tr>
@@ -205,7 +205,7 @@ nothing from Meta.</p>
 <h3>Sprint 0 checklist (the day before S1)</h3>
 <ol>
 <li>Repository created (<a href="architecture.html"><code>architecture.md</code></a> §3), <code>main</code> protected, preview deployments on.</li>
-<li>Vercel project with the environment of blueprint §9; <code>CRON_SECRET</code>; the thirteen crons in <code>vercel.json</code>.</li>
+<li>Vercel project with the environment of blueprint §9; <code>CRON_SECRET</code>; the crons of the cron table in <code>vercel.json</code>.</li>
 <li>Atlas M0 cluster, the collections and indexes of technical design §2 + blueprint §5 (a <code>scripts/indexes.ts</code>).</li>
 <li>Upstash database in <code>us-east-1</code>; Blob store.</li>
 <li>Resend: domain verified (SPF, DKIM, DMARC), <code>reply.</code> MX, webhook endpoint with the signing secret.</li>
@@ -213,7 +213,7 @@ nothing from Meta.</p>
 <li>Claude API key with a spend limit; <code>DRAFTER=template</code> until the knowledge files are loaded.</li>
 <li>Sentry project; Better Stack monitor on <code>/api/health</code>.</li>
 <li>DoneIsBetter SSO client for the machine (owner).</li>
-<li>The first client's policy record entered on the Policy screen from <a href="responsible-data.html"><code>responsible-data.md</code></a> §6 — with <code>postal_address</code> empty until P-1.</li>
+<li>The first customer's policy record entered on the Policy screen from <a href="responsible-data.html"><code>responsible-data.md</code></a> §6 — with <code>postal_address</code> empty until P-1.</li>
 </ol>
 <h2>3. Issues</h2>
 <div class="tbl"><table>

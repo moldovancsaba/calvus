@@ -1,5 +1,8 @@
 # business.direct — research V: beyond children — the other people, data and practices a responsible marketing machine must cover
 
+> **Status — evidence.** Written while the project was framed around the first customer's site; the vocabulary of that time (client, platform, provider, family) is kept, the product's terms are in `product-definition.md` §5. Every figure the stakeholder documents use from this round was re-verified on 2026-09-20 in `evidence.md`, which is the authority where the two differ.
+
+
 *Fifth research round, 2026-09-19, on the owner's question: "Is there any other use case like
 kids that we need to cover, or could we cover, as a responsible business entity?" The
 answer is yes — eleven of them, in three groups: **people** the law or good practice treats as

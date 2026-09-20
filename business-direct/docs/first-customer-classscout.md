@@ -11,7 +11,7 @@ catalogue is far larger; they appear in no stakeholder document (D45).** Assembl
 ## Part A — the site measured (audit of the starting point)
 
 *Measured 2026-09-19 with `curl` and the two converters (catalogue re-pulled the same evening: 253 providers, 51 records updated); the videos read frame by frame.
-Your Field NYC is the client (D11); the Hungarian instance is the reference.*
+Your Field NYC is the first customer's instance; the Hungarian instance is the reference connector's data.*
 
 ### 1. The client platform: Your Field NYC (getyourfield.com)
 

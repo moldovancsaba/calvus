@@ -26,8 +26,8 @@ channels. Families arrive on the listing page; the platform's sign-up captures t
 *Nothing publishes unapproved.*
 
 **B2B sales → advertisers (providers).** Every provider enters the pipeline at *identified*.
-The invitation sequence (one approval for the whole run) moves those with an e-mail to
-*contacted*; a reply moves to *replied* and lands in the inbox with a drafted answer;
+The invitation sequence (one approval for the whole run, recipients in propensity order — R22)
+moves those with an e-mail to *contacted*; a reply moves to *replied* and lands in the inbox with a drafted answer;
 "Apply to manage" (or a confirmed yes) → *applied*; the platform's confirmation →
 *managing*; a paid product → *upgraded*. Phone-only providers get a call task; providers
 with neither get the website form. "Not my program" or unsubscribe stops everything for
@@ -35,7 +35,7 @@ that address.
 
 ## 2b. Two interfaces, one machine (D33)
 
-**Simple** is for the client's operator: *Home* shows what needs a person as ranked
+**Simple** is for the owner's operator: *Home* shows what needs a person as ranked
 recommendations — each with the reason (the research figure behind it) and one button —
 and a single press runs every recommendation the machine judges safe: approving drafted
 posts and real-footage clips, sending the invitation when the policy gate allows, filing
@@ -64,7 +64,7 @@ replacing one costs a CAC.
 
 | Department | Runs alone | Needs a person |
 |---|---|---|
-| Social publishing (platform) | draft, schedule slots, read comments and DMs, draft the reply with the link to the listing | publish, send the reply — "someone tags you — first, not a queue" (D25) |
+| Social publishing (platform) | draft, schedule slots, read comments and DMs, draft the reply with the link to the listing; real footage first, generation only to fill gaps (R21) | publish, send the reply — "someone tags you — first, not a queue" (D25) |
 | Provider sales (platform) | draft the sequence and the reply, move stages on events, build the call list | send, override a stage |
 | Retention (platform) | watch renewals, page freshness, enquiry response and saves; draft the touch from the advertiser's numbers; log kept and lost | send — renewal reminders may earn auto-approval; at-risk touches need judgement (R37) |
 | Weekly picks (platform → families) | build the Sunday digest and saved-provider alerts within the cap | nothing — the family's preferences are the approval (R2, R3) |
@@ -143,17 +143,17 @@ records the entitlement. No discounting logic — that is DiscountDirect's domai
 - **Stop**: one tap turns every channel off and cancels what is queued, in one transaction.
 - **Why you got this** on every message: the provider she saved, the channel, the count.
 
-## 6b. Responsible data — for every client (D32)
+## 6b. Responsible data — for every customer (D32)
 
 The machine carries one **policy record per instance** and a **gate** that reads it before
 every send and every draft (`responsible-data.md`). Seventeen principles hold
-whatever the client: know who the service is for; a child is an age, never a name (R24); no
+whatever the customer: know who the service is for; a child is an age, never a name (R24); no
 profiling or targeted advertising on a minor's data, not even with consent (R27);
 high-privacy defaults that the person turns on (R28); consent that names channel and sender,
 stored verbatim (R4); zero-party over inferred (R11); who sent it, why, how to stop, and the
 postal address (R2, R23); disclosure when a machine wrote or made it (R20); retention with an
 end date; and the gate is code (R26) — provider e-mail needs the postal address, the digest
-needs the client's policy to describe e-mail alerts, audiences need the saves opt-in, SMS
+needs the site's privacy policy to describe e-mail alerts, audiences need the saves opt-in, SMS
 needs the consent text, generation needs the disclosure rule, a minor's data needs the
 audience model and a DPIA. The client's value is lower exposure, a better-converting
 audience, trust as the acquisition channel, and auditability: every send carries its policy
@@ -206,62 +206,25 @@ where they exist and on documented assumptions where they do not, saying which (
 sequence cadence, the content slots and the upgrade pitch follow the numbers (R17–R19).
 The model and its events are `economics.md`.
 
-## 8d. What the audit changed (D30)
-
-| Audit finding | Rule / behaviour now |
-|---|---|
-| A2 the cap consumed by the digest | cap = 4 provider-originated messages; digest and alerts on preference (§6) |
-| A3 no postal address | `{postal_address}` in every provider e-mail; the sequence card shows the gate check |
-| A4 nearby audience vs preference | reachable nearby = opted in; the card shows the reachable count (§4) |
-| A5 enquiries to unclaimed providers lost | the ask becomes sales step 2 and moves the provider to *contacted* (§4b) |
-| A6 R9 wording | forward automatically on events; a person may move any stage, logged with who and why |
-| A7 R19 on sample trials | R19 keeps the pitch rule with a 60-day floor and the honest number |
-| A8 score signals | +15 saved or asked, −40 not my program, −20 bounce, unsubscribed excluded |
-| A9 no sending-guard rule | R23 |
-| A10 operator time undercounted | operator hours tile; batch approval of real-footage clips; earned auto-approval per department after four clean weeks (reminders earned; FAQ answers week 1 of 4) — every auto-sent message still logged and stoppable |
-| A11 capture undefined | capture = upgrades within 30 days of a delivered result ÷ upgrades; measured on the economics screen |
-| A12 consent proof invisible | the preference row shows when and where consent was given |
-| A13 children's data | R24 age band in provider-facing text; counsel question prerequisite P-4 |
-| A14 disclosure on drafted messages | R20 extended: an AI-drafted, unedited answer carries the market's disclosure and is logged |
-| A17 EU named addresses | connector `contactKind`; EU instances skip `person` addresses without consent |
-| A18 stage history | logged per change; the drawer shows the last three |
-| S1/T1 Sawyer | positioning: families, not software — a Sawyer connector is a later adapter, never a competing booking tool |
-| W1/O4 the conversations line | an economics input: 0 = bundled (D21), 99 = the incumbent's price; the plan's MRR follows it |
-
-## 8c. What the research changed (D28)
-
-| Research finding | Rule / behaviour now in the system |
-|---|---|
-| Human-made content first; generated media must be labelled on every platform (research II §3, §4.3) | **R21** a provider's real recording beats any generation; the clip engine is the v1 media service; **R20** every generated asset carries a C2PA credential at creation and the platform's label at publish; **R15** never generate a person or a child |
-| One anchor a week, cut into many pieces; keywords in text, caption and audio (research II §3) | the social department plans one anchor per neighbourhood × activity per week — Reel, carousel, story, digest item, page update — and `rules/social.md` carries the keyword rule |
-| AI answers cite structured, reviewed, current pages (research II §2.1) | a generated page is published only when its readiness (verified fields on every provider, a session, reviews, a last-verified date and answer block) is ≥ 3 of 4 |
-| Owned audiences grow product- and community-led (research II §2.1) | the digest is also a public neighbourhood newsletter anyone can join without an account, cross-recommended between neighbourhoods |
-| 58 % of replies come from step one, 4–7 touches, warm-up 4–6 weeks, bounce < 2 %, domain reputation is the failure mode (research II §5.1) | three touches 3–4 days apart (invitation → "a family saved you" → reminder) then a call task; a sending domain per instance with warm-up day count, daily cap and bounce limit — the machine will not send past them; replies within one business day |
-| Lead scoring orders spend; next-best-action (research III §4) | **R22** a propensity score per provider (e-mail, phone, trial, session, announcement, image, verified fields, unclaimed flag, replied, applied, thread) orders every sequence and the call list, nightly |
-| Sell the upgrade at the activation moment; Angi and Yelp report revenue per lead / location (research III §1, §5) | R19 in force: the product cards appear only when delivered value exceeds the cheapest product's annual price; the provider's results carry "your return" |
-| Marketplace experiments must be clustered; MMM waits under $1 M spend (research III §3) | the first experiment is a neighbourhood holdout (content on in one neighbourhood, off in a comparable one, four weeks); attribution stays last-touch until then |
-| Cohorts, not averages (research III §2) | cohort LTV per acquisition channel shown as *assumption* until 100 observations, then *measured* (R16) |
-| Voice agents pay back fastest on inbound, after-hours and follow-ups; Yelp Receptionist at $99 (research II §5.1, III §1) | missed-call text-back stays in v1; voice remains "later" until Twilio and consent (prerequisites P-11 and P-12) |
-
 ## 8e. The rules, mapped (every SSOT rule → where this document states it)
 
 | Rule | Where | Rule | Where |
 |---|---|---|---|
 | R1 human gate on everything | §3, §9 | R16 next-dollar ranking on measured or declared rates | §8b |
 | R2 who, why, how to stop | §6, §7 | R17 sequence cadence follows the data | §8b |
-| R3 the cap: 4 provider messages a month | §6 | R18 content slots follow families-per-post | §8b, §8c |
-| R4 consent per channel, per provider for SMS | §6 | R19 the upgrade pitch at delivered value, 60-day floor | §5, §8d |
-| R5 provider e-mail without consent, opt-out honoured, "not my program" stops | §7 | R20 credentials and disclosure on generated and AI-drafted content | §8c, §8d |
-| R6 generated pages only with ≥ 3 providers | §3, §8c | R21 real footage beats generation | §8c |
-| R7 every non-catalogue figure labelled sample | §1 (the machine says what is real), §8 | R22 propensity score orders sequences and the call list | §8c, §8d |
-| R8 knowledge files read before every draft | §3 | R23 the sending guard | §7, §8d |
-| R9 stages move on events; a person may move any, logged | §2, §8d | R24 a child is an age, never a name | §4b, §6b |
-| R10 AI optional per department | §3 | R25 batch and earned auto-approval | §3, §8d |
+| R3 the cap: 4 provider messages a month | §6 | R18 content slots follow families-per-post | §8b |
+| R4 consent per channel, per provider for SMS | §6 | R19 the upgrade pitch at delivered value, 60-day floor | §5 |
+| R5 provider e-mail without consent, opt-out honoured, "not my program" stops | §7 | R20 credentials and disclosure on generated and AI-drafted content | §6b, §9 |
+| R6 generated pages only with ≥ 3 providers | §3 | R21 real footage beats generation | §3 |
+| R7 every non-catalogue figure labelled sample | §1 (the machine says what is real), §8 | R22 propensity score orders sequences and the call list | §2 |
+| R8 knowledge files read before every draft | §3 | R23 the sending guard | §7 |
+| R9 stages move on events; a person may move any, logged | §2 | R24 a child is an age, never a name | §4b, §6b |
+| R10 AI optional per department | §3 | R25 batch and earned auto-approval | §3 |
 | R11 campaigns reach saved and opted-in nearby families only | §4, §4b | R26 the policy gate | §6b |
 | R12 an upgrade changes where the provider appears, never what a family receives | §5 | R27 no profiling or targeting of minors | §6b |
 | R13 the machine never discounts | §5 | R28 high-privacy defaults | §6, §6b |
 | R14 a drafted answer within a minute; reply time from the enquiry | §4b | R29 the one press runs only safe recommendations | §2b |
-| R15 never generate a person or a child | §8c, §9 | R30 children in footage with written parental consent | §6c |
+| R15 never generate a person or a child | §9 | R30 children in footage with written parental consent | §6c |
 | R31 safeguarding shown as verified only | §6c | R32 no pressure; "not now" pauses | §6c |
 | R33 no protected characteristic or proxy | §6c | R34 accessible by default | §6c |
 | R35 sensitive categories answered, never stored | §6c | R36 no dark pattern, no AI manipulation | §6c |
@@ -411,12 +374,7 @@ is the reference implementation of the enumerations and state machines below.*
 
 ### 5. Decision register
 
-`decisions.md` holds D1–D46. The ones the engineering documents rest on: D2 (three
-views), D5 (DiscountDirect sibling), D6 (departments, knowledge layer, human-in-the-loop,
-optional AI, dashboard, integrations), D11 (Your Field first), D14 (two flows), D15
-(post card and pipeline strip), D17 (one page, in-memory state), D18 (sample generated
-from the real catalogue). Stack decisions are ADRs in `architecture.md` §11 — the build
-baseline since D37; the owner flips any with a decision.
+`decisions.md` holds D1–D47; every rule below names the decision behind it.
 
 ### 6. Rules register
 
@@ -481,34 +439,3 @@ baseline since D37; the owner flips any with a decision.
 | Marketing value of an avid family | platform capture of delivered value + referral value, per year | economics |
 | Cost per family from content | content stack ÷ families from posts | economics |
 | Next dollar | expected LTV gained per $ for touch / call / content | economics, recap |
-
-### 8. Document map
-
-| Doc | Holds |
-|---|---|
-| `product-definition.md` | client, problem, views, flows, what is real |
-| `01-research.md` | sourced evidence, legal by market |
-| `first-customer-classscout.md` | the platform measured, the catalogue's coverage, the videos, DiscountDirect's contribution |
-| `first-customer-classscout.md` | real vs sample |
-| `decisions.md` | D1–D46 |
-| `05-layout-specs.md`, `design-system.html`, `layouts.html` | gates 1 and 2 |
-| `build-log.md`, `gate.md` | rounds and the measured pass |
-| `register-of-asks.md` | the register of asks, with states |
-| `first-customer-classscout.md` | what the implementation needs after acceptance; nothing for the presentation |
-| `business-logic.md` | the rules end to end: parties, flows, departments, campaigns, money, families, law, recap |
-| `economics.md` | CAC, LTV, avid value, content ROI, next dollar, metrics tree, events, attribution |
-| `executive-summary.md` | one page: the classified media owner's situation, the product, how they use it, the benefits, the proof, the decision |
-| `economics.md` | the value for the media owner: what the product computes, the funnel and rates, the first customer's worked example, sensitivity, costs |
-| `documentation-audit.md` | the deep audit by error class; the owner's answers; the transformation programme and its status |
-| `evidence.md` | every figure with its source opened and its status |
-| `responsible-data.md` | the product as processor; the documents it must have; the counsel list |
-| `market.md` | the product's market, the site software, the tools bought for the pieces, the gap, the product SWOT |
-| `responsible-data.md` | principles, the policy record, the gate, onboarding, the client's value, worked instances |
-| `business-logic.md` (this) | terms, enumerations, entities, rules, metrics |
-| `architecture.md` | context, quality attributes, containers, flows, stack, ADRs |
-| `architecture.md` | data model, state machines, connectors, jobs, operations |
-| `delivery-plan.md` | milestones, sprints with acceptance tests, issues with DoD, blocked register, risks |
-| `01g-research-real-system.md` | every external service verified: auth, review, limits, prices, alternatives, cost |
-| `architecture.md` | drawings, repository layout, modules with pseudo code, contracts, crons, the outbox, security, the worker, tests, operations |
-| `architecture.md` | prototype tokens and components → production |
-

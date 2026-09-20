@@ -37,7 +37,7 @@ footer{margin-top:56px;padding-top:18px;border-top:1px solid var(--line);font-si
 </head>
 <body>
 <div class="wrap">
-<nav class="docnav" aria-label="Project documentation"><span class="docnav-brand">business.direct · docs</span><a href="index.html">Overview</a><a href="executive-summary.html">Executive summary</a><a href="product-definition.html">Product definition</a><a href="product-specification.html">Product specification</a><a href="market.html">Market</a><a href="economics.html">Economics</a><a href="business-logic.html" aria-current=page>Business logic and SSOT</a><a href="architecture.html">Architecture and blueprint</a><a href="delivery-plan.html">Delivery plan</a><a href="responsible-data.html">Responsible data and legal</a><a href="first-customer-classscout.html">First customer</a><a href="evidence.html">Evidence</a><a href="research.html">Research I</a><a href="research-2.html">Research II</a><a href="research-3.html">Research III</a><a href="research-4.html">Research IV</a><a href="research-5.html">Research V</a><a href="research-6.html">Research VI</a><a href="design-system.html">Design system</a><a href="layouts.html">Layouts</a><a href="05-layout-specs.html">Layout specs</a><a href="decisions.html">Decisions</a><a href="build-log.html">Build log</a><a href="gate.html">Gate</a><a href="register-of-asks.html">Register of asks</a><a href="logic-audit.html">Logic audit</a><a href="documentation-audit.html">Documentation audit</a></nav>
+<nav class="docnav" aria-label="Project documentation"><span class="docnav-brand">business.direct · docs</span><a href="index.html">Overview</a><a href="executive-summary.html">Executive summary</a><a href="product-definition.html">Product definition</a><a href="product-specification.html">Product specification</a><a href="market.html">Market</a><a href="economics.html">Economics</a><a href="business-logic.html" aria-current=page>Business logic and SSOT</a><a href="architecture.html">Architecture and blueprint</a><a href="delivery-plan.html">Delivery plan</a><a href="responsible-data.html">Responsible data and legal</a><a href="first-customer-classscout.html">First customer</a><a href="evidence.html">Evidence</a><a href="research.html">Evidence · Research I</a><a href="research-2.html">Evidence · Research II</a><a href="research-3.html">Evidence · Research III</a><a href="research-4.html">Evidence · Research IV</a><a href="research-5.html">Evidence · Research V</a><a href="research-6.html">Evidence · Research VI</a><a href="design-system.html">Design system</a><a href="layouts.html">Layouts</a><a href="05-layout-specs.html">Layout specs</a><a href="decisions.html">History · Decisions</a><a href="build-log.html">History · Build log</a><a href="gate.html">History · Gate</a><a href="register-of-asks.html">History · Register of asks</a><a href="logic-audit.html">History · Logic audit</a><a href="documentation-audit.html">History · Documentation audit</a></nav>
 <header><p class="eyebrow">Calvus · business.direct · project documentation</p><h1>business.direct — business logic and single source of truth</h1></header>
 <p><em>For the delivery team. What this document holds: Part A — the product's rules end to end, in the order money and messages move: who
 the parties are, what each department does, what leaves, who approves, what it costs, what
@@ -81,14 +81,14 @@ edits or skips; approved posts publish at their calendar slot through the platfo
 channels. Families arrive on the listing page; the platform's sign-up captures them.
 <em>Nothing publishes unapproved.</em></p>
 <p><strong>B2B sales → advertisers (providers).</strong> Every provider enters the pipeline at <em>identified</em>.
-The invitation sequence (one approval for the whole run) moves those with an e-mail to
-<em>contacted</em>; a reply moves to <em>replied</em> and lands in the inbox with a drafted answer;
+The invitation sequence (one approval for the whole run, recipients in propensity order — R22)
+moves those with an e-mail to <em>contacted</em>; a reply moves to <em>replied</em> and lands in the inbox with a drafted answer;
 "Apply to manage" (or a confirmed yes) → <em>applied</em>; the platform's confirmation →
 <em>managing</em>; a paid product → <em>upgraded</em>. Phone-only providers get a call task; providers
 with neither get the website form. "Not my program" or unsubscribe stops everything for
 that address.</p>
 <h2>2b. Two interfaces, one machine (D33)</h2>
-<p><strong>Simple</strong> is for the client's operator: <em>Home</em> shows what needs a person as ranked
+<p><strong>Simple</strong> is for the owner's operator: <em>Home</em> shows what needs a person as ranked
 recommendations — each with the reason (the research figure behind it) and one button —
 and a single press runs every recommendation the machine judges safe: approving drafted
 posts and real-footage clips, sending the invitation when the policy gate allows, filing
@@ -122,7 +122,7 @@ replacing one costs a CAC.</p>
 <tbody>
 <tr>
 <td>Social publishing (platform)</td>
-<td>draft, schedule slots, read comments and DMs, draft the reply with the link to the listing</td>
+<td>draft, schedule slots, read comments and DMs, draft the reply with the link to the listing; real footage first, generation only to fill gaps (R21)</td>
 <td>publish, send the reply — "someone tags you — first, not a queue" (D25)</td>
 </tr>
 <tr>
@@ -280,16 +280,16 @@ records the entitlement. No discounting logic — that is DiscountDirect's domai
 <li><strong>Stop</strong>: one tap turns every channel off and cancels what is queued, in one transaction.</li>
 <li><strong>Why you got this</strong> on every message: the provider she saved, the channel, the count.</li>
 </ul>
-<h2>6b. Responsible data — for every client (D32)</h2>
+<h2>6b. Responsible data — for every customer (D32)</h2>
 <p>The machine carries one <strong>policy record per instance</strong> and a <strong>gate</strong> that reads it before
 every send and every draft (<a href="responsible-data.html"><code>responsible-data.md</code></a>). Seventeen principles hold
-whatever the client: know who the service is for; a child is an age, never a name (R24); no
+whatever the customer: know who the service is for; a child is an age, never a name (R24); no
 profiling or targeted advertising on a minor's data, not even with consent (R27);
 high-privacy defaults that the person turns on (R28); consent that names channel and sender,
 stored verbatim (R4); zero-party over inferred (R11); who sent it, why, how to stop, and the
 postal address (R2, R23); disclosure when a machine wrote or made it (R20); retention with an
 end date; and the gate is code (R26) — provider e-mail needs the postal address, the digest
-needs the client's policy to describe e-mail alerts, audiences need the saves opt-in, SMS
+needs the site's privacy policy to describe e-mail alerts, audiences need the saves opt-in, SMS
 needs the consent text, generation needs the disclosure rule, a minor's data needs the
 audience model and a DPIA. The client's value is lower exposure, a better-converting
 audience, trust as the acquisition channel, and auditability: every send carries its policy
@@ -333,136 +333,6 @@ the next dollar weekly (touch · call · content) by expected LTV gained — on 
 where they exist and on documented assumptions where they do not, saying which (R16). The
 sequence cadence, the content slots and the upgrade pitch follow the numbers (R17–R19).
 The model and its events are <a href="economics.html"><code>economics.md</code></a>.</p>
-<h2>8d. What the audit changed (D30)</h2>
-<div class="tbl"><table>
-<thead>
-<tr>
-<th>Audit finding</th>
-<th>Rule / behaviour now</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>A2 the cap consumed by the digest</td>
-<td>cap = 4 provider-originated messages; digest and alerts on preference (§6)</td>
-</tr>
-<tr>
-<td>A3 no postal address</td>
-<td><code>{postal_address}</code> in every provider e-mail; the sequence card shows the gate check</td>
-</tr>
-<tr>
-<td>A4 nearby audience vs preference</td>
-<td>reachable nearby = opted in; the card shows the reachable count (§4)</td>
-</tr>
-<tr>
-<td>A5 enquiries to unclaimed providers lost</td>
-<td>the ask becomes sales step 2 and moves the provider to <em>contacted</em> (§4b)</td>
-</tr>
-<tr>
-<td>A6 R9 wording</td>
-<td>forward automatically on events; a person may move any stage, logged with who and why</td>
-</tr>
-<tr>
-<td>A7 R19 on sample trials</td>
-<td>R19 keeps the pitch rule with a 60-day floor and the honest number</td>
-</tr>
-<tr>
-<td>A8 score signals</td>
-<td>+15 saved or asked, −40 not my program, −20 bounce, unsubscribed excluded</td>
-</tr>
-<tr>
-<td>A9 no sending-guard rule</td>
-<td>R23</td>
-</tr>
-<tr>
-<td>A10 operator time undercounted</td>
-<td>operator hours tile; batch approval of real-footage clips; earned auto-approval per department after four clean weeks (reminders earned; FAQ answers week 1 of 4) — every auto-sent message still logged and stoppable</td>
-</tr>
-<tr>
-<td>A11 capture undefined</td>
-<td>capture = upgrades within 30 days of a delivered result ÷ upgrades; measured on the economics screen</td>
-</tr>
-<tr>
-<td>A12 consent proof invisible</td>
-<td>the preference row shows when and where consent was given</td>
-</tr>
-<tr>
-<td>A13 children's data</td>
-<td>R24 age band in provider-facing text; counsel question prerequisite P-4</td>
-</tr>
-<tr>
-<td>A14 disclosure on drafted messages</td>
-<td>R20 extended: an AI-drafted, unedited answer carries the market's disclosure and is logged</td>
-</tr>
-<tr>
-<td>A17 EU named addresses</td>
-<td>connector <code>contactKind</code>; EU instances skip <code>person</code> addresses without consent</td>
-</tr>
-<tr>
-<td>A18 stage history</td>
-<td>logged per change; the drawer shows the last three</td>
-</tr>
-<tr>
-<td>S1/T1 Sawyer</td>
-<td>positioning: families, not software — a Sawyer connector is a later adapter, never a competing booking tool</td>
-</tr>
-<tr>
-<td>W1/O4 the conversations line</td>
-<td>an economics input: 0 = bundled (D21), 99 = the incumbent's price; the plan's MRR follows it</td>
-</tr>
-</tbody>
-</table></div>
-<h2>8c. What the research changed (D28)</h2>
-<div class="tbl"><table>
-<thead>
-<tr>
-<th>Research finding</th>
-<th>Rule / behaviour now in the system</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Human-made content first; generated media must be labelled on every platform (research II §3, §4.3)</td>
-<td><strong>R21</strong> a provider's real recording beats any generation; the clip engine is the v1 media service; <strong>R20</strong> every generated asset carries a C2PA credential at creation and the platform's label at publish; <strong>R15</strong> never generate a person or a child</td>
-</tr>
-<tr>
-<td>One anchor a week, cut into many pieces; keywords in text, caption and audio (research II §3)</td>
-<td>the social department plans one anchor per neighbourhood × activity per week — Reel, carousel, story, digest item, page update — and <code>rules/social.md</code> carries the keyword rule</td>
-</tr>
-<tr>
-<td>AI answers cite structured, reviewed, current pages (research II §2.1)</td>
-<td>a generated page is published only when its readiness (verified fields on every provider, a session, reviews, a last-verified date and answer block) is ≥ 3 of 4</td>
-</tr>
-<tr>
-<td>Owned audiences grow product- and community-led (research II §2.1)</td>
-<td>the digest is also a public neighbourhood newsletter anyone can join without an account, cross-recommended between neighbourhoods</td>
-</tr>
-<tr>
-<td>58 % of replies come from step one, 4–7 touches, warm-up 4–6 weeks, bounce &lt; 2 %, domain reputation is the failure mode (research II §5.1)</td>
-<td>three touches 3–4 days apart (invitation → "a family saved you" → reminder) then a call task; a sending domain per instance with warm-up day count, daily cap and bounce limit — the machine will not send past them; replies within one business day</td>
-</tr>
-<tr>
-<td>Lead scoring orders spend; next-best-action (research III §4)</td>
-<td><strong>R22</strong> a propensity score per provider (e-mail, phone, trial, session, announcement, image, verified fields, unclaimed flag, replied, applied, thread) orders every sequence and the call list, nightly</td>
-</tr>
-<tr>
-<td>Sell the upgrade at the activation moment; Angi and Yelp report revenue per lead / location (research III §1, §5)</td>
-<td>R19 in force: the product cards appear only when delivered value exceeds the cheapest product's annual price; the provider's results carry "your return"</td>
-</tr>
-<tr>
-<td>Marketplace experiments must be clustered; MMM waits under $1 M spend (research III §3)</td>
-<td>the first experiment is a neighbourhood holdout (content on in one neighbourhood, off in a comparable one, four weeks); attribution stays last-touch until then</td>
-</tr>
-<tr>
-<td>Cohorts, not averages (research III §2)</td>
-<td>cohort LTV per acquisition channel shown as <em>assumption</em> until 100 observations, then <em>measured</em> (R16)</td>
-</tr>
-<tr>
-<td>Voice agents pay back fastest on inbound, after-hours and follow-ups; Yelp Receptionist at $99 (research II §5.1, III §1)</td>
-<td>missed-call text-back stays in v1; voice remains "later" until Twilio and consent (prerequisites P-11 and P-12)</td>
-</tr>
-</tbody>
-</table></div>
 <h2>8e. The rules, mapped (every SSOT rule → where this document states it)</h2>
 <div class="tbl"><table>
 <thead>
@@ -490,41 +360,41 @@ The model and its events are <a href="economics.html"><code>economics.md</code><
 <td>R3 the cap: 4 provider messages a month</td>
 <td>§6</td>
 <td>R18 content slots follow families-per-post</td>
-<td>§8b, §8c</td>
+<td>§8b</td>
 </tr>
 <tr>
 <td>R4 consent per channel, per provider for SMS</td>
 <td>§6</td>
 <td>R19 the upgrade pitch at delivered value, 60-day floor</td>
-<td>§5, §8d</td>
+<td>§5</td>
 </tr>
 <tr>
 <td>R5 provider e-mail without consent, opt-out honoured, "not my program" stops</td>
 <td>§7</td>
 <td>R20 credentials and disclosure on generated and AI-drafted content</td>
-<td>§8c, §8d</td>
+<td>§6b, §9</td>
 </tr>
 <tr>
 <td>R6 generated pages only with ≥ 3 providers</td>
-<td>§3, §8c</td>
+<td>§3</td>
 <td>R21 real footage beats generation</td>
-<td>§8c</td>
+<td>§3</td>
 </tr>
 <tr>
 <td>R7 every non-catalogue figure labelled sample</td>
 <td>§1 (the machine says what is real), §8</td>
 <td>R22 propensity score orders sequences and the call list</td>
-<td>§8c, §8d</td>
+<td>§2</td>
 </tr>
 <tr>
 <td>R8 knowledge files read before every draft</td>
 <td>§3</td>
 <td>R23 the sending guard</td>
-<td>§7, §8d</td>
+<td>§7</td>
 </tr>
 <tr>
 <td>R9 stages move on events; a person may move any, logged</td>
-<td>§2, §8d</td>
+<td>§2</td>
 <td>R24 a child is an age, never a name</td>
 <td>§4b, §6b</td>
 </tr>
@@ -532,7 +402,7 @@ The model and its events are <a href="economics.html"><code>economics.md</code><
 <td>R10 AI optional per department</td>
 <td>§3</td>
 <td>R25 batch and earned auto-approval</td>
-<td>§3, §8d</td>
+<td>§3</td>
 </tr>
 <tr>
 <td>R11 campaigns reach saved and opted-in nearby families only</td>
@@ -560,7 +430,7 @@ The model and its events are <a href="economics.html"><code>economics.md</code><
 </tr>
 <tr>
 <td>R15 never generate a person or a child</td>
-<td>§8c, §9</td>
+<td>§9</td>
 <td>R30 children in footage with written parental consent</td>
 <td>§6c</td>
 </tr>
@@ -1163,12 +1033,7 @@ is the reference implementation of the enumerations and state machines below.</e
 </tbody>
 </table></div>
 <h3>5. Decision register</h3>
-<p><a href="decisions.html"><code>decisions.md</code></a> holds D1–D46. The ones the engineering documents rest on: D2 (three
-views), D5 (DiscountDirect sibling), D6 (departments, knowledge layer, human-in-the-loop,
-optional AI, dashboard, integrations), D11 (Your Field first), D14 (two flows), D15
-(post card and pipeline strip), D17 (one page, in-memory state), D18 (sample generated
-from the real catalogue). Stack decisions are ADRs in <a href="architecture.html"><code>architecture.md</code></a> §11 — the build
-baseline since D37; the owner flips any with a decision.</p>
+<p><a href="decisions.html"><code>decisions.md</code></a> holds D1–D47; every rule below names the decision behind it.</p>
 <h3>6. Rules register</h3>
 <div class="tbl"><table>
 <thead>
@@ -1460,117 +1325,6 @@ baseline since D37; the owner flips any with a decision.</p>
 <td>Next dollar</td>
 <td>expected LTV gained per $ for touch / call / content</td>
 <td>economics, recap</td>
-</tr>
-</tbody>
-</table></div>
-<h3>8. Document map</h3>
-<div class="tbl"><table>
-<thead>
-<tr>
-<th>Doc</th>
-<th>Holds</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><a href="product-definition.html"><code>product-definition.md</code></a></td>
-<td>client, problem, views, flows, what is real</td>
-</tr>
-<tr>
-<td><a href="research.html"><code>01-research.md</code></a></td>
-<td>sourced evidence, legal by market</td>
-</tr>
-<tr>
-<td><a href="first-customer-classscout.html"><code>first-customer-classscout.md</code></a></td>
-<td>the platform measured, the catalogue's coverage, the videos, DiscountDirect's contribution</td>
-</tr>
-<tr>
-<td><a href="first-customer-classscout.html"><code>first-customer-classscout.md</code></a></td>
-<td>real vs sample</td>
-</tr>
-<tr>
-<td><a href="decisions.html"><code>decisions.md</code></a></td>
-<td>D1–D46</td>
-</tr>
-<tr>
-<td><a href="05-layout-specs.html"><code>05-layout-specs.md</code></a>, <code>design-system.html</code>, <code>layouts.html</code></td>
-<td>gates 1 and 2</td>
-</tr>
-<tr>
-<td><a href="build-log.html"><code>build-log.md</code></a>, <a href="gate.html"><code>gate.md</code></a></td>
-<td>rounds and the measured pass</td>
-</tr>
-<tr>
-<td><a href="register-of-asks.html"><code>register-of-asks.md</code></a></td>
-<td>the register of asks, with states</td>
-</tr>
-<tr>
-<td><a href="first-customer-classscout.html"><code>first-customer-classscout.md</code></a></td>
-<td>what the implementation needs after acceptance; nothing for the presentation</td>
-</tr>
-<tr>
-<td><a href="business-logic.html"><code>business-logic.md</code></a></td>
-<td>the rules end to end: parties, flows, departments, campaigns, money, families, law, recap</td>
-</tr>
-<tr>
-<td><a href="economics.html"><code>economics.md</code></a></td>
-<td>CAC, LTV, avid value, content ROI, next dollar, metrics tree, events, attribution</td>
-</tr>
-<tr>
-<td><a href="executive-summary.html"><code>executive-summary.md</code></a></td>
-<td>one page: the classified media owner's situation, the product, how they use it, the benefits, the proof, the decision</td>
-</tr>
-<tr>
-<td><a href="economics.html"><code>economics.md</code></a></td>
-<td>the value for the media owner: what the product computes, the funnel and rates, the first customer's worked example, sensitivity, costs</td>
-</tr>
-<tr>
-<td><a href="documentation-audit.html"><code>documentation-audit.md</code></a></td>
-<td>the deep audit by error class; the owner's answers; the transformation programme and its status</td>
-</tr>
-<tr>
-<td><a href="evidence.html"><code>evidence.md</code></a></td>
-<td>every figure with its source opened and its status</td>
-</tr>
-<tr>
-<td><a href="responsible-data.html"><code>responsible-data.md</code></a></td>
-<td>the product as processor; the documents it must have; the counsel list</td>
-</tr>
-<tr>
-<td><a href="market.html"><code>market.md</code></a></td>
-<td>the product's market, the site software, the tools bought for the pieces, the gap, the product SWOT</td>
-</tr>
-<tr>
-<td><a href="responsible-data.html"><code>responsible-data.md</code></a></td>
-<td>principles, the policy record, the gate, onboarding, the client's value, worked instances</td>
-</tr>
-<tr>
-<td><a href="business-logic.html"><code>business-logic.md</code></a> (this)</td>
-<td>terms, enumerations, entities, rules, metrics</td>
-</tr>
-<tr>
-<td><a href="architecture.html"><code>architecture.md</code></a></td>
-<td>context, quality attributes, containers, flows, stack, ADRs</td>
-</tr>
-<tr>
-<td><a href="architecture.html"><code>architecture.md</code></a></td>
-<td>data model, state machines, connectors, jobs, operations</td>
-</tr>
-<tr>
-<td><a href="delivery-plan.html"><code>delivery-plan.md</code></a></td>
-<td>milestones, sprints with acceptance tests, issues with DoD, blocked register, risks</td>
-</tr>
-<tr>
-<td><a href="research-6.html"><code>01g-research-real-system.md</code></a></td>
-<td>every external service verified: auth, review, limits, prices, alternatives, cost</td>
-</tr>
-<tr>
-<td><a href="architecture.html"><code>architecture.md</code></a></td>
-<td>drawings, repository layout, modules with pseudo code, contracts, crons, the outbox, security, the worker, tests, operations</td>
-</tr>
-<tr>
-<td><a href="architecture.html"><code>architecture.md</code></a></td>
-<td>prototype tokens and components → production</td>
 </tr>
 </tbody>
 </table></div>

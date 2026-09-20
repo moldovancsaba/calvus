@@ -92,3 +92,42 @@ platform: A15 (reviews and prices on the cards — ask #12) and A16's keyed endp
 | Q10 | Release 1 re-cut into read-only and keyed halves; asks #12 (reviews, prices on the platform) and #13 added | A15, A16 |
 | Q11 | Connector `contactKind` for EU instances; stage history in the drawer; consent proof on the preference row | A12, A17, A18 |
 | Q12 | Strategic: position against Sawyer as "families, not software"; decide bundled vs $99 conversations line in the economics defaults | S1/T1, W1/O4 |
+
+## 5. What the audit changed in the rules (D30)
+
+| Audit finding | Rule / behaviour now |
+|---|---|
+| A2 the cap consumed by the digest | cap = 4 provider-originated messages; digest and alerts on preference (§6) |
+| A3 no postal address | `{postal_address}` in every provider e-mail; the sequence card shows the gate check |
+| A4 nearby audience vs preference | reachable nearby = opted in; the card shows the reachable count (§4) |
+| A5 enquiries to unclaimed providers lost | the ask becomes sales step 2 and moves the provider to *contacted* (§4b) |
+| A6 R9 wording | forward automatically on events; a person may move any stage, logged with who and why |
+| A7 R19 on sample trials | R19 keeps the pitch rule with a 60-day floor and the honest number |
+| A8 score signals | +15 saved or asked, −40 not my program, −20 bounce, unsubscribed excluded |
+| A9 no sending-guard rule | R23 |
+| A10 operator time undercounted | operator hours tile; batch approval of real-footage clips; earned auto-approval per department after four clean weeks (reminders earned; FAQ answers week 1 of 4) — every auto-sent message still logged and stoppable |
+| A11 capture undefined | capture = upgrades within 30 days of a delivered result ÷ upgrades; measured on the economics screen |
+| A12 consent proof invisible | the preference row shows when and where consent was given |
+| A13 children's data | R24 age band in provider-facing text; counsel question prerequisite P-4 |
+| A14 disclosure on drafted messages | R20 extended: an AI-drafted, unedited answer carries the market's disclosure and is logged |
+| A17 EU named addresses | connector `contactKind`; EU instances skip `person` addresses without consent |
+| A18 stage history | logged per change; the drawer shows the last three |
+| S1/T1 Sawyer | positioning: families, not software — a Sawyer connector is a later adapter, never a competing booking tool |
+| W1/O4 the conversations line | an economics input: 0 = bundled (D21), 99 = the incumbent's price; the plan's MRR follows it |
+
+## 6. What the research changed in the rules (D28)
+
+| Research finding | Rule / behaviour now in the system |
+|---|---|
+| Human-made content first; generated media must be labelled on every platform (research II §3, §4.3) | **R21** a provider's real recording beats any generation; the clip engine is the v1 media service; **R20** every generated asset carries a C2PA credential at creation and the platform's label at publish; **R15** never generate a person or a child |
+| One anchor a week, cut into many pieces; keywords in text, caption and audio (research II §3) | the social department plans one anchor per neighbourhood × activity per week — Reel, carousel, story, digest item, page update — and `rules/social.md` carries the keyword rule |
+| AI answers cite structured, reviewed, current pages (research II §2.1) | a generated page is published only when its readiness (verified fields on every provider, a session, reviews, a last-verified date and answer block) is ≥ 3 of 4 |
+| Owned audiences grow product- and community-led (research II §2.1) | the digest is also a public neighbourhood newsletter anyone can join without an account, cross-recommended between neighbourhoods |
+| 58 % of replies come from step one, 4–7 touches, warm-up 4–6 weeks, bounce < 2 %, domain reputation is the failure mode (research II §5.1) | three touches 3–4 days apart (invitation → "a family saved you" → reminder) then a call task; a sending domain per instance with warm-up day count, daily cap and bounce limit — the machine will not send past them; replies within one business day |
+| Lead scoring orders spend; next-best-action (research III §4) | **R22** a propensity score per provider (e-mail, phone, trial, session, announcement, image, verified fields, unclaimed flag, replied, applied, thread) orders every sequence and the call list, nightly |
+| Sell the upgrade at the activation moment; Angi and Yelp report revenue per lead / location (research III §1, §5) | R19 in force: the product cards appear only when delivered value exceeds the cheapest product's annual price; the provider's results carry "your return" |
+| Marketplace experiments must be clustered; MMM waits under $1 M spend (research III §3) | the first experiment is a neighbourhood holdout (content on in one neighbourhood, off in a comparable one, four weeks); attribution stays last-touch until then |
+| Cohorts, not averages (research III §2) | cohort LTV per acquisition channel shown as *assumption* until 100 observations, then *measured* (R16) |
+| Voice agents pay back fastest on inbound, after-hours and follow-ups; Yelp Receptionist at $99 (research II §5.1, III §1) | missed-call text-back stays in v1; voice remains "later" until Twilio and consent (prerequisites P-11 and P-12) |
+
+
