@@ -22,7 +22,7 @@ project.*
 | Gate checks | links, anchors, docs links, fidelity parity | — | + chart-asset version, inert markers | covered by Holdvölgy's gate | + stale-phrase scan, prototype banner | + data shape, script parse, stale-phrase scan, decision range, issue count, ask references, rules map |
 | Widths measured (gate doc) | 390, 1440 | — | 375 only | 375, 1024 | 390, 1024, 1440 | 390, 768, 1024, 1440 |
 | SSOT rules | R1–R7 | — | R1–R11 | R1–R21 | R1–R11 | R1–R36 |
-| Architecture | 5 ADRs, stack PROPOSED | — | 8 ADRs, PROPOSED | 14 ADRs, **decided** (D26) | 9 ADRs, PROPOSED | 14 ADRs, PROPOSED |
+| Architecture | 5 ADRs, stack PROPOSED | — | 8 ADRs, PROPOSED | 14 ADRs, **decided** (D26) | 9 ADRs, PROPOSED | 14 ADRs, PROPOSED at the audit; 25 and the build baseline since D37 the same day (`business-direct/docs/system-blueprint.html`) |
 | Business logic document | no | — | no | yes (`BUSINESS-LOGIC.md`) | no | yes (`09`) |
 | Unit economics / analytics | no | — | no | no | no | yes (`16`, the Economics screen) |
 | Audit + SWOT of the logic | no | — | no | no | no | yes (`17`) |

@@ -135,6 +135,12 @@ and it is dated.</p>
 <td>SSOT, architecture, technical design, implementation plan, token map; stack decisions PROPOSED</td>
 <td>owner / client flips ADRs</td>
 </tr>
+<tr>
+<td>10</td>
+<td><strong>Real-system blueprint</strong> (when the owner calls the next phase)</td>
+<td><code>01g</code> research: every external service verified against the vendor's own terms on the day (auth, review, limits, prices, alternative, cost); <code>20-system-blueprint.md</code>: drawings, repository layout, modules with what each owns and pseudo code, data contracts, jobs, security, tests, operations; the ADRs become the build baseline; the plan re-cut into sprints with an acceptance test each and a sprint-0 checklist — business.direct D37 is the reference</td>
+<td>owner: "build"</td>
+</tr>
 </tbody>
 </table></div>
 <p>Stages 3–4 are the ones people are tempted to skip. Holdvölgy's first prototype skipped
@@ -345,6 +351,11 @@ live), indexed by a <code>README.md</code> that is also the dated process log:</
 <td><code>19-implementation-prerequisites.md</code></td>
 <td>what the client provides after acceptance, grouped by when it blocks; the presentation's "what we ask of you today" is one decision</td>
 </tr>
+<tr>
+<td>20</td>
+<td><code>20-system-blueprint.md</code> (+ a research round on the services)</td>
+<td>stage 10 only: the document a developer builds from — every service verified and priced on the day, drawings, modules with pseudo code, contracts, jobs, security, tests, operations; the prototype → module map so nothing built in the prototype is lost</td>
+</tr>
 </tbody>
 </table></div>
 <p>Rules for the set:</p>
@@ -481,6 +492,10 @@ each can be a paragraph on day one, but each exists and is dated.</p>
 <tr>
 <td>Technical package</td>
 <td>SSOT defines every term the others use; architecture cites the audit's numbers; every ADR has options and a reason; the plan has DoD per issue and an honest blocked register</td>
+</tr>
+<tr>
+<td>Real-system blueprint</td>
+<td>every service's limits and prices carry the date they were read and a primary link; every module says what it owns and has pseudo code for what is not obvious; every rule that is code names a test; every sprint has an acceptance test the owner can watch; nothing in the prototype lacks a module</td>
 </tr>
 <tr>
 <td>Project</td>

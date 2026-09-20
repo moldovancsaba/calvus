@@ -36,7 +36,7 @@ footer{margin-top:56px;padding-top:18px;border-top:1px solid var(--line);font-si
 </head>
 <body>
 <div class="wrap">
-<nav class="docnav" aria-label="Project documentation"><span class="docnav-brand">business.direct · docs</span><a href="index.html" aria-current=page>Overview</a><a href="brief.html">Brief</a><a href="research.html">Research</a><a href="research-2.html">Research II</a><a href="research-3.html">Research III</a><a href="research-4.html">Research IV</a><a href="research-5.html">Research V</a><a href="audit.html">Audit</a><a href="sources.html">Sources</a><a href="design-system.html">Design system</a><a href="layouts.html">Layouts</a><a href="05-layout-specs.html">Layout specs</a><a href="decisions.html">Decisions</a><a href="build-log.html">Build log</a><a href="gate.html">Gate</a><a href="client-asks.html">Register of asks</a><a href="implementation-prerequisites.html">Prerequisites</a><a href="business-logic.html">Business logic</a><a href="ssot.html">SSOT</a><a href="architecture.html">Architecture</a><a href="technical-design.html">Technical design</a><a href="implementation-plan.html">Plan</a><a href="token-map.html">Token map</a><a href="executive.html">Executive summary</a><a href="analytics.html">Analytics</a><a href="audit-swot.html">Audit · SWOT</a><a href="policy-framework.html">Policy framework</a></nav>
+<nav class="docnav" aria-label="Project documentation"><span class="docnav-brand">business.direct · docs</span><a href="index.html" aria-current=page>Overview</a><a href="brief.html">Brief</a><a href="research.html">Research</a><a href="research-2.html">Research II</a><a href="research-3.html">Research III</a><a href="research-4.html">Research IV</a><a href="research-5.html">Research V</a><a href="research-6.html">Research VI</a><a href="audit.html">Audit</a><a href="sources.html">Sources</a><a href="design-system.html">Design system</a><a href="layouts.html">Layouts</a><a href="05-layout-specs.html">Layout specs</a><a href="decisions.html">Decisions</a><a href="build-log.html">Build log</a><a href="gate.html">Gate</a><a href="client-asks.html">Register of asks</a><a href="implementation-prerequisites.html">Prerequisites</a><a href="business-logic.html">Business logic</a><a href="ssot.html">SSOT</a><a href="architecture.html">Architecture</a><a href="technical-design.html">Technical design</a><a href="implementation-plan.html">Plan</a><a href="system-blueprint.html">System blueprint</a><a href="token-map.html">Token map</a><a href="executive.html">Executive summary</a><a href="analytics.html">Analytics</a><a href="audit-swot.html">Audit · SWOT</a><a href="policy-framework.html">Policy framework</a></nav>
 <header><p class="eyebrow">Calvus · business.direct · project documentation</p><h1>business.direct — project documentation</h1></header>
 <p>An automated marketing machine for B2B2C listing platforms — the one-person sales and
 marketing team for a listed business, run by the platform, with the consumer as the
@@ -88,6 +88,11 @@ Built to the prototyping standard (<code>PROTOTYPING.md</code>); this index is t
 <td>Beyond children: children in real footage, the adults who work with them, people in vulnerable circumstances, protected characteristics, accessibility, sensitive data categories, dark patterns and AI manipulation — the law and the enforcement behind each, the rule it becomes (R30–R36), how it generalises</td>
 </tr>
 <tr>
+<td>01g research VI</td>
+<td><a href="research-6.html"><code>01g-research-real-system.md</code></a></td>
+<td>The real system's services verified on the day: hosting, database, cache, files, jobs, e-mail, Meta, SMS, payments, drafting, transcription, the media worker, credentials, sign-in, observability — auth, review, limits, prices, alternatives; what each needs before the first run; the monthly cost at pilot and at the sizing target; what is assumed</td>
+</tr>
+<tr>
 <td>02 audit</td>
 <td><a href="audit.html"><code>02-audit.md</code></a></td>
 <td>Your Field measured: API, 253 providers, field coverage, site copy, the platform's own policy and terms; the Hungarian reference instance; the two videos frame by frame; what DiscountDirect provides</td>
@@ -100,7 +105,7 @@ Built to the prototyping standard (<code>PROTOTYPING.md</code>); this index is t
 <tr>
 <td>04 decisions</td>
 <td><a href="decisions.html"><code>04-decisions.md</code></a></td>
-<td>D1–D36</td>
+<td>D1–D37</td>
 </tr>
 <tr>
 <td>05 design</td>
@@ -115,7 +120,7 @@ Built to the prototyping standard (<code>PROTOTYPING.md</code>); this index is t
 <tr>
 <td>06 build log</td>
 <td><a href="build-log.html"><code>06-build-log.md</code></a></td>
-<td>Nine rounds: the prototype; presentation and package; editors and tablet; campaigns, upgrades, recap; conversations; economics; the research implemented; the audit implemented; the policy screen; the two interfaces</td>
+<td>Ten rounds and a re-pull: the prototype; presentation and package; editors and tablet; campaigns, upgrades, recap; conversations; economics; the research implemented; the audit implemented; the policy screen; the two interfaces; beyond children; the catalogue re-pulled</td>
 </tr>
 <tr>
 <td>07 gate</td>
@@ -140,7 +145,7 @@ Built to the prototyping standard (<code>PROTOTYPING.md</code>); this index is t
 <tr>
 <td>11 architecture</td>
 <td><a href="architecture.html"><code>11-architecture.md</code></a></td>
-<td>context, the platform measured, quality attributes, containers, flows, integrations, stack and ADR-1–14 — <strong>PROPOSED</strong> (D19)</td>
+<td>context, the platform measured, quality attributes, containers (incl. the media worker), flows, integrations, stack and ADR-1–25 — the build baseline (D37)</td>
 </tr>
 <tr>
 <td>12 technical design</td>
@@ -150,7 +155,7 @@ Built to the prototyping standard (<code>PROTOTYPING.md</code>); this index is t
 <tr>
 <td>13 plan</td>
 <td><a href="implementation-plan.html"><code>13-implementation-plan.md</code></a></td>
-<td>seven milestones, 65 issues with a Definition of Done, blocked register (the prerequisites), risks, release scope in two halves</td>
+<td>seven milestones, nine two-week sprints with an acceptance test each and a sprint-0 checklist, 65 issues with a Definition of Done, blocked register (the prerequisites), risks, release scope in two halves</td>
 </tr>
 <tr>
 <td>14 token map</td>
@@ -176,6 +181,11 @@ Built to the prototyping standard (<code>PROTOTYPING.md</code>); this index is t
 <td>18 policy framework</td>
 <td><a href="policy-framework.html"><code>18-responsible-data-policy-framework.md</code></a></td>
 <td>Seventeen principles, the policy record per instance, the gate (ten rows), onboarding, the client's value, two worked instances, how it generalises (D32, D35)</td>
+</tr>
+<tr>
+<td>20 system blueprint</td>
+<td><a href="system-blueprint.html"><code>20-system-blueprint.md</code></a></td>
+<td>The document a developer builds from: drawings (context, deployment, module map, the two pipelines, the clip engine, the state machines), the repository layout, seventeen modules with what each owns and pseudo code, data contracts, the cron table, the outbox in full, security, configuration, the media worker, the test plan, operations, the prototype → module map (D37)</td>
 </tr>
 <tr>
 <td>19 prerequisites</td>
@@ -345,7 +355,14 @@ other gates and the executive summary; on the other four projects, responsible-d
 records, the stale and consistency checks, asks re-classified, sourced benchmarks, the
 missing widths measured, business-logic documents for Holdvölgy and IDBC, and an audit of
 DiscountDirect's logic.</p>
-<p><strong>Next.</strong> Present. After acceptance, the prerequisites checklist.</p>
+<p><strong>2026-09-20 — the real system (D37).</strong> The owner asked for the next phase: research and a plan
+to build the machine for real. Research VI reads every service's own terms on the day (auth,
+review, limits, prices, the alternative) and the monthly cost; the system blueprint gives the
+drawings, the modules with pseudo code, the contracts, the crons, the outbox, security, the media
+worker, the tests and the operations; the architecture's ADRs become the build baseline with
+ADR-15–25 for the service choices; the plan is re-cut into nine sprints with an acceptance test
+each and a sprint-0 checklist.</p>
+<p><strong>Next.</strong> Present. After acceptance, the prerequisites checklist and sprint 0.</p>
 <footer>Source: <code>business-direct/docs/README.md</code> · rendered by <code>docs/build.py</code>.</footer>
 </div>
 </body>

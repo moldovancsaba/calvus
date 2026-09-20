@@ -1,9 +1,12 @@
 # business.direct — implementation plan
 
-*Written 2026-09-19 on the PROPOSED architecture; phase 2 (M5) added the same day. Estimates are for a team of two
-developers and the owner as product lead; they assume ADR-1 to ADR-8 stand and the open
-asks in `08-client-asks.md` close in the first two weeks. Every issue has a Definition of
-Done; the blocked register is honest about what waits on the client.*
+*Written 2026-09-19 on the architecture's ADRs; phase 2 (M5) added the same day; re-cut to
+sprint level on 2026-09-20 (D37) from the system blueprint (`20-system-blueprint.md`) and the
+service research (`01g-research-real-system.md`). Estimates are for a team of two developers and
+the owner as product lead; they assume the ADRs (ADR-1 to ADR-25) stand as the build baseline and
+the prerequisites in `19-implementation-prerequisites.md` arrive as §4 says. Every issue has a
+Definition of Done; every sprint has an acceptance test the owner can watch; the blocked register
+is honest about what waits on the client.*
 
 ## 0. Conventions
 
@@ -29,7 +32,39 @@ instance (`platform_id`). "Measured" means a number in the build log, not a clai
 | M3 | Families | 9–10 | preferences by signed link, consent capture, caps, Sunday digest, saved-provider alerts through platform push, Stop |
 | M4 | Intelligence and pages | 11–12 | overview tiles on real numbers, the intelligence recap screen, market radar note, generated pages written through the connector, operations dashboards |
 | M5 | Campaigns and upgrades (phase 2) | 13–15 | provider campaigns from the card with audiences from the platform's saves, results screen, products and Stripe entitlements, the family inbox's reason line |
-| M6 | Second instance | 16–17 | Sportolok connector, Hungarian dictionary, legal footers; proves ADR-2 |
+| M6 | Second-instance proof | 17 | a second connector against the reference API's recorded fixtures, a second policy record and instance row, strings from a dictionary; proves ADR-2 without assuming a second client |
+
+## 2b. Sprints (two weeks each; what ships, what the owner sees at the review, what it needs)
+
+| Sprint | Weeks | Issues | Acceptance test at the review (run on the console, measured) | Needs before it starts |
+|---|---|---|---|---|
+| S0 setup | 0 | — | the accounts of research VI §14 exist; `env.ts` boots; `/api/health` is green; SSO signs the owner in as operator | Vercel Pro, Atlas M0, Upstash, Resend domain DNS, Claude key, the SSO client; **Meta App Review submitted** |
+| S1 foundation | 1–2 | BD-0-1 … BD-0-11 | 253 providers cached by `sync`; the thirteen screens navigate with empty states; Simple and Advanced modes; the Policy screen shows the first client's record with `postal_address` marked missing and the features it blocks; a Server Action that tries to import a channel fails the build; the outbox drains a stub row in ≤ 60 s | — |
+| S2 provider sales | 3–4 | BD-1-1, 1-2, 1-4, 1-6, 1-10, 1-11, 1-12, 1-14, 1-7 | with a test policy record: step 1 sent by Resend to a test provider in score order; the reply lands in the thread within a minute; stage moves *identified → contacted → replied* by events only; a template without `{postal_address}` cannot be approved; bounce ≥ 2 % pauses; "not my program" excludes the address | a sending domain (P-11 DNS); a test policy record |
+| S3 conversations | 5–6 | BD-1-3, 1-5, 1-8, 1-9, 1-13 | an inbound e-mail, a platform message and a missed call each become an enquiry with a drafted answer in ≤ 1 min; AI on / off both marked; apply-to-manage writes a claim request when keyed, else an operator task; a family's ask to an unclaimed provider becomes sales step 2 | P-7 for the keyed branch (else the task branch is demonstrated) |
+| S4 social publishing | 7–8 | BD-2-1, 2-2, 2-3, 2-4, 2-6, 2-5, 2-9 | a draft from a catalogue event → approve → published to the test Page and Instagram account at its slot ± 5 min; the snapshot in Blob; a comment on the post arrives by webhook with a drafted reply; the weekly anchor on the calendar | **Meta App Review approved** (submitted S0); a test Page + Instagram account |
+| S5 the clip engine | 9–10 | BD-2-7, 2-10, 2-8, 2-11 | a 20-minute recording uploaded on the provider's Media screen → four captioned 9:16 clips with C2PA in the queue in ≤ 10 min (measured); a recording flagged as showing children is refused without the consent confirmation, by the app and by the worker; a draft with "only 3 spots left" is refused | Fly.io app; Deepgram key; a C2PA certificate (self-signed for the pilot) |
+| S6 families | 11–12 | BD-3-1 … BD-3-6, 3-8, 3-9 | a family opens a signed link, turns picks on → Sunday's digest arrives; a new session at a saved provider → push within 1 h (keyed) or an operator task; the cap race test (2 sends, 1 slot → 1 sent, 1 refused); Stop cancels queued rows in one transaction; the SMS toggle cannot turn on without a consent row | P-2 (digest clause) for a real send — the test instance runs with a test record |
+| S7 intelligence | 13–14 | BD-4-1 … BD-4-13 | every overview tile names its source; `metrics` rolls yesterday's events; a rate flips to "measured" at 100 observations (seeded); the economics screen reads `assumptions`; the propensity score changes the sequence order; the holdout experiment configured; a generated page publishes only at readiness ≥ 3 of 4; the five alerts fire in a drill; a department earns auto-approval after four clean weeks (clock-seeded) and loses it on an edit | P-6 for real tiles (else labelled sample) |
+| S8 campaigns and upgrades | 15–16 | BD-5-1 … BD-5-6 | a managing provider sees a campaign draft with the audience count before approval; a family at the cap receives nothing; Stripe test-mode checkout → `entitlements` → *upgraded* → card flag (keyed) or task; the results screen from the message log; cancellation within 14 days refunds (R32) | Stripe test keys; P-12 prices (sample until then) |
+| S9 second-instance proof | 17 | BD-6-1, 6-2 | a second instance row + policy record + connector against fixtures runs every job without code change; the gate blocks everything on the unfilled record | — |
+
+Two developers, nine sprints, seventeen weeks, matching the milestone table; a sprint that loses
+its external dependency (S4 without Meta's approval) swaps with the next one — S5 and S6 need
+nothing from Meta.
+
+### Sprint 0 checklist (the day before S1)
+
+1. Repository created (`20-system-blueprint.md` §3), `main` protected, preview deployments on.
+2. Vercel project with the environment of blueprint §9; `CRON_SECRET`; the thirteen crons in `vercel.json`.
+3. Atlas M0 cluster, the collections and indexes of technical design §2 + blueprint §5 (a `scripts/indexes.ts`).
+4. Upstash database in `us-east-1`; Blob store.
+5. Resend: domain verified (SPF, DKIM, DMARC), `reply.` MX, webhook endpoint with the signing secret.
+6. Meta developer app under the platform's Business Manager; test Page and Instagram professional account; App Review **submitted** with the screencast of the approval → publish flow.
+7. Claude API key with a spend limit; `DRAFTER=template` until the knowledge files are loaded.
+8. Sentry project; Better Stack monitor on `/api/health`.
+9. DoneIsBetter SSO client for the machine (owner).
+10. The first client's policy record entered on the Policy screen from `18-responsible-data-policy-framework.md` §6 — with `postal_address` empty until P-1.
 
 ## 3. Issues
 
@@ -98,8 +133,8 @@ instance (`platform_id`). "Measured" means a number in the build log, not a clai
 | BD-5-4 | `send-campaigns` with preference and cap | a family at the cap receives nothing (test); the reason line on every message |
 | BD-5-5 | Products, Stripe Checkout, entitlements webhook | first `active` → *upgraded* → card flag set through the connector |
 | BD-5-6 | Provider results screen | what went out from the message log; plan ladder from entitlements |
-| BD-6-1 | `SportolokConnector` incl. `ingest` | 431 listings cached; one page published to the reference instance |
-| BD-6-2 | Hungarian dictionary and legal footers | every string from the dictionary; footer per market |
+| BD-6-1 | A second `PlatformConnector` (the reference API's shape, incl. `ingest`) against recorded fixtures | 431 reference listings cached from fixtures; `publishPage` exercised against a fixture server; no live write |
+| BD-6-2 | Instance dictionary and legal footer per policy record | every user-facing string from the dictionary; the footer (postal address, opt-out wording) comes from the instance's policy record |
 
 ## 4. Blocked register
 
@@ -126,15 +161,17 @@ Every row below is an implementation prerequisite (`19-implementation-prerequisi
 | A cap or consent bug | TCPA exposure | ADR-3 double check; consent-before-SMS test; zero-violation alert |
 | Providers see the invitation as spam | pipeline stalls | the copy names the provider's own page and the free claim; one reminder only; "not my program" honoured |
 | AI drafts off-brand | operator trust | knowledge files first; AI optional; every draft edited is a training signal for the prompt |
+| A vendor changes price or limit (research VI's numbers are dated 2026-09-20) | cost or cadence | every vendor is behind an interface (connector, adapter, drafter, media adapter); the cost table is re-read at contract |
+| The cron cadence or the 300 s tick is outgrown | a job cannot finish in a tick | ADR-18's upgrade path: Inngest consumes the same outbox rows; batching first |
 | One operator is a bottleneck | queue grows | departments with AI on produce fewer, better drafts; the queue shows age; nothing sends unapproved anyway |
 
 ## 6. Release scope
 
-**Release 1 (M0–M3, ~10 weeks), re-cut by the audit (Q10) into two halves:** **1a, read-only against the platform** — the sales sequence with the sending guard and postal address, the reply inbox, the provider view (today, conversations, media, knowledge), the content queue with labels, economics on assumptions, the family's preferences by signed link; **1b, when the platform's key and events arrive** — claim requests, campaign audiences from saves, notifications, card flags, sign-up sources, bookings. The presentation says which half is which.
+**Release 1 (M0–M3, sprints S1–S6, twelve weeks), re-cut by the audit (Q10) into two halves:** **1a, read-only against the platform** — the sales sequence with the sending guard and postal address, the reply inbox, the provider view (today, conversations, media, knowledge), the content queue with labels, economics on assumptions, the family's preferences by signed link; **1b, when the platform's key and events arrive** — claim requests, campaign audiences from saves, notifications, card flags, sign-up sources, bookings. The presentation says which half is which.
 
 **Release 1 as first planned:** Your Field NYC; provider sales end to end; Instagram and
 Facebook publishing with approval; family digest, alerts and preferences; caps and consent;
-the operator's approval queue as the one gate. **Release 1.1 (M4):** real intelligence,
-the recap, generated pages, dashboards. **Release 2 (M5):** provider campaigns, results,
-products and Stripe upgrades. **Release 3 (M6):** the second instance. Out of scope until a
+the operator's approval queue as the one gate. **Release 1.1 (M4, S7):** real intelligence,
+the recap, generated pages, dashboards. **Release 2 (M5, S8):** provider campaigns, results,
+products and Stripe upgrades. **Release 3 (M6, S9):** the second-instance proof. Out of scope until a
 decision: TikTok and X, Google Business Profile, calendars.

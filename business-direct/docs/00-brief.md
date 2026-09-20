@@ -87,7 +87,8 @@ Every stage of the standard is done (2026-09-19). Gates 1 and 2 approved (D9, D1
 prototype built in nine rounds (`06-build-log.md`) — the two flows, campaigns and upgrades,
 conversations, economics, the research implemented, the audit implemented, the
 responsible-data policy record and gate, the Simple and Advanced interfaces — and measured
-(`07-gate.md`); the presentation, the business logic, the technical package (stack
-PROPOSED), the audit and SWOT, and the policy framework written. Nothing is open for the
-presentation; what the implementation needs after acceptance is
-`19-implementation-prerequisites.md`. **Next: present.**
+(`07-gate.md`); the presentation, the business logic, the technical package (the stack
+verified service by service and the system blueprint with modules and pseudo code, D37), the
+audit and SWOT, and the policy framework written. Nothing is open for the presentation; what
+the implementation needs after acceptance is `19-implementation-prerequisites.md`; the build
+starts with the sprint-0 checklist in `13-implementation-plan.md`. **Next: present.**

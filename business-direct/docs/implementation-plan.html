@@ -36,12 +36,15 @@ footer{margin-top:56px;padding-top:18px;border-top:1px solid var(--line);font-si
 </head>
 <body>
 <div class="wrap">
-<nav class="docnav" aria-label="Project documentation"><span class="docnav-brand">business.direct · docs</span><a href="index.html">Overview</a><a href="brief.html">Brief</a><a href="research.html">Research</a><a href="research-2.html">Research II</a><a href="research-3.html">Research III</a><a href="research-4.html">Research IV</a><a href="research-5.html">Research V</a><a href="audit.html">Audit</a><a href="sources.html">Sources</a><a href="design-system.html">Design system</a><a href="layouts.html">Layouts</a><a href="05-layout-specs.html">Layout specs</a><a href="decisions.html">Decisions</a><a href="build-log.html">Build log</a><a href="gate.html">Gate</a><a href="client-asks.html">Register of asks</a><a href="implementation-prerequisites.html">Prerequisites</a><a href="business-logic.html">Business logic</a><a href="ssot.html">SSOT</a><a href="architecture.html">Architecture</a><a href="technical-design.html">Technical design</a><a href="implementation-plan.html" aria-current=page>Plan</a><a href="token-map.html">Token map</a><a href="executive.html">Executive summary</a><a href="analytics.html">Analytics</a><a href="audit-swot.html">Audit · SWOT</a><a href="policy-framework.html">Policy framework</a></nav>
+<nav class="docnav" aria-label="Project documentation"><span class="docnav-brand">business.direct · docs</span><a href="index.html">Overview</a><a href="brief.html">Brief</a><a href="research.html">Research</a><a href="research-2.html">Research II</a><a href="research-3.html">Research III</a><a href="research-4.html">Research IV</a><a href="research-5.html">Research V</a><a href="research-6.html">Research VI</a><a href="audit.html">Audit</a><a href="sources.html">Sources</a><a href="design-system.html">Design system</a><a href="layouts.html">Layouts</a><a href="05-layout-specs.html">Layout specs</a><a href="decisions.html">Decisions</a><a href="build-log.html">Build log</a><a href="gate.html">Gate</a><a href="client-asks.html">Register of asks</a><a href="implementation-prerequisites.html">Prerequisites</a><a href="business-logic.html">Business logic</a><a href="ssot.html">SSOT</a><a href="architecture.html">Architecture</a><a href="technical-design.html">Technical design</a><a href="implementation-plan.html" aria-current=page>Plan</a><a href="system-blueprint.html">System blueprint</a><a href="token-map.html">Token map</a><a href="executive.html">Executive summary</a><a href="analytics.html">Analytics</a><a href="audit-swot.html">Audit · SWOT</a><a href="policy-framework.html">Policy framework</a></nav>
 <header><p class="eyebrow">Calvus · business.direct · project documentation</p><h1>business.direct — implementation plan</h1></header>
-<p><em>Written 2026-09-19 on the PROPOSED architecture; phase 2 (M5) added the same day. Estimates are for a team of two
-developers and the owner as product lead; they assume ADR-1 to ADR-8 stand and the open
-asks in <a href="client-asks.html"><code>08-client-asks.md</code></a> close in the first two weeks. Every issue has a Definition of
-Done; the blocked register is honest about what waits on the client.</em></p>
+<p><em>Written 2026-09-19 on the architecture's ADRs; phase 2 (M5) added the same day; re-cut to
+sprint level on 2026-09-20 (D37) from the system blueprint (<a href="system-blueprint.html"><code>20-system-blueprint.md</code></a>) and the
+service research (<a href="research-6.html"><code>01g-research-real-system.md</code></a>). Estimates are for a team of two developers and
+the owner as product lead; they assume the ADRs (ADR-1 to ADR-25) stand as the build baseline and
+the prerequisites in <a href="implementation-prerequisites.html"><code>19-implementation-prerequisites.md</code></a> arrive as §4 says. Every issue has a
+Definition of Done; every sprint has an acceptance test the owner can watch; the blocked register
+is honest about what waits on the client.</em></p>
 <h2>0. Conventions</h2>
 <p>Issue ids <code>BD-&lt;milestone&gt;-&lt;n&gt;</code>. A milestone ships to production behind a feature flag per
 instance (<code>platform_id</code>). "Measured" means a number in the build log, not a claim.</p>
@@ -103,12 +106,112 @@ instance (<code>platform_id</code>). "Measured" means a number in the build log,
 </tr>
 <tr>
 <td>M6</td>
-<td>Second instance</td>
-<td>16–17</td>
-<td>Sportolok connector, Hungarian dictionary, legal footers; proves ADR-2</td>
+<td>Second-instance proof</td>
+<td>17</td>
+<td>a second connector against the reference API's recorded fixtures, a second policy record and instance row, strings from a dictionary; proves ADR-2 without assuming a second client</td>
 </tr>
 </tbody>
 </table></div>
+<h2>2b. Sprints (two weeks each; what ships, what the owner sees at the review, what it needs)</h2>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>Sprint</th>
+<th>Weeks</th>
+<th>Issues</th>
+<th>Acceptance test at the review (run on the console, measured)</th>
+<th>Needs before it starts</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>S0 setup</td>
+<td>0</td>
+<td>—</td>
+<td>the accounts of research VI §14 exist; <code>env.ts</code> boots; <code>/api/health</code> is green; SSO signs the owner in as operator</td>
+<td>Vercel Pro, Atlas M0, Upstash, Resend domain DNS, Claude key, the SSO client; <strong>Meta App Review submitted</strong></td>
+</tr>
+<tr>
+<td>S1 foundation</td>
+<td>1–2</td>
+<td>BD-0-1 … BD-0-11</td>
+<td>253 providers cached by <code>sync</code>; the thirteen screens navigate with empty states; Simple and Advanced modes; the Policy screen shows the first client's record with <code>postal_address</code> marked missing and the features it blocks; a Server Action that tries to import a channel fails the build; the outbox drains a stub row in ≤ 60 s</td>
+<td>—</td>
+</tr>
+<tr>
+<td>S2 provider sales</td>
+<td>3–4</td>
+<td>BD-1-1, 1-2, 1-4, 1-6, 1-10, 1-11, 1-12, 1-14, 1-7</td>
+<td>with a test policy record: step 1 sent by Resend to a test provider in score order; the reply lands in the thread within a minute; stage moves <em>identified → contacted → replied</em> by events only; a template without <code>{postal_address}</code> cannot be approved; bounce ≥ 2 % pauses; "not my program" excludes the address</td>
+<td>a sending domain (P-11 DNS); a test policy record</td>
+</tr>
+<tr>
+<td>S3 conversations</td>
+<td>5–6</td>
+<td>BD-1-3, 1-5, 1-8, 1-9, 1-13</td>
+<td>an inbound e-mail, a platform message and a missed call each become an enquiry with a drafted answer in ≤ 1 min; AI on / off both marked; apply-to-manage writes a claim request when keyed, else an operator task; a family's ask to an unclaimed provider becomes sales step 2</td>
+<td>P-7 for the keyed branch (else the task branch is demonstrated)</td>
+</tr>
+<tr>
+<td>S4 social publishing</td>
+<td>7–8</td>
+<td>BD-2-1, 2-2, 2-3, 2-4, 2-6, 2-5, 2-9</td>
+<td>a draft from a catalogue event → approve → published to the test Page and Instagram account at its slot ± 5 min; the snapshot in Blob; a comment on the post arrives by webhook with a drafted reply; the weekly anchor on the calendar</td>
+<td><strong>Meta App Review approved</strong> (submitted S0); a test Page + Instagram account</td>
+</tr>
+<tr>
+<td>S5 the clip engine</td>
+<td>9–10</td>
+<td>BD-2-7, 2-10, 2-8, 2-11</td>
+<td>a 20-minute recording uploaded on the provider's Media screen → four captioned 9:16 clips with C2PA in the queue in ≤ 10 min (measured); a recording flagged as showing children is refused without the consent confirmation, by the app and by the worker; a draft with "only 3 spots left" is refused</td>
+<td>Fly.io app; Deepgram key; a C2PA certificate (self-signed for the pilot)</td>
+</tr>
+<tr>
+<td>S6 families</td>
+<td>11–12</td>
+<td>BD-3-1 … BD-3-6, 3-8, 3-9</td>
+<td>a family opens a signed link, turns picks on → Sunday's digest arrives; a new session at a saved provider → push within 1 h (keyed) or an operator task; the cap race test (2 sends, 1 slot → 1 sent, 1 refused); Stop cancels queued rows in one transaction; the SMS toggle cannot turn on without a consent row</td>
+<td>P-2 (digest clause) for a real send — the test instance runs with a test record</td>
+</tr>
+<tr>
+<td>S7 intelligence</td>
+<td>13–14</td>
+<td>BD-4-1 … BD-4-13</td>
+<td>every overview tile names its source; <code>metrics</code> rolls yesterday's events; a rate flips to "measured" at 100 observations (seeded); the economics screen reads <code>assumptions</code>; the propensity score changes the sequence order; the holdout experiment configured; a generated page publishes only at readiness ≥ 3 of 4; the five alerts fire in a drill; a department earns auto-approval after four clean weeks (clock-seeded) and loses it on an edit</td>
+<td>P-6 for real tiles (else labelled sample)</td>
+</tr>
+<tr>
+<td>S8 campaigns and upgrades</td>
+<td>15–16</td>
+<td>BD-5-1 … BD-5-6</td>
+<td>a managing provider sees a campaign draft with the audience count before approval; a family at the cap receives nothing; Stripe test-mode checkout → <code>entitlements</code> → <em>upgraded</em> → card flag (keyed) or task; the results screen from the message log; cancellation within 14 days refunds (R32)</td>
+<td>Stripe test keys; P-12 prices (sample until then)</td>
+</tr>
+<tr>
+<td>S9 second-instance proof</td>
+<td>17</td>
+<td>BD-6-1, 6-2</td>
+<td>a second instance row + policy record + connector against fixtures runs every job without code change; the gate blocks everything on the unfilled record</td>
+<td>—</td>
+</tr>
+</tbody>
+</table></div>
+<p>Two developers, nine sprints, seventeen weeks, matching the milestone table; a sprint that loses
+its external dependency (S4 without Meta's approval) swaps with the next one — S5 and S6 need
+nothing from Meta.</p>
+<h3>Sprint 0 checklist (the day before S1)</h3>
+<ol>
+<li>Repository created (<a href="system-blueprint.html"><code>20-system-blueprint.md</code></a> §3), <code>main</code> protected, preview deployments on.</li>
+<li>Vercel project with the environment of blueprint §9; <code>CRON_SECRET</code>; the thirteen crons in <code>vercel.json</code>.</li>
+<li>Atlas M0 cluster, the collections and indexes of technical design §2 + blueprint §5 (a <code>scripts/indexes.ts</code>).</li>
+<li>Upstash database in <code>us-east-1</code>; Blob store.</li>
+<li>Resend: domain verified (SPF, DKIM, DMARC), <code>reply.</code> MX, webhook endpoint with the signing secret.</li>
+<li>Meta developer app under the platform's Business Manager; test Page and Instagram professional account; App Review <strong>submitted</strong> with the screencast of the approval → publish flow.</li>
+<li>Claude API key with a spend limit; <code>DRAFTER=template</code> until the knowledge files are loaded.</li>
+<li>Sentry project; Better Stack monitor on <code>/api/health</code>.</li>
+<li>DoneIsBetter SSO client for the machine (owner).</li>
+<li>The first client's policy record entered on the Policy screen from <a href="policy-framework.html"><code>18-responsible-data-policy-framework.md</code></a> §6 — with <code>postal_address</code> empty until P-1.</li>
+</ol>
 <h2>3. Issues</h2>
 <div class="tbl"><table>
 <thead>
@@ -436,13 +539,13 @@ instance (<code>platform_id</code>). "Measured" means a number in the build log,
 </tr>
 <tr>
 <td>BD-6-1</td>
-<td><code>SportolokConnector</code> incl. <code>ingest</code></td>
-<td>431 listings cached; one page published to the reference instance</td>
+<td>A second <code>PlatformConnector</code> (the reference API's shape, incl. <code>ingest</code>) against recorded fixtures</td>
+<td>431 reference listings cached from fixtures; <code>publishPage</code> exercised against a fixture server; no live write</td>
 </tr>
 <tr>
 <td>BD-6-2</td>
-<td>Hungarian dictionary and legal footers</td>
-<td>every string from the dictionary; footer per market</td>
+<td>Instance dictionary and legal footer per policy record</td>
+<td>every user-facing string from the dictionary; the footer (postal address, opt-out wording) comes from the instance's policy record</td>
 </tr>
 </tbody>
 </table></div>
@@ -550,6 +653,16 @@ instance (<code>platform_id</code>). "Measured" means a number in the build log,
 <td>knowledge files first; AI optional; every draft edited is a training signal for the prompt</td>
 </tr>
 <tr>
+<td>A vendor changes price or limit (research VI's numbers are dated 2026-09-20)</td>
+<td>cost or cadence</td>
+<td>every vendor is behind an interface (connector, adapter, drafter, media adapter); the cost table is re-read at contract</td>
+</tr>
+<tr>
+<td>The cron cadence or the 300 s tick is outgrown</td>
+<td>a job cannot finish in a tick</td>
+<td>ADR-18's upgrade path: Inngest consumes the same outbox rows; batching first</td>
+</tr>
+<tr>
 <td>One operator is a bottleneck</td>
 <td>queue grows</td>
 <td>departments with AI on produce fewer, better drafts; the queue shows age; nothing sends unapproved anyway</td>
@@ -557,12 +670,12 @@ instance (<code>platform_id</code>). "Measured" means a number in the build log,
 </tbody>
 </table></div>
 <h2>6. Release scope</h2>
-<p><strong>Release 1 (M0–M3, ~10 weeks), re-cut by the audit (Q10) into two halves:</strong> <strong>1a, read-only against the platform</strong> — the sales sequence with the sending guard and postal address, the reply inbox, the provider view (today, conversations, media, knowledge), the content queue with labels, economics on assumptions, the family's preferences by signed link; <strong>1b, when the platform's key and events arrive</strong> — claim requests, campaign audiences from saves, notifications, card flags, sign-up sources, bookings. The presentation says which half is which.</p>
+<p><strong>Release 1 (M0–M3, sprints S1–S6, twelve weeks), re-cut by the audit (Q10) into two halves:</strong> <strong>1a, read-only against the platform</strong> — the sales sequence with the sending guard and postal address, the reply inbox, the provider view (today, conversations, media, knowledge), the content queue with labels, economics on assumptions, the family's preferences by signed link; <strong>1b, when the platform's key and events arrive</strong> — claim requests, campaign audiences from saves, notifications, card flags, sign-up sources, bookings. The presentation says which half is which.</p>
 <p><strong>Release 1 as first planned:</strong> Your Field NYC; provider sales end to end; Instagram and
 Facebook publishing with approval; family digest, alerts and preferences; caps and consent;
-the operator's approval queue as the one gate. <strong>Release 1.1 (M4):</strong> real intelligence,
-the recap, generated pages, dashboards. <strong>Release 2 (M5):</strong> provider campaigns, results,
-products and Stripe upgrades. <strong>Release 3 (M6):</strong> the second instance. Out of scope until a
+the operator's approval queue as the one gate. <strong>Release 1.1 (M4, S7):</strong> real intelligence,
+the recap, generated pages, dashboards. <strong>Release 2 (M5, S8):</strong> provider campaigns, results,
+products and Stripe upgrades. <strong>Release 3 (M6, S9):</strong> the second-instance proof. Out of scope until a
 decision: TikTok and X, Google Business Profile, calendars.</p>
 <footer>Source: <code>business-direct/docs/13-implementation-plan.md</code> · rendered by <code>docs/build.py</code>.</footer>
 </div>

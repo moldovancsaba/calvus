@@ -36,7 +36,7 @@ footer{margin-top:56px;padding-top:18px;border-top:1px solid var(--line);font-si
 </head>
 <body>
 <div class="wrap">
-<nav class="docnav" aria-label="Project documentation"><span class="docnav-brand">business.direct · docs</span><a href="index.html">Overview</a><a href="brief.html">Brief</a><a href="research.html">Research</a><a href="research-2.html">Research II</a><a href="research-3.html">Research III</a><a href="research-4.html">Research IV</a><a href="research-5.html">Research V</a><a href="audit.html">Audit</a><a href="sources.html">Sources</a><a href="design-system.html">Design system</a><a href="layouts.html">Layouts</a><a href="05-layout-specs.html">Layout specs</a><a href="decisions.html">Decisions</a><a href="build-log.html">Build log</a><a href="gate.html">Gate</a><a href="client-asks.html">Register of asks</a><a href="implementation-prerequisites.html">Prerequisites</a><a href="business-logic.html">Business logic</a><a href="ssot.html">SSOT</a><a href="architecture.html">Architecture</a><a href="technical-design.html" aria-current=page>Technical design</a><a href="implementation-plan.html">Plan</a><a href="token-map.html">Token map</a><a href="executive.html">Executive summary</a><a href="analytics.html">Analytics</a><a href="audit-swot.html">Audit · SWOT</a><a href="policy-framework.html">Policy framework</a></nav>
+<nav class="docnav" aria-label="Project documentation"><span class="docnav-brand">business.direct · docs</span><a href="index.html">Overview</a><a href="brief.html">Brief</a><a href="research.html">Research</a><a href="research-2.html">Research II</a><a href="research-3.html">Research III</a><a href="research-4.html">Research IV</a><a href="research-5.html">Research V</a><a href="research-6.html">Research VI</a><a href="audit.html">Audit</a><a href="sources.html">Sources</a><a href="design-system.html">Design system</a><a href="layouts.html">Layouts</a><a href="05-layout-specs.html">Layout specs</a><a href="decisions.html">Decisions</a><a href="build-log.html">Build log</a><a href="gate.html">Gate</a><a href="client-asks.html">Register of asks</a><a href="implementation-prerequisites.html">Prerequisites</a><a href="business-logic.html">Business logic</a><a href="ssot.html">SSOT</a><a href="architecture.html">Architecture</a><a href="technical-design.html" aria-current=page>Technical design</a><a href="implementation-plan.html">Plan</a><a href="system-blueprint.html">System blueprint</a><a href="token-map.html">Token map</a><a href="executive.html">Executive summary</a><a href="analytics.html">Analytics</a><a href="audit-swot.html">Audit · SWOT</a><a href="policy-framework.html">Policy framework</a></nav>
 <header><p class="eyebrow">Calvus · business.direct · project documentation</p><h1>business.direct — technical design</h1></header>
 <p><em>Written 2026-09-19 on <a href="architecture.html"><code>11-architecture.md</code></a>'s PROPOSED containers. Where the prototype
 already implements a rule, the section names the function in <code>assets/app.js</code> so a
@@ -238,7 +238,16 @@ opt_outs         { platform_id, provider_id, kind: 'not_mine'|'unsubscribed'|'bo
 auto_approval    { platform_id, owner, department, clean_weeks, earned_at?, revoked_at? }
 policies         { platform_id, ...Policy (SSOT §3), version, updated_by, updated_at }   # D32; the gate reads it
 experiments      { platform_id, name, treat_area, control_area, weeks, started_at, state, readout? }
-media_assets     { _id, platform_id, provider_id?, adapter, generated: bool, credential: C2PA, blob_url, used_in[] }
+media_assets     { _id, platform_id, provider_id?, adapter, generated: bool, credential: C2PA, blob_url, captions_url?, consent_ref?, shows_children?, used_in[] }
+outbox           { _id, platform_id, kind, channel, to{}, copy, subject?, html?, media?, draft_id?, campaign_id?, step?, provider_id?, why, by,
+                   countsTowardCap, state: queued|sending|sent|refused|dead, attempts, next_at, refused_reason?, policy_basis?, message_id?, created_at }   # D37, blueprint §7
+media_jobs       { _id, recording_id, state: sent|done|failed, at }                       # the worker's job (blueprint §10)
+sync_runs        { platform_id, at, count }                                               # /api/health reads the last one
+stage_history    { provider_id, from, to, by, override, at }                              # append-only
+tasks            { platform_id, kind: call|payment_failed|not_keyed|human_reply, provider_id?, family_id?, why, state, at }   # what needs a person
+users            { sub, email, role: operator|provider, provider_id?, platform_id }        # SSO mapping (ADR-5)
+instances        { platform_id, name, timezone, connector, base_url, key?, flags{social,campaigns,sms,clips,pages} }
+webhook_log      { source, event_id, received_at, raw }                                   # 30 days, for replay
 </code></pre>
 <p>Indexes: <code>provider_state (platform_id, stage)</code>, <code>drafts (platform_id, state, scheduled_for)</code>,
 <code>messages (family_id, sent_at)</code> for the cap query, <code>consents (family_id, channel, provider_id)</code>.</p>
@@ -321,7 +330,7 @@ the first <code>active</code> moves the provider to <em>upgraded</em> (prototype
 <p><strong>Family channel</strong> — <code>on ↔ off</code> per channel; <em>Stop</em> → every channel off + cancel queued
 drafts for that family. Consent for SMS is a separate append-only record; the toggle
 cannot turn SMS on without a consent row.</p>
-<h2>5. Jobs (Vercel Cron → outbox workers)</h2>
+<h2>5. Jobs (Vercel Cron → outbox workers; the cron table with schedules and batch sizes is <a href="system-blueprint.html"><code>20-system-blueprint.md</code></a> §6)</h2>
 <div class="tbl"><table>
 <thead>
 <tr>
@@ -423,7 +432,7 @@ cannot turn SMS on without a consent row.</p>
 </tr>
 </tbody>
 </table></div>
-<h2>6. Connectors and adapters</h2>
+<h2>6. Connectors and adapters (per-adapter pseudo code: <a href="system-blueprint.html"><code>20-system-blueprint.md</code></a> §4.7)</h2>
 <pre><code class="language-ts">interface PlatformConnector {
   listProviders(): Promise&lt;ProviderCard[]&gt;;      getProvider(id): Promise&lt;Provider&gt;;
   facets(): Promise&lt;Facets&gt;;                     siteCopy(): Promise&lt;SiteCopy&gt;;

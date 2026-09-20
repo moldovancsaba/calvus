@@ -15,24 +15,26 @@ Built to the prototyping standard (`PROTOTYPING.md`); this index is the process 
 | 01c research III | `01c-research-data-driven-marketing.md` | Case studies and practices behind the data-driven decision flow: Yelp (Receptionist, Hatch, revenue per location), Angi, Thumbtack, Rover; LTV : CAC and payback lines; attribution → incrementality → MMM; Booking.com; next-best-action; P10–P12 (implemented, D28) |
 | 01e research IV | `01e-research-responsible-data.md` | Responsible data and children's rights: the law by market (COPPA 2025, NY CDPA, California and the states, GDPR Art. 8, DSA Art. 28, the UK Children's Code), the enforcement record, the frameworks (privacy by design, ICO, ISO 27701, NIST, LEGO), the business value of doing it properly |
 | 01f research V | `01f-research-beyond-children.md` | Beyond children: children in real footage, the adults who work with them, people in vulnerable circumstances, protected characteristics, accessibility, sensitive data categories, dark patterns and AI manipulation — the law and the enforcement behind each, the rule it becomes (R30–R36), how it generalises |
+| 01g research VI | `01g-research-real-system.md` | The real system's services verified on the day: hosting, database, cache, files, jobs, e-mail, Meta, SMS, payments, drafting, transcription, the media worker, credentials, sign-in, observability — auth, review, limits, prices, alternatives; what each needs before the first run; the monthly cost at pilot and at the sizing target; what is assumed |
 | 02 audit | `02-audit.md` | Your Field measured: API, 253 providers, field coverage, site copy, the platform's own policy and terms; the Hungarian reference instance; the two videos frame by frame; what DiscountDirect provides |
 | 03 sources | `03-sources.md` | What is real (the platform's public data), what is sample (generated from real cards), what is inherited |
-| 04 decisions | `04-decisions.md` | D1–D36 |
+| 04 decisions | `04-decisions.md` | D1–D37 |
 | 05 design | `design-system.html` + `../assets/tokens.css` + `../assets/components.css` | **Gate 1 approved (D9)**: tokens and components, one source |
 | 05 layouts | `05-layout-specs.md` + `layouts.html` + `frames/` | **Gate 2 approved (D16)**: platform 1440 / 390, provider 390, family 390; the later screens reuse the same grids |
-| 06 build log | `06-build-log.md` | Nine rounds: the prototype; presentation and package; editors and tablet; campaigns, upgrades, recap; conversations; economics; the research implemented; the audit implemented; the policy screen; the two interfaces |
+| 06 build log | `06-build-log.md` | Ten rounds and a re-pull: the prototype; presentation and package; editors and tablet; campaigns, upgrades, recap; conversations; economics; the research implemented; the audit implemented; the policy screen; the two interfaces; beyond children; the catalogue re-pulled |
 | 07 gate | `07-gate.md` + `../check.py` | What the script checks (links, anchors, docs cross-links, data, script, stale phrases); the measured pass at 390, 768, 1024 and 1440 |
 | 08 register of asks | `08-client-asks.md` | Every item that once needed the owner, with its state: none open for the presentation; the rest are prerequisites; four closed |
 | 09 business logic | `09-business-logic.md` | The rules end to end: parties, the two flows, the two interfaces, departments, campaigns, conversations, money, families, responsible data for every client, law, the recap, data-driven decisions, what the research and the audit changed, what the machine never does |
 | 10 SSOT | `10-ssot.md` | glossary, enumerations, entities, settings, rules R1–R36, metrics, document map |
-| 11 architecture | `11-architecture.md` | context, the platform measured, quality attributes, containers, flows, integrations, stack and ADR-1–14 — **PROPOSED** (D19) |
+| 11 architecture | `11-architecture.md` | context, the platform measured, quality attributes, containers (incl. the media worker), flows, integrations, stack and ADR-1–25 — the build baseline (D37) |
 | 12 technical design | `12-technical-design.md` | screens, content model, state machines, jobs, connector, media and channel adapter interfaces, drafting, i18n, operations |
-| 13 plan | `13-implementation-plan.md` | seven milestones, 65 issues with a Definition of Done, blocked register (the prerequisites), risks, release scope in two halves |
+| 13 plan | `13-implementation-plan.md` | seven milestones, nine two-week sprints with an acceptance test each and a sprint-0 checklist, 65 issues with a Definition of Done, blocked register (the prerequisites), risks, release scope in two halves |
 | 14 token map | `14-token-map.md` | tokens and components → GDS + Mantine; contrast computed |
 | 15 executive summary | `15-executive-summary.md` | One page in prose: the thesis, the evidence, the first client, what the machine already found, what is different, what we ask today, what comes next (hub audit action 8) |
 | 16 analytics | `16-analytics-and-unit-economics.md` | CAC / LTV / payback for providers, the marketing value of an avid family, content ROI, the next-dollar rule, the metrics tree, events and attribution, rules R16–R19; what is real vs assumed (D26) |
 | 17 audit · SWOT | `17-business-logic-audit-and-swot.md` | Audit of the business logic: 19 findings with fixes; the SWOT with evidence; the recommendations Q1–Q12 (adopted and implemented, D30) |
 | 18 policy framework | `18-responsible-data-policy-framework.md` | Seventeen principles, the policy record per instance, the gate (ten rows), onboarding, the client's value, two worked instances, how it generalises (D32, D35) |
+| 20 system blueprint | `20-system-blueprint.md` | The document a developer builds from: drawings (context, deployment, module map, the two pipelines, the clip engine, the state machines), the repository layout, seventeen modules with what each owns and pseudo code, data contracts, the cron table, the outbox in full, security, configuration, the media worker, the test plan, operations, the prototype → module map (D37) |
 | 19 prerequisites | `19-implementation-prerequisites.md` | What the implementation needs from ClassScout after acceptance — before the first send, before Release 1b, to confirm at acceptance — not required for the presentation or the planning (D34) |
 
 Rendered by `build.py` (`python3 business-direct/docs/build.py`); gate `python3 business-direct/check.py`
@@ -224,4 +226,12 @@ records, the stale and consistency checks, asks re-classified, sourced benchmark
 missing widths measured, business-logic documents for Holdvölgy and IDBC, and an audit of
 DiscountDirect's logic.
 
-**Next.** Present. After acceptance, the prerequisites checklist.
+**2026-09-20 — the real system (D37).** The owner asked for the next phase: research and a plan
+to build the machine for real. Research VI reads every service's own terms on the day (auth,
+review, limits, prices, the alternative) and the monthly cost; the system blueprint gives the
+drawings, the modules with pseudo code, the contracts, the crons, the outbox, security, the media
+worker, the tests and the operations; the architecture's ADRs become the build baseline with
+ADR-15–25 for the service choices; the plan is re-cut into nine sprints with an acceptance test
+each and a sprint-0 checklist.
+
+**Next.** Present. After acceptance, the prerequisites checklist and sprint 0.

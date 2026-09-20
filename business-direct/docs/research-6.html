@@ -1,0 +1,548 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>business.direct — research VI: the real system — every service verified, what it costs, what it needs, what it limits — business.direct docs</title>
+<link rel="stylesheet" href="../assets/tokens.css">
+<style>/* business.direct — documentation pages on the product tokens (GDS roles, teal accent). */
+:root{--ground:var(--gds-bg-canvas,#f8fafc);--card:var(--gds-bg-surface,#fff);--ink:var(--gds-text-body,#111827);--text:#1f2937;--muted:var(--gds-text-meta,#64748b);--accent:var(--gds-brand-accent,#0f766e);--accent-deep:var(--gds-brand-accent-strong,#115e59);--line:var(--gds-border-card,#e2e8f0);--line-soft:#eef2f7;--note:var(--gds-brand-accent-tint,#e6f4f2)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--ground);color:var(--text);font-family:var(--gds-font,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif);font-size:15.5px;line-height:1.6;padding-block:0 64px;padding-inline:clamp(16px,4vw,40px)}
+.wrap{max-width:74ch;margin-inline:auto}
+.docnav{display:flex;flex-wrap:wrap;gap:4px 18px;align-items:center;padding:16px 0;border-bottom:1px solid var(--line);font-size:12px;letter-spacing:.06em;text-transform:uppercase}
+.docnav a{color:var(--muted);text-decoration:none;min-height:44px;min-width:44px;display:inline-flex;align-items:center;border-bottom:2px solid transparent}
+.docnav a:hover,.docnav a[aria-current]{color:var(--ink);border-color:var(--accent)}
+.docnav-brand{color:var(--accent-deep);font-weight:800;margin-right:6px}
+.docnav-hub{margin-left:auto}
+header{padding-block:40px 24px;border-bottom:1px solid var(--line);margin-bottom:28px}
+.eyebrow{font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--accent-deep);margin:0 0 12px;font-weight:800}
+h1,h2,h3{color:var(--ink);line-height:1.1;text-wrap:balance;margin:0;letter-spacing:-.02em}
+h1{font-size:clamp(30px,6vw,46px);font-weight:900}
+h2{font-size:clamp(23px,4vw,30px);font-weight:900;margin:48px 0 14px;padding-top:20px;border-top:1px solid var(--line)}
+h3{font-size:18px;margin:30px 0 8px;font-weight:800}
+p{margin:0 0 14px} strong{color:var(--ink);font-weight:800}
+ul,ol{padding-left:22px;margin:0 0 16px} li{margin:5px 0} li>ul{margin:6px 0 0}
+code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.86em;background:var(--note);padding:1px 5px;border-radius:4px;color:var(--ink);overflow-wrap:anywhere}
+pre{overflow-x:auto;padding:14px 16px;border:1px solid var(--line);border-radius:10px;background:var(--card);font-size:12px;line-height:1.35}
+pre code{background:none;padding:0;font-size:inherit}
+a{color:var(--accent-deep)} :focus-visible{outline:2px solid var(--accent-deep);outline-offset:2px}
+.tbl{overflow-x:auto;margin:14px 0 22px;border:1px solid var(--line);border-radius:10px;background:var(--card)}
+table{border-collapse:collapse;width:100%;font-size:13.5px;min-width:560px}
+th{text-align:left;font-weight:800;color:var(--ink);background:var(--note);padding:10px 12px;border-bottom:1px solid var(--line);font-size:11.5px;letter-spacing:.06em;text-transform:uppercase}
+td{padding:10px 12px;border-top:1px solid var(--line-soft);vertical-align:top;background:var(--card)} td:first-child{color:var(--ink)}
+footer{margin-top:56px;padding-top:18px;border-top:1px solid var(--line);font-size:12px;color:var(--muted)}
+</style>
+</head>
+<body>
+<div class="wrap">
+<nav class="docnav" aria-label="Project documentation"><span class="docnav-brand">business.direct · docs</span><a href="index.html">Overview</a><a href="brief.html">Brief</a><a href="research.html">Research</a><a href="research-2.html">Research II</a><a href="research-3.html">Research III</a><a href="research-4.html">Research IV</a><a href="research-5.html">Research V</a><a href="research-6.html" aria-current=page>Research VI</a><a href="audit.html">Audit</a><a href="sources.html">Sources</a><a href="design-system.html">Design system</a><a href="layouts.html">Layouts</a><a href="05-layout-specs.html">Layout specs</a><a href="decisions.html">Decisions</a><a href="build-log.html">Build log</a><a href="gate.html">Gate</a><a href="client-asks.html">Register of asks</a><a href="implementation-prerequisites.html">Prerequisites</a><a href="business-logic.html">Business logic</a><a href="ssot.html">SSOT</a><a href="architecture.html">Architecture</a><a href="technical-design.html">Technical design</a><a href="implementation-plan.html">Plan</a><a href="system-blueprint.html">System blueprint</a><a href="token-map.html">Token map</a><a href="executive.html">Executive summary</a><a href="analytics.html">Analytics</a><a href="audit-swot.html">Audit · SWOT</a><a href="policy-framework.html">Policy framework</a></nav>
+<header><p class="eyebrow">Calvus · business.direct · project documentation</p><h1>business.direct — research VI: the real system — every service verified, what it costs, what it needs, what it limits</h1></header>
+<p><em>Sixth research round, 2026-09-20, on the owner's instruction: "step to the next phase … make a
+research and plan how we can make it a real system … exact services, what module goes where,
+how it works, the architecture, the system drawings, everything with pseudo code." This document
+is the research half: for every external service the machine depends on, the vendor's own terms
+as read on 2026-09-20 — authentication, review or registration, rate limits, prices, and the
+alternative considered. The plan half is <a href="system-blueprint.html"><code>20-system-blueprint.md</code></a> (modules, drawings, pseudo
+code) and <a href="implementation-plan.html"><code>13-implementation-plan.md</code></a> (sprints, acceptance tests). </em><em>P</em><em> marks a primary source
+(the vendor's own documentation or pricing page), </em><em>A</em><em> a secondary summary. Prices and limits
+change; every number carries the date it was read and is re-checked at contract signature. The
+client is ClassScout (Your Field NYC); everything is English and US-first; a second instance is a
+policy record and a connector (ADR-2), nothing here assumes one.</em></p>
+<h2>0. What the machine needs from outside (the dependency list)</h2>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>Need</th>
+<th>Service chosen</th>
+<th>Alternative kept</th>
+<th>Decision</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>App hosting, HTTP, cron, preview per branch</td>
+<td>Vercel (Pro)</td>
+<td>Fly.io for everything</td>
+<td>ADR-15</td>
+</tr>
+<tr>
+<td>Database</td>
+<td>MongoDB Atlas</td>
+<td>Postgres on Neon</td>
+<td>ADR-16 (stays D26)</td>
+</tr>
+<tr>
+<td>Caps, rate limits, idempotency, locks</td>
+<td>Upstash Redis</td>
+<td>MongoDB counters</td>
+<td>ADR-3 (stays)</td>
+</tr>
+<tr>
+<td>Files (media, snapshots, exports)</td>
+<td>Vercel Blob</td>
+<td>Cloudflare R2</td>
+<td>ADR-17</td>
+</tr>
+<tr>
+<td>Jobs</td>
+<td>Vercel Cron + a MongoDB outbox (§4)</td>
+<td>Inngest when the cron cadence or 300 s is hit</td>
+<td>ADR-18</td>
+</tr>
+<tr>
+<td>E-mail out and inbound</td>
+<td>Resend</td>
+<td>Postmark</td>
+<td>ADR-19</td>
+</tr>
+<tr>
+<td>Instagram + Facebook publishing and inbound</td>
+<td>Meta Graph API (Instagram API with Facebook Login)</td>
+<td>Buffer / Later API as a proxy</td>
+<td>ADR-20</td>
+</tr>
+<tr>
+<td>SMS (later, families only, consent)</td>
+<td>Twilio with A2P 10DLC registration</td>
+<td>Telnyx</td>
+<td>ADR-21</td>
+</tr>
+<tr>
+<td>Payments for upgrades</td>
+<td>Stripe Checkout + Billing on the platform's account</td>
+<td>Paddle</td>
+<td>ADR-9 (stays)</td>
+</tr>
+<tr>
+<td>Drafting (optional per department)</td>
+<td>Claude API (Sonnet 5 default, Haiku 4.5 for classification, Batch for nightly work)</td>
+<td>OpenAI</td>
+<td>ADR-7 (stays), ADR-22</td>
+</tr>
+<tr>
+<td>Clip engine: transcription</td>
+<td>Deepgram Nova (batch)</td>
+<td>OpenAI Whisper API</td>
+<td>ADR-23</td>
+</tr>
+<tr>
+<td>Clip engine: cutting, captions, C2PA</td>
+<td>ffmpeg in a container worker + <code>c2pa-node</code></td>
+<td>Vercel function with <code>ffmpeg-static</code></td>
+<td>ADR-24</td>
+</tr>
+<tr>
+<td>Content credentials</td>
+<td>C2PA via <code>@contentauth/c2pa-node</code></td>
+<td>none (label only)</td>
+<td>R20 needs the credential</td>
+</tr>
+<tr>
+<td>Generated images (later, never a person)</td>
+<td>Nano Banana 2 (Gemini image) behind <code>MediaAdapter.image</code></td>
+<td>Ideogram, Firefly</td>
+<td>ADR-12 (stays)</td>
+</tr>
+<tr>
+<td>Sign-in for operators and providers</td>
+<td>DoneIsBetter SSO</td>
+<td>Auth.js with e-mail magic links</td>
+<td>ADR-5 (stays)</td>
+</tr>
+<tr>
+<td>Errors, logs, uptime</td>
+<td>Vercel logs + Sentry (free tier) + a <code>/api/health</code> polled by Better Stack</td>
+<td>Datadog</td>
+<td>ADR-25</td>
+</tr>
+</tbody>
+</table></div>
+<h2>1. Hosting and runtime — Vercel</h2>
+<p><strong>P</strong> <a href="https://vercel.com/docs/cron-jobs/usage-and-pricing">Vercel cron jobs: usage and pricing</a>,
+<a href="https://vercel.com/docs/functions/limitations">Vercel functions limits</a> — read 2026-09-20.</p>
+<ul>
+<li><strong>Cron</strong>: Hobby 2 crons/project, once a day, unreliable timing; <strong>Pro: 40 crons per project, one-minute
+  granularity</strong> (the cron <em>invokes</em> an HTTP route; the route's own duration limit applies). Pro is $20 per
+  member per month.</li>
+<li><strong>Function duration</strong>: 300 s maximum on Pro with <code>maxDuration</code> set (default lower); memory up to 3 GB;
+  request body 4.5 MB; response streaming allowed. A single cron tick therefore drains a batch, never
+  "everything". The outbox <code>send</code> job (every minute, batch of 100) sends 6 000 messages an hour, twelve
+  times the sizing target of 5 000 a day (architecture §3).</li>
+<li><strong>Preview per branch</strong> and production on <code>main</code> — the repo's existing model.</li>
+<li><strong>Why not Fly.io for everything</strong>: the app is a Next.js console with Server Actions; Vercel is the
+  platform the client already runs on (<a href="audit.html"><code>02-audit.md</code></a>), the operator learns one dashboard, and the one
+  thing Vercel cannot do (long ffmpeg runs) goes to one small container (§10).</li>
+</ul>
+<h2>2. Database — MongoDB Atlas</h2>
+<p><strong>P</strong> <a href="https://www.mongodb.com/pricing">Atlas pricing</a> — read 2026-09-20: <strong>M0 free: 512 MB, shared,
+no backups beyond the free snapshot, 500 connections</strong>; M10 dedicated from ~$0.08/hour (~$57/month)
+with continuous backup, 10 GB, and the connection headroom Server Actions need.</p>
+<ul>
+<li>Sizing (architecture §3): 1 000 providers × ~4 KB cache = 4 MB; 5 000 messages/day × 24 months × ~1 KB
+  ≈ 3.6 GB in the message log at full scale → <strong>M0 for the build and the pilot, M10 for production</strong>;
+  the message log is the first collection to need a TTL index (<code>retention</code> job).</li>
+<li>Mongoose stays (D26, DiscountDirect); schemas are validated with Zod at the boundary
+  (<a href="system-blueprint.html"><code>20-system-blueprint.md</code></a> §5) so a bad webhook never reaches the model.</li>
+<li><strong>Change streams</strong> are available from M10 (not on M0) — the blueprint does not depend on them; the
+  outbox is polled by cron.</li>
+</ul>
+<h2>3. Caps and locks — Upstash Redis</h2>
+<p><strong>P</strong> <a href="https://upstash.com/pricing/redis">Upstash pricing</a> — read 2026-09-20: <strong>free 256 MB, 500 000
+commands a month</strong>; pay-as-you-go $0.2 per 100 000 commands after; REST API (works from Vercel
+functions without a persistent socket).</p>
+<ul>
+<li>The cap check is two commands per family per send (<code>INCR</code> + <code>EXPIRE</code>, or one Lua script); at
+  5 000 sends a day that is ~300 000 commands a month — inside the free tier for the pilot.</li>
+<li>Idempotency keys for webhooks (<code>SET NX EX 86400</code>), one key per event id.</li>
+<li>Upstash is also where the <code>send</code> job takes its one-minute lock (<code>SET lock:send NX EX 55</code>) so two cron
+  ticks never drain the same batch twice (§4).</li>
+</ul>
+<h2>4. Jobs — Vercel Cron + a durable outbox, Inngest as the upgrade path</h2>
+<p><strong>P</strong> <a href="https://www.inngest.com/docs/deploy/vercel">Inngest: deploy to Vercel</a>,
+<a href="https://www.inngest.com/docs/getting-started/nextjs-quick-start">Inngest Next.js quick start</a>,
+<a href="https://vercel.com/marketplace/inngest/account">Inngest for Vercel (marketplace)</a>; <strong>A</strong>
+<a href="https://dev.to/stacknotice/inngest-nextjs-the-complete-guide-2026-2i33">Inngest + Next.js guide, 2026</a>,
+<a href="https://www.inngest.com/uses/scheduled-jobs">Inngest: scheduled jobs</a> — read 2026-09-20.</p>
+<ul>
+<li>What Inngest adds: durable <code>step.run</code> / <code>step.sleep</code> / <code>step.waitForEvent</code> (a function can wait
+  days for an approval event and resume), retries per step, concurrency keys, a cron in code,
+  a dashboard; served from one <code>/api/inngest</code> route with <code>maxDuration</code>; free tier 100 000 step runs a
+  month. Trigger.dev is the equivalent with its own workers.</li>
+<li>What the machine actually needs today: a durable queue of approved work, a sender that runs every
+  minute in batches, retries with backoff, a dead-letter, and a lock. <strong>A MongoDB <code>outbox</code> collection
+  plus one cron tick a minute gives all of it</strong> (blueprint §7) and adds no vendor, no second dashboard
+  and no event-shape to keep in sync. Sequences do not need "sleep for three days" — the
+  <code>sequence-step</code> job computes what is due from <code>sent_at + delay_days</code> every morning.</li>
+<li><strong>Decision (ADR-18)</strong>: Vercel Cron + outbox. Move to Inngest when any of these is measured: a job
+  needs more than 300 s per tick and cannot be batched; more than 40 schedules are needed; a workflow
+  needs to wait on an external event for days with state that is awkward to keep in a document.
+  The outbox row shape is kept Inngest-compatible (an event name and a JSON payload) so the move is a
+  new consumer, not a migration.</li>
+</ul>
+<h2>5. E-mail — Resend</h2>
+<p><strong>P</strong> <a href="https://resend.com/pricing">Resend pricing</a>, <a href="https://resend.com/docs/dashboard/receiving/introduction">Resend inbound</a>,
+<a href="https://resend.com/docs/dashboard/webhooks/introduction">Resend webhooks</a> — read 2026-09-20.</p>
+<ul>
+<li><strong>Free: 3 000 e-mails a month, 100 a day, one custom domain</strong>; Pro from $20 a month for 50 000
+  e-mails and unlimited domains; dedicated IP from the Scale tier.</li>
+<li><strong>Inbound</strong>: an MX record on a subdomain (<code>reply.&lt;sending domain&gt;</code>) delivers every incoming e-mail as
+  a webhook (<code>email.received</code>) with the parsed headers and body; replies to a sequence therefore land
+  in <code>threads</code> without polling. Webhooks are signed (Svix headers <code>svix-id</code>, <code>svix-timestamp</code>,
+  <code>svix-signature</code>); the route verifies before it reads.</li>
+<li><strong>Delivery events</strong> (<code>email.sent</code>, <code>delivered</code>, <code>bounced</code>, <code>complained</code>, <code>opened</code>, <code>clicked</code>) drive
+  the sending guard's bounce rate (R23) and the metrics tree's open and click leaves.</li>
+<li><strong>Warm-up</strong>: Resend has no automatic warm-up on shared IPs; the sending guard's own schedule
+  (day 1–42, <code>sending.warm_day</code>) stays the control (D30, Q2).</li>
+<li>List-Unsubscribe headers (<code>List-Unsubscribe</code>, <code>List-Unsubscribe-Post</code>) are set on every marketing
+  message so Gmail and Yahoo's one-click requirement is met; the body still carries the link and the
+  postal address (CAN-SPAM, R2, R23).</li>
+<li>Why not Postmark: equivalent product; Resend is already the family's choice (D26) and its inbound
+  webhook is simpler to wire than Postmark's inbound stream.</li>
+</ul>
+<h2>6. Instagram and Facebook — Meta Graph API</h2>
+<p><strong>P</strong> <a href="https://developers.facebook.com/docs/instagram-platform/content-publishing">Instagram platform: content publishing</a>,
+<a href="https://developers.facebook.com/docs/instagram-platform/webhooks">Instagram platform: webhooks</a>,
+<a href="https://developers.facebook.com/documentation/instagram-platform/webhooks">Setup webhooks subscriptions</a>;
+<strong>A</strong> <a href="https://hookdeck.com/webhooks/skills/facebook-webhooks">Hookdeck: Facebook webhooks</a>,
+<a href="https://innocentanyaele.medium.com/setup-meta-webhooks-for-instagram-messaging-and-respond-to-message-4575bc95c7a2">Meta webhooks for Instagram messaging (walk-through)</a> — read 2026-09-20.</p>
+<ul>
+<li><strong>Account</strong>: the platform's Instagram must be a professional account (Business or Creator) linked to
+  a Facebook Page; the app authenticates by <strong>Facebook Login for Business</strong> and holds a Page access
+  token (long-lived, 60 days, refreshed) from which the Instagram user id is read.</li>
+<li><strong>Permissions and review</strong>: <code>instagram_business_basic</code>, <code>instagram_business_content_publish</code>,
+  <code>instagram_business_manage_comments</code>, <code>instagram_business_manage_messages</code>, <code>pages_manage_posts</code>,
+  <code>pages_read_engagement</code>, <code>pages_manage_metadata</code>. Publishing to a page the app does not own requires
+  <strong>App Review</strong> (typically two to four weeks; a screencast of the flow and a privacy-policy URL are
+  required). <em>Prerequisite P-11 (v1 integrations) covers the review; it starts in sprint 1 so it is
+  done before the publishing sprint.</em></li>
+<li><strong>Publishing flow</strong> (Instagram): create a media container <code>POST /{ig-user-id}/media</code> with
+  <code>image_url</code> or <code>video_url</code> (a public HTTPS URL — Vercel Blob provides it) and the caption; poll
+  <code>GET /{container-id}?fields=status_code</code> until <code>FINISHED</code>; then <code>POST /{ig-user-id}/media_publish</code>.
+  Reels use <code>media_type=REELS</code>; carousels create child containers first. Facebook Page: <code>POST
+  /{page-id}/photos</code> or <code>/videos</code> or <code>/feed</code>.</li>
+<li><strong>Limits</strong>: <strong>100 API-published posts per Instagram account per rolling 24 hours</strong> (carousel counts
+  once); the platform's rate limit is per app-user and per hour (calls = 200 × users); the machine
+  publishes tens a week, not hundreds a day.</li>
+<li><strong>Inbound</strong>: a Webhooks subscription on the Instagram object for <code>comments</code>, <code>messages</code>,
+  <code>mentions</code>; on the Page object for <code>feed</code>. Meta <code>GET</code>s the callback with a <code>hub.challenge</code> to verify
+  the URL, then <code>POST</code>s events signed with <code>X-Hub-Signature-256</code> (HMAC-SHA256 with the App Secret).
+  Comments arrive with the media id and the commenter's username; replying is <code>POST
+  /{comment-id}/replies</code>. DMs require the messaging permission and the app in <strong>Live</strong> mode.</li>
+<li><strong>Media constraints</strong>: JPEG only for images (8 MB), 4:5 to 1.91:1 aspect ratio; Reels MP4/MOV, 3 s
+  to 15 min, 9:16, ≤ 1 GB; captions ≤ 2 200 characters, 30 hashtags. The clip engine's output profile
+  (blueprint §10) is set to these.</li>
+<li>Why not a scheduling SaaS (Buffer, Later) as a proxy: it would add a vendor between the outbox and
+  the channel and put the audit snapshot outside the message log; the direct API is a few hundred
+  lines.</li>
+</ul>
+<h2>7. SMS — Twilio with A2P 10DLC (families only, later, consent only)</h2>
+<p><strong>P</strong> <a href="https://www.twilio.com/docs/messaging/compliance/a2p-10dlc">Twilio A2P 10DLC overview</a>,
+<a href="https://www.twilio.com/en-us/sms/pricing/us">Twilio messaging pricing (US)</a> — read 2026-09-20.</p>
+<ul>
+<li><strong>Registration before any US SMS</strong>: a Brand ($4 one-time for a standard brand plus vetting fees;
+  secondary vetting $40 when a higher throughput is needed) and a Campaign use case ($15 monthly for a
+  standard campaign — "Low volume mixed" ~$1.50/month for small senders); campaign registration
+  requires the sender's <strong>privacy-policy URL and terms URL and sample messages</strong>, and a described
+  opt-in flow — the consent text the policy record stores (<code>consentText.sms</code>). Unregistered traffic is
+  blocked by US carriers.</li>
+<li><strong>Price</strong>: ~$0.0083 per outbound SMS segment plus carrier fees (~$0.003–0.005); a local number ~$1.15
+  a month.</li>
+<li><strong>STOP/START/HELP</strong> are handled by Twilio's Advanced Opt-Out automatically; the inbound webhook
+  (<code>POST</code> with <code>X-Twilio-Signature</code>) writes the opt-out to <code>consents</code> (revoked) the same second (R4).</li>
+<li><strong>Missed-call capture</strong> (phase 3 conversations): a Twilio number forwards to the provider's phone and
+  posts a status callback when unanswered → an enquiry row. Voice minute ~$0.014.</li>
+<li>Decision: SMS stays off until the policy record's <code>channels.sms</code> is <code>consent</code> and counsel's consent
+  text is in (P-3, P-4); the adapter is built in the same shape as e-mail so the switch is
+  configuration.</li>
+</ul>
+<h2>8. Payments — Stripe (the platform is the merchant)</h2>
+<p><strong>P</strong> <a href="https://docs.stripe.com/payments/checkout/how-checkout-works">Stripe Checkout: subscriptions</a>,
+<a href="https://docs.stripe.com/webhooks">Stripe webhooks</a>, <a href="https://docs.stripe.com/connect/separate-charges-and-transfers">Stripe Connect: on_behalf_of</a> — read 2026-09-20.</p>
+<ul>
+<li><strong>Checkout Session</strong> in <code>mode: 'subscription'</code> with the product's price id creates the customer and
+  the subscription; the machine never sees a card number. Customer Portal handles cancellation
+  (cooling-off, R32: the machine sets <code>cancel_at_period_end</code> on request within 14 days and refunds
+  through the API).</li>
+<li><strong>Webhooks</strong>: <code>checkout.session.completed</code>, <code>customer.subscription.updated</code>, <code>customer.subscription.deleted</code>,
+  <code>invoice.payment_failed</code>; signed with <code>Stripe-Signature</code>; Stripe retries failed deliveries for up to
+  three days. The <code>entitlements</code> job is idempotent on the event id.</li>
+<li><strong>Account model</strong>: the platform's own Stripe account holds the keys (ADR-9). Connect's
+  <code>on_behalf_of</code> is not available on Checkout subscriptions, so "business.direct as a Connect platform
+  taking a fee" is not the v1 shape; if a revenue share is agreed later, it is an invoice between the
+  two companies, not a Stripe fee.</li>
+<li>Stripe pricing: 2.9 % + $0.30 per successful card charge (US, standard); Billing 0.7 % on recurring
+  when using the Billing product.</li>
+</ul>
+<h2>9. Drafting — Claude API</h2>
+<p><strong>P</strong> <a href="https://docs.claude.com/en/docs/about-claude/pricing">Claude API pricing</a>,
+<a href="https://docs.claude.com/en/docs/build-with-claude/batch-processing">Batch processing</a> — read 2026-09-20.</p>
+<ul>
+<li>Prices per million tokens (input / output): <strong>Opus 5 $5 / $25; Sonnet 5 $2 / $10; Haiku 4.5 $1 / $5</strong>;
+  the <strong>Batch API halves both</strong> for work that can wait up to 24 hours; prompt caching cuts repeated
+  context (the knowledge files) to a tenth on reads.</li>
+<li>The machine's prompts are the knowledge files (voice, rules, the card) — ~4 000 tokens of context
+  and ~300 tokens out per draft. At 200 drafts a day on Sonnet 5 with cached context: ≈ $0.01 per draft,
+  ~$60 a month; the nightly <code>draft-social</code> and <code>draft-campaigns</code> batches use the Batch API; the
+  inbound <code>draft-answers</code> (a minute, R14) uses the live API. Classification (a reply's sentiment, a
+  vulnerability signal for R32, the banned-pattern check) runs on Haiku 4.5.</li>
+<li>Every AI output is stored with <code>ai: true</code>, the model id and the prompt version (<code>drafts.ai_meta</code>)
+  so a marking rule (R20) and a later audit are queries.</li>
+<li>The provider is behind an interface (<code>Drafter</code>) — ADR-7 stays; the vendor is an environment
+  variable.</li>
+</ul>
+<h2>10. The clip engine — transcription, cutting, captions, credentials</h2>
+<p><strong>P</strong> <a href="https://deepgram.com/pricing">Deepgram pricing</a> (Nova batch ~$0.0043 per minute, pay-as-you-go
+with $200 free credit), <a href="https://openai.com/api/pricing/">OpenAI audio pricing</a> (Whisper $0.006 per
+minute), <a href="https://github.com/contentauth/c2pa-node"><code>@contentauth/c2pa-node</code></a> (Builder / Reader
+API, Node 22+, signs with an X.509 certificate), <a href="https://fly.io/docs/about/pricing/">Fly.io Machines pricing</a>,
+<a href="https://railway.com/pricing">Railway pricing</a>, <a href="https://modal.com/pricing">Modal pricing</a> — read 2026-09-20.</p>
+<ul>
+<li><strong>Transcription</strong>: Deepgram Nova batch at ~$0.0043/min with word timestamps and diarisation; a
+  30-minute session recording costs ~$0.13. Whisper via OpenAI is $0.006/min without diarisation.
+  Word timestamps drive the caption file (SRT/WebVTT, R34) and the "moment" finder (blueprint §10).</li>
+<li><strong>Cutting and captions</strong>: ffmpeg (<code>-ss/-to</code> cuts, <code>subtitles=</code> burn-in, <code>scale=1080:1920</code> for
+  9:16). It does not fit a Vercel function well (250 MB bundle limit, 300 s, no persistent scratch)
+  — <strong>one container worker</strong> runs it: a Fly.io Machine (shared-cpu-1x, 1 GB, ~$0.007/hour while
+  running, stopped otherwise; auto-start on request) or Railway (from $5/month) — the blueprint
+  picks Fly.io with <code>auto_stop_machines</code> so the pilot pays cents. Modal (per-second GPU/CPU billing,
+  Python-first) is the alternative if the clip engine later adds a vision model.</li>
+<li><strong>Credentials</strong>: <code>c2pa-node</code> builds a manifest (<code>c2pa.actions</code>: created / edited, <code>c2pa.ai_generated</code>
+  where applicable) and signs it into the MP4 or JPEG; the signing certificate is the platform's
+  (<code>CLIENT_C2PA_CERT</code>, <code>CLIENT_C2PA_KEY</code> in the worker's secrets), the manifest names the machine
+  as the tool and the platform as the signer. Instagram and Facebook strip most metadata on upload —
+  the credential is therefore also kept on the Blob copy and linked from the post's audit snapshot
+  (R20 is met by the record; the visible label is set per platform rule).</li>
+<li><strong>Children in footage</strong> (R30): the consent confirmation is a required input of the worker's request
+  (<code>consent_ref</code>); without it the worker refuses the cut and returns the coach-only / place-only
+  option — the rule is enforced twice, in the app and in the worker.</li>
+</ul>
+<h2>11. Generated images (later)</h2>
+<p><strong>P</strong> <a href="https://ai.google.dev/gemini-api/docs/pricing">Gemini API pricing (image generation)</a> —
+read 2026-09-20: Nano Banana 2 (Gemini image) from ~$0.045 per 1K-square image to ~$0.15 per 4K
+image; images carry SynthID; the machine adds its own C2PA manifest and the platform label. Only
+behind <code>MediaAdapter.image</code>, never a person (R15), only when <code>aiDisclosure</code> is set (gate). Not in
+Release 1.</p>
+<h2>12. Sign-in — DoneIsBetter SSO</h2>
+<p>The owner's own identity provider; used by the platform (D31 confirmed sign-in is DoneIsBetter).
+Assumed: OIDC with an authorization-code flow and a JWT carrying <code>sub</code>, <code>email</code>, and a role claim
+per client id; the machine keeps a <code>users</code> collection mapping <code>sub</code> → role (<code>operator</code>) or
+<code>provider_id</code>. <strong>A (assumption)</strong>: the OIDC details are the owner's to confirm at sprint 0; the
+fallback is Auth.js with e-mail magic links, which changes one file.</p>
+<h2>13. Observability</h2>
+<p><strong>P</strong> <a href="https://sentry.io/pricing/">Sentry pricing</a> (developer tier free: 5 000 errors a month),
+<a href="https://betterstack.com/uptime">Better Stack uptime</a> (free: 10 monitors, 3-minute checks) — read 2026-09-20.</p>
+<ul>
+<li>Vercel's own logs and function metrics cover requests; Sentry catches exceptions in Server Actions,
+  routes and the worker with the <code>platform_id</code> tag; Better Stack polls <code>/api/health</code> (which reports
+  outbox lag, the last sync time, the last cron tick) and pages on failure. The five alerts in
+  architecture §9 are computed in <code>/api/health</code> and by the <code>metrics</code> job.</li>
+</ul>
+<h2>14. What each service needs before the first real run (folds into <a href="implementation-prerequisites.html"><code>19-implementation-prerequisites.md</code></a>)</h2>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>Service</th>
+<th>Needs</th>
+<th>Lead time</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Vercel Pro</td>
+<td>a team, the domain, environment variables</td>
+<td>a day</td>
+</tr>
+<tr>
+<td>MongoDB Atlas</td>
+<td>a project, an M0 cluster (M10 at production), IP allow-list for Vercel</td>
+<td>a day</td>
+</tr>
+<tr>
+<td>Upstash</td>
+<td>a database in the same region (US-East)</td>
+<td>minutes</td>
+</tr>
+<tr>
+<td>Resend</td>
+<td>the sending domain's DNS (SPF, DKIM, DMARC), an MX for <code>reply.</code></td>
+<td>a day; DNS is the platform's (P-11)</td>
+</tr>
+<tr>
+<td>Meta</td>
+<td>a Meta developer app owned by the platform's Business Manager, the Page and the Instagram account connected, App Review with a screencast, the privacy-policy URL</td>
+<td><strong>two to four weeks</strong> — start in sprint 1</td>
+</tr>
+<tr>
+<td>Twilio</td>
+<td>account, brand and campaign registration with the privacy-policy and terms URLs</td>
+<td>one to two weeks; only when SMS is switched on</td>
+</tr>
+<tr>
+<td>Stripe</td>
+<td>the platform's account, products and prices, webhook endpoint</td>
+<td>a day; the prices are P-6 / P-12</td>
+</tr>
+<tr>
+<td>Claude API</td>
+<td>an API key, a spend limit</td>
+<td>minutes</td>
+</tr>
+<tr>
+<td>Deepgram</td>
+<td>an API key</td>
+<td>minutes</td>
+</tr>
+<tr>
+<td>Fly.io</td>
+<td>an app, secrets (Deepgram key, C2PA cert), the worker's shared token</td>
+<td>a day</td>
+</tr>
+<tr>
+<td>C2PA certificate</td>
+<td>an X.509 signing certificate in the platform's name (a public CA's document-signing cert, or a self-signed cert for the pilot with the caveat that verifiers show it as untrusted)</td>
+<td>a week for a CA cert</td>
+</tr>
+<tr>
+<td>DoneIsBetter SSO</td>
+<td>a client id and secret for the machine, the redirect URL</td>
+<td>the owner's, a day</td>
+</tr>
+</tbody>
+</table></div>
+<h2>15. Monthly cost at pilot and at the sizing target</h2>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>Line</th>
+<th>Pilot (Your Field, ≤ 300 providers, ≤ 5 000 families)</th>
+<th>Sizing target (1 000 providers, 50 000 families)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Vercel Pro</td>
+<td>$20 (one member)</td>
+<td>$40 (two)</td>
+</tr>
+<tr>
+<td>MongoDB Atlas</td>
+<td>$0 (M0)</td>
+<td>~$57 (M10)</td>
+</tr>
+<tr>
+<td>Upstash</td>
+<td>$0</td>
+<td>~$5</td>
+</tr>
+<tr>
+<td>Vercel Blob</td>
+<td>~$1</td>
+<td>~$10</td>
+</tr>
+<tr>
+<td>Resend</td>
+<td>$0–20</td>
+<td>$20–90</td>
+</tr>
+<tr>
+<td>Meta</td>
+<td>$0</td>
+<td>$0</td>
+</tr>
+<tr>
+<td>Claude API</td>
+<td>~$20</td>
+<td>~$80</td>
+</tr>
+<tr>
+<td>Deepgram</td>
+<td>~$5</td>
+<td>~$30</td>
+</tr>
+<tr>
+<td>Fly.io worker</td>
+<td>~$3</td>
+<td>~$15</td>
+</tr>
+<tr>
+<td>Sentry, Better Stack</td>
+<td>$0</td>
+<td>$0–26</td>
+</tr>
+<tr>
+<td>Stripe</td>
+<td>2.9 % + $0.30 per charge on the platform's account</td>
+<td>same</td>
+</tr>
+<tr>
+<td>Twilio (when on)</td>
+<td>~$3 + $0.01 per SMS</td>
+<td>~$20 + volume</td>
+</tr>
+<tr>
+<td><strong>Total infrastructure</strong></td>
+<td><strong>≈ $50–75 a month</strong></td>
+<td><strong>≈ $280–400 a month</strong></td>
+</tr>
+</tbody>
+</table></div>
+<p>Against the economics model's ARPA of $49 (<a href="analytics.html"><code>16-analytics-and-unit-economics.md</code></a>): the pilot's
+infrastructure is covered by two upgraded providers; the sizing target's by eight.</p>
+<h2>16. What was not found or is assumed</h2>
+<ul>
+<li>Meta's App Review duration is quoted from developer reports (two to four weeks), not from a
+  published SLA; it is the schedule's largest external risk and starts in sprint 1.</li>
+<li>The Your Field API's rate limits are not published (<a href="audit.html"><code>02-audit.md</code></a>); the connector polls hourly
+  with ETag / <code>updatedAt</code> diffs and backs off on 429.</li>
+<li>DoneIsBetter SSO's protocol details are assumed to be OIDC (§12).</li>
+<li>Whether the platform will accept a <code>reply.</code> MX on its domain, or the machine sends from its own
+  domain on the platform's behalf, is a sprint-0 configuration question (P-11); the sending guard
+  works either way.</li>
+<li>A C2PA certificate in the platform's name is the platform's purchase; the pilot may run on a
+  self-signed certificate with the caveat stated.</li>
+</ul>
+<footer>Source: <code>business-direct/docs/01g-research-real-system.md</code> · rendered by <code>docs/build.py</code>.</footer>
+</div>
+</body>
+</html>

@@ -36,12 +36,14 @@ footer{margin-top:56px;padding-top:18px;border-top:1px solid var(--line);font-si
 </head>
 <body>
 <div class="wrap">
-<nav class="docnav" aria-label="Project documentation"><span class="docnav-brand">business.direct · docs</span><a href="index.html">Overview</a><a href="brief.html">Brief</a><a href="research.html">Research</a><a href="research-2.html">Research II</a><a href="research-3.html">Research III</a><a href="research-4.html">Research IV</a><a href="research-5.html">Research V</a><a href="audit.html">Audit</a><a href="sources.html">Sources</a><a href="design-system.html">Design system</a><a href="layouts.html">Layouts</a><a href="05-layout-specs.html">Layout specs</a><a href="decisions.html">Decisions</a><a href="build-log.html">Build log</a><a href="gate.html">Gate</a><a href="client-asks.html">Register of asks</a><a href="implementation-prerequisites.html">Prerequisites</a><a href="business-logic.html">Business logic</a><a href="ssot.html">SSOT</a><a href="architecture.html" aria-current=page>Architecture</a><a href="technical-design.html">Technical design</a><a href="implementation-plan.html">Plan</a><a href="token-map.html">Token map</a><a href="executive.html">Executive summary</a><a href="analytics.html">Analytics</a><a href="audit-swot.html">Audit · SWOT</a><a href="policy-framework.html">Policy framework</a></nav>
+<nav class="docnav" aria-label="Project documentation"><span class="docnav-brand">business.direct · docs</span><a href="index.html">Overview</a><a href="brief.html">Brief</a><a href="research.html">Research</a><a href="research-2.html">Research II</a><a href="research-3.html">Research III</a><a href="research-4.html">Research IV</a><a href="research-5.html">Research V</a><a href="research-6.html">Research VI</a><a href="audit.html">Audit</a><a href="sources.html">Sources</a><a href="design-system.html">Design system</a><a href="layouts.html">Layouts</a><a href="05-layout-specs.html">Layout specs</a><a href="decisions.html">Decisions</a><a href="build-log.html">Build log</a><a href="gate.html">Gate</a><a href="client-asks.html">Register of asks</a><a href="implementation-prerequisites.html">Prerequisites</a><a href="business-logic.html">Business logic</a><a href="ssot.html">SSOT</a><a href="architecture.html" aria-current=page>Architecture</a><a href="technical-design.html">Technical design</a><a href="implementation-plan.html">Plan</a><a href="system-blueprint.html">System blueprint</a><a href="token-map.html">Token map</a><a href="executive.html">Executive summary</a><a href="analytics.html">Analytics</a><a href="audit-swot.html">Audit · SWOT</a><a href="policy-framework.html">Policy framework</a></nav>
 <header><p class="eyebrow">Calvus · business.direct · project documentation</p><h1>business.direct — architecture</h1></header>
-<p><em>Written 2026-09-19 for the first client, Your Field NYC (D11); phase 2 (campaigns, upgrades, recap — D21–D23) added the same day. The stack is PROPOSED
-(§10, ADRs in §11): it follows DiscountDirect's decided stack (D26 there) because the
-client platform runs on the same family (<a href="audit.html"><code>02-audit.md</code></a> §1), and the owner or client flips
-each ADR. Terms are the SSOT's (<a href="ssot.html"><code>10-ssot.md</code></a>).</em></p>
+<p><em>Written 2026-09-19 for the first client, Your Field NYC (D11); phase 2 (campaigns, upgrades, recap — D21–D23) added the same day; on 2026-09-20 the stack became the </em><em>build baseline</em><em> (D37): every
+service was verified against the vendor's own terms (<a href="research-6.html"><code>01g-research-real-system.md</code></a>), the modules,
+drawings and pseudo code are in <a href="system-blueprint.html"><code>20-system-blueprint.md</code></a>, and ADR-15 to ADR-25 record the service
+choices. The stack follows DiscountDirect's decided stack (D26 there) because the client platform
+runs on the same family (<a href="audit.html"><code>02-audit.md</code></a> §1); the owner flips any ADR with a decision. Terms are the
+SSOT's (<a href="ssot.html"><code>10-ssot.md</code></a>).</em></p>
 <h2>1. System context</h2>
 <pre><code> Families (web, e-mail, push, SMS)        Social channels (Instagram, Facebook, TikTok, X)
         ▲            ▲                              ▲
@@ -154,7 +156,7 @@ and the message log.</p>
 </tr>
 </tbody>
 </table></div>
-<h2>4. Containers (PROPOSED)</h2>
+<h2>4. Containers (build baseline, D37)</h2>
 <pre><code>┌────────────────────────────────────────────────────────────────┐
 │ business.direct app — Next.js 15 App Router on Vercel (Node 24) │
 │  • operator console, provider view, family preferences (GDS)    │
@@ -173,9 +175,12 @@ and the message log.</p>
         │
   Vercel Cron → outbox workers: catalogue sync, draft generation,
                 scheduled publishing, sequence steps, digest build,
-                alert fan-out, retention
+                alert fan-out, retention (thirteen schedules, blueprint §6)
+  Media worker (Fly.io container): ffmpeg · Deepgram · c2pa-node — the one
+                thing a Vercel function cannot do (ADR-24)
   Platform connector: YourFieldConnector | SportolokConnector (one interface)
   DoneIsBetter SSO for operator and provider sign-in (ADR-5)
+  Sentry + Better Stack on /api/health (ADR-25)
 </code></pre>
 <div class="tbl"><table>
 <thead>
@@ -212,6 +217,10 @@ and the message log.</p>
 <tr>
 <td>Channel adapters</td>
 <td>one per channel, same interface: <code>draft → preview</code>, <code>publish</code>, <code>inbound webhook → thread</code></td>
+</tr>
+<tr>
+<td>Media worker (ADR-24)</td>
+<td>a stateless container on Fly.io: transcribe (Deepgram), find moments, cut 9:16 with burned captions (ffmpeg), sign (C2PA), upload to Blob, call back; refuses a recording that shows children without the consent reference (R30) — the second enforcement</td>
 </tr>
 <tr>
 <td>Media adapters (D28)</td>
@@ -352,7 +361,7 @@ digest Sunday 17:00/18:00, sequences 09:00 weekdays, retention nightly. Alerting
 outbox lag &gt; 30 min, webhook signature failures, cap violations (must be zero), send
 errors per channel. Runbooks for: a channel's token expiry, a provider's "not my program",
 a family's deletion request.</p>
-<h2>10. Stack (PROPOSED)</h2>
+<h2>10. Stack (build baseline, D37; each line verified in <a href="research-6.html"><code>01g-research-real-system.md</code></a>)</h2>
 <div class="tbl"><table>
 <thead>
 <tr>
@@ -384,8 +393,18 @@ a family's deletion request.</p>
 </tr>
 <tr>
 <td>Jobs</td>
-<td>Vercel Cron + durable outbox in MongoDB</td>
-<td>proven in DiscountDirect; no separate queue to run</td>
+<td>Vercel Cron (Pro: one-minute granularity, 300 s per tick) + durable outbox in MongoDB; Inngest is the named upgrade path</td>
+<td>proven in DiscountDirect; no separate queue to run; the outbox row is Inngest-shaped (ADR-18)</td>
+</tr>
+<tr>
+<td>Media processing</td>
+<td>one Fly.io container: ffmpeg, Deepgram Nova, <code>c2pa-node</code></td>
+<td>a Vercel function cannot run ffmpeg for minutes (ADR-24)</td>
+</tr>
+<tr>
+<td>Observability</td>
+<td>Vercel logs, Sentry (free tier), Better Stack on <code>/api/health</code></td>
+<td>the five alerts of §9 (ADR-25)</td>
 </tr>
 <tr>
 <td>E-mail</td>
@@ -409,8 +428,8 @@ a family's deletion request.</p>
 </tr>
 <tr>
 <td>AI</td>
-<td>one LLM provider behind an interface, configurable</td>
-<td>drafting quality; optional (R10)</td>
+<td>Claude API behind the <code>Drafter</code> interface: Sonnet 5 for drafts, Haiku 4.5 for classification, the Batch API for the nightly sets; <code>DRAFTER=template</code> runs the machine without AI</td>
+<td>drafting quality; optional (R10); ADR-22</td>
 </tr>
 <tr>
 <td>Billing</td>
@@ -419,7 +438,7 @@ a family's deletion request.</p>
 </tr>
 </tbody>
 </table></div>
-<h2>11. Architecture decision records (all PROPOSED)</h2>
+<h2>11. Architecture decision records (the build baseline since D37; the owner flips any with a decision)</h2>
 <div class="tbl"><table>
 <thead>
 <tr>
@@ -513,6 +532,72 @@ a family's deletion request.</p>
 <td><strong>Campaign audiences are resolved by the platform's saves and location, never uploaded lists</strong></td>
 <td>(a) providers upload contacts; (b) audiences from the platform's data only</td>
 <td>(b): consent lives on the platform (R4, R11); no provider list ever enters the machine</td>
+</tr>
+<tr>
+<td>ADR-15</td>
+<td><strong>Vercel Pro hosts the app, the routes and the crons</strong></td>
+<td>(a) Vercel; (b) Fly.io for everything; (c) a VPS</td>
+<td>(a): the platform's own host; preview per branch; 40 crons at one-minute granularity; the one gap (long ffmpeg runs) goes to ADR-24</td>
+</tr>
+<tr>
+<td>ADR-16</td>
+<td><strong>MongoDB Atlas, M0 for the build and the pilot, M10 for production</strong></td>
+<td>(a) Atlas; (b) Postgres on Neon</td>
+<td>(a): D26 stays; the message log is the first collection that needs M10's backups and TTL headroom</td>
+</tr>
+<tr>
+<td>ADR-17</td>
+<td><strong>Vercel Blob for media, snapshots and exports</strong></td>
+<td>(a) Blob; (b) Cloudflare R2</td>
+<td>(a): public HTTPS URLs Meta can fetch, signed URLs for the worker, one vendor fewer</td>
+</tr>
+<tr>
+<td>ADR-18</td>
+<td><strong>Vercel Cron + a MongoDB outbox; Inngest when a measured limit is hit</strong> (a tick &gt; 300 s that cannot be batched, &gt; 40 schedules, or a workflow that must wait days on an external event)</td>
+<td>(a) cron + outbox; (b) Inngest now; (c) Trigger.dev</td>
+<td>(a): everything the machine needs today is a durable row and a one-minute drain; the row is kept event-shaped so (b) is a new consumer, not a migration</td>
+</tr>
+<tr>
+<td>ADR-19</td>
+<td><strong>Resend for outbound and inbound e-mail</strong></td>
+<td>(a) Resend; (b) Postmark</td>
+<td>(a): D26; inbound as a signed webhook; delivery events feed the sending guard; List-Unsubscribe headers on every marketing message</td>
+</tr>
+<tr>
+<td>ADR-20</td>
+<td><strong>Meta Graph API directly (Instagram API with Facebook Login for Business)</strong></td>
+<td>(a) direct; (b) a scheduling SaaS as proxy</td>
+<td>(a): the outbox stays the only sender and the audit snapshot stays in the message log; App Review starts in sprint 0</td>
+</tr>
+<tr>
+<td>ADR-21</td>
+<td><strong>Twilio with A2P 10DLC, built in the adapter's shape but switched off until the policy record allows SMS</strong></td>
+<td>(a) Twilio; (b) Telnyx; (c) no SMS</td>
+<td>(a): consent tooling and STOP handling; registration needs the privacy-policy and terms URLs the record holds</td>
+</tr>
+<tr>
+<td>ADR-22</td>
+<td><strong>Claude API as the first <code>Drafter</code>: Sonnet 5 drafts, Haiku 4.5 classifies, Batch for nightly sets; <code>ai_meta</code> stored on every AI output</strong></td>
+<td>(a) Claude; (b) OpenAI; (c) a local model</td>
+<td>(a): quality per cost at ~$0.01 a draft with cached context; the vendor is an environment variable</td>
+</tr>
+<tr>
+<td>ADR-23</td>
+<td><strong>Deepgram Nova (batch) for transcription</strong></td>
+<td>(a) Deepgram; (b) Whisper API</td>
+<td>(a): word timestamps and diarisation at ~$0.0043 a minute; the captions (R34) and the moment finder need the timestamps</td>
+</tr>
+<tr>
+<td>ADR-24</td>
+<td><strong>One stateless media worker on Fly.io (ffmpeg, Deepgram, <code>c2pa-node</code>)</strong></td>
+<td>(a) Fly.io container; (b) <code>ffmpeg-static</code> in a Vercel function; (c) Modal</td>
+<td>(a): a 30-minute recording does not fit 300 s or 250 MB; auto-stop machines cost cents at pilot; (c) if a vision model joins</td>
+</tr>
+<tr>
+<td>ADR-25</td>
+<td><strong>Sentry + Better Stack on <code>/api/health</code>; no analytics SaaS</strong></td>
+<td>(a) Sentry + uptime; (b) Datadog</td>
+<td>(a): free tiers cover the pilot; the five alerts are computed by the machine itself (ADR-11)</td>
 </tr>
 </tbody>
 </table></div>

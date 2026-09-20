@@ -108,7 +108,7 @@ program" copy:
 | Local discovery profile | photos, coach bio, reviews, booking on the card | $29 / month |
 
 Choosing one moves the provider to *upgraded*; it changes where the provider appears, never
-what a family receives (R12); the platform's intelligence screen sums the sample revenue. Billing is Stripe (ADR-9, PROPOSED); the platform invoices, business.direct
+what a family receives (R12); the platform's intelligence screen sums the sample revenue. Billing is Stripe Checkout on the platform's account (ADR-9); the platform invoices, business.direct
 records the entitlement. No discounting logic — that is DiscountDirect's domain (D5, R13).
 
 ## 6. Families: preferences, consent, cap, stop

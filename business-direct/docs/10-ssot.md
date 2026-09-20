@@ -115,12 +115,12 @@ implementation of the enumerations and state machines below.*
 
 ## 5. Decision register
 
-`04-decisions.md` holds D1–D36. The ones the engineering documents rest on: D2 (three
+`04-decisions.md` holds D1–D37. The ones the engineering documents rest on: D2 (three
 views), D5 (DiscountDirect sibling), D6 (departments, knowledge layer, human-in-the-loop,
 optional AI, dashboard, integrations), D11 (Your Field first), D14 (two flows), D15
 (post card and pipeline strip), D17 (one page, in-memory state), D18 (sample generated
-from the real catalogue). Stack decisions are ADRs in `11-architecture.md` §11, all
-PROPOSED.
+from the real catalogue). Stack decisions are ADRs in `11-architecture.md` §11 — the build
+baseline since D37; the owner flips any with a decision.
 
 ## 6. Rules register
 
@@ -193,7 +193,7 @@ PROPOSED.
 | `01-research.md` | sourced evidence, legal by market |
 | `02-audit.md` | the platform measured, the catalogue's coverage, the videos, DiscountDirect's contribution |
 | `03-sources.md` | real vs sample |
-| `04-decisions.md` | D1–D36 |
+| `04-decisions.md` | D1–D37 |
 | `05-layout-specs.md`, `design-system.html`, `layouts.html` | gates 1 and 2 |
 | `06-build-log.md`, `07-gate.md` | rounds and the measured pass |
 | `08-client-asks.md` | the register of asks, with states |
@@ -205,5 +205,7 @@ PROPOSED.
 | `10-ssot.md` (this) | terms, enumerations, entities, rules, metrics |
 | `11-architecture.md` | context, quality attributes, containers, flows, stack, ADRs |
 | `12-technical-design.md` | data model, state machines, connectors, jobs, operations |
-| `13-implementation-plan.md` | milestones, issues with DoD, blocked register, risks |
+| `13-implementation-plan.md` | milestones, sprints with acceptance tests, issues with DoD, blocked register, risks |
+| `01g-research-real-system.md` | every external service verified: auth, review, limits, prices, alternatives, cost |
+| `20-system-blueprint.md` | drawings, repository layout, modules with pseudo code, contracts, crons, the outbox, security, the worker, tests, operations |
 | `14-token-map.md` | prototype tokens and components → production |

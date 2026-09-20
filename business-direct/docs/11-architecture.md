@@ -1,9 +1,11 @@
 # business.direct — architecture
 
-*Written 2026-09-19 for the first client, Your Field NYC (D11); phase 2 (campaigns, upgrades, recap — D21–D23) added the same day. The stack is PROPOSED
-(§10, ADRs in §11): it follows DiscountDirect's decided stack (D26 there) because the
-client platform runs on the same family (`02-audit.md` §1), and the owner or client flips
-each ADR. Terms are the SSOT's (`10-ssot.md`).*
+*Written 2026-09-19 for the first client, Your Field NYC (D11); phase 2 (campaigns, upgrades, recap — D21–D23) added the same day; on 2026-09-20 the stack became the **build baseline** (D37): every
+service was verified against the vendor's own terms (`01g-research-real-system.md`), the modules,
+drawings and pseudo code are in `20-system-blueprint.md`, and ADR-15 to ADR-25 record the service
+choices. The stack follows DiscountDirect's decided stack (D26 there) because the client platform
+runs on the same family (`02-audit.md` §1); the owner flips any ADR with a decision. Terms are the
+SSOT's (`10-ssot.md`).*
 
 ## 1. System context
 
@@ -55,7 +57,7 @@ and the message log.
 | Availability | 99.5 % for the operator console; the outbox is durable, delivery may lag | nobody logs in; the machine must not lose approved work |
 | Portability | channel adapters and the platform connector behind interfaces; a second instance (Hungarian reference) is a configuration, not a fork | D11's "reference ideas" |
 
-## 4. Containers (PROPOSED)
+## 4. Containers (build baseline, D37)
 
 ```
 ┌────────────────────────────────────────────────────────────────┐
@@ -76,9 +78,12 @@ and the message log.
         │
   Vercel Cron → outbox workers: catalogue sync, draft generation,
                 scheduled publishing, sequence steps, digest build,
-                alert fan-out, retention
+                alert fan-out, retention (thirteen schedules, blueprint §6)
+  Media worker (Fly.io container): ffmpeg · Deepgram · c2pa-node — the one
+                thing a Vercel function cannot do (ADR-24)
   Platform connector: YourFieldConnector | SportolokConnector (one interface)
   DoneIsBetter SSO for operator and provider sign-in (ADR-5)
+  Sentry + Better Stack on /api/health (ADR-25)
 ```
 
 | Container | Responsibility |
@@ -90,6 +95,7 @@ and the message log.
 | Outbox workers | the only thing that sends; consumes `approved` drafts, writes the message log |
 | Platform connector | read the catalogue; write claim requests, notifications, generated pages when keyed |
 | Channel adapters | one per channel, same interface: `draft → preview`, `publish`, `inbound webhook → thread` |
+| Media worker (ADR-24) | a stateless container on Fly.io: transcribe (Deepgram), find moments, cut 9:16 with burned captions (ffmpeg), sign (C2PA), upload to Blob, call back; refuses a recording that shows children without the consent reference (R30) — the second enforcement |
 | Media adapters (D28) | `MediaAdapter.clips` (v1: a recording → captioned clips), `.video`, `.image`, `.audio` (later) behind one interface; every output carries a C2PA credential (R20); never a person (R15) |
 | Sending domain per instance | warm-up schedule, daily cap, bounce monitor; the outbox refuses sends past the limits |
 | Policy gate (D32) | reads the instance's policy record before every send and draft; blocks and explains |
@@ -177,7 +183,7 @@ outbox lag > 30 min, webhook signature failures, cap violations (must be zero), 
 errors per channel. Runbooks for: a channel's token expiry, a provider's "not my program",
 a family's deletion request.
 
-## 10. Stack (PROPOSED)
+## 10. Stack (build baseline, D37; each line verified in `01g-research-real-system.md`)
 
 | Layer | Choice | Reason |
 |---|---|---|
@@ -185,15 +191,17 @@ a family's deletion request.
 | Data | MongoDB Atlas (Mongoose) | DiscountDirect D26; document shapes match the platform's JSON |
 | Cache/limits | Upstash Redis | caps and idempotency |
 | Files | Vercel Blob | post media, audit snapshots |
-| Jobs | Vercel Cron + durable outbox in MongoDB | proven in DiscountDirect; no separate queue to run |
+| Jobs | Vercel Cron (Pro: one-minute granularity, 300 s per tick) + durable outbox in MongoDB; Inngest is the named upgrade path | proven in DiscountDirect; no separate queue to run; the outbox row is Inngest-shaped (ADR-18) |
+| Media processing | one Fly.io container: ffmpeg, Deepgram Nova, `c2pa-node` | a Vercel function cannot run ffmpeg for minutes (ADR-24) |
+| Observability | Vercel logs, Sentry (free tier), Better Stack on `/api/health` | the five alerts of §9 (ADR-25) |
 | E-mail | Resend | D26; inbound parsing for replies |
 | Social | Meta Graph API first; TikTok and X second | reach on the family side (research §4) |
 | SMS | Twilio | consent tooling, STOP handling |
 | Auth | DoneIsBetter SSO | the family's existing identity provider |
-| AI | one LLM provider behind an interface, configurable | drafting quality; optional (R10) |
+| AI | Claude API behind the `Drafter` interface: Sonnet 5 for drafts, Haiku 4.5 for classification, the Batch API for the nightly sets; `DRAFTER=template` runs the machine without AI | drafting quality; optional (R10); ADR-22 |
 | Billing | Stripe (Checkout + Billing, the platform's account) | upgrades (ADR-9) |
 
-## 11. Architecture decision records (all PROPOSED)
+## 11. Architecture decision records (the build baseline since D37; the owner flips any with a decision)
 
 | ADR | Decision | Options considered | Reason |
 |---|---|---|---|
@@ -211,3 +219,14 @@ a family's deletion request.
 | ADR-14 | **One policy record per instance, enforced by a gate in the outbox, the draft jobs and the schema** (D32) | (a) policy as documentation; (b) policy as configuration read by the code; (c) a third-party consent-management platform | (b): the enforcement record is a list of defaults and labels, not breaches — the rules must be code; a CMP handles cookies, not sequences, digests and audiences |
 | ADR-11 | **Analytics as an append-only event log in MongoDB with nightly materialised metrics per `platform_id`**; no third-party analytics SaaS holds family data | (a) product-analytics SaaS (Amplitude / Mixpanel); (b) own event log + materialised views; (c) warehouse + BI | (b): the events already exist as collections; the metrics tree is small and known; family data stays in the platform's region (§8); a warehouse can be added when a second instance needs cross-instance reporting |
 | ADR-10 | **Campaign audiences are resolved by the platform's saves and location, never uploaded lists** | (a) providers upload contacts; (b) audiences from the platform's data only | (b): consent lives on the platform (R4, R11); no provider list ever enters the machine |
+| ADR-15 | **Vercel Pro hosts the app, the routes and the crons** | (a) Vercel; (b) Fly.io for everything; (c) a VPS | (a): the platform's own host; preview per branch; 40 crons at one-minute granularity; the one gap (long ffmpeg runs) goes to ADR-24 |
+| ADR-16 | **MongoDB Atlas, M0 for the build and the pilot, M10 for production** | (a) Atlas; (b) Postgres on Neon | (a): D26 stays; the message log is the first collection that needs M10's backups and TTL headroom |
+| ADR-17 | **Vercel Blob for media, snapshots and exports** | (a) Blob; (b) Cloudflare R2 | (a): public HTTPS URLs Meta can fetch, signed URLs for the worker, one vendor fewer |
+| ADR-18 | **Vercel Cron + a MongoDB outbox; Inngest when a measured limit is hit** (a tick > 300 s that cannot be batched, > 40 schedules, or a workflow that must wait days on an external event) | (a) cron + outbox; (b) Inngest now; (c) Trigger.dev | (a): everything the machine needs today is a durable row and a one-minute drain; the row is kept event-shaped so (b) is a new consumer, not a migration |
+| ADR-19 | **Resend for outbound and inbound e-mail** | (a) Resend; (b) Postmark | (a): D26; inbound as a signed webhook; delivery events feed the sending guard; List-Unsubscribe headers on every marketing message |
+| ADR-20 | **Meta Graph API directly (Instagram API with Facebook Login for Business)** | (a) direct; (b) a scheduling SaaS as proxy | (a): the outbox stays the only sender and the audit snapshot stays in the message log; App Review starts in sprint 0 |
+| ADR-21 | **Twilio with A2P 10DLC, built in the adapter's shape but switched off until the policy record allows SMS** | (a) Twilio; (b) Telnyx; (c) no SMS | (a): consent tooling and STOP handling; registration needs the privacy-policy and terms URLs the record holds |
+| ADR-22 | **Claude API as the first `Drafter`: Sonnet 5 drafts, Haiku 4.5 classifies, Batch for nightly sets; `ai_meta` stored on every AI output** | (a) Claude; (b) OpenAI; (c) a local model | (a): quality per cost at ~$0.01 a draft with cached context; the vendor is an environment variable |
+| ADR-23 | **Deepgram Nova (batch) for transcription** | (a) Deepgram; (b) Whisper API | (a): word timestamps and diarisation at ~$0.0043 a minute; the captions (R34) and the moment finder need the timestamps |
+| ADR-24 | **One stateless media worker on Fly.io (ffmpeg, Deepgram, `c2pa-node`)** | (a) Fly.io container; (b) `ffmpeg-static` in a Vercel function; (c) Modal | (a): a 30-minute recording does not fit 300 s or 250 MB; auto-stop machines cost cents at pilot; (c) if a vision model joins |
+| ADR-25 | **Sentry + Better Stack on `/api/health`; no analytics SaaS** | (a) Sentry + uptime; (b) Datadog | (a): free tiers cover the pilot; the five alerts are computed by the machine itself (ADR-11) |

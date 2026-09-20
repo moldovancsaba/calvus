@@ -46,6 +46,7 @@ and it is dated.
 | 7 | **Presentation** | `bemutato.html` in the client's language and brand | client review |
 | 8 | **Fine-tuning** | reported item → minimal fix → measured → URL | client |
 | 9 | **Technical package** | SSOT, architecture, technical design, implementation plan, token map; stack decisions PROPOSED | owner / client flips ADRs |
+| 10 | **Real-system blueprint** (when the owner calls the next phase) | `01g` research: every external service verified against the vendor's own terms on the day (auth, review, limits, prices, alternative, cost); `20-system-blueprint.md`: drawings, repository layout, modules with what each owns and pseudo code, data contracts, jobs, security, tests, operations; the ADRs become the build baseline; the plan re-cut into sprints with an acceptance test each and a sprint-0 checklist — business.direct D37 is the reference | owner: "build" |
 
 Stages 3–4 are the ones people are tempted to skip. Holdvölgy's first prototype skipped
 them and was withdrawn as "generic"; the second went through both gates and was approved
@@ -166,6 +167,7 @@ live), indexed by a `README.md` that is also the dated process log:
 | 14 | `14-token-map.md` | prototype tokens and components → production; or why there is nothing to map |
 | 18 | `18-responsible-data-policy-framework.md` (or the project's equivalent) | **required for any prototype that sends, stores or targets people**: the policy record per client instance (jurisdictions and laws, audience model, child-data rule, consent per channel, high-privacy defaults, cap, opt-out SLA, AI disclosure, retention, the client's published policy clauses) and the gate that blocks a feature until its fields are set — see business.direct for the reference |
 | 19 | `19-implementation-prerequisites.md` | what the client provides after acceptance, grouped by when it blocks; the presentation's "what we ask of you today" is one decision |
+| 20 | `20-system-blueprint.md` (+ a research round on the services) | stage 10 only: the document a developer builds from — every service verified and priced on the day, drawings, modules with pseudo code, contracts, jobs, security, tests, operations; the prototype → module map so nothing built in the prototype is lost |
 
 Rules for the set:
 
@@ -278,4 +280,5 @@ each can be a paragraph on day one, but each exists and is dated.
 | Presentation | in the client's language and brand, standalone, with previews and asks; the client can review from a phone |
 | Fine-tuning round | the reported item changed and nothing else; measured; URL sent under the client's heading |
 | Technical package | SSOT defines every term the others use; architecture cites the audit's numbers; every ADR has options and a reason; the plan has DoD per issue and an honest blocked register |
+| Real-system blueprint | every service's limits and prices carry the date they were read and a primary link; every module says what it owns and has pseudo code for what is not obvious; every rule that is code names a test; every sprint has an acceptance test the owner can watch; nothing in the prototype lacks a module |
 | Project | all fifteen slots exist and are dated; `check.py` clean; hub, README and CLAUDE.md know about it |

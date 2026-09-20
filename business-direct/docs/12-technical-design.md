@@ -71,7 +71,16 @@ opt_outs         { platform_id, provider_id, kind: 'not_mine'|'unsubscribed'|'bo
 auto_approval    { platform_id, owner, department, clean_weeks, earned_at?, revoked_at? }
 policies         { platform_id, ...Policy (SSOT §3), version, updated_by, updated_at }   # D32; the gate reads it
 experiments      { platform_id, name, treat_area, control_area, weeks, started_at, state, readout? }
-media_assets     { _id, platform_id, provider_id?, adapter, generated: bool, credential: C2PA, blob_url, used_in[] }
+media_assets     { _id, platform_id, provider_id?, adapter, generated: bool, credential: C2PA, blob_url, captions_url?, consent_ref?, shows_children?, used_in[] }
+outbox           { _id, platform_id, kind, channel, to{}, copy, subject?, html?, media?, draft_id?, campaign_id?, step?, provider_id?, why, by,
+                   countsTowardCap, state: queued|sending|sent|refused|dead, attempts, next_at, refused_reason?, policy_basis?, message_id?, created_at }   # D37, blueprint §7
+media_jobs       { _id, recording_id, state: sent|done|failed, at }                       # the worker's job (blueprint §10)
+sync_runs        { platform_id, at, count }                                               # /api/health reads the last one
+stage_history    { provider_id, from, to, by, override, at }                              # append-only
+tasks            { platform_id, kind: call|payment_failed|not_keyed|human_reply, provider_id?, family_id?, why, state, at }   # what needs a person
+users            { sub, email, role: operator|provider, provider_id?, platform_id }        # SSO mapping (ADR-5)
+instances        { platform_id, name, timezone, connector, base_url, key?, flags{social,campaigns,sms,clips,pages} }
+webhook_log      { source, event_id, received_at, raw }                                   # 30 days, for replay
 ```
 
 Indexes: `provider_state (platform_id, stage)`, `drafts (platform_id, state, scheduled_for)`,
@@ -122,7 +131,7 @@ the first `active` moves the provider to *upgraded* (prototype: `data-buy`).
 drafts for that family. Consent for SMS is a separate append-only record; the toggle
 cannot turn SMS on without a consent row.
 
-## 5. Jobs (Vercel Cron → outbox workers)
+## 5. Jobs (Vercel Cron → outbox workers; the cron table with schedules and batch sizes is `20-system-blueprint.md` §6)
 
 | Job | Schedule | Does |
 |---|---|---|
@@ -145,7 +154,7 @@ cannot turn SMS on without a consent row.
 | `metrics` | nightly 02:00 | roll `events` into `metrics_daily`; replace an assumption with a measured rate once ≥ 100 observations exist (R16) |
 | `retention` | nightly | drafts 90 days after final state; messages 24 months |
 
-## 6. Connectors and adapters
+## 6. Connectors and adapters (per-adapter pseudo code: `20-system-blueprint.md` §4.7)
 
 ```ts
 interface PlatformConnector {
