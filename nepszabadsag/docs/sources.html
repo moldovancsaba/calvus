@@ -48,7 +48,7 @@ and what is actually in hand. Written 2026-09-21.</em></p>
 <td><strong>sample</strong> — placeholders until the Figma spec is exported</td>
 </tr>
 <tr>
-<td>The 25-site technical benchmark (stack, weight, TTFB, fonts, nav, colour)</td>
+<td>The 24-site technical benchmark (stack, weight, TTFB, fonts, nav, colour)</td>
 <td><code>curl</code> from this environment, 2026-09-21 (<a href="research.html"><code>01-research.md</code></a> §1)</td>
 <td>real, measured</td>
 </tr>
@@ -73,9 +73,9 @@ and what is actually in hand. Written 2026-09-21.</em></p>
 <td>real, cited, cross-corroborated</td>
 </tr>
 <tr>
-<td>Comparable relaunch cases (Magyar Nemzet, The Independent's post-print transition, <strong>the real Népszava's 2026 crisis</strong>)</td>
+<td>Comparable relaunch cases (Magyar Nemzet, The Independent's post-print transition)</td>
 <td>Wikipedia, Balkan Insight, a Reuters-Institute-hosted academic study (<a href="research.html"><code>01-research.md</code></a> §5)</td>
-<td>real, cited; the Népszava finding is the one item here that changes a brief-level decision — see <a href="brief.html"><code>00-brief.md</code></a></td>
+<td>real, cited</td>
 </tr>
 <tr>
 <td>Published design-system references (Guardian Source, NYT typefaces, Spiegel's 2016 redesign)</td>
@@ -83,13 +83,8 @@ and what is actually in hand. Written 2026-09-21.</em></p>
 <td>real, cited; the NYT and Spiegel items lean on secondary or unverified-by-direct-fetch sources — flagged in place</td>
 </tr>
 <tr>
-<td>nepszava.hu: stack, weight, cache headers, <code>robots.txt</code>, the digital-edition login system, the third-party vendor (xximedia.hu), the 2026 ad rate card</td>
-<td><code>curl</code>, 2026-09-21 (<a href="research.html"><code>01-research.md</code></a> §8)</td>
-<td>real, measured and quoted from the vendor's own pages and PDF — but <strong>not this project's own asset</strong>: the owner confirmed 2026-09-21 that calling nepszava.hu "the sister site" in the original briefing was a mistake; kept here as an unaffiliated market comparable only</td>
-</tr>
-<tr>
 <td>nol.hu (the old domain)</td>
-<td><code>curl</code>, 2026-09-21 (<a href="audit.html"><code>02-audit.md</code></a> §4)</td>
+<td><code>curl</code>, 2026-09-21 (<a href="audit.html"><code>02-audit.md</code></a> §1)</td>
 <td>real — a one-line stub; the archive is sold via lapcentrum.hu, not audited here</td>
 </tr>
 <tr>
@@ -111,10 +106,9 @@ and what is actually in hand. Written 2026-09-21.</em></p>
 </table></div>
 <h2>Gaps — what the client (or a next session) still needs to supply</h2>
 <ol>
-<li><strong>~~The Népszava sub-brand name~~ — resolved 2026-09-21.</strong> The owner confirmed the Figma's
-   internal Népszava section is unrelated to the real newspaper of that name, and that
-   describing nepszava.hu as this project's "sister site" during the original briefing was
-   itself a mistake — see <a href="brief.html"><code>00-brief.md</code></a> and <a href="audit.html"><code>02-audit.md</code></a>.</li>
+<li><strong>~~A third-party site once mentioned during briefing~~ — resolved 2026-09-21.</strong> The owner
+   said it has no relationship to this project of any kind; it has been removed from this
+   documentation set entirely — see <a href="brief.html"><code>00-brief.md</code></a>, <a href="audit.html"><code>02-audit.md</code></a> and <a href="decisions.html"><code>04-decisions.md</code></a> D10–D11.</li>
 <li><strong>Exact design tokens.</strong> Figma Dev Mode (MCP server) or an export of the eight frames as
    PNG plus the variables list — <a href="handover.html"><code>handover.md</code></a> §3.</li>
 <li><strong>Logo files and type licences</strong> — the built pages use a CSS approximation of the mark
@@ -126,9 +120,7 @@ and what is actually in hand. Written 2026-09-21.</em></p>
    Instagram, Facebook) that the landing page and the front page both promise to show.</li>
 <li><strong>Who receives the landing page's registration form</strong> (Vezetéknév, Keresztnév, e-mail) —
    the client's developer, or this prototype.</li>
-<li><strong>Whether the new title's paywall/reader is built in-house or through a vendor</strong> — not a
-   decision this project inherits from anyone; nepszava.hu's own unaffiliated third-party
-   approach (xximedia.hu) is one real-world data point to weigh, nothing more
-   (<a href="research.html"><code>01-research.md</code></a> §8).</li>
+<li><strong>Whether the new title's paywall/reader is built in-house or through a vendor</strong> — an open
+   build-vs-buy decision, not inherited from anyone.</li>
 </ol>
 <footer>Népszabadság · dokumentáció, 2026</footer></div></body></html>

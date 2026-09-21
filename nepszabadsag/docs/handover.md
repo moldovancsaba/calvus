@@ -48,12 +48,10 @@ márka viszonya". The publisher line in every footer is **© 2026 Liberty Press 
 
 The owner confirmed 2026-09-21 that "nepszava" was their own slip: the project is
 **Népszabadság**. The folder `nepszabadsag/`, already live, needs no rename. **Same-day
-correction:** the owner also said that calling nepszava.hu "the sister site" during this
-briefing was itself a mistake — nepszava.hu has no relationship to this project. A related
-note from `01-research.md` §5 stands regardless: a real, unrelated newspaper of that name is
-independently in a well-reported crisis; the owner has confirmed this is coincidence, not a
-signal of anything planned (`00-brief.md`). nepszava.hu's technical findings moved from
-`02-audit.md` to `01-research.md` §8, labelled as an unaffiliated comparable.
+correction:** the owner also said that a third-party news site mentioned during this
+briefing, described at the time as "the sister site," has no relationship to this project of
+any kind — it has been removed from this documentation set entirely, at the owner's direct
+instruction (`04-decisions.md` D10–D11).
 
 ## 3. What the Figma frames contain (read on screen, 2026-09-21)
 
@@ -143,8 +141,8 @@ every fetch and `bench.json` are in that session's scratchpad, not in the repo.
 | Stage | State | What it needs |
 |---|---|---|
 | Brief (`00-brief.md`) | **written 2026-09-21** — client, brief, what's real, the name (settled) | owner reads it |
-| Research (`01-research.md`) | **written 2026-09-21** — the 25-site technical benchmark, a rendered-layout pass at 1440/390 for ten reachable sites, Reuters Institute DNR 2026 (Hungary), subscription/paywall benchmarks, the 2016 closure cross-checked across four sources, comparable relaunch cases, design-system references, proposals P1–P9 | owner says "direction approved" |
-| Audit (`02-audit.md`) | **written 2026-09-21** — nepszava.hu measured in depth (digital-edition vendor, 2026 ad rate card, rendered home page) and nol.hu | — |
+| Research (`01-research.md`) | **written 2026-09-21** — the 24-site technical benchmark, a rendered-layout pass at 1440/390 for nine reachable sites, Reuters Institute DNR 2026 (Hungary), subscription/paywall benchmarks, the 2016 closure cross-checked across four sources, comparable relaunch cases, design-system references, proposals P1–P4 | owner says "direction approved" |
+| Audit (`02-audit.md`) | **written 2026-09-21** — the old nol.hu domain, the client's only asset there is to audit | — |
 | Sources (`03-sources.md`) | **written 2026-09-21** — every input and every gap numbered | the gaps listed there (Figma spec, logo files, photographs, the registration back end, the "utolsó poszt" source) |
 | Design system | **written 2026-09-21** (`05-design.md`) — tokens/components as built, from direct visual read, not Dev Mode | exact pixel values still rest on an export or Dev Mode access |
 | Frames 1440 / 390 | Figma has them; not separately transcribed as static frames — built straight into the five pages instead, on the owner's direct build instruction (D1) | — |

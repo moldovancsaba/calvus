@@ -1,14 +1,10 @@
 # Népszabadság — audit of the starting point
 
-*Correction, 2026-09-21 (the same day this document was first written): the owner's original
-briefing described nepszava.hu as "the sister site" of this project. The owner has since said
-that was a mistake — nepszava.hu has no relationship to Népszabadság or to this project, of
-any kind. Everything this document originally measured about nepszava.hu (its digital-edition
-vendor, its 2026 ad rate card, its rendered home page) was factually accurate, but it does not
-belong in an audit of the client's own assets. That material now lives in `01-research.md` §8,
-labelled for what it actually is: one more researched comparable among the twenty-five
-benchmarked there, not a special or inherited precedent. What remains here is the client's own
-asset: the old domain.*
+*Correction, 2026-09-21: the owner's original briefing described a third-party news site as
+"the sister site" of this project. The owner has since said that was a mistake — that site has
+no relationship to Népszabadság or to this project, of any kind, and has been removed from
+this documentation set entirely, at the owner's direct instruction (`04-decisions.md` D10,
+D11). What remains here is the client's own asset: the old domain.*
 
 ## 1. nol.hu — the old Népszabadság domain
 

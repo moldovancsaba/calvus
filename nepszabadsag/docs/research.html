@@ -21,7 +21,7 @@ footer{margin-top:48px;padding-top:16px;border-top:1px solid var(--line);font-si
 </style></head>
 <body><div class="wrap"><nav class="docnav" aria-label="Project documentation"><span class="docnav-brand">Népszabadság · dokumentáció</span><a href="index.html">Overview</a><a href="brief.html">Brief</a><a href="research.html" aria-current=page>Research</a><a href="audit.html">Audit</a><a href="sources.html">Sources</a><a href="decisions.html">Decisions</a><a href="design.html">Design</a><a href="build-log.html">Build log</a><a href="gate.html">Gate</a><a href="handover.html">Handover</a></nav>
 <header><p class="eyebrow">Népszabadság · project documentation</p><h1>Népszabadság — research: how the greatest news sites are built, what a relaunch here has to answer, and what a serif subscription-first daily should learn from precedent</h1></header>
-<p><em>For the owner (direction approval) and the team (the build's brief). Twenty-five news home
+<p><em>For the owner (direction approval) and the team (the build's brief). Twenty-four news home
 pages measured with <code>curl</code> (§1) and a smaller reachable set read rendered in the browser pane
 at 1440 and 390 (§7); five areas of sourced industry evidence (§2–§6) gathered 2026-09-21.
 </em><em>P</em><em> primary (a report, a regulator, a company's own page); </em><em>A</em><em> an industry summary,
@@ -29,13 +29,13 @@ trade press, or a secondary write-up of a primary source. Where a source itself 
 or an unverified chain, that flag is kept, not smoothed over.</em></p>
 <h2>0. The five things that matter most</h2>
 <ol>
-<li><strong>The project's name is Népszabadság</strong> (confirmed by the owner 2026-09-21 — an earlier reference to "nepszava" was a slip, not a signal). <strong>Update, same day:</strong> the owner also confirmed that describing nepszava.hu as this project's "sister site" during the original briefing was itself a mistake — nepszava.hu has no relationship to Népszabadság or to this project. The Figma's internal <strong>Népszava</strong> sub-brand section happening to share its name with that real, independent, 153-year-old Hungarian daily (which went online-only on 2026-05-29, still without a buyer as of 2026-07-30, §5) is coincidence, now confirmed rather than merely likely.</li>
+<li><strong>The project's name is Népszabadság</strong> (confirmed by the owner 2026-09-21 — an earlier reference to "nepszava" was a slip, not a signal, and an unrelated third-party site once mentioned during briefing has no connection to this project — removed from this document entirely, per the owner).</li>
 <li><strong>Hungarians trust news less than almost anyone else measured, and pay for it rarely.</strong> 17% trust news generally (lowest of 48 markets, DNR 2026); 6% pay for any online news. A registration wall that earns trust before it asks for money is not a nice-to-have here — it is the only lever the market data supports (§2).</li>
 <li><strong>A hard free-to-paid cliff is a normal industry pattern, but the pricing literature's own advice cuts against launching a fully free period.</strong> Registered users convert to paid roughly 10× better than anonymous visitors, and European benchmarks find that even a token charge during a trial period out-converts zero-cost trials (§3) — worth raising against the memo's "free until 15 November" plan, not overriding it.</li>
-<li><strong>The 2016 closure has direct, checkable precedent, and one unaffiliated Hungarian outlet's real ad rate card gives a useful pricing reference.</strong> Four independent sources converge on the same shape of the 2016 story (§4); nepszava.hu's own current rate card prices the same banner sizes the Figma uses, in real forints (§8) — not this project's own numbers, but a real one to check assumptions against.</li>
+<li><strong>The 2016 closure has direct, checkable precedent.</strong> Four independent sources converge on the same shape of the 2016 story (§4) — this project does not have to guess at its own history.</li>
 <li><strong>Every measurable leader separates a display headline face from a body-text face, and colours by editorial section rather than a single brand accent</strong> (§6, §7) — the opposite of a one-brand-colour approach, and worth stating as a rule before the design-system gate, not after.</li>
 </ol>
-<h2>1. Technical benchmark — 25 news home pages, measured with <code>curl</code>, 2026-09-21</h2>
+<h2>1. Technical benchmark — 24 news home pages, measured with <code>curl</code>, 2026-09-21</h2>
 <p>Desktop UA, gzip, one cold request each; TTFB and size are single readings, not averages.</p>
 <div class="tbl"><table>
 <thead>
@@ -318,18 +318,6 @@ or an unverified chain, that flag is kept, not smoothed over.</em></p>
 <td>Belföld · Nagyvilág · Közélet · Tudomány · Sport · Élet-Stílus · … 22 items; green #57a600, #002e5e</td>
 </tr>
 <tr>
-<td>nepszava.hu</td>
-<td>200</td>
-<td>0.05</td>
-<td>48</td>
-<td>27</td>
-<td>57</td>
-<td>30</td>
-<td>Cloudflare, AdSense, OneSignal, Gemius, d3, Swiper; home rendered by <code>/js/home/index.js</code></td>
-<td>(self-hosted, <code>fontconfig.css</code>)</td>
-<td>description "Népszava politikai napilap"; 57 stylesheet links; <code>cache-control: no-store</code></td>
-</tr>
-<tr>
 <td>hang.hu (Magyar Hang)</td>
 <td>200</td>
 <td>0.08</td>
@@ -361,9 +349,9 @@ subscription-first daily (NYT, WSJ, FT, Zeit, WaPo) cannot be read from this env
 sources instead (§6). (2) Every measurable leader is on Next.js / Nuxt with a self-hosted type
 family of two or three faces and one brand colour plus red for live/breaking. (3) The Hungarian
 field splits: Telex (Nuxt, 6 scripts, 143 KB) and 444 (Next, 7 scripts) are lean; Index (86
-scripts) and 24.hu (WordPress + WPBakery, 54 scripts) are heavy; nepszava.hu ships 57
-stylesheet links and <code>no-store</code> caching. (4) Home pages carry 236–782 links; the Figma címlap
-carries far fewer — a deliberate choice to be defended, not a gap to close.</p>
+scripts) and 24.hu (WordPress + WPBakery, 54 scripts) are heavy. (4) Home pages carry 236–782
+links; the Figma címlap carries far fewer — a deliberate choice to be defended, not a gap to
+close.</p>
 <h2>2. Reuters Institute Digital News Report 2026 — Hungary</h2>
 <ul>
 <li>Only <strong>17%</strong> of Hungarians say they generally trust the news, down 5 points from 2025 — the lowest figure recorded for Hungary since 2016, and the lowest of the 48 markets surveyed in 2026. <strong>P</strong> <a href="https://reutersinstitute.politics.ox.ac.uk/digital-news-report/2026/hungary">Reuters Institute DNR 2026 — Hungary</a></li>
@@ -406,11 +394,10 @@ outlet's retrospective — converge on the same two-part shape (stated reason vs
 context). That convergence, not any one source alone, is what makes the political reading
 well-established rather than fringe, and is worth the client knowing is on the record before
 the relaunch invites the comparison itself ("Lassan véget ér 10 év hallgatás").</p>
-<h2>5. Comparable relaunch cases — and the one that changes a decision</h2>
+<h2>5. Comparable relaunch cases</h2>
 <ul>
 <li><strong>Magyar Nemzet (Hungary — the closest national precedent).</strong> An 80-year-old (founded 1938) conservative daily; ceased publication 11 April 2018 after the election, citing financial problems; its online presence went dark for about ten months. Relaunched 6 February 2019, this time explicitly aligned with the governing party, replacing a title called Magyar Idők. As of August 2026 it converted again — daily to <strong>weekly</strong> print — part of a broader 2026 shift of Hungarian political dailies to online/weekly formats. <strong>A</strong> <a href="https://en.wikipedia.org/wiki/Magyar_Nemzet">Wikipedia</a>; <a href="https://balkaninsight.com/2026/07/30/hungary-enters-post-print-age-as-political-dailies-disappear/rd/">Balkan Insight, 30 Jul 2026</a> — the strongest "closed, then relaunched" precedent in the same market, though its own relaunch carried a political realignment worth being aware of, not necessarily worth raising with this client unprompted.</li>
 <li><strong>The Independent (UK) — print stopped, publishing continued (the closest "digital continuation" precedent, not a full closure).</strong> Went online-only in March 2016. Academic research hosted by Reuters Institute found British readership did not fall in the year after, but total time British audiences spent with the title fell 81%, because online readers engage far less deeply than former print subscribers did; overseas browsing grew at least 50%. <strong>P</strong> <a href="https://reutersinstitute.politics.ox.ac.uk/our-research/are-newspapers-heading-toward-post-print-obscurity-case-study-independents-transition">Reuters Institute research (Thurman &amp; Fletcher)</a> — the same research page cites a similar 72% post-print time-spent decline for NME.</li>
-<li><strong>The real Népszava — found while researching; a small aside, not a brief-level decision.</strong> Independent of this project (whose own name is settled as Népszabadság, <a href="brief.html"><code>00-brief.md</code></a>), Hungary's actual Népszava — its oldest continuously published paper (153 years) and, since 2019, the country's last liberal/social-democratic political daily — stopped print and went online-only on <strong>2026-05-29</strong> when distributor Mediaworks cancelled its print contract over unpaid debts; about a third of staff were laid off; as of the most recent report found (2026-07-30) its owner was still seeking a buyer and its future was stated as uncertain. <strong>A</strong> <a href="https://balkaninsight.com/2026/07/30/hungary-enters-post-print-age-as-political-dailies-disappear/rd/">Balkan Insight, 30 Jul 2026</a>; <a href="https://europeanjournalists.org/blog/2026/05/29/hungary-threats-against-the-countrys-last-progressive-daily-newspaper/">European Federation of Journalists, coverage of the threats/closure</a>. The Figma's internal Népszava sub-brand section — and its own front-page tease, "Mi lesz a Népszavával?" — happens to share the name; the owner has confirmed this is coincidence, not a signal of anything planned (<a href="brief.html"><code>00-brief.md</code></a>).</li>
 <li>Weaker-fit precedents, pattern only: Taloussanomat (Finland) reportedly improved its financial position after going online-only in 2007, cited via a secondary academic-literature chain not independently re-verified here. <strong>A</strong> <a href="https://www.tandfonline.com/doi/full/10.1080/21670811.2018.1504625">via a TandFonline-hosted paper</a>. A 2024–2025 US magazine "print revival" trend (Field &amp; Stream, Saveur, SPIN, Ebony, a reported Life return) shows print returning after being dropped, but these are magazines, not dailies, and the source article itself could only be confirmed via search-result snippets (direct fetch returned HTTP 403) — treat the specifics as unverified. <strong>A</strong> <a href="https://www.niemanlab.org/2024/12/the-print-revival-comes-to-news/">Nieman Lab, Dec 2024 — fetch blocked, snippet only</a></li>
 </ul>
 <h2>6. Published design-system references</h2>
@@ -481,7 +468,7 @@ link, foregrounding commerce and subscription immediately; the lead uses an illu
 collage-style treatment with condensed display type composited on the photo — closer to
 tabloid/magazine-cover language than editorial photography — beside an explicitly labelled
 <strong>"HIRDETÉS"</strong> (advertisement) block. Mobile: no hamburger at all — a persistent bottom
-app-style tab bar (Menü / Címlap / Friss / Kör / Fiók) is the one outlier among all ten
+app-style tab bar (Menü / Címlap / Friss / Kör / Fiók) is the one outlier among all nine
 sites; small circular author-avatar photos accompany bylines, a personality-driven
 authorship treatment not seen elsewhere.</p>
 <p><strong>index.hu.</strong> Desktop: white ground, red wordmark, an orange underline accent, a financial
@@ -498,19 +485,6 @@ one item carrying a small tag suggesting blended native/sponsored content. Mobil
 dark-mode toggle and the subscribe button both sit above the fold; content opens into a
 text-only pair of headlines before any photo, an alternating text/photo rhythm that reads
 denser than BBC, FAZ or SZ.</p>
-<p><strong>nepszava.hu — unaffiliated with this project (§8), read on screen rather than measured by
-<code>curl</code>.</strong> Desktop: a black topic-tag ticker, a centred blue "NÉPSZAVA" logo block,
-then <strong>two full-width ad units back to back directly under the masthead</strong> — one unfilled, one
-a foreign-market shopping carousel — before any editorial content. The lead story is
-<strong>text-only</strong> (no photograph), a plain bold black headline with blue pill topic tags; a
-floating overlay ad appears near the top of the viewport on scroll. <strong>No subscription or
-paywall control is visible anywhere in the header, hero or body</strong> — "Előfizetés" appears only
-as one small footer link. Mobile: the header shrinks to a bare "N" monogram (every other
-site studied keeps a full wordmark at phone width), no subscribe control; the first thing
-below the header is a <strong>mistargeted French-language ad</strong> (programmatic inventory not
-localised to Hungarian); an unusual segmented "CIKKEK / HÍREK" pill toggle appears with no
-analogue on any other site measured; everything below the lead is a plain text list with no
-thumbnails at all — the most image-sparse presentation of the ten sites.</p>
 <h3>Synthesis</h3>
 <ul>
 <li><strong>Serif headlines read as the most editorially confident execution.</strong> FAZ (serif at both
@@ -518,15 +492,11 @@ thumbnails at all — the most image-sparse presentation of the ten sites.</p>
   cluttered of the set — directly relevant to a serif-headline repositioning (§0, §6).</li>
 <li><strong>Every subscription-forward site puts the CTA where it cannot be missed</strong> — FAZ, SZ,
   Spiegel, 444.hu and 24.hu all surface a subscribe button or overlay in the header or as a
-  persistent module. nepszava.hu currently does none of this (§0).</li>
+  persistent module.</li>
 <li><strong>A photo-led single lead is the norm among the strongest layouts</strong> (BBC, FAZ, SZ,
-  Spiegel); index.hu's colour-block hero and nepszava.hu's text-only lead both read as
-  weaker entry points by comparison.</li>
+  Spiegel); index.hu's colour-block hero reads as a weaker entry point by comparison.</li>
 <li><strong>Ad density and curation visibly track perceived quality.</strong> BBC and 444.hu keep ads
-  clearly labelled or edge-confined; nepszava.hu stacks two full-width ad units under the
-  masthead plus a floating overlay plus, on mobile, a mistargeted non-Hungarian ad — denser
-  and less curated than any competitor measured, and a concrete, fixable gap for the new site
-  to not repeat.</li>
+  clearly labelled or edge-confined — worth matching in the new build.</li>
 <li><strong>Density tracks business model</strong>: the donation-funded site (Telex) and the tabloid-leaning
   sites (Index, 24.hu) run dense, image-sparse headline walls; the subscription dailies (FAZ,
   SZ, Spiegel) run a single strong lead with more whitespace and imagery — the pattern a
@@ -537,93 +507,7 @@ thumbnails at all — the most image-sparse presentation of the ten sites.</p>
   finding that a token charge out-converts a fully free trial period — a concrete precedent
   to weigh against the memo's "free until 15 November" plan (P2).</li>
 </ul>
-<h2>8. A closer look: nepszava.hu's monetization model — no relationship to this project</h2>
-<p><em>Correction, 2026-09-21 (same day as the research below was first written): the owner's
-original briefing described nepszava.hu as "the sister site" of this project. The owner has
-since said that was a mistake — nepszava.hu has no relationship to Népszabadság or to this
-project, of any kind. Everything measured about it is still factually accurate (it is a real,
-independently-operated Hungarian news site — the actual Népszava named in §5), but it belongs
-here, as one more researched comparable among the twenty-five in §1, not in <a href="audit.html"><code>02-audit.md</code></a>
-(which is reserved for the client's own assets — see the correction recorded there). The
-findings below are unchanged from the original measurement; only their status has changed,
-from "the sister site" to "an unaffiliated Hungarian outlet, useful for market colour."</em></p>
-<p>nepszava.hu runs a real digital-edition subscription product, outsourced to a third-party
-vendor rather than built in-house: <code>/digitalisujsag</code> loads a page-flip e-paper reader gated by
-a login form that resolves to <strong>xximedia.hu</strong>, a Hungarian e-paper/digital-newsstand platform.
-The vendor's own product page states (2026-09-21) that "a kiadvány jelenleg nem elérhető" — the
-mobile edition is currently not offered — while the newsroom continues producing the paper in
-digital form only. The vendor page names the operating company as <strong>XXI. Század Média Zrt.</strong>
-<strong>P</strong> (the site's own login fragment and <a href="https://xximedia.hu/mobilnsz">xximedia.hu/mobilnsz</a>,
-fetched directly, 2026-09-21)</p>
-<p>nepszava.hu's own 2026 online ad rate card (PDF, effective 2026-08-27, from xximedia.hu, HUF,
-list price, ex-VAT, per week) happens to price the same header/rail/inline banner sizes the
-client's Figma frames show (970×250, 300×250, 300×300, 300×600):</p>
-<div class="tbl"><table>
-<thead>
-<tr>
-<th>Placement</th>
-<th>Sizes</th>
-<th>Weekly list price (Ft, ex-VAT)</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Multiscreen premium, header, home page</td>
-<td>970×250 + 300×300</td>
-<td>4 790 000</td>
-</tr>
-<tr>
-<td>Multiscreen premium, header, article pages</td>
-<td>970×250 + 300×300</td>
-<td>3 590 000</td>
-</tr>
-<tr>
-<td>Multiscreen basic, header, home page</td>
-<td>728×90 + 300×250</td>
-<td>4 390 000</td>
-</tr>
-<tr>
-<td>Multiscreen basic, header, article pages</td>
-<td>728×90 + 300×250</td>
-<td>2 990 000</td>
-</tr>
-<tr>
-<td>Desktop premium, right rail, home page</td>
-<td>300×600</td>
-<td>3 590 000</td>
-</tr>
-<tr>
-<td>Desktop basic, right rail, home page</td>
-<td>300×250</td>
-<td>2 700 000</td>
-</tr>
-<tr>
-<td>Desktop basic, right rail, article pages</td>
-<td>300×250</td>
-<td>2 000 000</td>
-</tr>
-<tr>
-<td>Sponsored article (agency-written), front-page feature</td>
-<td>—</td>
-<td>3 000 000</td>
-</tr>
-<tr>
-<td>Sponsored article (client-supplied), front-page feature</td>
-<td>—</td>
-<td>2 700 000</td>
-</tr>
-</tbody>
-</table></div>
-<p><strong>P</strong> <a href="https://xximedia.hu/files/public/cikkepek/261/File/2026/NEPSZAVA_ONLINE_MEDIAAJANLO_2026_03.pdf">Népszava Online Tarifa 2026, XXI. Század Média Zrt.</a>,
-effective 2026-08-27. A video-banner surcharge of 50% and a 70 KB static-creative limit are
-stated in the same document.</p>
-<p><strong>What it means here.</strong> These are one unaffiliated Hungarian publisher's real 2026 numbers for
-the same standard banner sizes the Figma uses — useful as a real-world pricing reference <em>if</em>
-the new title carries its own advertising, not as an inherited rate card or a build-vs-buy
-precedent this project is entitled to. Whether XXI. Század Média Zrt. has any relationship to
-Liberty Press Kft. (the new design's stated publisher) is not addressed here and does not need
-to be — there is no basis, now that the "sister site" premise is retracted, to expect one.</p>
-<h2>9. What it means for the prototype — proposals for the owner (each becomes a D-number when decided)</h2>
+<h2>8. What it means for the prototype — proposals for the owner (each becomes a D-number when decided)</h2>
 <div class="tbl"><table>
 <thead>
 <tr>
@@ -650,27 +534,12 @@ to be — there is no basis, now that the "sister site" premise is retracted, to
 </tr>
 <tr>
 <td>P4</td>
-<td>Decide build-vs-buy for the paywall/e-paper reader with nepszava.hu's unaffiliated third-party-vendor approach (xximedia.hu) as one real-world data point, not an assumption that it must be built in-house</td>
-<td>§8</td>
-</tr>
-<tr>
-<td>P5</td>
-<td>Price the ad inventory (970×250, 300×250, 600×250) from a real 2026 Hungarian rate card rather than inventing figures, if this title carries its own advertising</td>
-<td>§8</td>
-</tr>
-<tr>
-<td>P6</td>
-<td>A header-level subscribe/registration control on every page, always visible — every subscription-forward site studied has one; nepszava.hu has none</td>
+<td>A header-level subscribe/registration control on every page, always visible — every subscription-forward site studied has one</td>
 <td>§7</td>
-</tr>
-<tr>
-<td>P7</td>
-<td>Keep the ad load lighter and better-curated than nepszava.hu's (which stacks two full-width units under the masthead plus a floating overlay) — the Figma's own slot count is already close to this</td>
-<td>§7, §8</td>
 </tr>
 </tbody>
 </table></div>
-<h2>10. What was not found, or could not be verified</h2>
+<h2>9. What was not found, or could not be verified</h2>
 <ul>
 <li>A Hungary-specific mobile-vs-desktop reading split in DNR 2026 (only a global figure exists).</li>
 <li>A CEE-specific print+digital bundle-pricing benchmark (the closest source says this bundling is uncommon in its sample).</li>

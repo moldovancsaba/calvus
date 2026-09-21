@@ -8,8 +8,8 @@ Hungarian presentation for the client: [bemutato.html](bemutato.html).
 | Document | What it holds |
 |---|---|
 | `00-brief.md` | who the client is, what the brief asks, what is real and not yet, the name (settled) |
-| `01-research.md` | the 25-site technical benchmark, Reuters Institute DNR 2026 (Hungary), subscription/paywall benchmarks, the 2016 closure sourced, comparable relaunch cases, design-system references, the rendered-layout study, a closer look at nepszava.hu (unaffiliated — §8), proposals for the owner |
-| `02-audit.md` | the old nol.hu domain — the client's only asset there is to audit; records the correction that nepszava.hu is not a "sister site" |
+| `01-research.md` | the 24-site technical benchmark, Reuters Institute DNR 2026 (Hungary), subscription/paywall benchmarks, the 2016 closure sourced, comparable relaunch cases, design-system references, the rendered-layout study, proposals for the owner |
+| `02-audit.md` | the old nol.hu domain — the client's only asset there is to audit |
 | `03-sources.md` | every input and what it contributed, every gap numbered |
 | `04-decisions.md` | numbered register of the build's decisions, D1 onward |
 | `05-design.md` | the tokens and components as built, read from the Figma file |
@@ -81,3 +81,19 @@ vendor and rate card as inherited) were removed or reframed accordingly — `01-
 `handover.md` updated to match; `bemutato.html`'s two cards built on the sister-site framing
 rewritten. Nothing about the built prototype itself needed to change — it never referenced
 nepszava.hu directly.
+
+**2026-09-21 — full removal.** The owner asked for the third-party site to be removed
+completely, not relabelled. `01-research.md` §8 (the "closer look," added minutes earlier)
+deleted outright; its row removed from the 25-site benchmark (now 24 sites, §1); its entry
+removed from the rendered-layout study (now nine sites, §7); the three proposals that
+depended on it removed or reworded to stand on the other measured sites alone (P1–P4, §8,
+renumbered again). The real, unrelated newspaper's 2026 crisis — a separate finding, but
+naming the same word — removed from `01-research.md` §5 for the same reason. `00-brief.md`,
+`03-sources.md`, `02-audit.md` and `handover.md` no longer name the site anywhere except in
+strictly historical narration of what the owner's original message said (kept, since editing
+that would misrepresent the record, not correct it). `04-decisions.md` D11 records this
+round. The built prototype needed no change — it never referenced the site. **Left open,
+flagged rather than assumed:** the client's own Figma-designed "Népszava" sub-brand section,
+nav item and page within the actual site (`nepszava/index.html`) is a different thing — part
+of the client's own design, not something mentioned by mistake — and has not been touched
+pending the owner's word on whether that should also go.
