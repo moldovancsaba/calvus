@@ -19,7 +19,7 @@ pre{overflow-x:auto;padding:14px 16px;border:1px solid var(--line);background:va
 blockquote{margin:12px 0;padding:12px 16px;border-left:4px solid var(--accent);background:var(--note)}
 footer{margin-top:48px;padding-top:16px;border-top:1px solid var(--line);font-size:12px;color:var(--muted);font-family:var(--nsz-sans)}
 </style></head>
-<body><div class="wrap"><nav class="docnav" aria-label="Project documentation"><span class="docnav-brand">Népszabadság · dokumentáció</span><a href="index.html">Overview</a><a href="brief.html">Brief</a><a href="research.html">Research</a><a href="audit.html">Audit</a><a href="sources.html" aria-current=page>Sources</a><a href="handover.html">Handover</a></nav>
+<body><div class="wrap"><nav class="docnav" aria-label="Project documentation"><span class="docnav-brand">Népszabadság · dokumentáció</span><a href="index.html">Overview</a><a href="brief.html">Brief</a><a href="research.html">Research</a><a href="audit.html">Audit</a><a href="sources.html" aria-current=page>Sources</a><a href="decisions.html">Decisions</a><a href="design.html">Design</a><a href="build-log.html">Build log</a><a href="gate.html">Gate</a><a href="handover.html">Handover</a></nav>
 <header><p class="eyebrow">Népszabadság · project documentation</p><h1>Népszabadság — sources and gaps</h1></header>
 <p><em>What every finding in this documentation set is built from, and every gap between the ask
 and what is actually in hand. Written 2026-09-21.</em></p>
@@ -92,6 +92,21 @@ and what is actually in hand. Written 2026-09-21.</em></p>
 <td><code>curl</code>, 2026-09-21 (<a href="audit.html"><code>02-audit.md</code></a> §4)</td>
 <td>real — a one-line stub; the archive is sold via lapcentrum.hu, not audited here</td>
 </tr>
+<tr>
+<td>The built prototype's headlines, deks, bylines, reading times and the Cikkoldal's full body text (Belföld, Gazdaság, Kultúra, Külföld, Média/Vélemény, Népszava — twenty items)</td>
+<td>read directly off the Figma frames, 2026-09-21 (<code>content.py</code>, <code>source: "figma"</code>)</td>
+<td><strong>real</strong> — the client's own copy, used verbatim; the Cikkoldal needed no invented continuation because the Figma's paywall box marks exactly where the free text ends</td>
+</tr>
+<tr>
+<td>Two Sport and Tudomány Címlap items</td>
+<td>written for this prototype — the Figma designs no rovat front for either category</td>
+<td><strong>sample</strong>, declared <code>source: "original"</code> in <code>content.py</code>; neutral, evergreen, no real named official quoted</td>
+</tr>
+<tr>
+<td>Fourteen photographs across every page</td>
+<td>Wikimedia Commons, downloaded and resized 2026-09-21, license and author recorded per image in <code>content.py IMAGES</code></td>
+<td><strong>real</strong> photographs, appropriately licensed (CC BY / CC BY-SA / public domain); several are topical illustrations rather than the article's literal documentary subject — marked with a <code>note</code> in <code>content.py</code> and stated in the on-page photo credit</td>
+</tr>
 </tbody>
 </table></div>
 <h2>Gaps — what the client (or a next session) still needs to supply</h2>
@@ -102,8 +117,11 @@ and what is actually in hand. Written 2026-09-21.</em></p>
    (owner, 2026-09-21) — see <a href="brief.html"><code>00-brief.md</code></a>.</li>
 <li><strong>Exact design tokens.</strong> Figma Dev Mode (MCP server) or an export of the eight frames as
    PNG plus the variables list — <a href="handover.html"><code>handover.md</code></a> §3.</li>
-<li><strong>Logo files, type licences, and the photographs</strong> the frames currently show as
-   placeholders — no AI-generated imagery, per the repo rule.</li>
+<li><strong>Logo files and type licences</strong> — the built pages use a CSS approximation of the mark
+   and Google-hosted fonts (Source Serif 4, Inter), not the client's own files. <strong>The
+   frames' own photographs</strong> are still placeholders in Figma; the built prototype uses real,
+   appropriately-licensed Wikimedia Commons photos as a stand-in (no AI-generated imagery,
+   per the repo rule) — real client photography is still the eventual real gap.</li>
 <li><strong>A Szerkesztőség's "utolsó poszt"</strong> — which channel supplies the latest post (blog,
    Instagram, Facebook) that the landing page and the front page both promise to show.</li>
 <li><strong>Who receives the landing page's registration form</strong> (Vezetéknév, Keresztnév, e-mail) —

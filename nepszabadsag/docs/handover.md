@@ -144,10 +144,10 @@ every fetch and `bench.json` are in that session's scratchpad, not in the repo.
 | Research (`01-research.md`) | **written 2026-09-21** — the 25-site technical benchmark, a rendered-layout pass at 1440/390 for ten reachable sites, Reuters Institute DNR 2026 (Hungary), subscription/paywall benchmarks, the 2016 closure cross-checked across four sources, comparable relaunch cases, design-system references, proposals P1–P9 | owner says "direction approved" |
 | Audit (`02-audit.md`) | **written 2026-09-21** — nepszava.hu measured in depth (digital-edition vendor, 2026 ad rate card, rendered home page) and nol.hu | — |
 | Sources (`03-sources.md`) | **written 2026-09-21** — every input and every gap numbered | the gaps listed there (Figma spec, logo files, photographs, the registration back end, the "utolsó poszt" source) |
-| Design system | `assets/tokens.css` provisional | confirmation from Figma, then the live components page → owner gate |
-| Frames 1440 / 390 | Figma has them | transcribe once tokens are confirmed → owner gate |
-| Build | — | generator for címlap / rovat / cikk / márkafront + the landing; sample data declared sample |
-| Gate, sweep, presentation, technical package | gate (`check.py`) exists | sweep, presentation and technical package once the build exists |
+| Design system | **written 2026-09-21** (`05-design.md`) — tokens/components as built, from direct visual read, not Dev Mode | exact pixel values still rest on an export or Dev Mode access |
+| Frames 1440 / 390 | Figma has them; not separately transcribed as static frames — built straight into the five pages instead, on the owner's direct build instruction (D1) | — |
+| Build | **first version built 2026-09-21** — Címlap, the Belföld rovatfront, one Cikkoldal with the paywall, the Népszava almárka, the landing page; generated from `content.py` + `build.py`; measured clean at 390 and 1440 | rovat fronts for Külföld/Gazdaság/Kultúra/Sport/Tudomány; real client photography and logo files |
+| Gate, sweep, presentation, technical package | gate covers the site pages (`check.py`); the Hungarian presentation (`bemutato.html`) written 2026-09-21 | a full sweep once more pages exist; the technical package (stages 10–14) once the direction is confirmed |
 
 ## 6. Questions for the owner (none blocks the research)
 

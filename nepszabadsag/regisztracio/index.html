@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="hu">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Előregisztráció — Népszabadság, 2026. október 8.</title>
+<meta name="description" content="Indul az elő-regisztráció! Iratkozz fel, hogy elsőként értesülj a Népszabadság újraindulásáról 2026. október 8-án.">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@400;600;700;800&display=swap">
+<link rel="stylesheet" href="../assets/tokens.css">
+<link rel="stylesheet" href="../assets/site.css">
+
+</head>
+<body>
+<div class="proto-banner">Prototípus — Népszabadság, 2026. A cikkek egy része a klienstől kapott Figma-terv valós szövege; a Sport és Tudomány rovat, valamint minden fénykép a prototípus számára készült vagy gyűjtött minta.</div>
+<header class="site-header">
+  <div class="header-top">
+    <a class="brand" href="../index.html"><span class="brand-mark">N</span><span class="brand-word">NÉPSZABADSÁG</span></a>
+    <div class="header-actions">
+      <button class="icon-btn hamburger" aria-expanded="false" aria-controls="mobilenav" onclick="document.getElementById('mobilenav').hidden=!document.getElementById('mobilenav').hidden;this.setAttribute('aria-expanded',!document.getElementById('mobilenav').hidden)" aria-label="Menü">☰</button>
+      <nav class="main-nav" aria-label="Fő navigáció"><ul><li><a href="../belfold/index.html">Belföld</a></li><li><a href="../index.html#külföld">Külföld</a></li><li><a href="../index.html#gazdaság">Gazdaság</a></li><li><a href="../index.html#kultúra">Kultúra</a></li><li><a href="../index.html#külföld">Sport</a></li><li><a href="../index.html#külföld">Tudomány</a></li><li><a href="../nepszava/index.html">Népszava</a></li></ul></nav>
+      <button class="icon-btn" aria-label="Keresés" title="Keresés (nem működik a prototípusban)">🔍</button>
+      <a class="btn-subscribe" href="../regisztracio/index.html">Előfizetés</a>
+    </div>
+  </div>
+  <nav class="mobile-nav" id="mobilenav" hidden aria-label="Mobil navigáció"><ul><li><a href="../belfold/index.html">Belföld</a></li><li><a href="../index.html#külföld">Külföld</a></li><li><a href="../index.html#gazdaság">Gazdaság</a></li><li><a href="../index.html#kultúra">Kultúra</a></li><li><a href="../index.html#külföld">Sport</a></li><li><a href="../index.html#külföld">Tudomány</a></li><li><a href="../nepszava/index.html">Népszava</a></li></ul></nav>
+</header>
+<section class="landing-section wrap">
+  <span class="eyebrow">Előfizetés</span>
+  <h1>Indul az elő-regisztráció!</h1>
+  <p class="lead-text">Legyél Te is tagja közösségünknek! Értesülj elsőként az újraindulás részleteiről, kedvezményes előfizetési lehetőségekről. Hírlevelek, exkluzív tartalmak, regisztrálj még ma!</p>
+  <form class="reg-form" onsubmit="event.preventDefault();document.getElementById('regok').classList.add('is-shown');this.reset();">
+    <input type="text" placeholder="Vezetéknév" required><input type="text" placeholder="Keresztnév" required><input type="email" placeholder="E-mail cím" required>
+    <button class="btn-primary" type="submit">Regisztrálok!</button>
+  </form>
+  <div class="reg-success" id="regok">Köszönjük a regisztrációt! (A prototípusban ez az üzenet csak a böngészőben jelenik meg — a valódi feliratkozás fogadó rendszere még nincs kijelölve, lásd 03-sources.md, 5. pont.)</div>
+</section>
+
+<section class="landing-section wrap">
+  <h2>Lassan véget ér 10 év hallgatás</h2>
+  <p class="lead-text">Online, megújult formában, de a megszokott szakmai elhivatottsággal, kompromisszumok nélkül indul újra a Népszabadság napilap.</p>
+  <div class="countdown" id="countdown" data-launch="2026-10-08T08:00:00+02:00">
+    <div class="unit"><span class="num" id="cd-d">–</span><span class="label">nap</span></div>
+    <div class="unit"><span class="num" id="cd-h">–</span><span class="label">óra</span></div>
+    <div class="unit"><span class="num" id="cd-m">–</span><span class="label">perc</span></div>
+    <div class="unit"><span class="num" id="cd-s">–</span><span class="label">mp</span></div>
+  </div>
+</section>
+
+<section class="landing-section wrap">
+  <h2>Megújul a Népszabadság!</h2>
+  <p>Azok napilapja, akiknek fontos a társadalmi szolidaritás, a tények tisztelete és a független újságírás.</p><p>Tíz évig tartott a csend — ez idő alatt a médiakörnyezet gyökeresen átalakult, de a szakmai elhivatottság, amivel ezt a munkát végezni szeretnénk, nem változott.</p><p>Független, alapos, a tényekhez ragaszkodó újságírás, amely nem hátrál meg, ha egy témát kényelmetlennek talál valaki.</p><p>A Belföld, a Külföld, a Gazdaság, a Kultúra, a Sport és a Tudomány rovatainkban ugyanolyan gonddal dolgozunk majd, mint ahogyan azt egy nagy múltú napilaptól elvárható.</p><p>A bizalmat nem lehet egyetlen lapszámmal visszaszerezni — azt minden egyes nappal újra ki kell érdemelni.</p>
+</section>
+
+<section class="landing-section wrap">
+  <div class="quote-block">„A Népszabadság beszántása nem gazdasági, hanem egyértelműen politikai döntés volt. A magyar sajtótörténetben ez mérföldkő, sajnos a legrosszabb értelemben.”<cite>Török Gábor, 2016, Index</cite></div>
+</section>
+
+<section class="landing-section wrap">
+  <h2>A Szerkesztőség</h2>
+  <p class="lead-text">Itt az utolsó poszt borítóképe és címe jelenjen meg mindig.</p>
+  <div class="editor-post"><div class="ph-box"></div><p>A szerkesztőség legutóbbi bejegyzése — a forrás megerősítésére vár (03-sources.md, 4. pont).</p></div>
+</section>
+
+<script>
+(function(){
+  var el = document.getElementById('countdown');
+  var target = new Date(el.dataset.launch).getTime();
+  function tick(){
+    var diff = Math.max(0, target - Date.now());
+    var d = Math.floor(diff/86400000), h = Math.floor(diff%86400000/3600000),
+        m = Math.floor(diff%3600000/60000), s = Math.floor(diff%60000/1000);
+    document.getElementById('cd-d').textContent = d;
+    document.getElementById('cd-h').textContent = String(h).padStart(2,'0');
+    document.getElementById('cd-m').textContent = String(m).padStart(2,'0');
+    document.getElementById('cd-s').textContent = String(s).padStart(2,'0');
+  }
+  tick(); setInterval(tick, 1000);
+})();
+</script>
+<footer class="site-footer">
+  <div class="footer-cols">
+    <div><h5>Rovatok</h5><ul><li><a href="../belfold/index.html">Belföld</a></li><li><a href="../index.html#külföld">Külföld</a></li><li><a href="../index.html#gazdaság">Gazdaság</a></li><li><a href="../index.html#kultúra">Kultúra</a></li><li><a href="../index.html#külföld">Sport</a></li><li><a href="../index.html#külföld">Tudomány</a></li><li><a href="../nepszava/index.html">Népszava</a></li></ul></div>
+    <div><h5>Almárka</h5><ul><li><a href="../nepszava/index.html">Népszava</a></li><li><a href="../nepszava/index.html">A nyomtatott lapról</a></li></ul></div>
+    <div><h5>A lapról</h5><ul><li><a href="../index.html">Impresszum</a></li><li><a href="../index.html">Etikai kódex</a></li><li><a href="../index.html">A szerkesztőség</a></li></ul></div>
+    <div><h5>Jogi és egyéb</h5><ul><li><a href="../index.html">Kapcsolat</a></li><li><a href="../index.html">Adatvédelmi tájékoztató</a></li><li><a href="../index.html">Előfizetési feltételek</a></li><li><a href="../index.html">RSS</a></li></ul></div>
+  </div>
+  <div class="footer-bottom wrap">© 2026 Liberty Press Kft. Minden jog fenntartva.</div>
+</footer>
+</body>
+</html>

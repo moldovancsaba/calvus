@@ -17,6 +17,9 @@ and what is actually in hand. Written 2026-09-21.*
 | Published design-system references (Guardian Source, NYT typefaces, Spiegel's 2016 redesign) | the Guardian's own design-system site (primary), Fonts In Use (secondary, for NYT's proprietary type), Spiegel's own dev blog (fetch blocked; used via a verified search summary) (`01-research.md` §6) | real, cited; the NYT and Spiegel items lean on secondary or unverified-by-direct-fetch sources — flagged in place |
 | nepszava.hu: stack, weight, cache headers, `robots.txt`, the digital-edition login system, the third-party vendor (xximedia.hu), the 2026 ad rate card, the operating company (XXI. Század Média Zrt.) | `curl`, 2026-09-21 (`02-audit.md` §1–3) | real, measured and quoted from the vendor's own pages and PDF |
 | nol.hu (the old domain) | `curl`, 2026-09-21 (`02-audit.md` §4) | real — a one-line stub; the archive is sold via lapcentrum.hu, not audited here |
+| The built prototype's headlines, deks, bylines, reading times and the Cikkoldal's full body text (Belföld, Gazdaság, Kultúra, Külföld, Média/Vélemény, Népszava — twenty items) | read directly off the Figma frames, 2026-09-21 (`content.py`, `source: "figma"`) | **real** — the client's own copy, used verbatim; the Cikkoldal needed no invented continuation because the Figma's paywall box marks exactly where the free text ends |
+| Two Sport and Tudomány Címlap items | written for this prototype — the Figma designs no rovat front for either category | **sample**, declared `source: "original"` in `content.py`; neutral, evergreen, no real named official quoted |
+| Fourteen photographs across every page | Wikimedia Commons, downloaded and resized 2026-09-21, license and author recorded per image in `content.py IMAGES` | **real** photographs, appropriately licensed (CC BY / CC BY-SA / public domain); several are topical illustrations rather than the article's literal documentary subject — marked with a `note` in `content.py` and stated in the on-page photo credit |
 
 ## Gaps — what the client (or a next session) still needs to supply
 
@@ -26,8 +29,11 @@ and what is actually in hand. Written 2026-09-21.*
    (owner, 2026-09-21) — see `00-brief.md`.
 2. **Exact design tokens.** Figma Dev Mode (MCP server) or an export of the eight frames as
    PNG plus the variables list — `handover.md` §3.
-3. **Logo files, type licences, and the photographs** the frames currently show as
-   placeholders — no AI-generated imagery, per the repo rule.
+3. **Logo files and type licences** — the built pages use a CSS approximation of the mark
+   and Google-hosted fonts (Source Serif 4, Inter), not the client's own files. **The
+   frames' own photographs** are still placeholders in Figma; the built prototype uses real,
+   appropriately-licensed Wikimedia Commons photos as a stand-in (no AI-generated imagery,
+   per the repo rule) — real client photography is still the eventual real gap.
 4. **A Szerkesztőség's "utolsó poszt"** — which channel supplies the latest post (blog,
    Instagram, Facebook) that the landing page and the front page both promise to show.
 5. **Who receives the landing page's registration form** (Vezetéknév, Keresztnév, e-mail) —

@@ -19,7 +19,7 @@ pre{overflow-x:auto;padding:14px 16px;border:1px solid var(--line);background:va
 blockquote{margin:12px 0;padding:12px 16px;border-left:4px solid var(--accent);background:var(--note)}
 footer{margin-top:48px;padding-top:16px;border-top:1px solid var(--line);font-size:12px;color:var(--muted);font-family:var(--nsz-sans)}
 </style></head>
-<body><div class="wrap"><nav class="docnav" aria-label="Project documentation"><span class="docnav-brand">Népszabadság · dokumentáció</span><a href="index.html">Overview</a><a href="brief.html">Brief</a><a href="research.html">Research</a><a href="audit.html">Audit</a><a href="sources.html">Sources</a><a href="handover.html" aria-current=page>Handover</a></nav>
+<body><div class="wrap"><nav class="docnav" aria-label="Project documentation"><span class="docnav-brand">Népszabadság · dokumentáció</span><a href="index.html">Overview</a><a href="brief.html">Brief</a><a href="research.html">Research</a><a href="audit.html">Audit</a><a href="sources.html">Sources</a><a href="decisions.html">Decisions</a><a href="design.html">Design</a><a href="build-log.html">Build log</a><a href="gate.html">Gate</a><a href="handover.html" aria-current=page>Handover</a></nav>
 <header><p class="eyebrow">Népszabadság · project documentation</p><h1>Népszabadság — handover: where the project stands on 2026-09-21</h1></header>
 <p><em>Written for whoever picks the project up next — a colleague, a new session, the owner
 from a phone. Everything below was read or measured on 2026-09-21; nothing is assumed.
@@ -208,23 +208,23 @@ every fetch and <code>bench.json</code> are in that session's scratchpad, not in
 </tr>
 <tr>
 <td>Design system</td>
-<td><code>assets/tokens.css</code> provisional</td>
-<td>confirmation from Figma, then the live components page → owner gate</td>
+<td><strong>written 2026-09-21</strong> (<a href="design.html"><code>05-design.md</code></a>) — tokens/components as built, from direct visual read, not Dev Mode</td>
+<td>exact pixel values still rest on an export or Dev Mode access</td>
 </tr>
 <tr>
 <td>Frames 1440 / 390</td>
-<td>Figma has them</td>
-<td>transcribe once tokens are confirmed → owner gate</td>
+<td>Figma has them; not separately transcribed as static frames — built straight into the five pages instead, on the owner's direct build instruction (D1)</td>
+<td>—</td>
 </tr>
 <tr>
 <td>Build</td>
-<td>—</td>
-<td>generator for címlap / rovat / cikk / márkafront + the landing; sample data declared sample</td>
+<td><strong>first version built 2026-09-21</strong> — Címlap, the Belföld rovatfront, one Cikkoldal with the paywall, the Népszava almárka, the landing page; generated from <code>content.py</code> + <code>build.py</code>; measured clean at 390 and 1440</td>
+<td>rovat fronts for Külföld/Gazdaság/Kultúra/Sport/Tudomány; real client photography and logo files</td>
 </tr>
 <tr>
 <td>Gate, sweep, presentation, technical package</td>
-<td>gate (<code>check.py</code>) exists</td>
-<td>sweep, presentation and technical package once the build exists</td>
+<td>gate covers the site pages (<code>check.py</code>); the Hungarian presentation (<code>bemutato.html</code>) written 2026-09-21</td>
+<td>a full sweep once more pages exist; the technical package (stages 10–14) once the direction is confirmed</td>
 </tr>
 </tbody>
 </table></div>

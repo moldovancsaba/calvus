@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Népszabadság — bemutató: az első verzió a ti tervetekből és a kutatásból</title>
+<meta name="description" content="Bemutató: az első Népszabadság-prototípus a Figma-terv valós tartalmából és a nemzetközi piackutatásból építve — mit mutat, mi valódi, mi minta, és mit kérünk ma.">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@400;600;700;800&display=swap">
+<link rel="stylesheet" href="../assets/tokens.css">
+<style>
+*{box-sizing:border-box}body{margin:0;background:var(--nsz-ground);color:var(--nsz-text);font:16px/1.6 var(--nsz-sans)}a{color:inherit}img,svg{max-width:100%;height:auto}
+.wrap{width:min(100% - 32px,1040px);margin-inline:auto}
+.hero{background:var(--nsz-ink);color:#fff;padding:36px 0 32px}
+.eyebrow{font-size:12px;letter-spacing:.08em;text-transform:uppercase;font-weight:800;color:var(--nsz-blue);margin:0 0 8px}
+.hero .eyebrow{color:#9fb8ff}
+.hero h1{font-family:var(--nsz-serif);font-size:clamp(28px,5.5vw,48px);line-height:1.1;margin:0 0 14px;max-width:22ch}
+.hero p{max-width:64ch;font-size:17px;opacity:.95;margin:0}
+.nums{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px;margin:24px 0 0}
+.num{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);border-radius:14px;padding:16px 18px}
+.num b{display:block;font-family:var(--nsz-serif);font-size:30px;line-height:1}.num span{font-size:13px;opacity:.9}
+section{padding:40px 0 8px}
+h2{font-family:var(--nsz-serif);font-size:clamp(24px,3.6vw,36px);line-height:1.1;margin:0 0 8px}
+.lede{color:var(--nsz-muted);max-width:66ch;margin:0 0 20px;font-size:16px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px}
+.card{background:#fff;border:1px solid var(--nsz-line);border-radius:14px;padding:20px}
+.card h3{font-family:var(--nsz-serif);font-size:19px;margin:0 0 8px}
+.card p,.card li{font-size:14.5px;margin:0 0 8px}.card ul{margin:0;padding-left:18px}
+.tbl{overflow-x:auto;border:1px solid var(--nsz-line);border-radius:12px;background:#fff;margin:8px 0 16px}
+table{border-collapse:collapse;width:100%;font-size:13.5px;min-width:560px}
+th{text-align:left;background:var(--nsz-panel);padding:10px 12px;font-size:12px;letter-spacing:.04em;text-transform:uppercase;color:var(--nsz-muted)}
+td{padding:10px 12px;border-top:1px solid var(--nsz-line);vertical-align:top}
+.btn{display:inline-flex;align-items:center;justify-content:center;min-height:48px;padding:10px 18px;border-radius:999px;background:var(--nsz-blue);color:#fff;text-decoration:none;font-weight:700;font-size:14px;margin:4px 6px 4px 0}
+.btn.alt{background:#fff;color:var(--nsz-blue);border:2px solid var(--nsz-blue)}
+.two{display:grid;grid-template-columns:1fr;gap:16px}@media(min-width:860px){.two{grid-template-columns:390px 1fr;align-items:start}}
+.phone{width:100%;max-width:390px;aspect-ratio:390/760;position:relative;overflow:hidden;border-radius:18px;border:1px solid var(--nsz-line);background:#fff}
+.phone iframe{position:absolute;top:0;left:0;width:390px;height:1600px;border:0;transform-origin:0 0;transform:scale(calc(var(--pw,390) / 390));pointer-events:none}
+.desk{width:100%;aspect-ratio:1440/900;position:relative;overflow:hidden;border-radius:14px;border:1px solid var(--nsz-line);background:#fff}
+.desk iframe{position:absolute;top:0;left:0;width:1440px;height:1400px;border:0;transform-origin:0 0;transform:scale(calc(var(--dw,1000) / 1440));pointer-events:none}
+.decision{background:var(--nsz-blue);color:#fff;border-radius:14px;padding:26px 24px;margin:16px 0}
+.decision h2{color:#fff}.decision p{color:#e6ecff}.decision .eyebrow{color:#cddaff}
+footer{margin:40px 0 24px;padding-top:16px;border-top:1px solid var(--nsz-line);font-size:12px;color:var(--nsz-muted)}
+footer a{display:inline-flex;align-items:center;min-height:44px}
+</style>
+</head>
+<body>
+<header class="hero"><div class="wrap">
+<p class="eyebrow">Bemutató · Népszabadság · 2026</p>
+<h1>Az első verzió elkészült — a ti Figma-tervetekből és a nemzetközi kutatásból építve</h1>
+<p>Amit ez a verzió megmutat: a Címlap, a Belföld rovatfront, egy teljes cikkoldal a
+regisztrációs fallal, a Népszava almárka és az elő-regisztrációs oldal — a tervetek valós
+szövegével feltöltve, nem kitalált mintaszöveggel. A kutatás fő tanulsága, hogy a bizalom a
+legritkább erőforrás ezen a piacon, és ez az oldal ehhez igazodik.</p>
+<div class="nums">
+<div class="num"><b>17%</b><span>bízik általában a hírekben Magyarországon — a legalacsonyabb a 48 vizsgált piac közül (Reuters Institute, 2026)</span></div>
+<div class="num"><b>20+</b><span>valós cikk, fejléc, szerző és olvasási idő a Figma-tervből — kitaláció nélkül</span></div>
+<div class="num"><b>14</b><span>saját, jogtisztán forrásolt fénykép a Wikimedia Commonsról, a terv üres fotóhelyei helyett</span></div>
+</div>
+</div></header>
+
+<main class="wrap">
+<section>
+<p class="eyebrow">1 · Mit épített meg ez a verzió</p>
+<h2>Öt oldal, egy forrásból generálva</h2>
+<p class="lede">Minden oldalt egyetlen tartalomforrás (<code>content.py</code>) tölt fel — nem
+kézzel írt HTML soronként, hanem egy generátor (<code>build.py</code>), ahogy a Holdvölgy és a
+többi projekt is épül ebben a repóban.</p>
+<div class="tbl"><table><thead><tr><th>Oldal</th><th>Mit mutat</th></tr></thead><tbody>
+<tr><td><b>Címlap</b></td><td>a vezércikk ("Tíz év csend után újra megjelenik a Népszabadság"), Belföld, Gazdaság, Kultúra, Külföld·Sport·Tudomány blokkok, Média/Vélemény, és a Népszava almárka kiemelt sávja</td></tr>
+<tr><td><b>Belföld rovatfront</b></td><td>a rovat leírása, a témapillék, a hosszú vezércikk ("Ahol a fejlesztési keret elfogyott, mielőtt megérkezett"), a rovat hat szerzője</td></tr>
+<tr><td><b>Cikkoldal</b></td><td>a teljes, valódi cikkszöveg három bekezdésben, majd a regisztrációs fal — pontosan ott, ahol a Figma-terv is elvágja</td></tr>
+<tr><td><b>Népszava almárka</b></td><td>a nyomtatott lapból, vélemény, riport, jegyzet és "a hét képe" rovatok, a Népszava három szerzője</td></tr>
+<tr><td><b>Elő-regisztráció</b></td><td>a memó hét szekciója szó szerint, élő visszaszámlálóval 2026. október 8. 08:00-ig, és egy működő (de sehova nem küldő) regisztrációs űrlappal</td></tr>
+</tbody></table></div>
+</section>
+
+<section>
+<p class="eyebrow">2 · Amit a kutatás mond</p>
+<h2>A bizalom a legritkább erőforrás — ehhez kell igazodni</h2>
+<div class="grid">
+<article class="card"><h3>A piac nem bízik, és nem fizet</h3><p>17% bízik a hírekben (a legalacsonyabb 48 piac közül), 6% fizet online hírekért (Reuters Institute Digital News Report 2026). A regisztrációs fal nem formalitás — ez az egyetlen eszköz, amit a piaci adatok alátámasztanak.</p></article>
+<article class="card"><h3>A "teljesen ingyenes" kockázatos</h3><p>Egy 2025-ös európai árazási kutatás szerint egy jelképes összeg már a próbaidőszakban is jobban konvertál, mint az ingyenes hozzáférés. A Spiegel élő példája: "4 hét 1 euróért", nem ingyen. Érdemes ezt a memó "november 15-ig ingyenes" tervével szemben mérlegelni — nem átalakítási javaslatként, csak kérdésként.</p></article>
+<article class="card"><h3>A testvéroldal saját tapasztalata felhasználható</h3><p>A nepszava.hu digitális lapszám-rendszere már működik, egy külső szolgáltatón (xximedia.hu) keresztül — valódi build-vagy-vegyél döntési alap az új oldal fizetőfal-motorjához.</p></article>
+<article class="card"><h3>A testvéroldal jelenlegi főoldala a leggyengébb a mért tíz közül</h3><p>Két teljes szélességű hirdetés a fejléc alatt, szöveg-only vezércikk, egyetlen előfizetési gomb sincs a főoldalon, mobilon egy célzatlan francia nyelvű hirdetés — konkrét, elkerülendő minta.</p></article>
+</div>
+</section>
+
+<section>
+<p class="eyebrow">3 · Telefonra és asztali gépre</p>
+<h2>Élő előnézet a most elkészült Címlapról</h2>
+<div class="two">
+<div><div class="phone"><iframe src="../index.html" title="Telefon, 390 px" loading="lazy" tabindex="-1"></iframe></div><p class="lede" style="margin-top:10px"><b>Telefon:</b> hamburger menü, a logó jelvénye, keresés és az Előfizetés gomb egy sorban; a vezércikk teljes szélességben, alatta a Belföld, Gazdaság, Kultúra blokkok egy oszlopban.</p></div>
+<div><div class="desk"><iframe src="../index.html" title="Asztali gép, 1440 px" loading="lazy" tabindex="-1"></iframe></div><p class="lede" style="margin-top:10px"><b>Asztali gép:</b> a teljes navigáció a fejlécben, három hasábos rács a Gazdaság, Kultúra és Külföld·Sport·Tudomány blokkokban, jobb oldali hirdetési sáv a cikkoldalon.</p></div>
+</div>
+<a class="btn" href="../index.html">A prototípus megnyitása</a>
+<a class="btn alt" href="../cikk/onkormanyzatok-fejlesztesi-keret.html">A cikkoldal és a fizetőfal</a>
+<a class="btn alt" href="../regisztracio/index.html">Az elő-regisztrációs oldal</a>
+</section>
+
+<section>
+<p class="eyebrow">4 · Mi valódi, mi minta</p>
+<h2>Semmit nem találtunk ki, amit a terv vagy a kutatás megadott</h2>
+<div class="grid">
+<article class="card"><h3>Valódi</h3><p>Minden fejléc, alcím, szerző, olvasási idő és a cikkoldal teljes törzsszövege a Figma-tervből, szó szerint; a memó hét szekciója; a kutatás minden száma a forrásával.</p></article>
+<article class="card"><h3>Minta — jelölve a dokumentációban</h3><p>A Sport és a Tudomány rovat két tétele (a tervben nincs ezekhez tartalom); mind a tizennégy fénykép — valódi, jogtiszta Wikimedia Commons-kép, de nem az ügyfél saját fotója.</p></article>
+<article class="card"><h3>Nem küld semmit</h3><p>A regisztrációs gombok a cikkoldalon és a fizetőfalon jeleznek, de nem regisztrálnak; az elő-regisztrációs űrlap a böngészőben mutat visszaigazolást, de sehova nem küld adatot.</p></article>
+</div>
+</section>
+
+<section>
+<div class="decision"><p class="eyebrow">5 · Amit ma kérünk</p><h2>Öt döntés, hogy a következő kör pontos legyen</h2><p>(1) A Figma Dev Mode engedélyezése vagy a nyolc keret exportálása — a pontos színekhez és méretekhez. (2) Kihez fusson be az elő-regisztrációs űrlap. (3) Melyik csatorna adja "A Szerkesztőség" utolsó posztját. (4) A saját logó- és fényképanyag, amikor rendelkezésre áll. (5) Egy mondat arról, hogy a Népszava alcím kapcsolódik-e a valós, jelenleg is nehéz helyzetben lévő azonos nevű laphoz — csak a rekord kedvéért, nem mert bármi utalna erre.</p></div>
+</section>
+
+<footer>Népszabadság · bemutató, 2026</footer>
+</main>
+<script>(function(){function f(){document.querySelectorAll('.phone').forEach(function(e){e.style.setProperty('--pw',e.clientWidth)});document.querySelectorAll('.desk').forEach(function(e){e.style.setProperty('--dw',e.clientWidth)})}f();addEventListener('resize',f)})();</script>
+</body>
+</html>

@@ -19,11 +19,12 @@ pre{overflow-x:auto;padding:14px 16px;border:1px solid var(--line);background:va
 blockquote{margin:12px 0;padding:12px 16px;border-left:4px solid var(--accent);background:var(--note)}
 footer{margin-top:48px;padding-top:16px;border-top:1px solid var(--line);font-size:12px;color:var(--muted);font-family:var(--nsz-sans)}
 </style></head>
-<body><div class="wrap"><nav class="docnav" aria-label="Project documentation"><span class="docnav-brand">Népszabadság · dokumentáció</span><a href="index.html" aria-current=page>Overview</a><a href="brief.html">Brief</a><a href="research.html">Research</a><a href="audit.html">Audit</a><a href="sources.html">Sources</a><a href="handover.html">Handover</a></nav>
+<body><div class="wrap"><nav class="docnav" aria-label="Project documentation"><span class="docnav-brand">Népszabadság · dokumentáció</span><a href="index.html" aria-current=page>Overview</a><a href="brief.html">Brief</a><a href="research.html">Research</a><a href="audit.html">Audit</a><a href="sources.html">Sources</a><a href="decisions.html">Decisions</a><a href="design.html">Design</a><a href="build-log.html">Build log</a><a href="gate.html">Gate</a><a href="handover.html">Handover</a></nav>
 <header><p class="eyebrow">Népszabadság · project documentation</p><h1>Népszabadság — project documentation</h1></header>
 <p>The relaunch of Népszabadság as an online paper with a weekly print edition, launching
 2026-10-08: a pre-registration landing page before launch and the site itself (címlap,
-rovatfront, cikkoldal, Népszava márkafront), designed in Figma and to be prototyped here.</p>
+rovatfront, cikkoldal, Népszava márkafront), designed in Figma and prototyped here. The
+Hungarian presentation for the client: <a href="bemutato.html">bemutato.html</a>.</p>
 <div class="tbl"><table>
 <thead>
 <tr>
@@ -49,13 +50,28 @@ rovatfront, cikkoldal, Népszava márkafront), designed in Figma and to be proto
 <td>every input and what it contributed, every gap numbered</td>
 </tr>
 <tr>
+<td><a href="decisions.html"><code>04-decisions.md</code></a></td>
+<td>numbered register of the build's decisions, D1 onward</td>
+</tr>
+<tr>
+<td><a href="design.html"><code>05-design.md</code></a></td>
+<td>the tokens and components as built, read from the Figma file</td>
+</tr>
+<tr>
+<td><a href="build-log.html"><code>06-build-log.md</code></a></td>
+<td>the build round, what was generated, what was measured, what was fixed</td>
+</tr>
+<tr>
+<td><a href="gate.html"><code>07-gate.md</code></a></td>
+<td>what <code>check.py</code> verifies</td>
+</tr>
+<tr>
 <td><a href="handover.html"><code>handover.md</code></a></td>
 <td>where the project stood on 2026-09-21 before the research and audit above were written — kept as the record of that session</td>
 </tr>
 </tbody>
 </table></div>
-<p>The rest of the standard set (decisions, design, build log, gate doc, technical package) is
-created as each stage is reached.</p>
+<p>The technical package (stages 10–14) is created once the client has agreed the direction.</p>
 <h2>Process log</h2>
 <p><strong>2026-09-21 — project opened.</strong> Inputs received: the landing memo
 <code>nsz_landing_20260914_v1.docx</code>, the Figma file (eight frames), the sister site
@@ -83,4 +99,20 @@ sub-brand section shares its name with a real, currently-distressed newspaper �
 in <a href="research.html"><code>01-research.md</code></a> §5 as a one-line question for the client, not a blocker. Next: the
 owner reads the research and says "direction approved," then the Figma is unlocked (Dev
 Mode or exports) and the design-system gate can start.</p>
+<p><strong>2026-09-21 — the first version of the prototype built.</strong> The owner asked directly for a
+first version built from the actual Figma content and the research, compressing the
+design-system/frame approval into that instruction (D1 in <a href="decisions.html"><code>04-decisions.md</code></a>). The Figma file
+was read again, this time for real headlines, deks, bylines, reading times and a full article
+body — the client's own copy, not invented (D2–D3). Built and generated from one source
+(<code>content.py</code> + <code>build.py</code>): the Címlap, the one Rovatfront the Figma designs (Belföld), the
+one Cikkoldal with its paywall mechanic, the Népszava márkafront, and the memo's landing page
+with a live countdown and a client-side registration form. Sport and Tudomány — the two nav
+categories the Figma never designed — carry two original, neutral items (D4–D5). Fourteen
+real, licensed Wikimedia Commons photographs replace the Figma's blurred placeholders (D6).
+Measured at 390 and 1440: found and fixed a 70 px mobile header overflow, four <code>&lt;h1&gt;</code>
+elements on the landing page, sixteen-plus sub-44 px tap targets, and two broken/mismatched
+links the extended gate caught — <a href="build-log.html"><code>06-build-log.md</code></a> has the full list. <code>nepszabadsag/check.py</code>
+extended to cover the site pages (previously docs-only) with alt-text and banner checks.
+Gate clean. Next: rovat fronts for the other five categories, the technical package, and the
+Hungarian presentation (<code>bemutato.html</code>).</p>
 <footer>Népszabadság · dokumentáció, 2026</footer></div></body></html>

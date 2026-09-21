@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Build log · Népszabadság</title><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@400;600;700;800&display=swap"><link rel="stylesheet" href="../assets/tokens.css"><style>/* Népszabadság — documentation on the project's provisional tokens (assets/tokens.css): white ground, black serif, one blue. */
+:root{--ground:var(--nsz-ground);--card:var(--nsz-panel);--ink:var(--nsz-ink);--text:var(--nsz-text);--muted:var(--nsz-muted);--accent:var(--nsz-blue);--accent-2:var(--nsz-lime);--line:var(--nsz-line);--note:#eef2fc}
+*{box-sizing:border-box}body{margin:0;font-family:var(--nsz-serif);background:var(--ground);color:var(--text);font-size:17px;line-height:1.6;padding:0 clamp(16px,4vw,40px) 64px}
+.wrap{max-width:78ch;margin:0 auto}
+.docnav{display:flex;flex-wrap:wrap;gap:2px 14px;align-items:center;padding:12px 0;border-bottom:3px solid var(--ink);font-family:var(--nsz-sans);font-size:13px}
+.docnav a{color:var(--accent);text-decoration:none;min-height:44px;display:inline-flex;align-items:center;font-weight:600}.docnav a[aria-current]{border-bottom:3px solid var(--accent);margin-bottom:-3px}
+.docnav-brand{font-family:var(--nsz-sans);font-weight:800;letter-spacing:.02em;font-size:15px;color:var(--ink);margin-right:8px;text-transform:uppercase}
+header .eyebrow{margin:26px 0 4px;font-family:var(--nsz-sans);font-size:13px;letter-spacing:.06em;text-transform:uppercase;color:var(--accent)}
+h1{font-family:var(--nsz-serif);font-weight:700;font-size:clamp(30px,5vw,44px);line-height:1.08;margin:0 0 14px;color:var(--ink)}
+h2{font-family:var(--nsz-serif);font-weight:700;font-size:26px;margin:44px 0 10px;padding-top:18px;border-top:2px solid var(--ink)}
+h3{font-family:var(--nsz-sans);font-weight:700;font-size:16px;margin:26px 0 8px;letter-spacing:.01em}
+p{margin:0 0 12px}li{margin:4px 0}strong{font-weight:700}em{color:var(--muted)}a{color:var(--accent)}
+code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.84em;background:var(--note);padding:1px 5px;border-radius:4px;overflow-wrap:anywhere}
+.tbl{overflow-x:auto;margin:12px 0 20px;border:1px solid var(--line);background:#fff}table{border-collapse:collapse;width:100%;font-size:14px;min-width:560px;font-family:var(--nsz-sans)}
+th{text-align:left;font-weight:700;background:var(--card);padding:10px 12px;border-bottom:2px solid var(--ink);font-size:12px;letter-spacing:.04em;text-transform:uppercase}td{padding:10px 12px;border-top:1px solid var(--line);vertical-align:top}
+pre{overflow-x:auto;padding:14px 16px;border:1px solid var(--line);background:var(--card);font-size:12px;line-height:1.35}
+blockquote{margin:12px 0;padding:12px 16px;border-left:4px solid var(--accent);background:var(--note)}
+footer{margin-top:48px;padding-top:16px;border-top:1px solid var(--line);font-size:12px;color:var(--muted);font-family:var(--nsz-sans)}
+</style></head>
+<body><div class="wrap"><nav class="docnav" aria-label="Project documentation"><span class="docnav-brand">Népszabadság · dokumentáció</span><a href="index.html">Overview</a><a href="brief.html">Brief</a><a href="research.html">Research</a><a href="audit.html">Audit</a><a href="sources.html">Sources</a><a href="decisions.html">Decisions</a><a href="design.html">Design</a><a href="build-log.html" aria-current=page>Build log</a><a href="gate.html">Gate</a><a href="handover.html">Handover</a></nav>
+<header><p class="eyebrow">Népszabadság · project documentation</p><h1>Build log</h1></header>
+<h2>Round 1 — 2026-09-21 — the first version of the prototype (D1–D9)</h2>
+<p><strong>Built.</strong> <code>build.py</code> generates five Hungarian pages from one content source (<code>content.py</code>):
+<code>index.html</code> (Címlap), <code>belfold/index.html</code> (the Belföld Rovatfront), <code>cikk/onkormanyzatok-
+fejlesztesi-keret.html</code> (the one Cikkoldal demo, with the registration/paywall mechanic),
+<code>nepszava/index.html</code> (the Népszava márkafront) and <code>regisztracio/index.html</code> (the memo's
+pre-registration landing page, with a live countdown to 2026-10-08 08:00 and a client-side-only
+registration form). Shared components: header with hamburger/main-nav, article pills, card
+row / photo card teasers, the ELEMZÉS/VÉLEMÉNY tag, the paywall box, the registration band, the
+four-column footer. Twenty real headlines/deks/bylines read from the Figma file populate the
+Belföld, Gazdaság, Kultúra, Külföld, Média and Népszava sections; two original items (Sport,
+Tudomány) fill the two nav categories the Figma never designed. Fourteen real, appropriately-
+licensed photographs from Wikimedia Commons (3.0 MB total, resized to ≤ 1200 px).</p>
+<p><strong>Measured</strong> (browser pane, cache-busted, all five pages).</p>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>Width</th>
+<th>Overflow</th>
+<th><code>h1</code></th>
+<th>Console errors</th>
+<th>Small (&lt; 44 px) targets</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>390</td>
+<td>0 px on every page</td>
+<td>1 on every page</td>
+<td>0</td>
+<td>0 after two rounds of fixes (see below)</td>
+</tr>
+<tr>
+<td>1440</td>
+<td>not exhaustively re-swept post-fix (pane captures ~800 px at a time; spot-checked, no defects found)</td>
+<td>—</td>
+<td>0</td>
+<td>—</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Defects found and fixed in this round</strong> (not left as "known issues" — PROTOTYPING §5):</p>
+<ol>
+<li>The mobile header overflowed by 70 px (hamburger + search + "Előfizetés" didn't fit beside
+   the full wordmark) — fixed by hiding the wordmark under 780 px, matching the Figma's own
+   "hamburger · logo · search · Előfizetés" mobile pattern, and tightening header gaps.</li>
+<li>The landing page had four <code>&lt;h1&gt;</code> elements (one per section) — fixed to one <code>h1</code> plus three
+   <code>h2</code>.</li>
+<li>The brand link, the two header icon buttons, all sixteen footer links and the paywall's
+   "Már van fiókom" link were under 44×44 px — fixed with explicit <code>min-width</code>/<code>min-height</code>
+   and flex centring.</li>
+<li>The registration-band and header-subscribe links on the three depth-1 pages
+   (<code>belfold/</code>, <code>cikk/</code>, <code>nepszava/</code>) pointed to <code>regisztracio/index.html</code> without the <code>../</code>
+   prefix, and the Címlap's "Mi lesz a Népszavával?" teaser linked to <code>#nepszava</code> while the
+   actual section id is <code>#népszava</code> (accented) — both caught by <code>nepszabadsag/check.py</code> after
+   it was extended to cover the site pages (it previously only checked <code>docs/</code>), fixed, and
+   the gate re-run clean.</li>
+</ol>
+<p><strong>Sample, declared</strong> (<a href="sources.html"><code>03-sources.md</code></a>): the Sport and Tudomány Címlap items; every photograph
+(real but not the article's literal documentary subject, where noted in <code>content.py</code>); the
+paywall/registration back end (visibly present, functionally inert per D8 in <a href="decisions.html"><code>04-decisions.md</code></a>,
+except the landing form which submits client-side only, D9).</p>
+<p><strong>Not built in this round</strong>: rovat fronts for Külföld, Gazdaság, Kultúra, Sport, Tudomány
+(the Figma designs only Belföld's); a technical package (stages 10–14); the presentation
+(<code>bemutato.html</code>) in Hungarian — next.</p>
+<footer>Népszabadság · dokumentáció, 2026</footer></div></body></html>

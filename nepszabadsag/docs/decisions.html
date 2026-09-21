@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Decisions · Népszabadság</title><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@400;600;700;800&display=swap"><link rel="stylesheet" href="../assets/tokens.css"><style>/* Népszabadság — documentation on the project's provisional tokens (assets/tokens.css): white ground, black serif, one blue. */
+:root{--ground:var(--nsz-ground);--card:var(--nsz-panel);--ink:var(--nsz-ink);--text:var(--nsz-text);--muted:var(--nsz-muted);--accent:var(--nsz-blue);--accent-2:var(--nsz-lime);--line:var(--nsz-line);--note:#eef2fc}
+*{box-sizing:border-box}body{margin:0;font-family:var(--nsz-serif);background:var(--ground);color:var(--text);font-size:17px;line-height:1.6;padding:0 clamp(16px,4vw,40px) 64px}
+.wrap{max-width:78ch;margin:0 auto}
+.docnav{display:flex;flex-wrap:wrap;gap:2px 14px;align-items:center;padding:12px 0;border-bottom:3px solid var(--ink);font-family:var(--nsz-sans);font-size:13px}
+.docnav a{color:var(--accent);text-decoration:none;min-height:44px;display:inline-flex;align-items:center;font-weight:600}.docnav a[aria-current]{border-bottom:3px solid var(--accent);margin-bottom:-3px}
+.docnav-brand{font-family:var(--nsz-sans);font-weight:800;letter-spacing:.02em;font-size:15px;color:var(--ink);margin-right:8px;text-transform:uppercase}
+header .eyebrow{margin:26px 0 4px;font-family:var(--nsz-sans);font-size:13px;letter-spacing:.06em;text-transform:uppercase;color:var(--accent)}
+h1{font-family:var(--nsz-serif);font-weight:700;font-size:clamp(30px,5vw,44px);line-height:1.08;margin:0 0 14px;color:var(--ink)}
+h2{font-family:var(--nsz-serif);font-weight:700;font-size:26px;margin:44px 0 10px;padding-top:18px;border-top:2px solid var(--ink)}
+h3{font-family:var(--nsz-sans);font-weight:700;font-size:16px;margin:26px 0 8px;letter-spacing:.01em}
+p{margin:0 0 12px}li{margin:4px 0}strong{font-weight:700}em{color:var(--muted)}a{color:var(--accent)}
+code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.84em;background:var(--note);padding:1px 5px;border-radius:4px;overflow-wrap:anywhere}
+.tbl{overflow-x:auto;margin:12px 0 20px;border:1px solid var(--line);background:#fff}table{border-collapse:collapse;width:100%;font-size:14px;min-width:560px;font-family:var(--nsz-sans)}
+th{text-align:left;font-weight:700;background:var(--card);padding:10px 12px;border-bottom:2px solid var(--ink);font-size:12px;letter-spacing:.04em;text-transform:uppercase}td{padding:10px 12px;border-top:1px solid var(--line);vertical-align:top}
+pre{overflow-x:auto;padding:14px 16px;border:1px solid var(--line);background:var(--card);font-size:12px;line-height:1.35}
+blockquote{margin:12px 0;padding:12px 16px;border-left:4px solid var(--accent);background:var(--note)}
+footer{margin-top:48px;padding-top:16px;border-top:1px solid var(--line);font-size:12px;color:var(--muted);font-family:var(--nsz-sans)}
+</style></head>
+<body><div class="wrap"><nav class="docnav" aria-label="Project documentation"><span class="docnav-brand">Népszabadság · dokumentáció</span><a href="index.html">Overview</a><a href="brief.html">Brief</a><a href="research.html">Research</a><a href="audit.html">Audit</a><a href="sources.html">Sources</a><a href="decisions.html" aria-current=page>Decisions</a><a href="design.html">Design</a><a href="build-log.html">Build log</a><a href="gate.html">Gate</a><a href="handover.html">Handover</a></nav>
+<header><p class="eyebrow">Népszabadság · project documentation</p><h1>Decisions</h1></header>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>#</th>
+<th>Date</th>
+<th>Decision</th>
+<th>Source</th>
+<th>Effect</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>D1</td>
+<td>2026-09-21</td>
+<td><strong>Direction approved by the owner's build instruction</strong> ("deliver the first version of the prototype based on the actual available content and the deep international research"): this compresses <code>PROTOTYPING.md</code> stages 3–4 (design-system and frame approval) into the owner's direct build request, since the owner is the same approving authority those gates route to</td>
+<td>owner</td>
+<td>stage 5 (build) starts without a separate gate round</td>
+</tr>
+<tr>
+<td>D2</td>
+<td>2026-09-21</td>
+<td><strong>Scope held to what the Figma actually specifies</strong>: one Címlap, the one designed Rovatfront (Belföld), the one designed Cikkoldal (the önkormányzati fejlesztési keret piece, paywall included), the one Népszava márkafront, and the memo's landing page — no rovat fronts invented for Külföld/Gazdaság/Kultúra/Sport/Tudomány beyond what the Figma shows as Címlap teasers</td>
+<td><a href="brief.html"><code>00-brief.md</code></a>; "based on the actual available content"</td>
+<td><code>content.py</code>, <code>build.py</code></td>
+</tr>
+<tr>
+<td>D3</td>
+<td>2026-09-21</td>
+<td><strong>Every headline, dek, byline, reading time and body paragraph read directly from the Figma file is used verbatim</strong> — including the Cikkoldal's full free-preview body, which needed no invented continuation because the Figma's own paywall box marks exactly where the free text ends</td>
+<td>client's own design content, PROTOTYPING §3.1</td>
+<td><code>content.py</code> (<code>source: "figma"</code>)</td>
+</tr>
+<tr>
+<td>D4</td>
+<td>2026-09-21</td>
+<td><strong>Sport and Tudomány have no Figma content</strong> (the file designs one Rovatfront, Belföld, only) — their two Címlap cards are original, neutral, evergreen items written for this prototype, with no real named official quoted and no invented quote attributed to a real person</td>
+<td>gap in the Figma file</td>
+<td><code>content.py</code> (<code>source: "original"</code>), <a href="sources.html"><code>03-sources.md</code></a></td>
+</tr>
+<tr>
+<td>D5</td>
+<td>2026-09-21</td>
+<td><strong>No copyrighted portal content reproduced.</strong> Real Hungarian news portals (Telex, Index, HVG, 24.hu…) were not scraped or paraphrased; the two original cards read as this newsroom's own reporting, which is also how a real competing paper actually works (it does not republish rivals' articles)</td>
+<td>copyright policy</td>
+<td><code>content.py</code></td>
+</tr>
+<tr>
+<td>D6</td>
+<td>2026-09-21</td>
+<td><strong>Every photograph is a real, appropriately-licensed Wikimedia Commons image</strong> (CC BY / CC BY-SA / public domain), downloaded, resized to ≤ 1200 px and re-compressed for the web; none is AI-generated, none is scraped press photography. Illustrative (non-documentary) matches are marked with a <code>note</code> in <code>content.py</code> and surfaced in the photo credit line</td>
+<td>repo rule: no AI imagery; copyright policy</td>
+<td><code>assets/img/</code>, <code>content.py IMAGES</code></td>
+</tr>
+<tr>
+<td>D7</td>
+<td>2026-09-21</td>
+<td><strong>One Cikkoldal page stands in for "what an article looks like"</strong>: every teaser card across every page links through to the single built article, since building a full page per headline is out of scope for a first version</td>
+<td>pragmatic v1 scope</td>
+<td><code>build.py article_href()</code></td>
+</tr>
+<tr>
+<td>D8</td>
+<td>2026-09-21</td>
+<td><strong>The paywall and registration controls are visibly present but inert</strong>, per the repo's "shown in place, visibly disabled" rule — clicking "Ingyenes regisztráció" or "Print+online előfizetés" shows an in-page notice rather than pretending to submit, since no registration backend exists yet (<a href="sources.html"><code>03-sources.md</code></a> #5)</td>
+<td>PROTOTYPING §3.1</td>
+<td><code>cikk/*.html</code></td>
+</tr>
+<tr>
+<td>D9</td>
+<td>2026-09-21</td>
+<td><strong>The landing page's registration form does submit, client-side only</strong>: on submit it shows a static confirmation and resets the fields, rather than staying fully inert — closer to what the client needs to demo the actual pre-registration pitch, with the limitation stated in the confirmation text itself</td>
+<td>judgment call, flagged for the owner to correct if unwanted</td>
+<td><code>regisztracio/index.html</code></td>
+</tr>
+</tbody>
+</table></div>
+<footer>Népszabadság · dokumentáció, 2026</footer></div></body></html>
