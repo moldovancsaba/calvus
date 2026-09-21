@@ -1,0 +1,570 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Népszabadság — handover: where the project stands on 2026-09-21 · Népszabadság</title><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@400;600;700;800&display=swap"><link rel="stylesheet" href="../assets/tokens.css"><style>/* Népszabadság — documentation on the project's provisional tokens (assets/tokens.css): white ground, black serif, one blue. */
+:root{--ground:var(--nsz-ground);--card:var(--nsz-panel);--ink:var(--nsz-ink);--text:var(--nsz-text);--muted:var(--nsz-muted);--accent:var(--nsz-blue);--accent-2:var(--nsz-lime);--line:var(--nsz-line);--note:#eef2fc}
+*{box-sizing:border-box}body{margin:0;font-family:var(--nsz-serif);background:var(--ground);color:var(--text);font-size:17px;line-height:1.6;padding:0 clamp(16px,4vw,40px) 64px}
+.wrap{max-width:78ch;margin:0 auto}
+.docnav{display:flex;flex-wrap:wrap;gap:2px 14px;align-items:center;padding:12px 0;border-bottom:3px solid var(--ink);font-family:var(--nsz-sans);font-size:13px}
+.docnav a{color:var(--accent);text-decoration:none;min-height:44px;display:inline-flex;align-items:center;font-weight:600}.docnav a[aria-current]{border-bottom:3px solid var(--accent);margin-bottom:-3px}
+.docnav-brand{font-family:var(--nsz-sans);font-weight:800;letter-spacing:.02em;font-size:15px;color:var(--ink);margin-right:8px;text-transform:uppercase}
+header .eyebrow{margin:26px 0 4px;font-family:var(--nsz-sans);font-size:13px;letter-spacing:.06em;text-transform:uppercase;color:var(--accent)}
+h1{font-family:var(--nsz-serif);font-weight:700;font-size:clamp(30px,5vw,44px);line-height:1.08;margin:0 0 14px;color:var(--ink)}
+h2{font-family:var(--nsz-serif);font-weight:700;font-size:26px;margin:44px 0 10px;padding-top:18px;border-top:2px solid var(--ink)}
+h3{font-family:var(--nsz-sans);font-weight:700;font-size:16px;margin:26px 0 8px;letter-spacing:.01em}
+p{margin:0 0 12px}li{margin:4px 0}strong{font-weight:700}em{color:var(--muted)}a{color:var(--accent)}
+code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.84em;background:var(--note);padding:1px 5px;border-radius:4px;overflow-wrap:anywhere}
+.tbl{overflow-x:auto;margin:12px 0 20px;border:1px solid var(--line);background:#fff}table{border-collapse:collapse;width:100%;font-size:14px;min-width:560px;font-family:var(--nsz-sans)}
+th{text-align:left;font-weight:700;background:var(--card);padding:10px 12px;border-bottom:2px solid var(--ink);font-size:12px;letter-spacing:.04em;text-transform:uppercase}td{padding:10px 12px;border-top:1px solid var(--line);vertical-align:top}
+pre{overflow-x:auto;padding:14px 16px;border:1px solid var(--line);background:var(--card);font-size:12px;line-height:1.35}
+blockquote{margin:12px 0;padding:12px 16px;border-left:4px solid var(--accent);background:var(--note)}
+footer{margin-top:48px;padding-top:16px;border-top:1px solid var(--line);font-size:12px;color:var(--muted);font-family:var(--nsz-sans)}
+</style></head>
+<body><div class="wrap"><nav class="docnav" aria-label="Project documentation"><span class="docnav-brand">Népszabadság · dokumentáció</span><a href="index.html">Overview</a><a href="handover.html" aria-current=page>Handover</a></nav>
+<header><p class="eyebrow">Népszabadság · project documentation</p><h1>Népszabadság — handover: where the project stands on 2026-09-21</h1></header>
+<p><em>Written for whoever picks the project up next — a colleague, a new session, the owner
+from a phone. Everything below was read or measured on 2026-09-21; nothing is assumed.
+Where something could not be read, it says so and says what unlocks it.</em></p>
+<h2>1. What the project is</h2>
+<p>The relaunch of <strong>Népszabadság</strong>, the daily closed in October 2016, as an online paper
+with a weekly print edition, launching <strong>2026-10-08 at 08:00</strong> — "Lassan véget ér 10 év
+hallgatás". Two deliverables are in scope:</p>
+<ol>
+<li><strong>A landing page before launch</strong> (<code>nsz_landing_20260914_v1.docx</code>, received 2026-09-21):
+   pre-registration with a countdown to the launch. The memo's own section list, verbatim:</li>
+</ol>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>Section</th>
+<th>Content the memo gives</th>
+<th>State in the memo</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Regisztráció</td>
+<td>HL "Indul az elő-regisztráció!", lead ("Legyél Te is tagja közösségünknek! Értesülj elsőként az újraindulás részleteiről, kedvezményes előfizetési lehetőségekről. Hírlevelek, exkluzív tartalmak, regisztrálj még ma!"), fields Vezetéknév · Keresztnév · email, button "Regisztrálok!"</td>
+<td>build</td>
+</tr>
+<tr>
+<td>Visszaszámláló</td>
+<td>HL "Lassan véget ér 10 év hallgatás", lead ("Online, megújult formában, de a megszokott szakmai elhivatottsággal, kompromisszumok nélkül indul újra a Népszabadság napilap."), countdown to 2026-10-08 08:00</td>
+<td>build</td>
+</tr>
+<tr>
+<td>Mission</td>
+<td>HL "Megújul a Népszabadság!" + five paragraphs of the paper's creed ("Azok napilapja, akiknek fontos a társadalmi szolidaritás…")</td>
+<td>build, copy as written</td>
+</tr>
+<tr>
+<td>Program</td>
+<td>—</td>
+<td><strong>"egyelőre rejtsük el"</strong> — hidden for now</td>
+</tr>
+<tr>
+<td>Idézet</td>
+<td>"A nap idézete": Török Gábor, 2016, Index — "A Népszabadság beszántása nem gazdasági, hanem egyértelműen politikai döntés volt. A magyar sajtótörténetben ez mérföldkő, sajnos a legrosszabb értelemben."</td>
+<td>build</td>
+</tr>
+<tr>
+<td>A Szerkesztőség</td>
+<td>"Itt az utolsó poszt borítóképe és címe jelenjen meg mindig" — the latest post's cover and title, always</td>
+<td>build; needs the post source</td>
+</tr>
+<tr>
+<td>Kérdőív</td>
+<td>—</td>
+<td><strong>"egyelőre rejtsük el"</strong> — hidden for now</td>
+</tr>
+</tbody>
+</table></div>
+<ol start="2">
+<li><strong>The site itself</strong>, designed in Figma (file "Népszabadság",
+   <code>RVrEZZJdxBZdiZs2MJrJUD</code>), eight frames on one page: <strong>Címlap</strong>, <strong>Rovatfront</strong>,
+   <strong>Cikkoldal</strong>, <strong>Népszava márkafront</strong> — each as desktop (1480 wide, "1920w light"
+   grid) and mobile. What each frame contains is in §3.</li>
+</ol>
+<p>The owner's ask (2026-09-21): research the greatest and most popular news sites — the
+best US, German, UK, Asian, Chinese and Hungarian — structure, layout, colours,
+everything; then build the project the way Holdvölgy was built (research, audit, design
+system, frames, generated pages, gate, presentation). The owner's follow-up the same
+hour: <em>"I hope you started with a deep market research."</em> — the research is the first
+deliverable, before any page.</p>
+<h2>2. The name — one thing to settle before the URL goes live</h2>
+<p>The owner's message calls the project <strong>"nepszava"</strong> and points at <strong>nepszava.hu</strong>. Every
+input says <strong>Népszabadság</strong>: the memo ("indul újra a Népszabadság napilap", "Megújul a
+Népszabadság!"), the Figma file's name, the logo in every frame, and the frame
+"Népszava márkafront", which reads <em>"A Népszabadság almárkája: a Népszava
+szerkesztőségének online anyagai és a nyomtatott lapszámok cikkei, egy helyen."</em> — so in
+this design <strong>Népszava is a sub-brand of Népszabadság</strong>, a rovat in the main navigation
+and a brand front of its own, and the front page teases "Mi lesz a Népszavával? A két
+márka viszonya". The publisher line in every footer is <strong>© 2026 Liberty Press Kft.</strong></p>
+<p>This folder is therefore <code>nepszabadsag/</code>. It is not live yet; if the owner wants
+<code>nepszava/</code>, rename before the first push (after a push a redirect stub must stay, per
+the repo rule). nepszava.hu stays in the audit as the sister brand's current site.</p>
+<h2>3. What the Figma frames contain (read on screen, 2026-09-21)</h2>
+<p>Read in the app's browser pane as an anonymous viewer at 50 % (desktop) and 100 %
+(mobile). Text was legible; exact sizes, colours and spacing were <strong>not</strong> readable —
+the Dev Mode MCP server is not enabled in the Figma desktop app here, and the anonymous
+viewer has no inspect panel. What unlocks the exact spec: either the owner enables
+<em>Preferences → Enable Dev Mode MCP Server</em> in the Figma desktop app, or exports the eight
+frames as PNG at 1× and the tokens as a variables list.</p>
+<p><strong>Shared chrome (every frame).</strong> Header: search icon left, the logo centre (a blue
+square "N" mark + NÉPSZABADSÁG wordmark), a blue <strong>Előfizetés</strong> button right. Main
+navigation: <strong>Belföld · Külföld · Gazdaság · Kultúra · Sport · Tudomány · Népszava</strong>.
+Article pages add a second row of outlined pills (e.g. "Az újraindulás · A
+szerkesztőség · Tíz év után"). Every page ends with a full-width <strong>blue band</strong>:
+<em>"November 15-ig ingyenes regisztrációval minden cikk teljes egészében olvasható."</em> with a
+<strong>lime "Regisztrálok"</strong> button, then a four-column footer — Rovatok (Belföld … Tudomány)
+· Almárka (Népszava, A nyomtatott lapról) · A lapról (Impresszum, Etikai kódex, A
+szerkesztőség, Kapcsolat) · Jogi és egyéb (Adatvédelmi tájékoztató, Előfizetési
+feltételek, RSS) — and "© 2026 Liberty Press Kft. · Minden jog fenntartva."</p>
+<p><strong>Címlap — desktop (1480 × 3810).</strong> Leaderboard ad slot 970 × 250 under the nav. Lead
+block: the lead story left (headline "Tíz év csend után újra megjelenik a Népszabadság",
+dek, "6 PERC"), its photo centre with caption, a right rail <strong>Legfrissebb</strong> (rovat label,
+headline, byline · time, thumbnail). Under the lead: a second story (MÉDIA rovat) and a
+teaser line of two links ("Ki írja majd a lapot? A szerkesztőség névsora" · "Mi lesz a
+Népszavával? A két márka viszonya"). Three columns Belföld / Gazdaság / Kultúra
+(headline, dek, byline, "N PERC"). Right rail continues: <strong>A nyomtatott lapból</strong>
+(stories with "Nyomtatásban: október 8., 1. oldal"), <strong>Vélemény</strong>, a 300 × 250 ad. Then
+section blocks <strong>Belföld</strong> and <strong>Gazdaság</strong> (large photo + headline + dek left; two
+smaller stories right), a <strong>NÉPSZAVA</strong> block (label pill, 3 × 2 photo grid: "A lapszám
+vezető interjúja", "Jegyzet a hétről", "Riport a Nyírségből", "Az olvasói levelek
+nyomában", "A hét képe", "Mire jó még a hetilap?"), the blue band, the footer.</p>
+<p><strong>Címlap — mobil.</strong> Header: hamburger · logo · search · a solid blue <strong>Előfizetés</strong>
+block at the right edge. Lead headline in large serif, lead text, full-width photo,
+the two teaser links, then a single column of stories: rovat label (small caps),
+headline, dek in larger serif, byline · date, "N PERC"; hairlines between stories.</p>
+<p><strong>Rovatfront — desktop.</strong> Rovat title (e.g. "Belföld") with a one-line description
+("Önkormányzatok, közigazgatás, egészségügy és oktatás — ami a településeken valóban
+eldől. Napi tudósítás és heti terepmunka."), a row of outlined topic pills
+(Önkormányzatok · Költségvetés · Egészségügy · Oktatás · Közbeszerzés), the lead story
+(headline, dek, byline, "21 PERC", photo right), a two-column list of stories (headline,
+byline · time, thumbnail), <strong>A rovat szerzői</strong> (six author portraits with name and
+beat), a "Régebbi cikkek" outlined button, the blue band, the footer.</p>
+<p><strong>Cikkoldal — desktop.</strong> Rovat label + a lime <strong>ELEMZÉS</strong> tag, headline, dek, hero
+photo with caption ("Felújítás alatt álló főtér egy dunántúli kisvárosban. Fotó: [FOTÓS
+NEVE] / Népszabadság"), the author card (portrait, name, one-line bio, date · "4 perc
+olvasás", a "Beállítás elsődleges forrásként" button), body, an inline 600 × 250 ad, the
+<strong>paywall box</strong> "A cikk folytatása regisztrációhoz kötött" with three bullet teasers of
+what the rest answers and three actions — blue <strong>Ingyenes regisztráció</strong>, outlined
+<strong>Print+online előfizetés — 3 290 Ft</strong>, link "Már van fiókom — belépés", note "November
+15-től a fal mögötti tartalom élő előfizetéssel olvasható." — then <strong>Még a témában</strong>
+(topic pills), a 300 × 250 ad in the right rail, <strong>Ezt is ajánljuk</strong> (3 × 2 photo grid),
+<strong>Szerkesztői válogatás</strong> (3 photos), footer. Mobile stacks the same in one column with
+the right-rail modules inline.</p>
+<p><strong>Népszava márkafront — desktop.</strong> Title "Népszava", the sub-brand description quoted in
+§2, pills (A nyomtatott lapból · Vélemény · Riport · Interjú · Jegyzet), the lead
+("Az interjú, amit a lapszám címoldalán hoztunk"), a two-column story list, <strong>A Népszava
+szerzői</strong> (six portraits), "Régebbi cikkek", the band, the footer.</p>
+<p><strong>Provisional tokens</strong> (<code>assets/tokens.css</code>, read from the screen, to be confirmed):
+white ground, near-black serif for headlines, leads and body; a sans for labels, nav,
+meta; one blue (logo, Előfizetés, rovat labels, links, the band); one lime (the
+Regisztrálok button, the ELEMZÉS tag); hairlines; light-grey panels for ad slots, the
+paywall box and the footer. Photos are placeholders (blurred) in every frame.</p>
+<p><strong>The business model the design encodes:</strong> registration wall now (free registration
+opens every article until 2026-11-15), a <strong>print + online subscription at 3 290 Ft</strong>
+from 2026-11-15, a print weekly ("A hetilap október 8-án kerül az újságosokhoz"), ad
+slots on every page (970 × 250, 300 × 250, 600 × 250), and the reader-relationship
+mechanics (author cards with "set as primary source", topic pills, "Legfrissebb").</p>
+<h2>4. Market research — what was measured today</h2>
+<p>Twenty-five home pages fetched with <code>curl</code> from this environment (desktop UA, gzip,
+one cold request each; TTFB and size are single readings, not averages):</p>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>Site</th>
+<th>HTTP</th>
+<th>TTFB s</th>
+<th>HTML KB</th>
+<th>scripts</th>
+<th>stylesheets</th>
+<th><code>&lt;img&gt;</code></th>
+<th>Stack signals</th>
+<th>Fonts seen in HTML</th>
+<th>Nav / brand colour</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>nytimes.com</td>
+<td>403 (bot wall)</td>
+<td>0.11</td>
+<td>0.8</td>
+<td>—</td>
+<td>—</td>
+<td>—</td>
+<td>—</td>
+<td>—</td>
+<td>not measurable by curl; the browser pane refuses nytimes.com</td>
+</tr>
+<tr>
+<td>washingtonpost.com</td>
+<td>connection reset</td>
+<td>—</td>
+<td>—</td>
+<td>—</td>
+<td>—</td>
+<td>—</td>
+<td>—</td>
+<td>—</td>
+<td>not reachable from here</td>
+</tr>
+<tr>
+<td>wsj.com</td>
+<td>401 (bot wall)</td>
+<td>0.14</td>
+<td>0.8</td>
+<td>—</td>
+<td>—</td>
+<td>—</td>
+<td>—</td>
+<td>—</td>
+<td>—</td>
+</tr>
+<tr>
+<td>theguardian.com/uk</td>
+<td>200</td>
+<td>0.14</td>
+<td>163</td>
+<td>19</td>
+<td>1</td>
+<td>139</td>
+<td>Next.js, Permutive</td>
+<td>GH Guardian Headline, Guardian Text Egyptian, Guardian Text Sans</td>
+<td>News · Opinion · Sport · Culture · Lifestyle; #052962 (theme-color), red #c70000</td>
+</tr>
+<tr>
+<td>bbc.com/news</td>
+<td>200</td>
+<td>0.04</td>
+<td>64</td>
+<td>59</td>
+<td>0</td>
+<td>44</td>
+<td>Next.js, Piano, Optimizely, Permutive</td>
+<td>BBC Reith Sans / Serif</td>
+<td>Home · News · Sport · Business · Technology · Health · Culture · Arts · Travel · Earth · Audio · Video · Live; black, red #b80000</td>
+</tr>
+<tr>
+<td>ft.com</td>
+<td>403 (security check)</td>
+<td>0.05</td>
+<td>198</td>
+<td>—</td>
+<td>—</td>
+<td>—</td>
+<td>Vue</td>
+<td>Financier Display, Metric</td>
+<td>pink #fff1e5, teal #0d7680</td>
+</tr>
+<tr>
+<td>spiegel.de</td>
+<td>200</td>
+<td>0.10</td>
+<td>253</td>
+<td>23</td>
+<td>2</td>
+<td>640</td>
+<td>Next.js/React</td>
+<td>SpiegelSans, SpiegelSerif, SpiegelSlab, National2Narrow</td>
+<td>22 nav items (Politik … Geschichte); theme-color #e64415</td>
+</tr>
+<tr>
+<td>zeit.de</td>
+<td>403 ("Da ist etwas schiefgelaufen")</td>
+<td>0.12</td>
+<td>5</td>
+<td>—</td>
+<td>—</td>
+<td>—</td>
+<td>—</td>
+<td>—</td>
+<td>—</td>
+</tr>
+<tr>
+<td>faz.net/aktuell</td>
+<td>200</td>
+<td>0.09</td>
+<td>295</td>
+<td>29</td>
+<td>1</td>
+<td>137</td>
+<td>Nuxt/Vite, jQuery</td>
+<td>Roboto, Source Sans 3</td>
+<td>Politik · Wirtschaft · Finanzen · Feuilleton · Karriere · Sport · Gesellschaft · Besser leben · Rhein-Main · Technik · Wissen · Reise; red #c60000</td>
+</tr>
+<tr>
+<td>sueddeutsche.de</td>
+<td>200</td>
+<td>0.03</td>
+<td>283</td>
+<td>82</td>
+<td>1</td>
+<td>181</td>
+<td>Next.js, GTM, Piano</td>
+<td>SZ Sans Digital, SZ Text, Old Standard, Montserrat</td>
+<td>SZ.de · Zeitung · Magazin · Jetzt · Dossier; #29293a, teal #009990</td>
+</tr>
+<tr>
+<td>nikkei.com</td>
+<td>200</td>
+<td>2.41</td>
+<td>95</td>
+<td>8</td>
+<td>1</td>
+<td>216</td>
+<td>Next.js/Vite</td>
+<td>(system)</td>
+<td>theme-color #003e70, red #d11100</td>
+</tr>
+<tr>
+<td>straitstimes.com/global</td>
+<td>200</td>
+<td>0.63</td>
+<td>64</td>
+<td>38</td>
+<td>2</td>
+<td>58</td>
+<td>Next.js, Piano, Chartbeat</td>
+<td>(system)</td>
+<td>Singapore · Asia · World · Opinion · Life · Business · Sport; #161616</td>
+</tr>
+<tr>
+<td>scmp.com</td>
+<td>200</td>
+<td>0.09</td>
+<td>244</td>
+<td>116</td>
+<td>6</td>
+<td>34</td>
+<td>Next.js, GTM, Piano, Optimizely</td>
+<td>Roboto, Roboto Condensed, Crete Round</td>
+<td>#2c4692 / #001246</td>
+</tr>
+<tr>
+<td>thehindu.com</td>
+<td>200</td>
+<td>0.43</td>
+<td>65</td>
+<td>80</td>
+<td>5</td>
+<td>123</td>
+<td>Next/React, jQuery, GTM, Piano, Chartbeat</td>
+<td>(system)</td>
+<td>#2b2e34</td>
+</tr>
+<tr>
+<td>people.com.cn</td>
+<td>200</td>
+<td>0.75</td>
+<td>37</td>
+<td>33</td>
+<td>4</td>
+<td>148</td>
+<td>jQuery</td>
+<td>(system)</td>
+<td>blue #006ebf, red #b64d3a; 664 links on the home page</td>
+</tr>
+<tr>
+<td>news.cn (Xinhua)</td>
+<td>200</td>
+<td>0.50</td>
+<td>42</td>
+<td>13</td>
+<td>2</td>
+<td>84</td>
+<td>jQuery</td>
+<td>(system)</td>
+<td>694 links</td>
+</tr>
+<tr>
+<td>caixin.com</td>
+<td>200</td>
+<td>0.76</td>
+<td>26</td>
+<td>48</td>
+<td>2</td>
+<td>79</td>
+<td>jQuery</td>
+<td>Arial</td>
+<td>#1f286f, #0098d0</td>
+</tr>
+<tr>
+<td>telex.hu</td>
+<td>200</td>
+<td>0.07</td>
+<td>143</td>
+<td>6</td>
+<td>16</td>
+<td>74</td>
+<td>Nuxt/Vite, GTM</td>
+<td>(self-hosted)</td>
+<td>#222228, red #ef1b1b, blue #0439d9</td>
+</tr>
+<tr>
+<td>444.hu</td>
+<td>200</td>
+<td>0.04</td>
+<td>49</td>
+<td>7</td>
+<td>3</td>
+<td>96</td>
+<td>Next.js, GTM</td>
+<td>(self-hosted)</td>
+<td>44 <code>&lt;h1&gt;</code> on the home page; orange #ffb76a</td>
+</tr>
+<tr>
+<td>hvg.hu</td>
+<td>200</td>
+<td>0.04</td>
+<td>64</td>
+<td>—</td>
+<td>—</td>
+<td>—</td>
+<td>—</td>
+<td>—</td>
+<td>orange #f26522</td>
+</tr>
+<tr>
+<td>index.hu</td>
+<td>200</td>
+<td>0.05</td>
+<td>75</td>
+<td>86</td>
+<td>5</td>
+<td>188</td>
+<td>Vite, jQuery, GTM</td>
+<td>(self-hosted)</td>
+<td>Belföld · Külföld · Gazdaság · Kult · Vélemény · Tech-Tud · Sport · Fomo · 24 Óra · Blog · Videó · Podcast; #ff9900</td>
+</tr>
+<tr>
+<td>24.hu</td>
+<td>200</td>
+<td>0.03</td>
+<td>66</td>
+<td>54</td>
+<td>8</td>
+<td>140</td>
+<td>WordPress (AIOSEO, WPBakery), Vue, jQuery</td>
+<td>(self-hosted)</td>
+<td>Belföld · Nagyvilág · Közélet · Tudomány · Sport · Élet-Stílus · … 22 items; green #57a600, #002e5e</td>
+</tr>
+<tr>
+<td>nepszava.hu</td>
+<td>200</td>
+<td>0.05</td>
+<td>48</td>
+<td>27</td>
+<td>57</td>
+<td>30</td>
+<td>Cloudflare, AdSense, OneSignal, Gemius, d3, Swiper; home rendered by <code>/js/home/index.js</code></td>
+<td>(self-hosted, <code>fontconfig.css</code>)</td>
+<td>description "Népszava politikai napilap"; 57 stylesheet links; <code>cache-control: no-store</code></td>
+</tr>
+<tr>
+<td>hang.hu (Magyar Hang)</td>
+<td>200</td>
+<td>0.08</td>
+<td>63</td>
+<td>28</td>
+<td>4</td>
+<td>49</td>
+<td>Next.js, jQuery, GTM</td>
+<td>(self-hosted)</td>
+<td>22 nav items incl. podcasts; teal #018d98</td>
+</tr>
+<tr>
+<td>nol.hu (the old Népszabadság)</td>
+<td>200</td>
+<td>0.03</td>
+<td>0.5</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>a one-line stub</td>
+<td>Arial</td>
+<td>"A nol.hu archívumára a Lapcentrumon lehet előfizetni." — the archive is sold through lapcentrum.hu; nothing else is served</td>
+</tr>
+</tbody>
+</table></div>
+<p>Raw HTML of every fetch and <code>bench.json</code> are in the session scratchpad
+(<code>scratchpad/bench/</code>), not in the repo.</p>
+<p><strong>What the numbers already say.</strong> (1) The reference sites that matter most for a
+serif, subscription-first daily (NYT, WSJ, FT, Zeit, WaPo) cannot be read from this
+environment by <code>curl</code>, and the browser pane refuses nytimes.com — their layouts must be
+read in the owner's own browser or from published design sources. (2) Every measurable
+leader is on Next.js / Nuxt with a self-hosted type family of two or three faces and one
+brand colour plus red for live/breaking. (3) The Hungarian field splits: Telex (Nuxt,
+6 scripts, 143 KB) and 444 (Next, 7 scripts) are lean; Index (86 scripts) and 24.hu
+(WordPress + WPBakery, 54 scripts) are heavy; nepszava.hu ships 57 stylesheet links and
+<code>no-store</code> caching. (4) Home pages carry 236–782 links; the Figma címlap carries far
+fewer — a deliberate choice to be defended in the research.</p>
+<h2>5. What is not done yet — the order, per <code>PROTOTYPING.md</code></h2>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>Stage</th>
+<th>State</th>
+<th>What it needs</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Research (<code>01-research.md</code>)</td>
+<td><strong>measurements only</strong> (§4); no layout study, no colour study, no industry sources yet</td>
+<td>a rendered look at each site at 1440 and 390 (the browser pane can open all but nytimes.com; the owner stopped the screenshot sweep at 2026-09-21 — restart it or supply screenshots); Reuters Institute Digital News Report 2026 (Hungary page: trust, paid news, brand reach), Press Gazette / FIPP subscription benchmarks, relaunch cases (Népszabadság 2016 closure sources; comparable relaunches), the NYT / Guardian / Spiegel design-system write-ups</td>
+</tr>
+<tr>
+<td>Audit (<code>02-audit.md</code>)</td>
+<td>nepszava.hu measured once (§4); nol.hu measured</td>
+<td>the sister site's page architecture and its subscription flow; the memo's landing has no current site to audit</td>
+</tr>
+<tr>
+<td>Brief (<code>00-brief.md</code>)</td>
+<td>this handover stands in</td>
+<td>to be cut from §1–§3 once the name is settled</td>
+</tr>
+<tr>
+<td>Sources (<code>03-sources.md</code>)</td>
+<td>memo read in full; Figma read on screen</td>
+<td>the Figma spec (Dev Mode or PNG + variables), the logo files, the type licences, the photographs, the "utolsó poszt" source, the registration back end (who receives the form)</td>
+</tr>
+<tr>
+<td>Design system</td>
+<td><code>assets/tokens.css</code> provisional</td>
+<td>confirmation from Figma, then the live components page → owner gate</td>
+</tr>
+<tr>
+<td>Frames 1440 / 390</td>
+<td>Figma has them</td>
+<td>transcribe once tokens are confirmed → owner gate</td>
+</tr>
+<tr>
+<td>Build</td>
+<td>—</td>
+<td>generator for címlap / rovat / cikk / márkafront + the landing; sample data declared sample</td>
+</tr>
+<tr>
+<td>Gate, sweep, presentation, technical package</td>
+<td>—</td>
+<td>as the standard</td>
+</tr>
+</tbody>
+</table></div>
+<h2>6. Questions for the owner (none blocks the research)</h2>
+<ol>
+<li>Folder and URL: <code>nepszabadsag/</code> (as every input says) or <code>nepszava/</code> (as the message says)?</li>
+<li>Figma: enable the Dev Mode MCP server, or export the eight frames as PNG at 1× plus the variables — either gives exact tokens.</li>
+<li>The landing goes live before 2026-10-08: is it a page inside this prototype, or a page the client's developer ships from our spec? Who receives the registration form (Vezetéknév, Keresztnév, e-mail)?</li>
+<li>"A Szerkesztőség — az utolsó poszt": which channel is the post source (a blog, Instagram, Facebook)?</li>
+<li>Photographs: the frames use placeholders; are there press photos or an archive to build with (no AI imagery, by the repo rule)?</li>
+</ol>
+<h2>7. Environment notes for the next session</h2>
+<ul>
+<li>The Drive connector can read the Figma link's page text but not its canvas; the built-in browser renders the canvas, and keyboard shortcuts do not reach it — use the zoom menu ("Zoom to fit", "Zoom to 50%") and hand-drags.</li>
+<li><code>curl</code> from here reaches most news sites; NYT, WSJ, FT and Zeit answer with bot walls, the Washington Post resets the connection.</li>
+<li>The browser pane refuses <code>nytimes.com</code> outright.</li>
+<li>Cookie banners: decline non-essential.</li>
+</ul>
+<footer>Népszabadság · dokumentáció, 2026</footer></div></body></html>

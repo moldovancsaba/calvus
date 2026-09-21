@@ -1,0 +1,15 @@
+/* Népszabadság — provisional tokens, read from the Figma frames on screen (2026-09-21).
+   Every value here is an observation from a 50 % / 100 % screenshot, not a Figma variable;
+   confirm against the file (Dev Mode) before the design-system gate. */
+:root{
+  --nsz-ink:#111111;        /* headlines and body — near black */
+  --nsz-text:#222222;
+  --nsz-muted:#6b6b6b;      /* bylines, "6 PERC", captions */
+  --nsz-line:#dcdcdc;       /* hairlines between stories */
+  --nsz-ground:#ffffff;
+  --nsz-panel:#f4f4f4;      /* ad slots, footer, paywall box */
+  --nsz-blue:#1d4fd7;       /* logo mark, Előfizetés button, rovat labels, links, registration band */
+  --nsz-lime:#c8f000;       /* the one warm accent: "Regisztrálok" on the blue band */
+  --nsz-serif:"Source Serif 4","Noto Serif",Georgia,serif;   /* headlines, leads, body — the frames are serif throughout */
+  --nsz-sans:"Inter",system-ui,sans-serif;                    /* labels, nav, meta */
+}
