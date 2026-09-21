@@ -66,3 +66,38 @@ the deleted page.
 
 **Now four pages**, not five: `index.html`, `belfold/index.html`,
 `cikk/onkormanyzatok-fejlesztesi-keret.html`, `regisztracio/index.html`.
+
+## Round 3 — 2026-09-21 — real content in place of the two gray placeholders (D13)
+
+**Owner flagged, from live-site screenshots**: an empty gray author-photo circle and a plain
+gray "HIRDETÉS 970×250" box — "add content everywhere... be professional."
+
+**Built.** `avatar()` in `build.py` renders a designed initials-mark (colored circle, the
+author's own initials) for each of the six bylined authors — `content.py AUTHORS[*]
+["avatar_color"]` gives each a distinct color. `ad_slot()` rewritten to render real ad
+creative from `content.py AD_CREATIVES` — three fictional advertisers (a travel agency, a
+home-goods retailer, a savings account) filling the Figma's three banner placements
+(Címlap 970×250 "Városnéző Utazási Iroda", the Cikkoldal's inline 600×250 "Otthon Trend",
+its rail 300×250 "Takarék Plusz"). `assets/site.css` gets `.avatar`/`.avatar-square`/
+`.avatar-circle` and `.ad-creative` rules; the stale `.author-card img`/`.author-row img`
+selectors (expecting an `<img>` that was never rendered) removed.
+
+**Also fixed while measuring this round**: `.author-row`'s `align-items:center` vertically
+centered the new avatar against the whole byline block (name + bio + button), landing it
+beside the bio line instead of the name — changed to `flex-start` so the avatar aligns with
+the top line, as a byline normally reads. Separately, the desktop main-nav's "Sport" link
+measured 40×46 px (only the short nav words were under 44 px wide; `.main-nav a` had
+vertical-only padding) — added horizontal padding and a `min-width`, first sub-44 px item
+caught at 1440 px in this project's measured passes so far (earlier rounds tested mobile,
+where the nav collapses to a full-width hamburger menu).
+
+**Measured** (browser pane, cache-busted, all four pages, 390 and 1440): 0 px overflow, one
+`h1`, 0 console errors, 0 sub-44 px targets besides the one already-accepted inline teaser
+link. Gate re-run clean.
+
+**Sample, declared** (`03-sources.md`): the six avatars and the three ad creatives — never a
+real photograph or a real advertiser. The landing page's third placeholder (`editor-post`,
+"A Szerkesztőség" latest-post box) was deliberately left as-is — it stands in for a specific
+real post the client hasn't supplied yet (`03-sources.md` #4), not a generic slot, so filling
+it with invented content would misrepresent real editorial activity rather than just dress up
+a placeholder.

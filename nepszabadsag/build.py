@@ -32,9 +32,26 @@ def author_link(key):
     return a["name"]
 
 
-def ad_slot(w, h):
+def ad_slot(w, h, creative):
+    """Sample banner-ad creative — a fictional advertiser (content.py AD_CREATIVES), not a
+    real commercial placement. w×h matches the Figma's own banner-ad dimensions."""
     cls = f"ad-{w}x{h}"
-    return f'<div class="ad-slot {cls}"><span><span class="ad-label">Hirdetés</span>{w} × {h}</span></div>'
+    c = C.AD_CREATIVES[creative]
+    return f"""<div class="ad-slot ad-creative {cls}" style="background:{c['bg']}">
+  <span class="ad-tag">Hirdetés</span>
+  <p class="ad-brand">{esc(c['brand'])}</p>
+  <p class="ad-headline">{esc(c['headline'])}</p>
+  <p class="ad-sub">{esc(c['sub'])}</p>
+  <span class="ad-cta">{esc(c['cta'])}</span>
+</div>"""
+
+
+def avatar(key, css_class):
+    """Designed initials-mark standing in for an author photo — see content.py's module
+    docstring for why this is a mark, not a stock photo of a fictional byline."""
+    a = C.AUTHORS[key]
+    initials = "".join(w[0] for w in a["name"].split()[:2]).upper()
+    return f'<div class="avatar {css_class}" style="background:{a["avatar_color"]}" aria-hidden="true"><span>{esc(initials)}</span></div>'
 
 
 # Only Belföld has a built rovatfront in this v1; Sport and Tudomány share the home page's
@@ -180,7 +197,7 @@ def build_cimlap():
         for t, href in L["teasers"]
     )
     lead_html = f"""<section class="lead-story wrap">
-  {ad_slot(970, 250)}
+  {ad_slot(970, 250, "utazas")}
   {img(L['image'])}
   <h1>{esc(L['headline'])}</h1>
   <p class="dek">{esc(L['dek'])}</p>
@@ -262,7 +279,7 @@ def build_rovatfront():
 </a>"""
     list_html = "".join(article_card_row(s, depth=1) for s in R["list"])
     authors_html = "".join(
-        f"""<div class="author-card"><div class="ph-box" style="width:100%;aspect-ratio:1/1;background:#e2e2e2;border-radius:6px;margin-bottom:8px"></div><h4>{esc(C.AUTHORS[k]['name'])}</h4><p>{esc(C.AUTHORS[k]['beat'])}</p></div>"""
+        f"""<div class="author-card">{avatar(k, "avatar-square")}<h4>{esc(C.AUTHORS[k]['name'])}</h4><p>{esc(C.AUTHORS[k]['beat'])}</p></div>"""
         for k in R["authors"]
     )
     body = f"""{article_pills(["Az újraindítás", "A szerkesztőség", "Tíz év után"])}
@@ -299,7 +316,7 @@ def build_cikkoldal():
     for block in A["body"]:
         if block.startswith("@AD@"):
             w, h = block[4:].split("x")
-            body_paras.append(ad_slot(int(w), int(h)))
+            body_paras.append(ad_slot(int(w), int(h), "otthon"))
         else:
             body_paras.append(f"<p>{esc(block)}</p>")
     body_html = "\n".join(body_paras)
@@ -326,7 +343,7 @@ def build_cikkoldal():
 <div class="article-hero">{img(A['image'])}</div>
 <p class="photo-caption">{esc(A['photo_caption'])}</p>
 <div class="author-row">
-  <div class="ph-box" style="width:52px;height:52px;border-radius:50%;background:#e2e2e2"></div>
+  {avatar(A['author'], "avatar-circle")}
   <div>
     <div class="name">{esc(C.AUTHORS[A['author']]['name'])}</div>
     <div class="bio">{esc(C.AUTHORS[A['author']]['bio'])} · {esc(A['date'])} · {esc(A['reading'])}</div>
@@ -340,7 +357,7 @@ def build_cikkoldal():
 <h2 class="section-h">Ezt is ajánljuk</h2>
 <div class="grid grid-3">{related}</div>"""
 
-    rail = f"""<aside class="rail">{ad_slot(300, 250)}</aside>"""
+    rail = f"""<aside class="rail">{ad_slot(300, 250, "penzugy")}</aside>"""
 
     body = f"""{article_pills(A['related_pills'])}
 <div class="wrap">

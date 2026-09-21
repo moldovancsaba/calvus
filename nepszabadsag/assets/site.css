@@ -22,7 +22,7 @@ a { color: var(--nsz-blue); }
 .hamburger { display: grid; }
 .main-nav { display: none; }
 .main-nav ul { list-style: none; margin: 0; padding: 0; display: flex; gap: 26px; flex-wrap: wrap; }
-.main-nav a { font-family: var(--nsz-sans); font-weight: 700; color: var(--nsz-ink); text-decoration: none; font-size: 15px; padding: 12px 0; display: inline-block; min-height: 44px; }
+.main-nav a { font-family: var(--nsz-sans); font-weight: 700; color: var(--nsz-ink); text-decoration: none; font-size: 15px; padding: 12px 4px; display: inline-block; min-height: 44px; min-width: 44px; text-align: center; }
 .main-nav a[aria-current="page"] { color: var(--nsz-blue); border-bottom: 3px solid var(--nsz-blue); }
 .mobile-nav { border-top: 1px solid var(--nsz-line); padding: 6px 20px 14px; }
 .mobile-nav ul { list-style: none; margin: 0; padding: 0; }
@@ -34,10 +34,20 @@ a { color: var(--nsz-blue); }
 
 /* ---- ad slots ---- */
 .ad-slot { background: var(--nsz-panel); border: 1px solid var(--nsz-line); display: grid; place-items: center; color: var(--nsz-muted); font-family: var(--nsz-serif); font-size: 15px; margin: 24px auto; }
-.ad-slot .ad-label { font-family: var(--nsz-sans); font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--nsz-muted); display: block; margin-bottom: 8px; text-align: center; }
 .ad-970x250 { max-width: 970px; aspect-ratio: 970/250; }
 .ad-600x250 { max-width: 600px; aspect-ratio: 600/250; }
 .ad-300x250 { width: 300px; aspect-ratio: 300/250; }
+
+/* sample ad creative — a fictional advertiser filling the slot, not a real placement */
+.ad-slot.ad-creative { display: flex; flex-direction: column; justify-content: center; align-items: flex-start; text-align: left; color: #fff; border: 0; padding: 22px 26px; position: relative; }
+.ad-creative .ad-tag { position: absolute; top: 10px; left: 14px; font-family: var(--nsz-sans); font-size: 10px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: rgba(255,255,255,0.75); }
+.ad-creative .ad-brand { font-family: var(--nsz-sans); font-weight: 800; font-size: 12px; letter-spacing: 0.04em; text-transform: uppercase; color: rgba(255,255,255,0.85); margin: 10px 0 8px; }
+.ad-creative .ad-headline { font-family: var(--nsz-serif); font-weight: 700; font-size: 22px; line-height: 1.2; color: #fff; margin: 0 0 6px; }
+.ad-creative .ad-sub { font-family: var(--nsz-sans); font-size: 13px; color: rgba(255,255,255,0.9); margin: 0 0 14px; max-width: 46ch; }
+.ad-creative .ad-cta { display: inline-flex; align-items: center; background: #fff; color: var(--nsz-ink); font-family: var(--nsz-sans); font-weight: 700; font-size: 13px; padding: 8px 14px; border-radius: 999px; min-height: 44px; }
+.ad-300x250.ad-creative { padding: 18px 20px; }
+.ad-300x250.ad-creative .ad-headline { font-size: 18px; }
+.ad-300x250.ad-creative .ad-sub { font-size: 12.5px; margin-bottom: 12px; }
 
 /* ---- article cards ---- */
 .eyebrow { font-family: var(--nsz-sans); font-size: 12px; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase; color: var(--nsz-blue); }
@@ -79,9 +89,13 @@ a { color: var(--nsz-blue); }
 
 /* ---- author cards ---- */
 .authors-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; }
-.author-card img { border-radius: 6px; aspect-ratio: 1/1; object-fit: cover; margin-bottom: 8px; background: var(--nsz-panel); }
 .author-card h4 { font-family: var(--nsz-sans); margin: 0 0 2px; font-size: 15px; }
 .author-card p { font-family: var(--nsz-sans); font-size: 13px; color: var(--nsz-muted); margin: 0; }
+
+/* ---- avatars — a designed initials-mark standing in for an author photo ---- */
+.avatar { display: flex; align-items: center; justify-content: center; color: #fff; font-family: var(--nsz-sans); font-weight: 800; }
+.avatar-square { width: 100%; aspect-ratio: 1/1; border-radius: 6px; margin-bottom: 8px; font-size: clamp(20px, 6vw, 28px); }
+.avatar-circle { width: 52px; height: 52px; border-radius: 50%; flex: none; font-size: 18px; }
 .older-btn { display: inline-block; margin: 24px 0; padding: 12px 20px; border: 1.5px solid var(--nsz-ink); border-radius: 999px; text-decoration: none; color: var(--nsz-ink); font-family: var(--nsz-sans); font-weight: 700; font-size: 14px; min-height: 44px; }
 
 /* ---- Cikkoldal ---- */
@@ -90,8 +104,8 @@ a { color: var(--nsz-blue); }
 .article-header .dek { font-size: 17px; margin: 0 0 16px; }
 .article-hero img { border-radius: 4px; aspect-ratio: 3/2; object-fit: cover; }
 .photo-caption { font-family: var(--nsz-sans); font-size: 12.5px; color: var(--nsz-muted); margin: 6px 0 20px; }
-.author-row { display: flex; gap: 12px; align-items: center; margin: 0 0 18px; }
-.author-row img { width: 52px; height: 52px; border-radius: 50%; object-fit: cover; flex: none; }
+.author-row { display: flex; gap: 12px; align-items: flex-start; margin: 0 0 18px; }
+.author-row .avatar-circle { margin-top: 2px; }
 .author-row .name { font-family: var(--nsz-sans); font-weight: 700; }
 .author-row .bio { font-family: var(--nsz-sans); font-size: 13px; color: var(--nsz-muted); }
 .primary-source-btn { font-family: var(--nsz-sans); font-size: 13px; font-weight: 700; color: var(--nsz-blue); border: 1.5px solid var(--nsz-blue); border-radius: 999px; padding: 8px 14px; background: #fff; margin-top: 6px; min-height: 44px; display: inline-flex; align-items: center; }

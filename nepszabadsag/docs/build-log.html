@@ -101,4 +101,33 @@ one <code>h1</code>, 0 console errors, 0 sub-44 px targets except the one remain
 the deleted page.</p>
 <p><strong>Now four pages</strong>, not five: <code>index.html</code>, <code>belfold/index.html</code>,
 <code>cikk/onkormanyzatok-fejlesztesi-keret.html</code>, <code>regisztracio/index.html</code>.</p>
+<h2>Round 3 — 2026-09-21 — real content in place of the two gray placeholders (D13)</h2>
+<p><strong>Owner flagged, from live-site screenshots</strong>: an empty gray author-photo circle and a plain
+gray "HIRDETÉS 970×250" box — "add content everywhere... be professional."</p>
+<p><strong>Built.</strong> <code>avatar()</code> in <code>build.py</code> renders a designed initials-mark (colored circle, the
+author's own initials) for each of the six bylined authors — <code>content.py AUTHORS[*]
+["avatar_color"]</code> gives each a distinct color. <code>ad_slot()</code> rewritten to render real ad
+creative from <code>content.py AD_CREATIVES</code> — three fictional advertisers (a travel agency, a
+home-goods retailer, a savings account) filling the Figma's three banner placements
+(Címlap 970×250 "Városnéző Utazási Iroda", the Cikkoldal's inline 600×250 "Otthon Trend",
+its rail 300×250 "Takarék Plusz"). <code>assets/site.css</code> gets <code>.avatar</code>/<code>.avatar-square</code>/
+<code>.avatar-circle</code> and <code>.ad-creative</code> rules; the stale <code>.author-card img</code>/<code>.author-row img</code>
+selectors (expecting an <code>&lt;img&gt;</code> that was never rendered) removed.</p>
+<p><strong>Also fixed while measuring this round</strong>: <code>.author-row</code>'s <code>align-items:center</code> vertically
+centered the new avatar against the whole byline block (name + bio + button), landing it
+beside the bio line instead of the name — changed to <code>flex-start</code> so the avatar aligns with
+the top line, as a byline normally reads. Separately, the desktop main-nav's "Sport" link
+measured 40×46 px (only the short nav words were under 44 px wide; <code>.main-nav a</code> had
+vertical-only padding) — added horizontal padding and a <code>min-width</code>, first sub-44 px item
+caught at 1440 px in this project's measured passes so far (earlier rounds tested mobile,
+where the nav collapses to a full-width hamburger menu).</p>
+<p><strong>Measured</strong> (browser pane, cache-busted, all four pages, 390 and 1440): 0 px overflow, one
+<code>h1</code>, 0 console errors, 0 sub-44 px targets besides the one already-accepted inline teaser
+link. Gate re-run clean.</p>
+<p><strong>Sample, declared</strong> (<a href="sources.html"><code>03-sources.md</code></a>): the six avatars and the three ad creatives — never a
+real photograph or a real advertiser. The landing page's third placeholder (<code>editor-post</code>,
+"A Szerkesztőség" latest-post box) was deliberately left as-is — it stands in for a specific
+real post the client hasn't supplied yet (<a href="sources.html"><code>03-sources.md</code></a> #4), not a generic slot, so filling
+it with invented content would misrepresent real editorial activity rather than just dress up
+a placeholder.</p>
 <footer>Népszabadság · dokumentáció, 2026</footer></div></body></html>

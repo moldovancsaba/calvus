@@ -109,3 +109,14 @@ that section. `content.py` and `build.py` updated; `00-brief.md`, `03-sources.md
 decision, not a correction — `04-decisions.md` D12. Down to four built pages from five.
 Measured at 390: 0 px overflow, one `h1`, 0 console errors. Gate clean, no dangling links to
 the deleted page.
+
+**2026-09-21 — the two remaining placeholders replaced with real content.** The owner flagged,
+directly from live-site screenshots, an empty gray author-photo circle and a plain gray
+"HIRDETÉS 970×250" box: "add content everywhere... be professional." Six bylined authors now
+get a designed initials-mark avatar (Wikimedia Commons has no suitable stock of generic,
+anonymous portraits, and inventing a "real" face for a fictional byline would misattribute a
+real person's likeness); the three Figma-marked ad placements (970×250, 600×250, 300×250) now
+render real ad creative for three fictional advertisers, never a real brand. `04-decisions.md`
+D13, `06-build-log.md` Round 3. A pre-existing sub-44 px desktop nav item ("Sport") and an
+avatar vertical-alignment issue were also fixed while measuring. Gate clean; 0 px overflow,
+one `h1`, 0 console errors at 390 and 1440.

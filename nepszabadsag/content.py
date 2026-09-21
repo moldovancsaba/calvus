@@ -11,6 +11,13 @@ web (originals were 1-15 MB; kept at both < 1200 px and > 70 kB JPEG quality her
 photo illustrates a topic rather than showing the article's own (fictional) subject, that is
 on record in IMAGES[*]["note"] — carried into the page as the photo credit line, matching the
 Figma's own "Fotó: NÉV / Népszabadság" convention.
+
+Author avatars are a designed initials-mark (AUTHORS[*]["avatar_color"]), not a photograph —
+Wikimedia Commons has no suitable stock of generic, anonymous portraits, and inventing a
+"real" face for a fictional byline would misattribute a real person's likeness. AD_CREATIVES
+are sample banner-ad content for the Figma's ad-slot placements: three fictional advertisers
+invented for this prototype, not a real commercial relationship — declared as sample in
+03-sources.md.
 """
 
 IMAGES = {
@@ -42,18 +49,35 @@ IMAGES = {
 }
 
 AUTHORS = {
-    "kovacs_anna": dict(name="Kovács Anna", beat="Belpolitika",
+    "kovacs_anna": dict(name="Kovács Anna", beat="Belpolitika", avatar_color="#1d4fd7",
         bio="Belpolitikai újságíró, önkormányzati és költségvetési témákkal foglalkozik."),
-    "varga_tamas": dict(name="Varga Tamás", beat="Közlekedés"),
-    "toth_akos": dict(name="Tóth Ákos", beat="Riport"),
-    "szabo_marton": dict(name="Szabó Márton", beat="Gazdaság"),
-    "nagy_eszter": dict(name="Nagy Eszter", beat="Kultúra, vélemény"),
-    "fodor_marton": dict(name="Fodor Márton", beat="Gazdaság"),
-    "szerkesztoseg": dict(name="Szerkesztőség", beat=""),
-    "mti": dict(name="MTI", beat=""),
+    "varga_tamas": dict(name="Varga Tamás", beat="Közlekedés", avatar_color="#2f6f4f"),
+    "toth_akos": dict(name="Tóth Ákos", beat="Riport", avatar_color="#8a3324"),
+    "szabo_marton": dict(name="Szabó Márton", beat="Gazdaság", avatar_color="#3c4858"),
+    "nagy_eszter": dict(name="Nagy Eszter", beat="Kultúra, vélemény", avatar_color="#6a3f6b"),
+    "fodor_marton": dict(name="Fodor Márton", beat="Gazdaság", avatar_color="#8a6d1d"),
+    "szerkesztoseg": dict(name="Szerkesztőség", beat="", avatar_color="#6b6b6b"),
+    "mti": dict(name="MTI", beat="", avatar_color="#6b6b6b"),
 }
 
 NAV = ["Belföld", "Külföld", "Gazdaság", "Kultúra", "Sport", "Tudomány"]
+
+# Sample ad creative for the ad slots the Figma marks as banner placements. Fictional
+# advertisers, invented for this prototype only — declared as sample in 03-sources.md.
+AD_CREATIVES = {
+    "utazas": dict(brand="Városnéző Utazási Iroda", bg="#1c3b57",
+        headline="Fedezd fel Európát",
+        sub="Foglalj most — akár 30%-kal olcsóbban a nyári utakra.",
+        cta="Ajánlatok megtekintése"),
+    "otthon": dict(brand="Otthon Trend", bg="#6b4a2f",
+        headline="Újítsd meg az otthonod",
+        sub="Tavaszi akció — akár 20% kedvezmény a válogatott bútorokra.",
+        cta="Megnézem az ajánlatot"),
+    "penzugy": dict(brand="Takarék Plusz", bg="#1f5c3f",
+        headline="Kezdj el megtakarítani",
+        sub="0 Ft számlavezetési díj az első évben, online számlanyitással.",
+        cta="Számlanyitás indítása"),
+}
 
 # The one full Cikkoldal demo article — every word of the free-to-read portion is the
 # client's own Figma copy (read on screen 2026-09-21); nothing was invented to extend it,
