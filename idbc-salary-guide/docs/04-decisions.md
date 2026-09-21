@@ -34,6 +34,7 @@ decision is added here first. "Owner" is the studio side; "client" is IDBC.*
 | D26 | 2026-09-18 | Expert Pool tile bars align to the card bottom so tiles with and without a market line line up | client note | |
 | D27 | 2026-09-18 | Standard documentation structure; technical package written with every stack decision in status PROPOSED | owner | see `11-architecture.md` §11; the flip of any ADR is the next D-number here |
 | D28 | 2026-09-20 | A **responsible-data policy record** for the guide (SSOT §6b, PROPOSED): the registration checkbox is a notice acknowledgement, not marketing consent; B2B role addresses by legitimate interest, named persons and candidates by consent; salary data stays aggregated; the privacy notice must be real before registration runs — rules R12–R14 | The studio, on the owner's directive (responsible data for every client) and the hub audit | docs only; no page changed (fine-tuning rule) |
+| D29 | 2026-09-21 | **The bértábla sheet is the single data source**: the LinkedIn Talent Insight counts are columns on `WEB_BERTABLA_IMPORT` and `EXPERT_POOL_IMPORT` (`linkedin_talent_insight`, plus `talent_insight_pozicio` where the report's label differs); the converter reads them from the sheet and the separate Talent Insight workbook is retired to a fallback | owner | the owner edits one sheet and feeds it back; nothing lives only in the prototype |
 
 ## Standing rules that came out of these
 

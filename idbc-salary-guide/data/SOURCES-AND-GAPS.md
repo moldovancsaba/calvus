@@ -237,6 +237,43 @@ links resolve. Screenshots were unavailable in this session (browser pane hidden
 gate was DOM-measured, not eyeballed — worth a visual pass on the Expert Pool tiles and the
 highlight box before the client sees them.
 
+## The Talent Insight counts move into the bértábla sheet (2026-09-21)
+
+The owner wants `IDBC_bertabla` (Drive sheet `1aQA6Kw5k1U9LQMiWYgcn__m2YCuGmEhx79QFSzE0hJg`)
+to be the one place data is edited, and everything the prototype shows to be in it. Checked
+first: today's export of the sheet (modified 2026-09-21 11:30) and the prototype's `salary`
+block agree row for row — 432 rows, 39 TOP3, 15 pool rows, every value identical. The only
+prototype data that was not in the sheet was the LinkedIn Talent Insight layer, which came
+from the separate `Talent Insight riport.xlsx` and a hand-reviewed name map in the converter.
+
+Written back:
+
+- **`WEB_BERTABLA_IMPORT`** gains two columns after `juttatasi_megjegyzes`:
+  `linkedin_talent_insight` (the count, on 37 of the 39 TOP3 rows; the two Építőipar rows the
+  client still owes are empty) and `talent_insight_pozicio` (filled on the 19 rows where the
+  Talent Insight report spells the position differently — informative, the site shows
+  `pozicio`).
+- **`EXPERT_POOL_IMPORT`** gains `linkedin_talent_insight` (13 of 15 rows; Pharma / Team
+  Leader and Finance / Desk Analyst empty).
+- **`UTMUTATO`** gains a paragraph explaining the columns, in the sheet's own Hungarian.
+- **The converter** (`build-salary-data.py`) now reads the counts from those columns when
+  they exist and no longer needs the Talent Insight workbook; the second argument is kept only
+  for a sheet that predates the columns. Rebuilt from the written-back sheet, `guide-data.json`
+  is identical to before for every row shown on the site (checked field by field); only the
+  stored `readme` text grew by the new paragraph.
+
+How it was delivered: the connector in this environment can rename or move the client's sheet
+but not write cells into it, so the columns exist as (a) the complete workbook
+`IDBC_bertabla_talent_insight_2026-09-21.xlsx` — today's sheet plus the columns, ready to
+import over the original — and (b) a Google Sheet in the owner's Drive,
+`IDBC_bertabla — LinkedIn Talent Insight oszlopok (2026-09-21)`, the same 54 rows in
+paste-ready form. Until the columns are in `IDBC_bertabla` itself, the converter's fallback
+path (sheet + Talent Insight workbook) still produces the same data.
+
+From now on the update loop is: edit the sheet → export xlsx → `build-salary-data.py <xlsx>`
+→ gate → push. A renamed TOP3 position needs no converter change any more; a new TOP3 row only
+needs its count typed into the column.
+
 ## The current bértábla (2026-09-18, second push of the day)
 
 The owner shared the live `IDBC_bertabla` sheet after the client's review. It is not the

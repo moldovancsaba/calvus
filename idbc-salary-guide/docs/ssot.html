@@ -209,13 +209,13 @@ the pages). Written 2026-09-18.</em></p>
 </tr>
 <tr>
 <td><code>salary.talentInsightTop3[]</code></td>
-<td><code>terulet</code>, <code>pozicio</code>, <code>linkedin</code> — the client's list verbatim</td>
-<td>Talent Insight sheet 1</td>
+<td><code>terulet</code>, <code>pozicio</code>, <code>linkedin</code> — the TOP3 list as the Talent Insight report names it</td>
+<td>bértábla TOP3 rows: <code>linkedin_talent_insight</code>, <code>talent_insight_pozicio</code> (D29)</td>
 </tr>
 <tr>
 <td><code>salary.expertPool[]</code></td>
 <td><code>iparag</code>, <code>pozicio</code>, <code>darab</code>, <code>linkedin?</code></td>
-<td>pool sheet + Talent Insight sheet 2</td>
+<td><code>EXPERT_POOL_IMPORT</code> incl. <code>linkedin_talent_insight</code> (D29)</td>
 </tr>
 <tr>
 <td><code>salary.readme</code></td>
@@ -284,7 +284,7 @@ case study).</p>
 </tbody>
 </table></div>
 <h2>5. Decision register</h2>
-<p><a href="decisions.html"><code>04-decisions.md</code></a> (D1–D28). Technical decisions in this package are ADRs in
+<p><a href="decisions.html"><code>04-decisions.md</code></a> (D1–D29). Technical decisions in this package are ADRs in
 <a href="architecture.html"><code>11-architecture.md</code></a> §11, PROPOSED until flipped; the flip is the next D-number.</p>
 <h2>6. Rules register</h2>
 <div class="tbl"><table>
@@ -323,8 +323,8 @@ case study).</p>
 </tr>
 <tr>
 <td>R6</td>
-<td>Talent Insight counts are matched by an explicit table; a renamed position fails the build.</td>
-<td>D22</td>
+<td>Talent Insight counts are read from the bértábla sheet's own column, row by row; the explicit name table is only the fallback for a sheet without the column, and there a renamed position fails the build.</td>
+<td>D22, D29</td>
 </tr>
 <tr>
 <td>R7</td>

@@ -12,7 +12,7 @@ test runner.
 Generators exist and must be re-run after editing their sources: `python3 holdvolgy/build.py`
 (site pages, HU + EN, from `build.py` content and `data/catalogue.json`); the two IDBC data
 converters (`idbc-salary-guide/data/build-guide-data.py <workbook>`,
-`build-salary-data.py <bértábla> <talent-insight>`); and `python3 build-docs.py` at the
+`build-salary-data.py <bértábla>` — the Talent Insight counts are columns in the bértábla sheet since 2026-09-21; the old second argument is a fallback); and `python3 build-docs.py` at the
 root, which renders every project's documentation from markdown. `python3 check.py` at the
 root is the gate (it runs the four project gates and a repo-wide link audit).
 Deployed to GitHub Pages straight from the `main` branch — there is no CI

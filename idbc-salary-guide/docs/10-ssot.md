@@ -51,8 +51,8 @@ the pages). Written 2026-09-18.*
 | `datasets[id]` | `label`, `questionSet`, `employee{base, cross}`, `employer{base, cross}`; `base[question] = {kind, options[], percent[], count[], weighted?}`; `cross[question][segment]` likewise | survey workbook via `build-guide-data.py <workbook>`; the trends page's dataset select is `#datasetSelect` (renamed from `editionSelect` 2026-09-18 — "edition" was the July term) |
 | `topics[]` | `topic`, `questionSets{set: {employee[], employer[]}}` — the question lists per set | workbook's "Téma besorolás" tab + client renames (D7) |
 | `salary.webBertabla[]` | `id`, `kod`, `terulet`, `szint`, `pozicio`, `top3`, `min`, `idbc`, `max`, `juttatas`, `linkedin?` | bértábla via `build-salary-data.py` |
-| `salary.talentInsightTop3[]` | `terulet`, `pozicio`, `linkedin` — the client's list verbatim | Talent Insight sheet 1 |
-| `salary.expertPool[]` | `iparag`, `pozicio`, `darab`, `linkedin?` | pool sheet + Talent Insight sheet 2 |
+| `salary.talentInsightTop3[]` | `terulet`, `pozicio`, `linkedin` — the TOP3 list as the Talent Insight report names it | bértábla TOP3 rows: `linkedin_talent_insight`, `talent_insight_pozicio` (D29) |
+| `salary.expertPool[]` | `iparag`, `pozicio`, `darab`, `linkedin?` | `EXPERT_POOL_IMPORT` incl. `linkedin_talent_insight` (D29) |
 | `salary.readme` | the sheet's UTMUTATO text verbatim | bértábla |
 | `sapProducts[]` | `category`, `items[]` | SAP spec |
 | `filterDimensions` | every intended filter with `available: true/false/"partial"` and why | `Szűrők` doc vs data |
@@ -77,7 +77,7 @@ case study).
 
 ## 5. Decision register
 
-`04-decisions.md` (D1–D28). Technical decisions in this package are ADRs in
+`04-decisions.md` (D1–D29). Technical decisions in this package are ADRs in
 `11-architecture.md` §11, PROPOSED until flipped; the flip is the next D-number.
 
 ## 6. Rules register
@@ -89,7 +89,7 @@ case study).
 | R3 | A question with no data under the selected segment is hidden; the aggregate is never substituted; one panel-level sentence if a panel is empty. | D9 |
 | R4 | The two 1–4 questions render as the weighted average only. | D16 |
 | R5 | An inert control is shown in place with `is-unavailable` and a `title`. | repo principle; gate check 5 |
-| R6 | Talent Insight counts are matched by an explicit table; a renamed position fails the build. | D22 |
+| R6 | Talent Insight counts are read from the bértábla sheet's own column, row by row; the explicit name table is only the fallback for a sheet without the column, and there a renamed position fails the build. | D22, D29 |
 | R7 | The shared chart assets are versioned; every page loads the same version. | gate check 4 |
 | R8 | The band labels (D5) and the "valós piaci adatok" note (D14) ship as the client's wording; the divergence from the sheet is documented, not hidden. | gap 6 |
 | R9 | One template per repeated thing: area page, tile, chart. | D11 |
