@@ -16,9 +16,9 @@ and what is actually in hand. Written 2026-09-21.*
 | Comparable relaunch cases (Magyar Nemzet, The Independent's post-print transition) | Wikipedia, Balkan Insight, a Reuters-Institute-hosted academic study (`01-research.md` §5) | real, cited |
 | Published design-system references (Guardian Source, NYT typefaces, Spiegel's 2016 redesign) | the Guardian's own design-system site (primary), Fonts In Use (secondary, for NYT's proprietary type), Spiegel's own dev blog (fetch blocked; used via a verified search summary) (`01-research.md` §6) | real, cited; the NYT and Spiegel items lean on secondary or unverified-by-direct-fetch sources — flagged in place |
 | nol.hu (the old domain) | `curl`, 2026-09-21 (`02-audit.md` §1) | real — a one-line stub; the archive is sold via lapcentrum.hu, not audited here |
-| The built prototype's headlines, deks, bylines, reading times and the Cikkoldal's full body text (Belföld, Gazdaság, Kultúra, Külföld, Média/Vélemény, Népszava — twenty items) | read directly off the Figma frames, 2026-09-21 (`content.py`, `source: "figma"`) | **real** — the client's own copy, used verbatim; the Cikkoldal needed no invented continuation because the Figma's paywall box marks exactly where the free text ends |
+| The built prototype's headlines, deks, bylines, reading times and the Cikkoldal's full body text (Belföld, Gazdaság, Kultúra, Külföld, Média/Vélemény — fourteen items) | read directly off the Figma frames, 2026-09-21 (`content.py`, `source: "figma"`) | **real** — the client's own copy, used verbatim; the Cikkoldal needed no invented continuation because the Figma's paywall box marks exactly where the free text ends |
 | Two Sport and Tudomány Címlap items | written for this prototype — the Figma designs no rovat front for either category | **sample**, declared `source: "original"` in `content.py`; neutral, evergreen, no real named official quoted |
-| Fourteen photographs across every page | Wikimedia Commons, downloaded and resized 2026-09-21, license and author recorded per image in `content.py IMAGES` | **real** photographs, appropriately licensed (CC BY / CC BY-SA / public domain); several are topical illustrations rather than the article's literal documentary subject — marked with a `note` in `content.py` and stated in the on-page photo credit |
+| Ten photographs across every page | Wikimedia Commons, downloaded and resized 2026-09-21, license and author recorded per image in `content.py IMAGES` | **real** photographs, appropriately licensed (CC BY / CC BY-SA / public domain); several are topical illustrations rather than the article's literal documentary subject — marked with a `note` in `content.py` and stated in the on-page photo credit |
 
 ## Gaps — what the client (or a next session) still needs to supply
 
@@ -38,3 +38,6 @@ and what is actually in hand. Written 2026-09-21.*
    the client's developer, or this prototype.
 6. **Whether the new title's paywall/reader is built in-house or through a vendor** — an open
    build-vs-buy decision, not inherited from anyone.
+7. **The Figma's own Népszava sub-brand front is not built here**, at the owner's explicit
+   instruction (`04-decisions.md` D12) — a deliberate deviation from the Figma file, not a
+   gap in reading it. Worth the client's awareness when comparing the prototype to the frames.

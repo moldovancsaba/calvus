@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Generate the Népszabadság prototype from one content source (content.py).
 Run: python3 nepszabadsag/build.py — writes index.html, belfold/index.html,
-cikk/<slug>.html, nepszava/index.html, regisztracio/index.html. No dependencies."""
+cikk/<slug>.html, regisztracio/index.html. No dependencies."""
 import pathlib, html as htmlmod
 import content as C
 
@@ -37,11 +37,11 @@ def ad_slot(w, h):
     return f'<div class="ad-slot {cls}"><span><span class="ad-label">Hirdetés</span>{w} × {h}</span></div>'
 
 
-# Only Belföld and Népszava have a built page in this v1; Sport and Tudomány share the
-# home page's combined "Külföld · Sport · Tudomány" anchor rather than each getting one.
+# Only Belföld has a built rovatfront in this v1; Sport and Tudomány share the home page's
+# combined "Külföld · Sport · Tudomány" anchor rather than each getting one.
 NAV_ANCHOR = {"Belföld": None, "Külföld": "külföld", "Gazdaság": "gazdaság",
-              "Kultúra": "kultúra", "Sport": "külföld", "Tudomány": "külföld", "Népszava": None}
-NAV_PAGE = {"Belföld": "belfold/index.html", "Népszava": "nepszava/index.html"}
+              "Kultúra": "kultúra", "Sport": "külföld", "Tudomány": "külföld"}
+NAV_PAGE = {"Belföld": "belfold/index.html"}
 
 
 def nav_href(n, up):
@@ -82,13 +82,11 @@ def article_pills(pills):
 def footer(depth):
     up = "../" * depth
     rovatok = "".join(f'<li><a href="{nav_href(n, up)}">{esc(n)}</a></li>' for n in C.FOOTER_ROVATOK)
-    almarka = "".join(f'<li><a href="{up}nepszava/index.html">{esc(i)}</a></li>' for i in C.FOOTER_ALMARKA)
     laprol = "".join(f'<li><a href="{up}index.html">{esc(i)}</a></li>' for i in C.FOOTER_LAPROL)
     jogi = "".join(f'<li><a href="{up}index.html">{esc(i)}</a></li>' for i in C.FOOTER_JOGI)
     return f"""<footer class="site-footer">
   <div class="footer-cols">
     <div><h5>Rovatok</h5><ul>{rovatok}</ul></div>
-    <div><h5>Almárka</h5><ul>{almarka}</ul></div>
     <div><h5>A lapról</h5><ul>{laprol}</ul></div>
     <div><h5>Jogi és egyéb</h5><ul>{jogi}</ul></div>
   </div>
@@ -239,21 +237,10 @@ def build_cimlap():
   {article_card_row('hetilap-visszaterese')}
 </section>"""
 
-    n_items = "".join(
-        f"""<div class="photo-card">{img(it['image'])}<h3>{esc(it['short'])}</h3><div class="meta">{author_link(it['author'])} · {esc(it['time'])}</div></div>"""
-        for it in C.NEPSZAVA_ITEMS[:6]
-    )
-    nepszava_block = f"""<section class="wrap" id="népszava">
-  <span class="nepszava-badge">Népszava</span>
-  <h2 class="section-h" style="border-top:0;margin-top:0">A Népszabadság almárkája</h2>
-  <div class="grid grid-3">{n_items}</div>
-  <a class="older-btn" href="nepszava/index.html">Tovább a Népszava oldalára</a>
-</section>"""
-
-    body = lead_html + belfold_block + gazdasag_block + kulfold_sport_tud + kultura_block + media_velemeny + nepszava_block + reg_band()
+    body = lead_html + belfold_block + gazdasag_block + kulfold_sport_tud + kultura_block + media_velemeny + reg_band()
     html_out = render_page(
         "Népszabadság — a napilap, 2026",
-        "Népszabadság: Belföld, Külföld, Gazdaság, Kultúra, Sport, Tudomány és a Népszava almárka — a lap online kiadása.",
+        "Népszabadság: Belföld, Külföld, Gazdaság, Kultúra, Sport és Tudomány — a lap online kiadása.",
         0, None, body,
     )
     (HERE / "index.html").write_text(html_out, encoding="utf-8")
@@ -375,63 +362,6 @@ def build_cikkoldal():
     print(f"cikk/{A['slug']}.html {len(html_out):6d} bytes")
 
 
-# ---------------------------------------------------------------- Népszava márkafront
-def build_nepszava():
-    global _DEPTH
-    _DEPTH = 1
-    pills = "".join(f'<span class="pill pill-static">{esc(p)}</span>' for p in ["A nyomtatott lapból", "Vélemény", "Riport", "Interjú", "Jegyzet"])
-    lead = C.NEPSZAVA_ITEMS[0]
-    lead_html = f"""<div class="lead-story">
-  {img(lead['image'])}
-  <h2 style="font-size:clamp(24px,5vw,34px)">{esc(lead['headline'])}</h2>
-  <p class="dek">{esc(lead['dek'])}</p>
-  <div class="meta">{author_link(lead['author'])} · {lead['time']} · {lead['reading']}</div>
-</div>"""
-    items = "".join(
-        f"""<div class="photo-card">{img(it['image'])}<h3>{esc(it['headline'])}</h3><div class="meta">{author_link(it['author'])} · {esc(it['time'])}{' · ' + it['reading'] if it.get('reading') else ''}</div></div>"""
-        for it in C.NEPSZAVA_ITEMS[1:]
-    )
-    print_block = "".join(
-        f"""<div class="card-row">{img(it['image'])}<div class="card-body"><h3>{esc(it['headline'])}</h3><div class="meta">{author_link(it['author'])} · Nyomtatásban: 2026. október 8., {it.get('print_page','1')}. oldal · {esc(it.get('reading') or '')}</div></div></div>"""
-        for it in C.NEPSZAVA_ITEMS if it.get("print_page")
-    )
-    velemeny = "".join(
-        f"""<div class="card-row"><div class="card-body"><h3>{esc(v['headline'])}</h3><div class="meta">{author_link(v['author'])} · {esc(v['date'])} · {esc(v['reading'])}</div></div></div>"""
-        for v in C.NEPSZAVA_VELEMENY
-    )
-    authors_html = "".join(
-        f"""<div class="author-card"><div class="ph-box" style="width:100%;aspect-ratio:1/1;background:#e2e2e2;border-radius:6px;margin-bottom:8px"></div><h4>{esc(C.AUTHORS[k]['name'])}</h4><p>{esc(C.AUTHORS[k]['beat'])}</p></div>"""
-        for k in ["toth_akos", "nagy_eszter", "varga_tamas"]
-    )
-    body = f"""<section class="wrap">
-  <div class="rovat-head">
-    <span class="nepszava-badge">Népszava</span>
-    <h1>Népszava</h1>
-    <p>A Népszabadság almárkája: a Népszava szerkesztőségének online anyagai és a nyomtatott lapszámok cikkei, egy helyen.</p>
-    <div class="rovat-pills">{pills}</div>
-  </div>
-  {lead_html}
-  <div class="grid grid-3" style="margin-top:20px">{items}</div>
-  <h2 class="section-h">A nyomtatott lapból</h2>
-  <div class="hairline-list">{print_block}</div>
-  <h2 class="section-h">Vélemény</h2>
-  <div class="hairline-list">{velemeny}</div>
-  <h2 class="section-h">A Népszava szerzői</h2>
-  <div class="authors-grid">{authors_html}</div>
-  <a class="older-btn" href="../index.html">Régebbi cikkek</a>
-</section>
-{reg_band(1)}"""
-    out_dir = HERE / "nepszava"
-    out_dir.mkdir(exist_ok=True)
-    html_out = render_page(
-        "Népszava — a Népszabadság almárkája",
-        "A Népszava: a Népszabadság almárkája — a nyomtatott lapszám cikkei, vélemények, riportok és interjúk egy helyen.",
-        1, "Népszava", body,
-    )
-    (out_dir / "index.html").write_text(html_out, encoding="utf-8")
-    print(f"nepszava/index.html   {len(html_out):6d} bytes")
-
-
 # ---------------------------------------------------------------- Landing (pre-registration)
 def build_landing():
     global _DEPTH
@@ -512,5 +442,4 @@ if __name__ == "__main__":
     build_cimlap()
     build_rovatfront()
     build_cikkoldal()
-    build_nepszava()
     build_landing()

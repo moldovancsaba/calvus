@@ -23,8 +23,9 @@ footer{margin-top:48px;padding-top:16px;border-top:1px solid var(--line);font-si
 <header><p class="eyebrow">Népszabadság · project documentation</p><h1>Népszabadság — project documentation</h1></header>
 <p>The relaunch of Népszabadság as an online paper with a weekly print edition, launching
 2026-10-08: a pre-registration landing page before launch and the site itself (címlap,
-rovatfront, cikkoldal, Népszava márkafront), designed in Figma and prototyped here. The
-Hungarian presentation for the client: <a href="bemutato.html">bemutato.html</a>.</p>
+rovatfront, cikkoldal), designed in Figma and prototyped here — the Figma also designs a
+Népszava sub-brand front, deliberately not built, at the owner's instruction. The Hungarian
+presentation for the client: <a href="bemutato.html">bemutato.html</a>.</p>
 <div class="tbl"><table>
 <thead>
 <tr>
@@ -144,4 +145,14 @@ flagged rather than assumed:</strong> the client's own Figma-designed "Népszava
 nav item and page within the actual site (<code>nepszava/index.html</code>) is a different thing — part
 of the client's own design, not something mentioned by mistake — and has not been touched
 pending the owner's word on whether that should also go.</p>
+<p><strong>2026-09-21 — the Népszava sub-brand removed from the build.</strong> The owner said, asked
+directly and told the deviation from the Figma file plainly beforehand, to remove it. Deleted
+from the built prototype: the <code>Népszava</code> nav item, the whole <code>nepszava/index.html</code> page, the
+Címlap's Népszava block, the front-page "Mi lesz a Népszavával?" tease, the footer's now-empty
+"Almárka" column (three columns, not four), and the four Commons photographs sourced only for
+that section. <code>content.py</code> and <code>build.py</code> updated; <a href="brief.html"><code>00-brief.md</code></a>, <a href="sources.html"><code>03-sources.md</code></a>,
+<a href="design.html"><code>05-design.md</code></a> and <a href="build-log.html"><code>06-build-log.md</code></a> (Round 2) record the change as a deliberate design
+decision, not a correction — <a href="decisions.html"><code>04-decisions.md</code></a> D12. Down to four built pages from five.
+Measured at 390: 0 px overflow, one <code>h1</code>, 0 console errors. Gate clean, no dangling links to
+the deleted page.</p>
 <footer>Népszabadság · dokumentáció, 2026</footer></div></body></html>

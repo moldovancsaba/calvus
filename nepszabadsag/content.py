@@ -39,15 +39,6 @@ IMAGES = {
     "lead-visszateres": dict(file="lead-visszateres.jpg", credit="közkincs, 1819",
         license="közkincs", alt="Történeti nyomdagép-metszet",
         note="szimbolikus illusztráció a lap visszatéréséhez"),
-    "nepszava-interju": dict(file="nepszava-interju.jpg", credit="Alex Proimos / Wikimedia Commons",
-        license="CC BY 2.0", alt="Séfek a konyhában",
-        note="illusztráció — az interjúalany kitalált"),
-    "nepszava-riport": dict(file="nepszava-riport.jpg", credit="Szemes Elek / Wikimedia Commons",
-        license="CC BY-SA 3.0", alt="Nyírmada látképe"),
-    "nepszava-jegyzet": dict(file="nepszava-jegyzet.jpg", credit="Adam Jones / Wikimedia Commons",
-        license="CC BY-SA 3.0", alt="Őszi lombozat a Budai Várból nézve"),
-    "nepszava-hetkepe": dict(file="nepszava-hetkepe.jpg", credit="b k (joiseyshowaa) / Wikimedia Commons",
-        license="CC BY-SA 2.0", alt="Naplemente a Dunán"),
 }
 
 AUTHORS = {
@@ -62,7 +53,7 @@ AUTHORS = {
     "mti": dict(name="MTI", beat=""),
 }
 
-NAV = ["Belföld", "Külföld", "Gazdaság", "Kultúra", "Sport", "Tudomány", "Népszava"]
+NAV = ["Belföld", "Külföld", "Gazdaság", "Kultúra", "Sport", "Tudomány"]
 
 # The one full Cikkoldal demo article — every word of the free-to-read portion is the
 # client's own Figma copy (read on screen 2026-09-21); nothing was invented to extend it,
@@ -97,9 +88,9 @@ CIKKOLDAL = dict(
     related=["haziorvosi-ellatas", "buszhalozat", "lakossagi-megtakaritas"],
 )
 
-# Every other real headline/dek/byline read directly off the Figma frames (Címlap, Rovatfront,
-# Népszava márkafront) — "figma" source. Sport and Tudomány have no Figma frame content, so
-# those two cards are "original": written for this prototype, neutral and evergreen.
+# Every other real headline/dek/byline read directly off the Figma frames (Címlap, Rovatfront)
+# — "figma" source. Sport and Tudomány have no Figma frame content, so those two cards are
+# "original": written for this prototype, neutral and evergreen.
 ARTICLES = {
     "haziorvosi-ellatas": dict(source="figma", rovat="Belföld",
         headline="A kistelepülések háziorvosi ellátásáról szóló vita újraindult",
@@ -162,39 +153,6 @@ ROVATFRONT = dict(
     authors=["kovacs_anna", "varga_tamas", "toth_akos", "szabo_marton", "nagy_eszter", "fodor_marton"],
 )
 
-# Népszava márkafront — real content read from the Figma file.
-NEPSZAVA_ITEMS = [
-    dict(pill="A nyomtatott lapból", headline="Az interjú, amit a lapszám címoldalán hoztunk",
-         short="A lapszám vezető interjúja",
-         dek="Tóth Ákos beszélgetése a Népszava nyomtatott kiadásából, teljes terjedelemben.",
-         author="toth_akos", time="tegnap", reading="9 PERC", image="nepszava-interju"),
-    dict(pill="Riport", headline="Riport a Nyírségből: ami a számokból kimarad",
-         short="Riport a Nyírségből",
-         dek=None, author="varga_tamas", time="09:15", reading="12 PERC", print_page=6,
-         image="nepszava-riport"),
-    dict(pill="Jegyzet", headline="Jegyzet: ami a hétből megmaradt",
-         short="Jegyzet a hétről",
-         dek=None, author="nagy_eszter", time="10:40", reading="4 PERC", print_page=14,
-         image="nepszava-jegyzet"),
-    dict(pill="A nyomtatott lapból", headline="Az olvasói levelek nyomában",
-         short="Az olvasói levelek nyomában",
-         dek=None, author="szerkesztoseg", time="tegnap", reading=None, image="nepszava-jegyzet"),
-    dict(pill="A hét képe", headline="A hét képe: kora őszi fény a Dunán",
-         short="A hét képe",
-         dek=None, author="kovacs_anna", time="tegnap", reading=None, image="nepszava-hetkepe"),
-    dict(pill="Vélemény", headline="Mire jó még a hetilap?",
-         short="Mire jó még a hetilap?",
-         dek=None, author="toth_akos", time="kedd", reading=None, image="nepszava-jegyzet"),
-]
-NEPSZAVA_VELEMENY = [
-    dict(headline="Miért nem a példányszám a kérdés?", author="nagy_eszter",
-         date="2026. október 8.", reading="6 PERC"),
-    dict(headline="A sajtószabadságról tíz év távlatából", author="toth_akos",
-         date="2026. október 8.", reading="10 PERC"),
-    dict(headline="Ki fizeti a vidéki tudósítást?", author="kovacs_anna",
-         date="2026. október 8.", reading="7 PERC"),
-]
-
 LEAD = dict(source="figma",
     headline="Tíz év csend után újra megjelenik a Népszabadság",
     dek="A hetilap október 8-án kerül az újságosokhoz, az online kiadás ugyanaznap reggel "
@@ -202,7 +160,6 @@ LEAD = dict(source="figma",
     reading="6 PERC", image="lead-visszateres",
     teasers=[
         ("Ki írja majd a lapot? A szerkesztőség névsora", None),
-        ("Mi lesz a Népszavával? A két márka viszonya", "#népszava"),
     ],
 )
 
@@ -213,7 +170,6 @@ QUOTE = dict(
 )
 
 FOOTER_ROVATOK = NAV
-FOOTER_ALMARKA = ["Népszava", "A nyomtatott lapról"]
 FOOTER_LAPROL = ["Impresszum", "Etikai kódex", "A szerkesztőség"]
 FOOTER_JOGI = ["Kapcsolat", "Adatvédelmi tájékoztató", "Előfizetési feltételek", "RSS"]
 COPYRIGHT = "© 2026 Liberty Press Kft. Minden jog fenntartva."

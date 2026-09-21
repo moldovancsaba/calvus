@@ -19,13 +19,15 @@ footer is **Liberty Press Kft.**
 
 ## What they publish, per the memo and the Figma
 
-General Hungarian news across **Belföld, Külföld, Gazdaság, Kultúra, Sport, Tudomány**, plus
-**Népszava** as a named section and its own brand front for opinion, interviews and the print
-weekly's own content — presented in the Figma as *"A Népszabadság almárkája: a Népszava
-szerkesztőségének online anyagai és a nyomtatott lapszámok cikkei, egy helyen."* The
-front page itself teases the question **"Mi lesz a Népszavával? A két márka viszonya"**
-("What will happen to Népszava? The relationship between the two brands") — see the name
-question below; the design is already asking the question the research independently raised.
+General Hungarian news across **Belföld, Külföld, Gazdaság, Kultúra, Sport, Tudomány**. The
+Figma also designs **Népszava** as a named section and its own brand front for opinion,
+interviews and the print weekly's own content — presented there as *"A Népszabadság
+almárkája: a Népszava szerkesztőségének online anyagai és a nyomtatott lapszámok cikkei, egy
+helyen,"* with a front-page tease "Mi lesz a Népszavával?" **The owner asked, 2026-09-21, for
+this sub-brand to be removed from the built prototype entirely** — the nav item, the
+`nepszava/index.html` page, the Címlap block and the tease — a deliberate deviation from the
+Figma file, not an oversight (`04-decisions.md` D12). What follows describes the Figma's own
+design; the built site does not include this section.
 
 ## The brief
 
@@ -39,11 +41,11 @@ mobile.
 
 ## What the prototype covers
 
-A serif-headline, subscription-first daily: a front page, section fronts, an article template
-with a registration/paywall mechanic (free registration until 2026-11-15, then a print+online
-subscription at 3 290 Ft), a named sub-brand front, and the pre-registration landing page —
-built from the approved design system and frames once the owner has gated them (`PROTOTYPING.md`
-stages 3–4), in Hungarian, phone and desktop measured separately.
+A serif-headline, subscription-first daily: a front page, one section front, an article
+template with a registration/paywall mechanic (free registration until 2026-11-15, then a
+print+online subscription at 3 290 Ft), and the pre-registration landing page — in Hungarian,
+phone and desktop measured separately. The Figma's own Népszava sub-brand front is not built,
+at the owner's instruction (see above).
 
 ## What is real, and what is not yet
 

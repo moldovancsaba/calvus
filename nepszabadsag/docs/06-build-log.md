@@ -46,3 +46,23 @@ except the landing form which submits client-side only, D9).
 **Not built in this round**: rovat fronts for Külföld, Gazdaság, Kultúra, Sport, Tudomány
 (the Figma designs only Belföld's); a technical package (stages 10–14); the presentation
 (`bemutato.html`) in Hungarian — next.
+
+## Round 2 — 2026-09-21 — the Népszava sub-brand removed (D12)
+
+**Removed, on the owner's explicit instruction** (a deliberate deviation from the Figma file,
+made with the tradeoff stated plainly beforehand, not an error): the `Népszava` nav item; the
+whole `nepszava/index.html` page (`build_nepszava()` deleted from `build.py`); the Címlap's
+Népszava block (six-item grid, "A Népszabadság almárkája" heading); the front-page "Mi lesz a
+Népszavával?" teaser; the footer's "Almárka" column, now three columns instead of four; and
+the four Wikimedia Commons photographs sourced only for that section (`nepszava-interju.jpg`,
+`nepszava-riport.jpg`, `nepszava-jegyzet.jpg`, `nepszava-hetkepe.jpg`). `content.py`'s `NAV`
+list, `FOOTER_ALMARKA`, `NEPSZAVA_ITEMS` and `NEPSZAVA_VELEMENY` removed entirely; the Lead
+story's second teaser link removed since its target no longer exists.
+
+**Measured** (browser pane, cache-busted, all four remaining pages): 390 px — 0 px overflow,
+one `h1`, 0 console errors, 0 sub-44 px targets except the one remaining inline teaser link
+(same accepted pattern as before). Gate re-run clean after the removal — no dangling links to
+the deleted page.
+
+**Now four pages**, not five: `index.html`, `belfold/index.html`,
+`cikk/onkormanyzatok-fejlesztesi-keret.html`, `regisztracio/index.html`.

@@ -2,8 +2,9 @@
 
 The relaunch of Népszabadság as an online paper with a weekly print edition, launching
 2026-10-08: a pre-registration landing page before launch and the site itself (címlap,
-rovatfront, cikkoldal, Népszava márkafront), designed in Figma and prototyped here. The
-Hungarian presentation for the client: [bemutato.html](bemutato.html).
+rovatfront, cikkoldal), designed in Figma and prototyped here — the Figma also designs a
+Népszava sub-brand front, deliberately not built, at the owner's instruction. The Hungarian
+presentation for the client: [bemutato.html](bemutato.html).
 
 | Document | What it holds |
 |---|---|
@@ -97,3 +98,14 @@ flagged rather than assumed:** the client's own Figma-designed "Népszava" sub-b
 nav item and page within the actual site (`nepszava/index.html`) is a different thing — part
 of the client's own design, not something mentioned by mistake — and has not been touched
 pending the owner's word on whether that should also go.
+
+**2026-09-21 — the Népszava sub-brand removed from the build.** The owner said, asked
+directly and told the deviation from the Figma file plainly beforehand, to remove it. Deleted
+from the built prototype: the `Népszava` nav item, the whole `nepszava/index.html` page, the
+Címlap's Népszava block, the front-page "Mi lesz a Népszavával?" tease, the footer's now-empty
+"Almárka" column (three columns, not four), and the four Commons photographs sourced only for
+that section. `content.py` and `build.py` updated; `00-brief.md`, `03-sources.md`,
+`05-design.md` and `06-build-log.md` (Round 2) record the change as a deliberate design
+decision, not a correction — `04-decisions.md` D12. Down to four built pages from five.
+Measured at 390: 0 px overflow, one `h1`, 0 console errors. Gate clean, no dangling links to
+the deleted page.

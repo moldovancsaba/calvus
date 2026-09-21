@@ -43,14 +43,16 @@ The masthead wordmark ("NÉPSZABADSÁG") is bold sans-serif caps, not serif — 
 - **Article pills row**: outlined blue pills under the header on article/rovat pages
   ("Az újraindítás", "A szerkesztőség", "Tíz év után" on the Cikkoldal).
 - **Card row** (photo left, text right) and **photo card** (photo above, text below) — the two
-  teaser patterns used throughout Címlap, Rovatfront and Népszava.
+  teaser patterns used throughout Címlap and Rovatfront.
 - **Tag**: lime background, dark text, uppercase, small — ELEMZÉS, VÉLEMÉNY.
 - **Paywall box**: panel background, blue top border, heading, three bullet teasers, two
   buttons (filled blue "Ingyenes regisztráció", outlined blue "Print+online előfizetés"), a
   login link, a note line — matches the Figma's Cikkoldal frame component for component.
 - **Registration band**: full-width blue bar, white text, a lime pill button — appears at the
   foot of every page, matching the Figma's "blue band" on every frame.
-- **Footer**: four columns (Rovatok, Almárka, A lapról, Jogi és egyéb) + a copyright line.
+- **Footer**: three columns (Rovatok, A lapról, Jogi és egyéb) + a copyright line. The Figma's
+  fourth column, Almárka (Népszava, A nyomtatott lapról), is not built — the sub-brand it
+  named was removed from the prototype (`04-decisions.md` D12).
 - **Countdown**: four number tiles (nap/óra/perc/mp), live via `setInterval`, targeting the
   memo's 2026-10-08 08:00 launch instant.
 
