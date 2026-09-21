@@ -19,7 +19,7 @@ pre{overflow-x:auto;padding:14px 16px;border:1px solid var(--line);background:va
 blockquote{margin:12px 0;padding:12px 16px;border-left:4px solid var(--accent);background:var(--note)}
 footer{margin-top:48px;padding-top:16px;border-top:1px solid var(--line);font-size:12px;color:var(--muted);font-family:var(--nsz-sans)}
 </style></head>
-<body><div class="wrap"><nav class="docnav" aria-label="Project documentation"><span class="docnav-brand">Népszabadság · dokumentáció</span><a href="index.html" aria-current=page>Overview</a><a href="handover.html">Handover</a></nav>
+<body><div class="wrap"><nav class="docnav" aria-label="Project documentation"><span class="docnav-brand">Népszabadság · dokumentáció</span><a href="index.html" aria-current=page>Overview</a><a href="brief.html">Brief</a><a href="research.html">Research</a><a href="audit.html">Audit</a><a href="sources.html">Sources</a><a href="handover.html">Handover</a></nav>
 <header><p class="eyebrow">Népszabadság · project documentation</p><h1>Népszabadság — project documentation</h1></header>
 <p>The relaunch of Népszabadság as an online paper with a weekly print edition, launching
 2026-10-08: a pre-registration landing page before launch and the site itself (címlap,
@@ -33,13 +33,29 @@ rovatfront, cikkoldal, Népszava márkafront), designed in Figma and to be proto
 </thead>
 <tbody>
 <tr>
+<td><a href="brief.html"><code>00-brief.md</code></a></td>
+<td>who the client is, what the brief asks, what is real and not yet, the name (settled)</td>
+</tr>
+<tr>
+<td><a href="research.html"><code>01-research.md</code></a></td>
+<td>the 25-site technical benchmark, Reuters Institute DNR 2026 (Hungary), subscription/paywall benchmarks, the 2016 closure sourced, comparable relaunch cases, design-system references, the rendered-layout study, proposals for the owner</td>
+</tr>
+<tr>
+<td><a href="audit.html"><code>02-audit.md</code></a></td>
+<td>the sister site nepszava.hu measured in depth (its digital-edition subscription system and vendor, its 2026 ad rate card) and the old nol.hu domain</td>
+</tr>
+<tr>
+<td><a href="sources.html"><code>03-sources.md</code></a></td>
+<td>every input and what it contributed, every gap numbered</td>
+</tr>
+<tr>
 <td><a href="handover.html"><code>handover.md</code></a></td>
-<td>where the project stands on 2026-09-21: the inputs read, the Figma frames described, the market measurements, what is not done, the questions</td>
+<td>where the project stood on 2026-09-21 before the research and audit above were written — kept as the record of that session</td>
 </tr>
 </tbody>
 </table></div>
-<p>The standard documentation set (brief, research, audit, sources, decisions, design,
-build log, gate, technical package) is created as each stage is reached.</p>
+<p>The rest of the standard set (decisions, design, build log, gate doc, technical package) is
+created as each stage is reached.</p>
 <h2>Process log</h2>
 <p><strong>2026-09-21 — project opened.</strong> Inputs received: the landing memo
 <code>nsz_landing_20260914_v1.docx</code>, the Figma file (eight frames), the sister site
@@ -51,4 +67,20 @@ a handover document; written as <a href="handover.html"><code>handover.md</code>
 every relative link and asset resolves, every cross-page anchor exists, the two docs
 pages link each other, one <code>h1</code> and a <code>lang</code> attribute per page. Registered on the hub
 and in <a href="index.html"><code>README.md</code></a> already (same commit as the handover); this closes the gate slot.</p>
+<p><strong>2026-09-21 — research and audit written.</strong> <a href="brief.html"><code>00-brief.md</code></a>, <a href="research.html"><code>01-research.md</code></a>,
+<a href="audit.html"><code>02-audit.md</code></a> and <a href="sources.html"><code>03-sources.md</code></a> added, closing stage 0 (brief), stage 1 (research and
+audit) and stage 2 (sources) of <code>PROTOTYPING.md</code>. Research: the 25-site benchmark from
+<a href="handover.html"><code>handover.md</code></a> moved here and joined by sourced industry evidence (Reuters Institute DNR
+2026 Hungary, subscription/paywall benchmarks, the 2016 closure cross-checked across four
+sources, comparable relaunch cases, design-system references) and a rendered-layout study
+in the browser pane at 1440 and 390. Audit: nepszava.hu measured in depth — its digital
+edition runs on a third-party vendor (xximedia.hu), its 2026 ad rate card prices the exact
+banner sizes the Figma uses, and its operating company (XXI. Század Média Zrt.) differs
+from the new design's stated publisher (Liberty Press Kft.) — a fact for the owner, not a
+conclusion drawn here. The owner confirmed the project's name is Népszabadság (an earlier
+"nepszava" reference was a slip); a smaller, separate note — the Figma's internal Népszava
+sub-brand section shares its name with a real, currently-distressed newspaper — is recorded
+in <a href="research.html"><code>01-research.md</code></a> §5 as a one-line question for the client, not a blocker. Next: the
+owner reads the research and says "direction approved," then the Figma is unlocked (Dev
+Mode or exports) and the design-system gate can start.</p>
 <footer>Népszabadság · dokumentáció, 2026</footer></div></body></html>

@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Népszabadság — audit of the starting point · Népszabadság</title><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@400;600;700;800&display=swap"><link rel="stylesheet" href="../assets/tokens.css"><style>/* Népszabadság — documentation on the project's provisional tokens (assets/tokens.css): white ground, black serif, one blue. */
+:root{--ground:var(--nsz-ground);--card:var(--nsz-panel);--ink:var(--nsz-ink);--text:var(--nsz-text);--muted:var(--nsz-muted);--accent:var(--nsz-blue);--accent-2:var(--nsz-lime);--line:var(--nsz-line);--note:#eef2fc}
+*{box-sizing:border-box}body{margin:0;font-family:var(--nsz-serif);background:var(--ground);color:var(--text);font-size:17px;line-height:1.6;padding:0 clamp(16px,4vw,40px) 64px}
+.wrap{max-width:78ch;margin:0 auto}
+.docnav{display:flex;flex-wrap:wrap;gap:2px 14px;align-items:center;padding:12px 0;border-bottom:3px solid var(--ink);font-family:var(--nsz-sans);font-size:13px}
+.docnav a{color:var(--accent);text-decoration:none;min-height:44px;display:inline-flex;align-items:center;font-weight:600}.docnav a[aria-current]{border-bottom:3px solid var(--accent);margin-bottom:-3px}
+.docnav-brand{font-family:var(--nsz-sans);font-weight:800;letter-spacing:.02em;font-size:15px;color:var(--ink);margin-right:8px;text-transform:uppercase}
+header .eyebrow{margin:26px 0 4px;font-family:var(--nsz-sans);font-size:13px;letter-spacing:.06em;text-transform:uppercase;color:var(--accent)}
+h1{font-family:var(--nsz-serif);font-weight:700;font-size:clamp(30px,5vw,44px);line-height:1.08;margin:0 0 14px;color:var(--ink)}
+h2{font-family:var(--nsz-serif);font-weight:700;font-size:26px;margin:44px 0 10px;padding-top:18px;border-top:2px solid var(--ink)}
+h3{font-family:var(--nsz-sans);font-weight:700;font-size:16px;margin:26px 0 8px;letter-spacing:.01em}
+p{margin:0 0 12px}li{margin:4px 0}strong{font-weight:700}em{color:var(--muted)}a{color:var(--accent)}
+code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.84em;background:var(--note);padding:1px 5px;border-radius:4px;overflow-wrap:anywhere}
+.tbl{overflow-x:auto;margin:12px 0 20px;border:1px solid var(--line);background:#fff}table{border-collapse:collapse;width:100%;font-size:14px;min-width:560px;font-family:var(--nsz-sans)}
+th{text-align:left;font-weight:700;background:var(--card);padding:10px 12px;border-bottom:2px solid var(--ink);font-size:12px;letter-spacing:.04em;text-transform:uppercase}td{padding:10px 12px;border-top:1px solid var(--line);vertical-align:top}
+pre{overflow-x:auto;padding:14px 16px;border:1px solid var(--line);background:var(--card);font-size:12px;line-height:1.35}
+blockquote{margin:12px 0;padding:12px 16px;border-left:4px solid var(--accent);background:var(--note)}
+footer{margin-top:48px;padding-top:16px;border-top:1px solid var(--line);font-size:12px;color:var(--muted);font-family:var(--nsz-sans)}
+</style></head>
+<body><div class="wrap"><nav class="docnav" aria-label="Project documentation"><span class="docnav-brand">Népszabadság · dokumentáció</span><a href="index.html">Overview</a><a href="brief.html">Brief</a><a href="research.html">Research</a><a href="audit.html" aria-current=page>Audit</a><a href="sources.html">Sources</a><a href="handover.html">Handover</a></nav>
+<header><p class="eyebrow">Népszabadság · project documentation</p><h1>Népszabadság — audit of the starting point</h1></header>
+<p><em>The new Népszabadság has no current site of its own — the old domain (nol.hu) is a dead
+archive stub. What is measured here is the sister brand the design names throughout
+(nepszava.hu, "A Népszabadság almárkája") and the old domain, both with <code>curl</code> from this
+environment, 2026-09-21. Every figure below is what a tool returned; nothing is estimated.</em></p>
+<h2>1. nepszava.hu — the sister site named in the design</h2>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>Measure</th>
+<th>Value</th>
+<th>What it means</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Stack</td>
+<td>Cloudflare in front; home rendered client-side by <code>/js/home/index.js</code>; AdSense, <code>gemius.js</code> (audience measurement), <code>pegapoll.com</code> embed, D3.js, Swiper</td>
+<td>a JS-rendered front page — <code>curl</code> sees an empty shell for the nav and most content; a real DOM read needs a browser</td>
+</tr>
+<tr>
+<td>Weight (curl, 2026-09-21)</td>
+<td>48 KB HTML, 27 scripts, 57 stylesheets, 30 <code>&lt;img&gt;</code></td>
+<td>57 stylesheet links on one page is unusually high — see <a href="research.html"><code>01-research.md</code></a> §1 for how this compares to the other 24 sites measured</td>
+</tr>
+<tr>
+<td>Cache</td>
+<td><code>cache-control: no-store, no-cache, must-revalidate</code> on the home page</td>
+<td>every visit is a fresh render — no edge cache for the front page, which the site's own headers confirm</td>
+</tr>
+<tr>
+<td><code>robots.txt</code></td>
+<td>disallows <code>/digitalisujsag</code>, <code>/digitalisujsag_bejelentkezes</code>, <code>/json/*</code>, <code>/default.asp</code>, <code>/articles/article.php</code>, <code>/PrintArticle.asp</code>; sitemap at <code>/sitemapindex.xml</code></td>
+<td>the disallow list names a <code>digitalisujsag</code> ("digital newspaper") product with its own login page — see §2</td>
+</tr>
+<tr>
+<td>Meta</td>
+<td><code>description</code>: "Népszava politikai napilap"; <code>og:site_name</code> "Népszava"; Google Play app id <code>hu.nepszava.mobile</code>, Apple App Store id <code>1446287033</code></td>
+<td>the sister brand runs its own native apps, separate from the web site</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>P</strong> <a href="https://nepszava.hu/">nepszava.hu</a> (curl, 2026-09-21); <a href="https://nepszava.hu/robots.txt">nepszava.hu/robots.txt</a></p>
+<h2>2. The digital edition — a real subscription product, run by a third party</h2>
+<p>Fetching the disallowed paths directly (curl, not a crawler, so <code>robots.txt</code> does not block
+the request) shows a working product: <code>/digitalisujsag</code> loads a page-flip e-paper reader
+(<code>pdfobject.js</code>, a Swiper-based page viewer, a calendar to pick a past issue, dark mode, a
+resizable font — read from the page's own <code>&lt;meta&gt;</code> and <code>&lt;script&gt;</code> tags) gated by a login
+form. The login form itself resolves to a <strong>third-party vendor</strong>, not code on nepszava.hu:</p>
+<ul>
+<li>The registration link on the login screen points to <code>https://xximedia.hu/felhasznalo?reg=reg</code>
+  and the product-information link to <code>https://xximedia.hu/mobilnsz</code> — a Hungarian e-paper /
+  digital-newsstand platform, not a nepszava.hu-built system. <strong>P</strong> (the site's own login
+  fragment, fetched directly, 2026-09-21)</li>
+<li>The vendor's product page for "mobil Népszava" states, in its own words (2026-09-21):
+  <em>"A kiadvány jelenleg nem elérhető"</em> — the publication is <strong>currently not offered</strong> — with
+  a note that the newsroom still produces the paper at the same standard but "jelenleg
+  azonban csak digitális formában tudjuk ezeket kínálni" (currently only in digital form), and
+  a subscription is what makes the mobile app and the full nepszava.hu content
+  accessible. <strong>P</strong> <a href="https://xximedia.hu/mobilnsz">xximedia.hu/mobilnsz</a>, 2026-09-21</li>
+<li>The vendor page names the operating company as <strong>XXI. Század Média Zrt.</strong>, KÖKI Terminál
+  B irodaépület, 1191 Budapest, Vak Bottyán u. 75/A-C — not the "Liberty Press Kft." the new
+  Népszabadság's Figma footer names (<a href="handover.html"><code>handover.md</code></a> §2). <strong>This is a plain fact, not a
+  conclusion</strong>: it says the sister brand's current publisher differs from the new project's
+  stated publisher; whether that is a change of ownership, a separate holding entity, or
+  something to raise with the client is for the owner, not this document. <strong>P</strong> <a href="https://xximedia.hu/files/public/cikkepek/261/File/2026/NEPSZAVA_ONLINE_MEDIAAJANLO_2026_03.pdf">xximedia.hu
+  media kit PDF</a>,
+  2026-09-21 (see §3)</li>
+</ul>
+<p><strong>What it means here.</strong> The design's "November 15-ig ingyenes regisztrációval… utána
+Print+online előfizetés — 3 290 Ft" mechanic has a direct precedent one click away: the
+sister brand already runs a paid digital-edition reader, already outsourced to a specialist
+vendor rather than built in-house. That is a real build-vs-buy option for the new site's own
+paywall/reader, not a hypothetical — worth a line in <a href="sources.html"><code>03-sources.md</code></a> and a question for the
+owner (who has the commercial relationship with the vendor, if any, for the new title).</p>
+<h2>3. Advertising — a real, priced rate card for the exact slot sizes the Figma uses</h2>
+<p>nepszava.hu's own 2026 online rate card (PDF, effective 2026-08-27, downloaded from
+<code>xximedia.hu</code>, prices in HUF, list price, ex-VAT, per week) prices the same header/rail/
+inline banner sizes the client's Figma frames show (970×250, 300×250, 300×300, 300×600):</p>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>Placement</th>
+<th>Sizes</th>
+<th>Weekly list price (Ft, ex-VAT)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Multiscreen premium, header, home page</td>
+<td>970×250 + 300×300</td>
+<td>4 790 000</td>
+</tr>
+<tr>
+<td>Multiscreen premium, header, article pages</td>
+<td>970×250 + 300×300</td>
+<td>3 590 000</td>
+</tr>
+<tr>
+<td>Multiscreen basic, header, home page</td>
+<td>728×90 + 300×250</td>
+<td>4 390 000</td>
+</tr>
+<tr>
+<td>Multiscreen basic, header, article pages</td>
+<td>728×90 + 300×250</td>
+<td>2 990 000</td>
+</tr>
+<tr>
+<td>Desktop premium, right rail, home page</td>
+<td>300×600</td>
+<td>3 590 000</td>
+</tr>
+<tr>
+<td>Desktop basic, right rail, home page</td>
+<td>300×250</td>
+<td>2 700 000</td>
+</tr>
+<tr>
+<td>Desktop basic, right rail, article pages</td>
+<td>300×250</td>
+<td>2 000 000</td>
+</tr>
+<tr>
+<td>Sponsored article (agency-written), front-page feature</td>
+<td>—</td>
+<td>3 000 000</td>
+</tr>
+<tr>
+<td>Sponsored article (client-supplied), front-page feature</td>
+<td>—</td>
+<td>2 700 000</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>P</strong> <a href="https://xximedia.hu/files/public/cikkepek/261/File/2026/NEPSZAVA_ONLINE_MEDIAAJANLO_2026_03.pdf">Népszava Online Tarifa 2026, XXI. Század Média Zrt.</a>,
+effective 2026-08-27</p>
+<p><strong>What it means here.</strong> The Figma's ad slots (970×250, 300×250, 600×250 per <a href="handover.html"><code>handover.md</code></a>
+§3) are not a designer's placeholder convention — they are the exact commercial inventory
+sizes the Hungarian market (or at least this publisher) already sells, at these prices. If
+the new site inherits or competes with this inventory, these are the real numbers to build
+a rate card from rather than invent one; a video-banner surcharge of 50% and a 70 KB static
+creative limit are stated in the same document.</p>
+<h2>4. nol.hu — the old Népszabadság domain</h2>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>Measure</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>HTTP</td>
+<td>200</td>
+</tr>
+<tr>
+<td>Content</td>
+<td>a one-line stub, Arial, no scripts, no stylesheets, no images: <em>"A nol.hu archívumára a Lapcentrumon lehet előfizetni."</em></td>
+</tr>
+<tr>
+<td>What it means</td>
+<td>the historic domain is fully retired; the archive itself is sold as a subscription through a third party, lapcentrum.hu, not served here</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>P</strong> <a href="https://nol.hu/">nol.hu</a>, curl 2026-09-21 (also recorded in <a href="research.html"><code>01-research.md</code></a> §1)</p>
+<h2>5. The rendered home page — read in the browser pane, 2026-09-21</h2>
+<p><code>curl</code> only returns the JS shell (§1); read directly in the browser at 1440 and 390 instead
+(full write-up and the nine-site comparison in <a href="research.html"><code>01-research.md</code></a> §7). In short: two full-width
+ad units stack directly under the masthead before any editorial content, one of them unfilled
+and the other a foreign-market shopping carousel; the lead story runs with no photograph at
+all; a floating overlay ad appears on scroll; <strong>no subscription or registration control is
+visible anywhere in the header, hero or body</strong> — "Előfizetés" is one small footer link; and on
+mobile the header shrinks to a bare "N" monogram with a mistargeted French-language ad
+immediately below it. Against the other nine sites measured the same way, this is the least
+curated and least subscription-forward home page of the set — a concrete, fixable gap for the
+new site to not repeat (<a href="research.html"><code>01-research.md</code></a> §7 proposals P8–P9).</p>
+<h2>6. What was not measured, and why</h2>
+<ul>
+<li><strong>Whether XXI. Század Média Zrt. and Liberty Press Kft. are related</strong> — a fact for the owner
+  to confirm or correct, not something this audit infers from public pages.</li>
+<li><strong>The App Store / Play Store listings for "mobil Népszava"</strong> — the Apple listing rate-limited
+  this environment (HTTP 429) and the Play Store page did not expose price text to a plain
+  fetch (client-rendered); neither was pursued further.</li>
+</ul>
+<footer>Népszabadság · dokumentáció, 2026</footer></div></body></html>

@@ -35,10 +35,10 @@ system, frames, generated pages, gate, presentation). The owner's follow-up the 
 hour: *"I hope you started with a deep market research."* — the research is the first
 deliverable, before any page.
 
-## 2. The name — one thing to settle before the URL goes live
+## 2. The name — settled
 
-The owner's message calls the project **"nepszava"** and points at **nepszava.hu**. Every
-input says **Népszabadság**: the memo ("indul újra a Népszabadság napilap", "Megújul a
+The owner's message first called the project **"nepszava"**; every written input said
+**Népszabadság**: the memo ("indul újra a Népszabadság napilap", "Megújul a
 Népszabadság!"), the Figma file's name, the logo in every frame, and the frame
 "Népszava márkafront", which reads *"A Népszabadság almárkája: a Népszava
 szerkesztőségének online anyagai és a nyomtatott lapszámok cikkei, egy helyen."* — so in
@@ -46,9 +46,12 @@ this design **Népszava is a sub-brand of Népszabadság**, a rovat in the main 
 and a brand front of its own, and the front page teases "Mi lesz a Népszavával? A két
 márka viszonya". The publisher line in every footer is **© 2026 Liberty Press Kft.**
 
-This folder is therefore `nepszabadsag/`. It is not live yet; if the owner wants
-`nepszava/`, rename before the first push (after a push a redirect stub must stay, per
-the repo rule). nepszava.hu stays in the audit as the sister brand's current site.
+The owner confirmed 2026-09-21 that "nepszava" was their own slip: the project is
+**Népszabadság**. The folder `nepszabadsag/`, already live, needs no rename. nepszava.hu
+stays in the audit as the sister brand's current site (`02-audit.md`) — and, separately, a
+small note surfaced in `01-research.md` §5: a real, unrelated newspaper of that name is
+independently in a well-reported crisis, worth one line of confirmation with the client
+someday, not a blocker.
 
 ## 3. What the Figma frames contain (read on screen, 2026-09-21)
 
@@ -125,69 +128,30 @@ from 2026-11-15, a print weekly ("A hetilap október 8-án kerül az újságosok
 slots on every page (970 × 250, 300 × 250, 600 × 250), and the reader-relationship
 mechanics (author cards with "set as primary source", topic pills, "Legfrissebb").
 
-## 4. Market research — what was measured today
+## 4. Market research — what was measured that day
 
-Twenty-five home pages fetched with `curl` from this environment (desktop UA, gzip,
-one cold request each; TTFB and size are single readings, not averages):
+Twenty-five home pages were fetched with `curl` that day (desktop UA, gzip, one cold
+request each). The full table, since folded into the project's single research document
+along with the rendered-layout pass and the sourced industry evidence that followed, now
+lives in **`01-research.md` §1** — this handover keeps no separate copy of it. Raw HTML of
+every fetch and `bench.json` are in that session's scratchpad, not in the repo.
 
-| Site | HTTP | TTFB s | HTML KB | scripts | stylesheets | `<img>` | Stack signals | Fonts seen in HTML | Nav / brand colour |
-|---|---|---|---|---|---|---|---|---|---|
-| nytimes.com | 403 (bot wall) | 0.11 | 0.8 | — | — | — | — | — | not measurable by curl; the browser pane refuses nytimes.com |
-| washingtonpost.com | connection reset | — | — | — | — | — | — | — | not reachable from here |
-| wsj.com | 401 (bot wall) | 0.14 | 0.8 | — | — | — | — | — | — |
-| theguardian.com/uk | 200 | 0.14 | 163 | 19 | 1 | 139 | Next.js, Permutive | GH Guardian Headline, Guardian Text Egyptian, Guardian Text Sans | News · Opinion · Sport · Culture · Lifestyle; #052962 (theme-color), red #c70000 |
-| bbc.com/news | 200 | 0.04 | 64 | 59 | 0 | 44 | Next.js, Piano, Optimizely, Permutive | BBC Reith Sans / Serif | Home · News · Sport · Business · Technology · Health · Culture · Arts · Travel · Earth · Audio · Video · Live; black, red #b80000 |
-| ft.com | 403 (security check) | 0.05 | 198 | — | — | — | Vue | Financier Display, Metric | pink #fff1e5, teal #0d7680 |
-| spiegel.de | 200 | 0.10 | 253 | 23 | 2 | 640 | Next.js/React | SpiegelSans, SpiegelSerif, SpiegelSlab, National2Narrow | 22 nav items (Politik … Geschichte); theme-color #e64415 |
-| zeit.de | 403 ("Da ist etwas schiefgelaufen") | 0.12 | 5 | — | — | — | — | — | — |
-| faz.net/aktuell | 200 | 0.09 | 295 | 29 | 1 | 137 | Nuxt/Vite, jQuery | Roboto, Source Sans 3 | Politik · Wirtschaft · Finanzen · Feuilleton · Karriere · Sport · Gesellschaft · Besser leben · Rhein-Main · Technik · Wissen · Reise; red #c60000 |
-| sueddeutsche.de | 200 | 0.03 | 283 | 82 | 1 | 181 | Next.js, GTM, Piano | SZ Sans Digital, SZ Text, Old Standard, Montserrat | SZ.de · Zeitung · Magazin · Jetzt · Dossier; #29293a, teal #009990 |
-| nikkei.com | 200 | 2.41 | 95 | 8 | 1 | 216 | Next.js/Vite | (system) | theme-color #003e70, red #d11100 |
-| straitstimes.com/global | 200 | 0.63 | 64 | 38 | 2 | 58 | Next.js, Piano, Chartbeat | (system) | Singapore · Asia · World · Opinion · Life · Business · Sport; #161616 |
-| scmp.com | 200 | 0.09 | 244 | 116 | 6 | 34 | Next.js, GTM, Piano, Optimizely | Roboto, Roboto Condensed, Crete Round | #2c4692 / #001246 |
-| thehindu.com | 200 | 0.43 | 65 | 80 | 5 | 123 | Next/React, jQuery, GTM, Piano, Chartbeat | (system) | #2b2e34 |
-| people.com.cn | 200 | 0.75 | 37 | 33 | 4 | 148 | jQuery | (system) | blue #006ebf, red #b64d3a; 664 links on the home page |
-| news.cn (Xinhua) | 200 | 0.50 | 42 | 13 | 2 | 84 | jQuery | (system) | 694 links |
-| caixin.com | 200 | 0.76 | 26 | 48 | 2 | 79 | jQuery | Arial | #1f286f, #0098d0 |
-| telex.hu | 200 | 0.07 | 143 | 6 | 16 | 74 | Nuxt/Vite, GTM | (self-hosted) | #222228, red #ef1b1b, blue #0439d9 |
-| 444.hu | 200 | 0.04 | 49 | 7 | 3 | 96 | Next.js, GTM | (self-hosted) | 44 `<h1>` on the home page; orange #ffb76a |
-| hvg.hu | 200 | 0.04 | 64 | — | — | — | — | — | orange #f26522 |
-| index.hu | 200 | 0.05 | 75 | 86 | 5 | 188 | Vite, jQuery, GTM | (self-hosted) | Belföld · Külföld · Gazdaság · Kult · Vélemény · Tech-Tud · Sport · Fomo · 24 Óra · Blog · Videó · Podcast; #ff9900 |
-| 24.hu | 200 | 0.03 | 66 | 54 | 8 | 140 | WordPress (AIOSEO, WPBakery), Vue, jQuery | (self-hosted) | Belföld · Nagyvilág · Közélet · Tudomány · Sport · Élet-Stílus · … 22 items; green #57a600, #002e5e |
-| nepszava.hu | 200 | 0.05 | 48 | 27 | 57 | 30 | Cloudflare, AdSense, OneSignal, Gemius, d3, Swiper; home rendered by `/js/home/index.js` | (self-hosted, `fontconfig.css`) | description "Népszava politikai napilap"; 57 stylesheet links; `cache-control: no-store` |
-| hang.hu (Magyar Hang) | 200 | 0.08 | 63 | 28 | 4 | 49 | Next.js, jQuery, GTM | (self-hosted) | 22 nav items incl. podcasts; teal #018d98 |
-| nol.hu (the old Népszabadság) | 200 | 0.03 | 0.5 | 0 | 0 | 0 | a one-line stub | Arial | "A nol.hu archívumára a Lapcentrumon lehet előfizetni." — the archive is sold through lapcentrum.hu; nothing else is served |
-
-Raw HTML of every fetch and `bench.json` are in the session scratchpad
-(`scratchpad/bench/`), not in the repo.
-
-**What the numbers already say.** (1) The reference sites that matter most for a
-serif, subscription-first daily (NYT, WSJ, FT, Zeit, WaPo) cannot be read from this
-environment by `curl`, and the browser pane refuses nytimes.com — their layouts must be
-read in the owner's own browser or from published design sources. (2) Every measurable
-leader is on Next.js / Nuxt with a self-hosted type family of two or three faces and one
-brand colour plus red for live/breaking. (3) The Hungarian field splits: Telex (Nuxt,
-6 scripts, 143 KB) and 444 (Next, 7 scripts) are lean; Index (86 scripts) and 24.hu
-(WordPress + WPBakery, 54 scripts) are heavy; nepszava.hu ships 57 stylesheet links and
-`no-store` caching. (4) Home pages carry 236–782 links; the Figma címlap carries far
-fewer — a deliberate choice to be defended in the research.
-
-## 5. What is not done yet — the order, per `PROTOTYPING.md`
+## 5. Where each stage stands now — the order, per `PROTOTYPING.md`
 
 | Stage | State | What it needs |
 |---|---|---|
-| Research (`01-research.md`) | **measurements only** (§4); no layout study, no colour study, no industry sources yet | a rendered look at each site at 1440 and 390 (the browser pane can open all but nytimes.com; the owner stopped the screenshot sweep at 2026-09-21 — restart it or supply screenshots); Reuters Institute Digital News Report 2026 (Hungary page: trust, paid news, brand reach), Press Gazette / FIPP subscription benchmarks, relaunch cases (Népszabadság 2016 closure sources; comparable relaunches), the NYT / Guardian / Spiegel design-system write-ups |
-| Audit (`02-audit.md`) | nepszava.hu measured once (§4); nol.hu measured | the sister site's page architecture and its subscription flow; the memo's landing has no current site to audit |
-| Brief (`00-brief.md`) | this handover stands in | to be cut from §1–§3 once the name is settled |
-| Sources (`03-sources.md`) | memo read in full; Figma read on screen | the Figma spec (Dev Mode or PNG + variables), the logo files, the type licences, the photographs, the "utolsó poszt" source, the registration back end (who receives the form) |
+| Brief (`00-brief.md`) | **written 2026-09-21** — client, brief, what's real, the name (settled) | owner reads it |
+| Research (`01-research.md`) | **written 2026-09-21** — the 25-site technical benchmark, a rendered-layout pass at 1440/390 for ten reachable sites, Reuters Institute DNR 2026 (Hungary), subscription/paywall benchmarks, the 2016 closure cross-checked across four sources, comparable relaunch cases, design-system references, proposals P1–P9 | owner says "direction approved" |
+| Audit (`02-audit.md`) | **written 2026-09-21** — nepszava.hu measured in depth (digital-edition vendor, 2026 ad rate card, rendered home page) and nol.hu | — |
+| Sources (`03-sources.md`) | **written 2026-09-21** — every input and every gap numbered | the gaps listed there (Figma spec, logo files, photographs, the registration back end, the "utolsó poszt" source) |
 | Design system | `assets/tokens.css` provisional | confirmation from Figma, then the live components page → owner gate |
 | Frames 1440 / 390 | Figma has them | transcribe once tokens are confirmed → owner gate |
 | Build | — | generator for címlap / rovat / cikk / márkafront + the landing; sample data declared sample |
-| Gate, sweep, presentation, technical package | — | as the standard |
+| Gate, sweep, presentation, technical package | gate (`check.py`) exists | sweep, presentation and technical package once the build exists |
 
 ## 6. Questions for the owner (none blocks the research)
 
-1. Folder and URL: `nepszabadsag/` (as every input says) or `nepszava/` (as the message says)?
+1. Folder and URL: `nepszabadsag/` or `nepszava/`? **Settled 2026-09-21** — Népszabadság, `nepszabadsag/`.
 2. Figma: enable the Dev Mode MCP server, or export the eight frames as PNG at 1× plus the variables — either gives exact tokens.
 3. The landing goes live before 2026-10-08: is it a page inside this prototype, or a page the client's developer ships from our spec? Who receives the registration form (Vezetéknév, Keresztnév, e-mail)?
 4. "A Szerkesztőség — az utolsó poszt": which channel is the post source (a blog, Instagram, Facebook)?

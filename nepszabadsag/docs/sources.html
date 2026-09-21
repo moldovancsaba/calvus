@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Népszabadság — sources and gaps · Népszabadság</title><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@400;600;700;800&display=swap"><link rel="stylesheet" href="../assets/tokens.css"><style>/* Népszabadság — documentation on the project's provisional tokens (assets/tokens.css): white ground, black serif, one blue. */
+:root{--ground:var(--nsz-ground);--card:var(--nsz-panel);--ink:var(--nsz-ink);--text:var(--nsz-text);--muted:var(--nsz-muted);--accent:var(--nsz-blue);--accent-2:var(--nsz-lime);--line:var(--nsz-line);--note:#eef2fc}
+*{box-sizing:border-box}body{margin:0;font-family:var(--nsz-serif);background:var(--ground);color:var(--text);font-size:17px;line-height:1.6;padding:0 clamp(16px,4vw,40px) 64px}
+.wrap{max-width:78ch;margin:0 auto}
+.docnav{display:flex;flex-wrap:wrap;gap:2px 14px;align-items:center;padding:12px 0;border-bottom:3px solid var(--ink);font-family:var(--nsz-sans);font-size:13px}
+.docnav a{color:var(--accent);text-decoration:none;min-height:44px;display:inline-flex;align-items:center;font-weight:600}.docnav a[aria-current]{border-bottom:3px solid var(--accent);margin-bottom:-3px}
+.docnav-brand{font-family:var(--nsz-sans);font-weight:800;letter-spacing:.02em;font-size:15px;color:var(--ink);margin-right:8px;text-transform:uppercase}
+header .eyebrow{margin:26px 0 4px;font-family:var(--nsz-sans);font-size:13px;letter-spacing:.06em;text-transform:uppercase;color:var(--accent)}
+h1{font-family:var(--nsz-serif);font-weight:700;font-size:clamp(30px,5vw,44px);line-height:1.08;margin:0 0 14px;color:var(--ink)}
+h2{font-family:var(--nsz-serif);font-weight:700;font-size:26px;margin:44px 0 10px;padding-top:18px;border-top:2px solid var(--ink)}
+h3{font-family:var(--nsz-sans);font-weight:700;font-size:16px;margin:26px 0 8px;letter-spacing:.01em}
+p{margin:0 0 12px}li{margin:4px 0}strong{font-weight:700}em{color:var(--muted)}a{color:var(--accent)}
+code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.84em;background:var(--note);padding:1px 5px;border-radius:4px;overflow-wrap:anywhere}
+.tbl{overflow-x:auto;margin:12px 0 20px;border:1px solid var(--line);background:#fff}table{border-collapse:collapse;width:100%;font-size:14px;min-width:560px;font-family:var(--nsz-sans)}
+th{text-align:left;font-weight:700;background:var(--card);padding:10px 12px;border-bottom:2px solid var(--ink);font-size:12px;letter-spacing:.04em;text-transform:uppercase}td{padding:10px 12px;border-top:1px solid var(--line);vertical-align:top}
+pre{overflow-x:auto;padding:14px 16px;border:1px solid var(--line);background:var(--card);font-size:12px;line-height:1.35}
+blockquote{margin:12px 0;padding:12px 16px;border-left:4px solid var(--accent);background:var(--note)}
+footer{margin-top:48px;padding-top:16px;border-top:1px solid var(--line);font-size:12px;color:var(--muted);font-family:var(--nsz-sans)}
+</style></head>
+<body><div class="wrap"><nav class="docnav" aria-label="Project documentation"><span class="docnav-brand">Népszabadság · dokumentáció</span><a href="index.html">Overview</a><a href="brief.html">Brief</a><a href="research.html">Research</a><a href="audit.html">Audit</a><a href="sources.html" aria-current=page>Sources</a><a href="handover.html">Handover</a></nav>
+<header><p class="eyebrow">Népszabadság · project documentation</p><h1>Népszabadság — sources and gaps</h1></header>
+<p><em>What every finding in this documentation set is built from, and every gap between the ask
+and what is actually in hand. Written 2026-09-21.</em></p>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>Content</th>
+<th>Source</th>
+<th>Real or gap</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>The landing page's seven sections, copy and states</td>
+<td><code>nsz_landing_20260914_v1.docx</code>, read in full 2026-09-21</td>
+<td><strong>real</strong>, quoted verbatim in <a href="handover.html"><code>handover.md</code></a> §1</td>
+</tr>
+<tr>
+<td>The site's page set, section names, chrome and business model (registration wall, 3 290 Ft print+online from 2026-11-15, ad slot sizes)</td>
+<td>the Figma file "Népszabadság" (<code>RVrEZZJdxBZdiZs2MJrJUD</code>), eight frames read on screen at 50%/100% zoom, 2026-09-21</td>
+<td><strong>real</strong> structure; <strong>not real</strong> colours, exact type sizes and spacing — Dev Mode is not enabled here (<a href="handover.html"><code>handover.md</code></a> §3)</td>
+</tr>
+<tr>
+<td>Provisional design tokens</td>
+<td><code>assets/tokens.css</code>, read from the screen</td>
+<td><strong>sample</strong> — placeholders until the Figma spec is exported</td>
+</tr>
+<tr>
+<td>The 25-site technical benchmark (stack, weight, TTFB, fonts, nav, colour)</td>
+<td><code>curl</code> from this environment, 2026-09-21 (<a href="research.html"><code>01-research.md</code></a> §1)</td>
+<td>real, measured</td>
+</tr>
+<tr>
+<td>The rendered-layout study (grid, colour as rendered, typography, density) at 1440 and 390</td>
+<td>the app's browser pane, 2026-09-21 (<a href="research.html"><code>01-research.md</code></a> §7)</td>
+<td>real, measured; NYT, WSJ, FT, Zeit and WaPo could not be reached — their layouts rest on published sources instead</td>
+</tr>
+<tr>
+<td>Reuters Institute Digital News Report 2026 (Hungary): trust, payment, brand reach, media-capture context</td>
+<td>fetched directly 2026-09-21 (<a href="research.html"><code>01-research.md</code></a> §2)</td>
+<td>real, cited <strong>P</strong></td>
+</tr>
+<tr>
+<td>Subscription/paywall conversion and pricing benchmarks</td>
+<td>trade press and one 2025 European pricing study (Funds4Media, 101 titles) (<a href="research.html"><code>01-research.md</code></a> §3)</td>
+<td>real, cited, mostly <strong>A</strong> (secondary); no CEE-specific print+digital bundle benchmark exists in the source</td>
+</tr>
+<tr>
+<td>Népszabadság's 2016 closure</td>
+<td>four sources cross-checked: Euronews, Human Rights Watch, RSF's own statement, Direkt36's investigative retrospective (<a href="research.html"><code>01-research.md</code></a> §4)</td>
+<td>real, cited, cross-corroborated</td>
+</tr>
+<tr>
+<td>Comparable relaunch cases (Magyar Nemzet, The Independent's post-print transition, <strong>the real Népszava's 2026 crisis</strong>)</td>
+<td>Wikipedia, Balkan Insight, a Reuters-Institute-hosted academic study (<a href="research.html"><code>01-research.md</code></a> §5)</td>
+<td>real, cited; the Népszava finding is the one item here that changes a brief-level decision — see <a href="brief.html"><code>00-brief.md</code></a></td>
+</tr>
+<tr>
+<td>Published design-system references (Guardian Source, NYT typefaces, Spiegel's 2016 redesign)</td>
+<td>the Guardian's own design-system site (primary), Fonts In Use (secondary, for NYT's proprietary type), Spiegel's own dev blog (fetch blocked; used via a verified search summary) (<a href="research.html"><code>01-research.md</code></a> §6)</td>
+<td>real, cited; the NYT and Spiegel items lean on secondary or unverified-by-direct-fetch sources — flagged in place</td>
+</tr>
+<tr>
+<td>nepszava.hu: stack, weight, cache headers, <code>robots.txt</code>, the digital-edition login system, the third-party vendor (xximedia.hu), the 2026 ad rate card, the operating company (XXI. Század Média Zrt.)</td>
+<td><code>curl</code>, 2026-09-21 (<a href="audit.html"><code>02-audit.md</code></a> §1–3)</td>
+<td>real, measured and quoted from the vendor's own pages and PDF</td>
+</tr>
+<tr>
+<td>nol.hu (the old domain)</td>
+<td><code>curl</code>, 2026-09-21 (<a href="audit.html"><code>02-audit.md</code></a> §4)</td>
+<td>real — a one-line stub; the archive is sold via lapcentrum.hu, not audited here</td>
+</tr>
+</tbody>
+</table></div>
+<h2>Gaps — what the client (or a next session) still needs to supply</h2>
+<ol>
+<li><strong>The Népszava sub-brand name</strong> — a one-line confirmation, whenever convenient, that the
+   Figma's internal Népszava section is unrelated to the real, currently-distressed newspaper
+   of that name; low priority, not a blocker. The project's own name is settled: Népszabadság
+   (owner, 2026-09-21) — see <a href="brief.html"><code>00-brief.md</code></a>.</li>
+<li><strong>Exact design tokens.</strong> Figma Dev Mode (MCP server) or an export of the eight frames as
+   PNG plus the variables list — <a href="handover.html"><code>handover.md</code></a> §3.</li>
+<li><strong>Logo files, type licences, and the photographs</strong> the frames currently show as
+   placeholders — no AI-generated imagery, per the repo rule.</li>
+<li><strong>A Szerkesztőség's "utolsó poszt"</strong> — which channel supplies the latest post (blog,
+   Instagram, Facebook) that the landing page and the front page both promise to show.</li>
+<li><strong>Who receives the landing page's registration form</strong> (Vezetéknév, Keresztnév, e-mail) —
+   the client's developer, or this prototype.</li>
+<li><strong>The relationship (if any) between XXI. Század Média Zrt.</strong> (nepszava.hu's operator,
+   per its own vendor's rate card, <a href="audit.html"><code>02-audit.md</code></a> §2–3) <strong>and Liberty Press Kft.</strong> (the new
+   design's stated publisher) — a plain fact for the owner to confirm, not something inferred
+   here.</li>
+<li><strong>Whether the new title's paywall/reader reuses or replaces</strong> the sister site's existing
+   third-party digital-edition vendor (xximedia.hu) — a real build-vs-buy decision with a
+   working precedent already measured (<a href="audit.html"><code>02-audit.md</code></a> §2).</li>
+</ol>
+<footer>Népszabadság · dokumentáció, 2026</footer></div></body></html>

@@ -3,7 +3,7 @@
 Run from anywhere:  python3 nepszabadsag/docs/build.py   (needs the `markdown` package)."""
 import re, pathlib, markdown
 HERE = pathlib.Path(__file__).parent
-PAGES = [("README.md", "index.html", "Overview"), ("handover.md", "handover.html", "Handover")]
+PAGES = [("README.md", "index.html", "Overview"), ("00-brief.md", "brief.html", "Brief"), ("01-research.md", "research.html", "Research"), ("02-audit.md", "audit.html", "Audit"), ("03-sources.md", "sources.html", "Sources"), ("handover.md", "handover.html", "Handover")]
 CSS = (HERE / "docs.css").read_text(encoding="utf-8")
 for src, out, label in PAGES:
     md = (HERE / src).read_text(encoding="utf-8")

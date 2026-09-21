@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Népszabadság — brief · Népszabadság</title><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@400;600;700;800&display=swap"><link rel="stylesheet" href="../assets/tokens.css"><style>/* Népszabadság — documentation on the project's provisional tokens (assets/tokens.css): white ground, black serif, one blue. */
+:root{--ground:var(--nsz-ground);--card:var(--nsz-panel);--ink:var(--nsz-ink);--text:var(--nsz-text);--muted:var(--nsz-muted);--accent:var(--nsz-blue);--accent-2:var(--nsz-lime);--line:var(--nsz-line);--note:#eef2fc}
+*{box-sizing:border-box}body{margin:0;font-family:var(--nsz-serif);background:var(--ground);color:var(--text);font-size:17px;line-height:1.6;padding:0 clamp(16px,4vw,40px) 64px}
+.wrap{max-width:78ch;margin:0 auto}
+.docnav{display:flex;flex-wrap:wrap;gap:2px 14px;align-items:center;padding:12px 0;border-bottom:3px solid var(--ink);font-family:var(--nsz-sans);font-size:13px}
+.docnav a{color:var(--accent);text-decoration:none;min-height:44px;display:inline-flex;align-items:center;font-weight:600}.docnav a[aria-current]{border-bottom:3px solid var(--accent);margin-bottom:-3px}
+.docnav-brand{font-family:var(--nsz-sans);font-weight:800;letter-spacing:.02em;font-size:15px;color:var(--ink);margin-right:8px;text-transform:uppercase}
+header .eyebrow{margin:26px 0 4px;font-family:var(--nsz-sans);font-size:13px;letter-spacing:.06em;text-transform:uppercase;color:var(--accent)}
+h1{font-family:var(--nsz-serif);font-weight:700;font-size:clamp(30px,5vw,44px);line-height:1.08;margin:0 0 14px;color:var(--ink)}
+h2{font-family:var(--nsz-serif);font-weight:700;font-size:26px;margin:44px 0 10px;padding-top:18px;border-top:2px solid var(--ink)}
+h3{font-family:var(--nsz-sans);font-weight:700;font-size:16px;margin:26px 0 8px;letter-spacing:.01em}
+p{margin:0 0 12px}li{margin:4px 0}strong{font-weight:700}em{color:var(--muted)}a{color:var(--accent)}
+code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.84em;background:var(--note);padding:1px 5px;border-radius:4px;overflow-wrap:anywhere}
+.tbl{overflow-x:auto;margin:12px 0 20px;border:1px solid var(--line);background:#fff}table{border-collapse:collapse;width:100%;font-size:14px;min-width:560px;font-family:var(--nsz-sans)}
+th{text-align:left;font-weight:700;background:var(--card);padding:10px 12px;border-bottom:2px solid var(--ink);font-size:12px;letter-spacing:.04em;text-transform:uppercase}td{padding:10px 12px;border-top:1px solid var(--line);vertical-align:top}
+pre{overflow-x:auto;padding:14px 16px;border:1px solid var(--line);background:var(--card);font-size:12px;line-height:1.35}
+blockquote{margin:12px 0;padding:12px 16px;border-left:4px solid var(--accent);background:var(--note)}
+footer{margin-top:48px;padding-top:16px;border-top:1px solid var(--line);font-size:12px;color:var(--muted);font-family:var(--nsz-sans)}
+</style></head>
+<body><div class="wrap"><nav class="docnav" aria-label="Project documentation"><span class="docnav-brand">Népszabadság · dokumentáció</span><a href="index.html">Overview</a><a href="brief.html" aria-current=page>Brief</a><a href="research.html">Research</a><a href="audit.html">Audit</a><a href="sources.html">Sources</a><a href="handover.html">Handover</a></nav>
+<header><p class="eyebrow">Népszabadság · project documentation</p><h1>Népszabadság — brief</h1></header>
+<p><em>Stage 0 of the prototyping standard (<code>PROTOTYPING.md</code>). For the owner and the team. Written
+2026-09-21 from the landing memo, the Figma file, and what <a href="research.html"><code>01-research.md</code></a> and <a href="audit.html"><code>02-audit.md</code></a>
+found once read and measured.</em></p>
+<h2>The client</h2>
+<p><strong>Népszabadság</strong> — Hungary's largest-circulation daily until it was abruptly shut down on
+8 October 2016 by its then-publisher; the official reason given was financial (cumulative
+losses, falling readership), while contemporary press-freedom reporting (RSF, HRW) and a later
+investigative retrospective describe the closure as widely read at the time as a politically
+engineered removal of a paper then running stories critical of figures close to the governing
+party, with the publisher sold to a government-aligned buyer weeks later — sourced in full in
+<a href="research.html"><code>01-research.md</code></a> §4. It is relaunching as an online paper with a weekly print edition,
+<strong>launching 2026-10-08 at 08:00</strong> — the memo's own line, <em>"Lassan véget ér 10 év hallgatás"</em>
+("Ten years of silence are slowly ending"). The publisher named in the new design's every
+footer is <strong>Liberty Press Kft.</strong></p>
+<h2>What they publish, per the memo and the Figma</h2>
+<p>General Hungarian news across <strong>Belföld, Külföld, Gazdaság, Kultúra, Sport, Tudomány</strong>, plus
+<strong>Népszava</strong> as a named section and its own brand front for opinion, interviews and the print
+weekly's own content — presented in the Figma as <em>"A Népszabadság almárkája: a Népszava
+szerkesztőségének online anyagai és a nyomtatott lapszámok cikkei, egy helyen."</em> The
+front page itself teases the question <strong>"Mi lesz a Népszavával? A két márka viszonya"</strong>
+("What will happen to Népszava? The relationship between the two brands") — see the name
+question below; the design is already asking the question the research independently raised.</p>
+<h2>The brief</h2>
+<p>The owner's ask (2026-09-21): research the greatest and most popular news sites — US, German,
+UK, Asian, Chinese and Hungarian — structure, layout, colours, everything; then build the
+project the way Holdvölgy was built (research, audit, design system, frames, generated pages,
+gate, presentation). Two deliverables are in scope: <strong>a pre-registration landing page</strong>
+before launch (the memo's seven sections, two marked "hide for now") and <strong>the site itself</strong>,
+eight Figma frames — Címlap, Rovatfront, Cikkoldal, Népszava márkafront, each desktop and
+mobile.</p>
+<h2>What the prototype covers</h2>
+<p>A serif-headline, subscription-first daily: a front page, section fronts, an article template
+with a registration/paywall mechanic (free registration until 2026-11-15, then a print+online
+subscription at 3 290 Ft), a named sub-brand front, and the pre-registration landing page —
+built from the approved design system and frames once the owner has gated them (<code>PROTOTYPING.md</code>
+stages 3–4), in Hungarian, phone and desktop measured separately.</p>
+<h2>What is real, and what is not yet</h2>
+<p><strong>Real:</strong> the memo's copy, quoted as written; the Figma's structure, page set and section
+names, read on screen 2026-09-21; the technical and rendered-layout benchmark of 25 news home
+pages and the sourced industry research (<a href="research.html"><code>01-research.md</code></a>); the sister site and old-domain
+audit (<a href="audit.html"><code>02-audit.md</code></a>). <strong>Not yet real:</strong> exact colours, type sizes and spacing (the Figma's
+Dev Mode is not enabled here — provisional tokens only, <code>assets/tokens.css</code>); the photographs
+(every frame uses placeholders); the logo files; who receives the landing page's registration
+form; the source of "the last post" for A Szerkesztőség; whether the new title's registration/
+paywall reuses or replaces the sister site's existing third-party digital-edition vendor
+(<a href="audit.html"><code>02-audit.md</code></a> §2).</p>
+<h2>The name — settled</h2>
+<p>The owner's own message called the project "nepszava"; every written input (the memo, the
+Figma file's name, the logo, the footer) says <strong>Népszabadság</strong>, with <strong>Népszava</strong> as its
+sub-brand. The owner confirmed 2026-09-21 that calling it "nepszava" was their own slip: the
+project is <strong>Népszabadság</strong>. The folder stays <code>nepszabadsag/</code>, live since 2026-09-21 — no
+rename needed.</p>
+<p><strong>A smaller, separate note, worth one line to the client whenever convenient, not a blocker.</strong>
+Independent research for <a href="research.html"><code>01-research.md</code></a> found that a real, unrelated newspaper called
+<strong>Népszava</strong> — Hungary's oldest continuously published paper — went online-only on
+2026-05-29 after its distributor cancelled its print contract over unpaid debts, and was, as
+of the last report found (2026-07-30), still without a buyer. This has no bearing on the
+project's own name (settled above); it only touches the Figma's internal <strong>Népszava</strong>
+sub-brand section, which happens to share that name. The Figma's own front-page tease, "Mi
+lesz a Népszavával?", may be entirely coincidental — worth a one-line confirmation with the
+client at some point, nothing more (<a href="research.html"><code>01-research.md</code></a> §5).</p>
+<h2>Where it stands</h2>
+<p>Stage 0 (this brief), stage 1 (research and audit) and stage 2 (sources) written 2026-09-21.
+<strong>Next:</strong> the owner reads the research and says "direction approved"; then the Figma is
+unlocked (Dev Mode or exports) and the design system gate can start.</p>
+<footer>Népszabadság · dokumentáció, 2026</footer></div></body></html>
