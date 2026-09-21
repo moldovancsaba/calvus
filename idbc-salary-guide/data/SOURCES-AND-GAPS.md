@@ -262,29 +262,15 @@ Written back:
   is identical to before for every row shown on the site (checked field by field); only the
   stored `readme` text grew by the new paragraph.
 
-How it was delivered. The sheet is
+Where it lives: in the sheet itself —
 [IDBC_bertabla](https://docs.google.com/spreadsheets/d/1aQA6Kw5k1U9LQMiWYgcn__m2YCuGmEhx79QFSzE0hJg/edit)
-— four tabs: `UTMUTATO`, `EXPERT_POOL_IMPORT`, `WEB_BERTABLA_IMPORT`, `LISTAK`; owned by
-the client side, so the connector in this environment can read and export it but not write
-cells into it. The columns therefore exist in three forms until they are pasted or imported
-into the sheet itself:
-
-1. **The complete workbook** `IDBC_bertabla.xlsx` (sent to the owner 2026-09-21) — today's
-   sheet plus the columns; *Fájl → Importálás → Táblázat cseréje* over the original makes it
-   the one source in one step.
-2. **Paste-ready, row-aligned:**
-   [IDBC_bertabla — LinkedIn Talent Insight oszlopok, sorra igazítva](https://docs.google.com/spreadsheets/d/1rKxTobiwNoISANPajOcT2ZB2r8uH28PzitOsckHcnKI/edit)
-   — column A is the row number of `WEB_BERTABLA_IMPORT` (header row 5, data rows 6–450 as
-   the sheet stands today), B–C are the two new columns for that row; E–F the same for
-   `EXPERT_POOL_IMPORT` (rows 2–16). Copy B5:C450 → paste at `WEB_BERTABLA_IMPORT!J5`; copy
-   F2:F16 → paste at `EXPERT_POOL_IMPORT!D2` (type the header `linkedin_talent_insight` in
-   D1). Valid only while no row is inserted or deleted above those rows.
-3. **Readable list:**
-   [IDBC_bertabla — LinkedIn Talent Insight oszlopok](https://docs.google.com/spreadsheets/d/1f1xP4XULhnHcatc2v1SMWsTULf7srv0Bgh_DGHHn8gg/edit)
-   — the 54 rows by tab, area and position, for checking.
-
-Until one of these lands in `IDBC_bertabla`, the converter's fallback path (sheet + Talent
-Insight workbook) still produces the same data.
+(four tabs: `UTMUTATO`, `EXPERT_POOL_IMPORT`, `WEB_BERTABLA_IMPORT`, `LISTAK`). The columns
+were written into it on 2026-09-21 through the sheet's own editor (the link carries edit
+access): `WEB_BERTABLA_IMPORT!J5:K450`, `EXPERT_POOL_IMPORT!D1:D16`, the note at
+`UTMUTATO!A18:A19`. Checked after writing: the sheet's own sums (41 393 on the TOP3 column,
+57 644 on the pool column) equal the prototype's; a fresh export of the sheet run through the
+converter, with no Talent Insight workbook, reproduces `guide-data.json` row for row. The
+interim companion sheets and workbook are withdrawn.
 
 From now on the update loop is: edit the sheet → export xlsx → `build-salary-data.py <xlsx>`
 → gate → push. A renamed TOP3 position needs no converter change any more; a new TOP3 row only
