@@ -349,13 +349,29 @@ from the separate <code>Talent Insight riport.xlsx</code> and a hand-reviewed na
   is identical to before for every row shown on the site (checked field by field); only the
   stored <code>readme</code> text grew by the new paragraph.</li>
 </ul>
-<p>How it was delivered: the connector in this environment can rename or move the client's sheet
-but not write cells into it, so the columns exist as (a) the complete workbook
-<code>IDBC_bertabla_talent_insight_2026-09-21.xlsx</code> — today's sheet plus the columns, ready to
-import over the original — and (b) a Google Sheet in the owner's Drive,
-<code>IDBC_bertabla — LinkedIn Talent Insight oszlopok (2026-09-21)</code>, the same 54 rows in
-paste-ready form. Until the columns are in <code>IDBC_bertabla</code> itself, the converter's fallback
-path (sheet + Talent Insight workbook) still produces the same data.</p>
+<p>How it was delivered. The sheet is
+<a href="https://docs.google.com/spreadsheets/d/1aQA6Kw5k1U9LQMiWYgcn__m2YCuGmEhx79QFSzE0hJg/edit">IDBC_bertabla</a>
+— four tabs: <code>UTMUTATO</code>, <code>EXPERT_POOL_IMPORT</code>, <code>WEB_BERTABLA_IMPORT</code>, <code>LISTAK</code>; owned by
+the client side, so the connector in this environment can read and export it but not write
+cells into it. The columns therefore exist in three forms until they are pasted or imported
+into the sheet itself:</p>
+<ol>
+<li><strong>The complete workbook</strong> <code>IDBC_bertabla.xlsx</code> (sent to the owner 2026-09-21) — today's
+   sheet plus the columns; <em>Fájl → Importálás → Táblázat cseréje</em> over the original makes it
+   the one source in one step.</li>
+<li><strong>Paste-ready, row-aligned:</strong>
+   <a href="https://docs.google.com/spreadsheets/d/1rKxTobiwNoISANPajOcT2ZB2r8uH28PzitOsckHcnKI/edit">IDBC_bertabla — LinkedIn Talent Insight oszlopok, sorra igazítva</a>
+   — column A is the row number of <code>WEB_BERTABLA_IMPORT</code> (header row 5, data rows 6–450 as
+   the sheet stands today), B–C are the two new columns for that row; E–F the same for
+   <code>EXPERT_POOL_IMPORT</code> (rows 2–16). Copy B5:C450 → paste at <code>WEB_BERTABLA_IMPORT!J5</code>; copy
+   F2:F16 → paste at <code>EXPERT_POOL_IMPORT!D2</code> (type the header <code>linkedin_talent_insight</code> in
+   D1). Valid only while no row is inserted or deleted above those rows.</li>
+<li><strong>Readable list:</strong>
+   <a href="https://docs.google.com/spreadsheets/d/1f1xP4XULhnHcatc2v1SMWsTULf7srv0Bgh_DGHHn8gg/edit">IDBC_bertabla — LinkedIn Talent Insight oszlopok</a>
+   — the 54 rows by tab, area and position, for checking.</li>
+</ol>
+<p>Until one of these lands in <code>IDBC_bertabla</code>, the converter's fallback path (sheet + Talent
+Insight workbook) still produces the same data.</p>
 <p>From now on the update loop is: edit the sheet → export xlsx → <code>build-salary-data.py &lt;xlsx&gt;</code>
 → gate → push. A renamed TOP3 position needs no converter change any more; a new TOP3 row only
 needs its count typed into the column.</p>
