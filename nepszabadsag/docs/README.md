@@ -19,3 +19,8 @@ nepszava.hu. The memo read in full, the frames read on screen, twenty-five news 
 pages measured with `curl`. The owner stopped the browser screenshot sweep and asked for
 a handover document; written as `handover.md`. Open: the folder name
 (`nepszabadsag` here, `nepszava` in the message), Figma Dev Mode access.
+
+**2026-09-21 — gate added.** `nepszabadsag/check.py` wired into the root `check.py`:
+every relative link and asset resolves, every cross-page anchor exists, the two docs
+pages link each other, one `h1` and a `lang` attribute per page. Registered on the hub
+and in `README.md` already (same commit as the handover); this closes the gate slot.

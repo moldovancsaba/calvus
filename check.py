@@ -9,10 +9,11 @@ project gate covers (the hub). Exit 1 if any of them finds something.
   lexodont.hu/check.py        both fidelities + docs: links, anchors, docs cross-links, parity
   business-direct/check.py    pages + docs: links, anchors, docs cross-links
   bizdrankazoldet/check.py    docs: links, cross-links, stale phrases, sourced figures
+  nepszabadsag/check.py       docs: links, anchors, docs cross-links, one h1, lang
 """
 import re, subprocess, sys, pathlib
 ROOT = pathlib.Path(__file__).resolve().parent
-GATES = ["holdvolgy/check.py", "idbc-salary-guide/check.py", "lexodont.hu/check.py", "business-direct/check.py", "bizdrankazoldet/check.py"]
+GATES = ["holdvolgy/check.py", "idbc-salary-guide/check.py", "lexodont.hu/check.py", "business-direct/check.py", "bizdrankazoldet/check.py", "nepszabadsag/check.py"]
 failed = []
 for g in GATES:
     r = subprocess.run([sys.executable, str(ROOT / g)], capture_output=True, text=True)
