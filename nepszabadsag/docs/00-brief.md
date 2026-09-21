@@ -49,13 +49,13 @@ stages 3–4), in Hungarian, phone and desktop measured separately.
 
 **Real:** the memo's copy, quoted as written; the Figma's structure, page set and section
 names, read on screen 2026-09-21; the technical and rendered-layout benchmark of 25 news home
-pages and the sourced industry research (`01-research.md`); the sister site and old-domain
-audit (`02-audit.md`). **Not yet real:** exact colours, type sizes and spacing (the Figma's
-Dev Mode is not enabled here — provisional tokens only, `assets/tokens.css`); the photographs
-(every frame uses placeholders); the logo files; who receives the landing page's registration
-form; the source of "the last post" for A Szerkesztőség; whether the new title's registration/
-paywall reuses or replaces the sister site's existing third-party digital-edition vendor
-(`02-audit.md` §2).
+pages and the sourced industry research (`01-research.md`); the old-domain audit (`02-audit.md`).
+**Not yet real:** exact colours, type sizes and spacing (the Figma's Dev Mode is not enabled
+here — provisional tokens only, `assets/tokens.css`); the photographs (every frame uses
+placeholders); the logo files; who receives the landing page's registration form; the source
+of "the last post" for A Szerkesztőség; whether the new title's registration/paywall is built
+in-house or through a vendor (nepszava.hu's own unaffiliated third-party approach is one real
+data point, `01-research.md` §8, not a precedent this project inherits).
 
 ## The name — settled
 
@@ -65,15 +65,15 @@ sub-brand. The owner confirmed 2026-09-21 that calling it "nepszava" was their o
 project is **Népszabadság**. The folder stays `nepszabadsag/`, live since 2026-09-21 — no
 rename needed.
 
-**A smaller, separate note, worth one line to the client whenever convenient, not a blocker.**
-Independent research for `01-research.md` found that a real, unrelated newspaper called
-**Népszava** — Hungary's oldest continuously published paper — went online-only on
-2026-05-29 after its distributor cancelled its print contract over unpaid debts, and was, as
-of the last report found (2026-07-30), still without a buyer. This has no bearing on the
-project's own name (settled above); it only touches the Figma's internal **Népszava**
-sub-brand section, which happens to share that name. The Figma's own front-page tease, "Mi
-lesz a Népszavával?", may be entirely coincidental — worth a one-line confirmation with the
-client at some point, nothing more (`01-research.md` §5).
+**A smaller, separate note, now resolved.** Independent research for `01-research.md` found
+that a real, unrelated newspaper called **Népszava** — Hungary's oldest continuously published
+paper — went online-only on 2026-05-29 after its distributor cancelled its print contract over
+unpaid debts, and was, as of the last report found (2026-07-30), still without a buyer. The
+owner confirmed 2026-09-21 that this has no bearing on the project: the Figma's internal
+**Népszava** sub-brand section, and its front-page tease "Mi lesz a Népszavával?", coincidentally
+share the real paper's name — nothing more (`01-research.md` §5). The owner also confirmed,
+same day, that describing **nepszava.hu** (that real paper's own site) as this project's
+"sister site" during the original briefing was itself a mistake — see `02-audit.md`.
 
 ## Where it stands
 

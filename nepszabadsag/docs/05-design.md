@@ -21,8 +21,8 @@ Figma Dev Mode or an exact export before this is treated as final — see the op
 
 One blue, one lime — confirmed directly on screen (D3 in `01-research.md` §0 also flags this
 as the pattern every measured competitor follows: a single brand accent plus a warm highlight,
-not a rainbow of section colours). Deviates from §6's "colour by editorial section" proposal
-(P4) — that stays a proposal for the design-system gate proper, not applied here since the
+not a rainbow of section colours). Deviates from `01-research.md`'s "colour by editorial section" proposal
+(P3) — that stays a proposal for the design-system gate proper, not applied here since the
 Figma itself uses one blue throughout.
 
 ## Type

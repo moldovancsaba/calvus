@@ -8,8 +8,8 @@ Hungarian presentation for the client: [bemutato.html](bemutato.html).
 | Document | What it holds |
 |---|---|
 | `00-brief.md` | who the client is, what the brief asks, what is real and not yet, the name (settled) |
-| `01-research.md` | the 25-site technical benchmark, Reuters Institute DNR 2026 (Hungary), subscription/paywall benchmarks, the 2016 closure sourced, comparable relaunch cases, design-system references, the rendered-layout study, proposals for the owner |
-| `02-audit.md` | the sister site nepszava.hu measured in depth (its digital-edition subscription system and vendor, its 2026 ad rate card) and the old nol.hu domain |
+| `01-research.md` | the 25-site technical benchmark, Reuters Institute DNR 2026 (Hungary), subscription/paywall benchmarks, the 2016 closure sourced, comparable relaunch cases, design-system references, the rendered-layout study, a closer look at nepszava.hu (unaffiliated — §8), proposals for the owner |
+| `02-audit.md` | the old nol.hu domain — the client's only asset there is to audit; records the correction that nepszava.hu is not a "sister site" |
 | `03-sources.md` | every input and what it contributed, every gap numbered |
 | `04-decisions.md` | numbered register of the build's decisions, D1 onward |
 | `05-design.md` | the tokens and components as built, read from the Figma file |
@@ -63,6 +63,21 @@ real, licensed Wikimedia Commons photographs replace the Figma's blurred placeho
 Measured at 390 and 1440: found and fixed a 70 px mobile header overflow, four `<h1>`
 elements on the landing page, sixteen-plus sub-44 px tap targets, and two broken/mismatched
 links the extended gate caught — `06-build-log.md` has the full list. `nepszabadsag/check.py`
-extended to cover the site pages (previously docs-only) with alt-text and banner checks.
-Gate clean. Next: rovat fronts for the other five categories, the technical package, and the
-Hungarian presentation (`bemutato.html`).
+extended to cover the site pages (previously docs-only) with alt-text and banner checks. The
+Hungarian client presentation (`bemutato.html`) written the same round, with live embedded
+previews of the built pages. Gate clean. Next: rovat fronts for the other five categories and
+the technical package.
+
+**2026-09-21 — correction: nepszava.hu is not a "sister site."** The owner said that
+describing nepszava.hu as this project's sister site during the original briefing (§1 above)
+was a mistake — nepszava.hu has no relationship to Népszabadság or to this project, of any
+kind. `02-audit.md` is rewritten to hold only the client's actual asset (the old nol.hu
+domain); the nepszava.hu findings (digital-edition vendor, 2026 ad rate card, rendered home
+page) moved to `01-research.md` §8, relabelled as one unaffiliated comparable among the
+twenty-five benchmarked there rather than a special or inherited precedent. Two proposals
+that depended on the sister-site premise (confirming a publisher relationship; treating the
+vendor and rate card as inherited) were removed or reframed accordingly — `01-research.md`
+§9 (renumbered from §8) has the current list. `00-brief.md`, `03-sources.md` and
+`handover.md` updated to match; `bemutato.html`'s two cards built on the sister-site framing
+rewritten. Nothing about the built prototype itself needed to change — it never referenced
+nepszava.hu directly.

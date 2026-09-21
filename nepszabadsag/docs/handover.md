@@ -47,11 +47,13 @@ and a brand front of its own, and the front page teases "Mi lesz a Népszavával
 márka viszonya". The publisher line in every footer is **© 2026 Liberty Press Kft.**
 
 The owner confirmed 2026-09-21 that "nepszava" was their own slip: the project is
-**Népszabadság**. The folder `nepszabadsag/`, already live, needs no rename. nepszava.hu
-stays in the audit as the sister brand's current site (`02-audit.md`) — and, separately, a
-small note surfaced in `01-research.md` §5: a real, unrelated newspaper of that name is
-independently in a well-reported crisis, worth one line of confirmation with the client
-someday, not a blocker.
+**Népszabadság**. The folder `nepszabadsag/`, already live, needs no rename. **Same-day
+correction:** the owner also said that calling nepszava.hu "the sister site" during this
+briefing was itself a mistake — nepszava.hu has no relationship to this project. A related
+note from `01-research.md` §5 stands regardless: a real, unrelated newspaper of that name is
+independently in a well-reported crisis; the owner has confirmed this is coincidence, not a
+signal of anything planned (`00-brief.md`). nepszava.hu's technical findings moved from
+`02-audit.md` to `01-research.md` §8, labelled as an unaffiliated comparable.
 
 ## 3. What the Figma frames contain (read on screen, 2026-09-21)
 

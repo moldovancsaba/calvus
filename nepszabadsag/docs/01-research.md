@@ -9,10 +9,10 @@ or an unverified chain, that flag is kept, not smoothed over.*
 
 ## 0. The five things that matter most
 
-1. **The project's name is Népszabadság** (confirmed by the owner 2026-09-21 — an earlier reference to "nepszava" was a slip, not a signal). Separately, and much smaller: the Figma's internal **Népszava** sub-brand section happens to share its name with a real, independent, 153-year-old Hungarian daily that went online-only on 2026-05-29 after its distributor cancelled its print contract over debt, and was still without a buyer as of 2026-07-30 (§5) — likely coincidence, worth one line of confirmation with the client, not a blocker.
+1. **The project's name is Népszabadság** (confirmed by the owner 2026-09-21 — an earlier reference to "nepszava" was a slip, not a signal). **Update, same day:** the owner also confirmed that describing nepszava.hu as this project's "sister site" during the original briefing was itself a mistake — nepszava.hu has no relationship to Népszabadság or to this project. The Figma's internal **Népszava** sub-brand section happening to share its name with that real, independent, 153-year-old Hungarian daily (which went online-only on 2026-05-29, still without a buyer as of 2026-07-30, §5) is coincidence, now confirmed rather than merely likely.
 2. **Hungarians trust news less than almost anyone else measured, and pay for it rarely.** 17% trust news generally (lowest of 48 markets, DNR 2026); 6% pay for any online news. A registration wall that earns trust before it asks for money is not a nice-to-have here — it is the only lever the market data supports (§2).
 3. **A hard free-to-paid cliff is a normal industry pattern, but the pricing literature's own advice cuts against launching a fully free period.** Registered users convert to paid roughly 10× better than anonymous visitors, and European benchmarks find that even a token charge during a trial period out-converts zero-cost trials (§3) — worth raising against the memo's "free until 15 November" plan, not overriding it.
-4. **The 2016 closure and the exact ad-slot economics both have direct, checkable precedent.** Four independent sources converge on the same shape of the 2016 story (§4); the sister site's own current rate card prices the exact banner sizes the Figma uses, in real forints (`02-audit.md` §3) — this project does not have to guess at either its own history or its ad business model.
+4. **The 2016 closure has direct, checkable precedent, and one unaffiliated Hungarian outlet's real ad rate card gives a useful pricing reference.** Four independent sources converge on the same shape of the 2016 story (§4); nepszava.hu's own current rate card prices the same banner sizes the Figma uses, in real forints (§8) — not this project's own numbers, but a real one to check assumptions against.
 5. **Every measurable leader separates a display headline face from a body-text face, and colours by editorial section rather than a single brand accent** (§6, §7) — the opposite of a one-brand-colour approach, and worth stating as a rule before the design-system gate, not after.
 
 ## 1. Technical benchmark — 25 news home pages, measured with `curl`, 2026-09-21
@@ -105,7 +105,7 @@ the relaunch invites the comparison itself ("Lassan véget ér 10 év hallgatás
 
 - **Magyar Nemzet (Hungary — the closest national precedent).** An 80-year-old (founded 1938) conservative daily; ceased publication 11 April 2018 after the election, citing financial problems; its online presence went dark for about ten months. Relaunched 6 February 2019, this time explicitly aligned with the governing party, replacing a title called Magyar Idők. As of August 2026 it converted again — daily to **weekly** print — part of a broader 2026 shift of Hungarian political dailies to online/weekly formats. **A** [Wikipedia](https://en.wikipedia.org/wiki/Magyar_Nemzet); [Balkan Insight, 30 Jul 2026](https://balkaninsight.com/2026/07/30/hungary-enters-post-print-age-as-political-dailies-disappear/rd/) — the strongest "closed, then relaunched" precedent in the same market, though its own relaunch carried a political realignment worth being aware of, not necessarily worth raising with this client unprompted.
 - **The Independent (UK) — print stopped, publishing continued (the closest "digital continuation" precedent, not a full closure).** Went online-only in March 2016. Academic research hosted by Reuters Institute found British readership did not fall in the year after, but total time British audiences spent with the title fell 81%, because online readers engage far less deeply than former print subscribers did; overseas browsing grew at least 50%. **P** [Reuters Institute research (Thurman & Fletcher)](https://reutersinstitute.politics.ox.ac.uk/our-research/are-newspapers-heading-toward-post-print-obscurity-case-study-independents-transition) — the same research page cites a similar 72% post-print time-spent decline for NME.
-- **The real Népszava — found while researching; a small aside, not a brief-level decision.** Independent of this project (whose own name is settled as Népszabadság, `00-brief.md`), Hungary's actual Népszava — its oldest continuously published paper (153 years) and, since 2019, the country's last liberal/social-democratic political daily — stopped print and went online-only on **2026-05-29** when distributor Mediaworks cancelled its print contract over unpaid debts; about a third of staff were laid off; as of the most recent report found (2026-07-30) its owner was still seeking a buyer and its future was stated as uncertain. **A** [Balkan Insight, 30 Jul 2026](https://balkaninsight.com/2026/07/30/hungary-enters-post-print-age-as-political-dailies-disappear/rd/); [European Federation of Journalists, coverage of the threats/closure](https://europeanjournalists.org/blog/2026/05/29/hungary-threats-against-the-countrys-last-progressive-daily-newspaper/). The Figma's internal Népszava sub-brand section — and its own front-page tease, "Mi lesz a Népszavával?" — happens to share the name; worth one line of confirmation with the client at some point (`00-brief.md`), not treated here as a signal of anything planned.
+- **The real Népszava — found while researching; a small aside, not a brief-level decision.** Independent of this project (whose own name is settled as Népszabadság, `00-brief.md`), Hungary's actual Népszava — its oldest continuously published paper (153 years) and, since 2019, the country's last liberal/social-democratic political daily — stopped print and went online-only on **2026-05-29** when distributor Mediaworks cancelled its print contract over unpaid debts; about a third of staff were laid off; as of the most recent report found (2026-07-30) its owner was still seeking a buyer and its future was stated as uncertain. **A** [Balkan Insight, 30 Jul 2026](https://balkaninsight.com/2026/07/30/hungary-enters-post-print-age-as-political-dailies-disappear/rd/); [European Federation of Journalists, coverage of the threats/closure](https://europeanjournalists.org/blog/2026/05/29/hungary-threats-against-the-countrys-last-progressive-daily-newspaper/). The Figma's internal Népszava sub-brand section — and its own front-page tease, "Mi lesz a Népszavával?" — happens to share the name; the owner has confirmed this is coincidence, not a signal of anything planned (`00-brief.md`).
 - Weaker-fit precedents, pattern only: Taloussanomat (Finland) reportedly improved its financial position after going online-only in 2007, cited via a secondary academic-literature chain not independently re-verified here. **A** [via a TandFonline-hosted paper](https://www.tandfonline.com/doi/full/10.1080/21670811.2018.1504625). A 2024–2025 US magazine "print revival" trend (Field & Stream, Saveur, SPIN, Ebony, a reported Life return) shows print returning after being dropped, but these are magazines, not dailies, and the source article itself could only be confirmed via search-result snippets (direct fetch returned HTTP 403) — treat the specifics as unverified. **A** [Nieman Lab, Dec 2024 — fetch blocked, snippet only](https://www.niemanlab.org/2024/12/the-print-revival-comes-to-news/)
 
 ## 6. Published design-system references
@@ -204,8 +204,8 @@ dark-mode toggle and the subscribe button both sit above the fold; content opens
 text-only pair of headlines before any photo, an alternating text/photo rhythm that reads
 denser than BBC, FAZ or SZ.
 
-**nepszava.hu — the sister site, read on screen rather than measured by `curl` (complements
-`02-audit.md`).** Desktop: a black topic-tag ticker, a centred blue "NÉPSZAVA" logo block,
+**nepszava.hu — unaffiliated with this project (§8), read on screen rather than measured by
+`curl`.** Desktop: a black topic-tag ticker, a centred blue "NÉPSZAVA" logo block,
 then **two full-width ad units back to back directly under the masthead** — one unfilled, one
 a foreign-market shopping carousel — before any editorial content. The lead story is
 **text-only** (no photograph), a plain bold black headline with blue pill topic tags; a
@@ -244,21 +244,67 @@ thumbnails at all — the most image-sparse presentation of the ten sites.
   finding that a token charge out-converts a fully free trial period — a concrete precedent
   to weigh against the memo's "free until 15 November" plan (P2).
 
-## 8. What it means for the prototype — proposals for the owner (each becomes a D-number when decided)
+## 8. A closer look: nepszava.hu's monetization model — no relationship to this project
+
+*Correction, 2026-09-21 (same day as the research below was first written): the owner's
+original briefing described nepszava.hu as "the sister site" of this project. The owner has
+since said that was a mistake — nepszava.hu has no relationship to Népszabadság or to this
+project, of any kind. Everything measured about it is still factually accurate (it is a real,
+independently-operated Hungarian news site — the actual Népszava named in §5), but it belongs
+here, as one more researched comparable among the twenty-five in §1, not in `02-audit.md`
+(which is reserved for the client's own assets — see the correction recorded there). The
+findings below are unchanged from the original measurement; only their status has changed,
+from "the sister site" to "an unaffiliated Hungarian outlet, useful for market colour."*
+
+nepszava.hu runs a real digital-edition subscription product, outsourced to a third-party
+vendor rather than built in-house: `/digitalisujsag` loads a page-flip e-paper reader gated by
+a login form that resolves to **xximedia.hu**, a Hungarian e-paper/digital-newsstand platform.
+The vendor's own product page states (2026-09-21) that "a kiadvány jelenleg nem elérhető" — the
+mobile edition is currently not offered — while the newsroom continues producing the paper in
+digital form only. The vendor page names the operating company as **XXI. Század Média Zrt.**
+**P** (the site's own login fragment and [xximedia.hu/mobilnsz](https://xximedia.hu/mobilnsz),
+fetched directly, 2026-09-21)
+
+nepszava.hu's own 2026 online ad rate card (PDF, effective 2026-08-27, from xximedia.hu, HUF,
+list price, ex-VAT, per week) happens to price the same header/rail/inline banner sizes the
+client's Figma frames show (970×250, 300×250, 300×300, 300×600):
+
+| Placement | Sizes | Weekly list price (Ft, ex-VAT) |
+|---|---|---|
+| Multiscreen premium, header, home page | 970×250 + 300×300 | 4 790 000 |
+| Multiscreen premium, header, article pages | 970×250 + 300×300 | 3 590 000 |
+| Multiscreen basic, header, home page | 728×90 + 300×250 | 4 390 000 |
+| Multiscreen basic, header, article pages | 728×90 + 300×250 | 2 990 000 |
+| Desktop premium, right rail, home page | 300×600 | 3 590 000 |
+| Desktop basic, right rail, home page | 300×250 | 2 700 000 |
+| Desktop basic, right rail, article pages | 300×250 | 2 000 000 |
+| Sponsored article (agency-written), front-page feature | — | 3 000 000 |
+| Sponsored article (client-supplied), front-page feature | — | 2 700 000 |
+
+**P** [Népszava Online Tarifa 2026, XXI. Század Média Zrt.](https://xximedia.hu/files/public/cikkepek/261/File/2026/NEPSZAVA_ONLINE_MEDIAAJANLO_2026_03.pdf),
+effective 2026-08-27. A video-banner surcharge of 50% and a 70 KB static-creative limit are
+stated in the same document.
+
+**What it means here.** These are one unaffiliated Hungarian publisher's real 2026 numbers for
+the same standard banner sizes the Figma uses — useful as a real-world pricing reference *if*
+the new title carries its own advertising, not as an inherited rate card or a build-vs-buy
+precedent this project is entitled to. Whether XXI. Század Média Zrt. has any relationship to
+Liberty Press Kft. (the new design's stated publisher) is not addressed here and does not need
+to be — there is no basis, now that the "sister site" premise is retracted, to expect one.
+
+## 9. What it means for the prototype — proposals for the owner (each becomes a D-number when decided)
 
 | # | Proposal | From |
 |---|---|---|
-| P1 | A one-line confirmation with the client, whenever convenient, that the Figma's Népszava sub-brand section is unrelated to the real, currently-distressed newspaper of that name — low priority, not a gate | §5, `00-brief.md` |
-| P2 | Keep the registration wall, but raise the "fully free until 15 Nov" plan against the pricing literature's own advice that even a token charge converts better than a free trial — the client's call, not a redesign | §3 |
-| P3 | A dedicated serif headline face, separate from the body-text face, and a plain sans reserved for metadata/nav/captions — matching every measured leader and the Figma's own apparent direction | §6, §7 |
-| P4 | Colour organised by editorial section (rovat), not a single brand blue — the Guardian's "pillar" model, and closer to what the Figma's rovat-labelled pills already imply | §6 |
-| P5 | Decide build-vs-buy for the paywall/e-paper reader against the sister site's own precedent (a third-party vendor, xximedia.hu) rather than assuming it must be built in-house | `02-audit.md` §2 |
-| P6 | Price the ad inventory (970×250, 300×250, 600×250) from the sister site's own real 2026 rate card rather than inventing figures, if this title carries its own advertising | `02-audit.md` §3 |
-| P7 | Confirm the relationship (if any) between XXI. Század Média Zrt. and Liberty Press Kft. — a plain fact, not inferred here | `02-audit.md` §2, `03-sources.md` |
-| P8 | A header-level subscribe/registration control on every page, always visible — every subscription-forward site studied has one; the sister site has none | §7 |
-| P9 | Keep the ad load lighter and better-curated than the sister site's (which stacks two full-width units under the masthead plus a floating overlay) — the Figma's own slot count is already close to this | §7, `02-audit.md` §3 |
+| P1 | Keep the registration wall, but raise the "fully free until 15 Nov" plan against the pricing literature's own advice that even a token charge converts better than a free trial — the client's call, not a redesign | §3 |
+| P2 | A dedicated serif headline face, separate from the body-text face, and a plain sans reserved for metadata/nav/captions — matching every measured leader and the Figma's own apparent direction | §6, §7 |
+| P3 | Colour organised by editorial section (rovat), not a single brand blue — the Guardian's "pillar" model, and closer to what the Figma's rovat-labelled pills already imply | §6 |
+| P4 | Decide build-vs-buy for the paywall/e-paper reader with nepszava.hu's unaffiliated third-party-vendor approach (xximedia.hu) as one real-world data point, not an assumption that it must be built in-house | §8 |
+| P5 | Price the ad inventory (970×250, 300×250, 600×250) from a real 2026 Hungarian rate card rather than inventing figures, if this title carries its own advertising | §8 |
+| P6 | A header-level subscribe/registration control on every page, always visible — every subscription-forward site studied has one; nepszava.hu has none | §7 |
+| P7 | Keep the ad load lighter and better-curated than nepszava.hu's (which stacks two full-width units under the masthead plus a floating overlay) — the Figma's own slot count is already close to this | §7, §8 |
 
-## 9. What was not found, or could not be verified
+## 10. What was not found, or could not be verified
 
 - A Hungary-specific mobile-vs-desktop reading split in DNR 2026 (only a global figure exists).
 - A CEE-specific print+digital bundle-pricing benchmark (the closest source says this bundling is uncommon in its sample).
