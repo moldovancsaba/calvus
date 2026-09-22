@@ -132,8 +132,6 @@
     .is-unavailable { opacity: .4; cursor: not-allowed; }
     .cta-button.is-unavailable { background: rgba(19,35,35,.14); color: rgba(16,24,24,.55); opacity: 1; }
 
-    .bottom-cta { display: flex; justify-content: center; margin-top: 30px; }
-
     .menu-toggle {
       display: none;
       margin-left: auto;
@@ -254,8 +252,8 @@
     .sap-callout-arrow { font-size: 30px; font-weight: 900; color: var(--green); flex: none; }
 
     .salary-filters { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 260px)); gap: 14px; margin-bottom: 26px; }
-    .table-title { margin: 26px 0 8px; font-size: clamp(20px, 2.4vw, 26px); letter-spacing: -0.4px; }
-    .table-note { margin: 0 0 10px; font-size: 12px; font-weight: 800; color: var(--muted); max-width: 720px; }
+    .table-title { margin: 26px 0 8px; font-size: clamp(27px, 3vw, 36px); letter-spacing: -0.4px; }
+    .table-note { margin: 0 0 10px; font-size: 12px; font-weight: 800; color: var(--muted); }
     .salary-count { font-size: 12px; font-weight: 800; color: var(--muted); margin: 0 0 14px; }
 
     .table-wrap { overflow: auto; border-radius: 18px; border: 1px solid var(--line); background: #fff; container-type: inline-size; }
@@ -291,10 +289,12 @@
       tr + tr { border-top: 1px solid var(--line); }
 
       td { border: 0; padding: 4px 14px; }
-      /* Space above each level block. Targeted by label rather than position: the
+      /* Space above each level block. Targeted by class rather than position: the
          `tr > td:nth-child(1)` form also matched the position header cell and outranked
-         its own `padding: 0`, which pushed the collapsed header off-centre. */
-      td[data-label="Tapasztalati szint"] { padding-top: 10px; }
+         its own `padding: 0`, which pushed the collapsed header off-centre. No data-label on
+         this cell (client feedback, 2026-09-22: the repeated "TAPASZTALATI SZINT" pseudo-label
+         per card read as noise), so it needs its own class to keep the same layout. */
+      .szint-cell { padding-top: 10px; }
       td:last-child { padding-bottom: 12px; }
 
       /* value labels — visual only; the real <th> association is intact for screen readers */
@@ -319,7 +319,7 @@
       .pos-chevron { flex: none; width: 10px; height: 10px; border-right: 2.5px solid var(--dark); border-bottom: 2.5px solid var(--dark); transform: rotate(45deg); transition: transform .15s ease; }
       .pos-toggle[aria-expanded="true"] .pos-chevron { transform: rotate(-135deg); }
 
-      td[data-label="Tapasztalati szint"] { grid-column: 1 / -1; }
+      .szint-cell { grid-column: 1 / -1; }
       td[data-label="Egyéb juttatás"] { grid-column: 1 / -1; }
       td.num { text-align: left; }
 
@@ -413,7 +413,7 @@
       </ul>
 
       <div class="nav-actions">
-        <a class="button button-primary" href="https://idbc.hu/ajanlatkeres/">Ajánlatkérés</a>
+        <a class="button button-primary" href="../kapcsolat/index.html">Ajánlatkérés</a>
         <button class="button button-logout is-unavailable" type="button" aria-disabled="true"
           title="A be- és kijelentkezés a prototípusban még nincs bekötve">Kijelentkezés</button>
       </div>
@@ -490,14 +490,11 @@
           </label>
         </div>
 
-        <div class="top-cards" id="topCards"></div>
-
         <div class="top3-chart-card" id="top3Panel" aria-label="TOP3 kiemelt pozíciók bérsávja"></div>
 
         <div id="moreSalaries">
         <h3 class="table-title">További bérek</h3>
         <p class="table-note">A bemutatott, 2026-os valós piaci adatokon alapuló bérsávok egész Magyarországra vonatkozó, havi bruttó forintösszegek.</p>
-        <p class="salary-count" id="salaryCount"></p>
 
         <div class="table-wrap" role="region" aria-labelledby="salaryTableCaption" tabindex="0">
           <table role="table">
@@ -513,9 +510,6 @@
             </thead>
           </table>
         </div>
-        </div>
-        <div class="bottom-cta">
-          <span class="cta-button is-unavailable" aria-disabled="true" title="Az Excel export még nem érhető el">Excel letöltése az összes bérrel</span>
         </div>
       </div>
     </section>
@@ -567,7 +561,6 @@
     // ---------- Salary section ----------
     const teruletSelect = document.querySelector('#teruletSelect');
     const salaryTable = document.querySelector('.table-wrap table');
-    const salaryCount = document.querySelector('#salaryCount');
     const top3Panel = document.querySelector('#top3Panel');
 
     // SAP is its own dedicated page (../sap/index.html) — kept in the same source sheet for easier
@@ -579,47 +572,18 @@
       teruletSelect.innerHTML = teruletek.map(t => `<option value="${escapeHtml(t)}">${escapeHtml(t)}</option>`).join('');
     }
 
-    // Summary cards above the chart, same block as the SAP page: one card per
-    // perspective, spanning the selected area's TOP3 rows.
-    const topCards = document.querySelector('#topCards');
-
-    function bandOf(rows, key) {
-      const vals = rows.map(r => r[key]).filter(v => v != null);
-      if (!vals.length) return null;
-      const lo = Math.min(...vals), hi = Math.max(...vals);
-      return lo === hi ? fmtHuf(lo) : `${fmtHuf(lo)} – ${fmtHuf(hi)}`;
-    }
-
-    function renderTopCards(rows) {
-      const note = [...new Set(rows.map(r => r.juttatas).filter(Boolean))][0] || '';
-      topCards.innerHTML = [
-        { key: 'max', title: IDBCChart.LABEL.max },
-        { key: 'min', title: IDBCChart.LABEL.min },
-        { key: 'idbc', title: IDBCChart.LABEL.idbc },
-      ].filter(c => bandOf(rows, c.key)).map(c => `
-        <article class="range-card">
-          <h3>${escapeHtml(c.title)}</h3>
-          <p class="range-value">${escapeHtml(bandOf(rows, c.key))}</p>
-          ${note ? `<p>Egyéb juttatások: ${escapeHtml(note)}</p>` : ''}
-        </article>`).join('');
-    }
-
     // Chart: TOP3 positions for the selected area only.
     function renderTop3() {
       const rows = nonSapRows.filter(r => r.top3 && r.terulet === teruletSelect.value);
       if (!rows.length) {
         // No curated TOP3 for this area in the current bértábla. Say so in place of the chart:
         // a silently missing block read as a defect to the client (2026-09-18).
-        topCards.style.display = 'none';
-        topCards.innerHTML = '';
         top3Panel.style.display = '';
         top3Panel.innerHTML =
           `<h3>TOP 3 pozíció – ${escapeHtml(teruletSelect.value)}</h3>` +
           '<p class="no-data">Ehhez a területhez a jelenlegi bértábla nem jelöl kiemelt TOP3 pozíciót.</p>';
         return false;
       }
-      topCards.style.display = '';
-      renderTopCards(rows);
       top3Panel.style.display = '';
       top3Panel.innerHTML =
         `<h3>TOP 3 pozíció – ${escapeHtml(teruletSelect.value)}</h3>` +
@@ -668,7 +632,7 @@
                 <span class="pos-chevron" aria-hidden="true"></span>
               </button>
             </td>` : ''}
-            <td role="cell" data-label="Tapasztalati szint">${escapeHtml(r.szint ? (SZINT_LABELS[r.szint] || r.szint) : '–')}</td>
+            <td role="cell" class="szint-cell">${escapeHtml(r.szint ? (SZINT_LABELS[r.szint] || r.szint) : '')}</td>
             <td class="num" role="cell" data-label="Minimum">${fmtHuf(r.min)}</td>
             <td class="num" role="cell" data-label="Maximum">${fmtHuf(r.max)}</td>
             <td role="cell" data-label="Egyéb juttatás">${escapeHtml(r.juttatas)}</td>
@@ -677,7 +641,6 @@
       }).join('') || '<tbody role="rowgroup"><tr role="row"><td role="cell" colspan="5" class="no-data">Nincs pozíció ehhez a szűréshez.</td></tr></tbody>';
       salaryTable.querySelectorAll('tbody').forEach(tb => tb.remove());
       salaryTable.insertAdjacentHTML('beforeend', bodyHtml);
-      salaryCount.textContent = byPos.size + ' pozíció a kiválasztott területen';
     }
 
     function renderSalarySection() {

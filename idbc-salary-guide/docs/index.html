@@ -78,7 +78,7 @@ every project.</p>
 <tr>
 <td>04 decisions</td>
 <td><a href="decisions.html"><code>04-decisions.md</code></a></td>
-<td>D1–D29, dated, with who and why</td>
+<td>D1–D31, dated, with who and why</td>
 </tr>
 <tr>
 <td>05 design</td>
@@ -175,6 +175,34 @@ rounds (method note, area-page comments, the "edition" name, the converter's har
 path) — details in <a href="sources.html"><code>SOURCES-AND-GAPS.md</code></a>; no figure or layout changed.</p>
 <p><strong>Next.</strong> The client's structure demo for the home page; the four missing counts; the
 stack decisions (blocked register in <code>13</code>).</p>
+<p><strong>2026-09-22 — client feedback round, studio scope only (D30–D31).</strong> A client mail mixed
+feedback on this prototype with feedback on a real backend/CMS the studio does not build
+(account storage, a rich-text editor, an "editable pages" admin list, live Excel sync) —
+triaged first, the backend items flagged back rather than faked (<a href="client-asks.html"><code>08-client-asks.md</code></a>).
+Everything in the studio's own scope fixed in one round: registration subtitle copy; the
+hero crop (heads were being cut off at wide viewports — a fixed-height hero band cropping
+more as the page gets wider, not a missing editing feature); Piaci trendek's chart-intro
+copy and the middle two-tile CTA's width; the Ajánlatkérés header button now opens a new
+in-guide <code>kapcsolat/</code> page instead of leaving the guide entirely; every green summary tile
+and Excel-download CTA removed from Bérek and SAP; SAP's technológiai trendek rebuilt from
+prose into tiles with its own contact card, recruitment trends kept as collapsible text
+with a second contact card; the TOP3 chart's redundant per-position area sub-label dropped
+(the client's "extra gray row / two position names" read); Bérek's table drops the
+"Tapasztalati szint" pseudo-label on mobile; the home-office policy question kept in source
+order instead of being re-sorted by percentage (D30). Separately, verified the client's
+mail actually gives <strong>two different area-naming lists</strong> for Piaci trendek and Bérek, not
+one — applied each to its own page rather than reconciling them, and caught a real bug the
+rename would otherwise have caused (<code>terulet/index.html</code> joins survey data by the <em>old</em>
+area names; a bridge field keeps that join working, D31). Two items already resolved on
+the live prototype before this round: the Esettanulmányok "wall of text" complaint (already
+a structured article layout with video placeholders, added 2026-09-18 per a client
+workshop) and the Regisztráció field list (already exactly the client's list). Flagged back
+to the client, not fixed here: the homepage's chamber logos/podcast/"IT doboz" (still
+pending their structure demo, C-1/C-5 in <a href="prerequisites.html"><code>19-implementation-prerequisites.md</code></a>); two survey
+questions and an "IT Contracting" salary segment that don't exist in the parsed data at all
+(needs the source Excel checked — may be genuine survey segmentation, not a parsing bug);
+the Expert Pool text content the client says was sent but never reached this round. Gate
+clean at 390 and 1440, no console errors, no new sub-44 px targets.</p>
 <footer>IDBC Talent Market &amp; Salary Guide 2026 · documentation</footer>
 </div>
 </body>

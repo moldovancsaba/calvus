@@ -19,20 +19,30 @@ OUT = __file__.rsplit("/", 1)[0] + "/guide-data.json"
 # Area codes in the sheet -> the names the site uses. Where the trends pages already name the
 # area (areas.json), that name is reused so one area reads the same everywhere; the sheet splits
 # Sales and Marketing, which the trends survey pools — kept split here, it is the client's table.
+# Order and naming is the Bérek page's own taxonomy (client feedback, 2026-09-22) — deliberately
+# different wording from Piaci trendek's separate area list in places (e.g. "Pénzügy és számvitel"
+# vs. "Pénzügy, Számvitel", "Office Support" vs. its own Office Support wording); do not reconcile
+# the two, they are verified as intentionally separate.
 AREA_NAME = {
-    "BSC": "BSC",
+    "IT": "IT",
+    # "IT Contracting" is a verified real data gap, not a bug: the bértábla sheet has no rows for
+    # it today (only the separate market-trends survey data carries it as a segment). Kept here so
+    # the code is ready for it, but with no sheet code mapped to it, it will simply never appear in
+    # the rendered <select> (zero matching rows) until the client supplies IT Contracting salary
+    # figures, or confirms the segment is already folded into "IT".
+    "IT_CONTRACTING": "IT Contracting",
+    "SAP": "SAP",
     "PENZUGY": "Pénzügy és számvitel",
     "Sales": "Sales",
     "Marketing": "Marketing",
     "HR": "HR",
-    "Office Support": "Office Support & Ügyfélszolgálat",
     "Retail": "Retail",
-    "GYARTAS": "Gyártás, termelés, mérnökség",
-    "LOGISZTIKA": "Logisztika és szállítás",
-    "CP": "Építőipar, ingatlan",
-    "PHARMA": "Pharma & Life Sciences",
-    "IT": "IT",
-    "SAP": "SAP",
+    "Office Support": "Office Support",
+    "BSC": "Business Service Center (BSC)",
+    "LOGISZTIKA": "Logisztika, Szállítás",
+    "GYARTAS": "Gyártás, Termelés, Mérnökség",
+    "CP": "Építőipar, Ingatlan",
+    "PHARMA": "Pharma, Life Sciences",
 }
 AREA_ORDER = list(AREA_NAME)  # display order of the Bérek filter
 

@@ -63,10 +63,11 @@
 
     .eyebrow { margin: 0 0 8px; font-size: 12px; font-weight: 900; text-transform: uppercase; letter-spacing: .08em; color: var(--muted); }
     h1 { margin: 0 0 6px; font-size: clamp(28px, 4vw, 42px); line-height: 1.02; letter-spacing: -1px; }
-    .lede { margin: 0; font-size: 13px; font-weight: 700; color: var(--muted); }
 
     /* Summary: text column clamped to the media slot's height (video placeholder or key-thought box), expandable. */
     .area-summary { display: grid; grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr); gap: 26px; align-items: start; margin: 24px 0 0; }
+    /* Media slot + contact tile stacked in the right-hand column, same pattern as sap/index.html's .side-stack. */
+    .media-stack { display: grid; gap: 22px; }
     .summary-text { position: relative; }
     .summary-body { position: relative; overflow: hidden; }
     .summary-body.is-clamped::after {
@@ -94,9 +95,20 @@
     .area-media.is-highlight { display: grid; place-items: center; padding: 28px; background: var(--green); aspect-ratio: auto; min-height: 220px; }
     .area-media.is-highlight blockquote { margin: 0; font-size: clamp(22px, 2.6vw, 34px); font-weight: 900; font-style: italic; line-height: 1.2; letter-spacing: -0.6px; text-align: center; color: var(--dark); }
 
+    /* Contact tile (client, 2026-09): reuses sap/index.html's .contact-card pattern — photo,
+       name, title, mailto CTA — since this template serves all 11 areas generically. */
+    .contact-card { display: grid; grid-template-columns: 96px 1fr; gap: 16px; align-items: center; padding: 16px; border-radius: var(--radius-medium); background: var(--dark); color: #fff; box-shadow: var(--shadow-soft); }
+    .contact-card img { width: 96px; height: 96px; object-fit: cover; object-position: center top; border-radius: 14px; }
+    .contact-card h3 { margin: 0 0 4px; font-size: 18px; line-height: 1.1; }
+    .contact-card p { margin: 0 0 10px; color: rgba(255,255,255,.82); font-size: 12px; font-weight: 800; }
+    .contact-card .cta-button {
+      display: inline-flex; align-items: center; justify-content: center; min-height: 40px;
+      padding: 9px 16px; border-radius: 999px; border: 0; background: var(--green); color: var(--dark);
+      font-size: 12px; font-weight: 900; text-decoration: none;
+    }
+
     .results-head { margin: 46px 0 0; padding-top: 26px; border-top: 2px solid var(--dark); }
     .results-head h2 { margin: 0 0 6px; font-size: clamp(22px, 3vw, 30px); letter-spacing: -0.6px; }
-    .sample-note { margin: 0; font-size: 12px; font-weight: 800; color: var(--muted); max-width: 720px; }
     .topic-filter { margin: 20px 0 0; max-width: 340px; }
     .topic-filter label { display: grid; gap: 8px; font-size: 13px; font-weight: 900; }
     select {
@@ -134,6 +146,8 @@
 
     @media (max-width: 900px) {
       .area-summary, .panels { grid-template-columns: 1fr; }
+      .contact-card { grid-template-columns: 1fr; }
+      .contact-card img { width: 100%; height: 220px; }
       .navbar { flex-wrap: wrap; gap: 14px; }
       .menu-toggle { display: block; }
       .nav-links, .nav-actions { display: none; }
@@ -181,7 +195,7 @@
       </ul>
 
       <div class="nav-actions">
-        <a class="button button-primary" href="https://idbc.hu/ajanlatkeres/">Ajánlatkérés</a>
+        <a class="button button-primary" href="../kapcsolat/index.html">Ajánlatkérés</a>
         <button class="button button-logout is-unavailable" type="button" aria-disabled="true"
           title="A be- és kijelentkezés a prototípusban még nincs bekötve">Kijelentkezés</button>
       </div>
@@ -194,19 +208,27 @@
 
       <p class="eyebrow">Területi összefoglaló</p>
       <h1 id="areaTitle">Terület</h1>
-      <p class="lede" id="areaLede"></p>
 
       <div class="area-summary">
         <div class="summary-text">
           <div class="summary-body is-clamped" id="summaryBody"></div>
           <button class="read-more" id="readMore" aria-expanded="false">Olvass tovább</button>
         </div>
-        <div class="area-media" id="areaMedia"></div>
+        <div class="media-stack">
+          <div class="area-media" id="areaMedia"></div>
+          <article class="contact-card">
+            <img src="https://idbc.hu/uploads/2025/11/Baranyai_Zsolt-1.webp" alt="Baranyai Zsolt portréfotó" />
+            <div>
+              <h3>Baranyai Zsolt</h3>
+              <p>Head of SAP and ECM BU, Partner</p>
+              <a class="cta-button" href="mailto:contact@idbc.hu?subject=Talent%20Market%20%26%20Salary%20Guide%202026%20konzult%C3%A1ci%C3%B3">Kapcsolatfelvétel</a>
+            </div>
+          </article>
+        </div>
       </div>
 
       <div class="results-head">
         <h2>A terület kutatási eredményei</h2>
-        <p class="sample-note" id="sampleNote"></p>
         <div class="topic-filter">
           <label>
             <span>Téma</span>
@@ -291,7 +313,6 @@
     // ---------- summary ----------
     document.title = `${area.name} – Területi összefoglaló – Talent Market & Salary Guide 2026`;
     el('areaTitle').textContent = area.name;
-    el('areaLede').textContent = 'Piaci helyzetkép, kereslet és bérezési trendek — az IDBC 2026-os kutatása alapján.';
     // Placeholders in the client's two shapes; the final video / key thought replaces the inner markup.
     const mediaEl = el('areaMedia');
     if (area.media === 'video') {
@@ -339,12 +360,13 @@
     // `edition` still selects which question set applies (the survey instrument itself only
     // ever had two variants — general and IT/IT Contracting — see data/SOURCES-AND-GAPS.md), but
     // the actual figures now come from this area's own real crosstab, not a pooled sample.
-    const dsKey = DATA.datasets[area.name] ? area.name : DATA.totalKey;
+    //
+    // guide-data.json's `datasets` object is keyed by the area's ORIGINAL name (the converter's
+    // output predates the 2026-09 taxonomy rename in areas.json), so the join uses `dataKey` —
+    // areas.json's bridge field — rather than the current, renamed `area.name` used for display.
+    const dsKey = DATA.datasets[area.dataKey] ? area.dataKey : DATA.totalKey;
     const dataset = DATA.datasets[dsKey];
     const areaData = dataset;
-    el('sampleNote').textContent = dsKey === area.name
-      ? `Az alábbi eredmények a(z) ${area.name} terület saját válaszain alapulnak.`
-      : `Ehhez a területhez még nem érkezett külön bontás, ezért az „${DATA.totalLabel}" eredményei láthatók.`;
 
     const topics = DATA.topics.map(t => t.topic);
     el('topicSelect').innerHTML = topics.map(t => `<option>${esc(t)}</option>`).join('');
@@ -409,12 +431,46 @@
       return items.reduce((s, it) => s + it.percent, 0) > 110;
     }
 
+    // Same ordinal-detection as ../index.html (kept in sync — both render from the same
+    // guide-data.json). Range-bucket questions ("Nem kaptam béremelést", "1-5", ... "21+") and
+    // day-count/frequency labels ("Nem engedélyezett a home office", "Heti 1 nap home office", ...,
+    // "Heti 5 nap home office", "Teljesen rugalmas, nincs meghatározott keret", "Vezetői döntenek a
+    // mértékéről a csapataikban") are ordinal: sorting them by percentage instead of by the scale
+    // itself scrambles the order.
+    const NO_HOME_OFFICE = /nem enged(élyezett)?|nincs (otthoni|home office)/i;
+    const UNLIMITED_HOME_OFFICE = /teljesen rugalmas|vezet(ő|ői)k? d[öo]nt/i;
+    function numericRangeStart(label) {
+      const leading = label.match(/^(\d+)/);
+      if (leading) return parseInt(leading[1], 10);
+      const dayCount = label.match(/(\d+)\s*nap\b/i);
+      if (dayCount) return parseInt(dayCount[1], 10);
+      if (NO_HOME_OFFICE.test(label)) return -1;
+      if (UNLIMITED_HOME_OFFICE.test(label)) return 99;
+      return null;
+    }
+    function isOrdinalScale(labels) {
+      const numericCount = labels.filter(l => numericRangeStart(l) !== null).length;
+      return labels.length >= 3 && numericCount >= labels.length - 1;
+    }
+    function ordinalCompare(labelA, labelB) {
+      const na = numericRangeStart(labelA);
+      const nb = numericRangeStart(labelB);
+      if (na === null && nb === null) return 0;
+      if (na === null) return -1;
+      if (nb === null) return 1;
+      return na - nb;
+    }
+
     function renderSimple(title, c) {
       const nonZero = c.items.filter(it => it.percent > 0);
       if (!nonZero.length) return '';
-      const multi = isMultiSum(c.items) || c.items.length > 5;
-      if (multi) {
-        const sorted = [...nonZero].sort((a, b) => b.percent - a.percent);
+      const isMulti = isMultiSum(c.items);
+      const manyOptions = c.items.length > 5;
+      if (isMulti || manyOptions) {
+        const ordinal = !isMulti && isOrdinalScale(c.items.map(it => it.label));
+        const sorted = ordinal
+          ? [...nonZero].sort((a, b) => ordinalCompare(a.label, b.label))
+          : [...nonZero].sort((a, b) => b.percent - a.percent);
         const rows = sorted.map((it, i) => `
           <div class="answer-row-multi">
             <div class="answer-label">${esc(it.label)}</div>
@@ -431,10 +487,15 @@
     }
 
     function renderMatrixPercent(title, c) {
+      const multiSelect = c.items.some(row => row.values.reduce((s, v) => s + v.percent, 0) > 110);
+      const ordinal = !multiSelect && isOrdinalScale(c.groups);
       const groups = c.items.map(row => {
         const nonZero = row.values.map((v, i) => ({ percent: v.percent, group: c.groups[i] })).filter(v => v.percent > 0);
         if (!nonZero.length) return '';
-        const bars = nonZero.sort((a, b) => b.percent - a.percent).map((v, i) => `
+        const sorted = ordinal
+          ? nonZero.sort((a, b) => ordinalCompare(a.group, b.group))
+          : nonZero.sort((a, b) => b.percent - a.percent);
+        const bars = sorted.map((v, i) => `
           <div class="answer-row-multi">
             <div class="answer-label">${esc(v.group)}</div>
             <div class="bar bar-compact"><span class="segment" style="width:${v.percent}%;background:${paletteColor(i)}"></span></div>

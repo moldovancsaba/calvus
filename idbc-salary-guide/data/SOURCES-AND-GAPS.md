@@ -595,3 +595,129 @@ Two mockup controls are rendered in position but visibly inert
   content editions, not languages. There is no English copy to switch to.
 
 Remove the `is-unavailable` class (and add the real `href`) once either lands.
+
+## Client feedback round (2026-09-22)
+
+A mail with feedback on "the salary guide" mixed two different things: real feedback on
+this prototype, and feedback on a real backend/CMS platform this studio does not build
+(account registration storage, a rich-text content editor, an "editable pages" admin
+list, live Excel-to-site data sync). The backend items are named in the round below but
+left unbuilt — this repo has no CMS, no accounts, no server; flagging them back to the
+client is the honest response, not building a fake version of them.
+
+**Registration.** The field list (Vezetéknév, Keresztnév, E-mail, Cégnév, Pozíció,
+Fióktípus, Jelszó, Adatvédelem) already matched the client's ask exactly — no change
+needed there. Added the requested subtitle under the heading: "Regisztrálj néhány adat
+megadásával, és fedezd fel a teljes tartalmat!"
+
+**Hero images.** The client's "isn't there some way to set which part of the image
+shows? they're all slipped down" turned out to be one real, simple bug: every hero uses
+a fixed `min-height: 400px` band with `object-position: center`. At mobile widths that
+crops close to square and looks fine; at wide desktop widths the same 400px height spans
+a much wider, shorter box, so `object-fit: cover` zooms in and crops the top of the
+frame — visibly cutting into subjects' heads (confirmed by rendering `index.html`'s hero
+at both widths and comparing). Fixed site-wide: `object-position: center` → `center 20%`.
+A per-image focal-point *editing control* would be a CMS feature (the "isn't there some
+way" half of the question), out of scope for a static prototype.
+
+**Piaci trendek / homepage.** Chart-intro copy replaced exactly as asked. The middle
+"Bérsávok / Expert Pool" two-tile CTA was genuinely too wide (each card stretching to
+~590px for a two-word title) — capped and centred at desktop widths. Area subpages: added
+a contact tile under the video/highlight block, removed the fixed subtitle under the H1
+and the small-print line under "A terület kutatási eredményei" (both were static, not
+per-area, so cutting them loses nothing area-specific). The home-office "current policy"
+question (6 day-count options) was being sorted by percentage like a ranked-choice
+question — extended the existing ordinal-detection (already used for salary-range
+buckets) to recognize day-count and the two non-numeric home-office labels, so it now
+stays in source order, in both `index.html` and `terulet/index.html`.
+
+**The "IT doboz" and the chamber logos are not fixed — they don't exist yet.** Grepping
+the whole codebase found no element linking to both Bérek and Piaci trendek together, and
+no chamber-logo markup anywhere. Both match content the client's own 2026-09-18 mail
+promised for a *new* home page structure that, per that same mail, was still pending
+("the client sends the structure demo next week") — see C-1/C-5 in
+`19-implementation-prerequisites.md`. Today's `index.html` is still the trends hub
+standing in as the home page. This feedback most likely describes the still-pending
+structure demo, a mockup shown outside this prototype, or the new homepage content that
+has since arrived but wasn't forwarded to this round — flagged back rather than guessed
+at.
+
+**Two area-name taxonomies, verified separately.** Re-read side by side, the client's
+mail gives two different, overlapping wordings — one for Piaci trendek's 11 areas
+(`data/areas.json`), a differently-worded one for Bérek's 14 (`build-salary-data.py`'s
+`AREA_NAME`, e.g. "Pénzügy és számvitel" there vs. "Pénzügy, Számvitel" on the trends
+side). Applied each to its own page. Renaming `areas.json`'s `name` field in place would
+have silently broken `terulet/index.html`'s join into `guide-data.json`'s `datasets`
+object, which is keyed by the *old* names for 8 of the 11 areas — caught before it
+shipped; a new `dataKey` field on each area object holds the pre-rename name for that
+join, `name` is display-only now.
+
+**"IT Contracting" in Bérek's filter is a genuine data gap, verified against the actual
+data, not assumed.** The bértábla (`salary.webBertabla`) has 13 areas and no "IT
+Contracting" row anywhere — confirmed by inspecting `guide-data.json` directly. The
+separate market-trends survey data *does* carry "IT Contracting" as its own segment
+(`datasets["IT Contracting"]` exists), so the client's ask isn't invented — but adding it
+to the Bérek filter needs real salary rows for that segment, which this repo doesn't
+have. `AREA_NAME` in `build-salary-data.py` has the slot ready (`IT_CONTRACTING`, no
+sheet code mapped); it will simply show zero rows, not a fabricated placeholder, until
+the client supplies figures or confirms IT Contracting is already folded into "IT".
+
+**Two survey questions, verified genuinely absent from the parsed data, not just
+mis-sorted.** The client flagged a missing "home office policy's effect on recruiting
+success" employer question, and two AI-topic employer questions missing for non-IT areas.
+Searched every topic in `guide-data.json` for any phrasing close to the first — not
+found anywhere, under any topic. The two AI questions *do* exist, but only in the
+"IT + Contracting" question set, not "Általános" — and that pattern (IT+Contracting
+respondents getting extra questions general respondents never saw, e.g. "Nyitott lennél
+külföldre költözni?" elsewhere in the same topic file) repeats enough across the dataset
+that it reads as genuine survey segmentation, not a parser bug. There's no source
+`.xlsx` in this repo to check the raw "Téma besorolás" sheet either way — flagged to the
+client rather than guessed at in either direction (not silently dropped, not fabricated).
+
+**Bérek — the "extra gray row" / "why two position names" bug, found by rendering the
+page, not by reading the code.** The TOP3 chart's sub-label under every position name was
+`[terulet, szint].filter(Boolean).join(' · ')` — on a page that's always filtered to one
+area already, that repeats the (redundant) area code under every single position, and for
+positions with no `szint` it's the *only* thing in that sub-label, floating alone in a
+way that reads as a second, out-of-place name. Rendering `berezes/index.html?terulet=bsc`
+and reading the actual output confirmed it directly: "Supply Chain / Order Management
+Specialist" showed "BSC" on its own line underneath, for an area already selected in the
+filter above. Fixed by dropping `terulet` from the sub-label everywhere (`assets/
+top3-chart.js`, shared by Bérek, SAP and Expert Pool) — it now shows only the experience
+level, when there is one.
+
+Separately, the further-down position table's `data-label="Tapasztalati szint"`
+attribute drove a mobile-only pseudo-label (`content: attr(data-label)`) repeated on
+every single row/card — much noisier than the table's one real `<th>` header. Removed
+the attribute from that cell specifically (renamed to a plain `.szint-cell` class to keep
+its layout rule); changed the empty case from a bare "–" to nothing at all. The desktop
+table's single `<th>Tapasztalati szint</th>` column header is untouched — one instance
+per table isn't what the client was describing.
+
+**Bérek and SAP — every green summary tile and both Excel-download buttons removed**, per
+the client's explicit ask on both pages; the TOP3 chart itself stays (only the redundant
+3-card band summary above it goes). "További bérek" heading enlarged to match the (now
+sole) TOP3 heading's size; its status line no longer clamped to 720px.
+
+**SAP — technológiai trendek rebuilt from four paragraphs of prose into three tiles**,
+reusing the shared `.range-card` component (the exact tile already used for TOP3 summary
+cards elsewhere — no new CSS component, just reused) with a contact card beside it;
+recruitment trends kept as running text but now collapsible (first paragraph visible, a
+"Tovább olvasom" toggle reveals the rest), with its own separate contact card. The tile
+copy is a condensed rewrite of the client's own paragraphs (same claims, shorter) — worth
+the client's eyes before it's called final, same as any condensation.
+
+**A new `kapcsolat/` page** replaces the header's "Ajánlatkérés" button leaving the guide
+entirely for `idbc.hu/ajanlatkeres/` — it now opens a contact-only page inside the guide
+(header, heading, an inert contact form matching this project's established pattern, footer,
+nothing else), resolving `19-implementation-prerequisites.md`'s P-3.
+
+**Already resolved before this round, verified by rendering, not assumed:**
+Esettanulmányok's "wall of text, no video placeholder" complaint — the page already has a
+full hero and each case study is already a structured article with its own video-card
+placeholder, added 2026-09-18 after a client workshop asked for exactly this. No change
+needed; flagged as likely describing a stale/cached view.
+
+Measured before push: all changed guide pages at 375 and 1440px — no horizontal overflow,
+no console errors, no new sub-44px targets. `idbc-salary-guide/check.py` and the root
+`check.py` both `GATE: CLEAN`.

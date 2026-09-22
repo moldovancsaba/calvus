@@ -112,7 +112,7 @@
           `</g>`;
       });
 
-      const sub = [r.terulet, r.szint].filter(Boolean).join(' · ');
+      const sub = r.szint || '';
       return `
         <div class="top3-compact-row">
           <p class="top3-compact-name">${escapeHtml(r.pozicio)}</p>
@@ -196,7 +196,7 @@
         body += `<line class="salary-connector" x1="${first.x.toFixed(1)}" y1="${y}" x2="${last.x.toFixed(1)}" y2="${y}" stroke="url(#${uid})" />`;
       }
 
-      const sub = [r.terulet, r.szint].filter(Boolean).join(' · ');
+      const sub = r.szint || '';
       body += `<text class="role-label" x="0" y="${(y - (sub ? 4 : -5)).toFixed(1)}">${escapeHtml(r.pozicio)}</text>`;
       if (sub) body += `<text class="role-sub" x="0" y="${(y + 13).toFixed(1)}">${escapeHtml(sub)}</text>`;
       if (r.linkedin != null) {

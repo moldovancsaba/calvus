@@ -85,7 +85,6 @@
        layout is right without faking a working control. */
     .is-unavailable { opacity: .4; cursor: not-allowed; }
     .button.is-unavailable { border-color: rgba(255,255,255,.4); color: rgba(255,255,255,.75); }
-    .cta-button.is-unavailable { background: rgba(19,35,35,.14); color: rgba(16,24,24,.55); opacity: 1; }
 
     .menu-toggle { display: none; margin-left: auto; border: 0; background: transparent; color: #fff; font-size: 22px; cursor: pointer; }
 
@@ -121,12 +120,24 @@
 
     .summary-grid { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(320px, .9fr); gap: 42px; padding-bottom: 52px; border-bottom: 2px solid rgba(19,35,35,.55); }
 
-    .article-copy h2, .section-title, .salary-title { margin: 0; font-size: clamp(32px, 4.5vw, 50px); line-height: 1; letter-spacing: -1.4px; }
+    .article-copy h2, .section-title { margin: 0; font-size: clamp(32px, 4.5vw, 50px); line-height: 1; letter-spacing: -1.4px; }
     .article-copy p { margin: 18px 0 0; font-size: 18px; font-weight: 800; line-height: 1.38; }
     .article-copy h2 { font-size: clamp(28px, 3.4vw, 40px); }
-    .article-copy .trend-title { margin: 30px 0 0; font-size: 22px; line-height: 1.1; letter-spacing: -0.5px; }
     .article-copy .trend-copy { margin-top: 12px; font-size: 15px; font-weight: 700; line-height: 1.5; }
-    .article-copy .trend-eyebrow { margin: 38px 0 0; padding-top: 26px; border-top: 1px solid rgba(19,35,35,.25); }
+    /* The trend tiles reuse assets/chart.css's .range-card, but nested here .article-copy p
+       (above) would otherwise tie with .range-card p on specificity and win on source order
+       (this inline stylesheet loads after chart.css) — restore the compact tile paragraph. */
+    .article-copy .range-card p { margin: 0; font-size: 13px; font-weight: 800; line-height: 1.3; }
+    .article-copy .top-cards { margin-top: 26px; }
+
+    /* Toborzási trendek collapsible (client request, 2026-09-22): the first paragraph shows by
+       default, the rest toggles behind a plain-text "Tovább olvasom" control. */
+    .trend-toggle {
+      display: inline-flex; align-items: center; gap: 6px; margin-top: 16px; padding: 0;
+      border: 0; background: transparent; color: var(--dark); font: inherit; font-size: 13px;
+      font-weight: 900; text-decoration: underline; text-underline-offset: 3px; cursor: pointer;
+    }
+    .trend-toggle:focus-visible { outline: 3px solid var(--dark); outline-offset: 3px; }
 
     .bullet-list { display: grid; gap: 12px; margin: 24px 0 0; padding: 0; list-style: none; }
     .bullet-list li { position: relative; padding-left: 28px; font-size: 15px; font-weight: 800; }
@@ -165,7 +176,6 @@
     .product-card ul { display: grid; gap: 9px; margin: 0; padding-left: 18px; font-size: 14px; font-weight: 800; line-height: 1.25; }
 
     .salary-section { padding: 58px 0 80px; }
-    .salary-head { display: flex; justify-content: space-between; align-items: end; gap: 30px; margin-bottom: 28px; }
 
     .no-data { font-size: 13px; font-weight: 700; color: var(--muted); font-style: italic; margin: 0; }
 
@@ -223,8 +233,6 @@
       tr:not(.is-collapsed) td.pos-cell { border-bottom: 1px solid rgba(19,35,35,.14); }
     }
 
-    .bottom-cta { display: flex; justify-content: center; margin-top: 30px; }
-
     .site-footer { position: relative; padding: 49px 0 34px; border-radius: var(--radius-large) var(--radius-large) 0 0; background: var(--dark-2); color: #fff; }
     .footer-inner { display: grid; grid-template-columns: 1fr 190px; gap: 56px; padding-bottom: 44px; border-bottom: 1px solid rgba(255,255,255,.2); }
     .brand-footer { margin-bottom: 20px; }
@@ -253,7 +261,6 @@
       .navbar.is-open .nav-actions .button { width: 100%; }
       .summary-grid, .product-grid { grid-template-columns: 1fr; }
       .side-stack { position: static; }
-      .salary-head { display: grid; }
       .footer-inner { grid-template-columns: 1fr; gap: 30px; }
     }
 
@@ -303,7 +310,7 @@
       </ul>
 
       <div class="nav-actions">
-        <a class="button button-primary" href="https://idbc.hu/ajanlatkeres/">Ajánlatkérés</a>
+        <a class="button button-primary" href="../kapcsolat/index.html">Ajánlatkérés</a>
         <button class="button button-logout is-unavailable" type="button" aria-disabled="true"
           title="A be- és kijelentkezés a prototípusban még nincs bekötve">Kijelentkezés</button>
       </div>
@@ -346,69 +353,51 @@
           <p class="eyebrow">Technológiai trendek</p>
           <h2>AI, Cloud és Clean Core: az új SAP-stratégia üzleti alapkövei</h2>
           <p>
-            A magyar SAP-piacot 2026-ban egyre inkább az AI-képességek üzleti integrációja, a cloud-first
-            architektúrák térnyerése és a vállalati rendszerek hosszú távú modernizációja határozza meg.
-            A vezető szervezetek fókuszában már nem önmagában az ERP-rendszerek megújítása áll, hanem olyan
-            skálázható, jövőálló működési modell kialakítása, amely képes támogatni a generatív AI-megoldások
-            bevezetését, az adatvezérelt döntéshozatalt és az automatizált üzleti folyamatokat. Ennek egyik
-            kulcseleme a clean core szemlélet elterjedése, amely a túlzott egyedi fejlesztések helyett a
-            standardizált SAP-képességekre, valamint a SAP Business Technology Platform (BTP) által biztosított
-            integrációs, fejlesztési és automatizációs lehetőségekre épít. Az S/4HANA-transzformációs programok
-            egyre gyakrabban kapcsolódnak össze a SAP Joule, az intelligens automatizációs megoldások és a modern
-            cloud szolgáltatások bevezetésével, így az ERP-fejlesztések stratégiai üzleti innovációs projektekké
-            válnak.
+            A magyar SAP-piacot 2026-ban az AI-képességek üzleti integrációja, a cloud-first
+            architektúrák térnyerése és a vállalati rendszerek hosszú távú modernizációja
+            határozza meg — a fókuszban már nem önmagában az ERP-rendszerek megújítása áll,
+            hanem egy skálázható, AI-re és adatvezérelt döntéshozatalra képes működési modell.
+            Ebben kulcsszerepet játszik a clean core szemlélet és a SAP Business Technology
+            Platform (BTP), miközben az S/4HANA-transzformációk egyre inkább a SAP Joule és a
+            modern cloud szolgáltatások bevezetésével kapcsolódnak össze, stratégiai üzleti
+            innovációs projektekké alakulva.
           </p>
 
-          <h3 class="trend-title">SAP Logistics Management (LGM): a logisztika új generációja</h3>
-          <p class="trend-copy">
-            A logisztikai területen kiemelt figyelem övezi a SAP új, cloud-native Logistics Management (LGM)
-            megoldását, amely a raktározási és szállítási folyamatokat egységes platformon kezeli. A megoldás
-            különösen azoknak a vállalatoknak kínál új lehetőségeket, amelyek több telephelyes működésben,
-            regionális logisztikai hálózatokban vagy S/4HANA-átállással párhuzamos ellátási lánc fejlesztésekben
-            gondolkodnak. Az LGM megjelenése jól mutatja, hogy a logisztika digitalizációja már nem csupán
-            operációs kérdés, hanem versenyképességi tényező.
-          </p>
-
-          <h3 class="trend-title">SAP SuccessFactors és SmartRecruiters: a HR digitalizáció következő szintje</h3>
-          <p class="trend-copy">
-            A HR-folyamatok modernizációja szintén gyorsuló ütemben zajlik. A vállalatok egyre nagyobb arányban
-            alkalmazzák a SAP SuccessFactors megoldásait a teljes munkavállalói életciklus kezelésére, míg a
-            SmartRecruiters integrációk a toborzási folyamatok digitalizálásában és a jelöltélmény fejlesztésében
-            kapnak meghatározó szerepet. A fókusz egyre inkább az adatvezérelt HR-működésen, az automatizált
-            folyamatokon és a munkavállalói élmény javításán van. Magyarországon ennek eredményeként a
-            HR-rendszerek fejlesztése ma már szorosan kapcsolódik a vállalatok átfogó digitális transzformációs
-            stratégiájához.
-          </p>
-
-          <h3 class="trend-title">S/4HANA: a felkészülés éve a vállalati transzformációra</h3>
-          <p class="trend-copy">
-            Összességében 2026-ban a SAP ökoszisztéma legfontosabb trendjeit az S/4HANA-átállások felgyorsulása,
-            a cloud-native logisztikai megoldások térnyerése, valamint a HR- és üzleti folyamatok intelligens
-            automatizációja formálja. Azok a vállalatok szerezhetnek tartós versenyelőnyt, amelyek az átállást
-            nem kötelező technológiai projektként, hanem üzleti innovációs lehetőségként kezelik.
-          </p>
-
-          <p class="eyebrow trend-eyebrow">Toborzási trendek SAP területen</p>
-          <p class="trend-copy">
-            Az IT-munkaerőpiac stabilizálódása mellett az SAP továbbra is növekedő és egyre magasabb értéket
-            képviselő terület. A keresletet elsősorban az S/4HANA-transzformációk, a cloudmigráció és a vállalati
-            rendszerek modernizációja hajtják, miközben az SAP- és architect-szerepkörök továbbra is
-            hiánypozícióknak számítanak.
-          </p>
-          <p class="trend-copy">
-            A recruitmentben a senior SAP Consultant, SAP Developer/ABAP Developer, S/4HANA szakértő és SAP
-            Architect profilok a legkeresettebbek. Ezt aktuális álláskínálatunk is alátámasztja, amelyben
-            jelenleg számos ABAP- és S/4HANA-fejlesztői lehetőség is szerepel. A piac közben fokozatosan elmozdul
-            a klasszikus SAP-szerepköröktől a több területet összekapcsoló, hibrid kompetenciák felé: az S/4HANA-,
-            cloud- és integrációs tudás mellett egyre fontosabbá válik az AI ismerete és gyakorlati alkalmazása
-            az SAP-környezetben.
-          </p>
-          <p class="trend-copy">
-            A következő időszakban az SAP BTP, az AI-alapú automatizáció és az intelligens vállalati megoldások
-            térnyerése tovább gyorsíthatja ezt az átalakulást. A jövő keresett SAP-szakembere ezért nem csupán
-            egy-egy modul vagy technológia specialistája lesz, hanem olyan hibrid szakember, aki az SAP- és
-            üzleti tudást modern technológiákkal, különösen AI-kompetenciákkal képes ötvözni.
-          </p>
+          <!-- Tiles reuse the shared .range-card component (assets/chart.css), the same one the
+               TOP3 summary cards used, per client request (2026-09-22) to replace long-form prose
+               with scannable blocks. -->
+          <div class="top-cards">
+            <article class="range-card">
+              <h3>SAP Logistics Management (LGM): a logisztika új generációja</h3>
+              <p>
+                A SAP új, cloud-native Logistics Management (LGM) megoldása a raktározási és
+                szállítási folyamatokat egységes platformon kezeli, elsősorban a több telephelyes,
+                regionális logisztikai hálózatban működő vállalatoknak kínálva új lehetőséget.
+                Megjelenése jól mutatja: a logisztika digitalizációja ma már versenyképességi
+                tényező, nem csupán operációs kérdés.
+              </p>
+            </article>
+            <article class="range-card">
+              <h3>SAP SuccessFactors és SmartRecruiters: a HR digitalizáció következő szintje</h3>
+              <p>
+                A HR-folyamatok modernizációja felgyorsult: egyre több vállalat használja a SAP
+                SuccessFactorst a teljes munkavállalói életciklus kezelésére, míg a SmartRecruiters
+                integrációk a toborzás digitalizálásában és a jelöltélmény javításában kapnak
+                kulcsszerepet. Magyarországon a HR-rendszerek fejlesztése ma már szorosan
+                kapcsolódik a vállalatok átfogó digitális transzformációs stratégiájához.
+              </p>
+            </article>
+            <article class="range-card">
+              <h3>S/4HANA: a felkészülés éve a vállalati transzformációra</h3>
+              <p>
+                2026-ban a SAP ökoszisztéma legfontosabb trendjeit az S/4HANA-átállások
+                felgyorsulása, a cloud-native logisztikai megoldások térnyerése és a HR- és üzleti
+                folyamatok intelligens automatizációja formálja. Tartós versenyelőnyt azok a
+                vállalatok szerezhetnek, amelyek az átállást üzleti innovációs lehetőségként
+                kezelik, nem kötelező technológiai projektként.
+              </p>
+            </article>
+          </div>
         </article>
 
         <aside class="side-stack">
@@ -416,6 +405,48 @@
             <span class="play-button" aria-hidden="true"></span>
           </a>
 
+          <article class="contact-card">
+            <img src="https://idbc.hu/uploads/2025/11/Baranyai_Zsolt-1.webp" alt="Baranyai Zsolt portréfotó" />
+            <div>
+              <h3>Baranyai Zsolt</h3>
+              <p>Head of SAP and ECM BU, Partner</p>
+              <a class="cta-button" href="mailto:contact@idbc.hu?subject=SAP%20piaci%20trendek%20konzult%C3%A1ci%C3%B3">Kapcsolatfelvétel</a>
+            </div>
+          </article>
+        </aside>
+      </div>
+    </section>
+
+    <section class="article-section" id="recruitment-trends">
+      <div class="container summary-grid">
+        <article class="article-copy">
+          <p class="eyebrow">Toborzási trendek SAP területen</p>
+          <p class="trend-copy">
+            Az IT-munkaerőpiac stabilizálódása mellett az SAP továbbra is növekedő és egyre magasabb értéket
+            képviselő terület. A keresletet elsősorban az S/4HANA-transzformációk, a cloudmigráció és a vállalati
+            rendszerek modernizációja hajtják, miközben az SAP- és architect-szerepkörök továbbra is
+            hiánypozícióknak számítanak.
+          </p>
+          <div class="trend-more" id="recruitmentMore" hidden>
+            <p class="trend-copy">
+              A recruitmentben a senior SAP Consultant, SAP Developer/ABAP Developer, S/4HANA szakértő és SAP
+              Architect profilok a legkeresettebbek. Ezt aktuális álláskínálatunk is alátámasztja, amelyben
+              jelenleg számos ABAP- és S/4HANA-fejlesztői lehetőség is szerepel. A piac közben fokozatosan elmozdul
+              a klasszikus SAP-szerepköröktől a több területet összekapcsoló, hibrid kompetenciák felé: az S/4HANA-,
+              cloud- és integrációs tudás mellett egyre fontosabbá válik az AI ismerete és gyakorlati alkalmazása
+              az SAP-környezetben.
+            </p>
+            <p class="trend-copy">
+              A következő időszakban az SAP BTP, az AI-alapú automatizáció és az intelligens vállalati megoldások
+              térnyerése tovább gyorsíthatja ezt az átalakulást. A jövő keresett SAP-szakembere ezért nem csupán
+              egy-egy modul vagy technológia specialistája lesz, hanem olyan hibrid szakember, aki az SAP- és
+              üzleti tudást modern technológiákkal, különösen AI-kompetenciákkal képes ötvözni.
+            </p>
+          </div>
+          <button type="button" class="trend-toggle" id="recruitmentToggle" aria-expanded="false" aria-controls="recruitmentMore">Tovább olvasom</button>
+        </article>
+
+        <aside class="side-stack">
           <article class="contact-card">
             <img src="https://idbc.hu/uploads/2025/11/Baranyai_Zsolt-1.webp" alt="Baranyai Zsolt portréfotó" />
             <div>
@@ -442,16 +473,6 @@
 
     <section class="salary-section" id="salary">
       <div class="container">
-        <div class="salary-head">
-          <div>
-            <p class="eyebrow">SAP bérpiaci iránytű</p>
-            <h2 class="salary-title">TOP3 kategória / terület</h2>
-          </div>
-          <span class="cta-button is-unavailable" aria-disabled="true" title="Az Excel export még nem érhető el">Excel letöltése az összes bérrel</span>
-        </div>
-
-        <div class="top-cards" id="topCards"></div>
-
         <section class="top3-chart-card" aria-labelledby="top3-position-title">
           <h3 id="top3-position-title">TOP 3 pozíció</h3>
           <div id="top3Panel"></div>
@@ -469,9 +490,6 @@
             </thead>
             <tbody id="salaryTableBody" role="rowgroup"></tbody>
           </table>
-        </div>
-        <div class="bottom-cta">
-          <span class="cta-button is-unavailable" aria-disabled="true" title="Az Excel export még nem érhető el">Excel letöltése az összes bérrel</span>
         </div>
       </div>
     </section>
@@ -531,31 +549,6 @@
 
     const top3Rows = sapRows.filter(r => r.top3);
 
-    // ---------- TOP3 summary cards ----------
-    // Each card spans one perspective across the TOP3 rows, so the numbers stay
-    // tied to the same data the chart and table below are drawn from.
-    function bandOf(rows, key) {
-      const vals = rows.map(r => r[key]).filter(v => v != null);
-      if (!vals.length) return null;
-      const lo = Math.min(...vals), hi = Math.max(...vals);
-      return lo === hi ? fmtHuf(lo) : `${fmtHuf(lo)} – ${fmtHuf(hi)}`;
-    }
-
-    const juttatasNote = [...new Set(top3Rows.map(r => r.juttatas).filter(Boolean))][0] || '';
-    // Card order follows the mockup: candidate expectation, company offer, IDBC view.
-    const cards = [
-      { key: 'max', title: IDBCChart.LABEL.max },
-      { key: 'min', title: IDBCChart.LABEL.min },
-      { key: 'idbc', title: IDBCChart.LABEL.idbc },
-    ].filter(c => bandOf(top3Rows, c.key));
-
-    document.querySelector('#topCards').innerHTML = cards.map(c => `
-      <article class="range-card">
-        <h3>${escapeHtml(c.title)}</h3>
-        <p class="range-value">${escapeHtml(bandOf(top3Rows, c.key))}</p>
-        ${juttatasNote ? `<p>Egyéb juttatások: ${escapeHtml(juttatasNote)}</p>` : ''}
-      </article>`).join('');
-
     // ---------- TOP3 point-line chart ----------
     const top3Panel = document.querySelector('#top3Panel');
     function renderTop3() {
@@ -609,6 +602,18 @@
       const open = row.classList.toggle('is-collapsed') === false;
       btn.setAttribute('aria-expanded', String(open));
     });
+
+    // "Tovább olvasom" toggle for the Toborzási trendek text block (client request, 2026-09-22).
+    const recruitmentToggle = document.querySelector('#recruitmentToggle');
+    const recruitmentMore = document.querySelector('#recruitmentMore');
+    if (recruitmentToggle && recruitmentMore) {
+      recruitmentToggle.addEventListener('click', () => {
+        const open = recruitmentMore.hidden;
+        recruitmentMore.hidden = !open;
+        recruitmentToggle.setAttribute('aria-expanded', String(open));
+        recruitmentToggle.textContent = open ? 'Kevesebb' : 'Tovább olvasom';
+      });
+    }
     })();
   </script>
 </body>

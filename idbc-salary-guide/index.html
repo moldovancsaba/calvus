@@ -142,7 +142,7 @@
     }
 
     .hero-media { position: absolute; inset: 0; }
-    .hero-media img { width: 100%; height: 100%; object-fit: cover; object-position: center; }
+    .hero-media img { width: 100%; height: 100%; object-fit: cover; object-position: center 20%; }
 
     .hero-overlay {
       position: absolute;
@@ -286,6 +286,14 @@
     .split-card-eyebrow { display: block; margin: 0 0 8px; font-size: 11px; font-weight: 900; text-transform: uppercase; letter-spacing: .06em; color: var(--muted); }
     .split-card-title { display: block; font-size: clamp(19px, 2.2vw, 24px); font-weight: 900; letter-spacing: -0.4px; }
 
+    /* Client (2026-09): the Bérezés/Expert Pool pair read as "too wide, text doesn't fill it
+       enough" at desktop widths, since each 1fr card stretched to ~590px for a two-word title.
+       Cap and center the pair instead of stretching them full-width; narrow/mobile keeps the
+       existing single-column stack from the .split-links rules below untouched. */
+    @media (min-width: 981px) {
+      #berezes-expertpool-cta .split-links { grid-template-columns: repeat(2, minmax(0, 440px)); justify-content: center; }
+    }
+
     .text-section { padding: 0 0 70px; }
     .text-section hr { margin: 0 0 22px; border: 0; border-top: 2px solid var(--dark); opacity: 0.75; }
     .text-section h2 { margin: 0; max-width: 560px; font-size: clamp(26px, 3.6vw, 34px); line-height: 1.05; letter-spacing: -0.6px; }
@@ -380,7 +388,7 @@
       </ul>
 
       <div class="nav-actions">
-        <a class="button button-primary" href="https://idbc.hu/ajanlatkeres/">Ajánlatkérés</a>
+        <a class="button button-primary" href="kapcsolat/index.html">Ajánlatkérés</a>
         <button class="button button-logout is-unavailable" type="button" aria-disabled="true"
           title="A be- és kijelentkezés a prototípusban még nincs bekötve">Kijelentkezés</button>
       </div>
@@ -455,6 +463,42 @@
         <div class="area-picker">
           <p class="area-picker-label">Válassz területet a részletes összefoglalóhoz és a terület kutatási eredményeihez:</p>
           <nav class="split-links area-cards" aria-label="Területek">
+            <a class="split-card" href="./terulet/index.html?terulet=bsc">
+              <span class="split-card-eyebrow">Terület</span>
+              <span class="split-card-title">Business Service Center (BSC) →</span>
+            </a>
+            <a class="split-card" href="./terulet/index.html?terulet=penzugy-es-szamvitel">
+              <span class="split-card-eyebrow">Terület</span>
+              <span class="split-card-title">Pénzügy, Számvitel →</span>
+            </a>
+            <a class="split-card" href="./terulet/index.html?terulet=hr">
+              <span class="split-card-eyebrow">Terület</span>
+              <span class="split-card-title">HR →</span>
+            </a>
+            <a class="split-card" href="./terulet/index.html?terulet=sales-marketing">
+              <span class="split-card-eyebrow">Terület</span>
+              <span class="split-card-title">Sales, Marketing →</span>
+            </a>
+            <a class="split-card" href="./terulet/index.html?terulet=office-support-ugyfelszolgalat">
+              <span class="split-card-eyebrow">Terület</span>
+              <span class="split-card-title">Ügyfélszolgálat, Adminisztráció →</span>
+            </a>
+            <a class="split-card" href="./terulet/index.html?terulet=logisztika-es-szallitas">
+              <span class="split-card-eyebrow">Terület</span>
+              <span class="split-card-title">Logisztika, Szállítás →</span>
+            </a>
+            <a class="split-card" href="./terulet/index.html?terulet=gyartas-termeles-mernokseg">
+              <span class="split-card-eyebrow">Terület</span>
+              <span class="split-card-title">Gyártás, Termelés, Mérnökség →</span>
+            </a>
+            <a class="split-card" href="./terulet/index.html?terulet=epitoipar-ingatlan">
+              <span class="split-card-eyebrow">Terület</span>
+              <span class="split-card-title">Építőipar, Ingatlan →</span>
+            </a>
+            <a class="split-card" href="./terulet/index.html?terulet=pharma-life-sciences">
+              <span class="split-card-eyebrow">Terület</span>
+              <span class="split-card-title">Pharma, Life Sciences →</span>
+            </a>
             <a class="split-card" href="./terulet/index.html?terulet=it">
               <span class="split-card-eyebrow">Terület</span>
               <span class="split-card-title">IT →</span>
@@ -463,47 +507,11 @@
               <span class="split-card-eyebrow">Terület</span>
               <span class="split-card-title">IT Contracting →</span>
             </a>
-            <a class="split-card" href="./terulet/index.html?terulet=penzugy-es-szamvitel">
-              <span class="split-card-eyebrow">Terület</span>
-              <span class="split-card-title">Pénzügy és számvitel →</span>
-            </a>
-            <a class="split-card" href="./terulet/index.html?terulet=sales-marketing">
-              <span class="split-card-eyebrow">Terület</span>
-              <span class="split-card-title">Sales &amp; Marketing →</span>
-            </a>
-            <a class="split-card" href="./terulet/index.html?terulet=hr">
-              <span class="split-card-eyebrow">Terület</span>
-              <span class="split-card-title">HR →</span>
-            </a>
-            <a class="split-card" href="./terulet/index.html?terulet=bsc">
-              <span class="split-card-eyebrow">Terület</span>
-              <span class="split-card-title">BSC →</span>
-            </a>
-            <a class="split-card" href="./terulet/index.html?terulet=epitoipar-ingatlan">
-              <span class="split-card-eyebrow">Terület</span>
-              <span class="split-card-title">Építőipar, ingatlan →</span>
-            </a>
-            <a class="split-card" href="./terulet/index.html?terulet=gyartas-termeles-mernokseg">
-              <span class="split-card-eyebrow">Terület</span>
-              <span class="split-card-title">Gyártás, termelés, mérnökség →</span>
-            </a>
-            <a class="split-card" href="./terulet/index.html?terulet=office-support-ugyfelszolgalat">
-              <span class="split-card-eyebrow">Terület</span>
-              <span class="split-card-title">Office Support &amp; Ügyfélszolgálat →</span>
-            </a>
-            <a class="split-card" href="./terulet/index.html?terulet=logisztika-es-szallitas">
-              <span class="split-card-eyebrow">Terület</span>
-              <span class="split-card-title">Logisztika és szállítás →</span>
-            </a>
-            <a class="split-card" href="./terulet/index.html?terulet=pharma-life-sciences">
-              <span class="split-card-eyebrow">Terület</span>
-              <span class="split-card-title">Pharma &amp; Life Sciences →</span>
-            </a>
           </nav>
         </div>
 
         <div class="filter-block">
-          <p class="filter-block-label">Vagy nézd meg a teljes kutatás eredményeit szegmens és téma szerint:</p>
+          <p class="filter-block-label">Vagy vizsgáld preferenciáid szerint a kutatási adatainkat!</p>
           <div class="top-filters">
             <label>
               <span>Szegmens</span>
@@ -645,9 +653,24 @@
     // sorting them by percentage instead of by the scale itself scrambles the order. Detect them by
     // checking that (almost) every label starts with a number, and sort those by that leading number,
     // with the one non-numeric "none" label pinned to the front.
+    //
+    // Day-count / frequency labels ("Nem engedélyezett a home office", "Heti 1 nap home office", ...,
+    // "Heti 5 nap home office", "Teljesen rugalmas, nincs meghatározott keret", "Vezetői döntenek a
+    // mértékéről a csapataikban") are ordinal too, but the digit sits mid-label ("Heti N nap") rather
+    // than at the very start, and the "no home office" / "fully flexible" / "manager decides" labels
+    // carry no digit at all. Recognize the "N nap" phrasing anywhere in the label, and give that small,
+    // fixed set of non-numeric home-office labels an explicit position in the scale (client, 2026-09:
+    // this question is inherently ordinal — increasing days of home office — not ranked by popularity).
+    const NO_HOME_OFFICE = /nem enged(élyezett)?|nincs (otthoni|home office)/i;
+    const UNLIMITED_HOME_OFFICE = /teljesen rugalmas|vezet(ő|ői)k? d[öo]nt/i;
     function numericRangeStart(label) {
-      const m = label.match(/^(\d+)/);
-      return m ? parseInt(m[1], 10) : null;
+      const leading = label.match(/^(\d+)/);
+      if (leading) return parseInt(leading[1], 10);
+      const dayCount = label.match(/(\d+)\s*nap\b/i);
+      if (dayCount) return parseInt(dayCount[1], 10);
+      if (NO_HOME_OFFICE.test(label)) return -1;
+      if (UNLIMITED_HOME_OFFICE.test(label)) return 99;
+      return null;
     }
     function isOrdinalScale(labels) {
       const numericCount = labels.filter(l => numericRangeStart(l) !== null).length;

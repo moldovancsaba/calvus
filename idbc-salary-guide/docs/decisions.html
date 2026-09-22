@@ -254,6 +254,20 @@ decision is added here first. "Owner" is the studio side; "client" is IDBC.</em>
 <td>owner</td>
 <td>the owner edits one sheet and feeds it back; nothing lives only in the prototype</td>
 </tr>
+<tr>
+<td>D30</td>
+<td>2026-09-22</td>
+<td><strong>Client feedback triaged: only the studio's own prototype scope is touched.</strong> The client's mail mixed feedback on this static prototype with feedback on a real backend/CMS the studio does not build (account registration storage, a rich-text editor, an "editable pages" admin list, live Excel-to-site sync) — those items are named but left unbuilt here, flagged back to the client rather than faked. Everything else fixed in one round: registration subtitle copy; hero crop (<code>object-position: center</code> → <code>center 20%</code> site-wide — the fixed 400 px-tall hero band was cropping heads at wide viewports); the Piaci trendek chart-intro copy; the two-tile "Bérsávok/Expert Pool" CTA's width; the Ajánlatkérés header button now opens a new in-guide <code>kapcsolat/</code> page instead of leaving the guide; every green summary tile and the Excel-download CTA removed from Bérek and SAP; SAP's technológiai trendek prose rebuilt as tiles (reusing the existing <code>.range-card</code> component) with its own contact card, recruitment trends kept as a collapsible text block with a second contact card; the TOP3 chart's per-position sub-label dropped the redundant, already-selected area code (client: "an extra gray row... two position names") down to just the experience level; Bérek's further-down table drops the "Tapasztalati szint" pseudo-label on mobile entirely, blank instead of "–" where no level exists; the home-office "current policy" question kept in its source/ordinal order instead of being re-sorted by percentage</td>
+<td>owner, triaging the client's mail</td>
+<td><a href="client-asks.html"><code>08-client-asks.md</code></a>, <a href="prerequisites.html"><code>19-implementation-prerequisites.md</code></a>, <a href="sources.html"><code>SOURCES-AND-GAPS.md</code></a></td>
+</tr>
+<tr>
+<td>D31</td>
+<td>2026-09-22</td>
+<td><strong>Two area-name taxonomies, not one — verified separate, not reconciled.</strong> The client's mail gives two different, overlapping-but-distinct area-naming lists: one for Piaci trendek (<code>areas.json</code>, e.g. "Pénzügy, Számvitel", "Ügyfélszolgálat, Adminisztráció") and a differently-worded one for Bérek (<code>build-salary-data.py</code>'s <code>AREA_NAME</code>, e.g. "Pénzügy és számvitel", "Office Support") — confirmed by re-reading the client's own two separate bullet lists side by side, not assumed. Both were applied verbatim to their own page rather than picking one wording and spreading it to both. Renaming <code>areas.json</code>'s display names required a bridge field (<code>dataKey</code>, holding each area's pre-rename name) so <code>terulet/index.html</code>'s join into <code>guide-data.json</code>'s <code>datasets</code> object (keyed by the old names) kept working — caught and fixed in the same round, before it could silently fall back 8 of 11 areas to the pooled aggregate</td>
+<td>owner, cross-checking the client's two lists</td>
+<td><code>data/areas.json</code>, <code>terulet/index.html</code>, <code>data/build-salary-data.py</code></td>
+</tr>
 </tbody>
 </table></div>
 <h2>Standing rules that came out of these</h2>
@@ -262,6 +276,7 @@ decision is added here first. "Owner" is the studio side; "client" is IDBC.</em>
 <li>The client's own copy ships as written, even where it asserts more than the source data does — and the divergence is recorded (D5, D14).</li>
 <li>One template per repeated thing (area pages, tiles, chart) — never eleven copies (D11).</li>
 <li>In fine-tuning, only the reported item changes; nothing is restructured or hidden unasked (D24, D25).</li>
+<li>Client feedback naming a backend/CMS capability the prototype cannot have (accounts, a rich-text editor, live data sync) is flagged back, never faked with static content pretending to be dynamic (D30).</li>
 </ul>
 <footer>IDBC Talent Market &amp; Salary Guide 2026 · documentation</footer>
 </div>

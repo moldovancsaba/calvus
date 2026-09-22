@@ -89,6 +89,24 @@ production build, not before the next review.</em></p>
 <td>every page hero</td>
 <td>stock (Unsplash) and one idbc.hu image</td>
 </tr>
+<tr>
+<td>C-7 (ask #16, 2026-09-22)</td>
+<td>The source Excel's "Téma besorolás" sheet checked for two survey questions missing from the parsed data (a home-office/recruiting-impact question; two non-IT AI employer questions)</td>
+<td><code>guide-data.json</code>'s topics, if the data exists</td>
+<td>absent — may be genuine survey segmentation (IT respondents consistently get extra questions elsewhere too), not a parsing bug</td>
+</tr>
+<tr>
+<td>C-8 (ask #17, 2026-09-22)</td>
+<td>"IT Contracting" salary figures for Bérek, or confirmation the segment is folded into "IT"</td>
+<td><code>data/build-salary-data.py</code>'s <code>AREA_NAME</code>, already has the slot ready</td>
+<td>the filter option simply doesn't appear (zero rows)</td>
+</tr>
+<tr>
+<td>C-9 (ask #18, 2026-09-22)</td>
+<td>Expert Pool page text content (client says previously sent; not received in this round)</td>
+<td><code>expert-pool/index.html</code></td>
+<td>the existing copy stays</td>
+</tr>
 </tbody>
 </table></div>
 <h2>2. Decisions before publication</h2>
@@ -107,13 +125,13 @@ production build, not before the next review.</em></p>
 <td>nothing publishes with a contradiction between the source and the page</td>
 </tr>
 <tr>
-<td>P-2 (ask #9)</td>
-<td>The area display names for the bértábla codes (<code>CP</code> → Építőipar, ingatlan; Office Support &amp; Ügyfélszolgálat; the Sales and Marketing split)</td>
+<td>~~P-2 (ask #9)~~</td>
+<td>~~The area display names for the bértábla codes~~ — <strong>resolved 2026-09-22</strong>: the client's mail gave final wording for both Bérek's own list and, separately, Piaci trendek's (confirmed genuinely different from each other, not reconciled)</td>
 <td>the Bérek filter labels</td>
 </tr>
 <tr>
-<td>P-3 (ask #8)</td>
-<td>The Ajánlatkérés target (<code>idbc.hu/ajanlatkeres/</code> or the in-guide form)</td>
+<td>~~P-3 (ask #8)~~</td>
+<td>~~The Ajánlatkérés target~~ — <strong>resolved 2026-09-22</strong>: now the in-guide <code>kapcsolat/</code> contact-only page</td>
 <td>the header link on every page</td>
 </tr>
 <tr>

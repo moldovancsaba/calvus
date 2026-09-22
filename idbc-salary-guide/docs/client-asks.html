@@ -39,10 +39,37 @@ footer{margin-top:56px;padding-top:18px;border-top:1px solid var(--line);font-si
 <header><p class="eyebrow">IDBC Salary Guide · project documentation</p><h1>IDBC Salary Guide — the register of asks</h1></header>
 <p><em>Every item that once needed the client, with its state. Since 2026-09-20 (owner's rule:
 an ask is never a presentation blocker) the open items are the client's pending content
-deliveries and the decisions for publication, listed in <a href="prerequisites.html"><code>19-implementation-prerequisites.md</code></a>;
-nothing is open for the next review.</em></p>
+deliveries and the decisions for publication, listed in <a href="prerequisites.html"><code>19-implementation-prerequisites.md</code></a>.</em></p>
 <h2>Open for the next review</h2>
-<p>None.</p>
+<p>A 2026-09-22 feedback mail mixed real prototype fixes (closed this round, see
+<a href="index.html"><code>README.md</code></a>'s process log and <a href="sources.html"><code>SOURCES-AND-GAPS.md</code></a>'s 2026-09-22 entry) with three items
+this studio cannot resolve without more from the client:</p>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>#</th>
+<th>Item</th>
+<th>What's needed</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>16</td>
+<td>Two survey questions ("current home office policy's effect on recruiting success"; two AI questions for non-IT employers) don't exist anywhere in the parsed research data</td>
+<td>The source Excel's "Téma besorolás" sheet checked — this repo has no copy of it. If the data exists, it's a converter fix; if those segments were genuinely never asked, it's not something to fabricate.</td>
+</tr>
+<tr>
+<td>17</td>
+<td>"IT Contracting" as a Bérek salary segment — the bértábla sheet has no rows for it (the separate market-trends survey data does have it)</td>
+<td>IT Contracting salary figures from the client, or confirmation the segment is already folded into "IT" today. Code is ready (<code>build-salary-data.py</code>'s <code>AREA_NAME</code>); it will just show zero rows until data lands.</td>
+</tr>
+<tr>
+<td>18</td>
+<td>Expert Pool page text content — the client says this was sent previously; it never reached this implementation round</td>
+<td>Resend, or point to where it lives.</td>
+</tr>
+</tbody>
+</table></div>
 <h2>Moved to the prerequisites (<a href="prerequisites.html"><code>19-implementation-prerequisites.md</code></a>)</h2>
 <div class="tbl"><table>
 <thead>
@@ -91,12 +118,12 @@ nothing is open for the next review.</em></p>
 <tr>
 <td>8</td>
 <td>Ajánlatkérés target</td>
-<td>P-3 — before publication</td>
+<td>~~P-3~~ — <strong>resolved 2026-09-22</strong>, now the in-guide <code>kapcsolat/</code> page</td>
 </tr>
 <tr>
 <td>9</td>
 <td>Area labels for the bértábla codes</td>
-<td>P-2 — before publication</td>
+<td>~~P-2~~ — <strong>resolved 2026-09-22</strong>, the client's mail gave the final wording for both Piaci trendek's and Bérek's own separate lists</td>
 </tr>
 <tr>
 <td>10</td>
@@ -132,7 +159,7 @@ nothing is open for the next review.</em></p>
 </table></div>
 <h2>Closed</h2>
 <p>See the process log in <a href="index.html"><code>README.md</code></a> for every item closed by a client mail round (2026-08-24,
-2026-08-25, 2026-09-01, 2026-09-08, 2026-09-18).</p>
+2026-08-25, 2026-09-01, 2026-09-08, 2026-09-18, 2026-09-22).</p>
 <footer>IDBC Talent Market &amp; Salary Guide 2026 · documentation</footer>
 </div>
 </body>

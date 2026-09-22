@@ -16,14 +16,17 @@ production build, not before the next review.*
 | C-4 (asks #5–7) | Seven area videos, four area key thoughts, two case-study videos | `terulet/` media slot and highlight box; `esettanulmanyok/` | labelled placeholders |
 | C-5 (ask #12) | Chamber logos, podcast embed | the home page (with C-1) | — |
 | C-6 (ask #15) | IDBC's own hero photographs, or confirmation that the stock photographs stay | every page hero | stock (Unsplash) and one idbc.hu image |
+| C-7 (ask #16, 2026-09-22) | The source Excel's "Téma besorolás" sheet checked for two survey questions missing from the parsed data (a home-office/recruiting-impact question; two non-IT AI employer questions) | `guide-data.json`'s topics, if the data exists | absent — may be genuine survey segmentation (IT respondents consistently get extra questions elsewhere too), not a parsing bug |
+| C-8 (ask #17, 2026-09-22) | "IT Contracting" salary figures for Bérek, or confirmation the segment is folded into "IT" | `data/build-salary-data.py`'s `AREA_NAME`, already has the slot ready | the filter option simply doesn't appear (zero rows) |
+| C-9 (ask #18, 2026-09-22) | Expert Pool page text content (client says previously sent; not received in this round) | `expert-pool/index.html` | the existing copy stays |
 
 ## 2. Decisions before publication
 
 | # | Decision | Why |
 |---|---|---|
 | P-1 (ask #13) | **The bértábla banner**: the sheet says the figures are sample values awaiting professional approval; the pages say "valós piaci adatok" — which is true | nothing publishes with a contradiction between the source and the page |
-| P-2 (ask #9) | The area display names for the bértábla codes (`CP` → Építőipar, ingatlan; Office Support & Ügyfélszolgálat; the Sales and Marketing split) | the Bérek filter labels |
-| P-3 (ask #8) | The Ajánlatkérés target (`idbc.hu/ajanlatkeres/` or the in-guide form) | the header link on every page |
+| ~~P-2 (ask #9)~~ | ~~The area display names for the bértábla codes~~ — **resolved 2026-09-22**: the client's mail gave final wording for both Bérek's own list and, separately, Piaci trendek's (confirmed genuinely different from each other, not reconciled) | the Bérek filter labels |
+| ~~P-3 (ask #8)~~ | ~~The Ajánlatkérés target~~ — **resolved 2026-09-22**: now the in-guide `kapcsolat/` contact-only page | the header link on every page |
 | P-4 (ask #10) | Excel export: the file, or confirmation it is generated from the same data at build | the inert CTA on three pages |
 | P-5 (ask #11) | Whether an English edition is wanted (there is no EN copy) | the inert EN switch |
 
