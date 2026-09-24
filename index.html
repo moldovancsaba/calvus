@@ -24,9 +24,33 @@
       h1 { margin: 0 0 10px; font-size: clamp(1.8rem, 3vw, 2.4rem); }
       .lead { margin: 0 0 28px; color: var(--muted); }
       .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px; }
-      .card { background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 18px; }
+      .card { background: var(--surface); border: 1px solid var(--line); border-radius: 14px; overflow: hidden; }
+      .card-body { padding: 18px; }
       .card h2 { margin: 0 0 8px; font-size: 1.1rem; }
       .card p { margin: 0 0 14px; color: var(--muted); }
+
+      /* A live, always-current miniature of the project's own home page — never a screenshot
+         that can go stale, since it's the same page the "Open project" link goes to. The iframe
+         is sized to 4x the visible box and scaled back down, so it stays responsive at any card
+         width instead of being tuned to one fixed pixel size. */
+      .card-preview {
+        position: relative;
+        height: 170px;
+        overflow: hidden;
+        background: var(--bg);
+        border-bottom: 1px solid var(--line);
+      }
+      .card-preview iframe {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 400%;
+        height: 400%;
+        transform: scale(0.25);
+        transform-origin: top left;
+        border: 0;
+        pointer-events: none;
+      }
       .link {
         display: inline-block;
         padding: 10px 14px;
@@ -58,9 +82,36 @@
         flex-wrap: wrap;
       }
       .brand-text { font-weight: 800; letter-spacing: 0.01em; color: var(--text); text-decoration: none; }
+      /* Hub-level documentation only — every project's own pages carry their own navigation on
+         their own card below; this header is not a second copy of that. */
       .site-nav { display: flex; gap: 20px; font-weight: 500; color: var(--muted); flex-wrap: wrap; }
       .site-nav a { color: var(--muted); text-decoration: none; }
       .site-nav a:hover { color: var(--text); }
+      .menu-toggle {
+        display: none;
+        margin-left: auto;
+        min-width: 44px;
+        min-height: 44px;
+        border: 1px solid var(--line);
+        border-radius: 10px;
+        background: var(--surface);
+        color: var(--text);
+        font-size: 18px;
+        cursor: pointer;
+      }
+      @media (max-width: 640px) {
+        .menu-toggle { display: block; }
+        .site-nav {
+          display: none;
+          flex-direction: column;
+          align-items: flex-start;
+          width: 100%;
+          gap: 4px;
+          padding: 4px 0 14px;
+        }
+        .nav-wrap.is-open .site-nav { display: flex; }
+        .site-nav a { display: block; padding: 8px 0; min-height: 44px; display: flex; align-items: center; }
+      }
     
     /* hub gate — a client-side courtesy lock; the page keeps only a hash */
     #gate{position:fixed;inset:0;z-index:100;display:grid;place-items:center;background:#f5f5f7;padding:24px}
@@ -105,32 +156,42 @@
 </script>
 
     <header class="site-header">
-      <div class="nav-wrap">
+      <div class="nav-wrap" id="navWrap">
         <a class="brand-text" href="./index.html">Calvus</a>
-        <nav class="site-nav">
-          <a href="./lexodont.hu/index.html">Lexodont</a>
-          <a href="./lexodont.hu_balsamic/index.html">Lexodont (Balsamic)</a>
-          <a href="./idbc-salary-guide/index.html">IDBC Salary Guide</a>
-          <a href="./idbc-salary-guide/berezes/index.html">IDBC Bérsávok</a>
-          <a href="./idbc-salary-guide/sap/index.html">IDBC SAP piaci trendek</a>
-          <a href="./idbc-salary-guide/expert-pool/index.html">IDBC Expert Pool</a>
-          <a href="./discountdirect/index.html">DiscountDirect</a>
-          <a href="./holdvolgy/index.html">Holdvölgy</a>
-          <a href="./business-direct/index.html">business.direct</a>
-          <a href="./bizdrankazoldet/docs/index.html">Bízd ránk a zöldet</a>
-          <a href="./nepszabadsag/index.html">Népszabadság</a>
+        <button class="menu-toggle" type="button" aria-label="Menü megnyitása" aria-expanded="false" aria-controls="siteNav">☰</button>
+        <nav class="site-nav" id="siteNav">
           <a href="./prototyping.html">How we prototype</a>
           <a href="./hub-audit.html">Hub audit</a>
           <a href="./product.html">The product standard</a>
         </nav>
       </div>
     </header>
+    <script>
+      (() => {
+        const wrap = document.getElementById('navWrap');
+        const toggle = wrap.querySelector('.menu-toggle');
+        toggle.addEventListener('click', () => {
+          const isOpen = wrap.classList.toggle('is-open');
+          toggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+          toggle.textContent = isOpen ? '✕' : '☰';
+        });
+        wrap.querySelectorAll('.site-nav a').forEach(a => a.addEventListener('click', () => {
+          wrap.classList.remove('is-open');
+          toggle.setAttribute('aria-expanded', 'false');
+          toggle.textContent = '☰';
+        }));
+      })();
+    </script>
     <main class="wrap">
       <h1>Calvus Project Hub</h1>
       <p class="lead">Client-facing wireframe projects managed in parallel. The method and the requirements every project follows: <a href="./prototyping.html">How we prototype</a>. Every project compared with every other: <a href="./hub-audit.html">Hub audit</a>
           <a href="./product.html">The product standard</a> (2026-09-20).</p>
       <section class="grid">
         <article class="card">
+          <div class="card-preview" aria-hidden="true">
+            <iframe src="./lexodont.hu/index.html" title="Előnézet: lexodont.hu" loading="lazy" tabindex="-1"></iframe>
+          </div>
+          <div class="card-body">
           <h2>lexodont.hu</h2>
           <p>Dental clinic wireframe (March–April 2026) in a polished and a Balsamiq-style variant — the structure lexodont.hu was built from; documented as the record.</p>
           <div class="links">
@@ -139,8 +200,13 @@
             <a class="link" href="./lexodont.hu/docs/bemutato.html">Bemutató (HU)</a>
             <a class="link" href="./lexodont.hu/docs/index.html">Project documentation</a>
           </div>
+          </div>
         </article>
         <article class="card">
+          <div class="card-preview" aria-hidden="true">
+            <iframe src="./idbc-salary-guide/index.html" title="Előnézet: IDBC Salary Guide" loading="lazy" tabindex="-1"></iframe>
+          </div>
+          <div class="card-body">
           <h2>IDBC Salary Guide</h2>
           <p>Real market-trends survey data, salary bands and expert pool - filterable by segment, topic, area and experience level.</p>
           <div class="links">
@@ -153,8 +219,13 @@
             <a class="link" href="./idbc-salary-guide/docs/bemutato.html">Bemutató (HU)</a>
             <a class="link" href="./idbc-salary-guide/docs/index.html">Project documentation</a>
           </div>
+          </div>
         </article>
         <article class="card">
+          <div class="card-preview" aria-hidden="true">
+            <iframe src="./discountdirect/index.html" title="Előnézet: DiscountDirect" loading="lazy" tabindex="-1"></iframe>
+          </div>
+          <div class="card-body">
           <h2>DiscountDirect</h2>
           <p>Messaging app wireframe connecting sellers and buyers - personalised offers driven by recommendations and purchase history, with channel selection, instant flash campaigns and automated personalised offer lists.</p>
           <div class="links">
@@ -169,8 +240,13 @@
             <a class="link" href="./discountdirect/bemutato.html">Bemutató (HU)</a>
             <a class="link" href="./discountdirect/docs.html">Project documentation</a>
           </div>
+          </div>
         </article>
         <article class="card">
+          <div class="card-preview" aria-hidden="true">
+            <iframe src="./business-direct/index.html" title="Előnézet: business.direct" loading="lazy" tabindex="-1"></iframe>
+          </div>
+          <div class="card-body">
           <h2>business.direct</h2>
           <p>A standalone product for classified media owners — listing platforms, directories, marketplaces of local businesses — to run the three jobs their business never stops needing: marketing (content generated from the listings and delivered to every medium), B2B sales (every listed business contacted and acquired as a paying advertiser through a lawful pipeline) and retention (churn seen weeks ahead and answered with a touch), with a human gate on everything and the owner's economics — listing price, advertiser CAC and LTV, visitor cost and value, churn, the next dollar — as a screen. Example persona and first buyer: ClassScout (Your Field NYC); the prototype runs on their real listings. State: prototype, presentation, executive summary, the value document, every service verified, eighteen modules with pseudo code, nine sprints; the documentation is being replaced under the audit's programme.</p>
           <div class="links">
@@ -182,8 +258,13 @@
             <a class="link" href="./business-direct/docs/economics.html">Economics</a>
             <a class="link" href="./business-direct/docs/index.html">Project documentation</a>
           </div>
+          </div>
         </article>
         <article class="card">
+          <div class="card-preview" aria-hidden="true">
+            <iframe src="./nepszabadsag/index.html" title="Előnézet: Népszabadság" loading="lazy" tabindex="-1"></iframe>
+          </div>
+          <div class="card-body">
           <h2>Népszabadság</h2>
           <p>The relaunch of Népszabadság as an online paper with a weekly print edition, launching 2026-10-08: a pre-registration landing page and the site itself (címlap, rovatfront, cikkoldal), designed in Figma. State: first version built 2026-09-21 — four pages generated from one content source, real headlines read from the Figma file, one full Cikkoldal with its paywall mechanic, ten real licensed photographs, a live-countdown landing page; measured clean at 390 and 1440. The Figma's Népszava sub-brand front is deliberately not built, at the owner's instruction. Next: rovat fronts for the remaining categories and the technical package.</p>
           <div class="links">
@@ -192,8 +273,13 @@
             <a class="link" href="./nepszabadsag/docs/bemutato.html">Bemutató (HU)</a>
             <a class="link" href="./nepszabadsag/docs/index.html">Project documentation</a>
           </div>
+          </div>
         </article>
         <article class="card">
+          <div class="card-preview" aria-hidden="true">
+            <iframe src="./bizdrankazoldet/index.html" title="Előnézet: Bízd ránk a zöldet" loading="lazy" tabindex="-1"></iframe>
+          </div>
+          <div class="card-body">
           <h2>Bízd ránk a zöldet</h2>
           <p>The playful office-plant brand of Gourmet Garden Kft. / Grofie (Budapest): office plant design, rental and care for companies, maintenance included. The brief: research how a silly-but-professional green service is presented in 2026 to earn trust, show reliability, own an identity and sell through its customer journey — then prototype it in Hungarian. State: the prototype built from the client's own material (their kit, photographs, illustrations, Reels) — seven Hungarian pages designed separately for phone and desktop; the presentation in Hungarian; next: the client's material for the samples.</p>
           <div class="links">
@@ -203,8 +289,13 @@
             <a class="link" href="./bizdrankazoldet/docs/design-system.html">Design system</a>
             <a class="link" href="./bizdrankazoldet/docs/index.html">Project documentation</a>
           </div>
+          </div>
         </article>
         <article class="card">
+          <div class="card-preview" aria-hidden="true">
+            <iframe src="./holdvolgy/index.html" title="Előnézet: Holdvölgy" loading="lazy" tabindex="-1"></iframe>
+          </div>
+          <div class="card-body">
           <h2>Holdvölgy 2026</h2>
           <p>Tokaji winery rebuilt on its own brand after benchmark research - home page as two designed experiences (desktop editorial estate, phone hospitality-and-buying tool), generated in HU and EN from one content source; approved through three gates, all documented.</p>
           <div class="links">
@@ -213,6 +304,7 @@
             <a class="link" href="./holdvolgy/borok.html">Borok</a>
             <a class="link" href="./holdvolgy/docs/bemutato.html">Bemutató (HU)</a>
             <a class="link" href="./holdvolgy/docs/index.html">Project documentation</a>
+          </div>
           </div>
         </article>
       </section>
