@@ -254,11 +254,27 @@
       transition: width .3s ease;
     }
 
-    .expert-count { font-size: 20px; letter-spacing: -0.4px; }
     /* Tile per the client's demo (2026-09): market count line, then the IDBC bar with its own label. */
     .expert-market { margin: -8px 0 16px; font-size: 13px; font-weight: 700; color: var(--muted); }
     .expert-bar-label { margin: 0 0 6px; font-size: 13px; font-weight: 900; }
     .expert-card .expert-bar-label { margin-top: auto; }
+
+    /* Restored 2026-09-24: client's follow-up kept the small/medium/large legend even after
+       the green summary tiles were dropped — it now labels the bar's own colour ramp instead
+       of a set of tiles. */
+    .expert-legend {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px 24px;
+      margin: 0 0 18px;
+      padding: 0;
+      list-style: none;
+      font-size: 12px;
+      font-weight: 900;
+      color: rgba(16,24,24,.76);
+    }
+    .expert-legend li { display: inline-flex; align-items: center; gap: 8px; }
+    .expert-legend span { width: 11px; height: 11px; flex: 0 0 11px; border-radius: 50%; }
 
     .intro-copy p { margin: 0 0 12px; font-size: 14px; font-weight: 700; line-height: 1.5; max-width: 600px; }
     .audience-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 22px; margin-bottom: 44px; }
@@ -503,6 +519,12 @@
           </label>
         </div>
 
+        <ul class="expert-legend" aria-label="Jelmagyarázat">
+          <li><span style="background:#a5df8f"></span>Kisebb pool</li>
+          <li><span style="background:#55aa8b"></span>Közepes pool</li>
+          <li><span style="background:#245d54"></span>Nagyobb pool</li>
+        </ul>
+
         <div class="expert-grid" id="expertGrid"></div>
         <p class="talent-note" id="talentNote"></p>
 
@@ -601,7 +623,6 @@
           ${r.linkedin != null ? `<p class="expert-market">Piacon elérhető szakember: ${fmt.format(r.linkedin)} fő*</p>` : ''}
           <p class="expert-bar-label">IDBC Expert Community</p>
           <div class="expert-bar-track"><div class="expert-bar-fill" style="width:${(r.darab / max * 100).toFixed(0)}%"></div></div>
-          <strong class="expert-count">${r.darab} fő</strong>
         </article>`;
       }).join('') || '<p class="no-data">Nincs elérhető jelölt ehhez az iparághoz.</p>';
       // The footnote belongs to the star; no star on screen, no footnote.

@@ -64,6 +64,14 @@
     .eyebrow { margin: 0 0 8px; font-size: 12px; font-weight: 900; text-transform: uppercase; letter-spacing: .08em; color: var(--muted); }
     h1 { margin: 0 0 6px; font-size: clamp(28px, 4vw, 42px); line-height: 1.02; letter-spacing: -1px; }
 
+    /* Client, 2026-09-24: these area sub-pages don't need a photo Hero like the guide's other
+       pages — just a green header band up top. */
+    .area-headerband { background: var(--green); }
+    .area-headerband .back-link { margin-top: 22px; color: rgba(16, 24, 24, .68); }
+    .area-headerband .back-link:hover { color: var(--dark); }
+    .area-headerband .eyebrow { color: rgba(16, 24, 24, .68); }
+    .area-headerband h1 { margin-bottom: 22px; color: var(--dark); }
+
     /* Summary: text column clamped to the media slot's height (video placeholder or key-thought box), expandable. */
     .area-summary { display: grid; grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr); gap: 26px; align-items: start; margin: 24px 0 0; }
     /* Media slot + contact tile stacked in the right-hand column, same pattern as sap/index.html's .side-stack. */
@@ -202,13 +210,16 @@
     </nav>
   </header>
 
-  <main class="section">
+  <section class="area-headerband">
     <div class="container">
       <a class="back-link" href="../index.html#trends">← Vissza a munkaerő-piaci trendekhez</a>
-
       <p class="eyebrow">Területi összefoglaló</p>
       <h1 id="areaTitle">Terület</h1>
+    </div>
+  </section>
 
+  <main class="section">
+    <div class="container">
       <div class="area-summary">
         <div class="summary-text">
           <div class="summary-body is-clamped" id="summaryBody"></div>

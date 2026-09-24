@@ -685,6 +685,14 @@
       return na - nb;
     }
 
+    // Categorical questions the client wants kept in their own answer order (client, 2026-09-24):
+    // the options are business postures ("Fluktuációt kezelünk", "10-50 fővel bővülünk", ...), not
+    // a numeric scale, so isOrdinalScale correctly does not treat it as one — but percentage sort
+    // still scrambles the order the client authored the question in.
+    const KEEP_SOURCE_ORDER = new Set([
+      'Mi jellemzi céged toborzási stratégiáját a 2026-os évben?',
+    ]);
+
     const datasetSelect = document.querySelector('#datasetSelect');
     const topicSelect = document.querySelector('#topicSelect');
     const empSegmentSelect = document.querySelector('#empSegmentSelect');
@@ -780,9 +788,11 @@
         // Range-bucket questions ("Nem kaptam béremelést" ... "21+") must stay in scale order —
         // sorting them by popularity instead would scramble the sequence.
         const ordinal = !isMulti && isOrdinalScale(c.items.map(it => it.label));
-        const sorted = ordinal
-          ? [...nonZero].sort((a, b) => ordinalCompare(a.label, b.label))
-          : [...nonZero].sort((a, b) => b.percent - a.percent);
+        const sorted = KEEP_SOURCE_ORDER.has(title)
+          ? nonZero
+          : ordinal
+            ? [...nonZero].sort((a, b) => ordinalCompare(a.label, b.label))
+            : [...nonZero].sort((a, b) => b.percent - a.percent);
         const rows = sorted.map((it, i) => `
           <div class="answer-row-multi">
             <div class="answer-label">${escapeHtml(it.label)}</div>
@@ -828,9 +838,11 @@
             .map((v, i) => ({ percent: v.percent, group: c.groups[i] }))
             .filter(v => v.percent > 0);
           if (!nonZero.length) return '';
-          const sorted = ordinal
-            ? nonZero.sort((a, b) => ordinalCompare(a.group, b.group))
-            : nonZero.sort((a, b) => b.percent - a.percent);
+          const sorted = KEEP_SOURCE_ORDER.has(title)
+            ? nonZero
+            : ordinal
+              ? nonZero.sort((a, b) => ordinalCompare(a.group, b.group))
+              : nonZero.sort((a, b) => b.percent - a.percent);
           const bars = sorted.map((v, i) => `
             <div class="answer-row-multi">
               <div class="answer-label">${escapeHtml(v.group)}</div>
