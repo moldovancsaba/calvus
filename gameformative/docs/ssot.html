@@ -122,8 +122,12 @@ on How we count; if the two ever disagree, this table is the definition and the 
 <td>sources opened or requested for the article and set aside, each with the reason</td>
 </tr>
 <tr>
-<td>Topic</td>
-<td>one of the eleven sections in <code>content.py</code> <code>TOPICS</code></td>
+<td>Desk</td>
+<td>one of the eight sections in <code>content.py</code> <code>DESKS</code> — Discover, Define, Design, Develop, Data, Drive, Defend, Deal — each defined by what the article does for the reader; every article has exactly one</td>
+</tr>
+<tr>
+<td>Subject</td>
+<td>one of the eleven subject tags in <code>content.py</code> <code>TOPICS</code> (the round-2 topic list); every article has one</td>
 </tr>
 </tbody>
 </table></div>
@@ -284,6 +288,12 @@ on How we count; if the two ever disagree, this table is the definition and the 
 <td>R16</td>
 <td>Every article lists sources used and sources investigated but not used, each linked, with a note</td>
 <td>same</td>
+<td><code>check.py</code> §12</td>
+</tr>
+<tr>
+<td>R18</td>
+<td>Every article sits on exactly one of the eight desks, and its desk page exists</td>
+<td><code>build.py</code> <code>check_rules()</code></td>
 <td><code>check.py</code> §12</td>
 </tr>
 <tr>

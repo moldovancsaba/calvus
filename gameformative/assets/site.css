@@ -451,3 +451,14 @@ body { padding-bottom: 64px; }
 .gf-toc-box a { min-width: 44px; }
 .gf-kicker a { display: inline-flex; align-items: center; min-height: 44px; min-width: 44px; }
 @media (max-width: 719px) { .gf-section .gf-topic-grid .b { display: none; } .gf-topic-tile { padding: 12px 14px; } }
+/* round 3: the desks */
+.gf-desk-tile .n { font-size: 26px; }
+.gf-desk-tile .b { color: var(--gf-text); }
+.gf-deskline { margin: 0 0 4px; font-size: 14px; color: var(--gf-muted); }
+.gf-deskdoes { font-size: 19px !important; color: var(--gf-text) !important; }
+.gf-subject { color: var(--gf-muted); font-weight: 700; }
+.gf-subject a { color: var(--gf-muted); }
+.gf-desk-table td, .gf-desk-table th { white-space: normal; height: auto; padding-top: 10px; padding-bottom: 10px; }
+.gf-desk-table th a { display: inline-flex; align-items: center; min-height: 44px; min-width: 44px; }
+@media (max-width: 719px) { .gf-section .gf-desk-grid .b { display: block; font-size: 13.5px; } }
+.gf-cardmeta a, .gf-topiclink { min-width: 44px; justify-content: center; }

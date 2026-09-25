@@ -8,7 +8,7 @@ import content as C
 
 HERE = pathlib.Path(__file__).parent
 S = json.loads((HERE / "data" / "stats.json").read_text(encoding="utf-8"))
-V = "12"  # asset version — bump when tokens.css, site.css or site.js change
+V = "14"  # asset version — bump when tokens.css, site.css or site.js change
 FONTS = '<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&display=swap">'
 LEAGUES = S["leagues"]
 LG = {l["id"]: l for l in LEAGUES}
@@ -71,14 +71,14 @@ def header(current, depth):
 </div></header>"""
 
 
-def topicbar(depth, current_topic=None):
-    """Every topic, always visible under the header — scrolls sideways on phones (visible navigation, S7)."""
-    items = "".join(f'<li><a href="{up(depth)}topics/{s}.html"' + (' aria-current="page"' if s == current_topic else "") + f'>{esc(n)}</a></li>' for s, n, _ in C.TOPICS)
-    return f'<nav class="gf-topicbar" aria-label="Topics"><div class="gf-wrap"><ul tabindex="0" aria-label="Topics, scroll sideways">{items}</ul></div></nav>'
+def deskbar(depth, current_desk=None):
+    """The eight desks, always visible under the header — scrolls sideways on phones (visible navigation, S7)."""
+    items = "".join(f'<li><a href="{up(depth)}desks/{s}.html"' + (' aria-current="page"' if s == current_desk else "") + f'>{esc(n)}</a></li>' for s, n, _ in C.DESKS)
+    return f'<nav class="gf-topicbar" aria-label="Desks"><div class="gf-wrap"><ul tabindex="0" aria-label="Desks, scroll sideways">{items}</ul></div></nav>'
 
 
 def tabbar(current, depth):
-    ic = {"Home": "home", "Latest": "analysis", "Topics": "scores", "How we work": "stats"}
+    ic = {"Home": "home", "Latest": "analysis", "Desks": "scores", "How we work": "stats"}
     items = []
     for label, href, short in C.NAV:
         if label not in C.TABBAR: continue
@@ -89,12 +89,13 @@ def tabbar(current, depth):
 
 def sheet(depth):
     links = "".join(f'<li><a href="{up(depth)}{href}">{esc(label)}</a></li>' for label, href, _ in C.NAV)
-    topics = "".join(f'<li><a href="{up(depth)}topics/{s}.html">{esc(n)}</a></li>' for s, n, _ in C.TOPICS)
+    desks = "".join(f'<li><a href="{up(depth)}desks/{s}.html">{esc(n)}</a></li>' for s, n, _ in C.DESKS)
     return f"""<div class="gf-sheet" id="gf-more" hidden role="dialog" aria-modal="true" aria-labelledby="gf-more-h"><div class="gf-sheet-panel">
   <div class="gf-sheet-head"><h2 id="gf-more-h">More</h2><button class="gf-icon-btn" type="button" data-sheet-close aria-label="Close">{icon("close")}</button></div>
   <ul>{links}</ul>
-  <h2 class="gf-kicker" style="margin-top:18px">Topics</h2>
-  <ul>{topics}</ul>
+  <h2 class="gf-kicker" style="margin-top:18px">Desks</h2>
+  <ul>{desks}</ul>
+  <ul><li><a href="{up(depth)}topics/index.html">All subjects</a></li></ul>
   <h2 class="gf-kicker" style="margin-top:18px">A later phase</h2>
   <ul><li><a href="{up(depth)}stats/index.html">Data pages (preview)</a></li></ul>
   <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:18px">
@@ -107,20 +108,20 @@ def sheet(depth):
 def footer(depth):
     u = up(depth)
     sec = "".join(f'<li><a href="{u}{href}">{esc(label)}</a></li>' for label, href, _ in C.NAV[1:])
-    tp = "".join(f'<li><a href="{u}topics/{s}.html">{esc(n)}</a></li>' for s, n, _ in C.TOPICS)
-    std = "".join(f'<li><a href="{u}how-we-count/index.html#{a}">{t}</a></li>' for a, t in (("rules", "Article rules"), ("sources", "How we source"), ("corrections", "Corrections"), ("automation", "Automation and AI"), ("labels", "Labels we use")))
+    tp = "".join(f'<li><a href="{u}desks/{s}.html">{esc(n)}</a></li>' for s, n, _ in C.DESKS) + f'<li><a href="{u}topics/index.html">All subjects</a></li>'
+    std = "".join(f'<li><a href="{u}how-we-count/index.html#{a}">{t}</a></li>' for a, t in (("desks", "The eight desks"), ("rules", "Article rules"), ("sources", "How we source"), ("corrections", "Corrections"), ("automation", "Automation and AI"), ("labels", "Labels we use")))
     return f"""<footer class="gf-footer"><div class="gf-wrap">
   <div class="gf-footer-grid">
     <div class="about">{brand(depth)}<p style="margin-top:8px">{esc(C.SITE["tagline"])} Every article lists the sources we used and the sources we investigated but did not use.</p></div>
     <div><h2>Sections</h2><ul>{sec}</ul><h2 style="margin-top:16px">A later phase</h2><ul><li><a href="{u}stats/index.html">Data pages (preview)</a></li></ul></div>
-    <div class="topics"><h2>Topics</h2><ul>{tp}</ul></div>
+    <div class="topics"><h2>Desks</h2><ul>{tp}</ul></div>
     <div><h2>Standards</h2><ul>{std}</ul></div>
   </div>
   <div class="gf-footer-bottom"><span>© 2026 gameformative.com</span><span>Articles checked against their sources</span></div>
 </div></footer>"""
 
 
-def page(path, title, desc, current, body, depth, jsonld=None, topic=None, later=False, extra_head=""):
+def page(path, title, desc, current, body, depth, jsonld=None, desk=None, later=False, extra_head=""):
     ld = f'<script type="application/ld+json">{json.dumps(jsonld, ensure_ascii=False)}</script>' if jsonld else ""
     notice = (f'<div class="gf-later"><div class="gf-wrap"><p><b>A later phase.</b> gameformative launches with articles only; these data pages preview what comes after. '
               f'<a href="{up(depth)}index.html">Back to the articles</a></p></div></div>') if later else ""
@@ -140,7 +141,7 @@ def page(path, title, desc, current, body, depth, jsonld=None, topic=None, later
 <body>
 {banner()}
 {header(current, depth)}
-{topicbar(depth, topic)}
+{deskbar(depth, desk)}
 {notice}
 <main id="main" class="gf-main"><div class="gf-wrap">
 {body}
@@ -402,6 +403,15 @@ def topic_link(a, depth):
     return f'<a class="gf-topiclink" href="{up(depth)}topics/{tp["slug"]}.html">{esc(tp["name"])}</a>'
 
 
+def desk_link(a, depth):
+    dk = C.DESK[a["desk"]]
+    return f'<a class="gf-topiclink" href="{up(depth)}desks/{dk["slug"]}.html">{esc(dk["name"])}</a>'
+
+
+def meta(a):
+    return f'{esc(C.DESK[a["desk"]]["name"])} · {esc(a["kind"])}'
+
+
 def excerpt(a, n=170):
     """A card's text: the standfirst, or — for an article without one — the opening of its first paragraph."""
     if a["standfirst"]: return a["standfirst"]
@@ -411,7 +421,7 @@ def excerpt(a, n=170):
 
 def story_card(a, depth, h="h3"):
     return (f'<article class="gf-story-card"><a class="gf-card-link" href="{up(depth)}articles/{a["slug"]}.html">{cover(a["cover"], a["title"])}'
-            f'<span class="body"><span class="gf-cardmeta">{esc(C.TOPIC[a["topic"]]["name"])} · {esc(a["kind"])}</span><{h}>{esc(a["title"])}</{h}><p>{esc(excerpt(a))}</p><span class="gf-meta">{esc(C.SITE["published"])} · {reading(a)}</span></span></a></article>')
+            f'<span class="body"><span class="gf-cardmeta">{meta(a)}</span><{h}>{esc(a["title"])}</{h}><p>{esc(excerpt(a))}</p><span class="gf-meta">{esc(C.SITE["published"])} · {reading(a)}</span></span></a></article>')
 
 
 def reading(a):
@@ -444,23 +454,31 @@ def roundup(l):
 
 
 # ------------------------------------------------------------------ pages
+def desk_tiles(depth, link_prefix=None):
+    pre = up(depth) + "desks/" if link_prefix is None else link_prefix
+    out = []
+    for s, n, does in C.DESKS:
+        k = sum(1 for a in ARTICLES if a["desk"] == s)
+        out.append(f'<li><a class="gf-topic-tile gf-desk-tile" href="{pre}{s}.html"><span class="n">{esc(n)}</span><span class="b">{esc(does)}</span>'
+                   f'<span class="c">{k} article{"s" if k != 1 else ""}{"" if k else " · none published yet"}</span></a></li>')
+    return "".join(out)
+
+
 def build_home():
     d = 0
     lead, rest = ARTICLES[0], ARTICLES[1:]
-    latest = "".join(f'<li><a href="articles/{a["slug"]}.html"><span class="gf-cardmeta">{esc(C.TOPIC[a["topic"]]["name"])}</span><span class="t">{esc(a["title"])}</span><span class="gf-meta">{reading(a)}</span></a></li>' for a in rest[:4])
+    latest = "".join(f'<li><a href="articles/{a["slug"]}.html"><span class="gf-cardmeta">{esc(C.DESK[a["desk"]]["name"])}</span><span class="t">{esc(a["title"])}</span><span class="gf-meta">{reading(a)}</span></a></li>' for a in rest[:4])
     cards = "".join(story_card(a, d) for a in rest[:3])
-    count = {s: sum(1 for a in ARTICLES if a["topic"] == s) for s, _, _ in C.TOPICS}
-    tiles = "".join(f'<li><a class="gf-topic-tile" href="topics/{s}.html"><span class="n">{esc(n)}</span><span class="b">{esc(b)}</span>'
-                    f'<span class="c">{count[s]} article{"s" if count[s] != 1 else ""}' + ("" if count[s] else " · none published yet") + '</span></a></li>' for s, n, b in C.TOPICS)
+    tiles = desk_tiles(d)
     body = f"""<h1 class="gf-sr">gameformative — sport, explained</h1>
 <div class="gf-lead">
   <a class="gf-lead-story" href="articles/{lead["slug"]}.html">{cover(lead["cover"], lead["title"])}
-    <span class="gf-cardmeta" style="display:block;margin-top:14px">{esc(C.TOPIC[lead["topic"]]["name"])} · {esc(lead["kind"])}</span>
+    <span class="gf-cardmeta" style="display:block;margin-top:14px">{meta(lead)}</span>
     <h2>{esc(lead["title"])}</h2><p>{esc(excerpt(lead, 230))}</p><span class="gf-meta">{esc(lead["byline"])} · {esc(C.SITE["published"])} · {reading(lead)}</span></a>
   <aside class="gf-rail" aria-labelledby="latest-h"><div class="gf-card gf-latest"><h2 id="latest-h" class="gf-kicker">Latest</h2><ol>{latest}</ol><a class="gf-btn gf-btn--quiet" href="articles/index.html">All articles</a></div></aside>
 </div>
 <section class="gf-section" aria-labelledby="an-h"><div class="gf-section-head"><h2 id="an-h">More to read</h2><a href="articles/index.html">All articles</a></div><div class="gf-grid gf-grid--3">{cards}</div></section>
-<section class="gf-section" aria-labelledby="tp-h"><div class="gf-section-head"><h2 id="tp-h">Topics</h2><a href="topics/index.html">All topics</a></div><ul class="gf-topic-grid">{tiles}</ul></section>
+<section class="gf-section" aria-labelledby="tp-h"><div class="gf-section-head"><h2 id="tp-h">The eight desks</h2><a href="desks/index.html">All desks</a></div><p class="gf-meta" style="margin:-6px 0 14px">Every article sits on one desk — by what it does for you.</p><ul class="gf-topic-grid gf-desk-grid">{tiles}</ul></section>
 <section class="gf-section gf-band" aria-labelledby="pr-h"><div class="gf-band-grid"><div><p class="gf-kicker">How we work</p><h2 id="pr-h" class="gf-display" style="font-size:clamp(28px,5.5vw,44px)">Every source on the table</h2>
 <p>Each article ends with two lists: the sources we used, and the sources we investigated but did not use — with the reason. Articles run from 800 to 3,200 characters, always in segments you can scan.</p>
 <p><a class="gf-btn" href="how-we-count/index.html#sources">How we source</a></p></div>
@@ -624,6 +642,7 @@ def check_rules(a):
     assert len(a["segments"]) >= R["min_segments"], f"{a['slug']}: {len(a['segments'])} segments, needs {R['min_segments']}"
     assert all(h for h, _ in a["segments"]), f"{a['slug']}: a segment without a heading"
     assert a["sources_used"] and a["sources_investigated"], f"{a['slug']}: both source lists are required"
+    assert a["desk"] in C.DESK, f"{a['slug']}: desk {a['desk']!r} is not one of the eight"
     for s in a["sources_used"] + a["sources_investigated"]:
         assert s["url"].startswith("https://") and s["title"] and s["publisher"] and s["note"], f"{a['slug']}: incomplete source {s}"
 
@@ -637,17 +656,17 @@ def build_article(a):
         blocks.append(f'<section class="gf-seg-block" aria-labelledby="s{i}"><h2 id="s{i}">{esc(h)}</h2>{inner}</section>')
     toc = "".join(f'<li><a href="#s{i}">{esc(h)}</a></li>' for i, (h, _) in enumerate(a["segments"], 1))
     others = [x for x in ARTICLES if x is not a]
-    same = [x for x in others if x["topic"] == a["topic"]]
+    same = [x for x in others if x["desk"] == a["desk"]]
     rail = "".join(story_card(x, d, "h3") for x in (same + [x for x in others if x not in same])[:2])
     n = C.body_chars(a)
     origin = ("From the editorial desk’s draft; checked against its sources before publishing." if a["origin"] == "owner"
               else "Written by the data desk. Every figure is computed from public-domain match records by the site’s own converter; nothing is estimated.")
     ld = {"@context": "https://schema.org", "@type": "NewsArticle", "headline": a["title"], "description": excerpt(a), "datePublished": C.SITE["published_iso"],
-          "articleSection": C.TOPIC[a["topic"]]["name"], "author": {"@type": "Organization", "name": a["byline"]}, "publisher": {"@type": "Organization", "name": "gameformative"},
+          "articleSection": C.DESK[a["desk"]]["name"], "keywords": C.TOPIC[a["topic"]]["name"], "author": {"@type": "Organization", "name": a["byline"]}, "publisher": {"@type": "Organization", "name": "gameformative"},
           "citation": [s["url"] for s in a["sources_used"]]}
     sf = f'<p class="dek" data-count>{esc(a["standfirst"])}</p>' if a["standfirst"] else ""
-    body = f"""<div class="gf-article-layout"><article class="gf-article" data-article data-min="{C.RULES["min_chars"]}" data-max="{C.RULES["max_chars"]}" data-segments="{C.RULES["min_segments"]}">
-<header class="gf-article-head"><p class="gf-cardmeta">{topic_link(a, d)} · {esc(a["kind"])}</p><h1>{esc(a["title"])}</h1>{sf}
+    body = f"""<div class="gf-article-layout"><article class="gf-article" data-article data-desk="{a["desk"]}" data-min="{C.RULES["min_chars"]}" data-max="{C.RULES["max_chars"]}" data-segments="{C.RULES["min_segments"]}">
+<header class="gf-article-head"><p class="gf-cardmeta">{desk_link(a, d)} · {esc(a["kind"])} · <span class="gf-subject">Subject: {topic_link(a, d)}</span></p><p class="gf-deskline">{esc(C.DESK[a["desk"]]["name"])} — {esc(C.DESK[a["desk"]]["does"])}</p><h1>{esc(a["title"])}</h1>{sf}
 <div class="gf-byline"><span>By <b>{esc(a["byline"])}</b></span><span>{esc(C.SITE["published"])}</span><span>{reading(a)}</span><span>{len(a["segments"])} segments</span></div></header>
 <nav class="gf-toc-box" aria-label="In this article"><h2 class="gf-kicker">In this article</h2><ol>{toc}</ol></nav>
 <div class="gf-body">{"".join(blocks)}</div>
@@ -657,12 +676,12 @@ def build_article(a):
 <p class="gf-meta">Links checked on {esc(C.SITE["published"])}. {esc(origin)} Body text: {n:,} characters. Found an error? <a href="../how-we-count/index.html#corrections">Our corrections policy</a>.</p></section>
 </article>
 <aside class="gf-rail" aria-label="More to read"><h2 class="gf-kicker">More to read</h2>{rail}</aside></div>"""
-    page(f"articles/{a['slug']}.html", f"{a['title']} — gameformative", excerpt(a), "Latest", body, d, jsonld=ld, topic=a["topic"])
+    page(f"articles/{a['slug']}.html", f"{a['title']} — gameformative", excerpt(a), "Latest", body, d, jsonld=ld, desk=a["desk"])
 
 
 def list_item(a, depth, hidden=False):
     return (f'<article class="gf-list-item"{" data-more hidden" if hidden else ""}><a class="gf-card-link" href="{up(depth)}articles/{a["slug"]}.html">{cover(a["cover"], a["title"])}'
-            f'<span class="body"><span class="gf-cardmeta">{esc(C.TOPIC[a["topic"]]["name"])} · {esc(a["kind"])}</span><h2>{esc(a["title"])}</h2>'
+            f'<span class="body"><span class="gf-cardmeta">{meta(a)}</span><h2>{esc(a["title"])}</h2>'
             f'<p style="margin:0;color:var(--gf-muted)">{esc(excerpt(a))}</p><span class="gf-meta">{esc(C.SITE["published"])} · {reading(a)}</span></span></a></article>')
 
 
@@ -676,26 +695,45 @@ def build_articles_index():
     page("articles/index.html", "Latest articles — gameformative", "The latest gameformative articles across every topic.", "Latest", body, d)
 
 
+def empty_panel(what):
+    return (f'<div class="gf-inert"><h2 style="font-size:20px;margin-bottom:6px">No {esc(what)} articles published yet</h2>'
+            f'<p style="margin:0">Every article published here follows the same rules: {C.RULES["min_chars"]:,}–{C.RULES["max_chars"]:,} characters, '
+            f'at least {C.RULES["min_segments"]} headed segments, and the sources used and investigated listed at the end.</p></div>')
+
+
+def build_desks():
+    d = 1
+    for s, n, does in C.DESKS:
+        arts = [a for a in ARTICLES if a["desk"] == s]
+        inner = f'<div class="gf-list">{"".join(list_item(a, d) for a in arts)}</div>' if arts else empty_panel(n + " desk")
+        others = "".join(f'<li><a href="{x}.html">{esc(m)}</a></li>' for x, m, _ in C.DESKS if x != s)
+        body = f"""<div class="gf-pagehead"><p class="gf-kicker"><a href="index.html">The desks</a></p><h1>{esc(n)}</h1><p class="gf-deskdoes">{esc(does)}</p></div>
+{inner}
+<section class="gf-section" aria-labelledby="ot-h"><div class="gf-section-head"><h2 id="ot-h">The other desks</h2></div><ul class="gf-toc">{others}</ul></section>"""
+        page(f"desks/{s}.html", f"{n} — gameformative", does, "Desks", body, d, desk=s)
+    body = f"""<div class="gf-pagehead"><p class="gf-kicker">The desks</p><h1>Eight desks, one job each</h1><p>Every gameformative article sits on one desk, chosen by what it does for you — whatever the sport or subject.</p></div>
+<ul class="gf-topic-grid gf-desk-grid">{desk_tiles(d, "")}</ul>
+<p class="gf-meta" style="margin-top:18px">Looking for a subject instead — sport science, sponsorship, sport tech? <a href="../topics/index.html">All subjects</a>.</p>"""
+    page("desks/index.html", "The desks — gameformative", "The eight gameformative desks: Discover, Define, Design, Develop, Data, Drive, Defend, Deal.", "Desks", body, d)
+
+
 def build_topics():
+    """Subjects: the owner's round-2 topic list, now the subject tag on each article (the desks are the
+    sections). The pages were live, so they stay — as subject pages."""
     d = 1
     tiles = []
     for s, n, b in C.TOPICS:
         arts = [a for a in ARTICLES if a["topic"] == s]
         tiles.append(f'<li><a class="gf-topic-tile" href="{s}.html"><span class="n">{esc(n)}</span><span class="b">{esc(b)}</span><span class="c">{len(arts)} article{"s" if len(arts) != 1 else ""}{"" if arts else " · none published yet"}</span></a></li>')
-        if arts:
-            inner = f'<div class="gf-list">{"".join(list_item(a, d) for a in arts)}</div>'
-        else:
-            inner = (f'<div class="gf-inert"><h2 style="font-size:20px;margin-bottom:6px">No {esc(n.lower())} articles published yet</h2>'
-                     f'<p style="margin:0">This topic is part of the launch plan. Every article published here follows the same rules: {C.RULES["min_chars"]:,}–{C.RULES["max_chars"]:,} characters, '
-                     f'at least {C.RULES["min_segments"]} headed segments, and the sources used and investigated listed at the end.</p></div>')
+        inner = f'<div class="gf-list">{"".join(list_item(a, d) for a in arts)}</div>' if arts else empty_panel(n.lower())
         others = "".join(f'<li><a href="{x}.html">{esc(m)}</a></li>' for x, m, _ in C.TOPICS if x != s)
-        body = f"""<div class="gf-pagehead"><p class="gf-kicker"><a href="index.html">Topics</a></p><h1>{esc(n)}</h1><p>{esc(b)}</p></div>
+        body = f"""<div class="gf-pagehead"><p class="gf-kicker"><a href="index.html">Subjects</a></p><h1>{esc(n)}</h1><p>{esc(b)}</p></div>
 {inner}
-<section class="gf-section" aria-labelledby="ot-h"><div class="gf-section-head"><h2 id="ot-h">Other topics</h2></div><ul class="gf-toc">{others}</ul></section>"""
-        page(f"topics/{s}.html", f"{n} — gameformative", b, "Topics", body, d, topic=s)
-    body = f"""<div class="gf-pagehead"><p class="gf-kicker">Topics</p><h1>What we cover</h1><p>Sport, explained from eleven angles — from the research lab to the sponsor’s balance sheet.</p></div>
+<section class="gf-section" aria-labelledby="ot-h"><div class="gf-section-head"><h2 id="ot-h">Other subjects</h2></div><ul class="gf-toc">{others}</ul></section>"""
+        page(f"topics/{s}.html", f"{n} — gameformative", b, None, body, d)
+    body = f"""<div class="gf-pagehead"><p class="gf-kicker">Subjects</p><h1>What we write about</h1><p>The subjects gameformative covers, from the research lab to the sponsor’s balance sheet. The site is organised by <a href="../desks/index.html">desk</a> — what an article does for you; each article is also tagged with its subject.</p></div>
 <ul class="gf-topic-grid">{"".join(tiles)}</ul>"""
-    page("topics/index.html", "Topics — gameformative", "Every gameformative topic: news, sport science, tactics, analytics, data, tech, development, fans, sponsorship and goods.", "Topics", body, d)
+    page("topics/index.html", "Subjects — gameformative", "Every gameformative subject: news, sport science, tactics, analytics, data, tech, development, fans, sponsorship and goods.", None, body, d)
 
 
 def build_redirects():
@@ -717,10 +755,13 @@ def build_method():
     gl = "".join(f"<dt>{esc(t)}</dt><dd>{esc(x)}</dd>" for t, x in C.GLOSSARY)
     R = C.RULES
     body = f"""<div class="gf-pagehead"><p class="gf-kicker">How we work</p><h1>Our standards</h1><p>What gameformative publishes, how every article is built and sourced, how we label, automate and correct — and what our numbers mean.</p></div>
-<ul class="gf-toc"><li><a href="#rules">Article rules</a></li><li><a href="#sources">How we source</a></li><li><a href="#labels">Labels</a></li><li><a href="#automation">Automation and AI</a></li><li><a href="#corrections">Corrections</a></li><li><a href="#data">Data</a></li><li><a href="#glossary">Glossary</a></li><li><a href="#accessibility">Accessibility</a></li></ul>
+<ul class="gf-toc"><li><a href="#desks">Desks</a></li><li><a href="#rules">Article rules</a></li><li><a href="#sources">How we source</a></li><li><a href="#labels">Labels</a></li><li><a href="#automation">Automation and AI</a></li><li><a href="#corrections">Corrections</a></li><li><a href="#data">Data</a></li><li><a href="#glossary">Glossary</a></li><li><a href="#accessibility">Accessibility</a></li></ul>
 <div class="gf-prose">
+<h2 id="desks">The eight desks</h2>
+<p>gameformative is organised by what an article does for you. Every article sits on exactly one desk.</p>
+<div class="gf-table-wrap" tabindex="0" role="region" aria-label="The eight desks"><table class="gf-table gf-desk-table"><thead><tr><th scope="col" class="l">Desk</th><th scope="col" class="l">What the article does for the reader</th></tr></thead><tbody>{"".join(f'<tr><th scope="row" class="l"><a href="../desks/{s}.html">{esc(n)}</a></th><td class="l">{esc(does)}</td></tr>' for s, n, does in C.DESKS)}</tbody></table></div>
 <h2 id="rules">Article rules</h2>
-<p>gameformative is a sport analysis and education site: news, tactics, techniques and the science of sport, across eleven topics. Every article follows three rules.</p>
+<p>Whatever its desk, every article follows three rules.</p>
 <dl><dt>Length</dt><dd>{R["min_chars"]:,} to {R["max_chars"]:,} characters of body text — the standfirst and every paragraph, spaces included. Headline, segment headings, charts and the source lists are not counted. Long enough to explain, short enough to finish.</dd>
 <dt>Segments</dt><dd>At least {R["min_segments"]} segments, each under its own heading, listed at the top of the article so you can jump to the part you need.</dd>
 <dt>Sources</dt><dd>Two lists close every article: the sources used, and the sources investigated but not used — each with a line on why.</dd></dl>
@@ -750,15 +791,15 @@ def build_styleguide():
 <section class="gf-section" aria-labelledby="k-h"><div class="gf-section-head"><h2 id="k-h">Labels and buttons</h2></div>
 <p style="display:flex;gap:8px;flex-wrap:wrap">{label("Analysis")}{label("Explainer")}<span class="gf-label gf-label--automated">Automated</span><span class="gf-label gf-label--data">Season review</span></p>
 <p style="display:flex;gap:10px;flex-wrap:wrap"><a class="gf-btn" href="#k-h">Primary</a><a class="gf-btn gf-btn--ghost" href="#k-h">Secondary</a><a class="gf-btn gf-btn--quiet" href="#k-h">Quiet</a><a class="gf-btn gf-btn--quiet is-unavailable" href="#k-h" aria-disabled="true" onclick="return false" title="Inert controls look like this">Inert</a></p></section>
-<section class="gf-section" aria-labelledby="s-h"><div class="gf-section-head"><h2 id="s-h">Story card, topic tile</h2></div>
-<div class="gf-grid gf-grid--3">{story_card(ARTICLES[0], d)}{story_card(ARTICLES[2], d)}<ul class="gf-topic-grid" style="grid-template-columns:1fr"><li><a class="gf-topic-tile" href="../topics/sport-science.html"><span class="n">Sport science</span><span class="b">{esc(C.TOPIC["sport-science"]["blurb"])}</span><span class="c">topic tile</span></a></li></ul></div></section>
+<section class="gf-section" aria-labelledby="s-h"><div class="gf-section-head"><h2 id="s-h">Story card, desk tile</h2></div>
+<div class="gf-grid gf-grid--3">{story_card(ARTICLES[0], d)}{story_card(ARTICLES[2], d)}<ul class="gf-topic-grid gf-desk-grid" style="grid-template-columns:1fr">{desk_tiles(d).split("</li>")[1]}</li></ul></div></section>
 <section class="gf-section" aria-labelledby="src-h"><div class="gf-section-head"><h2 id="src-h">The source lists</h2></div><div class="gf-sources" style="margin-top:0"><h3>Sources used</h3>{source_list(a["sources_used"][:1], "used")}<h3>Sources investigated but not used</h3>{source_list(a["sources_investigated"][:1], "investigated")}</div></section>
 <section class="gf-section" aria-labelledby="ch-h"><div class="gf-section-head"><h2 id="ch-h">Charts</h2></div><div class="gf-grid gf-grid--2">{chart("gpg-big5")}{chart("minutes-2526")}</div></section>"""
     page("styleguide/index.html", "Style guide — gameformative", "The gameformative design system: tokens and components, live.", None, body, d)
 
 
 def build_all():
-    build_home(); build_articles_index(); build_topics(); build_method(); build_styleguide()
+    build_home(); build_articles_index(); build_desks(); build_topics(); build_method(); build_styleguide()
     for a in ARTICLES: build_article(a)
     build_redirects()
     # the data pages — a later phase, kept live and linked from the footer

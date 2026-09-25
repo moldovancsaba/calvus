@@ -134,3 +134,20 @@ listed as investigated.
 
 **D25 — 2026-09-25 — Empty topics say "none published yet".** By: the team. An earlier wording, "first
 in preparation", implied work that does not exist.
+
+**D26 — 2026-09-25 — The eight desks are the site's structure.** By: owner ("We need to use this
+article structure"): Discover, Define, Design, Develop, Data, Drive, Defend, Deal, each defined by
+what the article does for the reader — the owner's wording, verbatim, on every desk page and on How
+we work. The desk bar replaces the topic bar; the phone tab bar's third tab is Desks. Every article
+sits on exactly one desk; `build.py` refuses an article without a valid desk and `check.py` checks
+that each article's desk page exists. Replaced: topics as sections (D20).
+
+**D27 — 2026-09-25 — The eleven topics become subject tags.** By: the team. The topic pages were live
+(pushed hours earlier), and "never delete a live URL" holds, so they stay — as subject pages: each
+article shows "Subject: …" and links to it; the footer and More link "All subjects". Two axes, one
+navigation: desks say what a piece does for you, subjects say what it is about.
+
+**D28 — 2026-09-25 — The desks of the six articles.** By: the team; one to confirm (ask A11).
+The GPS article → **Define** (its own source note says it "stays on definition literacy", and its
+question is "which math are we using?"); **Defend** (injury systems, load practice) is the other
+fit. The table explainer → Define. The four data analyses → Data.

@@ -31,6 +31,12 @@ researched with a short summary what we learned" — answered by `01a-source-reg
 a later phase, kept live and linked from the footer (D17). The first article is the owner's own
 draft (D22). The rules are enforced by the build and the gate (D18, `07-gate.md` check 12).
 
+## Round 3 — the eight desks (owner, 2026-09-25)
+
+The owner set the article structure: eight desks, each defined by what the article does for the
+reader — Discover, Define, Design, Develop, Data, Drive, Defend, Deal. They are now the site's
+sections; the round-2 topics are kept as each article's subject tag (D26–D28).
+
 ## Who and what (round 1 — the statistics site, now a later phase)
 
 - **The product:** gameformative.com, a new football **analytics + news + statistics** site in

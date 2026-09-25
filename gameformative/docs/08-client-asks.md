@@ -16,6 +16,7 @@ when it starts to matter. Written 2026-09-25.*
 | A7 | Confirm Vercel as the host (the domain already points there, `02-audit.md`) | owner | deployment of the real build | open — proposed in ADR-01 |
 | A8 | Confirm what counts as a "character" for the 800–3,200 rule: body text (standfirst + paragraphs, spaces included), headings and sources excluded (D19) | owner | nothing — the prototype runs on this definition | open |
 | A9 | The source notes in the first article use editorial shorthand ("Seed", "curiosity gap", "deferred so…"). Keep them as written, or rewrite them for readers? | owner | nothing — shipped as written (D22) | open |
-| A10 | Who writes the next articles, and in which topics first (eight of the eleven topics have none yet) | owner | a topic page having content | open |
+| A11 | The GPS article's desk: Define (chosen — literacy about a metric) or Defend (injury systems, load practice)? (D28) | owner | nothing — one line to change | open |
+| A10 | Who writes the next articles, and in which topics first (six of the eight desks have none yet) | owner | a topic page having content | open |
 
 Closed asks move to the process log in `README.md` with the date they closed.

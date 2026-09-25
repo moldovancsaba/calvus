@@ -24,19 +24,13 @@ Can a new sport site earn a reader's trust from its first article, and make rese
 
 ## The answer {#answer}
 
-**Articles that show their work.** gameformative covers {{topics}} topics:
+**Articles that show their work, organised by what they do for the reader.** gameformative has {{desks}} desks:
 
-- international news;
-- sport science;
-- tactics & technique;
-- sport analytics;
-- data intelligence;
-- sport tech;
-- athlete development;
-- fan engagement;
-- sponsorship;
-- training goods;
-- sport goods.
+| Desk | What the article does for the reader |
+|---|---|
+{{desk_rows}}
+
+Each article sits on one desk and carries one of {{topics}} subjects, from sport science to sponsorship.
 
 Every article follows three house rules, and the build refuses to publish one that breaks them:
 
@@ -48,7 +42,7 @@ Every article follows three house rules, and the build refuses to publish one th
 
 ## The value {#value}
 
-- **Measured.** The prototype has {{articles}} articles across {{topics}} topics. Pages weigh {{page_kb_min}}–{{page_kb_max}} kB of HTML, with no images and {{js_kb}} kB of script. The article rules are checked on every rendered page, and a deliberately broken article fails the check.
+- **Measured.** The prototype has {{articles}} articles on {{desks_used}} of the {{desks}} desks. Pages weigh {{page_kb_min}}–{{page_kb_max}} kB of HTML, with no images and {{js_kb}} kB of script. The article rules are checked on every rendered page, and a deliberately broken article fails the check.
 - **The honest finding.** The difference from the sites we measured is the sourcing: the two lists at the end of every piece. We saw no site in our benchmark that publishes what it investigated and set aside. The cost of that difference is editorial time, and it grows with every article. No revenue figure is given until the business model is chosen.
 
 ## Proof — what is real {#proof}
@@ -73,14 +67,14 @@ Measured on every page at 375 px and 1440 px: 0 px horizontal overflow, no tap t
 
 ## The one decision {#decision}
 
-<p class="lead-p"><strong>Approve the articles-first direction</strong>: the topics, the article template, and the house rules as implemented, counting characters as the body text, without headings or sources. Then name the editor, and M1 starts.</p>
+<p class="lead-p"><strong>Approve the articles-first direction</strong>: the eight desks, the article template, and the house rules as implemented, counting characters as the body text, without headings or sources. Then name the editor, and M1 starts.</p>
 
 <a class="cta" href="../index.html">Open the prototype</a> <a class="cta" href="../articles/gps-injury-risk-which-math.html">Read the first article</a>
 
 ## Appendix — what to click {#appendix}
 
-- **Home:** [the home page](../index.html). The topic bar under the header lists every topic.
+- **Home:** [the home page](../index.html). The desk bar under the header lists all eight desks.
 - **The first article:** [the GPS article](../articles/gps-injury-risk-which-math.html). Try "In this article" at the top, then the two source lists at the end.
-- **A topic:** [Sport science](../topics/sport-science.html) has an article; [Sponsorship](../topics/sponsorship.html) shows how an empty topic reads.
+- **A desk:** [Define](../desks/define.html) has two articles; [Deal](../desks/deal.html) shows how an empty desk reads. [All eight desks](../desks/index.html).
 - **The rules, in public:** [How we work](../how-we-count/index.html).
 - **The later phase:** the [data pages](../stats/index.html).

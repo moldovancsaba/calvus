@@ -125,3 +125,11 @@ link, so screen readers announce each as an article.
 The cover of the first article is drawn from its seed source's two numbers: the pooled odds ratio
 (1.33, CI 0.85–2.07) and the pooled relative risk (2.33, CI 1.65–3.30) on one scale with the
 no-effect line at 1 — the article's argument in one picture, and no photograph needed.
+
+## Round 3 — the eight desks (2026-09-25)
+
+The desk bar (the same component as the round-2 topic bar) lists Discover · Define · Design ·
+Develop · Data · Drive · Defend · Deal under the header. Desk tiles carry the desk name large, the
+owner's one-line job description in body text, and the article count. Article headers read
+"Desk · Kind · Subject: …" with the desk's job underneath; cards read "Desk · Kind". The eight
+names all begin with D — a pattern the brand can use later (a D-mark per desk), not built yet.

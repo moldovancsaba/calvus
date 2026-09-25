@@ -24,8 +24,8 @@ read the exit code, not the last line.*
     checks), against WCAG 2.2 AA — 4.5:1 for text, 3:1 for the blue and orange as chart marks.
 11. **Inert controls are marked**: every `is-unavailable` element has `aria-disabled="true"` and a
     `title` that says why.
-12. **The owner's article rules, measured on the page** (added 2026-09-25, round 2): every
-    `articles/*.html` has 800–3,200 characters of body text (the text of every `data-count`
+12. **The owner's article rules, measured on the page** (added 2026-09-25, round 2; the desk added in
+    round 3): every `articles/*.html` sits on one of the eight desks whose page exists, has 800–3,200 characters of body text (the text of every `data-count`
     paragraph — standfirst and paragraphs, spaces included), at least three headed segments, and
     both source lists — used, and investigated but not used — each with at least one `https` link.
     This is independent of `build.py`, which asserts the same rules before it writes a page.
@@ -63,3 +63,8 @@ The phone width measured is 375 px, the owner's stated reference for this projec
 32 site pages (home, latest, six articles, topics index and eleven topic pages, How we work, style
 guide, and the ten data pages) at 375 and 1440 px: 0 px overflow, one `h1` each, no tap target under
 44 px at 375, 0 console errors; the old `/analysis/` URLs redirect to `/articles/`.
+
+## Round 3 measured pass (2026-09-25)
+
+41 site pages (round 2's 32 plus the desks index and eight desk pages) at 375 and 1440 px: 0 px
+overflow, one `h1`, no tap target under 44 px at 375 after one fix, 0 console errors.

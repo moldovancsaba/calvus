@@ -29,7 +29,8 @@ on How we count; if the two ever disagree, this table is the definition and the 
 | Segment | a part of an article under its own heading; every article has at least three |
 | Sources used | the sources the article's text relies on, each with a link, publisher and a line on what it contributed |
 | Sources investigated but not used | sources opened or requested for the article and set aside, each with the reason |
-| Topic | one of the eleven sections in `content.py` `TOPICS` |
+| Desk | one of the eight sections in `content.py` `DESKS` — Discover, Define, Design, Develop, Data, Drive, Defend, Deal — each defined by what the article does for the reader; every article has exactly one |
+| Subject | one of the eleven subject tags in `content.py` `TOPICS` (the round-2 topic list); every article has one |
 
 ## Entities
 
@@ -64,6 +65,7 @@ on How we count; if the two ever disagree, this table is the definition and the 
 | R14 | Every article has 800–3,200 body characters | `content.py` `RULES`, `build.py` `check_rules()` | `check.py` §12 |
 | R15 | Every article has at least three segments, each headed | same | `check.py` §12 |
 | R16 | Every article lists sources used and sources investigated but not used, each linked, with a note | same | `check.py` §12 |
+| R18 | Every article sits on exactly one of the eight desks, and its desk page exists | `build.py` `check_rules()` | `check.py` §12 |
 | R17 | A source is linked only if it was requested on the day; one we could not read is marked so in the docs | editorial | `03-sources.md` §3 |
 
 ## Settings

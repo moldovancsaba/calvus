@@ -8,9 +8,10 @@
    data asserts);  9 every generated page reproduces from content.py + stats.json (build.py --check);
 10 every token text pair meets WCAG 2.2 AA contrast in the light and the dark theme;
 11 every inert control is marked (aria-disabled and a title that says why);
-12 the owner's article rules, measured on every rendered article page: 800–3,200 characters of body
-   text (standfirst + paragraphs, spaces included), at least three headed segments, and both source
-   lists — used, and investigated but not used — each with at least one linked source."""
+12 the owner's article rules, measured on every rendered article page: one of the eight desks (its
+   desk page exists), 800–3,200 characters of body text (standfirst + paragraphs, spaces included),
+   at least three headed segments, and both source lists — used, and investigated but not used —
+   each with at least one linked source."""
 import re, sys, subprocess, pathlib
 HERE = pathlib.Path(__file__).resolve().parent; ROOT = HERE.parent
 SITE = sorted(p for p in HERE.rglob("*.html") if "docs" not in p.relative_to(HERE).parts)
@@ -57,9 +58,10 @@ import html as _html
 articles = sorted(p for p in (HERE / "articles").glob("*.html") if p.name != "index.html")
 if not articles: findings.append("articles  no article pages found")
 for f in articles:
-    t2 = text[f]; m = re.search(r'data-article data-min="(\d+)" data-max="(\d+)" data-segments="(\d+)"', t2)
-    if not m: findings.append(f"article  {f.relative_to(ROOT)}: no article rules on the page"); continue
-    lo, hi, segs = map(int, m.groups())
+    t2 = text[f]; m = re.search(r'data-article data-desk="([a-z]+)" data-min="(\d+)" data-max="(\d+)" data-segments="(\d+)"', t2)
+    if not m: findings.append(f"article  {f.relative_to(ROOT)}: no desk or article rules on the page"); continue
+    desk = m.group(1); lo, hi, segs = map(int, m.groups()[1:])
+    if not (HERE / "desks" / f"{desk}.html").exists(): findings.append(f"article  {f.relative_to(ROOT)}: desk '{desk}' has no desk page")
     body = "".join(_html.unescape(re.sub(r"<[^>]+>", "", x)) for x in re.findall(r"<p[^>]*\bdata-count\b[^>]*>(.*?)</p>", t2, re.S))
     if not lo <= len(body) <= hi: findings.append(f"article  {f.relative_to(ROOT)}: {len(body)} characters, outside {lo}–{hi}")
     n_seg = len(re.findall(r'<section class="gf-seg-block"[^>]*><h2', t2))

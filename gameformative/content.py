@@ -1,7 +1,8 @@
 """Editorial content for the gameformative prototype — one source, read by build.py.
 
 gameformative is a sport analytical and educational infotainment site: news, tactics, techniques
-and the science of sport, across the topics in TOPICS (owner, 2026-09-25). The launch is articles
+and the science of sport. Its sections are the eight desks in DESKS — each article sits on one, by
+what it does for the reader — and each article carries a subject from TOPICS (owner, 2026-09-25). The launch is articles
 only (04-decisions.md D17). Every article obeys the house rules in RULES — 800 to 3,200 characters
 of body text, always segmented under headings, and closed by two source lists: the sources used and
 the sources investigated but not used. build.py and check.py both enforce them.
@@ -28,7 +29,22 @@ SITE = dict(
 # the headline, segment headings, charts and the source lists are not counted (10-ssot.md).
 RULES = dict(min_chars=800, max_chars=3200, min_segments=3)
 
-TOPICS = [  # slug, name, what the topic covers
+# The desks (owner, 2026-09-25): the site's sections. Each article sits on exactly one desk, chosen by
+# what the article does for the reader — the owner's wording, verbatim.
+DESKS = [  # slug, name, what the article does for the reader
+    ("discover", "Discover", "Something new: tech, method, science finding, financing model"),
+    ("define", "Define", "Literacy: what a term/metric/rule means, and how not to get fooled"),
+    ("design", "Design", "How to build: team, tactic, training system, experience"),
+    ("develop", "Develop", "Pathways: athletes and coaches getting better over time"),
+    ("data", "Data", "Analytics: models, tracking, measurement, decision support"),
+    ("drive", "Drive", "What moves results: incentives, culture, leadership, audience levers"),
+    ("defend", "Defend", "Risk and integrity: injury systems, load practice, governance"),
+    ("deal", "Deal", "Money and rights: sponsorship, media rights, commercial structures"),
+]
+DESK = {s: dict(slug=s, name=n, does=d) for s, n, d in DESKS}
+
+# The subjects (owner's topic list, round 2) — kept as each article's subject tag, not as sections.
+TOPICS = [  # slug, name, what the subject covers
     ("international-news", "International news", "What happened across world sport, and why it matters."),
     ("sport-science", "Sport science", "Research on performance, injury, recovery and health — read, weighed and explained."),
     ("tactics-technique", "Tactics & technique", "How teams and athletes solve problems on the field, broken down."),
@@ -46,10 +62,10 @@ TOPIC = {s: dict(slug=s, name=n, blurb=b) for s, n, b in TOPICS}
 NAV = [  # label, path from the site root, short label for the phone tab bar
     ("Home", "index.html", "Home"),
     ("Latest", "articles/index.html", "Latest"),
-    ("Topics", "topics/index.html", "Topics"),
+    ("Desks", "desks/index.html", "Desks"),
     ("How we work", "how-we-count/index.html", "Standards"),
 ]
-TABBAR = ["Home", "Latest", "Topics", "How we work"]  # + "More", the fifth tab
+TABBAR = ["Home", "Latest", "Desks", "How we work"]  # + "More", the fifth tab
 
 MONTHS = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
 
@@ -108,7 +124,7 @@ def articles(S):
 
     # 0 — the owner's draft (2026-09-25), shipped as written: the lead
     out.append(dict(
-        slug="gps-injury-risk-which-math", topic="sport-science", kind="Explainer", byline="gameformative editorial desk",
+        slug="gps-injury-risk-which-math", desk="define", topic="sport-science", kind="Explainer", byline="gameformative editorial desk",
         origin="owner",
         title="Your GPS says “injury risk.” The new football evidence says: which math are we using?",
         standfirst=None,
@@ -146,7 +162,7 @@ def articles(S):
     last_full = p["agg"]
     bottom = t[-2:]
     out.append(dict(
-        slug="premier-league-five-matchdays-in", topic="sport-analytics", kind="Analysis", byline="gameformative data desk", origin="data",
+        slug="premier-league-five-matchdays-in", desk="data", topic="sport-analytics", kind="Analysis", byline="gameformative data desk", origin="data",
         title=f"Five from five: what {lead['name']}’s perfect start does — and doesn’t — tell us",
         standfirst=f"{lead['pts']} points from {lead['p']} matches is the best start in the league. Last season, the team with {top5[0]} after five finished {ordinal(top5[1])}.",
         segments=[
@@ -178,7 +194,7 @@ def articles(S):
     btts = max(S["leagues"], key=lambda l: l["agg"]["btts_pct"])
     home = max(S["leagues"], key=lambda l: l["agg"]["home_pct"])
     out.append(dict(
-        slug="big-five-first-month", topic="sport-analytics", kind="Analysis", byline="gameformative data desk", origin="data",
+        slug="big-five-first-month", desk="data", topic="sport-analytics", kind="Analysis", byline="gameformative data desk", origin="data",
         title=f"Europe’s big five after a month: the {by_gpg[0]['name']} scores most, the {by_draw[0]['name']} draws most",
         standfirst=f"{by_gpg[0]['agg']['gpg']:.2f} goals a game in Germany, {by_gpg[-1]['agg']['gpg']:.2f} in England — and not a single goalless draw yet in {nil0[0]['name']}.",
         segments=[
@@ -216,7 +232,7 @@ def articles(S):
     premise(max(w["by_minute"], key=lambda b: b["goals"])["label"] == "76–90+", "the World Cup's busiest quarter-hour is the last")
     premise(sum(len(g) for g in w["groups"].values()) == 48, "48 teams took part")
     out.append(dict(
-        slug="how-spain-won-the-world-cup", topic="international-news", kind="Analysis", byline="gameformative data desk", origin="data",
+        slug="how-spain-won-the-world-cup", desk="data", topic="international-news", kind="Analysis", byline="gameformative data desk", origin="data",
         title=f"How Spain won the 2026 World Cup: {gf} scored, {ga} conceded",
         standfirst="Eight matches, one goal against, and a final settled in extra time by a substitute. The tournament in numbers.",
         segments=[
@@ -247,7 +263,7 @@ def articles(S):
     premise(late["goals"] > 2 * first["goals"], "more than twice as many late goals as early ones")
     premise(sorted(bm, key=lambda b: -b["goals"])[1]["label"] == "31–45+", "the period before half-time is second")
     out.append(dict(
-        slug="premier-league-2025-26-goals-by-minute", topic="sport-analytics", kind="Analysis", byline="gameformative data desk", origin="data",
+        slug="premier-league-2025-26-goals-by-minute", desk="data", topic="sport-analytics", kind="Analysis", byline="gameformative data desk", origin="data",
         title="One goal in four came after the 75th minute: the 2025/26 Premier League by the clock",
         standfirst=f"{late['goals']} of {p['goals']:,} goals arrived in the last quarter-hour of normal time, more than twice as many as in the first fifteen minutes.",
         segments=[
@@ -272,7 +288,7 @@ def articles(S):
     # 5 — explainer
     ppg_leader = max((r for l in S["leagues"] for r in l["table"]), key=lambda r: (r["ppg"], r["gd"]))
     out.append(dict(
-        slug="how-to-read-an-early-season-table", topic="sport-analytics", kind="Explainer", byline="gameformative data desk", origin="data",
+        slug="how-to-read-an-early-season-table", desk="define", topic="sport-analytics", kind="Explainer", byline="gameformative data desk", origin="data",
         title="Points per game, goal difference and form: how to read a table in September",
         standfirst="Leagues that have played different numbers of rounds, teams with a game in hand, a run of five results — three tools for reading a table before it settles.",
         segments=[

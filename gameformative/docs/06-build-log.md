@@ -81,3 +81,13 @@ land on the new URL): 0 px overflow, one `h1`, 0 console errors. At 375 px two s
 found and fixed — a short contents link ("Form", 40 × 44) and the topic-page breadcrumb (73 × 26).
 Load more reveals the sixth article and hides itself. Empty topics first read "first in
 preparation", which implied work that does not exist; now "none published yet" (D25).
+
+## Round 3 — 2026-09-25 — the eight desks
+
+**Built.** `DESKS` in `content.py` (the owner's table, verbatim); a desk per article (D28); the desk
+bar; `desks/` — an index and eight pages, six of them honestly empty; desk tiles on the home page;
+"Desk · Kind · Subject" on articles; the desks table on How we work; topic pages kept as subject
+pages (D27). `check_rules()` and `check.py` §12 now require a valid desk.
+
+**Measured.** 41 site pages at 375 and 1440 px: 0 px overflow, one `h1`, 0 console errors. At 375 px
+the "Data" desk link in four article headers was 36 × 44 — fixed (min width 44). Re-measured clean.

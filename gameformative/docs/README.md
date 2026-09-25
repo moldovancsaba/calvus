@@ -1,7 +1,8 @@
 # gameformative — project documentation
 
 gameformative.com is a sport analytical and educational infotainment site — news, tactics,
-techniques and the science of sport across eleven topics. It launches with articles only; every
+techniques and the science of sport, organised in eight desks (Discover, Define, Design, Develop,
+Data, Drive, Defend, Deal). It launches with articles only; every
 article runs 800–3,200 characters in headed segments and ends with the sources used and the
 sources investigated but not used. The football statistics built in round 1 (real public-domain
 data, openfootball CC0) are a later phase, kept live. The presentation for the owner: [presentation.html](presentation.html). The prototype:
@@ -66,3 +67,9 @@ How we work, redirects from `/analysis/`, and the data pages moved to "a later p
 claim in our own explainer was sourced (D24). The rules are enforced by the build and by a new gate
 check measured on the rendered pages; a deliberately broken page proved it fails. Measured at 375 and
 1440 px, clean. Decisions D17–D25; asks A8–A10.
+
+**2026-09-25 — round 3: the eight desks.** The owner gave the article structure: Discover, Define,
+Design, Develop, Data, Drive, Defend, Deal — each defined by what the article does for the reader.
+They are now the site's sections (desk bar, desk pages, desk tiles, How we work); every article sits
+on one desk, enforced by the build and the gate; the round-2 topics stay as subject tags, their live
+pages kept (D26–D28). Measured at 375 and 1440 px, clean. Ask A11: the GPS article's desk.

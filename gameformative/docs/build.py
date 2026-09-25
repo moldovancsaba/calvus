@@ -44,7 +44,9 @@ vals = dict(
     pl_goals=S["pl2526"]["goals"], inputs=len(S["inputs"]),
 )
 import sys; sys.path.insert(0, str(HERE.parent)); import content as C
-vals.update(topics=len(C.TOPICS), articles=len(C.articles(S)), min_chars=f"{C.RULES['min_chars']:,}", max_chars=f"{C.RULES['max_chars']:,}")
+_arts = C.articles(S)
+vals.update(desks=len(C.DESKS), desks_used=len({a["desk"] for a in _arts}), desk_rows="\n".join(f"| **{n}** | {d} |" for _, n, d in C.DESKS))
+vals.update(topics=len(C.TOPICS), articles=len(_arts), min_chars=f"{C.RULES['min_chars']:,}", max_chars=f"{C.RULES['max_chars']:,}")
 site = [p for p in HERE.parent.rglob("*.html") if "docs" not in p.relative_to(HERE.parent).parts and "analysis" not in p.relative_to(HERE.parent).parts]
 sizes = [p.stat().st_size for p in site]
 vals.update(page_kb_min=round(min(sizes) / 1000), page_kb_max=round(max(sizes) / 1000),
