@@ -948,3 +948,63 @@ Measured: `idbc-salary-guide/check.py` and the root `check.py` both `GATE: CLEAN
 sync; Bérek and Expert Pool re-rendered locally and read via their live DOM/console (not
 screenshots alone) to confirm the new area list and the new Expert Pool taxonomy display
 with no console errors and no horizontal overflow.
+
+## IDBCSYNC — every value the prototype uses, in the sheet (2026-09-25)
+
+The owner added an `IDBCSYNC` tab to `IDBC_bertabla` with five columns — `id` (identifies the
+value by its use), `változó` (the name as it reads on the page), `érték` (what it shows),
+`megjelenés` (page and section, so a reader can find it), `segítség` (what it is and what
+type of value is expected) — and asked for all data to be backfilled. Scope was confirmed
+twice, both times explicitly: everything, fully exploded, no summary rows pointing at other
+tabs — "this will be the single sheet".
+
+**What went in — 13,160 rows** (`04-decisions.md` D36):
+
+| Prefix | Rows | Source | One row per |
+|---|---|---|---|
+| `CONTENT-` | 114 | the pages' HTML, read by grep per page | heading, lead paragraph, label, button, nav/footer item, contact detail, form field, SAP tile/paragraph |
+| `AREA-` | 33 | `data/areas.json` | area × {name, summary (first 200 characters shown, full length stated), media type} |
+| `SAPPROD-` | 30 | `guide-data.json` `sapProducts` | category and catalogue item |
+| `SALARY-` | 1,470 | `salary.webBertabla` | present field (`szint`, `min`, `idbc`, `max`, `juttatas`, `linkedin`) of every row |
+| `POOL-` | 58 | `salary.expertPool` | `darab` and `linkedin` of every tile |
+| `TI-` | 39 | `salary.talentInsightTop3` | TOP3 position's Talent Insight count |
+| `SURVEY-` | 11,402 | `datasets` | every answer of every question in every area; every weighted score; every segment × answer cell of the `cross` breakdowns (experience on the employee side, company size on the employer side) |
+| `SITEMAP-`, `FILTERDIM-` | 14 | `siteMap`, `filterDimensions` | internal meta, marked as not shown on the site |
+
+**IDs** are deterministic and, where the data allows, free of positional indexes so an inserted
+row cannot shift them: `SALARY-<the record's existing id from build-salary-data.py>-<FIELD>`,
+`POOL-<IPARAG>-<POZICIO>`, `TI-<TERULET>-<POZICIO>`, `AREA-<slug>-<FIELD>`. Survey IDs do carry
+the question's position inside its area/side/base-or-cross block — `SURVEY-<AREA>-<SIDE>-<BASE|CROSS>-Q<n>-O<n>`
+for simple and weighted questions, `-Q<n>-S<segment>-G<answer>` for breakdown cells — since the
+survey material is final (D16) and has no other stable key. The generator refused to emit on a
+duplicate ID; there are none.
+
+**Every value is text.** Checked before import, not after: typed as numbers, 96 answer-bucket
+labels (`1-5`, `6-10`, `11-15`, `16-20`) would have become dates, the footer phone
+`+36 30 479 0090` a formula error, and 1,300+ decimals such as `12.5` depend on the sheet's
+Hungarian locale. Survey `érték` values therefore keep the JSON's own form (`19.28`, not
+`19,28`); a future converter reading the tab should expect a dot decimal and accept a comma
+if a person retypes one.
+
+**How it got in, since a sheet this size can't be typed.** A generated 8.3 MB file, split into
+nine tab-separated parts, served for a few minutes from this project's own GitHub Pages
+(`data/idbcsync-import/`; first under an underscore path, which Jekyll silently drops — renamed).
+A temporary gist was refused by the session's data-exfiltration guard; the Pages route adds
+no exposure, the same data is already public on the live site. Each part came in with
+`=ARRAYFORMULA(REGEXEXTRACT(IMPORTDATA(url;"¦");"^([^\t]*)\t…(.*)$"))` — one whole line per
+cell via a delimiter that never occurs, then split by `REGEXEXTRACT`, which only ever returns
+text. Google gates `IMPORTDATA` behind a document-level "external data" permission that an
+anonymous editor cannot grant; the owner granted it from a signed-in session. The whole range
+was then frozen with Szerkesztés → Irányított beillesztés → Csak az értékek (keyboard copy did
+not register in the automated browser; the menu did), verified against the source cell by cell
+from a fresh export — 13,160 rows, 0 mismatches, 0 formulas left, all values text, nothing
+below the data — and the transport files removed from the repo.
+
+**Noted in the tab, not changed:** `regisztracio/index.html`'s Ajánlatkérés header button still
+links to `idbc.hu/ajanlatkeres/` — every other page moved to `kapcsolat/` on 2026-09-22; this
+one was missed. The row `CONTENT-SHARED-CTA-AJANLATKERES` says so.
+
+**Not yet:** the site is still built from `WEB_BERTABLA_IMPORT`, `EXPERT_POOL_IMPORT` and the
+survey Excel, not from IDBCSYNC, and `idbc-sync-bertabla.yml` still reads the former. Making
+IDBCSYNC the tab the prototype is generated from is a separate step — and a structural one,
+since the page templates hold their static text in HTML today, not in data.

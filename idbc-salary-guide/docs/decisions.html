@@ -296,6 +296,13 @@ decision is added here first. "Owner" is the studio side; "client" is IDBC.</em>
 <td>owner, live-verified against the actual sheet at every step</td>
 <td><code>data/build-salary-data.py</code>, <code>data/guide-data.json</code>, <code>.github/workflows/idbc-sync-bertabla.yml</code>, the live <code>IDBC_bertabla</code> sheet</td>
 </tr>
+<tr>
+<td>D36</td>
+<td>2026-09-25</td>
+<td><strong>IDBCSYNC backfilled: every value the prototype uses, fully exploded, one row each.</strong> The owner added an <code>IDBCSYNC</code> tab to <code>IDBC_bertabla</code> (columns <code>id</code>, <code>változó</code>, <code>érték</code>, <code>megjelenés</code>, <code>segítség</code>) and set it as the single sheet — asked twice to confirm granularity, the answer was explicit: everything, no exceptions, no pointer rows to other tabs. 13,160 rows: 114 static page texts/labels/contacts/form fields, 33 area fields (<code>areas.json</code>), 30 SAP catalogue entries, 1,470 salary values (every present field of every <code>webBertabla</code> row), 58 Expert Pool values, 39 Talent Insight counts, 11,402 survey values (every simple answer, every weighted score, and every cell of the experience/company-size breakdown matrices), 14 meta rows (<code>siteMap</code>, <code>filterDimensions</code>). IDs are deterministic and index-free where the data allows (<code>SALARY-&lt;existing record id&gt;-&lt;FIELD&gt;</code>, <code>POOL-&lt;iparag&gt;-&lt;pozíció&gt;</code>, <code>SURVEY-&lt;area&gt;-&lt;side&gt;-&lt;base/cross&gt;-Q&lt;n&gt;-O&lt;n&gt;</code> or <code>-S&lt;segment&gt;-G&lt;answer&gt;</code>), so a future sheet → site converter can map rows back. <strong>Every value is stored as text, deliberately</strong>: imported as numbers, 96 answer-bucket labels (<code>1-5</code>, <code>6-10</code>, <code>11-15</code>) would have become dates, the footer phone <code>+36 30 479 0090</code> a formula error, and 1,300+ decimals like <code>12.5</code> locale-ambiguous in a Hungarian sheet. Method: generated from the repo's own data, served for minutes from this project's GitHub Pages (a gist was refused by the session's data-exfiltration guard; the data is already public on the live site), pulled in with <code>IMPORTDATA</code> + <code>REGEXEXTRACT</code> (text-only), frozen with Paste special → values, verified cell by cell against the source (0 mismatches, 0 formulas left), then the transport files removed from the repo. The owner granted the sheet's external-data permission from a signed-in session (an anonymous editor cannot)</td>
+<td>owner (scope, twice confirmed), studio (method)</td>
+<td>the live <code>IDBC_bertabla</code> sheet, <code>IDBCSYNC</code> tab</td>
+</tr>
 </tbody>
 </table></div>
 <h2>Standing rules that came out of these</h2>

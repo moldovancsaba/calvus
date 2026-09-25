@@ -12,7 +12,7 @@ every project.
 | 01 research | `01-research.md` | What was read (the client's specs, mockups, data, copy), the one external measurement, what was not researched and why |
 | 02 audit | `02-audit.md` | idbc.hu measured; the spec vs. the data; the client's data as it stands; defects found in the material |
 | 03 sources and assets | `../data/SOURCES-AND-GAPS.md` | Every source file and what it contributed, every gap, every change round with measurements — the running record since July |
-| 04 decisions | `04-decisions.md` | D1–D35, dated, with who and why |
+| 04 decisions | `04-decisions.md` | D1–D36, dated, with who and why |
 | 05 design | `05-design.md` | Where the look comes from (the client's mockups), tokens, layout |
 | 06 build log | `../data/SOURCES-AND-GAPS.md` | the dated change notes are the build log |
 | 07 gate | `07-gate.md` | The one-command gate, the measured pass, deliberate deviations |
@@ -149,3 +149,17 @@ directly to the live sheet requesting the two genuine remaining gaps (IT Contrac
 rows, the missing Qualified Person headcount). `.github/workflows/idbc-sync-bertabla.yml`
 (manual trigger only, gated, auto-commits on a real diff) is the ADR-2 upgrade path,
 confirmed working end to end against the live sheet before being relied on.
+
+**2026-09-25 — IDBCSYNC backfilled (D36).** The owner added an `IDBCSYNC` tab (`id`,
+`változó`, `érték`, `megjelenés`, `segítség`) as the single sheet and asked for every value
+the prototype uses, fully exploded. 13,160 rows went in — every page text, label, contact
+and form field; every area field; the SAP catalogue; every salary, Expert Pool and Talent
+Insight value; every survey percentage including each cell of the experience and
+company-size breakdowns. All stored as text on purpose (as numbers, `1-5`/`6-10` answer
+buckets would have turned into dates and the footer phone into a formula error). Imported
+via `IMPORTDATA` from short-lived files on this project's Pages, frozen to plain values,
+verified cell by cell against the source (0 mismatches, 0 formulas left), transport files
+removed. Still pointing the old way, noted in the tab rather than silently changed:
+`regisztracio/index.html`'s Ajánlatkérés button (the only page not yet on `kapcsolat/`).
+The sync workflow still reads `WEB_BERTABLA_IMPORT`/`EXPERT_POOL_IMPORT`, not IDBCSYNC —
+making IDBCSYNC the tab the site is built from is the next, separate step.

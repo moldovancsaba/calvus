@@ -78,7 +78,7 @@ every project.</p>
 <tr>
 <td>04 decisions</td>
 <td><a href="decisions.html"><code>04-decisions.md</code></a></td>
-<td>D1–D35, dated, with who and why</td>
+<td>D1–D36, dated, with who and why</td>
 </tr>
 <tr>
 <td>05 design</td>
@@ -243,6 +243,19 @@ directly to the live sheet requesting the two genuine remaining gaps (IT Contrac
 rows, the missing Qualified Person headcount). <code>.github/workflows/idbc-sync-bertabla.yml</code>
 (manual trigger only, gated, auto-commits on a real diff) is the ADR-2 upgrade path,
 confirmed working end to end against the live sheet before being relied on.</p>
+<p><strong>2026-09-25 — IDBCSYNC backfilled (D36).</strong> The owner added an <code>IDBCSYNC</code> tab (<code>id</code>,
+<code>változó</code>, <code>érték</code>, <code>megjelenés</code>, <code>segítség</code>) as the single sheet and asked for every value
+the prototype uses, fully exploded. 13,160 rows went in — every page text, label, contact
+and form field; every area field; the SAP catalogue; every salary, Expert Pool and Talent
+Insight value; every survey percentage including each cell of the experience and
+company-size breakdowns. All stored as text on purpose (as numbers, <code>1-5</code>/<code>6-10</code> answer
+buckets would have turned into dates and the footer phone into a formula error). Imported
+via <code>IMPORTDATA</code> from short-lived files on this project's Pages, frozen to plain values,
+verified cell by cell against the source (0 mismatches, 0 formulas left), transport files
+removed. Still pointing the old way, noted in the tab rather than silently changed:
+<code>regisztracio/index.html</code>'s Ajánlatkérés button (the only page not yet on <code>kapcsolat/</code>).
+The sync workflow still reads <code>WEB_BERTABLA_IMPORT</code>/<code>EXPERT_POOL_IMPORT</code>, not IDBCSYNC —
+making IDBCSYNC the tab the site is built from is the next, separate step.</p>
 <footer>IDBC Talent Market &amp; Salary Guide 2026 · documentation</footer>
 </div>
 </body>
