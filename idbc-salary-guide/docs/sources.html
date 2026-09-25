@@ -1128,7 +1128,7 @@ row, and the site was wired to it.</p>
 <tr>
 <td>Areas</td>
 <td><code>AREA-&lt;slug&gt;-NAME/-SUMMARY/-MEDIA</code></td>
-<td>yes (<code>-EDITION</code> hidden)</td>
+<td>yes (<code>-EDITION</code> hidden; <code>-NAME</code> hidden since D45)</td>
 <td>the name (used by the home tile, the Piaci trendek dropdown and the area page), the full summary, video or highlight</td>
 </tr>
 <tr>
@@ -1140,13 +1140,13 @@ row, and the site was wired to it.</p>
 <tr>
 <td>Expert Pool</td>
 <td><code>EXPERT-nn-IPARAG/POZICIO/DARAB/LINKEDIN</code></td>
-<td>yes</td>
+<td>yes until D45, hidden since</td>
 <td>every tile, including Qualified Person, which appears once its count is filled in</td>
 </tr>
 <tr>
 <td>SAP catalogue</td>
 <td><code>SAPPROD-CATn-NAME/-ITEMm</code></td>
-<td>yes</td>
+<td>yes until D45, hidden since</td>
 <td>categories and items</td>
 </tr>
 <tr>
@@ -1333,6 +1333,17 @@ those formulas and colours, base fill uniform, 0 values changed, hidden rows unc
 <code>idbcsync.py --check</code> 0 files changed; on screen, the owner's example (Project Manager →
 Engineering Team Leader (Junior), rows 3136/3137) and an area boundary (row 3281) render as
 the rules say.</p>
+<h2>"Csempe", registration and blank rows hidden in IDBCSYNC (2026-09-25, D45)</h2>
+<p>The owner asked to hide all "csempe" rows, the "regisztráció" rows and the empty rows. Read
+from the export first: 166 visible rows mention "csempe" (11 area names, whose "megjelenés"
+names the home-page area tile; the SAP catalogue, 30 rows; the Expert Pool tile texts, 5 rows,
+and tiles, 120 rows); "regisztr" matches exactly the registration section (24 rows); 359 rows
+at the bottom are completely blank. Hidden: those, plus the two section headings that would
+have been left alone (3977, 4065). Not hidden: 1,124 rows with an id but an empty value —
+optional salary fields, not empty rows. Fresh export: 551 newly hidden rows, exactly the
+intended set, none un-hidden, 0 values changed, 3,765 visible; <code>idbcsync.py --check</code> 0 files
+changed. Because the Expert Pool tiles are hidden, <code>EXPERT-27-DARAB</code> (the missing Qualified
+Person count, C-10) now needs its row shown before it can be typed in.</p>
 <footer>IDBC Talent Market &amp; Salary Guide 2026 · documentation</footer>
 </div>
 </body>

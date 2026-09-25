@@ -360,6 +360,13 @@ decision is added here first. "Owner" is the studio side; "client" is IDBC.</em>
 <td>owner</td>
 <td>the live <code>IDBC_bertabla</code> sheet</td>
 </tr>
+<tr>
+<td>D45</td>
+<td>2026-09-25</td>
+<td><strong>Every "csempe" row, the registration page and the blank rows are hidden in IDBCSYNC.</strong> Owner directive, applied literally: every visible row whose text mentions "csempe" (166 rows: the 11 area-name rows <code>AREA-&lt;slug&gt;-NAME</code>, described as "területi csempe"; the SAP catalogue 3978–4007; the Expert Pool tile texts 4060–4064 and all tiles 4066–4185), the two section headings left with nothing under them (3977 SAP megoldások, 4065 Expert Pool — csempék), the whole registration section 4254–4277, and the 359 blank rows at the bottom (17666–18024). Rows with an id but an empty value (1,124 — optional salary fields such as LinkedIn, IDBC, juttatás, szint) were not taken as "empty rows" and stay visible. Hidden with the row shortcut (⌘+Option+9) range by range. Fresh export: 551 rows newly hidden, exactly those; none un-hidden; 0 values changed; 3,765 rows visible (was 4,316); no visible row mentions csempe or regisztráció and none is blank; <code>idbcsync.py --check</code> 0 files changed. Side effect flagged: <code>EXPERT-27-DARAB</code> (the Qualified Person count the client was asked for, C-10) is among the hidden tile rows</td>
+<td>owner</td>
+<td>the live <code>IDBC_bertabla</code> sheet</td>
+</tr>
 </tbody>
 </table></div>
 <h2>Standing rules that came out of these</h2>

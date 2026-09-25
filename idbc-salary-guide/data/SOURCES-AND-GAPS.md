@@ -1033,10 +1033,10 @@ row, and the site was wired to it.
 | Block | Ids | Visible | What a person edits there |
 |---|---|---|---|
 | Every page text | `SHARED-…` (header, footer, chart legend — one row for all pages), `HOME-`, `TERULET-`, `BEREK-`, `SAP-`, `POOL-`, `ESETT-`, `REG-`, `KAPCS-` | yes (screen-reader labels hidden; the header and footer rows hidden since D42) | headings, paragraphs, buttons, form labels, image descriptions, tooltips, messages shown by the page scripts |
-| Areas | `AREA-<slug>-NAME/-SUMMARY/-MEDIA` | yes (`-EDITION` hidden) | the name (used by the home tile, the Piaci trendek dropdown and the area page), the full summary, video or highlight |
+| Areas | `AREA-<slug>-NAME/-SUMMARY/-MEDIA` | yes (`-EDITION` hidden; `-NAME` hidden since D45) | the name (used by the home tile, the Piaci trendek dropdown and the area page), the full summary, video or highlight |
 | Bértábla | `SAL-<area>-NAME`, `SAL-<area>-nnn-POZICIO/SZINT/TOP3/MIN/IDBC/MAX/JUTTATAS/LINKEDIN` | yes | every salary row of Bérek and SAP |
-| Expert Pool | `EXPERT-nn-IPARAG/POZICIO/DARAB/LINKEDIN` | yes | every tile, including Qualified Person, which appears once its count is filled in |
-| SAP catalogue | `SAPPROD-CATn-NAME/-ITEMm` | yes | categories and items |
+| Expert Pool | `EXPERT-nn-IPARAG/POZICIO/DARAB/LINKEDIN` | yes until D45, hidden since | every tile, including Qualified Person, which appears once its count is filled in |
+| SAP catalogue | `SAPPROD-CATn-NAME/-ITEMm` | yes until D45, hidden since | categories and items |
 | Survey texts | `SURVEY-TOTAL-LABEL`, `SURVEY-TOPICt-NAME`, `SURVEY-<SIDE>-SEGk`, `SURVEY-<SIDE>-Qnn-TEXT/-OPTmm` | yes until D42, hidden since | topic names, filter values, question texts, answer labels — each once, for every area |
 | Survey figures and keys | `SURVEY-<AREA>-<SIDE>-Qnn-[SEGk-](N\|OPTmm)`, topic membership, question sets, scale maxima, answer-order flags | hidden | — |
 
@@ -1238,3 +1238,16 @@ those formulas and colours, base fill uniform, 0 values changed, hidden rows unc
 `idbcsync.py --check` 0 files changed; on screen, the owner's example (Project Manager →
 Engineering Team Leader (Junior), rows 3136/3137) and an area boundary (row 3281) render as
 the rules say.
+
+## "Csempe", registration and blank rows hidden in IDBCSYNC (2026-09-25, D45)
+
+The owner asked to hide all "csempe" rows, the "regisztráció" rows and the empty rows. Read
+from the export first: 166 visible rows mention "csempe" (11 area names, whose "megjelenés"
+names the home-page area tile; the SAP catalogue, 30 rows; the Expert Pool tile texts, 5 rows,
+and tiles, 120 rows); "regisztr" matches exactly the registration section (24 rows); 359 rows
+at the bottom are completely blank. Hidden: those, plus the two section headings that would
+have been left alone (3977, 4065). Not hidden: 1,124 rows with an id but an empty value —
+optional salary fields, not empty rows. Fresh export: 551 newly hidden rows, exactly the
+intended set, none un-hidden, 0 values changed, 3,765 visible; `idbcsync.py --check` 0 files
+changed. Because the Expert Pool tiles are hidden, `EXPERT-27-DARAB` (the missing Qualified
+Person count, C-10) now needs its row shown before it can be typed in.
