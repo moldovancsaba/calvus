@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>gameformative — project documentation · gameformative</title><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&display=swap"><link rel="stylesheet" href="../assets/tokens.css"><style>/* gameformative — project documentation on the project's own tokens (../assets/tokens.css): off-white ground, Archivo, one blue, one orange. */
+body{margin:0;background:var(--gf-ground);color:var(--gf-text);font-family:var(--gf-font);font-size:16.5px;line-height:1.62;padding:0 clamp(16px,4vw,40px) 64px;font-variant-numeric:tabular-nums}
+*{box-sizing:border-box}.wrap{max-width:80ch;margin:0 auto}
+.docnav{display:flex;flex-wrap:wrap;gap:0 14px;align-items:center;padding:10px 0;border-bottom:3px solid var(--gf-ink);font-size:13.5px}
+.docnav a{color:var(--gf-blue);text-decoration:none;min-height:44px;min-width:44px;justify-content:center;display:inline-flex;align-items:center;font-weight:600}
+.docnav a[aria-current]{box-shadow:inset 0 -3px 0 var(--gf-orange)}
+.docnav-brand{font-weight:800;font-stretch:72%;font-size:20px;color:var(--gf-ink);margin-right:8px}
+.docnav-brand b{font-weight:900}
+header .eyebrow{margin:28px 0 4px;font-size:12px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--gf-blue)}
+h1{font-stretch:72%;font-weight:800;font-size:clamp(34px,6vw,52px);line-height:1.04;margin:0 0 16px;color:var(--gf-ink);letter-spacing:-.01em}
+h2{font-stretch:80%;font-weight:800;font-size:28px;line-height:1.1;margin:44px 0 10px;padding-top:12px;border-top:3px solid var(--gf-ink);color:var(--gf-ink)}
+h3{font-weight:750;font-size:18px;margin:26px 0 8px;color:var(--gf-ink)}h4{font-size:16px;margin:20px 0 6px;color:var(--gf-ink)}
+p{margin:0 0 12px}li{margin:4px 0}p,li,td,dd{overflow-wrap:anywhere}strong{font-weight:750;color:var(--gf-ink)}em{color:var(--gf-muted)}a{color:var(--gf-blue);overflow-wrap:anywhere}
+code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.84em;background:var(--gf-blue-soft);padding:1px 5px;border-radius:4px;overflow-wrap:anywhere}
+.tbl{overflow-x:auto;margin:12px 0 20px;border:1px solid var(--gf-line);border-radius:10px;background:var(--gf-surface)}
+table{border-collapse:collapse;width:100%;font-size:14px;min-width:560px}
+th{text-align:left;font-weight:800;background:var(--gf-sunk);padding:10px 12px;border-bottom:2px solid var(--gf-ink);font-size:11.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--gf-ink)}
+td{padding:9px 12px;border-top:1px solid var(--gf-line);vertical-align:top}
+pre{overflow-x:auto;padding:14px 16px;border:1px solid var(--gf-line);background:var(--gf-surface);border-radius:10px;font-size:12.5px;line-height:1.4}
+pre code{background:none;padding:0}
+blockquote{margin:14px 0;padding:12px 16px;border-left:4px solid var(--gf-orange);background:var(--gf-surface);border-radius:0 10px 10px 0}
+footer{margin-top:48px;padding-top:16px;border-top:1px solid var(--gf-line);font-size:12.5px;color:var(--gf-muted)}
+</style></head>
+<body><div class="wrap"><nav class="docnav" aria-label="Project documentation"><span class="docnav-brand">game<b>formative</b></span><a href="index.html" aria-current=page>Overview</a><a href="brief.html">Brief</a><a href="research.html">Research</a><a href="source-register.html">Sources researched</a><a href="evidence.html">Evidence</a><a href="audit.html">Audit</a><a href="inputs.html">Inputs and gaps</a><a href="decisions.html">Decisions</a><a href="design.html">Design</a><a href="build-log.html">Build log</a><a href="gate.html">Gate</a><a href="asks.html">Asks</a><a href="ssot.html">SSOT</a><a href="architecture.html">Architecture</a><a href="technical-design.html">Technical design</a><a href="plan.html">Plan</a><a href="token-map.html">Token map</a><a href="responsible-data.html">Responsible data</a><a href="presentation.html">Presentation</a><a href="../index.html">Prototype</a></nav>
+<header><p class="eyebrow">gameformative · project documentation</p><h1>gameformative — project documentation</h1></header>
+<p>gameformative.com is a football analytics and news site: results and tables for Europe's big five
+leagues, season and tournament reviews, analysis and explainers built on the numbers, and one page
+that says what every number means. The prototype runs on real public-domain data (openfootball,
+CC0). The presentation for the owner: <a href="presentation.html">presentation.html</a>. The prototype:
+<a href="../index.html">home page</a>. The design system, live: <a href="../styleguide/index.html">style guide</a>.</p>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>Document</th>
+<th>What it holds</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="brief.html"><code>00-brief.md</code></a></td>
+<td>the ask verbatim, what the prototype is, what is real / sample / inert / not built</td>
+</tr>
+<tr>
+<td><a href="research.html"><code>01-research.md</code></a></td>
+<td>the synthesis: industry, how fans get news, the benchmark (global, Germany, India, China, stats sites), colour and 2027 forecasts, type, UX best practice, trust and AI, proposals P1–P12</td>
+</tr>
+<tr>
+<td><a href="source-register.html"><code>01a-source-register.md</code></a></td>
+<td><strong>every source researched, one row each, with its status and what we learned</strong> — the sites and rankings (G, R, DE, IN, CN, ST), the industry (I), open data (O), colour and design forecasts (T), standards and practice (S)</td>
+</tr>
+<tr>
+<td><a href="evidence.html"><code>01b-evidence.md</code></a></td>
+<td>the four research passes in full: methods, timestamps, raw measurements</td>
+</tr>
+<tr>
+<td><a href="audit.html"><code>02-audit.md</code></a></td>
+<td>gameformative.com measured: registered 2026-09-25, Vercel DNS, no deployment</td>
+</tr>
+<tr>
+<td><a href="inputs.html"><code>03-sources.md</code></a></td>
+<td>the build's inputs and every gap, numbered</td>
+</tr>
+<tr>
+<td><a href="decisions.html"><code>04-decisions.md</code></a></td>
+<td>D1–D16</td>
+</tr>
+<tr>
+<td><a href="design.html"><code>05-design.md</code></a></td>
+<td>tokens, type, layout at the reference widths, components</td>
+</tr>
+<tr>
+<td><a href="build-log.html"><code>06-build-log.md</code></a></td>
+<td>the build round, what was measured, what was fixed</td>
+</tr>
+<tr>
+<td><a href="gate.html"><code>07-gate.md</code></a></td>
+<td>what <code>check.py</code> verifies and the measured pass</td>
+</tr>
+<tr>
+<td><a href="asks.html"><code>08-client-asks.md</code></a></td>
+<td>the asks A0–A7, none blocking the review</td>
+</tr>
+<tr>
+<td><a href="ssot.html"><code>10-ssot.md</code></a></td>
+<td>glossary, entities, the rules register, settings, document map</td>
+</tr>
+<tr>
+<td><a href="architecture.html"><code>11-architecture.md</code></a></td>
+<td>the real build: targets, containers, ADR-01–06 (PROPOSED)</td>
+</tr>
+<tr>
+<td><a href="technical-design.html"><code>12-technical-design.md</code></a></td>
+<td>the pipeline, content model, data mapping, templates, the live match centre spec</td>
+</tr>
+<tr>
+<td><a href="plan.html"><code>13-implementation-plan.md</code></a></td>
+<td>milestones M0–M4, issues with a Definition of Done, blocked register, risks</td>
+</tr>
+<tr>
+<td><a href="token-map.html"><code>14-token-map.md</code></a></td>
+<td>prototype tokens and components → production</td>
+</tr>
+<tr>
+<td><a href="responsible-data.html"><code>18-responsible-data.md</code></a></td>
+<td>what is stored (nothing personal), the policy record, the gate</td>
+</tr>
+</tbody>
+</table></div>
+<p>Regenerate: <code>python3 gameformative/data/convert.py</code> (only after a fetch), <code>python3
+gameformative/build.py</code>, <code>python3 gameformative/docs/build.py</code>, then <code>python3 check.py</code> at the root.</p>
+<h2 id="process-log">Process log</h2>
+<p><strong>2026-09-25 — project opened; research.</strong> The owner asked for gameformative.com: deep research on
+the sport media industry, 2027 colour and layout trends, BBC Sport, ESPN, NBA.com, FIFA and the top
+sports sites of Germany, India and China, colour, UX and mobile/desktop best practice — and the best
+possible prototype with documentation, checking Népszabadság as the precedent. Four research passes
+ran the same day: 31 sites measured with <code>curl</code> (nine blocked, named, not described), rankings from
+Similarweb and Semrush, industry sources read at source, forecasts labelled as projections, open-data
+licences read. The owner declined an external site in the in-app browser; it was used only on the
+local prototype from then on (D16). The domain audited: registered that day, no deployment.</p>
+<p><strong>2026-09-25 — the first version built.</strong> Data converted from openfootball with asserts (one stop,
+four nation spellings, fixed by an alias table). Design system from the research: warm off-white,
+ink navy, Form Blue and Energy Orange (projections read into sRGB, contrast-gated), Archivo in three
+widths. 19 pages generated; five articles written from the data with premises. Measured at 375 and
+1440 px in the browser pane; found and fixed a hidden sign-in leak, strip padding, four kinds of
+small tap target, a twelve-column table unreadable on phones (now compact with "All columns"), card
+labels stretching, and bracket headings drifting (<a href="build-log.html"><code>06-build-log.md</code></a>). Gate written and wired into the
+root <code>check.py</code>; clean.</p>
+<p><strong>2026-09-25 — sources register.</strong> The owner asked that the documentation list every source
+researched with a short summary of what we learned: <a href="source-register.html"><code>01a-source-register.md</code></a>, one row per source,
+with its status (measured, opened, secondary, blocked, snippet only, projection).</p>
+<footer>gameformative.com · project documentation, 2026</footer></div></body></html>

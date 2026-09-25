@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Brief — gameformative.com · gameformative</title><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&display=swap"><link rel="stylesheet" href="../assets/tokens.css"><style>/* gameformative — project documentation on the project's own tokens (../assets/tokens.css): off-white ground, Archivo, one blue, one orange. */
+body{margin:0;background:var(--gf-ground);color:var(--gf-text);font-family:var(--gf-font);font-size:16.5px;line-height:1.62;padding:0 clamp(16px,4vw,40px) 64px;font-variant-numeric:tabular-nums}
+*{box-sizing:border-box}.wrap{max-width:80ch;margin:0 auto}
+.docnav{display:flex;flex-wrap:wrap;gap:0 14px;align-items:center;padding:10px 0;border-bottom:3px solid var(--gf-ink);font-size:13.5px}
+.docnav a{color:var(--gf-blue);text-decoration:none;min-height:44px;min-width:44px;justify-content:center;display:inline-flex;align-items:center;font-weight:600}
+.docnav a[aria-current]{box-shadow:inset 0 -3px 0 var(--gf-orange)}
+.docnav-brand{font-weight:800;font-stretch:72%;font-size:20px;color:var(--gf-ink);margin-right:8px}
+.docnav-brand b{font-weight:900}
+header .eyebrow{margin:28px 0 4px;font-size:12px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--gf-blue)}
+h1{font-stretch:72%;font-weight:800;font-size:clamp(34px,6vw,52px);line-height:1.04;margin:0 0 16px;color:var(--gf-ink);letter-spacing:-.01em}
+h2{font-stretch:80%;font-weight:800;font-size:28px;line-height:1.1;margin:44px 0 10px;padding-top:12px;border-top:3px solid var(--gf-ink);color:var(--gf-ink)}
+h3{font-weight:750;font-size:18px;margin:26px 0 8px;color:var(--gf-ink)}h4{font-size:16px;margin:20px 0 6px;color:var(--gf-ink)}
+p{margin:0 0 12px}li{margin:4px 0}p,li,td,dd{overflow-wrap:anywhere}strong{font-weight:750;color:var(--gf-ink)}em{color:var(--gf-muted)}a{color:var(--gf-blue);overflow-wrap:anywhere}
+code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.84em;background:var(--gf-blue-soft);padding:1px 5px;border-radius:4px;overflow-wrap:anywhere}
+.tbl{overflow-x:auto;margin:12px 0 20px;border:1px solid var(--gf-line);border-radius:10px;background:var(--gf-surface)}
+table{border-collapse:collapse;width:100%;font-size:14px;min-width:560px}
+th{text-align:left;font-weight:800;background:var(--gf-sunk);padding:10px 12px;border-bottom:2px solid var(--gf-ink);font-size:11.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--gf-ink)}
+td{padding:9px 12px;border-top:1px solid var(--gf-line);vertical-align:top}
+pre{overflow-x:auto;padding:14px 16px;border:1px solid var(--gf-line);background:var(--gf-surface);border-radius:10px;font-size:12.5px;line-height:1.4}
+pre code{background:none;padding:0}
+blockquote{margin:14px 0;padding:12px 16px;border-left:4px solid var(--gf-orange);background:var(--gf-surface);border-radius:0 10px 10px 0}
+footer{margin-top:48px;padding-top:16px;border-top:1px solid var(--gf-line);font-size:12.5px;color:var(--gf-muted)}
+</style></head>
+<body><div class="wrap"><nav class="docnav" aria-label="Project documentation"><span class="docnav-brand">game<b>formative</b></span><a href="index.html">Overview</a><a href="brief.html" aria-current=page>Brief</a><a href="research.html">Research</a><a href="source-register.html">Sources researched</a><a href="evidence.html">Evidence</a><a href="audit.html">Audit</a><a href="inputs.html">Inputs and gaps</a><a href="decisions.html">Decisions</a><a href="design.html">Design</a><a href="build-log.html">Build log</a><a href="gate.html">Gate</a><a href="asks.html">Asks</a><a href="ssot.html">SSOT</a><a href="architecture.html">Architecture</a><a href="technical-design.html">Technical design</a><a href="plan.html">Plan</a><a href="token-map.html">Token map</a><a href="responsible-data.html">Responsible data</a><a href="presentation.html">Presentation</a><a href="../index.html">Prototype</a></nav>
+<header><p class="eyebrow">gameformative · project documentation</p><h1>Brief — gameformative.com</h1></header>
+<p><em>Written 2026-09-25, the day the project opened. For anyone picking the project up: what was asked,
+what the prototype is, what in it is real, and where it stands.</em></p>
+<h2 id="the-ask-verbatim">The ask, verbatim</h2>
+<blockquote>
+<p>"I need you to create a new prototype called gameformative.com it is a game analytics informative
+site with new, articles, statistics. I need you to make a deep research how the sport media
+industry looks like, what are the 2027 trends colours layouts and check the largest sites like bbc
+sport, espn, nba.com, fifa, and the top sport new sites in Germany, India and china, do the home
+work about colours, ux, mobile and desktop best practices and make the best possible prototype
+with documentation for gameformative.com. Check the nepszabadsag prototype as that is another news
+media project of ours"</p>
+</blockquote>
+<p>Owner, 2026-09-25. Later the same day: "In our documentation you need to list all sources you
+researched with a short summary what we learned" — answered by <a href="source-register.html"><code>01a-source-register.md</code></a>.</p>
+<h2 id="who-and-what">Who and what</h2>
+<ul>
+<li><strong>The product:</strong> gameformative.com, a new football <strong>analytics + news + statistics</strong> site in
+  English: results and tables, analysis and explainers built on the numbers, season and tournament
+  reviews, a method page that says what every number means.</li>
+<li><strong>Who it serves:</strong> fans who follow more than one league and want the numbers explained, not just
+  listed. The research (<a href="research.html"><code>01-research.md</code></a> §1–2) puts them on phones and desktops in roughly equal
+  measure, arriving increasingly through social and video feeds, and trusting human-edited,
+  sourced work more than automated copy.</li>
+<li><strong>Whose project:</strong> the studio's own (the owner calls it "ours"). There is no client brand, no
+  newsroom and no data contract yet — the domain was registered on the day (<a href="audit.html"><code>02-audit.md</code></a>).</li>
+<li><strong>Precedent:</strong> Népszabadság (<code>../../nepszabadsag/</code>), the studio's other news-media prototype —
+  its generator pattern (<code>content.py</code> + <code>build.py</code>), prototype banner, gate and documentation set
+  are followed here; its Hungarian print-daily design is deliberately not (each project carries its
+  own brand).</li>
+</ul>
+<h2 id="what-the-prototype-is">What the prototype is</h2>
+<p>A 19-page static site, generated from one content file and one data file:</p>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>Page</th>
+<th>What it shows</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Home</td>
+<td>lead analysis, the Premier League table, "the numbers this week", analysis, the four other leagues, World Cup review, automated round-ups, newsletter (inert)</td>
+</tr>
+<tr>
+<td>Scores</td>
+<td>the latest round and next fixtures for five leagues, filterable</td>
+</tr>
+<tr>
+<td>Tables &amp; stats, and one page per league (5)</td>
+<td>full table (overall / home / away, sortable, compact on phones), key numbers, points race, team leaders, clean sheets, results, fixtures</td>
+</tr>
+<tr>
+<td>Premier League 2025/26</td>
+<td>complete season: final table, title race, goals by minute, top scorers, attendance</td>
+</tr>
+<tr>
+<td>World Cup 2026 and its final</td>
+<td>the bracket, twelve groups, scorers, goals by stage; the final as a match centre</td>
+</tr>
+<tr>
+<td>Analysis (index + 5 pieces)</td>
+<td>four analyses and one explainer, with charts</td>
+</tr>
+<tr>
+<td>How we count</td>
+<td>glossary, data sources, table rules, labels, automation and AI, corrections, accessibility</td>
+</tr>
+<tr>
+<td>Style guide</td>
+<td>the design system, live</td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="what-is-real-sample-inert-not-built">What is real, sample, inert, not built</h2>
+<ul>
+<li><strong>Real:</strong> every result, table, goal, scorer, line-up and attendance — openfootball's
+  public-domain (CC0) data for the 2026/27 Premier League, LaLiga, Bundesliga, Serie A and Ligue 1
+  (results to 20 September 2026), the complete 2025/26 Premier League, and all 104 matches of the
+  2026 World Cup. Every derived figure is computed by <code>data/convert.py</code>; nothing is typed.</li>
+<li><strong>Sample:</strong> the article copy — written for the prototype by the "data desk" (no named newsroom
+  exists), every number in it read from the data, and the build stops if a data refresh would make
+  a sentence untrue (<a href="decisions.html"><code>04-decisions.md</code></a> D7).</li>
+<li><strong>Inert, shown in place:</strong> search, sign-in, the newsletter form, and the panels for xG, shots,
+  possession, player ratings and live scores — each says why.</li>
+<li><strong>Not built:</strong> a live data feed, accounts, the newsletter, the corrections page and form, other
+  sports, women's football, photography, advertising slots.</li>
+</ul>
+<h2 id="where-it-stands">Where it stands</h2>
+<p>First version built and measured 2026-09-25 (<a href="build-log.html"><code>06-build-log.md</code></a>); gate clean (<a href="gate.html"><code>07-gate.md</code></a>). The
+design-system and frame gates of the method were compressed into the owner's instruction to build
+"the best possible prototype" (D1) — the owner's review of the rendered site is that gate.</p>
+<h2 id="how-to-read-this-folder">How to read this folder</h2>
+<p><a href="index.html"><code>README.md</code></a> is the index and the dated process log. Read <a href="research.html"><code>01-research.md</code></a> for the why,
+<a href="design.html"><code>05-design.md</code></a> for the system, <a href="decisions.html"><code>04-decisions.md</code></a> for every choice, <code>presentation.html</code> for the
+one-page argument.</p>
+<footer>gameformative.com · project documentation, 2026</footer></div></body></html>

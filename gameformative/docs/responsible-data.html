@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Responsible data · gameformative</title><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&display=swap"><link rel="stylesheet" href="../assets/tokens.css"><style>/* gameformative — project documentation on the project's own tokens (../assets/tokens.css): off-white ground, Archivo, one blue, one orange. */
+body{margin:0;background:var(--gf-ground);color:var(--gf-text);font-family:var(--gf-font);font-size:16.5px;line-height:1.62;padding:0 clamp(16px,4vw,40px) 64px;font-variant-numeric:tabular-nums}
+*{box-sizing:border-box}.wrap{max-width:80ch;margin:0 auto}
+.docnav{display:flex;flex-wrap:wrap;gap:0 14px;align-items:center;padding:10px 0;border-bottom:3px solid var(--gf-ink);font-size:13.5px}
+.docnav a{color:var(--gf-blue);text-decoration:none;min-height:44px;min-width:44px;justify-content:center;display:inline-flex;align-items:center;font-weight:600}
+.docnav a[aria-current]{box-shadow:inset 0 -3px 0 var(--gf-orange)}
+.docnav-brand{font-weight:800;font-stretch:72%;font-size:20px;color:var(--gf-ink);margin-right:8px}
+.docnav-brand b{font-weight:900}
+header .eyebrow{margin:28px 0 4px;font-size:12px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--gf-blue)}
+h1{font-stretch:72%;font-weight:800;font-size:clamp(34px,6vw,52px);line-height:1.04;margin:0 0 16px;color:var(--gf-ink);letter-spacing:-.01em}
+h2{font-stretch:80%;font-weight:800;font-size:28px;line-height:1.1;margin:44px 0 10px;padding-top:12px;border-top:3px solid var(--gf-ink);color:var(--gf-ink)}
+h3{font-weight:750;font-size:18px;margin:26px 0 8px;color:var(--gf-ink)}h4{font-size:16px;margin:20px 0 6px;color:var(--gf-ink)}
+p{margin:0 0 12px}li{margin:4px 0}p,li,td,dd{overflow-wrap:anywhere}strong{font-weight:750;color:var(--gf-ink)}em{color:var(--gf-muted)}a{color:var(--gf-blue);overflow-wrap:anywhere}
+code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.84em;background:var(--gf-blue-soft);padding:1px 5px;border-radius:4px;overflow-wrap:anywhere}
+.tbl{overflow-x:auto;margin:12px 0 20px;border:1px solid var(--gf-line);border-radius:10px;background:var(--gf-surface)}
+table{border-collapse:collapse;width:100%;font-size:14px;min-width:560px}
+th{text-align:left;font-weight:800;background:var(--gf-sunk);padding:10px 12px;border-bottom:2px solid var(--gf-ink);font-size:11.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--gf-ink)}
+td{padding:9px 12px;border-top:1px solid var(--gf-line);vertical-align:top}
+pre{overflow-x:auto;padding:14px 16px;border:1px solid var(--gf-line);background:var(--gf-surface);border-radius:10px;font-size:12.5px;line-height:1.4}
+pre code{background:none;padding:0}
+blockquote{margin:14px 0;padding:12px 16px;border-left:4px solid var(--gf-orange);background:var(--gf-surface);border-radius:0 10px 10px 0}
+footer{margin-top:48px;padding-top:16px;border-top:1px solid var(--gf-line);font-size:12.5px;color:var(--gf-muted)}
+</style></head>
+<body><div class="wrap"><nav class="docnav" aria-label="Project documentation"><span class="docnav-brand">game<b>formative</b></span><a href="index.html">Overview</a><a href="brief.html">Brief</a><a href="research.html">Research</a><a href="source-register.html">Sources researched</a><a href="evidence.html">Evidence</a><a href="audit.html">Audit</a><a href="inputs.html">Inputs and gaps</a><a href="decisions.html">Decisions</a><a href="design.html">Design</a><a href="build-log.html">Build log</a><a href="gate.html">Gate</a><a href="asks.html">Asks</a><a href="ssot.html">SSOT</a><a href="architecture.html">Architecture</a><a href="technical-design.html">Technical design</a><a href="plan.html">Plan</a><a href="token-map.html">Token map</a><a href="responsible-data.html" aria-current=page>Responsible data</a><a href="presentation.html">Presentation</a><a href="../index.html">Prototype</a></nav>
+<header><p class="eyebrow">gameformative · project documentation</p><h1>Responsible data</h1></header>
+<p><em>The policy record for gameformative, and the gate that holds a feature until its fields are set.
+Written 2026-09-25. The prototype collects nothing: the newsletter form is disabled, sign-in is
+inert, and the only thing stored is the reader's theme choice, on their own device. This record
+applies from the first feature that stores or contacts people. Legal wording is the team's reading,
+to be confirmed by counsel.</em></p>
+<h2 id="what-the-prototype-stores">What the prototype stores</h2>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>Item</th>
+<th>Where</th>
+<th>Personal data</th>
+<th>Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Theme choice (<code>gf-theme</code>: light or dark)</td>
+<td>the reader's browser <code>localStorage</code></td>
+<td>no</td>
+<td>remember the reader's choice; never sent anywhere</td>
+</tr>
+</tbody>
+</table></div>
+<p>No cookies, no analytics, no advertising, no third-party scripts. The one third-party request is
+the font (Google Fonts), which production removes by self-hosting (ADR-05).</p>
+<h2 id="the-policy-record-to-fill-before-the-feature-ships">The policy record (to fill before the feature ships)</h2>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Value</th>
+<th>Blocks</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Jurisdictions and laws</td>
+<td>EU/EEA (GDPR, ePrivacy, AI Act Art. 50), UK (UK GDPR, PECR), others per market (A6)</td>
+<td>every feature below</td>
+</tr>
+<tr>
+<td>Audience</td>
+<td>general adult audience; the site is not directed at children</td>
+<td>accounts, newsletter</td>
+</tr>
+<tr>
+<td>Child-data rule</td>
+<td>a child is an age, never a name; no profiling or targeting on a minor's data, with or without consent</td>
+<td>accounts</td>
+</tr>
+<tr>
+<td>Consent per channel</td>
+<td>newsletter: double opt-in naming the sender and the channel; no pre-ticked boxes</td>
+<td>newsletter (A5)</td>
+</tr>
+<tr>
+<td>High-privacy defaults</td>
+<td>analytics without personal data and without cross-site tracking; ads only with consent (ADR-06)</td>
+<td>analytics, ads (A4)</td>
+</tr>
+<tr>
+<td>Frequency cap</td>
+<td>newsletter weekly ("The Monday numbers"), nothing more without a new opt-in</td>
+<td>newsletter</td>
+</tr>
+<tr>
+<td>Opt-out</td>
+<td>one-click unsubscribe in every mail, honoured immediately; postal address in every commercial mail</td>
+<td>newsletter</td>
+</tr>
+<tr>
+<td>AI disclosure</td>
+<td>automated text labelled; AI-generated text labelled unless human-reviewed under named editorial responsibility; AI imagery always labelled</td>
+<td>publishing</td>
+</tr>
+<tr>
+<td>Retention</td>
+<td>subscriber data until unsubscribe + 30 days; server logs 30 days</td>
+<td>newsletter, hosting</td>
+</tr>
+<tr>
+<td>Published policy</td>
+<td>a privacy page and the automation policy (How we count)</td>
+<td>launch</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>The gate:</strong> no feature that stores or contacts a person goes live while its row above says
+"to fill". The prototype's disabled newsletter form says so on the page ("nothing is collected;
+consent and sender are set before launch").</p>
+<footer>gameformative.com · project documentation, 2026</footer></div></body></html>

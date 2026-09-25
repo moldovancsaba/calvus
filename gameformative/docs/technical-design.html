@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Technical design · gameformative</title><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&display=swap"><link rel="stylesheet" href="../assets/tokens.css"><style>/* gameformative — project documentation on the project's own tokens (../assets/tokens.css): off-white ground, Archivo, one blue, one orange. */
+body{margin:0;background:var(--gf-ground);color:var(--gf-text);font-family:var(--gf-font);font-size:16.5px;line-height:1.62;padding:0 clamp(16px,4vw,40px) 64px;font-variant-numeric:tabular-nums}
+*{box-sizing:border-box}.wrap{max-width:80ch;margin:0 auto}
+.docnav{display:flex;flex-wrap:wrap;gap:0 14px;align-items:center;padding:10px 0;border-bottom:3px solid var(--gf-ink);font-size:13.5px}
+.docnav a{color:var(--gf-blue);text-decoration:none;min-height:44px;min-width:44px;justify-content:center;display:inline-flex;align-items:center;font-weight:600}
+.docnav a[aria-current]{box-shadow:inset 0 -3px 0 var(--gf-orange)}
+.docnav-brand{font-weight:800;font-stretch:72%;font-size:20px;color:var(--gf-ink);margin-right:8px}
+.docnav-brand b{font-weight:900}
+header .eyebrow{margin:28px 0 4px;font-size:12px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--gf-blue)}
+h1{font-stretch:72%;font-weight:800;font-size:clamp(34px,6vw,52px);line-height:1.04;margin:0 0 16px;color:var(--gf-ink);letter-spacing:-.01em}
+h2{font-stretch:80%;font-weight:800;font-size:28px;line-height:1.1;margin:44px 0 10px;padding-top:12px;border-top:3px solid var(--gf-ink);color:var(--gf-ink)}
+h3{font-weight:750;font-size:18px;margin:26px 0 8px;color:var(--gf-ink)}h4{font-size:16px;margin:20px 0 6px;color:var(--gf-ink)}
+p{margin:0 0 12px}li{margin:4px 0}p,li,td,dd{overflow-wrap:anywhere}strong{font-weight:750;color:var(--gf-ink)}em{color:var(--gf-muted)}a{color:var(--gf-blue);overflow-wrap:anywhere}
+code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.84em;background:var(--gf-blue-soft);padding:1px 5px;border-radius:4px;overflow-wrap:anywhere}
+.tbl{overflow-x:auto;margin:12px 0 20px;border:1px solid var(--gf-line);border-radius:10px;background:var(--gf-surface)}
+table{border-collapse:collapse;width:100%;font-size:14px;min-width:560px}
+th{text-align:left;font-weight:800;background:var(--gf-sunk);padding:10px 12px;border-bottom:2px solid var(--gf-ink);font-size:11.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--gf-ink)}
+td{padding:9px 12px;border-top:1px solid var(--gf-line);vertical-align:top}
+pre{overflow-x:auto;padding:14px 16px;border:1px solid var(--gf-line);background:var(--gf-surface);border-radius:10px;font-size:12.5px;line-height:1.4}
+pre code{background:none;padding:0}
+blockquote{margin:14px 0;padding:12px 16px;border-left:4px solid var(--gf-orange);background:var(--gf-surface);border-radius:0 10px 10px 0}
+footer{margin-top:48px;padding-top:16px;border-top:1px solid var(--gf-line);font-size:12.5px;color:var(--gf-muted)}
+</style></head>
+<body><div class="wrap"><nav class="docnav" aria-label="Project documentation"><span class="docnav-brand">game<b>formative</b></span><a href="index.html">Overview</a><a href="brief.html">Brief</a><a href="research.html">Research</a><a href="source-register.html">Sources researched</a><a href="evidence.html">Evidence</a><a href="audit.html">Audit</a><a href="inputs.html">Inputs and gaps</a><a href="decisions.html">Decisions</a><a href="design.html">Design</a><a href="build-log.html">Build log</a><a href="gate.html">Gate</a><a href="asks.html">Asks</a><a href="ssot.html">SSOT</a><a href="architecture.html">Architecture</a><a href="technical-design.html" aria-current=page>Technical design</a><a href="plan.html">Plan</a><a href="token-map.html">Token map</a><a href="responsible-data.html">Responsible data</a><a href="presentation.html">Presentation</a><a href="../index.html">Prototype</a></nav>
+<header><p class="eyebrow">gameformative · project documentation</p><h1>Technical design</h1></header>
+<p><em>How the prototype works, file by file, and what the real build adds. Written 2026-09-25.</em></p>
+<h2 id="1-the-prototypes-pipeline">1. The prototype's pipeline</h2>
+<pre><code>data/fetch.py      downloads 9 openfootball files → data/raw/          (run only to refresh)
+data/convert.py    raw/ → stats.json, with the data asserts           (--check: reproduce only)
+content.py         article copy, nav, glossary — figures read from stats.json, premises asserted
+build.py           content.py + stats.json → 19 pages                 (--check: reproduce only)
+check.py           the gate (07-gate.md)
+docs/build.py      docs markdown → HTML, and presentation.html from presentation-source.md
+</code></pre>
+<p>Refresh: <code>python3 data/fetch.py &amp;&amp; python3 data/convert.py &amp;&amp; python3 build.py &amp;&amp; python3 check.py</code>.
+If a refreshed dataset breaks a copy premise, <code>build.py</code> stops and names the sentence to rewrite.</p>
+<h2 id="2-content-model">2. Content model</h2>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>Object</th>
+<th>Fields</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Article</td>
+<td>slug, kind (Analysis, Explainer), league (en, all, wc), title, dek, key facts[], body[], cover</td>
+<td>body items: a paragraph, a <code>##</code> heading, or <code>("chart", id)</code></td>
+</tr>
+<tr>
+<td>Chart</td>
+<td>id → a figure built by <code>build.py</code> <code>chart()</code></td>
+<td>nine ids today; each renders title, subtitle, the chart, source, data table</td>
+</tr>
+<tr>
+<td>Cover</td>
+<td>type (race, bars, final, minutes, explainer)</td>
+<td>an SVG drawn from the data; decorative</td>
+</tr>
+<tr>
+<td>Round-up</td>
+<td>derived from a league's latest round</td>
+<td>template only; labelled Automated</td>
+</tr>
+<tr>
+<td>Glossary entry</td>
+<td>term, definition</td>
+<td><code>content.py</code> <code>GLOSSARY</code></td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="3-data-mapping">3. Data mapping</h2>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>Source field</th>
+<th>Becomes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>matches[].score.ft</code> or bare <code>score: [h, a]</code></td>
+<td>a result; a list score is the 2026/27 files' shorthand</td>
+</tr>
+<tr>
+<td><code>score.et</code>, <code>score.p</code></td>
+<td>after-extra-time score (cumulative); shoot-out, shown in brackets, never goals</td>
+</tr>
+<tr>
+<td><code>round</code> "Matchday N"</td>
+<td>round number for the points race; knock-out rounds by name</td>
+</tr>
+<tr>
+<td><code>group</code> "Group X"</td>
+<td>the World Cup group tables; teams in the round of 32 are marked through</td>
+</tr>
+<tr>
+<td><code>goals1/goals2[].{name, minute, penalty, owngoal}</code></td>
+<td>scorers (own goals excluded), minute buckets, the final's timeline</td>
+</tr>
+<tr>
+<td><code>lineup[].starter/subs</code></td>
+<td>the final's line-ups and substitutions</td>
+</tr>
+<tr>
+<td><code>attendance</code>, <code>ground</code></td>
+<td>season and tournament attendance; the final's venue</td>
+</tr>
+<tr>
+<td>team names</td>
+<td>display name and code through <code>data/teams.py</code>; aliases for the two "-full" files</td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="4-page-templates">4. Page templates</h2>
+<p><code>build.py</code> has one function per template: home, scores, stats hub, league (×5), season review,
+World Cup, match centre, article (×5), analysis index, how we count, style guide. Shared chrome:
+banner, header, results strip, footer, tab bar, More sheet. Every page: one <code>h1</code> (visually hidden
+on the home page, where the lead headline is an <code>h2</code> inside a link), <code>lang="en"</code>, a description,
+light and dark <code>theme-color</code>, JSON-LD where it applies (WebSite, NewsArticle, SportsEvent).</p>
+<h2 id="5-the-live-match-centre-specified-not-built">5. The live match centre (specified, not built)</h2>
+<ul>
+<li><strong>Data</strong>: provider push (or 5 s poll) into a per-match JSON at the edge: score, minute, events.</li>
+<li><strong>Score region</strong>: <code>role="status"</code>, <code>aria-live="polite"</code>, <code>aria-atomic="true"</code> — present in the DOM
+  before the first update; the full score is announced ("Spain 1, Argentina 0"), never one digit.</li>
+<li><strong>Events</strong>: a <code>role="log"</code> list, newest first, with a "Key events" filter (goals, cards, VAR,
+  substitutions) and periodic summaries.</li>
+<li><strong>Ticker rule</strong>: anything that moves or updates for more than 5 s has a visible pause (WCAG 2.2.2);
+  motion respects <code>prefers-reduced-motion</code>.</li>
+<li><strong>Markup</strong>: <code>LiveBlogPosting</code> for text coverage; <code>BroadcastEvent</code> for any live video.</li>
+<li><strong>Stats panel</strong>: possession, shots, xG, passes from the licensed provider; until then, the inert
+  panel the prototype shows.</li>
+</ul>
+<h2 id="6-state-and-interaction">6. State and interaction</h2>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>Behaviour</th>
+<th>Implementation</th>
+<th>Without JavaScript</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Theme</td>
+<td><code>data-theme</code> on <code>&lt;html&gt;</code>, set early by an inline script from <code>localStorage</code></td>
+<td>follows the system</td>
+</tr>
+<tr>
+<td>Table sort</td>
+<td>buttons in headers; <code>aria-sort</code>; a polite live region announces the order</td>
+<td>table in rank order</td>
+</tr>
+<tr>
+<td>Overall / home / away</td>
+<td>three tables, one shown</td>
+<td>overall shown</td>
+</tr>
+<tr>
+<td>All columns (phones)</td>
+<td>toggles <code>.is-full</code> on the table box</td>
+<td>compact table</td>
+</tr>
+<tr>
+<td>League filter (scores)</td>
+<td>shows one league's block</td>
+<td>all leagues shown</td>
+</tr>
+<tr>
+<td>Load more (analysis)</td>
+<td>reveals the next items; focus moves to the first new one</td>
+<td>first five shown; the rest are also on the home page and hubs</td>
+</tr>
+<tr>
+<td>More sheet</td>
+<td>dialog; focus in, Escape out, focus returned</td>
+<td>the footer holds the same links</td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="7-seo-and-urls">7. SEO and URLs</h2>
+<p>Readable, stable paths: <code>/stats/premier-league.html</code>, <code>/world-cup-2026/final.html</code>,
+<code>/analysis/&lt;slug&gt;.html</code>. Titles lead with the subject and end "— gameformative". Production adds
+canonical URLs, an XML sitemap, and <code>LiveBlogPosting</code> / <code>BroadcastEvent</code> markup on live pages.</p>
+<h2 id="8-performance">8. Performance</h2>
+<p>No images; covers are inline SVG under 2 kB each; one font family (one request); 36 kB CSS, 6 kB
+JS, both cacheable and versioned. Production: self-host and subset the font, inline critical CSS,
+pre-compress, CDN.</p>
+<h2 id="9-operations">9. Operations</h2>
+<p>The gate runs before every publish. Data refresh is a scripted pipeline; a failing assert stops
+publication and names the competition and the check that failed. Corrections are logged with date
+and text. Source files are kept by input hash, so any published table can be rebuilt exactly.</p>
+<footer>gameformative.com · project documentation, 2026</footer></div></body></html>

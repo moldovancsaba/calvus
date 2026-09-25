@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Token map — prototype to production · gameformative</title><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&display=swap"><link rel="stylesheet" href="../assets/tokens.css"><style>/* gameformative — project documentation on the project's own tokens (../assets/tokens.css): off-white ground, Archivo, one blue, one orange. */
+body{margin:0;background:var(--gf-ground);color:var(--gf-text);font-family:var(--gf-font);font-size:16.5px;line-height:1.62;padding:0 clamp(16px,4vw,40px) 64px;font-variant-numeric:tabular-nums}
+*{box-sizing:border-box}.wrap{max-width:80ch;margin:0 auto}
+.docnav{display:flex;flex-wrap:wrap;gap:0 14px;align-items:center;padding:10px 0;border-bottom:3px solid var(--gf-ink);font-size:13.5px}
+.docnav a{color:var(--gf-blue);text-decoration:none;min-height:44px;min-width:44px;justify-content:center;display:inline-flex;align-items:center;font-weight:600}
+.docnav a[aria-current]{box-shadow:inset 0 -3px 0 var(--gf-orange)}
+.docnav-brand{font-weight:800;font-stretch:72%;font-size:20px;color:var(--gf-ink);margin-right:8px}
+.docnav-brand b{font-weight:900}
+header .eyebrow{margin:28px 0 4px;font-size:12px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--gf-blue)}
+h1{font-stretch:72%;font-weight:800;font-size:clamp(34px,6vw,52px);line-height:1.04;margin:0 0 16px;color:var(--gf-ink);letter-spacing:-.01em}
+h2{font-stretch:80%;font-weight:800;font-size:28px;line-height:1.1;margin:44px 0 10px;padding-top:12px;border-top:3px solid var(--gf-ink);color:var(--gf-ink)}
+h3{font-weight:750;font-size:18px;margin:26px 0 8px;color:var(--gf-ink)}h4{font-size:16px;margin:20px 0 6px;color:var(--gf-ink)}
+p{margin:0 0 12px}li{margin:4px 0}p,li,td,dd{overflow-wrap:anywhere}strong{font-weight:750;color:var(--gf-ink)}em{color:var(--gf-muted)}a{color:var(--gf-blue);overflow-wrap:anywhere}
+code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.84em;background:var(--gf-blue-soft);padding:1px 5px;border-radius:4px;overflow-wrap:anywhere}
+.tbl{overflow-x:auto;margin:12px 0 20px;border:1px solid var(--gf-line);border-radius:10px;background:var(--gf-surface)}
+table{border-collapse:collapse;width:100%;font-size:14px;min-width:560px}
+th{text-align:left;font-weight:800;background:var(--gf-sunk);padding:10px 12px;border-bottom:2px solid var(--gf-ink);font-size:11.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--gf-ink)}
+td{padding:9px 12px;border-top:1px solid var(--gf-line);vertical-align:top}
+pre{overflow-x:auto;padding:14px 16px;border:1px solid var(--gf-line);background:var(--gf-surface);border-radius:10px;font-size:12.5px;line-height:1.4}
+pre code{background:none;padding:0}
+blockquote{margin:14px 0;padding:12px 16px;border-left:4px solid var(--gf-orange);background:var(--gf-surface);border-radius:0 10px 10px 0}
+footer{margin-top:48px;padding-top:16px;border-top:1px solid var(--gf-line);font-size:12.5px;color:var(--gf-muted)}
+</style></head>
+<body><div class="wrap"><nav class="docnav" aria-label="Project documentation"><span class="docnav-brand">game<b>formative</b></span><a href="index.html">Overview</a><a href="brief.html">Brief</a><a href="research.html">Research</a><a href="source-register.html">Sources researched</a><a href="evidence.html">Evidence</a><a href="audit.html">Audit</a><a href="inputs.html">Inputs and gaps</a><a href="decisions.html">Decisions</a><a href="design.html">Design</a><a href="build-log.html">Build log</a><a href="gate.html">Gate</a><a href="asks.html">Asks</a><a href="ssot.html">SSOT</a><a href="architecture.html">Architecture</a><a href="technical-design.html">Technical design</a><a href="plan.html">Plan</a><a href="token-map.html" aria-current=page>Token map</a><a href="responsible-data.html">Responsible data</a><a href="presentation.html">Presentation</a><a href="../index.html">Prototype</a></nav>
+<header><p class="eyebrow">gameformative · project documentation</p><h1>Token map — prototype to production</h1></header>
+<p><em>Every token and component the prototype defines, and what it becomes in the real build. Written
+2026-09-25. The prototype's names (<code>--gf-*</code>, <code>.gf-*</code>) are the production names: nothing is renamed,
+so a developer can lift <code>tokens.css</code> as the design-token file.</em></p>
+<h2 id="tokens">Tokens</h2>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>Prototype token</th>
+<th>Production</th>
+<th>Note</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>--gf-ground</code>, <code>--gf-surface</code>, <code>--gf-sunk</code></td>
+<td><code>color.background.{page,surface,sunk}</code></td>
+<td>light and dark values as in <a href="design.html"><code>05-design.md</code></a></td>
+</tr>
+<tr>
+<td><code>--gf-ink</code>, <code>--gf-text</code>, <code>--gf-muted</code></td>
+<td><code>color.text.{strong,body,muted}</code></td>
+<td>contrast pairs gated</td>
+</tr>
+<tr>
+<td><code>--gf-line</code>, <code>--gf-line-strong</code></td>
+<td><code>color.border.{subtle,strong}</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>--gf-blue</code>, <code>--gf-blue-soft</code>, <code>--gf-on-blue</code></td>
+<td><code>color.brand.{base,soft,on}</code></td>
+<td>Form Blue</td>
+</tr>
+<tr>
+<td><code>--gf-orange</code>, <code>--gf-orange-soft</code>, <code>--gf-orange-ink</code>, <code>--gf-on-orange</code></td>
+<td><code>color.accent.{base,soft,text,on}</code></td>
+<td>Energy Orange</td>
+</tr>
+<tr>
+<td><code>--gf-draw</code>, <code>--gf-on-draw</code></td>
+<td><code>color.result.draw.{base,on}</code></td>
+<td>W uses brand, L uses accent</td>
+</tr>
+<tr>
+<td><code>--gf-band</code>, <code>--gf-on-band</code>, <code>--gf-band-muted</code></td>
+<td><code>color.band.{base,text,muted}</code></td>
+<td>the same in both themes</td>
+</tr>
+<tr>
+<td><code>--gf-focus</code></td>
+<td><code>color.focus</code></td>
+<td>3 px outline</td>
+</tr>
+<tr>
+<td><code>--gf-font</code></td>
+<td><code>font.family.base</code> (Archivo, self-hosted)</td>
+<td>ADR-05</td>
+</tr>
+<tr>
+<td><code>--gf-condensed</code> (72%), 85%, <code>--gf-wide</code> (100%)</td>
+<td><code>font.width.{display,headline,ui}</code></td>
+<td>the <code>wdth</code> axis</td>
+</tr>
+<tr>
+<td><code>--gf-radius</code>, <code>--gf-radius-sm</code>, <code>--gf-radius-pill</code></td>
+<td><code>radius.{md,sm,pill}</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>--gf-space</code> (8 px), <code>--gf-max</code> (1240 px), <code>--gf-tap</code> (44 px), <code>--gf-header</code> (60 px)</td>
+<td><code>space.base</code>, <code>layout.max</code>, <code>size.tap-min</code>, <code>size.header</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>--gf-shadow</code></td>
+<td><code>shadow.card</code></td>
+<td></td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="components">Components</h2>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>Prototype class</th>
+<th>Production component</th>
+<th>Data</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>.gf-header</code>, <code>.gf-nav</code>, <code>.gf-tabbar</code>, <code>.gf-sheet</code></td>
+<td>Header, Nav, TabBar, MoreSheet</td>
+<td>nav config</td>
+</tr>
+<tr>
+<td><code>.gf-strip</code>, <code>.gf-chip-match</code></td>
+<td>ScoreStrip (a live island in M3)</td>
+<td>latest round / live feed</td>
+</tr>
+<tr>
+<td><code>.gf-table</code> + <code>[data-views]</code> + <code>.gf-sort</code></td>
+<td>LeagueTable (views, sort, compact mode)</td>
+<td>table rows</td>
+</tr>
+<tr>
+<td><code>.gf-form</code></td>
+<td>FormGuide</td>
+<td>last five results</td>
+</tr>
+<tr>
+<td><code>.gf-stat</code>, <code>.gf-stats-row</code></td>
+<td>StatTile</td>
+<td>aggregate</td>
+</tr>
+<tr>
+<td><code>.gf-story-card</code>, <code>.gf-lead-story</code>, <code>.gf-list-item</code>, <code>.gf-cover</code></td>
+<td>StoryCard, LeadStory, StoryListItem, DataCover</td>
+<td>article + cover spec</td>
+</tr>
+<tr>
+<td><code>.gf-snap</code></td>
+<td>LeagueSnapshot</td>
+<td>top rows</td>
+</tr>
+<tr>
+<td><code>.gf-figure</code>, <code>.gf-bars</code>, <code>.gf-stack</code>, <code>.gf-cols</code>, <code>.gf-line</code>, <code>.gf-data</code></td>
+<td>ChartFigure with Bar, StackedBar, Column, Line and DataTable variants</td>
+<td>chart spec</td>
+</tr>
+<tr>
+<td><code>.gf-results</code></td>
+<td>ResultsList</td>
+<td>matches</td>
+</tr>
+<tr>
+<td><code>.gf-bracket</code>, <code>.gf-tie</code>, <code>.gf-groups</code></td>
+<td>Bracket, Tie, GroupTables</td>
+<td>knock-out tree, groups</td>
+</tr>
+<tr>
+<td><code>.gf-matchhead</code>, <code>.gf-timeline</code>, <code>.gf-lineups</code></td>
+<td>MatchHeader, EventTimeline (a <code>role="log"</code> live island in M3), Lineups</td>
+<td>match</td>
+</tr>
+<tr>
+<td><code>.gf-label</code> (+ <code>--explainer</code>, <code>--automated</code>, <code>--data</code>)</td>
+<td>ContentLabel</td>
+<td>article kind</td>
+</tr>
+<tr>
+<td><code>.gf-transparency</code>, <code>.gf-keyfacts</code></td>
+<td>HowThisWasMade, KeyNumbers</td>
+<td>article meta</td>
+</tr>
+<tr>
+<td><code>.gf-inert</code></td>
+<td>UnavailablePanel (disappears when the data exists)</td>
+<td>—</td>
+</tr>
+<tr>
+<td><code>.gf-band</code>, <code>.gf-signup</code></td>
+<td>Band, NewsletterSignup</td>
+<td>—</td>
+</tr>
+<tr>
+<td><code>.proto-banner</code></td>
+<td>removed at M1</td>
+<td>—</td>
+</tr>
+</tbody>
+</table></div>
+<footer>gameformative.com · project documentation, 2026</footer></div></body></html>

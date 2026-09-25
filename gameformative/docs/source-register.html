@@ -1,0 +1,1018 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Sources researched — the full register · gameformative</title><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&display=swap"><link rel="stylesheet" href="../assets/tokens.css"><style>/* gameformative — project documentation on the project's own tokens (../assets/tokens.css): off-white ground, Archivo, one blue, one orange. */
+body{margin:0;background:var(--gf-ground);color:var(--gf-text);font-family:var(--gf-font);font-size:16.5px;line-height:1.62;padding:0 clamp(16px,4vw,40px) 64px;font-variant-numeric:tabular-nums}
+*{box-sizing:border-box}.wrap{max-width:80ch;margin:0 auto}
+.docnav{display:flex;flex-wrap:wrap;gap:0 14px;align-items:center;padding:10px 0;border-bottom:3px solid var(--gf-ink);font-size:13.5px}
+.docnav a{color:var(--gf-blue);text-decoration:none;min-height:44px;min-width:44px;justify-content:center;display:inline-flex;align-items:center;font-weight:600}
+.docnav a[aria-current]{box-shadow:inset 0 -3px 0 var(--gf-orange)}
+.docnav-brand{font-weight:800;font-stretch:72%;font-size:20px;color:var(--gf-ink);margin-right:8px}
+.docnav-brand b{font-weight:900}
+header .eyebrow{margin:28px 0 4px;font-size:12px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--gf-blue)}
+h1{font-stretch:72%;font-weight:800;font-size:clamp(34px,6vw,52px);line-height:1.04;margin:0 0 16px;color:var(--gf-ink);letter-spacing:-.01em}
+h2{font-stretch:80%;font-weight:800;font-size:28px;line-height:1.1;margin:44px 0 10px;padding-top:12px;border-top:3px solid var(--gf-ink);color:var(--gf-ink)}
+h3{font-weight:750;font-size:18px;margin:26px 0 8px;color:var(--gf-ink)}h4{font-size:16px;margin:20px 0 6px;color:var(--gf-ink)}
+p{margin:0 0 12px}li{margin:4px 0}p,li,td,dd{overflow-wrap:anywhere}strong{font-weight:750;color:var(--gf-ink)}em{color:var(--gf-muted)}a{color:var(--gf-blue);overflow-wrap:anywhere}
+code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.84em;background:var(--gf-blue-soft);padding:1px 5px;border-radius:4px;overflow-wrap:anywhere}
+.tbl{overflow-x:auto;margin:12px 0 20px;border:1px solid var(--gf-line);border-radius:10px;background:var(--gf-surface)}
+table{border-collapse:collapse;width:100%;font-size:14px;min-width:560px}
+th{text-align:left;font-weight:800;background:var(--gf-sunk);padding:10px 12px;border-bottom:2px solid var(--gf-ink);font-size:11.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--gf-ink)}
+td{padding:9px 12px;border-top:1px solid var(--gf-line);vertical-align:top}
+pre{overflow-x:auto;padding:14px 16px;border:1px solid var(--gf-line);background:var(--gf-surface);border-radius:10px;font-size:12.5px;line-height:1.4}
+pre code{background:none;padding:0}
+blockquote{margin:14px 0;padding:12px 16px;border-left:4px solid var(--gf-orange);background:var(--gf-surface);border-radius:0 10px 10px 0}
+footer{margin-top:48px;padding-top:16px;border-top:1px solid var(--gf-line);font-size:12.5px;color:var(--gf-muted)}
+</style></head>
+<body><div class="wrap"><nav class="docnav" aria-label="Project documentation"><span class="docnav-brand">game<b>formative</b></span><a href="index.html">Overview</a><a href="brief.html">Brief</a><a href="research.html">Research</a><a href="source-register.html" aria-current=page>Sources researched</a><a href="evidence.html">Evidence</a><a href="audit.html">Audit</a><a href="inputs.html">Inputs and gaps</a><a href="decisions.html">Decisions</a><a href="design.html">Design</a><a href="build-log.html">Build log</a><a href="gate.html">Gate</a><a href="asks.html">Asks</a><a href="ssot.html">SSOT</a><a href="architecture.html">Architecture</a><a href="technical-design.html">Technical design</a><a href="plan.html">Plan</a><a href="token-map.html">Token map</a><a href="responsible-data.html">Responsible data</a><a href="presentation.html">Presentation</a><a href="../index.html">Prototype</a></nav>
+<header><p class="eyebrow">gameformative · project documentation</p><h1>Sources researched — the full register</h1></header>
+<p><em>Every source the research for gameformative touched on 2026-09-25, with what it contributed. The
+synthesis is <a href="research.html"><code>01-research.md</code></a>; the raw notes, fetch times and measurements are <a href="evidence.html"><code>01b-evidence.md</code></a>.</em></p>
+<p><strong>How to read the status column.</strong>
+<strong>Measured</strong> — the page was fetched with <code>curl</code> (desktop Chrome user agent, from Hungary) and its
+HTML and CSS were counted by script. <strong>Opened</strong> — the page or document was read in full.
+<strong>Opened (secondary)</strong> — the primary was blocked, so a named news write-up of it was read instead.
+<strong>Blocked</strong> — the site refused the request (the reason is given). Nothing is said about its design.
+<strong>Snippet only</strong> — seen only in a search-result summary. Not relied on for any figure in the
+prototype or the presentation. <strong>Projection</strong> — a forecast by the named source, not a finding.</p>
+<p>All fetches were made from a single Hungarian connection, with no JavaScript run. A geo-edition,
+a consent pop-up or an advert added by script after page load is therefore not in these numbers.</p>
+<h2 id="1-the-global-sports-sites-the-owner-named">1. The global sports sites the owner named</h2>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>#</th>
+<th>Source</th>
+<th>Status</th>
+<th>What we learned</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>G1</td>
+<td>BBC Sport, <a href="https://www.bbc.com/sport">bbc.com/sport</a></td>
+<td>Measured 18:35 UTC</td>
+<td>React rendered on the server, all CSS inline; 682 kB HTML, 0.10 s to first byte. ReithSans/ReithSerif; light only (<code>color-scheme: only light</code>). The sport nav is Football, Cricket, F1, Rugby U, Tennis, Golf, Cycling, Athletics, More. No ad network in the HTML; a "Football Extra" newsletter block.</td>
+</tr>
+<tr>
+<td>G2</td>
+<td>BBC Sport, <a href="https://www.bbc.co.uk/sport">bbc.co.uk/sport</a></td>
+<td>Measured</td>
+<td>Not the same page as .com: a different global nav, and it supports dark mode (<code>light dark</code>, 398 custom properties). One brand can serve two editions with different theme support.</td>
+</tr>
+<tr>
+<td>G3</td>
+<td>ESPN, <a href="https://www.espn.com/">espn.com</a></td>
+<td><strong>Blocked</strong>: AWS WAF JavaScript challenge (HTTP 202)</td>
+<td>Nothing about its design. Its March 2026 brand system is covered from its own press room (T19, T20).</td>
+</tr>
+<tr>
+<td>G4</td>
+<td>NBA.com, <a href="https://www.nba.com/">nba.com</a></td>
+<td>Measured</td>
+<td>Next.js; the slowest first byte of the set, 5.1 s cold. Has a score strip, and a nav led by Games, Schedule, Watch, News, then Stats, Standings, Teams, Players, Fantasy. Fonts: Roboto family, Knockout, Action NBA Cond. <code>user-scalable=no</code> blocks pinch-zoom, an accessibility failure we avoid.</td>
+</tr>
+<tr>
+<td>G5</td>
+<td>FIFA, <a href="https://www.fifa.com/en">fifa.com/en</a></td>
+<td>Measured, but only an empty page</td>
+<td>Renders entirely in the browser (an empty <code>#root</code>), so its nav and structure could not be read. theme-color <code>#020F2A</code>. Fonts: FIFASans, Poppins, Noto Sans, and the P26 family from widths ultra-condensed to expanded.</td>
+</tr>
+<tr>
+<td>G6</td>
+<td>FIFA theme palette API (<code>cxm-api.fifa.com/…/themePalette</code>)</td>
+<td>Measured</td>
+<td>38 palette sets, each with light and dark tokens (brandPrimary <code>#0a84ff</code>, textDefault <code>#03122B</code>). A large sports brand tokenises both themes, as we do.</td>
+</tr>
+<tr>
+<td>G7</td>
+<td>The Athletic, <a href="https://www.nytimes.com/athletic/">nytimes.com/athletic</a></td>
+<td><strong>Blocked</strong>: DataDome captcha (HTTP 403)</td>
+<td>Nothing about its design or paywall. Its business results are in I27 and I28.</td>
+</tr>
+<tr>
+<td>G8</td>
+<td>Sky Sports, <a href="https://www.skysports.com/">skysports.com</a></td>
+<td>Measured</td>
+<td>Server-rendered; 0.11 s to first byte. A 2026 brand font plus a face per sport. Sections: Top Stories, <strong>Live Sport</strong>, Latest News, <strong>Watch</strong>, Pundits. An Opta widget font variable, Sourcepoint consent, Outbrain. The nav lists 15 sports.</td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="2-which-sites-are-the-top-ones-rankings-by-country">2. Which sites are the top ones — rankings by country</h2>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>#</th>
+<th>Source</th>
+<th>Status</th>
+<th>What we learned</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>R1</td>
+<td>Similarweb, Top Sports Websites Germany, Aug 2026</td>
+<td>Opened (top 5 without login)</td>
+<td>1 kicker.de, 2 transfermarkt.de, 3 sportschau.de, 4 sport1.de.</td>
+</tr>
+<tr>
+<td>R2</td>
+<td>Semrush, Most visited sports websites Germany, Aug 2026</td>
+<td>Opened</td>
+<td>Same order as R1, with visits: kicker 77.67M, transfermarkt 51.83M, sportschau 20.03M, sport1 11.23M, sport.de 10.56M. Two independent panels agree.</td>
+</tr>
+<tr>
+<td>R3</td>
+<td>IVW via sportjournalist.de, 12 May 2025</td>
+<td>Opened</td>
+<td>kicker had 246M visits (April 2025). Sport1 left IVW on 31 Mar 2025, so IVW no longer compares the field.</td>
+</tr>
+<tr>
+<td>R4</td>
+<td>Similarweb, Top Sports Websites India, Aug 2026</td>
+<td>Opened</td>
+<td>1 cricbuzz, 2 cricinfo, 3 a betting/fantasy site, 4 espncricinfo. Cricket dominates.</td>
+</tr>
+<tr>
+<td>R5</td>
+<td>Similarweb, cricbuzz competitors, Aug 2026</td>
+<td>Opened</td>
+<td>India country rank: cricbuzz #26, cricinfo #27, espncricinfo #312, NDTV Sports #856.</td>
+</tr>
+<tr>
+<td>R6</td>
+<td>Semrush, India sports, Aug 2026</td>
+<td>Opened</td>
+<td>Disagrees with R4: thehindu.com (whole domain) and sportskeeda first, with no cricbuzz. Panels differ, and we say so.</td>
+</tr>
+<tr>
+<td>R7</td>
+<td>Comscore "Sports Highlights on Digital 2025 – India", via passionateinmarketing.com</td>
+<td><strong>Blocked</strong> (403); snippet only</td>
+<td>Cricbuzz #1 with 53M unique visitors. Not used as a figure.</td>
+</tr>
+<tr>
+<td>R8</td>
+<td>afaqs, 5 Apr 2021 (Comscore)</td>
+<td>Opened</td>
+<td>Sportskeeda was #2 in India during IPL 2020. Old context only.</td>
+</tr>
+<tr>
+<td>R9</td>
+<td>Similarweb, sportskeeda.com, Aug 2026</td>
+<td>Opened</td>
+<td>The US is its top country (36.81%), India 8.13%. That explains why it served us its US edition.</td>
+</tr>
+<tr>
+<td>R10</td>
+<td>Similarweb <code>top-websites/china/sports/</code></td>
+<td>Opened</td>
+<td>Has no China list; the URL serves the worldwide list.</td>
+</tr>
+<tr>
+<td>R11</td>
+<td>Similarweb competitor pages (dongqiudi, sina sports), Aug 2026</td>
+<td>Opened</td>
+<td>China ranks: hupu #28, zhibo8 #62, dongqiudi #628, sports.qq #975, sina sports #1,838.</td>
+</tr>
+<tr>
+<td>R12</td>
+<td>Chinaz 体育综合 ranking, 20 Sep 2026</td>
+<td>Opened</td>
+<td>An SEO score, not traffic: hupu, CCTV sport, sina, sohu, 163, qq.</td>
+</tr>
+<tr>
+<td>R13</td>
+<td>Maigoo brand list, 11 Jun 2026</td>
+<td>Opened</td>
+<td>An editorial index of apps and platforms (CCTV Sports, Migu, Tencent Sports, iQiyi, Dongqiudi, Hupu). Shows China's sport is app-first.</td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="3-germany-india-china-the-sites-measured">3. Germany, India, China — the sites measured</h2>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>#</th>
+<th>Site</th>
+<th>Status</th>
+<th>What we learned</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>DE1</td>
+<td>kicker.de</td>
+<td><strong>Blocked</strong>: DataDome (403)</td>
+<td>The top German site could not be seen. sport.de (#5) was measured instead.</td>
+</tr>
+<tr>
+<td>DE2</td>
+<td>transfermarkt.de</td>
+<td>Measured</td>
+<td>Data-first: "Tabelle" appears 183 times; nav includes Marktwerte, Wettbewerbe, Statistiken. Sourcepoint consent, with "Pur-Abo" pay-or-consent. Oswald and Source Sans variable fonts. Betting (Sportwetten) in the nav.</td>
+</tr>
+<tr>
+<td>DE3</td>
+<td>sportschau.de</td>
+<td>Measured</td>
+<td>Public broadcaster: no ad or consent vendor. The fastest cold first byte of all, 0.074 s. The richest JSON-LD (32 NewsArticle). The only regional site with dark mode (a system setting or a cookie). Nav led by <strong>Live &amp; Ergebnisse</strong>; "live-ticker" appears 93 times.</td>
+</tr>
+<tr>
+<td>DE4</td>
+<td>sport1.de</td>
+<td>Measured</td>
+<td>WordPress and React, 78 scripts. Nav: Heute Live, Wetten &amp; Spiele. Barlow font.</td>
+</tr>
+<tr>
+<td>DE5</td>
+<td>sport.de</td>
+<td>Measured</td>
+<td>977 links on the home page; "Liveticker" appears 89 times. A 30-plus-sport A–Z nav. Titillium Web; theme-color <code>#1c1c1c</code>; bookmakers ("Wettanbieter") in the nav.</td>
+</tr>
+<tr>
+<td>IN1</td>
+<td>cricbuzz.com</td>
+<td>Measured</td>
+<td>Next.js. The first screen after the nav is a match carousel with live and finished scores. Nav: Live Scores, Schedule, Archives, News, Series, Teams, Videos, Rankings. Inter font. <code>user-scalable=no</code>.</td>
+</tr>
+<tr>
+<td>IN2</td>
+<td>espncricinfo.com, IN3 cricinfo.com, IN4 sports.ndtv.com</td>
+<td><strong>Blocked</strong>: Akamai "Access Denied" (403)</td>
+<td>Not described.</td>
+</tr>
+<tr>
+<td>IN5</td>
+<td>sportskeeda.com</td>
+<td>Measured — <strong>US edition served</strong></td>
+<td>NFL/NBA/MLB nav from our location, so its India layout was not observed. Inter and Barlow Condensed.</td>
+</tr>
+<tr>
+<td>IN6</td>
+<td>sportstar.thehindu.com</td>
+<td>Measured</td>
+<td>Bootstrap; "scorecard" appears 95 times, "matchcenter" 27; a Statsman stats column; Piano paywall; Taboola.</td>
+</tr>
+<tr>
+<td>IN7</td>
+<td>timesofindia.indiatimes.com/sports</td>
+<td>Measured</td>
+<td>Cricket-first nav (Cricket, Asian Games T20, IND vs AFG, Live Cricket Score). Rethink Sans; theme-color <code>#af2c2c</code>.</td>
+</tr>
+<tr>
+<td>CN1</td>
+<td>hupu.com</td>
+<td>Measured</td>
+<td>China rank #28. Opens with a CBA/NBA fixture strip; community ("步行街") is central. No <code>lang</code> attribute, no viewport: a desktop-only page. System CJK fonts.</td>
+</tr>
+<tr>
+<td>CN2</td>
+<td>zhibo8.com</td>
+<td>Measured</td>
+<td>The densest portal: 2,064 links, 34.9 per 10 kB. "直播" (live) appears 185 times and "比分" (scores) 59. 1.39 s cold first byte (served from China).</td>
+</tr>
+<tr>
+<td>CN3</td>
+<td>dongqiudi.com</td>
+<td>Measured</td>
+<td>App-first (Nuxt): only 45 links. Opens with "today's important matches" and scores; asks visitors to download the app via a QR code.</td>
+</tr>
+<tr>
+<td>CN4</td>
+<td>sports.qq.com</td>
+<td>Measured</td>
+<td>A Vue app shell with 14 links. DINPro and Blender Pro set only the numerals: a separate numeric face for scores.</td>
+</tr>
+<tr>
+<td>CN5</td>
+<td>sports.sina.com.cn</td>
+<td>Measured</td>
+<td>The sport channel sits inside a general portal; 935 links. Element UI palette.</td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="4-statistics-and-analytics-sites">4. Statistics and analytics sites</h2>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>#</th>
+<th>Site</th>
+<th>Status</th>
+<th>What we learned</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ST1</td>
+<td>fbref.com</td>
+<td><strong>Blocked</strong>: Cloudflare challenge (403)</td>
+<td>Not described.</td>
+</tr>
+<tr>
+<td>ST2</td>
+<td>theanalyst.com (Opta Analyst)</td>
+<td>Measured</td>
+<td>WordPress. Purple, magenta and orange; Big Shoulders Text and Lora; no dark mode. The Opta brand is itself the attribution. Content: Supercomputer predictions, Expected Points table, Power Rankings, FPL. Its tables render in the browser (0 in the HTML).</td>
+</tr>
+<tr>
+<td>ST3</td>
+<td>sofascore.com</td>
+<td><strong>Blocked</strong>: JSON 403 from Varnish</td>
+<td>Not described.</td>
+</tr>
+<tr>
+<td>ST4</td>
+<td>fotmob.com</td>
+<td>Measured</td>
+<td>Next.js; dark mode; Inter. xG leaderboards, decimal player ratings, shot maps, percentile bars, heatmaps. <strong>No data provider credited anywhere</strong>, the opposite of what we do.</td>
+</tr>
+<tr>
+<td>ST5</td>
+<td>basketball-reference.com</td>
+<td>Measured</td>
+<td>Server-rendered with system fonts. 50 sortable tables with glossary tooltips; "Data Provided By Sportradar" with a logo. The model for dense, citable tables.</td>
+</tr>
+<tr>
+<td>ST6</td>
+<td>understat.com</td>
+<td>Measured</td>
+<td>Dark by default. xG, NPxG, PPDA and xPTS in its table; CSV, JSON and XLSX export.</td>
+</tr>
+<tr>
+<td>ST7</td>
+<td>statmuse.com</td>
+<td>Measured</td>
+<td>Astro; dark mode with a toggle; plain-English question search; a Data &amp; Glossary page; a betting ("Money") section.</td>
+</tr>
+<tr>
+<td>ST8</td>
+<td>whoscored.com</td>
+<td><strong>Blocked</strong>: Cloudflare block page (403)</td>
+<td>Not described.</td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="5-the-industry-size-audience-business-ai">5. The industry — size, audience, business, AI</h2>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>#</th>
+<th>Source</th>
+<th>Status</th>
+<th>What we learned</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>I1</td>
+<td>SportsPro, 2 Feb 2026 (Ampere data)</td>
+<td>Opened (secondary)</td>
+<td><strong>Projection:</strong> streamers will spend US$14.2bn on sports rights in 2026, 7% more than 2025. Prime Video's share is US$3.8bn (27%).</td>
+</tr>
+<tr>
+<td>I2</td>
+<td>IBC, 26 Nov 2025 (Ampere)</td>
+<td>Opened (secondary)</td>
+<td><strong>Projection:</strong> rights spend reaches $78bn by 2030. Whether that is global is unclear in the text, so it is not used as a headline figure. US spend was $30.5bn in 2025.</td>
+</tr>
+<tr>
+<td>I3</td>
+<td>Ampere Analysis, the article itself</td>
+<td>Opened, no body returned</td>
+<td>Nothing.</td>
+</tr>
+<tr>
+<td>I4</td>
+<td>Consultancy.uk, 13 May 2026 (PwC Global Sports Survey 2026)</td>
+<td>Opened (secondary)</td>
+<td>Executives expect 7.4% annual growth; media rights 5.1% (down from 6.1%). 18–34s favour social highlights and creator-led content.</td>
+</tr>
+<tr>
+<td>I5</td>
+<td>PwC primary pages (pwc.co.uk, pwc.ch)</td>
+<td><strong>Blocked</strong> (403)</td>
+<td>Not read.</td>
+</tr>
+<tr>
+<td>I6</td>
+<td>PwC sponsorship/ticketing rates, sample size</td>
+<td>Snippet only</td>
+<td>Not used.</td>
+</tr>
+<tr>
+<td>I7</td>
+<td>Deloitte 2026 Global Sports Industry Outlook, 17 Feb 2026</td>
+<td>Opened</td>
+<td>Media rights "continue to climb". Women's commercial revenue is growing at double digits. AI as the "connective engine". <strong>Projection:</strong> 20 stadiums open in 2027.</td>
+</tr>
+<tr>
+<td>I8</td>
+<td>Statista, sports media rights by region 2025–2030</td>
+<td>Opened; figures paywalled</td>
+<td>Only confirms that the Ampere series exists.</td>
+</tr>
+<tr>
+<td>I9</td>
+<td>Statista, 2023 rights value</td>
+<td>Snippet only</td>
+<td>Not used.</td>
+</tr>
+<tr>
+<td>I10</td>
+<td>Stats Perform, Opta Pulse launch, 12 May 2026</td>
+<td>Opened</td>
+<td>Highlights produced "up to 80% faster": automation is the industry's direction.</td>
+</tr>
+<tr>
+<td>I11</td>
+<td><strong>Reuters Institute Digital News Report 2026</strong>, full PDF, 16 Jun 2026</td>
+<td>Opened in full</td>
+<td>Social and video networks (54%) now beat publishers' own sites and apps (51%) for news. 10% use AI chatbots for news weekly. Trust 37%; 17% pay. <strong>The report has no finding specific to sport</strong>, and we attribute none to it.</td>
+</tr>
+<tr>
+<td>I12</td>
+<td>Reuters Institute DNR 2025, executive summary</td>
+<td>Opened</td>
+<td>27% want AI summaries of articles. Social video news use rose from 52% (2020) to 65%.</td>
+</tr>
+<tr>
+<td>I13</td>
+<td>Reuters Institute, Generative AI and News Report 2025, 7 Oct 2025</td>
+<td>Opened</td>
+<td>12% are comfortable with fully AI-made news, against 62% for human-made. Hence our human-written copy, labelled automation and named editorial responsibility.</td>
+</tr>
+<tr>
+<td>I14</td>
+<td>Stats Perform, About Opta Analyst</td>
+<td>Opened</td>
+<td>Opta Analyst has about 1 million monthly visitors and 55,000 newsletter subscribers. A benchmark for a stats-led publication.</td>
+</tr>
+<tr>
+<td>I15</td>
+<td>Stats Perform on xG</td>
+<td>Opened</td>
+<td>xG is used by commentators, fantasy platforms and sportsbooks. It is the metric fans now expect, and it needs licensed data.</td>
+</tr>
+<tr>
+<td>I16</td>
+<td>Stats Perform, Automated Insights</td>
+<td>Opened</td>
+<td>Sells automated previews and recaps, with no statement on human review.</td>
+</tr>
+<tr>
+<td>I17</td>
+<td>Advanced Television / Nielsen, 1 May 2026 (second screen)</td>
+<td>Snippet only</td>
+<td>Not used.</td>
+</tr>
+<tr>
+<td>I18</td>
+<td>Nielsen, Tops of Sports (for 2026)</td>
+<td>Opened</td>
+<td>37% of the US population expected more interest in the 2026 World Cup.</td>
+</tr>
+<tr>
+<td>I19</td>
+<td>Nielsen, Global Sports Report 2025</td>
+<td>Opened</td>
+<td>51% of people globally are football fans. Football is the right first sport.</td>
+</tr>
+<tr>
+<td>I20</td>
+<td>Market-size vendors (Grand View and others)</td>
+<td>Snippet only</td>
+<td>Paid-report estimates; not cited.</td>
+</tr>
+<tr>
+<td>I21</td>
+<td>FSGA industry research</td>
+<td>Opened; figures members-only</td>
+<td>Nothing usable.</td>
+</tr>
+<tr>
+<td>I22</td>
+<td>Similarweb, platforms page, Aug 2026</td>
+<td>Opened</td>
+<td>66.55% of all web traffic worldwide is mobile. This is not sports-specific.</td>
+</tr>
+<tr>
+<td>I23</td>
+<td>Similarweb, Top Sports Websites (worldwide), Aug 2026</td>
+<td>Opened</td>
+<td>1 espn, 2 marca, 3 cricbuzz, 4 cricinfo, 5 mlb. No device split.</td>
+</tr>
+<tr>
+<td>I24</td>
+<td>Similarweb, fotmob.com and espn.com</td>
+<td>Opened</td>
+<td>FotMob: 26.9M visits over 3 months, 72.9% direct traffic. ESPN: 518.7M visits over 3 months. No device split.</td>
+</tr>
+<tr>
+<td>I25</td>
+<td>ESPN desktop/mobile share</td>
+<td>Snippet only, internally inconsistent</td>
+<td>Not used.</td>
+</tr>
+<tr>
+<td>I26</td>
+<td>TheNextWeb, 6 Aug 2026 (NYT Q2 2026)</td>
+<td>Opened (secondary)</td>
+<td>13.4M digital subscribers; The Athletic is sold inside a bundle; AI search summaries are reducing referral traffic.</td>
+</tr>
+<tr>
+<td>I27</td>
+<td>Nieman Lab, 5 Nov 2024</td>
+<td>Opened</td>
+<td>The Athletic's first quarterly profit was $2.6m.</td>
+</tr>
+<tr>
+<td>I28</td>
+<td>Axios on The Athletic; Yahoo Finance summaries</td>
+<td><strong>Blocked</strong> (403) / snippet only</td>
+<td>Not used.</td>
+</tr>
+<tr>
+<td>I29</td>
+<td>Deloitte UK, women's elite sport, 8 Apr 2026</td>
+<td>Opened</td>
+<td><strong>Projection:</strong> US$3bn revenue in 2026, up 340% since 2022. A clear expansion path; the prototype has no women's data yet (gap 7 in <a href="inputs.html"><code>03-sources.md</code></a>).</td>
+</tr>
+<tr>
+<td>I30</td>
+<td>Nielsen, Women &amp; Sports 2026</td>
+<td>Opened</td>
+<td>46bn minutes of women's sport watched in 2025, 71% more than in 2022.</td>
+</tr>
+<tr>
+<td>I31</td>
+<td>Nielsen/PepsiCo on women's football by 2030</td>
+<td>Snippet only (projection)</td>
+<td>Not used.</td>
+</tr>
+<tr>
+<td>I32</td>
+<td>Awful Announcing, 14 Oct 2025</td>
+<td>Opened</td>
+<td>MLS published AI recaps "not reviewed by editorial staff" and was criticised for thin copy.</td>
+</tr>
+<tr>
+<td>I33</td>
+<td>Front Office Sports, 5 Sep 2024</td>
+<td>Opened</td>
+<td>ESPN's AI recaps carried factual errors. Lesson: automation is labelled and reviewed.</td>
+</tr>
+<tr>
+<td>I34</td>
+<td>Gannett/LedeAI recaps, 2023</td>
+<td>Snippet only</td>
+<td>Not used.</td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="6-open-data-what-the-prototype-may-legally-use">6. Open data — what the prototype may legally use</h2>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>#</th>
+<th>Source</th>
+<th>Status</th>
+<th>What we learned</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>O1</td>
+<td><a href="https://github.com/openfootball/football.json">openfootball/football.json</a></td>
+<td>Opened; licence and files read</td>
+<td><strong>CC0 1.0</strong>: "Use as you please with no restrictions whatsoever". 2025/26 complete (23 league files), 2026/27 in progress (8 files). Results, plus goals and line-ups in the "-full" files; no xG. <strong>The prototype's data source.</strong></td>
+</tr>
+<tr>
+<td>O2</td>
+<td><a href="https://github.com/openfootball/worldcup.json">openfootball/worldcup.json</a></td>
+<td>Opened</td>
+<td>CC0 1.0. The 2026 file has all 104 matches with results; the "-full" file adds scorers, line-ups, substitutions and attendance.</td>
+</tr>
+<tr>
+<td>O3</td>
+<td>StatsBomb open data and its LICENSE.pdf (8 Sep 2023)</td>
+<td>Opened</td>
+<td>No redistribution and no commercial use ("commercially exploit the data or any analysis derived…"). <strong>Not usable on a public or monetised site.</strong></td>
+</tr>
+<tr>
+<td>O4</td>
+<td>NBA.com Terms of Use (13 Jul 2026)</td>
+<td>Opened</td>
+<td>Statistics are limited to news reporting or non-commercial use, with no betting or fantasy use. <strong>Not usable as a data source.</strong></td>
+</tr>
+<tr>
+<td>O5</td>
+<td>nflverse/nflverse-data</td>
+<td>Opened (API metadata only)</td>
+<td>GitHub lists it as CC-BY-4.0. Each dataset's terms need checking before NFL is added.</td>
+</tr>
+<tr>
+<td>O6</td>
+<td>chadwickbureau/baseballdatabank; jalapic/engsoccerdata</td>
+<td>Opened; no licence confirmed</td>
+<td>Not used.</td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="7-colour-and-design-forecasts-sports-identities">7. Colour and design forecasts, sports identities</h2>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>#</th>
+<th>Source</th>
+<th>Status</th>
+<th>What we learned</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>T1</td>
+<td>Pantone, Color of the Year 2026 press release, 4 Dec 2025</td>
+<td>Opened</td>
+<td><strong>Cloud Dancer</strong> (11-4201), "a billowy white" and a "structural anchor". It informed our warm off-white ground.</td>
+</tr>
+<tr>
+<td>T2</td>
+<td>Pantone, Color of the Year 2026 page</td>
+<td>Opened</td>
+<td>No hex given. <strong>The 2027 colour is not announced</strong> (it normally comes in early December).</td>
+</tr>
+<tr>
+<td>T3</td>
+<td>Young House Love, 2027 paint colours, updated 16 Sep 2026</td>
+<td>Opened</td>
+<td>Paint brands' 2027 picks lean earthy and muted. Consumer paint, not a web forecast.</td>
+</tr>
+<tr>
+<td>T4</td>
+<td>WGSN, Colour of the Year 2026: Transformative Teal, 3 Sep 2024</td>
+<td>Opened</td>
+<td>Dark blue fused with aqua green.</td>
+</tr>
+<tr>
+<td>T5</td>
+<td>WGSN, Key Colours A/W 26/27, 7 Oct 2024</td>
+<td>Opened</td>
+<td>Transformative Teal, Wax Paper, Fresh Purple, Cocoa Powder, Green Glow.</td>
+</tr>
+<tr>
+<td>T6</td>
+<td><strong>WGSN × Coloro, Colour of the Year 2027, 29 Apr 2025</strong></td>
+<td>Opened — <strong>projection</strong></td>
+<td><strong>Luminous Blue</strong> (125-28-38); S/S 27 key colours are Energy Orange, Pop Pink, Meadowland Green and Clay. The basis of our blue and orange (our own sRGB readings; no hex is published).</td>
+</tr>
+<tr>
+<td>T7</td>
+<td>FashionUnited, A/W 27/28 key colours, 17 Sep 2025</td>
+<td>Opened — projection</td>
+<td>Russet, Peaceful Lilac, Maize, Deep Green.</td>
+</tr>
+<tr>
+<td>T8</td>
+<td>Adobe Express, Top 10 graphic design trends 2026, 12 Dec 2025</td>
+<td>Opened</td>
+<td>Oversized playful type, saturated palettes, tactile texture, freeform editorial layouts.</td>
+</tr>
+<tr>
+<td>T9</td>
+<td>Figma, Top Web Design Trends 2026</td>
+<td>Opened</td>
+<td><strong>Dark mode as a standard feature</strong>, bold and kinetic type, retrofuturism with neon accents, motion.</td>
+</tr>
+<tr>
+<td>T10</td>
+<td>Figma, State of the Designer 2026</td>
+<td>Opened; data gated</td>
+<td>Survey figures seen as snippet only; not used.</td>
+</tr>
+<tr>
+<td>T11</td>
+<td>Shutterstock, 2025 Creative Impact Report</td>
+<td>Opened</td>
+<td>No colour trends. Believability drops after three campaign messages.</td>
+</tr>
+<tr>
+<td>T12</td>
+<td>WebFX, "Web Design Trends in 2027", 10 Oct 2025</td>
+<td>Opened — projection (agency)</td>
+<td>Includes data-driven design, real-time content and dark mode.</td>
+</tr>
+<tr>
+<td>T13</td>
+<td>Graticle, "Way Too Early 2027 Web Design Predictions"</td>
+<td>Opened — projection (agency)</td>
+<td>"Proof of personhood" (signals that a human made it); personalised homepages.</td>
+</tr>
+<tr>
+<td>T14</td>
+<td>1000logos, FIFA World Cup 26 identity, 23 May 2023</td>
+<td>Opened</td>
+<td>The first emblem with a photographic trophy; 16 host-city colourways; a custom typeface with Noto Sans secondary.</td>
+</tr>
+<tr>
+<td>T15</td>
+<td>Pimp my Type, FIFA 2026 typography, 18 Jun 2026</td>
+<td>Opened</td>
+<td>Ultra-condensed black type breaks down at small UI sizes. <strong>Use condensed type for display, wider cuts for UI</strong>, which is exactly our type rule.</td>
+</tr>
+<tr>
+<td>T16</td>
+<td>Vasava, UEFA Champions League 24/27 rebrand</td>
+<td>Opened</td>
+<td>A prismatic "refracted" display face; "more colourful, bolder and younger".</td>
+</tr>
+<tr>
+<td>T17</td>
+<td>UEFA, 2024 final identity, 31 Aug 2023</td>
+<td>Opened</td>
+<td>A new artist-led identity for each final.</td>
+</tr>
+<tr>
+<td>T18</td>
+<td>Creative Bloq (Mutabor), Bundesliga identity, 16 Feb 2026</td>
+<td>Opened</td>
+<td>Moves from flat design to texture, 3D and a new "tape-like" font; "motion first".</td>
+</tr>
+<tr>
+<td>T19</td>
+<td>Marketing Brew, ESPN brand identity, 9 Mar 2026</td>
+<td>Opened</td>
+<td>ESPN's first formal guidelines. The custom "Ignite" face is slanted 7°. <strong>One red chosen for accessibility and digital visibility.</strong></td>
+</tr>
+<tr>
+<td>T20</td>
+<td>ESPN Press Room, 27 Mar 2026</td>
+<td>Opened</td>
+<td>The "speedline" motion device; a system built from phone icon to billboard.</td>
+</tr>
+<tr>
+<td>T21</td>
+<td>Design Week, Sky Sports redesign, 15 Oct 2025</td>
+<td>Opened</td>
+<td>One five-weight custom face replaced six sport fonts; "live is still king".</td>
+</tr>
+<tr>
+<td>T22</td>
+<td>Premier League, digital relaunch, 1 Jul 2025</td>
+<td>Opened</td>
+<td>Matchday Live, vertical Matchday Stories, personalisation, an AI assistant over 30+ seasons of data.</td>
+</tr>
+<tr>
+<td>T23</td>
+<td>Sports Video Group, NBA on NBC/Peacock, 21 Oct 2025</td>
+<td>Opened</td>
+<td>Live data overlays, "Key Play Catch-Up", vertical highlights.</td>
+</tr>
+<tr>
+<td>T24</td>
+<td>ScoreVision, sports graphics trends 2025–26, 6 Aug 2025</td>
+<td>Opened</td>
+<td>Bold condensed type for screens; neon and glow accents for stats.</td>
+</tr>
+<tr>
+<td>T25</td>
+<td>NewscastStudio (ESPN college football), Design Week (FIFA)</td>
+<td><strong>Blocked</strong> (403)</td>
+<td>Not used.</td>
+</tr>
+<tr>
+<td>T26</td>
+<td>Tottenham variable font; Premier League 2016 identity details</td>
+<td>Snippet only</td>
+<td>Not used.</td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="8-standards-and-best-practice">8. Standards and best practice</h2>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>#</th>
+<th>Source</th>
+<th>Status</th>
+<th>What we learned</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>S1</td>
+<td>web.dev, Web Vitals (updated 31 Oct 2024)</td>
+<td>Opened</td>
+<td>LCP ≤ 2.5 s, INP ≤ 200 ms, CLS ≤ 0.1, measured at the 75th percentile. Our performance budget.</td>
+</tr>
+<tr>
+<td>S2</td>
+<td>W3C, WCAG 2.2 (12 Dec 2024)</td>
+<td>Opened</td>
+<td>4.5:1 text contrast; 3:1 for UI and chart marks; colour never alone; reflow at 320 px; <strong>pause control for anything auto-updating over 5 s (score tickers)</strong>; focus not obscured by sticky headers; 24×24 minimum targets.</td>
+</tr>
+<tr>
+<td>S3</td>
+<td>W3C WAI, Understanding 2.4.13 Focus Appearance</td>
+<td>Opened</td>
+<td>It is AAA, not AA. We meet it anyway with a 3 px outline.</td>
+</tr>
+<tr>
+<td>S4</td>
+<td>W3C WAI, Understanding 2.5.8 Target Size</td>
+<td>Opened</td>
+<td>24×24 is the AA floor. We build 44×44 on phones.</td>
+</tr>
+<tr>
+<td>S5</td>
+<td>Apple Human Interface Guidelines, Accessibility</td>
+<td>Opened</td>
+<td>44×44 pt default touch target.</td>
+</tr>
+<tr>
+<td>S6</td>
+<td>Google Android Accessibility Help, touch targets</td>
+<td>Opened</td>
+<td>48×48 dp with 8 dp spacing.</td>
+</tr>
+<tr>
+<td>S7</td>
+<td>Nielsen Norman Group, hidden vs visible navigation, 24 Jul 2016</td>
+<td>Opened</td>
+<td>Visible navigation is found and used more than a hamburger menu. We use a visible tab bar on phones and a visible top nav on desktop.</td>
+</tr>
+<tr>
+<td>S8</td>
+<td>NNG, Basic Patterns for Mobile Navigation, 15 Nov 2015</td>
+<td>Opened</td>
+<td>A tab bar suits 4–5 items. Ours has five, the fifth being "More".</td>
+</tr>
+<tr>
+<td>S9</td>
+<td>NNG, Mobile Tables, 17 Sep 2017</td>
+<td>Opened</td>
+<td>Sticky header and first column, clear scroll cues, let users choose columns. We have a compact phone table with "All columns".</td>
+</tr>
+<tr>
+<td>S10</td>
+<td>NNG, Infinite Scrolling, 4 Sep 2022</td>
+<td>Opened</td>
+<td>"Load more" beats infinite scroll when users need the footer. We use "Load more" on the analysis index.</td>
+</tr>
+<tr>
+<td>S11</td>
+<td>NNG, Dark Mode vs Light Mode, 2 Feb 2020</td>
+<td>Opened</td>
+<td>Light performs better for most readers. Offer dark, don't force it. We follow the system setting, default light, with a toggle.</td>
+</tr>
+<tr>
+<td>S12</td>
+<td>Datawrapper, colours for colour-blind readers, 23 Jun 2020</td>
+<td>Opened</td>
+<td>Blue with orange is the safest pair; label directly; "get it right in black &amp; white". Our chart palette and direct labels.</td>
+</tr>
+<tr>
+<td>S13</td>
+<td>Okabe &amp; Ito, Color Universal Design</td>
+<td>Opened</td>
+<td>The standard colour-blind-safe palette (no hex in the text).</td>
+</tr>
+<tr>
+<td>S14</td>
+<td>W3C WAI, Complex Images tutorial (8 Apr 2026)</td>
+<td>Opened</td>
+<td>Every chart gets a text alternative and its data as a table. We have "Show the numbers as a table" on every chart.</td>
+</tr>
+<tr>
+<td>S15</td>
+<td>Financial Times, Visual Vocabulary</td>
+<td>Opened</td>
+<td>Choose the chart by the relationship shown: ranking → bars, change over time → lines, part-to-whole → stacked bars.</td>
+</tr>
+<tr>
+<td>S16</td>
+<td>MDN, <code>prefers-reduced-motion</code></td>
+<td>Opened</td>
+<td>Honoured site-wide.</td>
+</tr>
+<tr>
+<td>S17</td>
+<td>MDN, ARIA live regions</td>
+<td>Opened</td>
+<td>Scores in a polite, atomic live region; tickers are not live regions by default. Used for sort announcements now and specified for live scores.</td>
+</tr>
+<tr>
+<td>S18</td>
+<td>Bootstrap 5.3 and Tailwind breakpoints</td>
+<td>Opened</td>
+<td>Common breakpoints. Ours are 720 and 1000, plus reflow to 320.</td>
+</tr>
+<tr>
+<td>S19</td>
+<td>StatCounter, desktop vs mobile, Aug 2026</td>
+<td>Opened</td>
+<td>Worldwide, all web: mobile 49.36%, desktop 49.11%. Both widths matter.</td>
+</tr>
+<tr>
+<td>S20</td>
+<td>Reuters Institute DNR 2026 and 2025, executive summaries</td>
+<td>Opened</td>
+<td>See I11 and I12.</td>
+</tr>
+<tr>
+<td>S21</td>
+<td>Press Gazette / Reuters Institute on live blogs, 20 Jun 2013</td>
+<td>Opened (old data)</td>
+<td>Readers value visible corrections on live pages.</td>
+</tr>
+<tr>
+<td>S22</td>
+<td>schema.org LiveBlogPosting</td>
+<td>Opened</td>
+<td>Markup for the live match pages of the real build.</td>
+</tr>
+<tr>
+<td>S23</td>
+<td>Google Search Central, video structured data (24 Sep 2026)</td>
+<td>Opened</td>
+<td>BroadcastEvent gives a LIVE badge; Clip or SeekToAction give "key moments".</td>
+</tr>
+<tr>
+<td>S24</td>
+<td>Premier League, Match Centre explainer series, 21 Feb 2025</td>
+<td>Opened</td>
+<td>"Why did that happen" explainers as a format.</td>
+</tr>
+<tr>
+<td>S25</td>
+<td>Opta Analyst, football stats definitions, 23 Jul 2024</td>
+<td>Opened</td>
+<td>xG, xA, big chance and PPDA defined by the provider. A glossary names its provider because definitions differ.</td>
+</tr>
+<tr>
+<td>S26</td>
+<td>European Commission, "Safer and more transparent AI", 2 Aug 2026</td>
+<td>Opened</td>
+<td><strong>EU AI Act Article 50 applies from 2 Aug 2026.</strong></td>
+</tr>
+<tr>
+<td>S27</td>
+<td>European Commission FAQ, Article 50, 24 Jul 2026</td>
+<td>Opened</td>
+<td>Human review means "deliberate examination of the substance"; spell-checking does not count.</td>
+</tr>
+<tr>
+<td>S28</td>
+<td>Cooley, 3 Aug 2026</td>
+<td>Opened</td>
+<td>Guidelines adopted 20 Jul 2026. Fines up to €15m or 3% of turnover.</td>
+</tr>
+<tr>
+<td>S29</td>
+<td>WAN-IFRA Editors Weblog, 7 Jul 2026</td>
+<td>Opened</td>
+<td>The Digital Omnibus did not defer Article 50. Machine-readable marking has a grace period to 2 Dec 2026.</td>
+</tr>
+<tr>
+<td>S30</td>
+<td>artificialintelligenceact.eu, Article 50 text</td>
+<td>Opened</td>
+<td>50(4): AI-generated public-interest text must be disclosed unless human-reviewed under someone's editorial responsibility. Our automation policy.</td>
+</tr>
+<tr>
+<td>S31</td>
+<td>European Commission, Code of Practice on AI-generated content (final 10 Jun 2026)</td>
+<td>Opened</td>
+<td>There is a standard EU icon set for labelling.</td>
+</tr>
+<tr>
+<td>S32</td>
+<td>BBC Editorial Guidelines 3.4.34, Correcting Mistakes</td>
+<td>Measured (curl)</td>
+<td>Correct promptly, say what was wrong, keep a public corrections page. Our corrections policy.</td>
+</tr>
+<tr>
+<td>S33</td>
+<td>The Trust Project, Trust Indicators</td>
+<td>Opened</td>
+<td>Eight indicators, including the type of work (news, analysis, opinion) and actionable feedback. Our labels and the How we count page.</td>
+</tr>
+<tr>
+<td>S34</td>
+<td>Nieman Lab on the Guardian live-blog format; live-blog "difficult to understand" statistic</td>
+<td><strong>Blocked</strong> (403) / snippet only</td>
+<td>Not used.</td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="what-we-did-not-research-and-why">What we did not research, and why</h2>
+<ul>
+<li><strong>Paid panels</strong> (Similarweb Pro, Comscore, Nielsen full reports, Statista) are behind logins or
+  paywalls. Where only a summary was public, only the summary is used.</li>
+<li><strong>Rendered layouts of external sites</strong> were not captured. The owner declined opening external
+  sites in the in-app browser on 2026-09-25, so it was used only for the local prototype, and
+  everything in sections 1–4 comes from the HTML and CSS as served.
+  Computed colours, rendered layout and Core Web Vitals of those sites are therefore not measured.</li>
+<li><strong>Chinese mobile apps</strong>, where most of that market's sports consumption happens (R13, CN3), were
+  not examined; only their websites were.</li>
+</ul>
+<footer>gameformative.com · project documentation, 2026</footer></div></body></html>

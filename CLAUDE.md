@@ -15,7 +15,12 @@ Generators exist and must be re-run after editing their sources: `python3 holdvo
 figure of the IDBC guide comes from the sheet's `IDBCSYNC` tab and a GitHub Action runs this
 every 15 minutes; edit the sheet, never a marked text in the pages, or the next sync reverts it); and `python3 build-docs.py` at the
 root, which renders every project's documentation from markdown. `python3 check.py` at the
-root is the gate (it runs the four project gates and a repo-wide link audit).
+root is the gate (it runs every project gate and a repo-wide link audit).
+gameformative (added 2026-09-25) is generated too: `python3 gameformative/build.py` (pages, from
+`content.py` + `data/stats.json`), and `data/stats.json` only ever from `python3
+gameformative/data/convert.py` after `data/fetch.py` — never by hand. Its gate
+(`gameformative/check.py`) fails if either the data or any page does not reproduce byte for byte,
+and `content.py`'s `premise()` asserts stop the build when a data refresh makes a sentence untrue.
 Deployed to GitHub Pages straight from the `main` branch — there is no CI
 pipeline, no bundler, no linter. Don't assume npm scripts, a `package.json`,
 or a design-system engine exist here; they don't. Treat any instruction that

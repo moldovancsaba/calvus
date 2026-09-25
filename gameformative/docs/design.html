@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Design system — as built · gameformative</title><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&display=swap"><link rel="stylesheet" href="../assets/tokens.css"><style>/* gameformative — project documentation on the project's own tokens (../assets/tokens.css): off-white ground, Archivo, one blue, one orange. */
+body{margin:0;background:var(--gf-ground);color:var(--gf-text);font-family:var(--gf-font);font-size:16.5px;line-height:1.62;padding:0 clamp(16px,4vw,40px) 64px;font-variant-numeric:tabular-nums}
+*{box-sizing:border-box}.wrap{max-width:80ch;margin:0 auto}
+.docnav{display:flex;flex-wrap:wrap;gap:0 14px;align-items:center;padding:10px 0;border-bottom:3px solid var(--gf-ink);font-size:13.5px}
+.docnav a{color:var(--gf-blue);text-decoration:none;min-height:44px;min-width:44px;justify-content:center;display:inline-flex;align-items:center;font-weight:600}
+.docnav a[aria-current]{box-shadow:inset 0 -3px 0 var(--gf-orange)}
+.docnav-brand{font-weight:800;font-stretch:72%;font-size:20px;color:var(--gf-ink);margin-right:8px}
+.docnav-brand b{font-weight:900}
+header .eyebrow{margin:28px 0 4px;font-size:12px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--gf-blue)}
+h1{font-stretch:72%;font-weight:800;font-size:clamp(34px,6vw,52px);line-height:1.04;margin:0 0 16px;color:var(--gf-ink);letter-spacing:-.01em}
+h2{font-stretch:80%;font-weight:800;font-size:28px;line-height:1.1;margin:44px 0 10px;padding-top:12px;border-top:3px solid var(--gf-ink);color:var(--gf-ink)}
+h3{font-weight:750;font-size:18px;margin:26px 0 8px;color:var(--gf-ink)}h4{font-size:16px;margin:20px 0 6px;color:var(--gf-ink)}
+p{margin:0 0 12px}li{margin:4px 0}p,li,td,dd{overflow-wrap:anywhere}strong{font-weight:750;color:var(--gf-ink)}em{color:var(--gf-muted)}a{color:var(--gf-blue);overflow-wrap:anywhere}
+code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.84em;background:var(--gf-blue-soft);padding:1px 5px;border-radius:4px;overflow-wrap:anywhere}
+.tbl{overflow-x:auto;margin:12px 0 20px;border:1px solid var(--gf-line);border-radius:10px;background:var(--gf-surface)}
+table{border-collapse:collapse;width:100%;font-size:14px;min-width:560px}
+th{text-align:left;font-weight:800;background:var(--gf-sunk);padding:10px 12px;border-bottom:2px solid var(--gf-ink);font-size:11.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--gf-ink)}
+td{padding:9px 12px;border-top:1px solid var(--gf-line);vertical-align:top}
+pre{overflow-x:auto;padding:14px 16px;border:1px solid var(--gf-line);background:var(--gf-surface);border-radius:10px;font-size:12.5px;line-height:1.4}
+pre code{background:none;padding:0}
+blockquote{margin:14px 0;padding:12px 16px;border-left:4px solid var(--gf-orange);background:var(--gf-surface);border-radius:0 10px 10px 0}
+footer{margin-top:48px;padding-top:16px;border-top:1px solid var(--gf-line);font-size:12.5px;color:var(--gf-muted)}
+</style></head>
+<body><div class="wrap"><nav class="docnav" aria-label="Project documentation"><span class="docnav-brand">game<b>formative</b></span><a href="index.html">Overview</a><a href="brief.html">Brief</a><a href="research.html">Research</a><a href="source-register.html">Sources researched</a><a href="evidence.html">Evidence</a><a href="audit.html">Audit</a><a href="inputs.html">Inputs and gaps</a><a href="decisions.html">Decisions</a><a href="design.html" aria-current=page>Design</a><a href="build-log.html">Build log</a><a href="gate.html">Gate</a><a href="asks.html">Asks</a><a href="ssot.html">SSOT</a><a href="architecture.html">Architecture</a><a href="technical-design.html">Technical design</a><a href="plan.html">Plan</a><a href="token-map.html">Token map</a><a href="responsible-data.html">Responsible data</a><a href="presentation.html">Presentation</a><a href="../index.html">Prototype</a></nav>
+<header><p class="eyebrow">gameformative · project documentation</p><h1>Design system — as built</h1></header>
+<p><em>Tokens and components as implemented in <code>assets/tokens.css</code> and <code>assets/site.css</code>, shown live on
+the style guide (<code>../styleguide/index.html</code>). Every choice traces to <a href="research.html"><code>01-research.md</code></a>; the reason is
+given in <a href="decisions.html"><code>04-decisions.md</code></a>. Written 2026-09-25.</em></p>
+<h2 id="the-idea">The idea</h2>
+<p><strong>The numbers are the picture.</strong> No photographs; every cover, tile and chart is drawn from the data
+the story is about (D9). The page structure follows the leaders the research measured — ink navy
+bands, white or off-white surfaces, one saturated accent — and the colours are read from the 2027
+forecasts (projections: WGSN × Coloro Luminous Blue and Energy Orange). The logo mark is a form line
+rising to an orange point: a run of results, the latest one highlighted.</p>
+<h2 id="colour">Colour</h2>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>Token</th>
+<th>Light</th>
+<th>Dark</th>
+<th>Role</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>--gf-ground</code></td>
+<td><code>#F7F6F2</code></td>
+<td><code>#0B0F1A</code></td>
+<td>page background — a warm off-white (after Pantone 2026 Cloud Dancer) / ink navy</td>
+</tr>
+<tr>
+<td><code>--gf-surface</code></td>
+<td><code>#FFFFFF</code></td>
+<td><code>#141B2B</code></td>
+<td>cards, tables, charts</td>
+</tr>
+<tr>
+<td><code>--gf-sunk</code></td>
+<td><code>#EFEDE7</code></td>
+<td><code>#10172A</code></td>
+<td>tracks, segmented controls, banner</td>
+</tr>
+<tr>
+<td><code>--gf-ink</code></td>
+<td><code>#0C1222</code></td>
+<td><code>#F3F5F9</code></td>
+<td>headlines, figures</td>
+</tr>
+<tr>
+<td><code>--gf-text</code></td>
+<td><code>#1F2637</code></td>
+<td><code>#D5DAE4</code></td>
+<td>body text</td>
+</tr>
+<tr>
+<td><code>--gf-muted</code></td>
+<td><code>#596175</code></td>
+<td><code>#9AA3B6</code></td>
+<td>meta, captions</td>
+</tr>
+<tr>
+<td><code>--gf-line</code> / <code>--gf-line-strong</code></td>
+<td><code>#E3E1DA</code> / <code>#C9C6BC</code></td>
+<td><code>#27314A</code> / <code>#3A4666</code></td>
+<td>hairlines; neutral bars</td>
+</tr>
+<tr>
+<td><code>--gf-blue</code></td>
+<td><code>#1F47E0</code></td>
+<td><code>#7C95FF</code></td>
+<td><strong>Form Blue</strong>: brand, links, primary buttons, W chips, the highlighted series</td>
+</tr>
+<tr>
+<td><code>--gf-orange</code></td>
+<td><code>#E0560B</code></td>
+<td><code>#FF8A3D</code></td>
+<td><strong>Energy Orange</strong>: the one accent — L chips, the second series, the "notice this" bar</td>
+</tr>
+<tr>
+<td><code>--gf-orange-ink</code></td>
+<td><code>#B23F00</code></td>
+<td><code>#FF9E5E</code></td>
+<td>orange as text</td>
+</tr>
+<tr>
+<td><code>--gf-draw</code></td>
+<td><code>#D9DCE3</code></td>
+<td><code>#3A4560</code></td>
+<td>D chips, draw segments</td>
+</tr>
+<tr>
+<td><code>--gf-band</code></td>
+<td><code>#0C1222</code></td>
+<td><code>#050811</code></td>
+<td>the ink bands (World Cup, newsletter, footer, covers) in both themes</td>
+</tr>
+</tbody>
+</table></div>
+<p>The blue and orange are the studio's own sRGB readings of the two forecast colours; no forecaster
+publishes hex values (register T6). <strong>Contrast is a gate check, not a claim</strong>: <code>check.py</code> computes
+every text pair (ink, text, muted, blue, orange-ink on ground, surface and sunk; the on-colours on
+blue, orange, draw and band; blue and orange as marks against the surface at 3:1) in both themes —
+48 pairs, all passing WCAG 2.2 AA.</p>
+<p><strong>Colour never carries meaning alone.</strong> Form chips print W, D or L; outcome bars print H, D and A
+with their percentages; the highlighted series in a chart also has a heavier or dashed stroke and a
+direct label; the top-four and bottom-three table bands have a printed key.</p>
+<h2 id="type">Type</h2>
+<p>One variable family, <strong>Archivo</strong> (Google Fonts, <code>wdth</code> 62–125, <code>wght</code> 400–900), in three widths:</p>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>Use</th>
+<th>Width</th>
+<th>Weight</th>
+<th>Size</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Display — page titles, lead headline, scores, stat numbers</td>
+<td>72% (<code>--gf-condensed</code>)</td>
+<td>800</td>
+<td>34–60 px, fluid</td>
+</tr>
+<tr>
+<td>Card and chart headlines</td>
+<td>85%</td>
+<td>750</td>
+<td>19–26 px</td>
+</tr>
+<tr>
+<td>UI, body, tables</td>
+<td>100%</td>
+<td>400–800</td>
+<td>14.5–18 px</td>
+</tr>
+<tr>
+<td>Kicker, labels</td>
+<td>100%</td>
+<td>800, tracked caps</td>
+<td>11–12 px</td>
+</tr>
+</tbody>
+</table></div>
+<p>Tabular numerals (<code>font-variant-numeric: tabular-nums</code>) are set on the body, so every column of
+figures aligns. Fallback: Arial Narrow, then the system sans.</p>
+<h2 id="space-shape-targets">Space, shape, targets</h2>
+<p>8 px base; content max width 1240 px; gutters 16 px (phone) and 24 px; radius 10 px (cards),
+6 px (chips, ties), pill (buttons, segmented controls). Every interactive element is at least
+44 × 44 px on phones (<code>--gf-tap</code>), measured (<a href="build-log.html"><code>06-build-log.md</code></a>).</p>
+<h2 id="layout-at-the-reference-widths">Layout at the reference widths</h2>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th></th>
+<th>Phone (375–719)</th>
+<th>Tablet (720–999)</th>
+<th>Desktop (1000+, reference 1440)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Navigation</td>
+<td>brand, search, theme on top; <strong>five-tab bar</strong> at the bottom (Home, Scores, Stats, Analysis, More)</td>
+<td>as phone</td>
+<td>brand, <strong>six-item top nav</strong>, search, theme, sign-in; no tab bar</td>
+</tr>
+<tr>
+<td>Results strip</td>
+<td>swipe; compact label</td>
+<td>swipe + arrow buttons</td>
+<td>swipe + arrow buttons</td>
+</tr>
+<tr>
+<td>Home</td>
+<td>one column: lead, the table, numbers (2×2), stories, leagues, bands</td>
+<td>two-column grids</td>
+<td>lead story + table rail; 4-up numbers, 3-up stories, 4-up leagues</td>
+</tr>
+<tr>
+<td>League table</td>
+<td><strong>compact</strong> (#, Team, P, GD, Pts) + "All columns"; team codes</td>
+<td>full</td>
+<td>full, sortable, overall / home / away</td>
+</tr>
+<tr>
+<td>Charts</td>
+<td>full width; HTML labels at real size</td>
+<td>two-up</td>
+<td>two-up</td>
+</tr>
+<tr>
+<td>World Cup bracket</td>
+<td>each round as a grid of ties</td>
+<td>as phone</td>
+<td>five-column bracket tree, ties aligned to their feeders</td>
+</tr>
+<tr>
+<td>Article</td>
+<td>single column; rail below</td>
+<td>as phone</td>
+<td>720 px text column + sticky rail</td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="components">Components</h2>
+<ul>
+<li><strong>Header</strong>: brand (mark + "game<strong>formative</strong>"), top nav (desktop), search (inert), theme toggle,
+  sign-in (inert, desktop). Sticky, translucent.</li>
+<li><strong>Results strip</strong>: the latest round of all five leagues, one chip per match (league, codes, score,
+  winner in bold), linking to the league's results; arrow buttons on wider screens.</li>
+<li><strong>Tab bar and More sheet</strong>: five tabs; More opens a dialog (focus moves in, Escape closes and
+  returns focus).</li>
+<li><strong>Labels</strong>: Analysis (blue), Explainer (neutral), Automated (orange), Season/Tournament review
+  (muted). Every piece carries one.</li>
+<li><strong>Stat tile</strong>: a condensed figure, what it counts, its context; the accent tile has an orange top
+  rule.</li>
+<li><strong>Story card / list item / lead story</strong>: data-graphic cover, label, headline, dek, date.</li>
+<li><strong>League snapshot</strong>: top five, last three results as form chips, points.</li>
+<li><strong>League table</strong>: sortable headers (buttons, announced to screen readers), sticky header and team
+  column, zone bands with a key, form chips, overall / home / away views, compact phone mode.</li>
+<li><strong>Results list</strong>: home — score — away, winner in bold, date; fixtures show kick-off time.</li>
+<li><strong>Charts</strong>: bars (ranking), stacked bars (part-to-whole), columns (distribution by minute), lines
+  (points race) — chosen by the FT Visual Vocabulary; each in a figure with title, subtitle, source
+  and "Show the numbers as a table".</li>
+<li><strong>Band</strong>: ink navy block for the World Cup review and the newsletter, in both themes.</li>
+<li><strong>Match head, timeline, line-ups</strong>: the match centre; goals and substitutions by minute.</li>
+<li><strong>Bracket</strong>: the knockout rounds in tree order (the converter walks back from the final).</li>
+<li><strong>Inert panel</strong>: dashed box that says what is not built and why (xG, live data, statistics).</li>
+<li><strong>Transparency note</strong>: on every article — who wrote it, where every figure comes from, the
+  corrections link.</li>
+</ul>
+<h2 id="motion">Motion</h2>
+<p>Only colour transitions on hover; smooth scrolling of the strip only when the reader has not asked
+for reduced motion. Nothing auto-plays, nothing auto-advances.</p>
+<footer>gameformative.com · project documentation, 2026</footer></div></body></html>

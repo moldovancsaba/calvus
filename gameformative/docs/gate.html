@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Gate · gameformative</title><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&display=swap"><link rel="stylesheet" href="../assets/tokens.css"><style>/* gameformative — project documentation on the project's own tokens (../assets/tokens.css): off-white ground, Archivo, one blue, one orange. */
+body{margin:0;background:var(--gf-ground);color:var(--gf-text);font-family:var(--gf-font);font-size:16.5px;line-height:1.62;padding:0 clamp(16px,4vw,40px) 64px;font-variant-numeric:tabular-nums}
+*{box-sizing:border-box}.wrap{max-width:80ch;margin:0 auto}
+.docnav{display:flex;flex-wrap:wrap;gap:0 14px;align-items:center;padding:10px 0;border-bottom:3px solid var(--gf-ink);font-size:13.5px}
+.docnav a{color:var(--gf-blue);text-decoration:none;min-height:44px;min-width:44px;justify-content:center;display:inline-flex;align-items:center;font-weight:600}
+.docnav a[aria-current]{box-shadow:inset 0 -3px 0 var(--gf-orange)}
+.docnav-brand{font-weight:800;font-stretch:72%;font-size:20px;color:var(--gf-ink);margin-right:8px}
+.docnav-brand b{font-weight:900}
+header .eyebrow{margin:28px 0 4px;font-size:12px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--gf-blue)}
+h1{font-stretch:72%;font-weight:800;font-size:clamp(34px,6vw,52px);line-height:1.04;margin:0 0 16px;color:var(--gf-ink);letter-spacing:-.01em}
+h2{font-stretch:80%;font-weight:800;font-size:28px;line-height:1.1;margin:44px 0 10px;padding-top:12px;border-top:3px solid var(--gf-ink);color:var(--gf-ink)}
+h3{font-weight:750;font-size:18px;margin:26px 0 8px;color:var(--gf-ink)}h4{font-size:16px;margin:20px 0 6px;color:var(--gf-ink)}
+p{margin:0 0 12px}li{margin:4px 0}p,li,td,dd{overflow-wrap:anywhere}strong{font-weight:750;color:var(--gf-ink)}em{color:var(--gf-muted)}a{color:var(--gf-blue);overflow-wrap:anywhere}
+code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.84em;background:var(--gf-blue-soft);padding:1px 5px;border-radius:4px;overflow-wrap:anywhere}
+.tbl{overflow-x:auto;margin:12px 0 20px;border:1px solid var(--gf-line);border-radius:10px;background:var(--gf-surface)}
+table{border-collapse:collapse;width:100%;font-size:14px;min-width:560px}
+th{text-align:left;font-weight:800;background:var(--gf-sunk);padding:10px 12px;border-bottom:2px solid var(--gf-ink);font-size:11.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--gf-ink)}
+td{padding:9px 12px;border-top:1px solid var(--gf-line);vertical-align:top}
+pre{overflow-x:auto;padding:14px 16px;border:1px solid var(--gf-line);background:var(--gf-surface);border-radius:10px;font-size:12.5px;line-height:1.4}
+pre code{background:none;padding:0}
+blockquote{margin:14px 0;padding:12px 16px;border-left:4px solid var(--gf-orange);background:var(--gf-surface);border-radius:0 10px 10px 0}
+footer{margin-top:48px;padding-top:16px;border-top:1px solid var(--gf-line);font-size:12.5px;color:var(--gf-muted)}
+</style></head>
+<body><div class="wrap"><nav class="docnav" aria-label="Project documentation"><span class="docnav-brand">game<b>formative</b></span><a href="index.html">Overview</a><a href="brief.html">Brief</a><a href="research.html">Research</a><a href="source-register.html">Sources researched</a><a href="evidence.html">Evidence</a><a href="audit.html">Audit</a><a href="inputs.html">Inputs and gaps</a><a href="decisions.html">Decisions</a><a href="design.html">Design</a><a href="build-log.html">Build log</a><a href="gate.html" aria-current=page>Gate</a><a href="asks.html">Asks</a><a href="ssot.html">SSOT</a><a href="architecture.html">Architecture</a><a href="technical-design.html">Technical design</a><a href="plan.html">Plan</a><a href="token-map.html">Token map</a><a href="responsible-data.html">Responsible data</a><a href="presentation.html">Presentation</a><a href="../index.html">Prototype</a></nav>
+<header><p class="eyebrow">gameformative · project documentation</p><h1>Gate</h1></header>
+<p><em>What <code>check.py</code> verifies, and the measured pass. Run <code>python3 gameformative/check.py</code> (or the
+root <code>python3 check.py</code>, which runs it with every other project's gate). It exits 1 on any finding;
+read the exit code, not the last line.</em></p>
+<h2 id="what-the-script-checks">What the script checks</h2>
+<ol>
+<li>Every relative <code>href</code> and <code>src</code> on every page — site and documentation — resolves.</li>
+<li>Every cross-page <code>#anchor</code> exists on its target page.</li>
+<li>Every documentation page links every other (the presentation carries no documentation links).</li>
+<li>Exactly one <code>h1</code>, a <code>&lt;title&gt;</code> and a <code>lang</code> attribute on every page.</li>
+<li>Every image has alt text (the site has none today; the check stays for when it does).</li>
+<li>Every site page carries the prototype banner.</li>
+<li>One asset version (<code>?v=</code>) on every page, so a stale stylesheet can never pass for the new one.</li>
+<li><strong>The data reproduces</strong>: <code>data/convert.py --check</code> rebuilds <code>stats.json</code> from <code>data/raw/</code> in
+   memory — running every data assert (goals for = goals against, points reconcile, the two files
+   of a competition agree match by match, goal lists match scores, every team in the name table,
+   the bracket resolves) — and fails if the committed file differs by a byte.</li>
+<li><strong>The pages reproduce</strong>: <code>build.py --check</code> regenerates all 19 pages in memory (which also runs
+   every copy premise in <code>content.py</code>) and fails if a committed page differs — so a hand edit to a
+   generated page cannot survive.</li>
+<li><strong>Contrast</strong>: 24 text/background pairs from <code>tokens.css</code>, in the light and the dark theme (48
+    checks), against WCAG 2.2 AA — 4.5:1 for text, 3:1 for the blue and orange as chart marks.</li>
+<li><strong>Inert controls are marked</strong>: every <code>is-unavailable</code> element has <code>aria-disabled="true"</code> and a
+    <code>title</code> that says why.</li>
+</ol>
+<p>The root <code>check.py</code> adds: no studio name on any project page, no tooling in footers, eyebrows,
+titles or the documentation brand, no internal documentation link in the presentation, and a
+repo-wide link audit.</p>
+<h2 id="what-is-measured-in-the-browser-not-by-the-script">What is measured in the browser (not by the script)</h2>
+<p>The method's measured pass (<code>PROTOTYPING.md</code> §3.3) runs in the app's browser pane on a local
+server: every page loaded in a same-origin iframe at an explicit width, measured from one script.</p>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>Criterion</th>
+<th>Target</th>
+<th>Result 2026-09-25</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Horizontal overflow at 375 px</td>
+<td>0 px</td>
+<td>0 px on all 19 pages</td>
+</tr>
+<tr>
+<td>Horizontal overflow at 1440 px</td>
+<td>0 px</td>
+<td>0 px on all 19 pages</td>
+</tr>
+<tr>
+<td>Tap targets under 44 × 44 at 375 px</td>
+<td>none</td>
+<td>none on all 19 pages (inline links in running text exempt, per WCAG 2.5.8)</td>
+</tr>
+<tr>
+<td>… with the More menu open</td>
+<td>none</td>
+<td>none (measured on four pages)</td>
+</tr>
+<tr>
+<td><code>h1</code> per page</td>
+<td>1</td>
+<td>1 on all 19 pages, both widths</td>
+</tr>
+<tr>
+<td>Console errors</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr>
+<td>Interactions</td>
+<td>work</td>
+<td>table sort (announced), overall/home/away, All columns, league filter, Load more, theme toggle (both ways, remembered), More sheet (focus in, Escape out, focus returned) — all exercised</td>
+</tr>
+</tbody>
+</table></div>
+<p>The phone width measured is 375 px, the owner's stated reference for this project; <code>PROTOTYPING.md</code>
+§3.3 names 390 — 375 is the stricter of the two.</p>
+<h2 id="deliberate-deviations">Deliberate deviations</h2>
+<ul>
+<li><strong>No prototype banner on documentation pages</strong> — they are not the site.</li>
+<li><strong>Desktop density below 44 px</strong> is allowed by the method; the only such controls are the league
+  tabs' pill height at desktop widths (40 px), which rise to 44 px on phones.</li>
+</ul>
+<footer>gameformative.com · project documentation, 2026</footer></div></body></html>

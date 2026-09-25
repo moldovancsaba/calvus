@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Build log · gameformative</title><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&display=swap"><link rel="stylesheet" href="../assets/tokens.css"><style>/* gameformative — project documentation on the project's own tokens (../assets/tokens.css): off-white ground, Archivo, one blue, one orange. */
+body{margin:0;background:var(--gf-ground);color:var(--gf-text);font-family:var(--gf-font);font-size:16.5px;line-height:1.62;padding:0 clamp(16px,4vw,40px) 64px;font-variant-numeric:tabular-nums}
+*{box-sizing:border-box}.wrap{max-width:80ch;margin:0 auto}
+.docnav{display:flex;flex-wrap:wrap;gap:0 14px;align-items:center;padding:10px 0;border-bottom:3px solid var(--gf-ink);font-size:13.5px}
+.docnav a{color:var(--gf-blue);text-decoration:none;min-height:44px;min-width:44px;justify-content:center;display:inline-flex;align-items:center;font-weight:600}
+.docnav a[aria-current]{box-shadow:inset 0 -3px 0 var(--gf-orange)}
+.docnav-brand{font-weight:800;font-stretch:72%;font-size:20px;color:var(--gf-ink);margin-right:8px}
+.docnav-brand b{font-weight:900}
+header .eyebrow{margin:28px 0 4px;font-size:12px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--gf-blue)}
+h1{font-stretch:72%;font-weight:800;font-size:clamp(34px,6vw,52px);line-height:1.04;margin:0 0 16px;color:var(--gf-ink);letter-spacing:-.01em}
+h2{font-stretch:80%;font-weight:800;font-size:28px;line-height:1.1;margin:44px 0 10px;padding-top:12px;border-top:3px solid var(--gf-ink);color:var(--gf-ink)}
+h3{font-weight:750;font-size:18px;margin:26px 0 8px;color:var(--gf-ink)}h4{font-size:16px;margin:20px 0 6px;color:var(--gf-ink)}
+p{margin:0 0 12px}li{margin:4px 0}p,li,td,dd{overflow-wrap:anywhere}strong{font-weight:750;color:var(--gf-ink)}em{color:var(--gf-muted)}a{color:var(--gf-blue);overflow-wrap:anywhere}
+code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.84em;background:var(--gf-blue-soft);padding:1px 5px;border-radius:4px;overflow-wrap:anywhere}
+.tbl{overflow-x:auto;margin:12px 0 20px;border:1px solid var(--gf-line);border-radius:10px;background:var(--gf-surface)}
+table{border-collapse:collapse;width:100%;font-size:14px;min-width:560px}
+th{text-align:left;font-weight:800;background:var(--gf-sunk);padding:10px 12px;border-bottom:2px solid var(--gf-ink);font-size:11.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--gf-ink)}
+td{padding:9px 12px;border-top:1px solid var(--gf-line);vertical-align:top}
+pre{overflow-x:auto;padding:14px 16px;border:1px solid var(--gf-line);background:var(--gf-surface);border-radius:10px;font-size:12.5px;line-height:1.4}
+pre code{background:none;padding:0}
+blockquote{margin:14px 0;padding:12px 16px;border-left:4px solid var(--gf-orange);background:var(--gf-surface);border-radius:0 10px 10px 0}
+footer{margin-top:48px;padding-top:16px;border-top:1px solid var(--gf-line);font-size:12.5px;color:var(--gf-muted)}
+</style></head>
+<body><div class="wrap"><nav class="docnav" aria-label="Project documentation"><span class="docnav-brand">game<b>formative</b></span><a href="index.html">Overview</a><a href="brief.html">Brief</a><a href="research.html">Research</a><a href="source-register.html">Sources researched</a><a href="evidence.html">Evidence</a><a href="audit.html">Audit</a><a href="inputs.html">Inputs and gaps</a><a href="decisions.html">Decisions</a><a href="design.html">Design</a><a href="build-log.html" aria-current=page>Build log</a><a href="gate.html">Gate</a><a href="asks.html">Asks</a><a href="ssot.html">SSOT</a><a href="architecture.html">Architecture</a><a href="technical-design.html">Technical design</a><a href="plan.html">Plan</a><a href="token-map.html">Token map</a><a href="responsible-data.html">Responsible data</a><a href="presentation.html">Presentation</a><a href="../index.html">Prototype</a></nav>
+<header><p class="eyebrow">gameformative · project documentation</p><h1>Build log</h1></header>
+<p><em>Every build round: what changed, what was measured, what was fixed. Newest last.</em></p>
+<h2 id="round-1-2026-09-25-the-first-version">Round 1 — 2026-09-25 — the first version</h2>
+<p><strong>Data.</strong> <code>data/fetch.py</code> downloaded nine openfootball files (CC0). The first run of
+<code>data/convert.py</code> passed the five 2026/27 leagues and the 2025/26 Premier League, then <strong>stopped on
+the World Cup</strong>: its two files spell four nations differently ("Côte d'Ivoire" / "Ivory Coast",
+"Cabo Verde" / "Cape Verde", "Congo DR" / "DR Congo", "Bosnia and Herzegovina" / "Bosnia &amp;
+Herzegovina"). Fixed with an explicit alias table in <code>data/teams.py</code>; the match-by-match cross-check
+then passed. The 2026/27 files also write some results as a bare <code>[h, a]</code> list instead of
+<code>{"ft": [h, a]}</code> — read as results, documented in <a href="technical-design.html"><code>12-technical-design.md</code></a> §3.</p>
+<p><strong>Copy.</strong> Five articles written in <code>content.py</code>, every figure from <code>stats.json</code>. Three sentences
+were rewritten before any page was built because the data could not back them: a general
+"title form is about two points a game" rule of thumb (replaced by last season's champion's
+actual PPG), "the pattern is familiar from earlier seasons" (no earlier season in the data; replaced
+by the added-time share), and an "October international break" (the dataset shows a fixture gap,
+not its reason; replaced by the date the schedule resumes). Premises added for every narrative
+claim (D7).</p>
+<p><strong>Pages.</strong> 19 pages generated by <code>build.py</code>: home, scores, stats hub, five league pages, the
+2025/26 season review, World Cup 2026 and its final, the analysis index and five pieces, How we
+count, the style guide.</p>
+<p><strong>Measured — local server, the app's browser pane, same-origin iframes at explicit widths.</strong></p>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>Pass</th>
+<th>Found</th>
+<th>Fixed</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>First render, 800 px</td>
+<td>the results strip's label sat on the page edge (<code>.gf-strip-row</code> padding overrode the wrapper's); cover lines filled black (SVG polyline default fill)</td>
+<td>padding split into top/bottom; <code>fill: none</code></td>
+</tr>
+<tr>
+<td>375 px</td>
+<td>"Sign in" visible on phones (<code>.gf-btn</code> display overrode the hide rule); the strip label took a third of the width; banner at 12.5 px ran to five lines</td>
+<td>selector specificity; compact phone label; banner 11.5 px on phones</td>
+</tr>
+<tr>
+<td>Sweep 375 px, 19 pages</td>
+<td>0 px overflow, one <code>h1</code> everywhere; <strong>small targets</strong>: footer "LaLiga" 43 × 44, sort buttons 8–29 px wide, the tie-breaker link 14 px high, the corrections link 36 px high</td>
+<td>footer links min 44 px wide; sort buttons min 44 px; table-foot links 44 px high; the corrections link set as running text in a paragraph</td>
+</tr>
+<tr>
+<td>375 px, league table</td>
+<td>twelve columns: only P, W, D visible before scrolling, <strong>Pts off screen</strong></td>
+<td>compact phone table (#, Team, P, GD, Pts) + "All columns" (D12)</td>
+</tr>
+<tr>
+<td>1440 px, home</td>
+<td>"Analysis" labels stretched across card width (flex stretch)</td>
+<td><code>align-self: flex-start</code></td>
+</tr>
+<tr>
+<td>1440 px, World Cup</td>
+<td>round headings drifted with the ties (space-around applied to headings too)</td>
+<td>ties in their own column box; headings fixed at the top</td>
+</tr>
+<tr>
+<td>Dark mode, 375 px</td>
+<td>—</td>
+<td>checked: tokens switch, charts and labels legible</td>
+</tr>
+<tr>
+<td>Documentation, 375 px, 19 pages</td>
+<td>doc-nav links 30–33 px wide; the evidence page 112 px wider than the screen (long unbroken strings in paragraphs; lists without a blank line rendered as paragraphs); a raw <code>&lt;a&gt;</code> in a table heading rendered as a real link</td>
+<td>nav links min 44 px; <code>overflow-wrap: anywhere</code> on prose; blank lines before lists; the tag set as code</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Final sweep</strong> (after all fixes): 19 site pages and 19 documentation pages × {375, 1440} px — 0 px
+horizontal overflow, one <code>h1</code>, 0 tap targets under 44 × 44 at 375 px (also with the More sheet open, four pages), 0 console errors.
+Interactions exercised: sort (with its announcement), overall/home/away, All columns on and off,
+league filter, Load more, theme toggle both ways, More sheet (focus in, Escape, focus returned).</p>
+<p><strong>Gate.</strong> <code>python3 gameformative/check.py</code>: CLEAN — every link and anchor, docs cross-links, one
+<code>h1</code>/title/lang per page, banner, one asset version, data and pages reproduce byte for byte, 48
+contrast pairs pass AA in both themes, inert controls marked.</p>
+<footer>gameformative.com · project documentation, 2026</footer></div></body></html>

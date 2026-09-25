@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Asks · gameformative</title><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&display=swap"><link rel="stylesheet" href="../assets/tokens.css"><style>/* gameformative — project documentation on the project's own tokens (../assets/tokens.css): off-white ground, Archivo, one blue, one orange. */
+body{margin:0;background:var(--gf-ground);color:var(--gf-text);font-family:var(--gf-font);font-size:16.5px;line-height:1.62;padding:0 clamp(16px,4vw,40px) 64px;font-variant-numeric:tabular-nums}
+*{box-sizing:border-box}.wrap{max-width:80ch;margin:0 auto}
+.docnav{display:flex;flex-wrap:wrap;gap:0 14px;align-items:center;padding:10px 0;border-bottom:3px solid var(--gf-ink);font-size:13.5px}
+.docnav a{color:var(--gf-blue);text-decoration:none;min-height:44px;min-width:44px;justify-content:center;display:inline-flex;align-items:center;font-weight:600}
+.docnav a[aria-current]{box-shadow:inset 0 -3px 0 var(--gf-orange)}
+.docnav-brand{font-weight:800;font-stretch:72%;font-size:20px;color:var(--gf-ink);margin-right:8px}
+.docnav-brand b{font-weight:900}
+header .eyebrow{margin:28px 0 4px;font-size:12px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--gf-blue)}
+h1{font-stretch:72%;font-weight:800;font-size:clamp(34px,6vw,52px);line-height:1.04;margin:0 0 16px;color:var(--gf-ink);letter-spacing:-.01em}
+h2{font-stretch:80%;font-weight:800;font-size:28px;line-height:1.1;margin:44px 0 10px;padding-top:12px;border-top:3px solid var(--gf-ink);color:var(--gf-ink)}
+h3{font-weight:750;font-size:18px;margin:26px 0 8px;color:var(--gf-ink)}h4{font-size:16px;margin:20px 0 6px;color:var(--gf-ink)}
+p{margin:0 0 12px}li{margin:4px 0}p,li,td,dd{overflow-wrap:anywhere}strong{font-weight:750;color:var(--gf-ink)}em{color:var(--gf-muted)}a{color:var(--gf-blue);overflow-wrap:anywhere}
+code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.84em;background:var(--gf-blue-soft);padding:1px 5px;border-radius:4px;overflow-wrap:anywhere}
+.tbl{overflow-x:auto;margin:12px 0 20px;border:1px solid var(--gf-line);border-radius:10px;background:var(--gf-surface)}
+table{border-collapse:collapse;width:100%;font-size:14px;min-width:560px}
+th{text-align:left;font-weight:800;background:var(--gf-sunk);padding:10px 12px;border-bottom:2px solid var(--gf-ink);font-size:11.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--gf-ink)}
+td{padding:9px 12px;border-top:1px solid var(--gf-line);vertical-align:top}
+pre{overflow-x:auto;padding:14px 16px;border:1px solid var(--gf-line);background:var(--gf-surface);border-radius:10px;font-size:12.5px;line-height:1.4}
+pre code{background:none;padding:0}
+blockquote{margin:14px 0;padding:12px 16px;border-left:4px solid var(--gf-orange);background:var(--gf-surface);border-radius:0 10px 10px 0}
+footer{margin-top:48px;padding-top:16px;border-top:1px solid var(--gf-line);font-size:12.5px;color:var(--gf-muted)}
+</style></head>
+<body><div class="wrap"><nav class="docnav" aria-label="Project documentation"><span class="docnav-brand">game<b>formative</b></span><a href="index.html">Overview</a><a href="brief.html">Brief</a><a href="research.html">Research</a><a href="source-register.html">Sources researched</a><a href="evidence.html">Evidence</a><a href="audit.html">Audit</a><a href="inputs.html">Inputs and gaps</a><a href="decisions.html">Decisions</a><a href="design.html">Design</a><a href="build-log.html">Build log</a><a href="gate.html">Gate</a><a href="asks.html" aria-current=page>Asks</a><a href="ssot.html">SSOT</a><a href="architecture.html">Architecture</a><a href="technical-design.html">Technical design</a><a href="plan.html">Plan</a><a href="token-map.html">Token map</a><a href="responsible-data.html">Responsible data</a><a href="presentation.html">Presentation</a><a href="../index.html">Prototype</a></nav>
+<header><p class="eyebrow">gameformative · project documentation</p><h1>Asks</h1></header>
+<p><em>The register of what the owner (or whoever runs gameformative) decides or provides. Nothing here
+blocks reviewing the prototype — it runs on public-domain data and sample copy. Each ask names
+when it starts to matter. Written 2026-09-25.</em></p>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>#</th>
+<th>Ask</th>
+<th>Owner</th>
+<th>Blocks</th>
+<th>State</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>A0</td>
+<td>Review the rendered prototype and the style guide; say "direction approved" or what to change</td>
+<td>owner</td>
+<td>the next round</td>
+<td><strong>open</strong> — the one decision in <code>presentation.html</code></td>
+</tr>
+<tr>
+<td>A1</td>
+<td>Choose a licensed football data provider for event data and live scores (shots, xG, possession, ratings, minute-by-minute). Candidates to price: Opta / Stats Perform, Sportradar, Genius Sports</td>
+<td>owner</td>
+<td>the live match centre and every xG/ratings panel</td>
+<td>open — price lists not public; quotes needed</td>
+</tr>
+<tr>
+<td>A2</td>
+<td>Name the newsroom: editor-in-chief (the named editorial responsibility under EU AI Act Art. 50(4)), writers, bylines</td>
+<td>owner</td>
+<td>publishing real articles; the Trust Project expertise indicator</td>
+<td>open</td>
+</tr>
+<tr>
+<td>A3</td>
+<td>Photography: an agency licence (e.g. a sports picture wire) or a decision to stay graphics-only</td>
+<td>owner</td>
+<td>photo-led formats</td>
+<td>open — the prototype is graphics-only by design (D9)</td>
+</tr>
+<tr>
+<td>A4</td>
+<td>Business model: advertising, membership, both; and whether betting partnerships are in or out (German leaders carry them in the nav; <a href="research.html"><code>01-research.md</code></a> §1)</td>
+<td>owner</td>
+<td>ad slots, paywall, consent design</td>
+<td>open</td>
+</tr>
+<tr>
+<td>A5</td>
+<td>Newsletter sender, platform and consent wording</td>
+<td>owner</td>
+<td>the newsletter going live (<a href="responsible-data.html"><code>18-responsible-data.md</code></a>)</td>
+<td>open</td>
+</tr>
+<tr>
+<td>A6</td>
+<td>Markets and languages after English: the research points to German (table-heavy), Hindi/English with cricket (India), Chinese with NBA/CBA (China)</td>
+<td>owner</td>
+<td>expansion rounds</td>
+<td>open</td>
+</tr>
+<tr>
+<td>A7</td>
+<td>Confirm Vercel as the host (the domain already points there, <a href="audit.html"><code>02-audit.md</code></a>)</td>
+<td>owner</td>
+<td>deployment of the real build</td>
+<td>open — proposed in ADR-01</td>
+</tr>
+</tbody>
+</table></div>
+<p>Closed asks move to the process log in <a href="index.html"><code>README.md</code></a> with the date they closed.</p>
+<footer>gameformative.com · project documentation, 2026</footer></div></body></html>

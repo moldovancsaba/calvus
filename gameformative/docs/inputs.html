@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Inputs and gaps · gameformative</title><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&display=swap"><link rel="stylesheet" href="../assets/tokens.css"><style>/* gameformative — project documentation on the project's own tokens (../assets/tokens.css): off-white ground, Archivo, one blue, one orange. */
+body{margin:0;background:var(--gf-ground);color:var(--gf-text);font-family:var(--gf-font);font-size:16.5px;line-height:1.62;padding:0 clamp(16px,4vw,40px) 64px;font-variant-numeric:tabular-nums}
+*{box-sizing:border-box}.wrap{max-width:80ch;margin:0 auto}
+.docnav{display:flex;flex-wrap:wrap;gap:0 14px;align-items:center;padding:10px 0;border-bottom:3px solid var(--gf-ink);font-size:13.5px}
+.docnav a{color:var(--gf-blue);text-decoration:none;min-height:44px;min-width:44px;justify-content:center;display:inline-flex;align-items:center;font-weight:600}
+.docnav a[aria-current]{box-shadow:inset 0 -3px 0 var(--gf-orange)}
+.docnav-brand{font-weight:800;font-stretch:72%;font-size:20px;color:var(--gf-ink);margin-right:8px}
+.docnav-brand b{font-weight:900}
+header .eyebrow{margin:28px 0 4px;font-size:12px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--gf-blue)}
+h1{font-stretch:72%;font-weight:800;font-size:clamp(34px,6vw,52px);line-height:1.04;margin:0 0 16px;color:var(--gf-ink);letter-spacing:-.01em}
+h2{font-stretch:80%;font-weight:800;font-size:28px;line-height:1.1;margin:44px 0 10px;padding-top:12px;border-top:3px solid var(--gf-ink);color:var(--gf-ink)}
+h3{font-weight:750;font-size:18px;margin:26px 0 8px;color:var(--gf-ink)}h4{font-size:16px;margin:20px 0 6px;color:var(--gf-ink)}
+p{margin:0 0 12px}li{margin:4px 0}p,li,td,dd{overflow-wrap:anywhere}strong{font-weight:750;color:var(--gf-ink)}em{color:var(--gf-muted)}a{color:var(--gf-blue);overflow-wrap:anywhere}
+code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.84em;background:var(--gf-blue-soft);padding:1px 5px;border-radius:4px;overflow-wrap:anywhere}
+.tbl{overflow-x:auto;margin:12px 0 20px;border:1px solid var(--gf-line);border-radius:10px;background:var(--gf-surface)}
+table{border-collapse:collapse;width:100%;font-size:14px;min-width:560px}
+th{text-align:left;font-weight:800;background:var(--gf-sunk);padding:10px 12px;border-bottom:2px solid var(--gf-ink);font-size:11.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--gf-ink)}
+td{padding:9px 12px;border-top:1px solid var(--gf-line);vertical-align:top}
+pre{overflow-x:auto;padding:14px 16px;border:1px solid var(--gf-line);background:var(--gf-surface);border-radius:10px;font-size:12.5px;line-height:1.4}
+pre code{background:none;padding:0}
+blockquote{margin:14px 0;padding:12px 16px;border-left:4px solid var(--gf-orange);background:var(--gf-surface);border-radius:0 10px 10px 0}
+footer{margin-top:48px;padding-top:16px;border-top:1px solid var(--gf-line);font-size:12.5px;color:var(--gf-muted)}
+</style></head>
+<body><div class="wrap"><nav class="docnav" aria-label="Project documentation"><span class="docnav-brand">game<b>formative</b></span><a href="index.html">Overview</a><a href="brief.html">Brief</a><a href="research.html">Research</a><a href="source-register.html">Sources researched</a><a href="evidence.html">Evidence</a><a href="audit.html">Audit</a><a href="inputs.html" aria-current=page>Inputs and gaps</a><a href="decisions.html">Decisions</a><a href="design.html">Design</a><a href="build-log.html">Build log</a><a href="gate.html">Gate</a><a href="asks.html">Asks</a><a href="ssot.html">SSOT</a><a href="architecture.html">Architecture</a><a href="technical-design.html">Technical design</a><a href="plan.html">Plan</a><a href="token-map.html">Token map</a><a href="responsible-data.html">Responsible data</a><a href="presentation.html">Presentation</a><a href="../index.html">Prototype</a></nav>
+<header><p class="eyebrow">gameformative · project documentation</p><h1>Inputs and gaps</h1></header>
+<p><em>Every input the prototype was built from, what it contributed, and every gap between the ask and
+what the inputs can support. Written 2026-09-25. The research sources are listed separately in
+<a href="source-register.html"><code>01a-source-register.md</code></a>; this page covers what went into the build.</em></p>
+<h2 id="inputs">Inputs</h2>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>#</th>
+<th>Input</th>
+<th>What it contributed</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>The owner's message of 2026-09-25 (quoted in <a href="brief.html"><code>00-brief.md</code></a>)</td>
+<td>the product, the scope of the research, the sites to study</td>
+</tr>
+<tr>
+<td>2</td>
+<td>The owner's follow-up: list every source with what we learned</td>
+<td><a href="source-register.html"><code>01a-source-register.md</code></a></td>
+</tr>
+<tr>
+<td>3</td>
+<td>The Népszabadság prototype (<code>../../nepszabadsag/</code>)</td>
+<td>the generator pattern, prototype banner, gate and documentation structure</td>
+</tr>
+<tr>
+<td>4</td>
+<td>openfootball <code>football.json</code> — <code>2026-27/{en,es,de,it,fr}.1.json</code>, <code>2025-26/en.1.json</code>, <code>2025-26/en.1-full.json</code></td>
+<td>every league result, table and derived figure; 2025/26 scorers, minutes, attendances. CC0 1.0</td>
+</tr>
+<tr>
+<td>5</td>
+<td>openfootball <code>worldcup.json</code> — <code>2026/worldcup.json</code>, <code>2026/worldcup-full.json</code></td>
+<td>all 104 World Cup matches, scorers, line-ups, substitutions, attendance. CC0 1.0</td>
+</tr>
+<tr>
+<td>6</td>
+<td>The research of 2026-09-25 (<a href="research.html"><code>01-research.md</code></a>)</td>
+<td>the palette, type, layout, navigation, table, chart, trust and automation decisions</td>
+</tr>
+</tbody>
+</table></div>
+<p>The raw files are committed in <code>data/raw/</code>; <code>data/fetch.py</code> re-downloads them and
+<code>data/convert.py</code> turns them into <code>data/stats.json</code>. The SHA-256 prefix of every input is written
+into <code>stats.json</code> and listed on the How we count page.</p>
+<h2 id="gaps">Gaps</h2>
+<ol>
+<li><strong>No licensed event data.</strong> The open source carries results, goals, line-ups, substitutions and
+   attendances — not shots, possession, xG, passes or player ratings, which fans of a stats site
+   expect (<a href="research.html"><code>01-research.md</code></a> §3.3). Those panels are shown in place, marked not available, and never
+   estimated. Filling them needs a data licence (<a href="asks.html"><code>08-client-asks.md</code></a> A1).</li>
+<li><strong>No live data.</strong> Results are recorded by hand upstream and arrive after the match; the
+   prototype shows final results to 20 September 2026 and the next fixtures as published. The live
+   match centre is specified (<a href="technical-design.html"><code>12-technical-design.md</code></a> §5), not built.</li>
+<li><strong>No newsroom.</strong> There are no journalists, so the byline is "gameformative data desk" and the
+   copy is sample. Inventing named reporters would put fictional people on a news site; we did not.</li>
+<li><strong>Official tie-breakers not applied.</strong> Tables are ordered by points, goal difference, goals
+   scored, then name. LaLiga and Serie A use head-to-head first; FIFA's group rules add more steps.
+   For teams level on points an official table can differ. Said on every table and on How we count.</li>
+<li><strong>Names as the source spells them.</strong> The "-full" files set many names in capitals without
+   accents ("MBAPPE"). The converter sets all-caps words in title case; accents the source dropped
+   are not restored (Kylian Mbappe, Joao Pedro), because restoring them would mean hand-editing data.</li>
+<li><strong>Team short names and codes are ours.</strong> No open standard exists for club abbreviations;
+   <code>data/teams.py</code> is the reviewed table (every source name must be in it, or the build stops).
+   National teams use FIFA trigrams.</li>
+<li><strong>One sport, men's competitions.</strong> Women's football, cricket (India's first sport), NBA and CBA
+   (China) are proposed expansions (<a href="research.html"><code>01-research.md</code></a> P12). No open, commercially usable data for
+   them was verified: StatsBomb and NBA.com terms forbid it (register O3, O4).</li>
+<li><strong>No photography.</strong> No licensed photo source, and AI imagery is ruled out. The prototype uses
+   data graphics generated from the numbers as its covers — a deliberate identity choice (D9) —
+   and a photo agency licence is an ask for the real build.</li>
+<li><strong>The data's own record is taken as given.</strong> Where the dataset records the 2026 World Cup final
+   or a 2026/27 score, the prototype shows it as the source records it; it was not independently
+   verified against a second source. Two files for the same competition are cross-checked match by
+   match by the converter.</li>
+<li><strong>Blocked research sites.</strong> Nine sites refused automated fetches (<a href="research.html"><code>01-research.md</code></a> §0); their
+    designs are not part of the benchmark.</li>
+</ol>
+<footer>gameformative.com · project documentation, 2026</footer></div></body></html>

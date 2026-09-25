@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Architecture — the real build (proposed) · gameformative</title><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&display=swap"><link rel="stylesheet" href="../assets/tokens.css"><style>/* gameformative — project documentation on the project's own tokens (../assets/tokens.css): off-white ground, Archivo, one blue, one orange. */
+body{margin:0;background:var(--gf-ground);color:var(--gf-text);font-family:var(--gf-font);font-size:16.5px;line-height:1.62;padding:0 clamp(16px,4vw,40px) 64px;font-variant-numeric:tabular-nums}
+*{box-sizing:border-box}.wrap{max-width:80ch;margin:0 auto}
+.docnav{display:flex;flex-wrap:wrap;gap:0 14px;align-items:center;padding:10px 0;border-bottom:3px solid var(--gf-ink);font-size:13.5px}
+.docnav a{color:var(--gf-blue);text-decoration:none;min-height:44px;min-width:44px;justify-content:center;display:inline-flex;align-items:center;font-weight:600}
+.docnav a[aria-current]{box-shadow:inset 0 -3px 0 var(--gf-orange)}
+.docnav-brand{font-weight:800;font-stretch:72%;font-size:20px;color:var(--gf-ink);margin-right:8px}
+.docnav-brand b{font-weight:900}
+header .eyebrow{margin:28px 0 4px;font-size:12px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--gf-blue)}
+h1{font-stretch:72%;font-weight:800;font-size:clamp(34px,6vw,52px);line-height:1.04;margin:0 0 16px;color:var(--gf-ink);letter-spacing:-.01em}
+h2{font-stretch:80%;font-weight:800;font-size:28px;line-height:1.1;margin:44px 0 10px;padding-top:12px;border-top:3px solid var(--gf-ink);color:var(--gf-ink)}
+h3{font-weight:750;font-size:18px;margin:26px 0 8px;color:var(--gf-ink)}h4{font-size:16px;margin:20px 0 6px;color:var(--gf-ink)}
+p{margin:0 0 12px}li{margin:4px 0}p,li,td,dd{overflow-wrap:anywhere}strong{font-weight:750;color:var(--gf-ink)}em{color:var(--gf-muted)}a{color:var(--gf-blue);overflow-wrap:anywhere}
+code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.84em;background:var(--gf-blue-soft);padding:1px 5px;border-radius:4px;overflow-wrap:anywhere}
+.tbl{overflow-x:auto;margin:12px 0 20px;border:1px solid var(--gf-line);border-radius:10px;background:var(--gf-surface)}
+table{border-collapse:collapse;width:100%;font-size:14px;min-width:560px}
+th{text-align:left;font-weight:800;background:var(--gf-sunk);padding:10px 12px;border-bottom:2px solid var(--gf-ink);font-size:11.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--gf-ink)}
+td{padding:9px 12px;border-top:1px solid var(--gf-line);vertical-align:top}
+pre{overflow-x:auto;padding:14px 16px;border:1px solid var(--gf-line);background:var(--gf-surface);border-radius:10px;font-size:12.5px;line-height:1.4}
+pre code{background:none;padding:0}
+blockquote{margin:14px 0;padding:12px 16px;border-left:4px solid var(--gf-orange);background:var(--gf-surface);border-radius:0 10px 10px 0}
+footer{margin-top:48px;padding-top:16px;border-top:1px solid var(--gf-line);font-size:12.5px;color:var(--gf-muted)}
+</style></head>
+<body><div class="wrap"><nav class="docnav" aria-label="Project documentation"><span class="docnav-brand">game<b>formative</b></span><a href="index.html">Overview</a><a href="brief.html">Brief</a><a href="research.html">Research</a><a href="source-register.html">Sources researched</a><a href="evidence.html">Evidence</a><a href="audit.html">Audit</a><a href="inputs.html">Inputs and gaps</a><a href="decisions.html">Decisions</a><a href="design.html">Design</a><a href="build-log.html">Build log</a><a href="gate.html">Gate</a><a href="asks.html">Asks</a><a href="ssot.html">SSOT</a><a href="architecture.html" aria-current=page>Architecture</a><a href="technical-design.html">Technical design</a><a href="plan.html">Plan</a><a href="token-map.html">Token map</a><a href="responsible-data.html">Responsible data</a><a href="presentation.html">Presentation</a><a href="../index.html">Prototype</a></nav>
+<header><p class="eyebrow">gameformative · project documentation</p><h1>Architecture — the real build (proposed)</h1></header>
+<p><em>Written 2026-09-25. The prototype is static HTML generated in this repository; this is the proposed
+architecture for gameformative.com in production. Every stack decision is an ADR in status
+</em><em>PROPOSED</em><em> until the owner flips it (the flip is the next D-number in <a href="decisions.html"><code>04-decisions.md</code></a>).</em></p>
+<h2 id="context">Context</h2>
+<pre><code> data providers ──► ingest ──► stats store ──► site renderer ──► CDN ──► readers (phone ≈ desktop)
+ (openfootball CC0;            (results,        (static pages +        │
+  licensed event/live feed)     tables,          live islands)          └─► newsletter, social cards
+                                aggregates)
+ newsroom CMS ────────────────────────────────► (articles, labels, corrections)
+</code></pre>
+<h2 id="the-target-measured">The target, measured</h2>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>Quality</th>
+<th>Target</th>
+<th>Why</th>
+<th>Prototype today</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>LCP (75th percentile, mobile)</td>
+<td>≤ 2.5 s</td>
+<td>Core Web Vitals (register S1)</td>
+<td>no images; one font family; under 75 kB of HTML per page</td>
+</tr>
+<tr>
+<td>INP</td>
+<td>≤ 200 ms</td>
+<td>S1</td>
+<td>6 kB of script, all event handlers local</td>
+</tr>
+<tr>
+<td>CLS</td>
+<td>≤ 0.1</td>
+<td>S1; tickers and ads must reserve space</td>
+<td>strip and tiles have fixed heights; no ads</td>
+</tr>
+<tr>
+<td>Time to first byte</td>
+<td>≤ 0.2 s from a CDN</td>
+<td>the measured leaders: BBC 0.10 s, sportschau 0.074 s; NBA's 5.1 s is the cautionary case (G4)</td>
+<td>static files</td>
+</tr>
+<tr>
+<td>Accessibility</td>
+<td>WCAG 2.2 AA</td>
+<td>S2</td>
+<td>contrast gated; 44 px targets measured</td>
+</tr>
+<tr>
+<td>Data freshness (live)</td>
+<td>score change on page ≤ 10 s after the provider</td>
+<td>a live match centre is only useful live</td>
+<td>not built (no feed)</td>
+</tr>
+<tr>
+<td>Data correctness</td>
+<td>every published table reconciles</td>
+<td>a stats site's whole product</td>
+<td>converter asserts (R2–R7)</td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="containers">Containers</h2>
+<ol>
+<li><strong>Ingest</strong> — pulls openfootball (daily) and the licensed provider (push or poll), normalises
+   names through the reviewed team table, runs the same asserts as <code>data/convert.py</code>, and refuses to
+   publish a competition that does not reconcile.</li>
+<li><strong>Stats store</strong> — matches, events, line-ups, and the derived tables and aggregates, versioned by
+   input hash (as <code>stats.json</code> records its inputs today).</li>
+<li><strong>Site renderer</strong> — pre-renders every page that changes only when data changes (tables, reviews,
+   articles); live islands (score strip, match centre) hydrate from a small JSON endpoint.</li>
+<li><strong>Newsroom CMS</strong> — articles with kind labels, byline, the "how this was made" note, correction
+   history; automated round-ups rendered by template from the store, labelled.</li>
+<li><strong>CDN / host</strong> — static pages and JSON at the edge; purge on data change.</li>
+</ol>
+<h2 id="architecture-decision-records">Architecture decision records</h2>
+<p><strong>ADR-01 — Host on Vercel. PROPOSED.</strong> Options: Vercel; GitHub Pages; Cloudflare Pages; own servers.
+The domain's DNS already points at Vercel (<a href="audit.html"><code>02-audit.md</code></a>), which removes a migration; Vercel serves
+static and edge functions, which the live islands need. GitHub Pages cannot run the live endpoint.</p>
+<p><strong>ADR-02 — Static-first rendering with live islands. PROPOSED.</strong> Options: a server-rendered app on
+every request (NBA.com's Next.js pattern, measured 5.1 s cold first byte, G4); fully client-rendered
+(FIFA's empty <code>#root</code>, G5, invisible without JavaScript); static pages rebuilt on data change plus
+small live components. The third keeps the prototype's measured performance and works without
+JavaScript — the prototype is already the static half.</p>
+<p><strong>ADR-03 — Keep the generator language: Python for ingest and rendering. PROPOSED.</strong> Options:
+Python (the converter and generator already exist and are gated); a JavaScript framework (Astro,
+Next.js). Python keeps <code>convert.py</code>'s asserts as the ingest gate unchanged; a framework is worth it
+only if the live islands grow into an app. Revisit at M3.</p>
+<p><strong>ADR-04 — Licensed event data from one provider. PROPOSED, blocked on ask A1.</strong> Options: Opta /
+Stats Perform, Sportradar, Genius Sports; or no event data. Without one, xG, ratings and live
+scores stay unavailable. Decided on price and terms, which are not public (register I14–I16).</p>
+<p><strong>ADR-05 — Fonts self-hosted. PROPOSED.</strong> The prototype loads Archivo from Google Fonts; production
+self-hosts the subset it uses (one request fewer, no third-party request before consent).</p>
+<p><strong>ADR-06 — Consent and analytics minimal by default. PROPOSED.</strong> Options: a full CMP with ad-tech
+(the German leaders, DE2–DE5); a privacy-first analytics tool with no personal data and no banner
+until ads or a newsletter need consent. See <a href="responsible-data.html"><code>18-responsible-data.md</code></a>.</p>
+<h2 id="flows">Flows</h2>
+<ul>
+<li><strong>Result arrives</strong> → ingest validates → store updates → renderer rebuilds that league's pages,
+  the home page and the strip → CDN purge. Target: minutes (non-live), seconds for the live islands.</li>
+<li><strong>Correction</strong> → editor edits the piece → correction note appended with date → corrections page
+  lists it.</li>
+<li><strong>Automated round-up</strong> → round complete in the store → template renders the card → labelled
+  Automated, published without edit (the template can only state what the data says).</li>
+</ul>
+<footer>gameformative.com · project documentation, 2026</footer></div></body></html>

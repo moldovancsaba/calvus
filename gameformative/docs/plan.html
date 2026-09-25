@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Implementation plan · gameformative</title><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&display=swap"><link rel="stylesheet" href="../assets/tokens.css"><style>/* gameformative — project documentation on the project's own tokens (../assets/tokens.css): off-white ground, Archivo, one blue, one orange. */
+body{margin:0;background:var(--gf-ground);color:var(--gf-text);font-family:var(--gf-font);font-size:16.5px;line-height:1.62;padding:0 clamp(16px,4vw,40px) 64px;font-variant-numeric:tabular-nums}
+*{box-sizing:border-box}.wrap{max-width:80ch;margin:0 auto}
+.docnav{display:flex;flex-wrap:wrap;gap:0 14px;align-items:center;padding:10px 0;border-bottom:3px solid var(--gf-ink);font-size:13.5px}
+.docnav a{color:var(--gf-blue);text-decoration:none;min-height:44px;min-width:44px;justify-content:center;display:inline-flex;align-items:center;font-weight:600}
+.docnav a[aria-current]{box-shadow:inset 0 -3px 0 var(--gf-orange)}
+.docnav-brand{font-weight:800;font-stretch:72%;font-size:20px;color:var(--gf-ink);margin-right:8px}
+.docnav-brand b{font-weight:900}
+header .eyebrow{margin:28px 0 4px;font-size:12px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--gf-blue)}
+h1{font-stretch:72%;font-weight:800;font-size:clamp(34px,6vw,52px);line-height:1.04;margin:0 0 16px;color:var(--gf-ink);letter-spacing:-.01em}
+h2{font-stretch:80%;font-weight:800;font-size:28px;line-height:1.1;margin:44px 0 10px;padding-top:12px;border-top:3px solid var(--gf-ink);color:var(--gf-ink)}
+h3{font-weight:750;font-size:18px;margin:26px 0 8px;color:var(--gf-ink)}h4{font-size:16px;margin:20px 0 6px;color:var(--gf-ink)}
+p{margin:0 0 12px}li{margin:4px 0}p,li,td,dd{overflow-wrap:anywhere}strong{font-weight:750;color:var(--gf-ink)}em{color:var(--gf-muted)}a{color:var(--gf-blue);overflow-wrap:anywhere}
+code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.84em;background:var(--gf-blue-soft);padding:1px 5px;border-radius:4px;overflow-wrap:anywhere}
+.tbl{overflow-x:auto;margin:12px 0 20px;border:1px solid var(--gf-line);border-radius:10px;background:var(--gf-surface)}
+table{border-collapse:collapse;width:100%;font-size:14px;min-width:560px}
+th{text-align:left;font-weight:800;background:var(--gf-sunk);padding:10px 12px;border-bottom:2px solid var(--gf-ink);font-size:11.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--gf-ink)}
+td{padding:9px 12px;border-top:1px solid var(--gf-line);vertical-align:top}
+pre{overflow-x:auto;padding:14px 16px;border:1px solid var(--gf-line);background:var(--gf-surface);border-radius:10px;font-size:12.5px;line-height:1.4}
+pre code{background:none;padding:0}
+blockquote{margin:14px 0;padding:12px 16px;border-left:4px solid var(--gf-orange);background:var(--gf-surface);border-radius:0 10px 10px 0}
+footer{margin-top:48px;padding-top:16px;border-top:1px solid var(--gf-line);font-size:12.5px;color:var(--gf-muted)}
+</style></head>
+<body><div class="wrap"><nav class="docnav" aria-label="Project documentation"><span class="docnav-brand">game<b>formative</b></span><a href="index.html">Overview</a><a href="brief.html">Brief</a><a href="research.html">Research</a><a href="source-register.html">Sources researched</a><a href="evidence.html">Evidence</a><a href="audit.html">Audit</a><a href="inputs.html">Inputs and gaps</a><a href="decisions.html">Decisions</a><a href="design.html">Design</a><a href="build-log.html">Build log</a><a href="gate.html">Gate</a><a href="asks.html">Asks</a><a href="ssot.html">SSOT</a><a href="architecture.html">Architecture</a><a href="technical-design.html">Technical design</a><a href="plan.html" aria-current=page>Plan</a><a href="token-map.html">Token map</a><a href="responsible-data.html">Responsible data</a><a href="presentation.html">Presentation</a><a href="../index.html">Prototype</a></nav>
+<header><p class="eyebrow">gameformative · project documentation</p><h1>Implementation plan</h1></header>
+<p><em>From the approved prototype to gameformative.com. Written 2026-09-25. Milestones, issues with a
+Definition of Done, the blocked register, risks. Dates are set when the owner approves the
+direction (ask A0) — none are promised here.</em></p>
+<h2 id="milestones">Milestones</h2>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>#</th>
+<th>Milestone</th>
+<th>Outcome</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>M0</td>
+<td>Direction approved</td>
+<td>owner's "approved" or changes on the prototype and style guide (A0)</td>
+</tr>
+<tr>
+<td>M1</td>
+<td>Static launch on open data</td>
+<td>gameformative.com live with the prototype's page set on a daily openfootball refresh; newsroom named; corrections page live</td>
+</tr>
+<tr>
+<td>M2</td>
+<td>Licensed data</td>
+<td>xG, shots, ratings, possession filling the panels the prototype marks unavailable</td>
+</tr>
+<tr>
+<td>M3</td>
+<td>Live</td>
+<td>live score strip and match centre with the accessibility rules of <a href="technical-design.html"><code>12-technical-design.md</code></a> §5</td>
+</tr>
+<tr>
+<td>M4</td>
+<td>Growth</td>
+<td>newsletter, social stat cards, the first regional expansion (A6)</td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="issues">Issues</h2>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>#</th>
+<th>Issue</th>
+<th>Milestone</th>
+<th>Definition of Done</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>Deploy the generated site to the host (ADR-01) with the domain</td>
+<td>M1</td>
+<td><code>https://gameformative.com/</code> serves the home page; HTTPS; 404 page; curl-verified</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Scheduled refresh: fetch → convert → build → gate → publish</td>
+<td>M1</td>
+<td>runs daily; a failing assert blocks publish and alerts; the published "data to" date advances</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Remove the prototype banner; replace sample copy with newsroom copy</td>
+<td>M1</td>
+<td>no "sample" text on any page; every article bylined to a named person or the desk with a named editor</td>
+</tr>
+<tr>
+<td>4</td>
+<td>Corrections page and error-report form</td>
+<td>M1</td>
+<td>a public page listing corrections with dates; the form sends to the editor; linked from every article</td>
+</tr>
+<tr>
+<td>5</td>
+<td>Self-host and subset Archivo (ADR-05)</td>
+<td>M1</td>
+<td>no third-party font request; LCP unchanged or better</td>
+</tr>
+<tr>
+<td>6</td>
+<td>Search</td>
+<td>M1</td>
+<td>teams, competitions and articles searchable; the header control becomes live</td>
+</tr>
+<tr>
+<td>7</td>
+<td>Canonical URLs, sitemap, structured data audit</td>
+<td>M1</td>
+<td>valid in Google's Rich Results test for NewsArticle and SportsEvent</td>
+</tr>
+<tr>
+<td>8</td>
+<td>Official tie-breakers per competition (D13)</td>
+<td>M1</td>
+<td>each league's published rules applied; tested with constructed level-on-points cases</td>
+</tr>
+<tr>
+<td>9</td>
+<td>Provider contract and ingest (ADR-04)</td>
+<td>M2</td>
+<td>provider data flows into the store with the same reconciliation asserts</td>
+</tr>
+<tr>
+<td>10</td>
+<td>xG, shots, ratings panels</td>
+<td>M2</td>
+<td>the inert panels filled; glossary names the provider's definitions (S25)</td>
+</tr>
+<tr>
+<td>11</td>
+<td>Live islands: score strip and match centre</td>
+<td>M3</td>
+<td>≤ 10 s from provider to page; polite atomic announcements; a pause control; reduced motion honoured</td>
+</tr>
+<tr>
+<td>12</td>
+<td>Newsletter (A5)</td>
+<td>M4</td>
+<td>double opt-in; sender named; unsubscribe in every mail; <a href="responsible-data.html"><code>18-responsible-data.md</code></a> record filled</td>
+</tr>
+<tr>
+<td>13</td>
+<td>Social stat cards (vertical and square images generated from the charts)</td>
+<td>M4</td>
+<td>one card per analysis, alt text included</td>
+</tr>
+<tr>
+<td>14</td>
+<td>First expansion market (A6)</td>
+<td>M4</td>
+<td>licensed data for that sport verified; language and navigation reviewed with a native editor</td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="blocked-register">Blocked register</h2>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>Blocked</th>
+<th>On</th>
+<th>Unblocks</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Issues 9–11</td>
+<td>A1 — a data provider chosen and contracted</td>
+<td>M2, M3</td>
+</tr>
+<tr>
+<td>Issue 3</td>
+<td>A2 — a newsroom named</td>
+<td>M1</td>
+</tr>
+<tr>
+<td>Photo-led formats</td>
+<td>A3</td>
+<td>—</td>
+</tr>
+<tr>
+<td>Ads, paywall, consent design</td>
+<td>A4</td>
+<td>the consent part of issue 12 and ADR-06</td>
+</tr>
+<tr>
+<td>Issue 12</td>
+<td>A5</td>
+<td>M4</td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="risks">Risks</h2>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>Risk</th>
+<th>Trigger</th>
+<th>Response</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>The open source lags or stops</td>
+<td>no new result for 3 days in season</td>
+<td>the "data to" date is on every page already; M2's provider becomes the primary source</td>
+</tr>
+<tr>
+<td>A provider's terms forbid a use (betting, redistribution)</td>
+<td>contract review</td>
+<td>the licence check is part of issue 9's DoD; nothing publishes before it</td>
+</tr>
+<tr>
+<td>Automated text drifts into claims</td>
+<td>a template change</td>
+<td>templates only state computed facts; every template change passes the gate and an editor's read</td>
+</tr>
+<tr>
+<td>AI-regulation changes</td>
+<td>EU guidance updates</td>
+<td>the automation policy is one page; labels are components</td>
+</tr>
+<tr>
+<td>Performance erodes with ads and live features</td>
+<td>CWV at p75 over budget</td>
+<td>reserved slots, lazy loading, the budget in <a href="architecture.html"><code>11-architecture.md</code></a> as a release check</td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="release-scope-for-m1">Release scope for M1</h2>
+<p>Everything the prototype shows, on the daily open-data refresh, with the newsroom named and the
+corrections page live. Not in M1: licensed data, live scores, accounts, newsletter, other sports.</p>
+<footer>gameformative.com · project documentation, 2026</footer></div></body></html>

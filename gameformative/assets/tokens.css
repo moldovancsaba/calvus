@@ -1,0 +1,92 @@
+/* gameformative — design tokens. One source for colour, type and space; site.css reads only these.
+   Palette logic (docs/05-design.md): a warm off-white ground, one brand blue, one live/alert orange —
+   blue + orange is the most colour-blind-robust pair for charts. The blue and orange are the studio's
+   own sRGB readings of two 2027 forecast colours (WGSN × Coloro "Luminous Blue" and "Energy Orange",
+   a projection, not a finding); no forecaster publishes hex values. Every text pair here is checked
+   for WCAG 2.2 contrast by check.py, in both themes. */
+:root {
+  color-scheme: light;
+  --gf-ground: #F7F6F2;
+  --gf-surface: #FFFFFF;
+  --gf-sunk: #EFEDE7;
+  --gf-ink: #0C1222;
+  --gf-text: #1F2637;
+  --gf-muted: #596175;
+  --gf-line: #E3E1DA;
+  --gf-line-strong: #C9C6BC;
+  --gf-blue: #1F47E0;
+  --gf-blue-soft: #E6EBFD;
+  --gf-on-blue: #FFFFFF;
+  --gf-orange: #E0560B;
+  --gf-orange-soft: #FDEBDF;
+  --gf-orange-ink: #B23F00;
+  --gf-on-orange: #0C1222;
+  --gf-draw: #D9DCE3;
+  --gf-on-draw: #0C1222;
+  --gf-band: #0C1222;
+  --gf-on-band: #F3F5F9;
+  --gf-band-muted: #9AA3B6;
+  --gf-focus: #1F47E0;
+
+  --gf-font: "Archivo", "Arial Narrow", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --gf-wide: 100%;
+  --gf-condensed: 72%;
+  --gf-radius: 10px;
+  --gf-radius-sm: 6px;
+  --gf-radius-pill: 999px;
+  --gf-space: 8px;
+  --gf-max: 1240px;
+  --gf-tap: 44px;
+  --gf-header: 60px;
+  --gf-shadow: 0 1px 2px rgba(12, 18, 34, .06), 0 4px 16px rgba(12, 18, 34, .05);
+}
+
+/* Dark: the reader's system preference, unless they chose light on the toggle; or the toggle's dark. */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    color-scheme: dark;
+    --gf-ground: #0B0F1A;
+    --gf-surface: #141B2B;
+    --gf-sunk: #10172A;
+    --gf-ink: #F3F5F9;
+    --gf-text: #D5DAE4;
+    --gf-muted: #9AA3B6;
+    --gf-line: #27314A;
+    --gf-line-strong: #3A4666;
+    --gf-blue: #7C95FF;
+    --gf-blue-soft: #1B2547;
+    --gf-on-blue: #0B0F1A;
+    --gf-orange: #FF8A3D;
+    --gf-orange-soft: #3A2415;
+    --gf-orange-ink: #FF9E5E;
+    --gf-on-orange: #0B0F1A;
+    --gf-draw: #3A4560;
+    --gf-on-draw: #F3F5F9;
+    --gf-band: #050811;
+    --gf-focus: #7C95FF;
+    --gf-shadow: 0 1px 2px rgba(0, 0, 0, .4);
+  }
+}
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --gf-ground: #0B0F1A;
+  --gf-surface: #141B2B;
+  --gf-sunk: #10172A;
+  --gf-ink: #F3F5F9;
+  --gf-text: #D5DAE4;
+  --gf-muted: #9AA3B6;
+  --gf-line: #27314A;
+  --gf-line-strong: #3A4666;
+  --gf-blue: #7C95FF;
+  --gf-blue-soft: #1B2547;
+  --gf-on-blue: #0B0F1A;
+  --gf-orange: #FF8A3D;
+  --gf-orange-soft: #3A2415;
+  --gf-orange-ink: #FF9E5E;
+  --gf-on-orange: #0B0F1A;
+  --gf-draw: #3A4560;
+  --gf-on-draw: #F3F5F9;
+  --gf-band: #050811;
+  --gf-focus: #7C95FF;
+  --gf-shadow: 0 1px 2px rgba(0, 0, 0, .4);
+}

@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Decisions · gameformative</title><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&display=swap"><link rel="stylesheet" href="../assets/tokens.css"><style>/* gameformative — project documentation on the project's own tokens (../assets/tokens.css): off-white ground, Archivo, one blue, one orange. */
+body{margin:0;background:var(--gf-ground);color:var(--gf-text);font-family:var(--gf-font);font-size:16.5px;line-height:1.62;padding:0 clamp(16px,4vw,40px) 64px;font-variant-numeric:tabular-nums}
+*{box-sizing:border-box}.wrap{max-width:80ch;margin:0 auto}
+.docnav{display:flex;flex-wrap:wrap;gap:0 14px;align-items:center;padding:10px 0;border-bottom:3px solid var(--gf-ink);font-size:13.5px}
+.docnav a{color:var(--gf-blue);text-decoration:none;min-height:44px;min-width:44px;justify-content:center;display:inline-flex;align-items:center;font-weight:600}
+.docnav a[aria-current]{box-shadow:inset 0 -3px 0 var(--gf-orange)}
+.docnav-brand{font-weight:800;font-stretch:72%;font-size:20px;color:var(--gf-ink);margin-right:8px}
+.docnav-brand b{font-weight:900}
+header .eyebrow{margin:28px 0 4px;font-size:12px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--gf-blue)}
+h1{font-stretch:72%;font-weight:800;font-size:clamp(34px,6vw,52px);line-height:1.04;margin:0 0 16px;color:var(--gf-ink);letter-spacing:-.01em}
+h2{font-stretch:80%;font-weight:800;font-size:28px;line-height:1.1;margin:44px 0 10px;padding-top:12px;border-top:3px solid var(--gf-ink);color:var(--gf-ink)}
+h3{font-weight:750;font-size:18px;margin:26px 0 8px;color:var(--gf-ink)}h4{font-size:16px;margin:20px 0 6px;color:var(--gf-ink)}
+p{margin:0 0 12px}li{margin:4px 0}p,li,td,dd{overflow-wrap:anywhere}strong{font-weight:750;color:var(--gf-ink)}em{color:var(--gf-muted)}a{color:var(--gf-blue);overflow-wrap:anywhere}
+code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.84em;background:var(--gf-blue-soft);padding:1px 5px;border-radius:4px;overflow-wrap:anywhere}
+.tbl{overflow-x:auto;margin:12px 0 20px;border:1px solid var(--gf-line);border-radius:10px;background:var(--gf-surface)}
+table{border-collapse:collapse;width:100%;font-size:14px;min-width:560px}
+th{text-align:left;font-weight:800;background:var(--gf-sunk);padding:10px 12px;border-bottom:2px solid var(--gf-ink);font-size:11.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--gf-ink)}
+td{padding:9px 12px;border-top:1px solid var(--gf-line);vertical-align:top}
+pre{overflow-x:auto;padding:14px 16px;border:1px solid var(--gf-line);background:var(--gf-surface);border-radius:10px;font-size:12.5px;line-height:1.4}
+pre code{background:none;padding:0}
+blockquote{margin:14px 0;padding:12px 16px;border-left:4px solid var(--gf-orange);background:var(--gf-surface);border-radius:0 10px 10px 0}
+footer{margin-top:48px;padding-top:16px;border-top:1px solid var(--gf-line);font-size:12.5px;color:var(--gf-muted)}
+</style></head>
+<body><div class="wrap"><nav class="docnav" aria-label="Project documentation"><span class="docnav-brand">game<b>formative</b></span><a href="index.html">Overview</a><a href="brief.html">Brief</a><a href="research.html">Research</a><a href="source-register.html">Sources researched</a><a href="evidence.html">Evidence</a><a href="audit.html">Audit</a><a href="inputs.html">Inputs and gaps</a><a href="decisions.html" aria-current=page>Decisions</a><a href="design.html">Design</a><a href="build-log.html">Build log</a><a href="gate.html">Gate</a><a href="asks.html">Asks</a><a href="ssot.html">SSOT</a><a href="architecture.html">Architecture</a><a href="technical-design.html">Technical design</a><a href="plan.html">Plan</a><a href="token-map.html">Token map</a><a href="responsible-data.html">Responsible data</a><a href="presentation.html">Presentation</a><a href="../index.html">Prototype</a></nav>
+<header><p class="eyebrow">gameformative · project documentation</p><h1>Decisions</h1></header>
+<p><em>Numbered register. Each entry: date, the decision, by whom, why, what it replaced. A decision is
+written here before it is code.</em></p>
+<p><strong>D1 — 2026-09-25 — Build the first version directly; the owner's review is the design gate.</strong>
+By: owner's instruction ("make the best possible prototype with documentation"). Why: the method
+(<code>PROTOTYPING.md</code> §2) puts design-system and frame approval before layout; the owner asked for the
+finished prototype in one round, as on Népszabadság (its D1). The design system is still built
+first and live (<code>styleguide/index.html</code>), so the owner can approve or redirect it on a rendered
+page. Replaced: separate token and frame approvals.</p>
+<p><strong>D2 — 2026-09-25 — Football first; five leagues and the World Cup.</strong> By: the team, from the
+research. Why: 51% of people globally are football fans (register I19); the only open data verified
+as free for commercial use is openfootball's football data (O1, O2); StatsBomb and NBA.com terms
+forbid it (O3, O4). Cricket, NBA/CBA and women's football are expansions (<a href="research.html"><code>01-research.md</code></a> P12).</p>
+<p><strong>D3 — 2026-09-25 — Every figure comes from openfootball through one converter; nothing typed,
+nothing estimated.</strong> By: the team. Why: <code>PROTOTYPING.md</code> §3.1 (no figure invented), and a stats site
+whose numbers do not reconcile has no product. <code>data/convert.py</code> asserts that each table's goals
+for equal its goals against, points reconcile with results, the two files for a competition agree
+match by match, and every goal list matches its score. It stopped the first run on four World Cup
+nations spelled differently in the two files — resolved by an explicit alias table, not fuzzy
+matching.</p>
+<p><strong>D4 — 2026-09-25 — Palette: warm off-white, ink navy, one blue, one orange.</strong> By: the team, from
+<a href="research.html"><code>01-research.md</code></a> §4. Why: the measured leaders use a near-black/navy structure and one saturated
+accent, blue most often; WGSN × Coloro project Luminous Blue as 2027's colour and Energy Orange
+among its key colours; blue with orange is the most colour-blind-safe pair. Hex values are our own
+readings and are contrast-checked by the gate. Replaced: nothing (new brand).</p>
+<p><strong>D5 — 2026-09-25 — Type: Archivo, one variable family with a width axis.</strong> By: the team. Why: the
+leaders pair condensed display with wider UI type (§5); the World Cup 26 face failed at small sizes
+because it was condensed everywhere (T15). One family, three widths (72 / 85 / 100%), tabular
+numerals, one font request.</p>
+<p><strong>D6 — 2026-09-25 — Light by default, dark by system preference or toggle, both tokenised.</strong> By: the
+team. Why: NNG — light reads better for most, dark should be available (S11); three of five stats
+sites and FIFA's own tokens offer both (ST4, ST6, ST7, G6). The choice is stored per device only.</p>
+<p><strong>D7 — 2026-09-25 — Article copy is written from the data, with premises that stop the build.</strong> By:
+the team. Why: sample copy on a live data feed goes stale silently. Each article reads its figures
+from <code>stats.json</code>, and each narrative claim ("City have won all five", "the last quarter-hour has
+the most goals") is a <code>premise()</code> in <code>content.py</code> — a refresh that falsifies one stops the build
+instead of publishing an untrue sentence.</p>
+<p><strong>D8 — 2026-09-25 — Byline "gameformative data desk"; no invented journalists.</strong> By: the team. Why:
+there is no newsroom; fictional named reporters on a news site would misrepresent who wrote it
+(Népszabadság used designed initials for the same reason). The Trust Project's expertise indicator
+(S33) is met when the newsroom is named.</p>
+<p><strong>D9 — 2026-09-25 — No photography; data graphics as covers.</strong> By: the team. Why: no licensed photo
+source, AI imagery ruled out (<code>PROTOTYPING.md</code> §3.1). The covers are drawn from the numbers the
+story is about (a points race, goals per game, a scoreline), which is also the brand idea: the
+numbers are the picture. A photo agency licence is ask A3.</p>
+<p><strong>D10 — 2026-09-25 — Scores before stories: a latest-results strip on every page.</strong> By: the team.
+Why: every regional leader puts scores at the top (<a href="research.html"><code>01-research.md</code></a> §3.2). The strip does not move
+on its own, so it needs no pause control; the live version's rules are in <a href="technical-design.html"><code>12-technical-design.md</code></a>.</p>
+<p><strong>D11 — 2026-09-25 — Visible navigation: a top nav on desktop, a five-tab bar on phones.</strong> By: the
+team. Why: NNG, visible beats hidden, and a tab bar holds 4–5 items (S7, S8). Home · Scores · Stats ·
+Analysis · More; More holds World Cup 2026, How we count, the leagues, theme and sign-in.</p>
+<p><strong>D12 — 2026-09-25 — Phone tables are compact until asked.</strong> By: the team, after the first measured
+pass. Why: the full twelve-column table at 375 px showed only P, W and D before scrolling — Pts was
+off screen. Phones now show #, Team, P, GD, Pts with an "All columns" button (NNG, let users choose
+columns, S9); desktop shows everything.</p>
+<p><strong>D13 — 2026-09-25 — Our table order is stated, not hidden.</strong> By: the team. Why: official
+tie-breakers differ by competition (gap 4 in <a href="inputs.html"><code>03-sources.md</code></a>); applying each league's full rules
+needs head-to-head logic the prototype does not need to prove the product. Every table says so.</p>
+<p><strong>D14 — 2026-09-25 — Automated round-ups come from a template, and say so.</strong> By: the team. Why:
+Article 50 of the EU AI Act, in force from 2 August 2026, and the reader-trust evidence (§7). The
+"in numbers" cards are filled by <code>build.py</code> from the results — no language model — and carry the
+Automated label and a link to the policy. Replaced: nothing.</p>
+<p><strong>D15 — 2026-09-25 — Charts are HTML where text matters.</strong> By: the team, while building. Why: an
+SVG chart drawn at a fixed viewBox shrinks its labels to ~7 px on a phone. Bars, stacked bars and
+columns are HTML; the line chart is an SVG stretched to its box with HTML labels over it, so text is
+real text at every width. Cover graphics stay SVG (decorative, <code>aria-hidden</code>).</p>
+<p><strong>D16 — 2026-09-25 — The browser was used only on the local prototype.</strong> By: owner (declined an
+external site in the in-app browser). Why: owner's call. Effect: the benchmark is built from
+measured HTML and CSS, not rendered pages (<a href="research.html"><code>01-research.md</code></a> §0).</p>
+<footer>gameformative.com · project documentation, 2026</footer></div></body></html>
