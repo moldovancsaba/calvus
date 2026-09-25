@@ -4,10 +4,11 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>IDBC Salary Guide — single source of truth (SSOT) · IDBC Salary Guide</title>
-<style>/* IDBC Salary Guide — documentation pages, on the guide's own tokens (dark green, light ground, Inter). */
-:root{--ground:#eef5ec;--card:#ffffff;--ink:#101818;--text:#2a3333;--muted:rgba(16,24,24,.66);--accent:#a5df8f;--accent-deep:#245d54;--line:rgba(19,35,35,.18);--line-soft:rgba(19,35,35,.08);--note:#e3efdf}
+<style>@import url("https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&display=swap");
+/* IDBC Salary Guide — documentation pages, on the guide's own tokens (idbc.hu's dark green and light ground, Outfit standing in for Gilroy). */
+:root{--ground:#f5f9f2;--card:#ffffff;--ink:#121c1b;--text:#26312f;--muted:rgba(18,28,27,.66);--accent:#a4dd8c;--accent-deep:#35715c;--line:rgba(18,28,27,.16);--line-soft:rgba(18,28,27,.08);--note:#daf1d0}
 *{box-sizing:border-box}
-body{margin:0;background:var(--ground);color:var(--text);font-family:"Inter","Montserrat","Segoe UI",Arial,sans-serif;font-size:15.5px;line-height:1.6;padding-block:0 64px;padding-inline:clamp(16px,4vw,40px)}
+body{margin:0;background:var(--ground);color:var(--text);font-family:"Outfit","Gilroy",system-ui,"Segoe UI",Arial,sans-serif;font-size:16px;line-height:1.6;padding-block:0 64px;padding-inline:clamp(16px,4vw,40px)}
 .wrap{max-width:74ch;margin-inline:auto}
 .docnav{display:flex;flex-wrap:wrap;gap:4px 18px;align-items:center;padding:16px 0;border-bottom:1px solid var(--line);font-size:12px;letter-spacing:.06em;text-transform:uppercase}
 .docnav a{color:var(--muted);text-decoration:none;min-height:44px;min-width:44px;display:inline-flex;align-items:center;border-bottom:2px solid transparent}
@@ -272,12 +273,16 @@ case study).</p>
 <td>compact layout ≤ 700 px viewport</td>
 </tr>
 <tr>
+<td>Header menu breakpoint</td>
+<td>links fold behind the menu icon below 1200 px (idbc.hu's)</td>
+</tr>
+<tr>
 <td>Table card mode</td>
 <td>container width &lt; 600 px</td>
 </tr>
 <tr>
 <td>Asset version</td>
-<td><code>?v=</code> on <code>top3-chart.js</code> (9) and <code>chart.css</code> (7) — bump on every change; the sync bumps <code>top3-chart.js</code> itself when a chart text changes in the sheet</td>
+<td><code>?v=</code> on <code>top3-chart.js</code> (10), <code>chart.css</code> (8), <code>site.css</code> and <code>site.js</code> (1) — bump on every change; the sync bumps <code>top3-chart.js</code> itself when a chart text changes in the sheet</td>
 </tr>
 <tr>
 <td>Tap floor</td>
@@ -290,7 +295,7 @@ case study).</p>
 </tbody>
 </table></div>
 <h2>5. Decision register</h2>
-<p><a href="decisions.html"><code>04-decisions.md</code></a> (D1–D38). Technical decisions in this package are ADRs in
+<p><a href="decisions.html"><code>04-decisions.md</code></a> (D1–D39). Technical decisions in this package are ADRs in
 <a href="architecture.html"><code>11-architecture.md</code></a> §11, PROPOSED until flipped; the flip is the next D-number.</p>
 <h2>6. Rules register</h2>
 <div class="tbl"><table>

@@ -5,55 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Területi összefoglaló – Talent Market &amp; Salary Guide 2026</title>
   <style>
-    :root {
-      --bg: #eef2ec;
-      --surface: #ffffff;
-      --dark: #132323;
-      --text: #101818;
-      --muted: #5d6b66;
-      --line: rgba(19, 35, 35, 0.14);
-      --green: #a5df8f;
-      --radius-medium: 22px;
-      --shadow-soft: 0 18px 40px rgba(19, 35, 35, 0.1);
-    }
-    * { box-sizing: border-box; }
-    body {
-      margin: 0;
-      background: var(--bg);
-      color: var(--text);
-      font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
-      font-weight: 800;
-    }
-    a { color: inherit; }
+
     button { font: inherit; cursor: pointer; }
-
-    .site-header { position: sticky; top: 0; z-index: 20; }
-    .navbar {
-      display: flex; align-items: center; gap: 18px;
-      margin: 0 auto; max-width: 1180px; padding: 14px 26px;
-      background: var(--dark); color: #fff; border-radius: 0 0 20px 20px;
-    }
-    .brand { display: grid; text-decoration: none; color: #fff; line-height: 1; }
-    .brand-main { font-size: 21px; font-weight: 900; letter-spacing: -0.4px; }
-    .brand-sub { font-size: 11px; font-weight: 700; color: var(--green); text-transform: lowercase; }
-    .nav-links { display: flex; gap: 18px; list-style: none; margin: 0; padding: 0; font-size: 13px; font-weight: 800; }
-    .nav-links a { color: rgba(255,255,255,.82); text-decoration: none; }
-    .nav-links a:hover { color: #fff; }
-    .nav-actions { margin-left: auto; display: flex; gap: 10px; align-items: center; }
-    .button {
-      display: inline-block; padding: 10px 18px; border-radius: 999px;
-      font-size: 13px; font-weight: 900; text-decoration: none; border: 1.5px solid transparent;
-    }
-    .button-primary { background: var(--green); color: var(--dark); }
-    .button-logout { background: transparent; border-color: rgba(255,255,255,.45); color: #fff; }
-    .is-unavailable { opacity: .55; cursor: not-allowed; }
-    .menu-toggle {
-      display: none; margin-left: auto; border: 0; background: transparent; color: #fff;
-      font-size: 22px; line-height: 1; cursor: pointer; min-width: 44px; min-height: 44px;
-    }
-
-    .container { max-width: 1180px; margin: 0 auto; padding: 0 26px; }
-    .section { padding: 32px 0 60px; }
 
     .back-link {
       display: inline-flex; align-items: center; gap: 7px; margin: 22px 0 18px;
@@ -61,16 +14,10 @@
     }
     .back-link:hover { color: var(--text); }
 
-    .eyebrow { margin: 0 0 8px; font-size: 12px; font-weight: 900; text-transform: uppercase; letter-spacing: .08em; color: var(--muted); }
     h1 { margin: 0 0 6px; font-size: clamp(28px, 4vw, 42px); line-height: 1.02; letter-spacing: -1px; }
 
     /* Client, 2026-09-24: these area sub-pages don't need a photo Hero like the guide's other
        pages — just a green header band up top. */
-    .area-headerband { background: var(--green); }
-    .area-headerband .back-link { margin-top: 22px; color: rgba(16, 24, 24, .68); }
-    .area-headerband .back-link:hover { color: var(--dark); }
-    .area-headerband .eyebrow { color: rgba(16, 24, 24, .68); }
-    .area-headerband h1 { margin-bottom: 22px; color: var(--dark); }
 
     /* Summary: text column clamped to the media slot's height (video placeholder or key-thought box), expandable. */
     .area-summary { display: grid; grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr); gap: 26px; align-items: start; margin: 24px 0 0; }
@@ -119,10 +66,6 @@
     .results-head h2 { margin: 0 0 6px; font-size: clamp(22px, 3vw, 30px); letter-spacing: -0.6px; }
     .topic-filter { margin: 20px 0 0; max-width: 340px; }
     .topic-filter label { display: grid; gap: 8px; font-size: 13px; font-weight: 900; }
-    select {
-      font: inherit; font-weight: 800; padding: 11px 14px; border-radius: 999px;
-      border: 1.5px solid var(--line); background: var(--green); color: var(--dark);
-    }
 
     .panels { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 40px; margin-top: 26px; }
     .panel h3 { margin: 0 0 4px; font-size: clamp(20px, 2.6vw, 26px); letter-spacing: -0.6px; }
@@ -148,70 +91,56 @@
     .multi-group-label { margin: 0 0 8px; font-size: 13px; font-weight: 900; }
     .no-data { font-size: 13px; font-weight: 700; color: var(--muted); font-style: italic; margin: 0; }
 
-    .site-footer { background: var(--dark); color: #fff; padding: 30px 0; margin-top: 40px; }
-    .site-footer .container { display: flex; justify-content: space-between; gap: 18px; flex-wrap: wrap; font-size: 12px; font-weight: 700; }
-    .site-footer a { color: var(--green); }
-
     @media (max-width: 900px) {
       .area-summary, .panels { grid-template-columns: 1fr; }
       .contact-card { grid-template-columns: 1fr; }
       .contact-card img { width: 100%; height: 220px; }
-      .navbar { flex-wrap: wrap; gap: 14px; }
-      .menu-toggle { display: block; }
-      .nav-links, .nav-actions { display: none; }
-      .navbar.is-open .nav-links,
-      .navbar.is-open .nav-actions {
-        display: flex; flex-direction: column; align-items: stretch;
-        width: 100%; order: 3; gap: 10px; padding: 14px 2px 12px; margin-left: 0;
-      }
-      .navbar.is-open .nav-links { font-size: 13px; }
-      .navbar.is-open .nav-links a { display: block; padding: 10px 2px; }
-      .navbar.is-open .nav-actions .button { width: 100%; text-align: center; }
+
     }
 
     /* Mobile tap targets: WCAG 2.5.5 / HIG floor of 44px for anything tappable.
        Applied only on small screens so desktop density is unchanged. */
     @media (max-width: 980px) {
-      .menu-toggle { min-width: 44px; min-height: 44px; }
-      .nav-links a,
-      .nav-actions .button,
-      .nav-actions .language-link,
-      .site-footer a,
-      .footer-nav a,
-      .footer-bottom a,
       .back-link { display: inline-flex; align-items: center; min-height: 44px; min-width: 44px; }
-      .brand { min-height: 44px; display: inline-flex; flex-direction: column; justify-content: center; }
-      select { min-height: 44px; }
+
     }
   </style>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&display=swap">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
+  <link rel="stylesheet" href="../assets/site.css?v=1">
 </head>
 <body>
-  <header class="site-header">
-    <nav class="navbar" aria-label="Fő navigáció" data-sync-attr="aria-label:SHARED-HEADER-ARIA-LABEL-FO-NAVIGACIO">
-      <a class="brand" href="../index.html" aria-label="IDBC Group" data-sync-attr="aria-label:SHARED-HEADER-ARIA-LABEL-IDBC-GROUP">
-        <span class="brand-main" data-sync="SHARED-HEADER-IDBC">IDBC</span>
-        <span class="brand-sub" data-sync="SHARED-HEADER-SALARY-GUIDE">salary guide</span>
-      </a>
-      <button class="menu-toggle" type="button" aria-label="Menü megnyitása" aria-expanded="false" data-sync-attr="aria-label:SHARED-HEADER-ARIA-LABEL-MENU-MEGNYITASA">☰</button>
-
-      <ul class="nav-links">
-        <li><a href="../index.html#trends" data-sync="SHARED-HEADER-PIACI-TRENDEK">Piaci trendek</a></li>
+  <header class="sg-header">
+    <nav class="sg-nav" aria-label="Fő navigáció" data-sync-attr="aria-label:SHARED-HEADER-ARIA-LABEL-FO-NAVIGACIO">
+      <div class="sg-brand">
+        <a href="https://idbc.hu/" aria-label="IDBC Group" data-sync-attr="aria-label:SHARED-HEADER-ARIA-LABEL-IDBC-GROUP"><img class="sg-logo" src="https://idbc.hu/includes/images/IDBC_logo_Group-02.svg" alt="" width="100" height="61"></a>
+        <span class="sg-brand-sep" aria-hidden="true"></span>
+        <a class="sg-guide" href="../index.html" aria-label="IDBC Salary Guide" data-sync="SHARED-HEADER-SALARY-GUIDE" data-sync-attr="aria-label:SHARED-HEADER-ARIA-LABEL-IDBC-SALARY-GUIDE">salary guide</a>
+      </div>
+      <div class="sg-lang" aria-label="Nyelvválasztó" data-sync-attr="aria-label:SHARED-HEADER-ARIA-LABEL-NYELVVALASZTO">
+        <span class="is-unavailable" aria-disabled="true" title="Angol nyelvű változat egyelőre nem érhető el" data-sync="SHARED-HEADER-EN" data-sync-attr="title:SHARED-HEADER-TITLE-ANGOL-NYELVU-VALTOZAT-EGYELORE">EN</span>
+        <span class="is-active" aria-current="true" data-sync="SHARED-HEADER-HU">HU</span>
+      </div>
+      <button class="sg-toggle" type="button" aria-label="Menü megnyitása" aria-expanded="false" data-sync-attr="aria-label:SHARED-HEADER-ARIA-LABEL-MENU-MEGNYITASA"><i class="bi bi-list" aria-hidden="true"></i></button>
+      <ul class="sg-links">
+        <li><a href="../index.html#trends" aria-current="page" data-sync="SHARED-HEADER-PIACI-TRENDEK">Piaci trendek</a></li>
         <li><a href="../berezes/index.html" data-sync="SHARED-HEADER-BEREK">Bérek</a></li>
         <li><a href="../sap/index.html" data-sync="SHARED-HEADER-SAP">SAP</a></li>
         <li><a href="../expert-pool/index.html" data-sync="SHARED-HEADER-EXPERT-POOL">Expert Pool</a></li>
         <li><a href="../esettanulmanyok/index.html" data-sync="SHARED-HEADER-ESETTANULMANYOK">Esettanulmányok</a></li>
       </ul>
-
-      <div class="nav-actions">
-        <a class="button button-primary" href="../kapcsolat/index.html" data-sync="SHARED-HEADER-AJANLATKERES">Ajánlatkérés</a>
-        <button class="button button-logout is-unavailable" type="button" aria-disabled="true"
-          title="A be- és kijelentkezés a prototípusban még nincs bekötve" data-sync="SHARED-HEADER-KIJELENTKEZES" data-sync-attr="title:SHARED-HEADER-TITLE-A-BE-ES-KIJELENTKEZES">Kijelentkezés</button>
+      <div class="sg-actions">
+        <a class="sg-btn sg-btn--dark-outline" href="../kapcsolat/index.html" data-sync="SHARED-HEADER-AJANLATKERES">Ajánlatkérés</a>
+        <button class="sg-btn sg-btn--dark is-unavailable" type="button" aria-disabled="true" title="A be- és kijelentkezés a prototípusban még nincs bekötve" data-sync="SHARED-HEADER-KIJELENTKEZES" data-sync-attr="title:SHARED-HEADER-TITLE-A-BE-ES-KIJELENTKEZES">Kijelentkezés</button>
       </div>
     </nav>
   </header>
+  <script src="../assets/site.js?v=1" defer></script>
 
-  <section class="area-headerband">
-    <div class="container">
+  <section class="sg-hero sg-hero--plain">
+    <div class="sg-hero-inner">
       <a class="back-link" href="../index.html#trends" data-sync="TERULET-A-VISSZA-A-MUNKAERO-PIACI">← Vissza a munkaerő-piaci trendekhez</a>
       <p class="eyebrow" data-sync="TERULET-P-TERULETI-OSSZEFOGLALO">Területi összefoglaló</p>
       <h1 id="areaTitle">Terület</h1>
@@ -275,32 +204,68 @@
     </div>
   </main>
 
-  <footer class="site-footer">
-    <div class="container">
-      <span data-sync="SHARED-FOOTER-IDBC-SALARY-GUIDE-TALENT">IDBC Salary Guide — Talent Market &amp; Salary Guide 2026</span>
-      <span><a href="../index.html#trends" data-sync="SHARED-FOOTER-VISSZA-A-TRENDEKHEZ">Vissza a trendekhez</a></span>
+  <footer class="sg-footer">
+    <div class="sg-footer-inner">
+      <section class="sg-footer-contact">
+        <a href="https://idbc.hu/" aria-label="IDBC Group" data-sync-attr="aria-label:SHARED-FOOTER-ARIA-LABEL-IDBC-GROUP"><img class="sg-logo" src="https://idbc.hu/includes/images/IDBC_logo_Group-02.svg" alt="" width="100" height="61"></a>
+        <p data-sync="SHARED-FOOTER-YOUR-PROFESSIONAL-BOOST">Your professional boost!</p>
+        <p><idbc-t data-sync="SHARED-FOOTER-TELEFON">Telefon:</idbc-t> <a href="tel:+36304798090" data-sync="SHARED-FOOTER-36-30-479-0090" data-sync-href="tel:SHARED-FOOTER-36-30-479-0090">+36 30 479 8090</a></p>
+        <p><idbc-t data-sync="SHARED-FOOTER-E-MAIL">E-mail:</idbc-t> <a href="mailto:contact@idbc.hu" data-sync="SHARED-FOOTER-CONTACT-IDBC-HU" data-sync-href="mailto:SHARED-FOOTER-CONTACT-IDBC-HU">contact@idbc.hu</a></p>
+        <p data-sync="SHARED-FOOTER-CIM-DUNA-TOWER-IRODAHAZ">Cím: Duna Tower Irodaház A torony 13. emelet<br>1138 Budapest, Népfürdő utca 22.</p>
+        <div class="sg-social">
+          <a href="https://hu.linkedin.com/company/idbc-creative-solutions-kft-" aria-label="LinkedIn" data-sync-attr="aria-label:SHARED-FOOTER-SOCIAL-LINKEDIN"><i class="bi bi-linkedin" aria-hidden="true"></i></a>
+          <a href="https://www.facebook.com/idbccreativesolutions/" aria-label="Facebook" data-sync-attr="aria-label:SHARED-FOOTER-SOCIAL-FACEBOOK"><i class="bi bi-facebook" aria-hidden="true"></i></a>
+          <a href="https://www.instagram.com/idbc.creativesolutions/" aria-label="Instagram" data-sync-attr="aria-label:SHARED-FOOTER-SOCIAL-INSTAGRAM"><i class="bi bi-instagram" aria-hidden="true"></i></a>
+          <a href="https://www.tiktok.com/@idbccreativesolutions" aria-label="TikTok" data-sync-attr="aria-label:SHARED-FOOTER-SOCIAL-TIKTOK"><i class="bi bi-tiktok" aria-hidden="true"></i></a>
+          <a href="https://www.youtube.com/@idbccreativesolutions" aria-label="YouTube" data-sync-attr="aria-label:SHARED-FOOTER-SOCIAL-YOUTUBE"><i class="bi bi-youtube" aria-hidden="true"></i></a>
+        </div>
+      </section>
+      <nav class="sg-footer-col" aria-label="Lábléc navigáció" data-sync-attr="aria-label:SHARED-FOOTER-ARIA-LABEL-LABLEC-NAVIGACIO">
+        <p class="sg-footer-h" data-sync="SHARED-FOOTER-IDBC-SALARY-GUIDE-TALENT">IDBC Salary Guide — Talent Market &amp; Salary Guide 2026</p>
+        <a href="../index.html#trends" data-sync="SHARED-FOOTER-PIACI-TRENDEK">Piaci trendek</a>
+        <a href="../berezes/index.html" data-sync="SHARED-FOOTER-BEREK">Bérek</a>
+        <a href="../sap/index.html" data-sync="SHARED-FOOTER-SAP">SAP</a>
+        <a href="../expert-pool/index.html" data-sync="SHARED-FOOTER-EXPERT-POOL">Expert Pool</a>
+        <a href="../esettanulmanyok/index.html" data-sync="SHARED-FOOTER-ESETTANULMANYOK">Esettanulmányok</a>
+      </nav>
+      <div class="sg-footer-col">
+        <p class="sg-footer-h" data-sync="SHARED-FOOTER-COL-SZOLGALTATASOK">Szolgáltatások</p>
+        <a href="https://idbc.hu/talent" data-sync="SHARED-FOOTER-TALENT">Talent</a>
+        <a href="https://idbc.hu/projects" data-sync="SHARED-FOOTER-PROJECTS">Projects</a>
+        <a href="https://idbc.hu/go" data-sync="SHARED-FOOTER-GO">GO</a>
+        <a class="sg-footer-h" href="https://idbc.hu/karrier/" data-sync="SHARED-FOOTER-KARRIER">Karrier</a>
+        <p class="sg-footer-h" data-sync="SHARED-FOOTER-COL-ROLUNK">Rólunk</p>
+        <a href="https://idbc.hu/rolunk/" data-sync="SHARED-FOOTER-IDBC">IDBC</a>
+        <a href="https://idbc.hu/csr/" data-sync="SHARED-FOOTER-CSR">CSR</a>
+        <p class="sg-footer-h" data-sync="SHARED-FOOTER-COL-SZAKMAI-TARTALMAK">Szakmai tartalmak</p>
+        <a href="https://idbc.hu/tartalmaink/" data-sync="SHARED-FOOTER-TARTALMAINK">Tartalmaink</a>
+        <a href="https://idbc.hu/podcast/" data-sync="SHARED-FOOTER-PODCASTJEINK">Podcastjeink</a>
+      </div>
+      <div class="sg-footer-col">
+        <p class="sg-footer-h" data-sync="SHARED-FOOTER-COL-KIEMELT-SZOLGALTATASOK">Kiemelt szolgáltatások</p>
+        <a href="https://idbc.hu/munkaero-kozvetites/" data-sync="SHARED-FOOTER-MUNKAERO-KOZVETITES">Munkaerő-közvetítés</a>
+        <a href="https://idbc.hu/szellemi-munkaero-kolcsonzes/" data-sync="SHARED-FOOTER-MUNKAERO-KOLCSONZES">Munkaerő-kölcsönzés</a>
+        <a href="https://idbc.hu/toborzas/" data-sync="SHARED-FOOTER-TOBORZAS-RPO">Toborzás kiszervezése (RPO)</a>
+        <a href="https://idbc.hu/projects/" data-sync="SHARED-FOOTER-IT-CONTRACTING">IT Contracting</a>
+        <a href="https://idbc.hu/go/sap/" data-sync="SHARED-FOOTER-SAP-SZOLGALTATASOK">SAP szolgáltatások</a>
+        <a href="https://idbc.hu/go/ecm/" data-sync="SHARED-FOOTER-ECM">Vállalati tartalom- és dokumentum kezelés</a>
+        <a href="https://idbc.hu/go/tanacsadas/" data-sync="SHARED-FOOTER-TANACSADAS">Ügyféloldali tanácsadás</a>
+        <p class="sg-footer-h" data-sync="SHARED-FOOTER-COL-KIEMELT-TARTALMAINK">Kiemelt tartalmaink</p>
+        <a href="https://idbc.hu/blog/it-contracting-gyors-es-hatekony-megoldas-az-it-munkaerohiany-lekuzdesere/" data-sync="SHARED-FOOTER-CIKK-IT-CONTRACTING">IT Contracting</a>
+        <a href="https://idbc.hu/blog/it-toborzas-2026-aktualis-piaci-informaciok-a-megalapozott-dontesekhez/" data-sync="SHARED-FOOTER-CIKK-IT-TOBORZAS">IT Toborzás</a>
+        <a href="https://idbc.hu/blog/az-it-piac-varhato-trendjei-2026-ban/" data-sync="SHARED-FOOTER-CIKK-IT-PIAC-2026">Az IT piac várható trendjei 2026</a>
+        <a href="https://idbc.hu/blog/2026-technologiai-trendjei-fokuszban-a-mukodesi-alapok-es-az-ai-integralasa-a-vallalati-mukodesbe/" data-sync="SHARED-FOOTER-CIKK-TECH-TRENDEK-2026">2026 technológiai trendjei</a>
+        <a class="sg-footer-h" href="https://idbc.hu/kapcsolat/" data-sync="SHARED-FOOTER-KAPCSOLAT">Kapcsolat</a>
+      </div>
+    </div>
+    <div class="sg-footer-bottom">
+      <p data-sync="SHARED-FOOTER-2026-IDBC-IDBC-GROUP">© 2026 IDBC – IDBC Group | Minden jog fenntartva</p>
+      <nav>
+        <a href="https://www.app.faceup.com/hu/c/y70cl70i/page/UGFnZTozMzI2NQ==" data-sync="SHARED-FOOTER-PANASZSZABALYZAT">Panaszszabályzat</a>
+        <a href="https://idbc.hu/adatvedelem/" data-sync="SHARED-FOOTER-ADATKEZELESI-TAJEKOZTATO">Adatkezelési tájékoztató</a>
+      </nav>
     </div>
   </footer>
-
-  <script>
-    (() => {
-      const toggle = document.querySelector('.menu-toggle');
-      const navbar = document.querySelector('.navbar');
-      if (!toggle || !navbar) return;
-      toggle.addEventListener('click', () => {
-        const isOpen = navbar.classList.toggle('is-open');
-        toggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
-        toggle.textContent = isOpen ? '✕' : '☰';
-      });
-      navbar.querySelectorAll('.nav-links a, .nav-actions a').forEach(a => {
-        a.addEventListener('click', () => {
-          navbar.classList.remove('is-open');
-          toggle.setAttribute('aria-expanded', 'false');
-          toggle.textContent = '☰';
-        });
-      });
-    })();
-  </script>
 
   <script>
     (async function () {
@@ -309,7 +274,7 @@
     const el = id => document.getElementById(id);
     const esc = s => String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
     const fmtPct = p => (Math.round(p * 10) / 10).toString().replace('.', ',') + '%';
-    const PALETTE = ["#c9e5d8","#b5dbc8","#94cbaa","#6aae81","#4ba184","#3c8a70","#2f6f5c","#a5df8f","#8fd474","#55aa8b","#dcd08a","#e0a45a"];
+    const PALETTE = ["#c9e5d8","#b5dbc8","#94cbaa","#6aae81","#4ba184","#3c8a70","#2f6f5c","#a4dd8c","#93d17a","#4ca283","#dcd08a","#e0a45a"];
     const paletteColor = i => PALETTE[i % PALETTE.length];
     const NO_DATA = /*sync:SHARED-JS-NO-DATA*/"A kiválasztott szűrési feltételekhez nem érhető el adat.";
     // Sheet texts with {placeholders} (IDBCSYNC): fill them in without touching anything else.

@@ -178,6 +178,10 @@ must actually happen before every push, not just be claimed:
   rendered by build.py"; documentation is set on the project's own tokens and fonts, never a
   generic docs theme; in prose the studio is "the studio". The root `check.py` enforces the first
   three; the aesthetic is judged with a rendered look before every push.
+- **IDBC Salary Guide styling lives in one file** since 2026-09-25: `idbc-salary-guide/assets/site.css`
+  (idbc.hu's tokens, header, footer, heroes, buttons, cards, forms) plus `assets/site.js` (menu). A
+  page's own `<style>` keeps only page-specific rules; never re-add shell rules there. Bump the
+  `?v=` on both when they change.
 - **Never delete a URL that has been live.** When content moves, leave a redirect
   page at the old path (owner incident 2026-09-16: a cached hub card led to a 404).
 

@@ -12,7 +12,7 @@ every project.
 | 01 research | `01-research.md` | What was read (the client's specs, mockups, data, copy), the one external measurement, what was not researched and why |
 | 02 audit | `02-audit.md` | idbc.hu measured; the spec vs. the data; the client's data as it stands; defects found in the material |
 | 03 sources and assets | `../data/SOURCES-AND-GAPS.md` | Every source file and what it contributed, every gap, every change round with measurements — the running record since July |
-| 04 decisions | `04-decisions.md` | D1–D38, dated, with who and why |
+| 04 decisions | `04-decisions.md` | D1–D39, dated, with who and why |
 | 05 design | `05-design.md` | Where the look comes from (the client's mockups), tokens, layout |
 | 06 build log | `../data/SOURCES-AND-GAPS.md` | the dated change notes are the build log |
 | 07 gate | `07-gate.md` | The one-command gate, the measured pass, deliberate deviations |
@@ -195,4 +195,13 @@ Phase 0 went out the same day — the footer's phone and floor corrected in IDBC
 idbc.hu's. A phone typed with a leading `+` turned into a formula error in the sheet before
 any sync ran; the sync now refuses Sheets error values. The 15-minute schedule moved off the
 quarter-hour marks, where GitHub had not started a single run in the first hour.
+
+**2026-09-25 — the prototype takes idbc.hu's design (D39).** The owner asked to deliver the
+alignment plan. One shared stylesheet and menu script now give all eight pages idbc.hu's
+header, footer, heroes, type, buttons, cards and forms; Outfit stands in for Gilroy until IDBC
+confirms the licence; the charts and pool tiles moved to idbc.hu's greens; the data
+components kept their layouts and — checked across all 1,142 rendered states — every figure.
+The new footer's 29 texts went into IDBCSYNC before the pages, so the sync never broke. Open
+with the client: whether idbc.hu or their demos win where the two differ (A-2), the Gilroy
+licence (A-1), their own photographs (C-6).
 

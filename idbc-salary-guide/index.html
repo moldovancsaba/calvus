@@ -8,176 +8,7 @@
   <title data-sync="HOME-TITLE-TALENT-MARKET-SALARY-GUIDE">Talent Market &amp; Salary Guide 2026 – Piaci trendek, bérezés és Expert Pool</title>
 
   <style>
-    :root {
-      --dark: #132323;
-      --dark-2: #0b1818;
-      --light-bg: #eef5ec;
-      --green: #a5df8f;
-      --green-strong: #8fd474;
-      --mint-1: #c9e5d8;
-      --mint-2: #b5dbc8;
-      --mint-3: #94cbaa;
-      --mint-4: #6aae81;
-      --mint-5: #4ba184;
-      --text: #101818;
-      --muted: rgba(16,24,24,.66);
-      --line: rgba(19,35,35,.18);
-      --container: 1210px;
-      --radius-large: 28px;
-      --radius-medium: 14px;
-      --shadow-soft: 0 16px 40px rgba(0, 0, 0, 0.12);
-    }
 
-    * { box-sizing: border-box; }
-    html { scroll-behavior: smooth; }
-
-    body {
-      margin: 0;
-      background:
-        radial-gradient(circle at 18% 20%, rgba(0,0,0,0.035) 0 1px, transparent 1px),
-        radial-gradient(circle at 68% 60%, rgba(0,0,0,0.025) 0 1px, transparent 1px),
-        var(--light-bg);
-      background-size: 7px 7px, 9px 9px, auto;
-      color: var(--text);
-      font-family: "Inter", "Montserrat", "Segoe UI", Arial, sans-serif;
-      line-height: 1.35;
-      padding-top: 78px;
-    }
-
-    img { max-width: 100%; display: block; }
-    a { color: inherit; text-decoration: none; }
-
-    .container {
-      width: min(var(--container), calc(100% - 56px));
-      margin-inline: auto;
-    }
-
-    .site-header {
-      position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
-      z-index: 20;
-      display: flex;
-      justify-content: center;
-      pointer-events: none;
-    }
-
-    .navbar {
-      width: min(980px, calc(100% - 80px));
-      min-height: 42px;
-      padding: 0 13px 0 20px;
-      border-radius: 0 0 14px 14px;
-      background: var(--dark);
-      color: #fff;
-      display: flex;
-      align-items: center;
-      gap: 22px;
-      box-shadow: var(--shadow-soft);
-      pointer-events: auto;
-      margin-top: 18px;
-    }
-
-    .brand {
-      display: inline-flex;
-      flex-direction: column;
-      justify-content: center;
-      min-width: 84px;
-      color: #fff;
-      font-weight: 900;
-      line-height: 0.8;
-      letter-spacing: -1px;
-    }
-
-    .brand-main { font-size: 28px; }
-    .brand-sub { margin-left: 42px; color: var(--green); font-size: 12px; letter-spacing: 0; }
-
-    .nav-links {
-      list-style: none;
-      display: flex;
-      align-items: center;
-      gap: 22px;
-      margin: 0 auto;
-      padding: 0;
-      font-size: 11px;
-      font-weight: 800;
-      white-space: nowrap;
-    }
-
-    .nav-actions { display: flex; gap: 8px; margin-left: auto; }
-
-    .button {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      min-height: 25px;
-      padding: 5px 16px;
-      border-radius: 8px;
-      font-size: 10px;
-      font-weight: 900;
-      white-space: nowrap;
-    }
-
-    .button-primary { background: var(--green); color: var(--dark); }
-    .button-outline { border: 2px solid var(--green); color: #fff; }
-
-    .menu-toggle {
-      display: none;
-      margin-left: auto;
-      border: 0;
-      background: transparent;
-      color: #fff;
-      font-size: 22px;
-      cursor: pointer;
-    }
-
-    .hero {
-      position: relative;
-      min-height: 400px;
-      margin: 18px 20px 0;
-      border-radius: 0 0 0 var(--radius-large);
-      overflow: hidden;
-      background: #d9e2dc;
-      box-shadow: var(--shadow-soft);
-    }
-
-    .hero-media { position: absolute; inset: 0; }
-    .hero-media img { width: 100%; height: 100%; object-fit: cover; object-position: center 20%; }
-
-    .hero-overlay {
-      position: absolute;
-      inset: 0;
-      background:
-        linear-gradient(90deg, rgba(9, 20, 20, 0.66) 0%, rgba(9, 20, 20, 0.44) 32%, rgba(9, 20, 20, 0.14) 62%, rgba(9, 20, 20, 0.08) 100%),
-        linear-gradient(180deg, rgba(9, 20, 20, 0.10) 0%, rgba(9, 20, 20, 0.22) 100%);
-    }
-
-    .hero-card {
-      position: absolute;
-      left: max(38px, calc((100vw - var(--container)) / 2));
-      bottom: 0;
-      z-index: 2;
-      width: min(600px, calc(100% - 70px));
-      padding: 24px 38px 28px;
-      border-radius: 0 var(--radius-medium) 0 0;
-      background: rgba(19, 35, 35, 0.92);
-      color: #fff;
-      backdrop-filter: blur(4px);
-    }
-
-    .hero-card h1 { margin: 0 0 10px; max-width: 480px; font-size: clamp(30px, 4vw, 42px); line-height: 0.95; letter-spacing: -1px; }
-    .hero-card p { margin: 0; max-width: 460px; font-size: 15px; font-weight: 800; line-height: 1.25; }
-
-    .eyebrow {
-      margin: 0 0 9px;
-      font-size: 12px;
-      font-weight: 900;
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-      color: rgba(19, 35, 35, 0.68);
-    }
-
-    .section { padding: 58px 0 62px; }
     .section-border { border-bottom: 2px solid rgba(19, 35, 35, 0.45); }
 
     .intro-block {
@@ -192,27 +23,6 @@
 
     .intro-block h2 { margin: 0; font-size: clamp(32px, 4.6vw, 52px); line-height: 0.98; letter-spacing: -1.6px; }
     .intro-block > p { margin: 0; font-size: 15px; font-weight: 800; line-height: 1.35; max-width: 600px; }
-
-    select {
-      min-height: 42px;
-      border: 0;
-      border-radius: 11px;
-      padding: 9px 42px 9px 15px;
-      background: var(--green);
-      color: var(--dark);
-      font: inherit;
-      font-size: 14px;
-      font-weight: 900;
-      cursor: pointer;
-      appearance: none;
-      background-image:
-        linear-gradient(45deg, transparent 50%, #0b1818 50%),
-        linear-gradient(135deg, #0b1818 50%, transparent 50%);
-      background-position: calc(100% - 20px) 17px, calc(100% - 13px) 17px;
-      background-size: 8px 8px, 8px 8px;
-      background-repeat: no-repeat;
-      width: 100%;
-    }
 
     .filter-block { margin: 0 0 30px; padding-top: 26px; border-top: 1px solid var(--line); }
     .filter-block-label { margin: 0 0 14px; font-size: 13px; font-weight: 900; }
@@ -231,7 +41,6 @@
     .area-cards .split-card { text-decoration: none; color: inherit; transition: transform .15s ease, box-shadow .15s ease; }
     .area-cards .split-card .split-card-title { font-size: clamp(17px, 1.6vw, 20px); }
     .area-cards .split-card:hover, .area-cards .split-card:focus-visible { transform: translateY(-2px); box-shadow: 0 22px 46px rgba(19, 35, 35, 0.14); }
-    .button-logout { background: transparent; border: 1.5px solid rgba(255,255,255,.45); color: #fff; }
 
     .chart-panels { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 48px; }
     .trend-panel { min-width: 0; }
@@ -241,7 +50,6 @@
     .panel-note { margin: 0 0 22px; font-size: 12px; font-weight: 700; color: var(--muted); }
     .segment-select { margin: 0 0 22px; }
     .segment-select label { display: grid; gap: 8px; font-size: 13px; font-weight: 900; }
-    .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0; }
 
     .chart-area { display: grid; gap: 44px; }
     .question-block { display: grid; gap: 10px; }
@@ -300,132 +108,80 @@
     .text-columns { margin-top: 20px; display: grid; gap: 8px; max-width: 820px; }
     .text-columns p { margin: 0 0 6px; font-size: 13px; font-weight: 700; line-height: 1.4; color: var(--muted); }
 
-    .site-footer { position: relative; padding: 49px 0 34px; border-radius: var(--radius-large) var(--radius-large) 0 0; background: var(--dark-2); color: #fff; }
-    .footer-inner { display: grid; grid-template-columns: 1fr 190px; gap: 56px; padding-bottom: 44px; border-bottom: 1px solid rgba(255,255,255,0.2); }
-    .brand-footer { margin-bottom: 20px; }
-    .footer-contact p { margin: 0 0 12px; color: #dbe4dd; font-size: 12px; line-height: 1.45; }
-    .footer-nav { display: grid; align-content: start; gap: 6px; padding-top: 6px; color: #dbe4dd; font-size: 12px; font-weight: 800; }
-    .footer-bottom { display: flex; justify-content: space-between; gap: 24px; padding-top: 22px; color: #dbe4dd; font-size: 11px; }
-    .footer-bottom p { margin: 0; }
-    .footer-bottom div { display: flex; gap: 18px; }
-
     @media (max-width: 1120px) {
       .chart-panels { grid-template-columns: 1fr; gap: 58px; }
     }
 
     @media (max-width: 980px) {
-      .navbar { width: calc(100% - 28px); min-height: 54px; gap: 14px; }
-      .menu-toggle { display: block; }
-      .nav-links, .nav-actions { display: none; }
-      .navbar { flex-wrap: wrap; }
-      .navbar.is-open .nav-links,
-      .navbar.is-open .nav-actions {
-        display: flex;
-        flex-direction: column;
-        align-items: stretch;
-        width: 100%;
-        order: 3;
-        gap: 10px;
-        padding: 14px 2px 12px;
-      }
-      .navbar.is-open .nav-links { font-size: 13px; }
-      .navbar.is-open .nav-actions .button { width: 100%; }
-      .hero { min-height: 360px; margin-inline: 10px; }
+
       .intro-block { grid-template-columns: 1fr; gap: 18px; }
       .insight-cards { grid-template-columns: 1fr; }
       .top-filters { grid-template-columns: 1fr; }
       .split-links { grid-template-columns: 1fr; }
       .split-links.area-cards { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-      .footer-inner { grid-template-columns: 1fr; gap: 30px; }
+
     }
 
     @media (max-width: 700px) {
-      .container { width: min(100% - 32px, var(--container)); }
+
       .split-links.area-cards { grid-template-columns: 1fr; }
       .answer-row { grid-template-columns: 1fr; gap: 8px; }
       .answer-row-multi { grid-template-columns: 1fr; gap: 4px; }
       .answer-value { text-align: left; }
       .legend { padding-left: 0; }
       .sap-callout { flex-direction: column; align-items: flex-start; }
-      .hero-card { left: 0; width: calc(100% - 34px); padding: 20px 24px 25px; }
-      .footer-bottom { flex-direction: column; }
-      .footer-bottom div { flex-direction: column; gap: 8px; }
+
     }
 
     /* Mobile tap targets: WCAG 2.5.5 / HIG floor of 44px for anything tappable.
        Applied only on small screens so desktop density is unchanged. */
     @media (max-width: 980px) {
-      .menu-toggle { min-width: 44px; min-height: 44px; }
-      .nav-links a,
-      .nav-actions .button,
-      .nav-actions .language-link,
-      .site-footer a,
-      .footer-nav a,
-      .footer-bottom a,
       .back-link { display: inline-flex; align-items: center; min-height: 44px; min-width: 44px; }
-      .brand { min-height: 44px; display: inline-flex; flex-direction: column; justify-content: center; }
-      select { min-height: 44px; }
+
     }
+
+    /* Hero crop: keep faces clear of the card that overlaps the photo's lower edge. */
+    .sg-hero-media img { object-position: center 12%; }
   </style>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&display=swap">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
+  <link rel="stylesheet" href="./assets/site.css?v=1">
 </head>
 
 <body>
-  <header class="site-header">
-    <nav class="navbar" aria-label="Fő navigáció" data-sync-attr="aria-label:SHARED-HEADER-ARIA-LABEL-FO-NAVIGACIO">
-      <a class="brand" href="./index.html" aria-label="IDBC Group" data-sync-attr="aria-label:SHARED-HEADER-ARIA-LABEL-IDBC-GROUP">
-        <span class="brand-main" data-sync="SHARED-HEADER-IDBC">IDBC</span>
-        <span class="brand-sub" data-sync="SHARED-HEADER-SALARY-GUIDE">salary guide</span>
-      </a>
-
-      <button class="menu-toggle" type="button" aria-label="Menü megnyitása" aria-expanded="false" data-sync-attr="aria-label:SHARED-HEADER-ARIA-LABEL-MENU-MEGNYITASA">☰</button>
-
-      <ul class="nav-links">
+  <header class="sg-header">
+    <nav class="sg-nav" aria-label="Fő navigáció" data-sync-attr="aria-label:SHARED-HEADER-ARIA-LABEL-FO-NAVIGACIO">
+      <div class="sg-brand">
+        <a href="https://idbc.hu/" aria-label="IDBC Group" data-sync-attr="aria-label:SHARED-HEADER-ARIA-LABEL-IDBC-GROUP"><img class="sg-logo" src="https://idbc.hu/includes/images/IDBC_logo_Group-02.svg" alt="" width="100" height="61"></a>
+        <span class="sg-brand-sep" aria-hidden="true"></span>
+        <a class="sg-guide" href="./index.html" aria-label="IDBC Salary Guide" data-sync="SHARED-HEADER-SALARY-GUIDE" data-sync-attr="aria-label:SHARED-HEADER-ARIA-LABEL-IDBC-SALARY-GUIDE">salary guide</a>
+      </div>
+      <div class="sg-lang" aria-label="Nyelvválasztó" data-sync-attr="aria-label:SHARED-HEADER-ARIA-LABEL-NYELVVALASZTO">
+        <span class="is-unavailable" aria-disabled="true" title="Angol nyelvű változat egyelőre nem érhető el" data-sync="SHARED-HEADER-EN" data-sync-attr="title:SHARED-HEADER-TITLE-ANGOL-NYELVU-VALTOZAT-EGYELORE">EN</span>
+        <span class="is-active" aria-current="true" data-sync="SHARED-HEADER-HU">HU</span>
+      </div>
+      <button class="sg-toggle" type="button" aria-label="Menü megnyitása" aria-expanded="false" data-sync-attr="aria-label:SHARED-HEADER-ARIA-LABEL-MENU-MEGNYITASA"><i class="bi bi-list" aria-hidden="true"></i></button>
+      <ul class="sg-links">
         <li><a href="./index.html#trends" aria-current="page" data-sync="SHARED-HEADER-PIACI-TRENDEK">Piaci trendek</a></li>
         <li><a href="./berezes/index.html" data-sync="SHARED-HEADER-BEREK">Bérek</a></li>
         <li><a href="./sap/index.html" data-sync="SHARED-HEADER-SAP">SAP</a></li>
         <li><a href="./expert-pool/index.html" data-sync="SHARED-HEADER-EXPERT-POOL">Expert Pool</a></li>
         <li><a href="./esettanulmanyok/index.html" data-sync="SHARED-HEADER-ESETTANULMANYOK">Esettanulmányok</a></li>
       </ul>
-
-      <div class="nav-actions">
-        <a class="button button-primary" href="kapcsolat/index.html" data-sync="SHARED-HEADER-AJANLATKERES">Ajánlatkérés</a>
-        <button class="button button-logout is-unavailable" type="button" aria-disabled="true"
-          title="A be- és kijelentkezés a prototípusban még nincs bekötve" data-sync="SHARED-HEADER-KIJELENTKEZES" data-sync-attr="title:SHARED-HEADER-TITLE-A-BE-ES-KIJELENTKEZES">Kijelentkezés</button>
+      <div class="sg-actions">
+        <a class="sg-btn sg-btn--dark-outline" href="./kapcsolat/index.html" data-sync="SHARED-HEADER-AJANLATKERES">Ajánlatkérés</a>
+        <button class="sg-btn sg-btn--dark is-unavailable" type="button" aria-disabled="true" title="A be- és kijelentkezés a prototípusban még nincs bekötve" data-sync="SHARED-HEADER-KIJELENTKEZES" data-sync-attr="title:SHARED-HEADER-TITLE-A-BE-ES-KIJELENTKEZES">Kijelentkezés</button>
       </div>
     </nav>
   </header>
-
-  <script>
-    (() => {
-      const toggle = document.querySelector('.menu-toggle');
-      const navbar = document.querySelector('.navbar');
-      if (!toggle || !navbar) return;
-      toggle.addEventListener('click', () => {
-        const isOpen = navbar.classList.toggle('is-open');
-        toggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
-        toggle.textContent = isOpen ? '✕' : '☰';
-      });
-      navbar.querySelectorAll('.nav-links a, .nav-actions a').forEach(a => {
-        a.addEventListener('click', () => {
-          navbar.classList.remove('is-open');
-          toggle.setAttribute('aria-expanded', 'false');
-          toggle.textContent = '☰';
-        });
-      });
-    })();
-  </script>
+  <script src="./assets/site.js?v=1" defer></script>
 
   <main>
-    <section class="hero" aria-labelledby="hero-title">
-      <div class="hero-media">
-        <img
-          src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=1600&q=80"
-          alt="Mosolygó üzleti öltözetű fiatal nő nagyvállalati irodai környezetben, íróasztal mellett"
-         data-sync-attr="alt:HOME-ALT-MOSOLYGO-UZLETI-OLTOZETU-FIATAL"/>
-        <div class="hero-overlay"></div>
-      </div>
-
-      <div class="hero-card">
+    <section class="sg-hero" aria-labelledby="hero-title">
+      <div class="sg-hero-media"><img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=1600&q=80" alt="Mosolygó üzleti öltözetű fiatal nő nagyvállalati irodai környezetben, íróasztal mellett" data-sync-attr="alt:HOME-ALT-MOSOLYGO-UZLETI-OLTOZETU-FIATAL"></div>
+      <div class="sg-hero-card">
         <h1 id="hero-title" data-sync="HOME-H1-TALENT-MARKET-SALARY-GUIDE">Talent Market &amp; Salary Guide 2026</h1>
         <p data-sync="HOME-P-INTERAKTIV-MUNKAEROPIACI-BETEKINTES-MUNKAVALLALOI">
           Interaktív munkaerőpiaci betekintés munkavállalói és munkáltatói oldalról,
@@ -465,47 +221,47 @@
           <nav class="split-links area-cards" aria-label="Területek" data-sync-attr="aria-label:HOME-ARIA-LABEL-TERULETEK">
             <a class="split-card" href="./terulet/index.html?terulet=bsc">
               <span class="split-card-eyebrow" data-sync="HOME-SPAN-TERULET">Terület</span>
-              <span class="split-card-title"><span data-sync="AREA-BSC-NAME">Business Service Center (BSC)</span> →</span>
+              <span class="split-card-title"><span data-sync="AREA-BSC-NAME">Business Service Center (BSC)</span></span>
             </a>
             <a class="split-card" href="./terulet/index.html?terulet=penzugy-es-szamvitel">
               <span class="split-card-eyebrow" data-sync="HOME-SPAN-TERULET-2">Terület</span>
-              <span class="split-card-title"><span data-sync="AREA-PENZUGY-ES-SZAMVITEL-NAME">Pénzügy, Számvitel</span> →</span>
+              <span class="split-card-title"><span data-sync="AREA-PENZUGY-ES-SZAMVITEL-NAME">Pénzügy, Számvitel</span></span>
             </a>
             <a class="split-card" href="./terulet/index.html?terulet=hr">
               <span class="split-card-eyebrow" data-sync="HOME-SPAN-TERULET-3">Terület</span>
-              <span class="split-card-title"><span data-sync="AREA-HR-NAME">HR</span> →</span>
+              <span class="split-card-title"><span data-sync="AREA-HR-NAME">HR</span></span>
             </a>
             <a class="split-card" href="./terulet/index.html?terulet=sales-marketing">
               <span class="split-card-eyebrow" data-sync="HOME-SPAN-TERULET-4">Terület</span>
-              <span class="split-card-title"><span data-sync="AREA-SALES-MARKETING-NAME">Sales, Marketing</span> →</span>
+              <span class="split-card-title"><span data-sync="AREA-SALES-MARKETING-NAME">Sales, Marketing</span></span>
             </a>
             <a class="split-card" href="./terulet/index.html?terulet=office-support-ugyfelszolgalat">
               <span class="split-card-eyebrow" data-sync="HOME-SPAN-TERULET-5">Terület</span>
-              <span class="split-card-title"><span data-sync="AREA-OFFICE-SUPPORT-UGYFELSZOLGALAT-NAME">Ügyfélszolgálat, Adminisztráció</span> →</span>
+              <span class="split-card-title"><span data-sync="AREA-OFFICE-SUPPORT-UGYFELSZOLGALAT-NAME">Ügyfélszolgálat, Adminisztráció</span></span>
             </a>
             <a class="split-card" href="./terulet/index.html?terulet=logisztika-es-szallitas">
               <span class="split-card-eyebrow" data-sync="HOME-SPAN-TERULET-6">Terület</span>
-              <span class="split-card-title"><span data-sync="AREA-LOGISZTIKA-ES-SZALLITAS-NAME">Logisztika, Szállítás</span> →</span>
+              <span class="split-card-title"><span data-sync="AREA-LOGISZTIKA-ES-SZALLITAS-NAME">Logisztika, Szállítás</span></span>
             </a>
             <a class="split-card" href="./terulet/index.html?terulet=gyartas-termeles-mernokseg">
               <span class="split-card-eyebrow" data-sync="HOME-SPAN-TERULET-7">Terület</span>
-              <span class="split-card-title"><span data-sync="AREA-GYARTAS-TERMELES-MERNOKSEG-NAME">Gyártás, Termelés, Mérnökség</span> →</span>
+              <span class="split-card-title"><span data-sync="AREA-GYARTAS-TERMELES-MERNOKSEG-NAME">Gyártás, Termelés, Mérnökség</span></span>
             </a>
             <a class="split-card" href="./terulet/index.html?terulet=epitoipar-ingatlan">
               <span class="split-card-eyebrow" data-sync="HOME-SPAN-TERULET-8">Terület</span>
-              <span class="split-card-title"><span data-sync="AREA-EPITOIPAR-INGATLAN-NAME">Építőipar, Ingatlan</span> →</span>
+              <span class="split-card-title"><span data-sync="AREA-EPITOIPAR-INGATLAN-NAME">Építőipar, Ingatlan</span></span>
             </a>
             <a class="split-card" href="./terulet/index.html?terulet=pharma-life-sciences">
               <span class="split-card-eyebrow" data-sync="HOME-SPAN-TERULET-9">Terület</span>
-              <span class="split-card-title"><span data-sync="AREA-PHARMA-LIFE-SCIENCES-NAME">Pharma, Life Sciences</span> →</span>
+              <span class="split-card-title"><span data-sync="AREA-PHARMA-LIFE-SCIENCES-NAME">Pharma, Life Sciences</span></span>
             </a>
             <a class="split-card" href="./terulet/index.html?terulet=it">
               <span class="split-card-eyebrow" data-sync="HOME-SPAN-TERULET-10">Terület</span>
-              <span class="split-card-title"><span data-sync="AREA-IT-NAME">IT</span> →</span>
+              <span class="split-card-title"><span data-sync="AREA-IT-NAME">IT</span></span>
             </a>
             <a class="split-card" href="./terulet/index.html?terulet=it-contracting">
               <span class="split-card-eyebrow" data-sync="HOME-SPAN-TERULET-11">Terület</span>
-              <span class="split-card-title"><span data-sync="AREA-IT-CONTRACTING-NAME">IT Contracting</span> →</span>
+              <span class="split-card-title"><span data-sync="AREA-IT-CONTRACTING-NAME">IT Contracting</span></span>
             </a>
           </nav>
         </div>
@@ -595,41 +351,73 @@
     </section>
   </main>
 
-  <footer class="site-footer" id="kapcsolat">
-    <div class="container footer-inner">
-      <section class="footer-contact">
-        <a class="brand brand-footer" href="#" aria-label="IDBC Group" data-sync-attr="aria-label:SHARED-FOOTER-ARIA-LABEL-IDBC-GROUP">
-          <span class="brand-main" data-sync="SHARED-FOOTER-IDBC">IDBC</span>
-          <span class="brand-sub" data-sync="SHARED-FOOTER-GROUP">group</span>
-        </a>
+  <footer class="sg-footer">
+    <div class="sg-footer-inner">
+      <section class="sg-footer-contact">
+        <a href="https://idbc.hu/" aria-label="IDBC Group" data-sync-attr="aria-label:SHARED-FOOTER-ARIA-LABEL-IDBC-GROUP"><img class="sg-logo" src="https://idbc.hu/includes/images/IDBC_logo_Group-02.svg" alt="" width="100" height="61"></a>
         <p data-sync="SHARED-FOOTER-YOUR-PROFESSIONAL-BOOST">Your professional boost!</p>
         <p><idbc-t data-sync="SHARED-FOOTER-TELEFON">Telefon:</idbc-t> <a href="tel:+36304798090" data-sync="SHARED-FOOTER-36-30-479-0090" data-sync-href="tel:SHARED-FOOTER-36-30-479-0090">+36 30 479 8090</a></p>
         <p><idbc-t data-sync="SHARED-FOOTER-E-MAIL">E-mail:</idbc-t> <a href="mailto:contact@idbc.hu" data-sync="SHARED-FOOTER-CONTACT-IDBC-HU" data-sync-href="mailto:SHARED-FOOTER-CONTACT-IDBC-HU">contact@idbc.hu</a></p>
         <p data-sync="SHARED-FOOTER-CIM-DUNA-TOWER-IRODAHAZ">Cím: Duna Tower Irodaház A torony 13. emelet<br>1138 Budapest, Népfürdő utca 22.</p>
+        <div class="sg-social">
+          <a href="https://hu.linkedin.com/company/idbc-creative-solutions-kft-" aria-label="LinkedIn" data-sync-attr="aria-label:SHARED-FOOTER-SOCIAL-LINKEDIN"><i class="bi bi-linkedin" aria-hidden="true"></i></a>
+          <a href="https://www.facebook.com/idbccreativesolutions/" aria-label="Facebook" data-sync-attr="aria-label:SHARED-FOOTER-SOCIAL-FACEBOOK"><i class="bi bi-facebook" aria-hidden="true"></i></a>
+          <a href="https://www.instagram.com/idbc.creativesolutions/" aria-label="Instagram" data-sync-attr="aria-label:SHARED-FOOTER-SOCIAL-INSTAGRAM"><i class="bi bi-instagram" aria-hidden="true"></i></a>
+          <a href="https://www.tiktok.com/@idbccreativesolutions" aria-label="TikTok" data-sync-attr="aria-label:SHARED-FOOTER-SOCIAL-TIKTOK"><i class="bi bi-tiktok" aria-hidden="true"></i></a>
+          <a href="https://www.youtube.com/@idbccreativesolutions" aria-label="YouTube" data-sync-attr="aria-label:SHARED-FOOTER-SOCIAL-YOUTUBE"><i class="bi bi-youtube" aria-hidden="true"></i></a>
+        </div>
       </section>
-
-      <nav class="footer-nav" aria-label="Lábléc navigáció" data-sync-attr="aria-label:SHARED-FOOTER-ARIA-LABEL-LABLEC-NAVIGACIO">
+      <nav class="sg-footer-col" aria-label="Lábléc navigáció" data-sync-attr="aria-label:SHARED-FOOTER-ARIA-LABEL-LABLEC-NAVIGACIO">
+        <p class="sg-footer-h" data-sync="SHARED-FOOTER-IDBC-SALARY-GUIDE-TALENT">IDBC Salary Guide — Talent Market &amp; Salary Guide 2026</p>
         <a href="./index.html#trends" data-sync="SHARED-FOOTER-PIACI-TRENDEK">Piaci trendek</a>
         <a href="./berezes/index.html" data-sync="SHARED-FOOTER-BEREK">Bérek</a>
         <a href="./sap/index.html" data-sync="SHARED-FOOTER-SAP">SAP</a>
         <a href="./expert-pool/index.html" data-sync="SHARED-FOOTER-EXPERT-POOL">Expert Pool</a>
         <a href="./esettanulmanyok/index.html" data-sync="SHARED-FOOTER-ESETTANULMANYOK">Esettanulmányok</a>
       </nav>
-    </div>
-
-    <div class="container footer-bottom">
-      <p data-sync="SHARED-FOOTER-2026-IDBC-IDBC-GROUP">© 2026 IDBC – IDBC Group | Minden jog fenntartva</p>
-      <div>
-        <a href="#" data-sync="SHARED-FOOTER-PANASZSZABALYZAT">Panaszszabályzat</a>
-        <a href="#" data-sync="SHARED-FOOTER-ADATKEZELESI-TAJEKOZTATO">Adatkezelési tájékoztató</a>
+      <div class="sg-footer-col">
+        <p class="sg-footer-h" data-sync="SHARED-FOOTER-COL-SZOLGALTATASOK">Szolgáltatások</p>
+        <a href="https://idbc.hu/talent" data-sync="SHARED-FOOTER-TALENT">Talent</a>
+        <a href="https://idbc.hu/projects" data-sync="SHARED-FOOTER-PROJECTS">Projects</a>
+        <a href="https://idbc.hu/go" data-sync="SHARED-FOOTER-GO">GO</a>
+        <a class="sg-footer-h" href="https://idbc.hu/karrier/" data-sync="SHARED-FOOTER-KARRIER">Karrier</a>
+        <p class="sg-footer-h" data-sync="SHARED-FOOTER-COL-ROLUNK">Rólunk</p>
+        <a href="https://idbc.hu/rolunk/" data-sync="SHARED-FOOTER-IDBC">IDBC</a>
+        <a href="https://idbc.hu/csr/" data-sync="SHARED-FOOTER-CSR">CSR</a>
+        <p class="sg-footer-h" data-sync="SHARED-FOOTER-COL-SZAKMAI-TARTALMAK">Szakmai tartalmak</p>
+        <a href="https://idbc.hu/tartalmaink/" data-sync="SHARED-FOOTER-TARTALMAINK">Tartalmaink</a>
+        <a href="https://idbc.hu/podcast/" data-sync="SHARED-FOOTER-PODCASTJEINK">Podcastjeink</a>
       </div>
+      <div class="sg-footer-col">
+        <p class="sg-footer-h" data-sync="SHARED-FOOTER-COL-KIEMELT-SZOLGALTATASOK">Kiemelt szolgáltatások</p>
+        <a href="https://idbc.hu/munkaero-kozvetites/" data-sync="SHARED-FOOTER-MUNKAERO-KOZVETITES">Munkaerő-közvetítés</a>
+        <a href="https://idbc.hu/szellemi-munkaero-kolcsonzes/" data-sync="SHARED-FOOTER-MUNKAERO-KOLCSONZES">Munkaerő-kölcsönzés</a>
+        <a href="https://idbc.hu/toborzas/" data-sync="SHARED-FOOTER-TOBORZAS-RPO">Toborzás kiszervezése (RPO)</a>
+        <a href="https://idbc.hu/projects/" data-sync="SHARED-FOOTER-IT-CONTRACTING">IT Contracting</a>
+        <a href="https://idbc.hu/go/sap/" data-sync="SHARED-FOOTER-SAP-SZOLGALTATASOK">SAP szolgáltatások</a>
+        <a href="https://idbc.hu/go/ecm/" data-sync="SHARED-FOOTER-ECM">Vállalati tartalom- és dokumentum kezelés</a>
+        <a href="https://idbc.hu/go/tanacsadas/" data-sync="SHARED-FOOTER-TANACSADAS">Ügyféloldali tanácsadás</a>
+        <p class="sg-footer-h" data-sync="SHARED-FOOTER-COL-KIEMELT-TARTALMAINK">Kiemelt tartalmaink</p>
+        <a href="https://idbc.hu/blog/it-contracting-gyors-es-hatekony-megoldas-az-it-munkaerohiany-lekuzdesere/" data-sync="SHARED-FOOTER-CIKK-IT-CONTRACTING">IT Contracting</a>
+        <a href="https://idbc.hu/blog/it-toborzas-2026-aktualis-piaci-informaciok-a-megalapozott-dontesekhez/" data-sync="SHARED-FOOTER-CIKK-IT-TOBORZAS">IT Toborzás</a>
+        <a href="https://idbc.hu/blog/az-it-piac-varhato-trendjei-2026-ban/" data-sync="SHARED-FOOTER-CIKK-IT-PIAC-2026">Az IT piac várható trendjei 2026</a>
+        <a href="https://idbc.hu/blog/2026-technologiai-trendjei-fokuszban-a-mukodesi-alapok-es-az-ai-integralasa-a-vallalati-mukodesbe/" data-sync="SHARED-FOOTER-CIKK-TECH-TRENDEK-2026">2026 technológiai trendjei</a>
+        <a class="sg-footer-h" href="https://idbc.hu/kapcsolat/" data-sync="SHARED-FOOTER-KAPCSOLAT">Kapcsolat</a>
+      </div>
+    </div>
+    <div class="sg-footer-bottom">
+      <p data-sync="SHARED-FOOTER-2026-IDBC-IDBC-GROUP">© 2026 IDBC – IDBC Group | Minden jog fenntartva</p>
+      <nav>
+        <a href="https://www.app.faceup.com/hu/c/y70cl70i/page/UGFnZTozMzI2NQ==" data-sync="SHARED-FOOTER-PANASZSZABALYZAT">Panaszszabályzat</a>
+        <a href="https://idbc.hu/adatvedelem/" data-sync="SHARED-FOOTER-ADATKEZELESI-TAJEKOZTATO">Adatkezelési tájékoztató</a>
+      </nav>
     </div>
   </footer>
 
   <script>
     (async () => {
     const DATA = await fetch('./data/guide-data.json', { cache: 'no-cache' }).then(r => r.json());
-    const PALETTE = ["#c9e5d8","#b5dbc8","#94cbaa","#6aae81","#4ba184","#3c8a70","#2f6f5c","#a5df8f","#8fd474","#55aa8b","#dcd08a","#e0a45a"];
+    const PALETTE = ["#c9e5d8","#b5dbc8","#94cbaa","#6aae81","#4ba184","#3c8a70","#2f6f5c","#a4dd8c","#93d17a","#4ca283","#dcd08a","#e0a45a"];
     const paletteColor = i => PALETTE[i % PALETTE.length];
 
     function escapeHtml(s) {

@@ -3,7 +3,8 @@
 *What idbc.hu looks like, measured, next to what the prototype does today; what has to
 change, in which order, and what needs a decision first. Written 2026-09-25 from the live
 site (home, `/go/sap/`, `/talent/`, a blog article, `/kapcsolat/`) at 1440 and 375 px.
-Phase 0 applied the same day (D38); phases 1–6 wait on the decisions in §5.*
+Phase 0 applied the same day (D38); phases 1–6 delivered the same day on the §5
+recommendations (D39) — see §10.*
 
 ## 1. Why
 
@@ -131,3 +132,30 @@ Every visible text is a sheet row now (D37), so the rebuild follows three rules:
 
 Phase 0 is minutes. Phases 1–2 are the foundation and change every page at once; 3 is page by
 page; 4 and 5 are small once 1 exists. Each phase can go live on its own.
+
+## 10. Delivered (2026-09-25, D39)
+
+The owner asked to deliver the plan; the §5 decisions were taken as recommended:
+
+| # | Taken |
+|---|---|
+| A-1 | Outfit (Google Fonts) stands in for Gilroy — the closest measured free face (1.7 % mean width difference over five samples) with a large x-height like Gilroy's; one line in `assets/site.css` swaps it for Gilroy once IDBC confirms the licence |
+| A-2 | idbc.hu for the frame (header, footer, heroes, titles, buttons, cards, forms); the client's demos for the data components — **to confirm with the client** |
+| A-3 | idbc.hu's header with the guide's five links and a "Salary Guide" link next to idbc.hu's logo |
+| A-4 | idbc.hu's full footer, plus the guide's own column |
+| A-5 | stock photos kept until IDBC supplies its own (C-6) |
+
+What changed: `assets/site.css` (tokens, type, header, footer, heroes, buttons, cards,
+forms, page copy) and `assets/site.js` (the menu) are shared by all eight pages; each page's
+own style lost its duplicated shell rules (about half its CSS); the chart and pool colours
+moved to idbc.hu's greens (`top3-chart.js?v=10`, `chart.css?v=8`); the documentation and the
+bemutató moved to the same tokens and face. 29 new footer rows went into IDBCSYNC before the
+pages (the sync kept running throughout).
+
+Measured: every chart, table and tile shows the same text and figures as before in all
+1,142 rendered states (every home filter combination, all 11 area pages with every topic
+and segment, Bérek for every area, SAP, Expert Pool); no horizontal scroll at 375 or 1440 on
+any page; tap targets ≥ 44 px on phones; the menu opens and closes with the right
+`aria-expanded`; no console errors; `check.py` clean; `idbcsync.py --check` against the live
+sheet changes nothing.
+

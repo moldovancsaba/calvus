@@ -4,10 +4,11 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>IDBC Salary Guide — token and component map · IDBC Salary Guide</title>
-<style>/* IDBC Salary Guide — documentation pages, on the guide's own tokens (dark green, light ground, Inter). */
-:root{--ground:#eef5ec;--card:#ffffff;--ink:#101818;--text:#2a3333;--muted:rgba(16,24,24,.66);--accent:#a5df8f;--accent-deep:#245d54;--line:rgba(19,35,35,.18);--line-soft:rgba(19,35,35,.08);--note:#e3efdf}
+<style>@import url("https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&display=swap");
+/* IDBC Salary Guide — documentation pages, on the guide's own tokens (idbc.hu's dark green and light ground, Outfit standing in for Gilroy). */
+:root{--ground:#f5f9f2;--card:#ffffff;--ink:#121c1b;--text:#26312f;--muted:rgba(18,28,27,.66);--accent:#a4dd8c;--accent-deep:#35715c;--line:rgba(18,28,27,.16);--line-soft:rgba(18,28,27,.08);--note:#daf1d0}
 *{box-sizing:border-box}
-body{margin:0;background:var(--ground);color:var(--text);font-family:"Inter","Montserrat","Segoe UI",Arial,sans-serif;font-size:15.5px;line-height:1.6;padding-block:0 64px;padding-inline:clamp(16px,4vw,40px)}
+body{margin:0;background:var(--ground);color:var(--text);font-family:"Outfit","Gilroy",system-ui,"Segoe UI",Arial,sans-serif;font-size:16px;line-height:1.6;padding-block:0 64px;padding-inline:clamp(16px,4vw,40px)}
 .wrap{max-width:74ch;margin-inline:auto}
 .docnav{display:flex;flex-wrap:wrap;gap:4px 18px;align-items:center;padding:16px 0;border-bottom:1px solid var(--line);font-size:12px;letter-spacing:.06em;text-transform:uppercase}
 .docnav a{color:var(--muted);text-decoration:none;min-height:44px;min-width:44px;display:inline-flex;align-items:center;border-bottom:2px solid transparent}
@@ -38,108 +39,62 @@ footer{margin-top:56px;padding-top:18px;border-top:1px solid var(--line);font-si
 <nav class="docnav" aria-label="Project documentation"><span class="docnav-brand">IDBC Salary Guide · documentation</span><a href="index.html">Overview</a><a href="bemutato.html">Bemutató</a><a href="brief.html">Brief</a><a href="research.html">Research</a><a href="audit.html">Audit</a><a href="sources.html">Sources & gaps</a><a href="decisions.html">Decisions</a><a href="design.html">Design</a><a href="gate.html">Gate</a><a href="client-asks.html">Register of asks</a><a href="prerequisites.html">Prerequisites</a><a href="business-logic.html">Business logic</a><a href="ssot.html">SSOT</a><a href="architecture.html">Architecture</a><a href="technical-design.html">Technical design</a><a href="implementation-plan.html">Implementation plan</a><a href="token-map.html" aria-current=page>Token map</a><a href="idbc-hu-alignment.html">idbc.hu alignment</a></nav>
 <header><p class="eyebrow">IDBC Salary Guide · project documentation</p><h1>IDBC Salary Guide — token and component map</h1></header>
 <p><em>How the prototype's tokens and components become one stylesheet and a set of templates in
-the production build (ADR-6). Today every page repeats the same <code>:root</code> block; production
-defines it once. Written 2026-09-18.</em></p>
+the production build (ADR-6). Written 2026-09-18; since 2026-09-25 the prototype itself
+defines its tokens once (<code>assets/site.css</code>, idbc.hu's values).</em></p>
 <h2>1. Tokens</h2>
+<p>Since 2026-09-25 (D39) the tokens are defined once, in <code>assets/site.css</code>, with idbc.hu's
+values; the table in <a href="design.html"><code>05-design.md</code></a> lists them. Production maps them onto the host theme:</p>
 <div class="tbl"><table>
 <thead>
 <tr>
-<th>Token</th>
+<th>Token (prototype)</th>
 <th>Value</th>
-<th>Role</th>
 <th>Production</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td><code>--dark</code></td>
-<td><code>#132323</code></td>
-<td>navbar, hero card, dark text on green</td>
-<td><code>--sg-dark</code></td>
+<td><code>#121c1b</code></td>
+<td>idbc.hu's own dark — already the same value</td>
 </tr>
 <tr>
 <td><code>--dark-2</code></td>
-<td><code>#0b1818</code></td>
-<td>footer</td>
-<td><code>--sg-dark-2</code></td>
+<td><code>#14201f</code></td>
+<td>idbc.hu's section dark</td>
 </tr>
 <tr>
-<td><code>--light-bg</code></td>
-<td><code>#eef5ec</code></td>
-<td>page ground (+ dot pattern)</td>
-<td><code>--sg-ground</code></td>
+<td><code>--ground</code></td>
+<td><code>#f5f9f2</code> + noise</td>
+<td>idbc.hu's ground (its noise texture image)</td>
 </tr>
 <tr>
-<td><code>--green</code></td>
-<td><code>#a5df8f</code></td>
-<td>primary button, selects, summary cards, pill, highlight box</td>
-<td><code>--sg-green</code></td>
+<td><code>--green</code> / <code>--green-strong</code></td>
+<td><code>#a4dd8c</code> / <code>#93d17a</code></td>
+<td>idbc.hu's green</td>
 </tr>
 <tr>
-<td><code>--green-strong</code></td>
-<td><code>#8fd474</code></td>
-<td>hover</td>
-<td><code>--sg-green-strong</code></td>
+<td><code>--green-mid</code>, <code>--green-teal</code>, <code>--green-pale</code></td>
+<td><code>#35715c</code>, <code>#4ca283</code>, <code>#daf1d0</code></td>
+<td>idbc.hu's palette</td>
 </tr>
 <tr>
-<td><code>--text</code></td>
-<td><code>#101818</code></td>
-<td>body</td>
-<td><code>--sg-text</code></td>
+<td><code>--font</code></td>
+<td>Outfit (stand-in)</td>
+<td>Gilroy, which idbc.hu already serves</td>
 </tr>
 <tr>
-<td><code>--muted</code></td>
-<td><code>rgba(16,24,24,.66)</code></td>
-<td>secondary</td>
-<td><code>--sg-muted</code></td>
-</tr>
-<tr>
-<td><code>--line</code></td>
-<td><code>rgba(19,35,35,.18)</code></td>
-<td>borders</td>
-<td><code>--sg-line</code></td>
-</tr>
-<tr>
-<td><code>--container</code></td>
-<td><code>1210px</code></td>
-<td>content width</td>
-<td><code>--sg-container</code></td>
-</tr>
-<tr>
-<td><code>--radius-large</code> / <code>--radius-medium</code></td>
-<td><code>28px</code> / <code>14px</code></td>
-<td>hero / cards</td>
-<td><code>--sg-radius-l/-m</code></td>
-</tr>
-<tr>
-<td><code>--shadow-soft</code></td>
-<td><code>0 16px 40px rgba(0,0,0,.12)</code></td>
-<td>cards</td>
-<td><code>--sg-shadow</code></td>
+<td>type scale, radii, buttons, container</td>
+<td>as in <a href="design.html"><code>05-design.md</code></a></td>
+<td>idbc.hu's theme variables (<code>--title-font-size</code> etc.)</td>
 </tr>
 <tr>
 <td>chart ramp</td>
-<td><code>#a5df8f</code> → <code>#55aa8b</code> → <code>#245d54</code></td>
-<td>offered → IDBC → expected; pool bars</td>
+<td><code>#a4dd8c</code> → <code>#4ca283</code> → <code>#35715c</code></td>
 <td>in <code>chart.css</code>, unchanged</td>
-</tr>
-<tr>
-<td>type</td>
-<td>Inter, Montserrat, Segoe UI, Arial; weights 700–900</td>
-<td></td>
-<td>idbc.hu's own font stack if it has Inter; otherwise self-host Inter</td>
-</tr>
-<tr>
-<td>breakpoints</td>
-<td>980 (menu), 900 (grids), 700 (chart compact), 600 container (table cards)</td>
-<td></td>
-<td>keep</td>
 </tr>
 </tbody>
 </table></div>
-<p>If idbc.hu's theme already defines a palette, the <code>--sg-*</code> names alias it where the
-values match (the dark green and the light ground are IDBC's brand) — mapping to be
-confirmed against the host theme in SG-010.</p>
 <h2>2. Components → templates and parts</h2>
 <div class="tbl"><table>
 <thead>
@@ -150,12 +105,16 @@ confirmed against the host theme in SG-010.</p>
 </thead>
 <tbody>
 <tr>
-<td><code>.navbar</code> + <code>.menu-toggle</code> + <code>.nav-links</code> + <code>.nav-actions</code></td>
-<td><code>parts/guide-header.html</code>; menu from one WordPress menu</td>
+<td><code>.sg-header</code> / <code>.sg-nav</code> (idbc.hu's header)</td>
+<td>idbc.hu's own header part; the guide's links as a menu</td>
 </tr>
 <tr>
-<td><code>.hero</code> + <code>.hero-card</code></td>
-<td><code>pattern/sg-hero</code> (image, eyebrow, <code>h1</code>, sentence)</td>
+<td><code>.sg-hero</code> + <code>.sg-hero-card</code>; <code>.sg-hero--plain</code></td>
+<td>idbc.hu's hero and "hero type 2" patterns</td>
+</tr>
+<tr>
+<td><code>.sg-footer</code> (idbc.hu's footer)</td>
+<td>idbc.hu's own footer part</td>
 </tr>
 <tr>
 <td><code>.intro-block</code></td>
@@ -204,7 +163,7 @@ confirmed against the host theme in SG-010.</p>
 <a href="client-asks.html"><code>08-client-asks.md</code></a> should gain this if the client agrees), the client's infographic
 (retired), the SVG chart internals (sized in viewBox units, not tokens).</p>
 <h2>4. Verification</h2>
-<p>SG-010: a script reads every prototype page's <code>:root</code> and the production stylesheet
+<p>SG-010: a script reads <code>assets/site.css</code>'s <code>:root</code> and the production stylesheet
 and fails on any differing value; the seven prototype pages and their production
 counterparts are compared by computed style on the shared components.</p>
 <footer>IDBC Talent Market &amp; Salary Guide 2026 · documentation</footer>

@@ -4,10 +4,11 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>IDBC Salary Guide — aligning the prototype with idbc.hu · IDBC Salary Guide</title>
-<style>/* IDBC Salary Guide — documentation pages, on the guide's own tokens (dark green, light ground, Inter). */
-:root{--ground:#eef5ec;--card:#ffffff;--ink:#101818;--text:#2a3333;--muted:rgba(16,24,24,.66);--accent:#a5df8f;--accent-deep:#245d54;--line:rgba(19,35,35,.18);--line-soft:rgba(19,35,35,.08);--note:#e3efdf}
+<style>@import url("https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&display=swap");
+/* IDBC Salary Guide — documentation pages, on the guide's own tokens (idbc.hu's dark green and light ground, Outfit standing in for Gilroy). */
+:root{--ground:#f5f9f2;--card:#ffffff;--ink:#121c1b;--text:#26312f;--muted:rgba(18,28,27,.66);--accent:#a4dd8c;--accent-deep:#35715c;--line:rgba(18,28,27,.16);--line-soft:rgba(18,28,27,.08);--note:#daf1d0}
 *{box-sizing:border-box}
-body{margin:0;background:var(--ground);color:var(--text);font-family:"Inter","Montserrat","Segoe UI",Arial,sans-serif;font-size:15.5px;line-height:1.6;padding-block:0 64px;padding-inline:clamp(16px,4vw,40px)}
+body{margin:0;background:var(--ground);color:var(--text);font-family:"Outfit","Gilroy",system-ui,"Segoe UI",Arial,sans-serif;font-size:16px;line-height:1.6;padding-block:0 64px;padding-inline:clamp(16px,4vw,40px)}
 .wrap{max-width:74ch;margin-inline:auto}
 .docnav{display:flex;flex-wrap:wrap;gap:4px 18px;align-items:center;padding:16px 0;border-bottom:1px solid var(--line);font-size:12px;letter-spacing:.06em;text-transform:uppercase}
 .docnav a{color:var(--muted);text-decoration:none;min-height:44px;min-width:44px;display:inline-flex;align-items:center;border-bottom:2px solid transparent}
@@ -40,7 +41,8 @@ footer{margin-top:56px;padding-top:18px;border-top:1px solid var(--line);font-si
 <p><em>What idbc.hu looks like, measured, next to what the prototype does today; what has to
 change, in which order, and what needs a decision first. Written 2026-09-25 from the live
 site (home, <code>/go/sap/</code>, <code>/talent/</code>, a blog article, <code>/kapcsolat/</code>) at 1440 and 375 px.
-Phase 0 applied the same day (D38); phases 1–6 wait on the decisions in §5.</em></p>
+Phase 0 applied the same day (D38); phases 1–6 delivered the same day on the §5
+recommendations (D39) — see §10.</em></p>
 <h2>1. Why</h2>
 <p>The guide is meant to live inside idbc.hu (ADR-1, <a href="architecture.html"><code>11-architecture.md</code></a>); the client's own
 home mockup already places it in that template. The prototype's look came from the client's
@@ -390,6 +392,50 @@ errors, the IDBCSYNC check (§7) and a dated entry in <a href="sources.html"><co
 <h2>9. Order and size</h2>
 <p>Phase 0 is minutes. Phases 1–2 are the foundation and change every page at once; 3 is page by
 page; 4 and 5 are small once 1 exists. Each phase can go live on its own.</p>
+<h2>10. Delivered (2026-09-25, D39)</h2>
+<p>The owner asked to deliver the plan; the §5 decisions were taken as recommended:</p>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>#</th>
+<th>Taken</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>A-1</td>
+<td>Outfit (Google Fonts) stands in for Gilroy — the closest measured free face (1.7 % mean width difference over five samples) with a large x-height like Gilroy's; one line in <code>assets/site.css</code> swaps it for Gilroy once IDBC confirms the licence</td>
+</tr>
+<tr>
+<td>A-2</td>
+<td>idbc.hu for the frame (header, footer, heroes, titles, buttons, cards, forms); the client's demos for the data components — <strong>to confirm with the client</strong></td>
+</tr>
+<tr>
+<td>A-3</td>
+<td>idbc.hu's header with the guide's five links and a "Salary Guide" link next to idbc.hu's logo</td>
+</tr>
+<tr>
+<td>A-4</td>
+<td>idbc.hu's full footer, plus the guide's own column</td>
+</tr>
+<tr>
+<td>A-5</td>
+<td>stock photos kept until IDBC supplies its own (C-6)</td>
+</tr>
+</tbody>
+</table></div>
+<p>What changed: <code>assets/site.css</code> (tokens, type, header, footer, heroes, buttons, cards,
+forms, page copy) and <code>assets/site.js</code> (the menu) are shared by all eight pages; each page's
+own style lost its duplicated shell rules (about half its CSS); the chart and pool colours
+moved to idbc.hu's greens (<code>top3-chart.js?v=10</code>, <code>chart.css?v=8</code>); the documentation and the
+bemutató moved to the same tokens and face. 29 new footer rows went into IDBCSYNC before the
+pages (the sync kept running throughout).</p>
+<p>Measured: every chart, table and tile shows the same text and figures as before in all
+1,142 rendered states (every home filter combination, all 11 area pages with every topic
+and segment, Bérek for every area, SAP, Expert Pool); no horizontal scroll at 375 or 1440 on
+any page; tap targets ≥ 44 px on phones; the menu opens and closes with the right
+<code>aria-expanded</code>; no console errors; <code>check.py</code> clean; <code>idbcsync.py --check</code> against the live
+sheet changes nothing.</p>
 <footer>IDBC Talent Market &amp; Salary Guide 2026 · documentation</footer>
 </div>
 </body>

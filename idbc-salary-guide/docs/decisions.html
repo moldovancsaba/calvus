@@ -4,10 +4,11 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>IDBC Salary Guide — decision register · IDBC Salary Guide</title>
-<style>/* IDBC Salary Guide — documentation pages, on the guide's own tokens (dark green, light ground, Inter). */
-:root{--ground:#eef5ec;--card:#ffffff;--ink:#101818;--text:#2a3333;--muted:rgba(16,24,24,.66);--accent:#a5df8f;--accent-deep:#245d54;--line:rgba(19,35,35,.18);--line-soft:rgba(19,35,35,.08);--note:#e3efdf}
+<style>@import url("https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&display=swap");
+/* IDBC Salary Guide — documentation pages, on the guide's own tokens (idbc.hu's dark green and light ground, Outfit standing in for Gilroy). */
+:root{--ground:#f5f9f2;--card:#ffffff;--ink:#121c1b;--text:#26312f;--muted:rgba(18,28,27,.66);--accent:#a4dd8c;--accent-deep:#35715c;--line:rgba(18,28,27,.16);--line-soft:rgba(18,28,27,.08);--note:#daf1d0}
 *{box-sizing:border-box}
-body{margin:0;background:var(--ground);color:var(--text);font-family:"Inter","Montserrat","Segoe UI",Arial,sans-serif;font-size:15.5px;line-height:1.6;padding-block:0 64px;padding-inline:clamp(16px,4vw,40px)}
+body{margin:0;background:var(--ground);color:var(--text);font-family:"Outfit","Gilroy",system-ui,"Segoe UI",Arial,sans-serif;font-size:16px;line-height:1.6;padding-block:0 64px;padding-inline:clamp(16px,4vw,40px)}
 .wrap{max-width:74ch;margin-inline:auto}
 .docnav{display:flex;flex-wrap:wrap;gap:4px 18px;align-items:center;padding:16px 0;border-bottom:1px solid var(--line);font-size:12px;letter-spacing:.06em;text-transform:uppercase}
 .docnav a{color:var(--muted);text-decoration:none;min-height:44px;min-width:44px;display:inline-flex;align-items:center;border-bottom:2px solid transparent}
@@ -314,6 +315,13 @@ decision is added here first. "Owner" is the studio side; "client" is IDBC.</em>
 <td>D38</td>
 <td>2026-09-25</td>
 <td><strong>idbc.hu becomes the reference for the prototype's look; plan in <a href="idbc-hu-alignment.html"><code>15-idbc-hu-alignment.md</code></a>; Phase 0 applied.</strong> The owner asked to learn idbc.hu and plan the prototype's alignment with it. Measured, not assumed: the colours were already idbc.hu's (the client's demos came from it); the gap is the typeface (Gilroy vs Inter), the type scale, and the shell and components (header, hero, cards, buttons, forms, footer). The plan keeps the data components as the client designed them and restyles them with idbc.hu's tokens only; six decisions come first (typeface licence, which design wins where idbc.hu and the client's demos differ, header and footer content, photography). The owner approved publishing the plan and Phase 0: the footer's phone (+36 30 479 <strong>8</strong>090) and floor (<strong>13.</strong> emelet) corrected in IDBCSYNC to idbc.hu's. Found on the way: a phone typed with a leading <code>+</code> became a formula and exported as <code>#ERROR!</code>, which the sync would have published as text — no run happened in between; the converter now refuses Sheets error values and the phone row's help text says to type <code>'+36 …</code>.</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>D39</td>
+<td>2026-09-25</td>
+<td><strong>The prototype takes idbc.hu's design; the alignment plan delivered in one pass.</strong> The owner asked to deliver <a href="idbc-hu-alignment.html"><code>15-idbc-hu-alignment.md</code></a>; its open decisions were taken as recommended — Outfit standing in for Gilroy until IDBC confirms the licence (idbc.hu serves Gilroy without cross-origin headers, so it cannot be borrowed), idbc.hu for the page frame and the client's demos for the data components (to confirm with the client), idbc.hu's header shape with the guide's links, idbc.hu's full footer, stock photos until IDBC's own arrive. One shared stylesheet (<code>assets/site.css</code>) and menu script replace the shell every page repeated; the pages keep their own rules only. The chart and pool colours moved to idbc.hu's greens. Proven before going live: all 1,142 rendered chart/table/tile states show the same text and figures as the live site; no page scrolls sideways at 375 or 1440; no console errors. The new footer texts are IDBCSYNC rows, added to the sheet before the pages so the 15-minute sync never failed.</td>
 <td></td>
 <td></td>
 </tr>

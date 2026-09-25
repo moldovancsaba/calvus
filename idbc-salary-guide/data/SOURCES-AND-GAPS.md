@@ -1122,3 +1122,40 @@ Sheets error value (`#ERROR!`, `#REF!`, `#N/A`, `#VALUE!`, `#NAME?`, `#DIV/0!`, 
 **Schedule.** In its first hour the 15-minute schedule (`*/15`) produced no run at all —
 GitHub delays or drops runs on the busy quarter-hour marks — so it moved to `7,22,37,52`.
 
+## idbc.hu's design on every page — the alignment plan delivered (2026-09-25)
+
+`docs/15-idbc-hu-alignment.md` §10 and D39 hold the decisions and the measurements; this is
+the build log.
+
+**One stylesheet.** `assets/site.css` holds idbc.hu's tokens (`#121c1b`, `#14201f`,
+`#a4dd8c`, `#35715c`, `#4ca283`, `#daf1d0`, ground `#f5f9f2` with a light noise), its type scale,
+header, footer, both hero types, buttons, cards, forms, and one block that sets the page copy
+on idbc.hu's body type. `assets/site.js` runs the header menu. Each page links both after its
+own `<style>`, which lost every rule the shared file now owns (a script removed them rule by
+rule, a second pass the ones hidden behind comments; about half of every page's CSS). Stripped
+along the way and put back per page: the hero photo crops from the client's 2026-09-22 "heads
+cut off" point.
+
+**Shell.** Header, footer and hero markup rebuilt on all eight pages with the same
+`data-sync` ids for every kept text. Kapcsolat's heading and form, one section before, are a
+plain hero plus the form now; the area page's green band is the same plain hero. The area
+tiles lost their typed "→" (the dark arrow square replaces it); the two page-link cards keep
+theirs, which are sheet content. Esettanulmányok and Regisztráció no longer show a hero photo
+(idbc.hu's article and contact pages have none).
+
+**Sheet.** 29 new rows — the footer's idbc.hu columns and the social labels — were inserted
+after the footer rows (IMPORTDATA from a short-lived file, frozen, file removed) and checked
+from a fresh export: 17,667 rows, 0 differences from the expected rows, no formulas, column A
+and the technical block still hidden. Six rows no page uses any more (the old text logo's
+"IDBC"/"group" labels, the area page's old footer link, two hero photo descriptions) are
+retired from the sheet after the pages go live; two kept rows take new values then
+(Panaszszabályzat → Panaszbejelentő, the guide column's heading).
+
+**Checks.** Rendered text of every chart, table and tile compared against the live site in
+all 1,142 states: identical. No horizontal scroll at 375 or 1440 on any page (one 65 px
+overflow on Expert Pool — a long button that would not wrap — fixed first). Tap targets ≥ 44
+px on phones after enlarging the social icons and the logo link. Menu opens and closes, 48 px
+rows, `aria-expanded` follows. No console errors. `check.py` clean. The browser pane's
+screenshots after a programmatic scroll sometimes return a stale frame; a second capture shows
+the page — recorded here so it is not mistaken for a rendering bug.
+

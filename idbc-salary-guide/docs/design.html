@@ -4,10 +4,11 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>IDBC Salary Guide — design · IDBC Salary Guide</title>
-<style>/* IDBC Salary Guide — documentation pages, on the guide's own tokens (dark green, light ground, Inter). */
-:root{--ground:#eef5ec;--card:#ffffff;--ink:#101818;--text:#2a3333;--muted:rgba(16,24,24,.66);--accent:#a5df8f;--accent-deep:#245d54;--line:rgba(19,35,35,.18);--line-soft:rgba(19,35,35,.08);--note:#e3efdf}
+<style>@import url("https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&display=swap");
+/* IDBC Salary Guide — documentation pages, on the guide's own tokens (idbc.hu's dark green and light ground, Outfit standing in for Gilroy). */
+:root{--ground:#f5f9f2;--card:#ffffff;--ink:#121c1b;--text:#26312f;--muted:rgba(18,28,27,.66);--accent:#a4dd8c;--accent-deep:#35715c;--line:rgba(18,28,27,.16);--line-soft:rgba(18,28,27,.08);--note:#daf1d0}
 *{box-sizing:border-box}
-body{margin:0;background:var(--ground);color:var(--text);font-family:"Inter","Montserrat","Segoe UI",Arial,sans-serif;font-size:15.5px;line-height:1.6;padding-block:0 64px;padding-inline:clamp(16px,4vw,40px)}
+body{margin:0;background:var(--ground);color:var(--text);font-family:"Outfit","Gilroy",system-ui,"Segoe UI",Arial,sans-serif;font-size:16px;line-height:1.6;padding-block:0 64px;padding-inline:clamp(16px,4vw,40px)}
 .wrap{max-width:74ch;margin-inline:auto}
 .docnav{display:flex;flex-wrap:wrap;gap:4px 18px;align-items:center;padding:16px 0;border-bottom:1px solid var(--line);font-size:12px;letter-spacing:.06em;text-transform:uppercase}
 .docnav a{color:var(--muted);text-decoration:none;min-height:44px;min-width:44px;display:inline-flex;align-items:center;border-bottom:2px solid transparent}
@@ -80,9 +81,21 @@ pages transcribe them. Written 2026-09-18.</em></p>
 <td>client</td>
 <td><code>IDBC_SalaryGuide_home.pdf</code> — inside idbc.hu's template (not built)</td>
 </tr>
+<tr>
+<td>Page frame (every page)</td>
+<td>idbc.hu</td>
+<td>measured 2026-09-25; <a href="idbc-hu-alignment.html"><code>15-idbc-hu-alignment.md</code></a>, D39</td>
+</tr>
 </tbody>
 </table></div>
-<h2>Tokens (as set in each page's <code>:root</code>)</h2>
+<h2>Since 2026-09-25: idbc.hu's design (D39)</h2>
+<p>The page frame — tokens, type, header, footer, heroes, buttons, cards, forms — now follows
+idbc.hu, measured on 2026-09-25 (<a href="idbc-hu-alignment.html"><code>15-idbc-hu-alignment.md</code></a>). The data components (TOP3
+chart, salary tables, survey charts and filters, Expert Pool tiles) keep the client's demo
+layouts above and only take idbc.hu's tokens. Everything shared lives in one file,
+<code>assets/site.css</code> (with <code>assets/site.js</code> for the header menu); each page's own <code>&lt;style&gt;</code>
+keeps only what is specific to that page and loads before it.</p>
+<h2>Tokens (<code>assets/site.css</code>, <code>:root</code>)</h2>
 <div class="tbl"><table>
 <thead>
 <tr>
@@ -94,58 +107,93 @@ pages transcribe them. Written 2026-09-18.</em></p>
 <tbody>
 <tr>
 <td><code>--dark</code></td>
-<td><code>#132323</code></td>
-<td>navbar, hero card, primary text on green</td>
+<td><code>#121c1b</code></td>
+<td>header, footer, dark cards and buttons, text on green</td>
 </tr>
 <tr>
 <td><code>--dark-2</code></td>
-<td><code>#0b1818</code></td>
-<td>footer</td>
+<td><code>#14201f</code></td>
+<td>hero band and hero card</td>
 </tr>
 <tr>
-<td><code>--light-bg</code></td>
-<td><code>#eef5ec</code></td>
-<td>page ground (with a faint dot pattern)</td>
+<td><code>--ground</code> / <code>--light-bg</code></td>
+<td><code>#f5f9f2</code> + a light noise texture</td>
+<td>page ground</td>
 </tr>
 <tr>
 <td><code>--green</code></td>
-<td><code>#a5df8f</code></td>
-<td>primary button, selects, summary cards, pill, highlight box</td>
+<td><code>#a4dd8c</code></td>
+<td>primary accent: header button group, selects, area tiles, pills</td>
 </tr>
 <tr>
 <td><code>--green-strong</code></td>
-<td><code>#8fd474</code></td>
+<td><code>#93d17a</code></td>
 <td>hover</td>
 </tr>
 <tr>
+<td><code>--green-mid</code></td>
+<td><code>#35715c</code></td>
+<td>eyebrows on light, the home figures' cards</td>
+</tr>
+<tr>
+<td><code>--green-teal</code></td>
+<td><code>#4ca283</code></td>
+<td>chart middle point</td>
+</tr>
+<tr>
+<td><code>--green-pale</code></td>
+<td><code>#daf1d0</code></td>
+<td>plain hero band, figures on the green-mid cards</td>
+</tr>
+<tr>
 <td><code>--text</code></td>
-<td><code>#101818</code></td>
+<td><code>#121c1b</code></td>
 <td>body</td>
 </tr>
 <tr>
 <td><code>--muted</code></td>
-<td><code>rgba(16,24,24,.66)</code></td>
+<td><code>rgba(18,28,27,.66)</code></td>
 <td>secondary copy</td>
 </tr>
 <tr>
 <td><code>--line</code></td>
-<td><code>rgba(19,35,35,.18)</code></td>
+<td><code>rgba(18,28,27,.14)</code></td>
 <td>borders</td>
 </tr>
 <tr>
+<td><code>--footer-text</code></td>
+<td><code>#a2a9a8</code></td>
+<td>footer copy</td>
+</tr>
+<tr>
 <td>chart ramp</td>
-<td><code>#a5df8f</code> → <code>#55aa8b</code> → <code>#245d54</code></td>
-<td>offered → IDBC → expected; also the pool bars</td>
+<td><code>#a4dd8c</code> → <code>#4ca283</code> → <code>#35715c</code></td>
+<td>offered → IDBC → expected; pool bars and legend</td>
 </tr>
 <tr>
 <td>type</td>
-<td>Inter (system fallback), 900/800 weights for headings and labels</td>
+<td>Outfit 400–800 (stand-in for idbc.hu's Gilroy until IDBC confirms the licence, A-1); titles 56/64 → 28/36 on phones, <code>h1</code> 40/48, <code>h2</code> 32/40, body 16/24, copy 18/28</td>
 <td></td>
 </tr>
 <tr>
 <td>radii</td>
-<td>28 / 14 / 18 px</td>
-<td>hero, cards, tiles</td>
+<td>32 (hero, footer top 56), 24 (cards), 16, 8 (buttons, selects, pills)</td>
+<td></td>
+</tr>
+<tr>
+<td>buttons</td>
+<td>8 px corners, weight 600, 56 px (default), 40 px (header), 64 px (form submit); dark with a soft light glow, green, and dark/green outlines</td>
+<td></td>
+</tr>
+<tr>
+<td>container</td>
+<td>1280 px; sections 48 px (32 on phones); sides 16 px on phones</td>
+<td></td>
+</tr>
+<tr>
+<td>breakpoints</td>
+<td>1200 (header menu), 1023 / 767 (footer columns, phone scale)</td>
+<td></td>
 </tr>
 <tr>
 <td>tap floor</td>
@@ -154,25 +202,30 @@ pages transcribe them. Written 2026-09-18.</em></p>
 </tr>
 </tbody>
 </table></div>
-<p>The tokens are repeated in every page's <code>&lt;style&gt;</code>; <code>assets/chart.css</code> relies on them.
-<a href="token-map.html"><code>14-token-map.md</code></a> is where they become a single definition for the production build.</p>
 <h2>Layout</h2>
 <ul>
-<li><strong>Navbar</strong> fixed, flush to the top, overlaying the hero (from the SAP mockup); hamburger
-  below 980 px; five items + two right-aligned actions (D19).</li>
-<li><strong>Hero</strong> with a dark card bottom-left; eyebrow, <code>h1</code>, one sentence.</li>
-<li><strong>Summary block</strong> of three green cards above every chart (band per perspective; on
-  Expert Pool: pool size / positions / largest pool).</li>
-<li><strong>TOP3 chart</strong>: wide layout above 700 px (role names in a left gutter, one shared
-  axis), compact layout below (one block per position with its own scale; D18); LinkedIn
-  pill under the role name; footnote under the chart (D22).</li>
-<li><strong>Tables</strong>: desktop table; cards below 600 px of container width (D17); Bérek groups
-  collapse behind a header showing the full band.</li>
-<li><strong>Area page</strong>: summary text clamped to the media slot's height with "Olvass tovább";
-  media slot = video placeholder or green key-thought box (D20).</li>
-<li><strong>Expert Community</strong>: intro → two audience cards (join form behind a <code>&lt;details&gt;</code>,
-  Ajánlatkérés anchor) → tiles (bar block anchored to the card bottom, D26) → contact form.</li>
-<li><strong>Articles</strong> (SAP trends, case studies): one column, ≤ 760 px measure (D25).</li>
+<li><strong>Header</strong> (<code>.sg-header</code>): idbc.hu's floating dark bar — 1312 px wide, 79 px tall, bottom
+  corners 32 px, fixed; idbc.hu's SVG logo (links to idbc.hu), a divider, the guide's own
+  "Salary Guide" link, EN/HU pills, the five guide links, the green-framed button group
+  (Ajánlatkérés, Kijelentkezés); below 1200 px a green menu icon opens the links as 48 px
+  rows.</li>
+<li><strong>Hero</strong> (<code>.sg-hero</code>): dark band, photo with 32 px corners, centred dark card (eyebrow,
+  <code>h1</code> 62/64, one sentence) overlapping the photo's lower edge — Kezdőoldal, Bérek, SAP, Expert
+  Pool. <strong>Plain hero</strong> (<code>.sg-hero--plain</code>, idbc.hu's "hero type 2"): pale green band with
+  rounded bottom — Esettanulmányok, Regisztráció, Kapcsolat, area pages. Per-page photo crops
+  keep faces clear of the card (the client's 2026-09-22 "heads cut off" point).</li>
+<li><strong>Section titles</strong> 56/64 bold, no rule under the intro block; eyebrows are small green
+  sentence-case lines, not uppercase labels.</li>
+<li><strong>Home figures</strong> as idbc.hu's number cards (<code>#35715c</code>, 32 px corners); <strong>area tiles</strong> as
+  green rows with the dark arrow square.</li>
+<li><strong>Copy</strong> regular weight at 16–18 px; labels 600 at 14 px (the demos' 700–900 weights at
+  12–15 px are gone).</li>
+<li><strong>Forms</strong>: white card with a soft green glow, underline fields, dark 64 px submit.</li>
+<li><strong>Footer</strong> (<code>.sg-footer</code>): idbc.hu's — logo, contact, social icons, the guide's own column,
+  idbc.hu's three link columns, bottom bar with Panaszbejelentő and Adatkezelési tájékoztató
+  (linked to idbc.hu's own pages).</li>
+<li><strong>TOP3 chart, tables, survey charts, Expert Pool tiles</strong>: unchanged in layout and figures
+  (1,142 rendered states compared before and after), on the new tokens.</li>
 </ul>
 <h2>Measured at</h2>
 <p>375 px and desktop on every page after each change round since 2026-09-15; the numbers

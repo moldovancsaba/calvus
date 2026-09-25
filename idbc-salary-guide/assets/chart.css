@@ -138,7 +138,7 @@
   max-width: 320px;
   padding: 9px 12px;
   border-radius: 10px;
-  background: var(--dark, #132323);
+  background: var(--dark, #121c1b);
   color: #fff;
   box-shadow: 0 8px 22px rgba(0, 0, 0, .22);
   font-family: "Inter", "Montserrat", "Segoe UI", Arial, sans-serif;
@@ -163,8 +163,8 @@
 .range-card {
   padding: 24px;
   border-radius: 22px;
-  background: var(--green, #a5df8f);
-  color: var(--dark, #132323);
+  background: var(--green, #a4dd8c);
+  color: var(--dark, #121c1b);
 }
 
 .range-card h3 {
@@ -213,7 +213,7 @@
 
 /* LinkedIn Talent Insight market count (client, 2026-09): green pill under the role name,
    one footnote under the chart. Same pill on the Expert Pool tiles' market line. */
-.talent-pill-svg rect { fill: #a5df8f; }
-.talent-pill-svg text { font-size: 12px; font-weight: 800; fill: #132323; }
-.talent-pill { display: inline-block; margin: 6px 0 8px; padding: 4px 10px; border-radius: 8px; background: #a5df8f; color: #132323; font-size: 12px; font-weight: 800; }
+.talent-pill-svg rect { fill: #a4dd8c; }
+.talent-pill-svg text { font-size: 12px; font-weight: 800; fill: #121c1b; }
+.talent-pill { display: inline-block; margin: 6px 0 8px; padding: 4px 10px; border-radius: 8px; background: #a4dd8c; color: #121c1b; font-size: 12px; font-weight: 800; }
 .talent-note { margin: 14px 0 0; font-size: 12px; font-weight: 700; color: rgba(16,24,24,.66); }

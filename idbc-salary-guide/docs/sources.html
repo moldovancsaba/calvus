@@ -4,10 +4,11 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>IDBC Salary Guide — data sources and design-intent audit · IDBC Salary Guide</title>
-<style>/* IDBC Salary Guide — documentation pages, on the guide's own tokens (dark green, light ground, Inter). */
-:root{--ground:#eef5ec;--card:#ffffff;--ink:#101818;--text:#2a3333;--muted:rgba(16,24,24,.66);--accent:#a5df8f;--accent-deep:#245d54;--line:rgba(19,35,35,.18);--line-soft:rgba(19,35,35,.08);--note:#e3efdf}
+<style>@import url("https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&display=swap");
+/* IDBC Salary Guide — documentation pages, on the guide's own tokens (idbc.hu's dark green and light ground, Outfit standing in for Gilroy). */
+:root{--ground:#f5f9f2;--card:#ffffff;--ink:#121c1b;--text:#26312f;--muted:rgba(18,28,27,.66);--accent:#a4dd8c;--accent-deep:#35715c;--line:rgba(18,28,27,.16);--line-soft:rgba(18,28,27,.08);--note:#daf1d0}
 *{box-sizing:border-box}
-body{margin:0;background:var(--ground);color:var(--text);font-family:"Inter","Montserrat","Segoe UI",Arial,sans-serif;font-size:15.5px;line-height:1.6;padding-block:0 64px;padding-inline:clamp(16px,4vw,40px)}
+body{margin:0;background:var(--ground);color:var(--text);font-family:"Outfit","Gilroy",system-ui,"Segoe UI",Arial,sans-serif;font-size:16px;line-height:1.6;padding-block:0 64px;padding-inline:clamp(16px,4vw,40px)}
 .wrap{max-width:74ch;margin-inline:auto}
 .docnav{display:flex;flex-wrap:wrap;gap:4px 18px;align-items:center;padding:16px 0;border-bottom:1px solid var(--line);font-size:12px;letter-spacing:.06em;text-transform:uppercase}
 .docnav a{color:var(--muted);text-decoration:none;min-height:44px;min-width:44px;display:inline-flex;align-items:center;border-bottom:2px solid transparent}
@@ -1232,6 +1233,37 @@ Sheets error value (<code>#ERROR!</code>, <code>#REF!</code>, <code>#N/A</code>,
 <code>#NULL!</code>, <code>#SPILL!</code>, <code>#CALC!</code>) with the row named.</p>
 <p><strong>Schedule.</strong> In its first hour the 15-minute schedule (<code>*/15</code>) produced no run at all —
 GitHub delays or drops runs on the busy quarter-hour marks — so it moved to <code>7,22,37,52</code>.</p>
+<h2>idbc.hu's design on every page — the alignment plan delivered (2026-09-25)</h2>
+<p><code>docs/15-idbc-hu-alignment.md</code> §10 and D39 hold the decisions and the measurements; this is
+the build log.</p>
+<p><strong>One stylesheet.</strong> <code>assets/site.css</code> holds idbc.hu's tokens (<code>#121c1b</code>, <code>#14201f</code>,
+<code>#a4dd8c</code>, <code>#35715c</code>, <code>#4ca283</code>, <code>#daf1d0</code>, ground <code>#f5f9f2</code> with a light noise), its type scale,
+header, footer, both hero types, buttons, cards, forms, and one block that sets the page copy
+on idbc.hu's body type. <code>assets/site.js</code> runs the header menu. Each page links both after its
+own <code>&lt;style&gt;</code>, which lost every rule the shared file now owns (a script removed them rule by
+rule, a second pass the ones hidden behind comments; about half of every page's CSS). Stripped
+along the way and put back per page: the hero photo crops from the client's 2026-09-22 "heads
+cut off" point.</p>
+<p><strong>Shell.</strong> Header, footer and hero markup rebuilt on all eight pages with the same
+<code>data-sync</code> ids for every kept text. Kapcsolat's heading and form, one section before, are a
+plain hero plus the form now; the area page's green band is the same plain hero. The area
+tiles lost their typed "→" (the dark arrow square replaces it); the two page-link cards keep
+theirs, which are sheet content. Esettanulmányok and Regisztráció no longer show a hero photo
+(idbc.hu's article and contact pages have none).</p>
+<p><strong>Sheet.</strong> 29 new rows — the footer's idbc.hu columns and the social labels — were inserted
+after the footer rows (IMPORTDATA from a short-lived file, frozen, file removed) and checked
+from a fresh export: 17,667 rows, 0 differences from the expected rows, no formulas, column A
+and the technical block still hidden. Six rows no page uses any more (the old text logo's
+"IDBC"/"group" labels, the area page's old footer link, two hero photo descriptions) are
+retired from the sheet after the pages go live; two kept rows take new values then
+(Panaszszabályzat → Panaszbejelentő, the guide column's heading).</p>
+<p><strong>Checks.</strong> Rendered text of every chart, table and tile compared against the live site in
+all 1,142 states: identical. No horizontal scroll at 375 or 1440 on any page (one 65 px
+overflow on Expert Pool — a long button that would not wrap — fixed first). Tap targets ≥ 44
+px on phones after enlarging the social icons and the logo link. Menu opens and closes, 48 px
+rows, <code>aria-expanded</code> follows. No console errors. <code>check.py</code> clean. The browser pane's
+screenshots after a programmatic scroll sometimes return a stale frame; a second capture shows
+the page — recorded here so it is not mistaken for a rendering bug.</p>
 <footer>IDBC Talent Market &amp; Salary Guide 2026 · documentation</footer>
 </div>
 </body>

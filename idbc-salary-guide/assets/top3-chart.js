@@ -2,9 +2,9 @@
    Loaded as a plain <script> by sap/, berezes/ and expert-pool/ — no build step,
    no modules, matching the rest of this repo. */
 (() => {
-  const COLOR_MIN = '#a5df8f';   // vállalatok által kínált bér
-  const COLOR_IDBC = '#55aa8b';  // IDBC szakértői által javasolt bér
-  const COLOR_MAX = '#245d54';   // jelöltek által elvárt bér
+  const COLOR_MIN = '#a4dd8c';   // vállalatok által kínált bér
+  const COLOR_IDBC = '#4ca283';  // IDBC szakértői által javasolt bér
+  const COLOR_MAX = '#35715c';   // jelöltek által elvárt bér
 
   // The texts below carry a sync marker: they come from the IDBCSYNC sheet (data/idbcsync.py rewrites them).
   const LABEL = {

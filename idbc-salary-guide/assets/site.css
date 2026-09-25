@@ -1,0 +1,448 @@
+/* IDBC Salary Guide — the one stylesheet shared by every page: idbc.hu's tokens, type scale,
+   header, footer, heroes, buttons, cards and forms (docs/15-idbc-hu-alignment.md). Loaded after
+   each page's own <style>, which keeps only what is specific to that page. */
+
+:root {
+  /* colours — idbc.hu */
+  --dark: #121c1b;
+  --dark-2: #14201f;
+  --ink: #121c1b;
+  --light-bg: #f5f9f2;
+  --ground: #f5f9f2;
+  --green: #a4dd8c;
+  --green-strong: #93d17a;
+  --green-mid: #35715c;
+  --green-teal: #4ca283;
+  --green-pale: #daf1d0;
+  --text: #121c1b;
+  --muted: rgba(18, 28, 27, .66);
+  --line: rgba(18, 28, 27, .14);
+  --footer-text: #a2a9a8;
+  --error: #b3261e;
+
+  /* type — Outfit stands in for idbc.hu's Gilroy until IDBC confirms the web licence (A-1) */
+  --font: "Outfit", "Gilroy", system-ui, -apple-system, "Segoe UI", Arial, sans-serif;
+  --title-size: 56px;
+  --title-lh: 64px;
+  --h1-size: 40px;
+  --h1-lh: 48px;
+  --h2-size: 32px;
+  --h2-lh: 40px;
+  --h3-size: 24px;
+  --h3-lh: 32px;
+
+  /* layout */
+  --container: 1280px;
+  --header-h: 79px;
+  --section-py: 48px;
+  --radius-large: 32px;
+  --radius-medium: 24px;
+  --radius-small: 16px;
+  --radius-button: 8px;
+  --shadow-soft: 0 12px 32px rgba(18, 28, 27, .08);
+  --glow-green: 0 0 24px rgba(179, 227, 160, .16);
+  --glow-dark: 0 0 64px rgba(218, 241, 208, .32);
+}
+
+@media (max-width: 767px) {
+  :root {
+    --title-size: 28px;
+    --title-lh: 36px;
+    --h1-size: 30px;
+    --h1-lh: 38px;
+    --h2-size: 24px;
+    --h2-lh: 32px;
+    --h3-size: 20px;
+    --h3-lh: 28px;
+    --header-h: 64px;
+    --section-py: 32px;
+  }
+}
+
+/* ---------- base ---------- */
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; scroll-padding-top: calc(var(--header-h) + 16px); }
+body {
+  margin: 0;
+  padding-top: 0;
+  font-family: var(--font);
+  font-size: 16px;
+  line-height: 1.5;
+  color: var(--text);
+  background-color: var(--ground);
+  /* idbc.hu's ground is a light noise texture; the same effect as a tiny inline SVG */
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0.07 0 0 0 0 0.11 0 0 0 0 0.1 0 0 0 .05 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  -webkit-font-smoothing: antialiased;
+}
+img { max-width: 100%; height: auto; display: block; }
+a { color: inherit; text-decoration: none; }
+button, input, select, textarea { font-family: inherit; }
+.container { width: min(var(--container), calc(100% - 32px)); margin-inline: auto; }
+.section { padding: var(--section-py) 0; }
+.sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0; }
+:focus-visible { outline: 3px solid var(--green-mid); outline-offset: 2px; }
+
+/* Controls with nothing behind them in the prototype: shown in place, visibly inert. */
+.is-unavailable { opacity: .45; cursor: not-allowed; }
+
+/* ---------- section titles and copy (idbc.hu: 56/64 bold, no rule under it) ---------- */
+.intro-block {
+  display: grid;
+  grid-template-columns: minmax(280px, 1fr) minmax(280px, 1fr);
+  gap: 24px 48px;
+  align-items: end;
+  margin: 0 0 32px;
+  padding: 0;
+  border: 0;
+}
+.intro-block h2, .section-title, h2.section-title, .page-title {
+  margin: 0;
+  font-size: var(--title-size);
+  line-height: var(--title-lh);
+  font-weight: 700;
+  letter-spacing: 0;
+  color: var(--dark);
+}
+.intro-block > p, .intro-block > div > p:not(.eyebrow) {
+  margin: 0;
+  max-width: 620px;
+  font-size: 18px;
+  line-height: 28px;
+  font-weight: 400;
+}
+.eyebrow {
+  margin: 0 0 8px;
+  font-size: 16px;
+  line-height: 24px;
+  font-weight: 600;
+  letter-spacing: 0;
+  text-transform: none;
+  color: var(--green-mid);
+}
+.table-title, .text-section h2 {
+  font-size: var(--h2-size);
+  line-height: var(--h2-lh);
+  font-weight: 700;
+  letter-spacing: 0;
+}
+.text-section hr { display: none; }
+.text-columns p { font-size: 16px; line-height: 28px; font-weight: 400; }
+.intro-block > :only-child { grid-column: 1 / -1; }
+@media (max-width: 900px) { .intro-block { grid-template-columns: 1fr; } }
+
+/* ---------- buttons (idbc.hu: 8 px corners, weight 600, 40 / 56 / 64 px) ---------- */
+.sg-btn, .cta, .cta-button, .read-more, .trend-toggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 56px;
+  padding: 0 24px;
+  border: 1px solid transparent;
+  border-radius: var(--radius-button);
+  font: 600 18px/1.2 var(--font);
+  text-align: center;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: background-color .15s ease, color .15s ease, box-shadow .15s ease;
+}
+.cta, .cta-button, .sg-btn--dark {
+  background: var(--dark);
+  color: var(--ground);
+  box-shadow: var(--glow-dark);
+}
+.cta:hover, .cta-button:hover, .sg-btn--dark:hover { background: #1f2d2b; }
+.sg-btn--green { background: var(--green); color: var(--dark); box-shadow: var(--glow-green); }
+.sg-btn--green:hover { background: var(--green-strong); }
+.sg-btn--green-outline { background: transparent; border-color: var(--green); color: var(--green); }
+.read-more, .trend-toggle, .sg-btn--dark-outline { background: transparent; border-color: var(--dark); color: var(--dark); }
+.read-more:hover, .trend-toggle:hover { background: var(--dark); color: var(--ground); }
+.cta.is-unavailable, .cta-button.is-unavailable { opacity: .45; box-shadow: none; }
+summary.cta { list-style: none; width: fit-content; }
+@media (max-width: 767px) {
+  /* long labels wrap on phones instead of pushing the card wider than the screen */
+  .sg-btn, .cta, .cta-button, .read-more, .trend-toggle { white-space: normal; min-height: 48px; padding: 12px 20px; font-size: 16px; }
+  summary.cta { width: 100%; }
+}
+summary.cta::-webkit-details-marker { display: none; }
+
+/* ---------- selects and form fields ---------- */
+select {
+  min-height: 56px;
+  padding: 0 48px 0 20px;
+  border: 0;
+  border-radius: var(--radius-button);
+  background-color: var(--green);
+  color: var(--dark);
+  font: 600 16px/1.2 var(--font);
+  cursor: pointer;
+  appearance: none;
+  background-image: linear-gradient(45deg, transparent 50%, var(--dark) 50%), linear-gradient(135deg, var(--dark) 50%, transparent 50%);
+  background-position: calc(100% - 26px) 50%, calc(100% - 19px) 50%;
+  background-size: 7px 7px, 7px 7px;
+  background-repeat: no-repeat;
+}
+.proto-form {
+  padding: 48px;
+  border-radius: var(--radius-large);
+  background: #fff;
+  box-shadow: 0 32px 128px rgba(164, 221, 140, .35);
+}
+.proto-form label { font-size: 14px; line-height: 20px; font-weight: 600; color: var(--dark); }
+.proto-form input:not([type="checkbox"]), .proto-form textarea, .proto-form select {
+  width: 100%;
+  min-height: 48px;
+  padding: 10px 0;
+  border: 0;
+  border-bottom: 2px solid var(--dark);
+  border-radius: 0;
+  background: transparent;
+  color: var(--dark);
+  font: 400 16px/24px var(--font);
+  box-shadow: none;
+}
+.proto-form select { padding: 0 40px 0 0; background-color: transparent; background-position: calc(100% - 14px) 50%, calc(100% - 7px) 50%; }
+.proto-form input:focus, .proto-form textarea:focus, .proto-form select:focus { outline: 0; border-bottom-color: var(--green-mid); }
+.proto-form .cta { min-height: 64px; padding: 0 32px; font-size: 20px; }
+.form-note { font-size: 14px; line-height: 22px; color: var(--muted); }
+@media (max-width: 767px) { .proto-form { padding: 24px; border-radius: var(--radius-medium); } }
+
+/* ---------- page copy on idbc.hu's body type ----------
+   The pages were set in the client's July/August demos' style (small text at weight 700–900).
+   idbc.hu sets body copy regular at 16–18 px and labels semibold at 14 px. */
+.article-copy p, .article p, .intro-copy p, .audience-card p, .pool-head p, .reg-wrap p, .summary-body p {
+  font-size: 18px; line-height: 28px; font-weight: 400;
+}
+.article-copy .trend-copy, .article li, .bullet-list li, .pool-outro, .section-lead, .sap-callout-lead,
+.contact-card p, .product-card ul, .article-copy .range-card p {
+  font-size: 16px; line-height: 26px; font-weight: 400;
+}
+.sap-callout-lead { color: rgba(245, 249, 242, .82); }
+.filter-block-label, .area-picker-label, .top-filters label, .segment-select label, .topic-filter label,
+.proto-form label, .expert-bar-label, .answer-label, .multi-group-label {
+  font-size: 14px; line-height: 20px; font-weight: 600; letter-spacing: 0;
+}
+.panel-note, .scale-hint, .form-note, .table-note, .salary-count, .no-data, .media-note, .area-media .media-note,
+.expert-market, .n-note, .proto-form .check {
+  font-size: 14px; line-height: 22px; font-weight: 400;
+}
+.split-card-eyebrow, .expert-iparag, .sap-callout-eyebrow {
+  font-size: 14px; font-weight: 600; text-transform: none; letter-spacing: 0;
+}
+td.num, td.pos-cell, .pos-band { font-weight: 600; }
+.segment { font-weight: 700; }
+.back-link { font-weight: 600; }
+.area-media.is-highlight blockquote { font-weight: 700; }
+.contact-card .cta-button { min-height: 48px; font-size: 16px; font-weight: 600; }
+
+/* ---------- cards: idbc.hu corners, flat fills ---------- */
+.trend-panel, .top3-chart-card, .table-wrap, .article, .audience-card, .expert-card, .product-card,
+.range-card, .contact-card, .panel, .video-card, .sap-callout, .summary-card, .split-card {
+  border-radius: var(--radius-medium);
+}
+
+/* Home figures (11+ év · 11 terület · …) as idbc.hu's "IDBC számokban" cards */
+.insight-card {
+  padding: 24px;
+  border-radius: var(--radius-large);
+  background: var(--green-mid);
+  color: var(--ground);
+}
+.insight-card .insight-stat { margin: 0 0 4px; font-size: 44px; line-height: 52px; font-weight: 800; color: var(--green-pale); letter-spacing: 0; }
+.insight-card p:not(.insight-stat) { margin: 0; font-size: 14px; line-height: 20px; font-weight: 600; text-transform: uppercase; letter-spacing: .02em; }
+
+/* Area tiles and page links as idbc.hu's green service rows with the dark arrow square */
+.split-card {
+  position: relative;
+  padding: 24px;
+  background: var(--green);
+  color: var(--dark);
+  box-shadow: none;
+}
+.split-card .split-card-eyebrow { font-size: 14px; font-weight: 600; text-transform: none; letter-spacing: 0; color: var(--green-mid); }
+.split-card .split-card-title { font-size: 24px; line-height: 32px; font-weight: 700; letter-spacing: 0; }
+.area-cards .split-card::after {
+  content: "\2192";
+  position: absolute;
+  right: 24px;
+  top: 50%;
+  width: 40px;
+  height: 40px;
+  margin-top: -20px;
+  display: grid;
+  place-items: center;
+  border-radius: var(--radius-button);
+  background: var(--dark);
+  color: var(--green);
+  font-size: 20px;
+}
+.area-cards .split-card { padding-right: 88px; }
+.split-card:hover { background: var(--green-strong); }
+
+/* ---------- header (idbc.hu: floating dark bar, rounded bottom, sticky) ---------- */
+.sg-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 50;
+  display: flex;
+  justify-content: center;
+  padding: 0 64px;
+  pointer-events: none;
+}
+.sg-nav {
+  width: min(1312px, 100%);
+  min-height: var(--header-h);
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  padding: 4px 24px;
+  border-radius: 0 0 32px 32px;
+  background: var(--dark);
+  color: var(--ground);
+  pointer-events: auto;
+}
+.sg-brand { display: flex; align-items: center; gap: 16px; flex: none; }
+.sg-brand > a { display: flex; align-items: center; min-height: 44px; }
+.sg-logo { display: block; width: 100px; height: auto; }
+.sg-brand-sep { width: 1px; height: 44px; background: rgba(245, 249, 242, .24); }
+.sg-guide {
+  font-size: 15px;
+  line-height: 18px;
+  font-weight: 700;
+  color: var(--green);
+  text-transform: capitalize;
+  white-space: nowrap;
+}
+.sg-lang { display: flex; gap: 8px; }
+.sg-lang span {
+  min-width: 41px;
+  padding: 7px 12px 5px;
+  border-radius: var(--radius-button);
+  font-size: 14px;
+  line-height: 20px;
+  font-weight: 600;
+  text-align: center;
+  color: var(--green);
+}
+.sg-lang .is-active { background: var(--green); color: var(--dark); }
+.sg-links { display: flex; align-items: center; gap: 28px; margin: 0 auto; padding: 0; list-style: none; }
+.sg-links a { font-size: 15px; line-height: 28px; font-weight: 600; color: var(--ground); white-space: nowrap; }
+.sg-links a:hover, .sg-links a[aria-current] { color: var(--green); }
+.sg-actions { display: flex; gap: 8px; padding: 4px; border-radius: 12px; background: var(--green); flex: none; }
+.sg-actions .sg-btn { min-height: 40px; padding: 0 16px; font-size: 14px; }
+.sg-actions .sg-btn--dark-outline:hover { background: var(--dark); color: var(--ground); }
+.sg-actions .is-unavailable { opacity: 1; color: rgba(245, 249, 242, .5); box-shadow: none; }
+.sg-toggle {
+  display: none;
+  width: 48px;
+  height: 48px;
+  margin-left: auto;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: var(--green);
+  font-size: 32px;
+  line-height: 1;
+  cursor: pointer;
+}
+@media (max-width: 1199px) {
+  .sg-header { padding: 0; }
+  .sg-nav { flex-wrap: wrap; gap: 12px 16px; padding: 8px 16px; border-radius: 0 0 24px 24px; }
+  .sg-toggle { display: grid; place-items: center; }
+  .sg-links, .sg-actions { display: none; }
+  .sg-nav.is-open .sg-links, .sg-nav.is-open .sg-actions { display: flex; order: 3; width: 100%; }
+  .sg-nav.is-open .sg-links { flex-direction: column; align-items: stretch; gap: 0; margin: 8px 0 0; }
+  .sg-nav.is-open .sg-links a { display: flex; align-items: center; min-height: 48px; font-size: 18px; border-top: 1px solid rgba(245, 249, 242, .12); }
+  .sg-nav.is-open .sg-actions { justify-content: stretch; margin-bottom: 8px; }
+  .sg-nav.is-open .sg-actions .sg-btn { flex: 1; min-height: 48px; }
+}
+@media (max-width: 767px) {
+  .sg-logo { width: 72px; }
+  .sg-brand-sep { height: 36px; }
+  .sg-guide { display: none; }
+  .sg-lang span { min-width: 44px; min-height: 44px; display: grid; place-items: center; padding: 0 8px; }
+}
+
+/* ---------- heroes ---------- */
+/* Service hero: dark band, photo with rounded corners, centred dark card (idbc.hu home, GO) */
+.sg-hero { padding: calc(var(--header-h) + 24px) 32px 0; background: var(--dark-2); color: var(--ground); }
+.sg-hero-media { max-width: 1376px; height: 480px; margin: 0 auto; overflow: hidden; border-radius: var(--radius-large); }
+.sg-hero-media img { width: 100%; height: 100%; object-fit: cover; }
+.sg-hero-card {
+  position: relative;
+  max-width: 844px;
+  margin: -120px auto 0;
+  padding: 32px 48px 40px;
+  border-radius: 32px 32px 0 0;
+  background: var(--dark-2);
+  text-align: center;
+}
+.sg-hero-card h1 { margin: 0 0 12px; font-size: 62px; line-height: 64px; font-weight: 700; letter-spacing: 0; color: #fff; }
+.sg-hero-card p { margin: 0 auto; max-width: 720px; font-size: 20px; line-height: 28px; font-weight: 400; color: var(--ground); }
+.sg-hero-card .eyebrow { margin: 0 0 12px; color: var(--green); }
+@media (max-width: 767px) {
+  .sg-hero { padding: calc(var(--header-h) + 12px) 0 0; }
+  .sg-hero-media { height: 300px; border-radius: 0; }
+  .sg-hero-card { margin-top: -48px; padding: 24px 16px 28px; border-radius: 24px 24px 0 0; text-align: left; }
+  .sg-hero-card h1 { font-size: 36px; line-height: 42px; }
+  .sg-hero-card p { font-size: 18px; line-height: 26px; }
+}
+
+/* Plain hero (idbc.hu "hero type 2": articles, contact) */
+.sg-hero--plain {
+  padding: calc(var(--header-h) + 64px) 0 56px;
+  border-radius: 0 0 56px 56px;
+  background: var(--green-pale);
+  color: var(--dark);
+}
+.sg-hero--plain .sg-hero-inner { width: min(var(--container), calc(100% - 32px)); margin: 0 auto; }
+.sg-hero--plain h1 { margin: 0 0 12px; max-width: 900px; font-size: var(--h1-size); line-height: var(--h1-lh); font-weight: 700; letter-spacing: 0; }
+.sg-hero--plain p { margin: 0; max-width: 760px; font-size: 20px; line-height: 28px; }
+.sg-hero--plain .eyebrow { color: var(--green-mid); }
+.sg-hero--plain .back-link { display: inline-flex; align-items: center; min-height: 44px; margin-bottom: 8px; font-weight: 600; color: var(--green-mid); }
+@media (max-width: 767px) { .sg-hero--plain { padding: calc(var(--header-h) + 32px) 0 32px; border-radius: 0 0 32px 32px; } }
+
+/* ---------- footer (idbc.hu) ---------- */
+.sg-footer {
+  margin-top: 64px;
+  padding: 80px 24px 48px;
+  border-radius: 56px 56px 0 0;
+  background: var(--dark);
+  color: var(--footer-text);
+  font-size: 14px;
+  line-height: 22px;
+}
+.sg-footer-inner { width: min(var(--container), 100%); margin: 0 auto; display: grid; grid-template-columns: minmax(240px, 1.2fr) repeat(3, minmax(160px, 1fr)); gap: 40px; }
+.sg-footer .sg-logo { width: 100px; margin-bottom: 24px; }
+.sg-footer p { margin: 0 0 12px; }
+.sg-footer a:hover { color: var(--green); }
+.sg-footer-contact a { color: var(--ground); font-weight: 600; }
+.sg-social { display: flex; gap: 16px; margin-top: 24px; font-size: 20px; }
+.sg-social a { display: grid; place-items: center; min-width: 32px; min-height: 32px; color: var(--ground); }
+.sg-footer-col { display: grid; align-content: start; gap: 8px; }
+.sg-footer-col .sg-footer-h { margin: 16px 0 0; font-size: 16px; line-height: 24px; font-weight: 700; color: var(--ground); }
+.sg-footer-col .sg-footer-h:first-child { margin-top: 0; }
+.sg-footer-col a { font-size: 16px; line-height: 24px; }
+.sg-footer-bottom {
+  width: min(var(--container), 100%);
+  margin: 48px auto 0;
+  padding-top: 24px;
+  border-top: 1px solid rgba(245, 249, 242, .12);
+  display: flex;
+  justify-content: space-between;
+  gap: 16px 24px;
+  flex-wrap: wrap;
+}
+.sg-footer-bottom p { margin: 0; }
+.sg-footer-bottom nav { display: flex; gap: 24px; flex-wrap: wrap; }
+@media (max-width: 1023px) { .sg-footer-inner { grid-template-columns: 1fr 1fr; } }
+@media (max-width: 767px) {
+  .sg-footer { padding: 56px 16px 32px; border-radius: 32px 32px 0 0; }
+  .sg-footer-inner { grid-template-columns: 1fr; gap: 32px; }
+  .sg-footer a { display: inline-flex; align-items: center; min-height: 44px; }
+  .sg-social { gap: 4px; }
+  .sg-social a { min-width: 44px; min-height: 44px; }
+  .sg-footer-col { gap: 0; }
+}
