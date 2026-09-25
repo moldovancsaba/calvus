@@ -12,7 +12,7 @@ every project.
 | 01 research | `01-research.md` | What was read (the client's specs, mockups, data, copy), the one external measurement, what was not researched and why |
 | 02 audit | `02-audit.md` | idbc.hu measured; the spec vs. the data; the client's data as it stands; defects found in the material |
 | 03 sources and assets | `../data/SOURCES-AND-GAPS.md` | Every source file and what it contributed, every gap, every change round with measurements — the running record since July |
-| 04 decisions | `04-decisions.md` | D1–D31, dated, with who and why |
+| 04 decisions | `04-decisions.md` | D1–D34, dated, with who and why |
 | 05 design | `05-design.md` | Where the look comes from (the client's mockups), tokens, layout |
 | 06 build log | `../data/SOURCES-AND-GAPS.md` | the dated change notes are the build log |
 | 07 gate | `07-gate.md` | The one-command gate, the measured pass, deliberate deviations |
@@ -106,3 +106,28 @@ questions and an "IT Contracting" salary segment that don't exist in the parsed 
 (needs the source Excel checked — may be genuine survey segmentation, not a parsing bug);
 the Expert Pool text content the client says was sent but never reached this round. Gate
 clean at 390 and 1440, no console errors, no new sub-44 px targets.
+
+**2026-09-24 — client's second look (D32), documented retroactively.** The client asked to
+keep Expert Pool's size legend after all (reversing this same week's D30 removal) and drop
+the raw headcount instead; the recruiting-strategy question on Piaci trendek got the same
+ordinal-order fix as D30's home-office question; terulet sub-pages got a plain green header
+instead of a photo hero. Shipped as commit `e59dfc2` without a documentation update at the
+time — recorded here on 2026-09-25 so the register stays complete, per CLAUDE.md's rule
+that documentation ships with the change regardless of which session makes the commit.
+
+**2026-09-25 — TOP3 chart label collision, fixed at the root (D33–D34).** The client
+reported labels "skewing" when TOP3 values sit close together. Verified against the
+rendered SVG's actual coordinates rather than assumed: the label-declutter algorithm only
+ever cascaded right from the leftmost dot, so a tight cluster's 2nd and 3rd labels drifted
+40–90 px from their own dots. Replaced with a min/max-cascade average, centering a
+colliding group on its natural midpoint instead — one shared function
+(`assets/top3-chart.js`), so the fix reaches Bérek, SAP and Expert Pool, both chart
+layouts, in one place (D33). Also found and fixed in the same pass: a long position name
+(BSC's "Supply Chain / Order Management Specialist", ~298 px at the chart's font) could
+overflow the wide chart's fixed 280 px row-label column, so its lowest-value dot sat on
+top of the label's last letters — the column now sizes to the longest name in view. Separately
+answered, not changed: the client asked whether BSC's "Sales Project Manager" showing
+"Manager" underneath is Drive-editable — traced the data path and confirmed yes, that's the
+bértábla sheet's own `szint` column, read verbatim (D34). Gate clean; verified with real
+SVG coordinates, not just a visual glance, on Bérek (BSC and IT), SAP and Expert Pool at
+390 and 1440, no console errors.

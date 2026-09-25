@@ -268,6 +268,27 @@ decision is added here first. "Owner" is the studio side; "client" is IDBC.</em>
 <td>owner, cross-checking the client's two lists</td>
 <td><code>data/areas.json</code>, <code>terulet/index.html</code>, <code>data/build-salary-data.py</code></td>
 </tr>
+<tr>
+<td>D32</td>
+<td>2026-09-24</td>
+<td><strong>Expert Pool's size legend reinstated — the client's second look reversed D30's removal.</strong> After seeing the legend gone, the client asked to keep it after all; the raw IDBC Expert Community headcount is dropped instead, so only the bar and the LinkedIn Talent Insight count show. Piaci trendek's recruiting-strategy question (base view and the company-size breakdown) now keeps the client's own answer order instead of being sorted by percentage — the same class of ordinal-order bug as D30's home-office fix, on a different question. Terulet sub-pages get a plain green header band instead of a photo hero, per the client's request. (This round's commit, <code>e59dfc2</code>, shipped without a documentation update at the time — recorded here retroactively on 2026-09-25 so the register stays complete; CLAUDE.md's documentation-ships-with-the-change rule applies regardless of which session makes the commit.)</td>
+<td>client, second review</td>
+<td><code>expert-pool/index.html</code>, <code>index.html</code>, <code>terulet/index.html</code></td>
+</tr>
+<tr>
+<td>D33</td>
+<td>2026-09-25</td>
+<td><strong>TOP3 chart label collision, fixed at the algorithm, not patched per-row.</strong> The client reported labels "skewing" when TOP3 values sit close together (desktop and mobile). Verified with the actual rendered SVG coordinates, not assumed: the old label-declutter cascaded strictly left-to-right from the leftmost dot, so a tight 3-value cluster dragged its 2nd and 3rd labels 40–90px clear of their own dots. Replaced with a min/max-cascade average (run the same push left-to-right, then mirrored right-to-left, average the two per label) — for well-spaced values this equals the old, unchanged result; for a tight cluster it centers the group on its natural midpoint instead of dragging it rightward. One function (<code>layoutLabels</code> in <code>assets/top3-chart.js</code>), so the fix reaches every page that loads it (Bérek, SAP, Expert Pool) and both the wide and the mobile "compact" chart layout. Found and fixed in the same pass: the wide chart's row-label column was a fixed 280px regardless of the position name's actual length — BSC's "Supply Chain / Order Management Specialist" measures ~298px at that font, so its lowest-value dot sat on top of the label's last letters whenever that value landed at the domain minimum (an artifact of a long name, not of close values, but visible in the same chart the client was looking at) — the column width is now sized to the longest position name in view, never narrower than the old 280px floor</td>
+<td>owner, verified against live-rendered SVG coordinates</td>
+<td><code>assets/top3-chart.js</code> (asset version bumped to <code>v=8</code>)</td>
+</tr>
+<tr>
+<td>D34</td>
+<td>2026-09-25</td>
+<td><strong>"Sales Project Manager" showing "Manager" under it at BSC is real data, not a bug — confirmed, not guessed.</strong> The client asked whether this is Drive-editable. Traced directly: <code>Sales Project Manager</code>'s <code>szint</code> (level) column in the bértábla sheet is literally <code>Manager</code>, read verbatim by <code>build-salary-data.py</code> with no transformation, and rendered as the TOP3 chart's sub-label — this is exactly what D30 changed that sub-label to show (the level, once the redundant repeated area code was dropped). Answer: <strong>yes</strong>, editable directly in the Drive sheet — blanking that row's level column and re-running the converter removes it, no code change needed. Left as-is; a code-side rule to suppress a level that merely repeats a word already in the position name was considered and rejected as guessing at intent for one row rather than fixing a reported defect</td>
+<td>owner, tracing the data path before answering</td>
+<td>none — data-only question</td>
+</tr>
 </tbody>
 </table></div>
 <h2>Standing rules that came out of these</h2>

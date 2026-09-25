@@ -46,28 +46,47 @@
     return { min: Math.floor(lo / step) * step, max: Math.ceil(hi / step) * step, step };
   }
 
-  // Value labels sit above their dot. When two dots are close the labels would
-  // collide, so nudge them apart left-to-right, then slide the whole row back
-  // if the last one overshot the plot.
+  // Value labels sit above their dot. When two dots are close the labels would collide, so
+  // they need nudging apart — but nudging with a single left-to-right cascade (the original
+  // approach) anchors the whole run on the leftmost dot and only ever pushes right, so a
+  // tight cluster of 3 close values drifts its 2nd and 3rd labels well clear of their own
+  // dots (client, 2026-09-25: "when the amounts are close together, the amounts skew" —
+  // confirmed live: a label could land 90px+ from the dot it names). Fixed with a min/max
+  // cascade: run the same left-to-right push, then a mirrored right-to-left push, and average
+  // the two per point. For points with room to spare both cascades already equal the natural
+  // x, so nothing changes; for a colliding run this centers the whole group on its natural
+  // midpoint instead of dragging it rightward. Same fix reaches both chart layouts (this and
+  // the mobile "compact" one below) and every page that loads this file (Bérek, SAP, Expert
+  // Pool), since they all call this one function.
   // ponytail: proportional-width estimate, not real text measurement — good
   // enough for tabular HUF strings at one fixed font size. Measure with
   // getComputedTextLength if the label font or content ever varies.
   function layoutLabels(points, plotMin, plotMax) {
     const halfWidth = p => (p.text.length * 5.6 + 8) / 2;
+    const gap = 6;
+    points.forEach(p => { p.hw = halfWidth(p); });
+
+    const n = points.length;
+    const minLayout = new Array(n);
     let prevRight = -Infinity;
-    points.forEach(p => {
-      const hw = halfWidth(p);
-      p.labelX = Math.max(p.x, prevRight + 6 + hw);
-      prevRight = p.labelX + hw;
+    points.forEach((p, i) => {
+      minLayout[i] = Math.max(p.x, prevRight + gap + p.hw);
+      prevRight = minLayout[i] + p.hw;
     });
-    const last = points[points.length - 1];
-    const overshoot = (last.labelX + halfWidth(last)) - plotMax;
-    if (overshoot > 0) {
-      const first = points[0];
-      const headroom = (first.labelX - halfWidth(first)) - plotMin;
-      const shift = Math.min(overshoot, Math.max(0, headroom));
-      points.forEach(p => { p.labelX -= shift; });
+    const maxLayout = new Array(n);
+    let nextLeft = Infinity;
+    for (let i = n - 1; i >= 0; i--) {
+      maxLayout[i] = Math.min(points[i].x, nextLeft - gap - points[i].hw);
+      nextLeft = maxLayout[i] - points[i].hw;
     }
+    points.forEach((p, i) => { p.labelX = (minLayout[i] + maxLayout[i]) / 2; });
+
+    // Keep the now-evenly-spaced group inside the plot bounds as one block.
+    const first = points[0], last = points[n - 1];
+    const leftOvershoot = plotMin - (first.labelX - first.hw);
+    if (leftOvershoot > 0) points.forEach(p => { p.labelX += leftOvershoot; });
+    const rightOvershoot = (last.labelX + last.hw) - plotMax;
+    if (rightOvershoot > 0) points.forEach(p => { p.labelX -= rightOvershoot; });
   }
 
   // Narrow layout (client request, 2026-09-16): instead of one wide chart with the role names
@@ -150,7 +169,12 @@
     if (compact) return renderCompactChart(rows, opts);
 
     const hasTalent = rows.some(r => r.linkedin != null);
-    const W = 1080, PLOT_MIN = 280, PLOT_MAX = 1020, TOP = 42, ROW_H = hasTalent ? 104 : 74;
+    // The plot's left edge has to clear the row-label text (position name, 14px/900-weight, set
+    // at x=0) or a dot landing at the domain minimum sits on top of it — confirmed live: "Supply
+    // Chain / Order Management Specialist" measures ~298px at this font, wider than the old fixed
+    // 280px gutter, so its lowest-value dot covered the label's last few letters (2026-09-25).
+    // 7px/char is a safe estimate for this font (real longest label above measured ~6.8px/char).
+    const W = 1080, PLOT_MIN = Math.max(280, Math.max(...rows.map(r => r.pozicio.length * 7)) + 20), PLOT_MAX = 1020, TOP = 42, ROW_H = hasTalent ? 104 : 74;
     const rowY = i => TOP + 44 + i * ROW_H;
     const gridBottom = rowY(rows.length - 1) + 44;
     const axisY = gridBottom + 36;

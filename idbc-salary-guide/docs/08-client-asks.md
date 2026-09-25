@@ -8,7 +8,9 @@ deliveries and the decisions for publication, listed in `19-implementation-prere
 
 A 2026-09-22 feedback mail mixed real prototype fixes (closed this round, see
 `README.md`'s process log and `SOURCES-AND-GAPS.md`'s 2026-09-22 entry) with three items
-this studio cannot resolve without more from the client:
+this studio cannot resolve without more from the client. The client repeated #16 on
+2026-09-25 (its own mail, unchanged) — the parsed data still doesn't have it; still needs
+the source file, not a re-ask:
 
 | # | Item | What's needed |
 |---|---|---|
@@ -39,4 +41,11 @@ this studio cannot resolve without more from the client:
 ## Closed
 
 See the process log in `README.md` for every item closed by a client mail round (2026-08-24,
-2026-08-25, 2026-09-01, 2026-09-08, 2026-09-18, 2026-09-22).
+2026-08-25, 2026-09-01, 2026-09-08, 2026-09-18, 2026-09-22, 2026-09-24, 2026-09-25).
+
+Two 2026-09-25 items answered without needing anything further from the client:
+
+| # | Item | Answer |
+|---|---|---|
+| 19 | TOP3 chart labels "skewing" when values sit close together | Fixed — a label-placement bug, reached every page sharing the chart, D33 |
+| 20 | Whether BSC's "Sales Project Manager" showing "Manager" is Drive-editable | Yes — it's the bértábla sheet's own `szint` column for that row, read verbatim; blank it there and re-run the converter to remove it, D34 |

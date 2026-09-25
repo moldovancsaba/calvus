@@ -721,3 +721,72 @@ needed; flagged as likely describing a stale/cached view.
 Measured before push: all changed guide pages at 375 and 1440px — no horizontal overflow,
 no console errors, no new sub-44px targets. `idbc-salary-guide/check.py` and the root
 `check.py` both `GATE: CLEAN`.
+
+## Client's second look (2026-09-24), documented retroactively on 2026-09-25
+
+Shipped as commit `e59dfc2` at the time without a documentation update — recorded here now
+so the round isn't lost from this file's running record (`04-decisions.md` D32).
+
+The client reviewed the 2026-09-22 round and reversed one item: Expert Pool's kicsi/közepes/
+nagy size legend, removed that round, was asked to come back — the client wants it after
+all. The raw IDBC Expert Community headcount is dropped instead, so each tile shows only
+the bar and the LinkedIn Talent Insight count. Separately: the recruiting-strategy question
+on Piaci trendek ("Mi jellemzi céged toborzási stratégiáját...") had the same
+sorted-by-percentage-instead-of-source-order bug as the home-office question D30 fixed,
+in both the base view and the company-size breakdown — fixed the same way. Terulet
+sub-pages swapped their photo hero for a plain green header band, per the client's request.
+
+## Chart label collision, verified and fixed at the root (2026-09-25)
+
+The client reported (2026-09-25 mail): "Ha nagyon közel vannak az összegek egymáshoz, akkor
+elcsúsznak az összegek (mobilon is)" — when the amounts sit close together, they skew, also
+on mobile. Verified against the actual rendered SVG before touching anything: on Bérek's
+BSC area, "IT Support / Technical Support Specialist" (790k/800k/800k, a 10k spread) and
+"Supply Chain / Order Management Specialist" (600k/630k/650k, 50k spread) both showed
+`630 000 Ft` and `650 000 Ft` labels sitting 42–94px to the right of their own dots. Root
+cause, read from `assets/top3-chart.js`'s `layoutLabels()`: the label-declutter algorithm
+cascaded strictly left-to-right, anchored on the leftmost dot's natural position, and only
+ever pushed labels further right to avoid overlapping the previous one — for a well-spaced
+row this is invisible, but a tight cluster of 3 labels (each ~64px wide) crammed into a
+~50px span drags the 2nd and 3rd labels well clear of the dots they name, with nothing to
+pull them back.
+
+Fixed by replacing the single cascade with a min/max-cascade average: run the existing
+left-to-right push to get each label's minimum feasible position, run the mirror image
+(right-to-left, cascading from the rightmost dot) to get each label's maximum feasible
+position, and average the two per label. For points with room to spare both cascades
+already equal the natural x (no change from before); for a colliding run, averaging centers
+the whole group on its natural midpoint instead of dragging it toward one edge. Confirmed
+by re-reading the live SVG coordinates after the fix: the BSC row that was 455.8/525.8/595.8
+(dots at 455.8/465.0/465.0) became 390.4/460.4/530.4 — centered on the dots instead of
+sitting to their right. One function, shared by every page that loads `assets/
+top3-chart.js` (Bérek, SAP, Expert Pool) and both chart layouts (the wide desktop chart and
+the mobile "compact" one) — fixing it once reaches all of them; version bumped to `v=8` in
+all three pages' `<script>` tags so the fix isn't served from a stale cache.
+
+Found in the same pass, not reported but visible in the same chart: the wide chart's
+row-label column had a fixed 280px width regardless of the actual position name. BSC's
+"Supply Chain / Order Management Specialist" measures ~298px at the chart's 14px/900-weight
+font (`getComputedTextLength()`, not the character-count estimate) — 18px wider than the
+column, so whenever that position's lowest value landed at the domain minimum (this row's
+600 000 Ft did), the dot sat directly on top of the label's last two letters. This is a
+different bug from the label-collision one above (it's about the row *label*, not the
+value labels, and triggers on a long name regardless of how close the values are) but
+looked similar enough in the same screenshot that it was worth fixing together. The column
+width is now `Math.max(280, longest position name in view × 7px + 20px)` — an estimate
+consistent with the codebase's existing character-count width heuristics elsewhere in this
+file, verified against the real measured width with margin to spare.
+
+Separately answered, not a bug: the client asked to "confirm whether [BSC's remaining gray
+'Manager' listing] is editable in the Drive" — traced end to end: "Sales Project Manager"
+is a `top3: true` row whose `szint` (level) column in the bértábla sheet is literally
+`Manager`; `build-salary-data.py` reads it with no transformation, and it's exactly the
+sub-label D30 changed to show once the redundant repeated area code was dropped. Answer:
+yes, Drive-editable — blank that row's level column and re-run the converter to remove it.
+No code change made; suppressing a level that happens to repeat a word already in the
+position name would be guessing at intent for one specific row, not fixing a defect.
+
+Measured after the fix: Bérek (BSC and IT areas), SAP and Expert Pool at 375 and 1440px,
+reading the live SVG's own coordinates rather than eyeballing screenshots — labels align
+to their dots in every case checked, no horizontal overflow, no console errors.
+`idbc-salary-guide/check.py` and the root `check.py` both `GATE: CLEAN`.

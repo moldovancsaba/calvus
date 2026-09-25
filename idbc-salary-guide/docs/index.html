@@ -78,7 +78,7 @@ every project.</p>
 <tr>
 <td>04 decisions</td>
 <td><a href="decisions.html"><code>04-decisions.md</code></a></td>
-<td>D1–D31, dated, with who and why</td>
+<td>D1–D34, dated, with who and why</td>
 </tr>
 <tr>
 <td>05 design</td>
@@ -203,6 +203,29 @@ questions and an "IT Contracting" salary segment that don't exist in the parsed 
 (needs the source Excel checked — may be genuine survey segmentation, not a parsing bug);
 the Expert Pool text content the client says was sent but never reached this round. Gate
 clean at 390 and 1440, no console errors, no new sub-44 px targets.</p>
+<p><strong>2026-09-24 — client's second look (D32), documented retroactively.</strong> The client asked to
+keep Expert Pool's size legend after all (reversing this same week's D30 removal) and drop
+the raw headcount instead; the recruiting-strategy question on Piaci trendek got the same
+ordinal-order fix as D30's home-office question; terulet sub-pages got a plain green header
+instead of a photo hero. Shipped as commit <code>e59dfc2</code> without a documentation update at the
+time — recorded here on 2026-09-25 so the register stays complete, per CLAUDE.md's rule
+that documentation ships with the change regardless of which session makes the commit.</p>
+<p><strong>2026-09-25 — TOP3 chart label collision, fixed at the root (D33–D34).</strong> The client
+reported labels "skewing" when TOP3 values sit close together. Verified against the
+rendered SVG's actual coordinates rather than assumed: the label-declutter algorithm only
+ever cascaded right from the leftmost dot, so a tight cluster's 2nd and 3rd labels drifted
+40–90 px from their own dots. Replaced with a min/max-cascade average, centering a
+colliding group on its natural midpoint instead — one shared function
+(<code>assets/top3-chart.js</code>), so the fix reaches Bérek, SAP and Expert Pool, both chart
+layouts, in one place (D33). Also found and fixed in the same pass: a long position name
+(BSC's "Supply Chain / Order Management Specialist", ~298 px at the chart's font) could
+overflow the wide chart's fixed 280 px row-label column, so its lowest-value dot sat on
+top of the label's last letters — the column now sizes to the longest name in view. Separately
+answered, not changed: the client asked whether BSC's "Sales Project Manager" showing
+"Manager" underneath is Drive-editable — traced the data path and confirmed yes, that's the
+bértábla sheet's own <code>szint</code> column, read verbatim (D34). Gate clean; verified with real
+SVG coordinates, not just a visual glance, on Bérek (BSC and IT), SAP and Expert Pool at
+390 and 1440, no console errors.</p>
 <footer>IDBC Talent Market &amp; Salary Guide 2026 · documentation</footer>
 </div>
 </body>
