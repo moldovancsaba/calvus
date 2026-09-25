@@ -12,7 +12,7 @@ every project.
 | 01 research | `01-research.md` | What was read (the client's specs, mockups, data, copy), the one external measurement, what was not researched and why |
 | 02 audit | `02-audit.md` | idbc.hu measured; the spec vs. the data; the client's data as it stands; defects found in the material |
 | 03 sources and assets | `../data/SOURCES-AND-GAPS.md` | Every source file and what it contributed, every gap, every change round with measurements — the running record since July |
-| 04 decisions | `04-decisions.md` | D1–D42, dated, with who and why |
+| 04 decisions | `04-decisions.md` | D1–D43, dated, with who and why |
 | 05 design | `05-design.md` | Where the look comes from (the client's mockups), tokens, layout |
 | 06 build log | `../data/SOURCES-AND-GAPS.md` | the dated change notes are the build log |
 | 07 gate | `07-gate.md` | The one-command gate, the measured pass, deliberate deviations |
@@ -223,4 +223,9 @@ dispatch until it does.
 request: rows 3–59 (header and footer) and 111–386 (the survey section: topics, questions,
 answer labels) are hidden where they stand; 3,957 rows stay visible. Values untouched, the
 sync sees no change. Still no scheduled sync run by 13:10 UTC.
+
+**2026-09-25 — IDBCSYNC sections in pastel colours (D43).** At the owner's request each of the
+tab's 16 sections has its own pastel background, its heading row a deeper shade in bold; the
+salary table's 13 areas alternate two aquas; row 1 is frozen. Values, hidden rows and the sync
+unchanged (checked on a fresh export).
 

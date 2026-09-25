@@ -44,6 +44,7 @@ IDBCSYNC (sheet tab) ──▶ export .xlsx ──▶ data/idbcsync.py ──▶
   touch — survey figures, screen-reader labels, technical keys — sit in one hidden block at
   the end; since D42 the header and footer rows and the survey texts are hidden where they
   stand (show the row group to edit them; hiding never changes what the sync reads). Rows whose `id` starts with `#` are section headings and are ignored.
+  Each section has its own pastel background and a bold heading row (D43); formatting is never read.
 - **How a row reaches a page.** Data rows build `guide-data.json` and `areas.json` by id
   pattern (`AREA-`, `SAL-`, `EXPERT-`, `SAPPROD-`, `SURVEY-`). Page texts are marked in the
   HTML: `data-sync="ID"` on an element holding only text (a line break in the cell is a

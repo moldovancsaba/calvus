@@ -148,7 +148,8 @@ smaller JSON (charts, filters). Chart and tooltip code is <code>top3-chart.js</c
   <code>megjelenés</code> (where it shows), <code>segítség</code> (what to type). Rows the client never needs to
   touch — survey figures, screen-reader labels, technical keys — sit in one hidden block at
   the end; since D42 the header and footer rows and the survey texts are hidden where they
-  stand (show the row group to edit them; hiding never changes what the sync reads). Rows whose <code>id</code> starts with <code>#</code> are section headings and are ignored.</li>
+  stand (show the row group to edit them; hiding never changes what the sync reads). Rows whose <code>id</code> starts with <code>#</code> are section headings and are ignored.
+  Each section has its own pastel background and a bold heading row (D43); formatting is never read.</li>
 <li><strong>How a row reaches a page.</strong> Data rows build <code>guide-data.json</code> and <code>areas.json</code> by id
   pattern (<code>AREA-</code>, <code>SAL-</code>, <code>EXPERT-</code>, <code>SAPPROD-</code>, <code>SURVEY-</code>). Page texts are marked in the
   HTML: <code>data-sync="ID"</code> on an element holding only text (a line break in the cell is a
