@@ -1088,6 +1088,11 @@ below the data — and the transport files removed from the repo.</p>
 <p><strong>Noted in the tab, not changed:</strong> <code>regisztracio/index.html</code>'s Ajánlatkérés header button still
 links to <code>idbc.hu/ajanlatkeres/</code> — every other page moved to <code>kapcsolat/</code> on 2026-09-22; this
 one was missed. The row <code>CONTENT-SHARED-CTA-AJANLATKERES</code> says so.</p>
+<p><em>Fixed the same day, on the owner's go-ahead:</em> the Regisztráció button now links to
+<code>../kapcsolat/index.html</code> like every other page (clicked through on desktop and in the 375 px
+hamburger menu, 310×44 target, lands on the Kapcsolat page, no console errors), and the
+IDBCSYNC row's <code>segítség</code> (E7) rewritten to match. No page links to <code>idbc.hu/ajanlatkeres/</code> any
+more.</p>
 <p><strong>Not yet:</strong> the site is still built from <code>WEB_BERTABLA_IMPORT</code>, <code>EXPERT_POOL_IMPORT</code> and the
 survey Excel, not from IDBCSYNC, and <code>idbc-sync-bertabla.yml</code> still reads the former. Making
 IDBCSYNC the tab the prototype is generated from is a separate step — and a structural one,

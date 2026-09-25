@@ -1004,6 +1004,12 @@ below the data — and the transport files removed from the repo.
 links to `idbc.hu/ajanlatkeres/` — every other page moved to `kapcsolat/` on 2026-09-22; this
 one was missed. The row `CONTENT-SHARED-CTA-AJANLATKERES` says so.
 
+*Fixed the same day, on the owner's go-ahead:* the Regisztráció button now links to
+`../kapcsolat/index.html` like every other page (clicked through on desktop and in the 375 px
+hamburger menu, 310×44 target, lands on the Kapcsolat page, no console errors), and the
+IDBCSYNC row's `segítség` (E7) rewritten to match. No page links to `idbc.hu/ajanlatkeres/` any
+more.
+
 **Not yet:** the site is still built from `WEB_BERTABLA_IMPORT`, `EXPERT_POOL_IMPORT` and the
 survey Excel, not from IDBCSYNC, and `idbc-sync-bertabla.yml` still reads the former. Making
 IDBCSYNC the tab the prototype is generated from is a separate step — and a structural one,

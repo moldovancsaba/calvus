@@ -163,3 +163,7 @@ removed. Still pointing the old way, noted in the tab rather than silently chang
 `regisztracio/index.html`'s Ajánlatkérés button (the only page not yet on `kapcsolat/`).
 The sync workflow still reads `WEB_BERTABLA_IMPORT`/`EXPERT_POOL_IMPORT`, not IDBCSYNC —
 making IDBCSYNC the tab the site is built from is the next, separate step.
+
+**2026-09-25 — Regisztráció's Ajánlatkérés fixed.** The one page the 2026-09-22 round missed
+now opens the in-guide `kapcsolat/` page too (desktop and phone menu checked); IDBCSYNC row 7
+updated to say so. No page links to `idbc.hu/ajanlatkeres/` any more (D30 complete).
