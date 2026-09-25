@@ -68,6 +68,16 @@ what the inputs can support. Written 2026-09-25. The research sources are listed
 <td>The research of 2026-09-25 (<a href="research.html"><code>01-research.md</code></a>)</td>
 <td>the palette, type, layout, navigation, table, chart, trust and automation decisions</td>
 </tr>
+<tr>
+<td>7</td>
+<td>The owner's second message of 2026-09-25: articles first; the positioning; the topic list; 800–3,200 characters, always segmented; sources used and investigated at the end</td>
+<td>the round-2 site structure, the house rules and their gate (D17–D20)</td>
+</tr>
+<tr>
+<td>8</td>
+<td>The owner's first article draft — <code>docs/reports/gameformative-article-latest.md</code>, management repository, branch <code>cursor/gameformative-client-9b8a</code>, read 2026-09-25</td>
+<td>the lead article, word for word (D22)</td>
+</tr>
 </tbody>
 </table></div>
 <p>The raw files are committed in <code>data/raw/</code>; <code>data/fetch.py</code> re-downloads them and
@@ -105,5 +115,60 @@ into <code>stats.json</code> and listed on the How we count page.</p>
    match by the converter.</li>
 <li><strong>Blocked research sites.</strong> Nine sites refused automated fetches (<a href="research.html"><code>01-research.md</code></a> §0); their
     designs are not part of the benchmark.</li>
+</ol>
+<h2 id="3-the-first-articles-sources-checked-2026-09-25-2142-utc">3. The first article's sources, checked (2026-09-25, 21:42 UTC)</h2>
+<p>Every link in the owner's draft was requested with <code>curl</code>; the two used sources were read.</p>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>Source</th>
+<th>In the draft as</th>
+<th>Result</th>
+<th>Supports the text?</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Sport Mont 2026, 24(1), 169–178 — doi 10.26773/smj.260219</td>
+<td>used (the seed)</td>
+<td>resolves to sportmont.ucg.ac.me; abstract read</td>
+<td><strong>Yes.</strong> Twelve studies reviewed, four pooled; OR-based pooling "no significant association" (OR 1.33, 95% CI 0.85–2.07), RR-based "more than doubling injury risk" (RR 2.33, 1.65–3.30); definitions and thresholds "varied substantially". The draft's "either disappears—or more than doubles" matches.</td>
+</tr>
+<tr>
+<td>Frontiers in Public Health, 13 Aug 2026 — doi 10.3389/fpubh.2026.1896651</td>
+<td>used</td>
+<td>resolves; abstract read</td>
+<td><strong>Yes.</strong> "small-to-moderate association" (g = 0.35); "does not support its use as a stand-alone causal or predictive model". The draft's "modest injury link … stand-alone crystal ball" matches.</td>
+</tr>
+<tr>
+<td>PMC11366842 (Sensors)</td>
+<td>investigated, not used</td>
+<td>resolves; abstract read</td>
+<td>— (not used)</td>
+</tr>
+<tr>
+<td>doi 10.3390/s26134228 (Sensors, MDPI)</td>
+<td>investigated, not used</td>
+<td>resolves to mdpi.com, which <strong>refused the request (HTTP 403)</strong></td>
+<td>not read</td>
+</tr>
+<tr>
+<td>Springer, doi 10.1007/s44163-026-01021-9</td>
+<td>investigated, not used</td>
+<td>resolves to link.springer.com, which served a <strong>JavaScript challenge</strong></td>
+<td>not read</td>
+</tr>
+</tbody>
+</table></div>
+<p>Gaps from round 2:</p>
+<ol start="11">
+<li><strong>Two investigated sources could not be read</strong> by us (MDPI 403, Springer challenge). They are
+    listed as the draft lists them — as investigated and not used — which is accurate; their
+    content is not something the article relies on.</li>
+<li><strong>The draft's source notes are editorial shorthand</strong> ("Seed", "curiosity gap"); shipped as
+    written, with the question to the owner (ask A9).</li>
+<li><strong>The draft's own header says "not published — staff gate".</strong> The prototype shows it as the
+    lead because the owner sent it as the first article; publishing it on the real site needs the
+    named editor's sign-off (ask A2).</li>
 </ol>
 <footer>gameformative.com · project documentation, 2026</footer></div></body></html>

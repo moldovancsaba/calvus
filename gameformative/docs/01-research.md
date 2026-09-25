@@ -217,3 +217,23 @@ Rendered layouts and Core Web Vitals of the leaders, captured in a real browser;
 (ESPN, The Athletic, kicker, ESPNcricinfo, FBref, Sofascore) from a browser session; the Chinese
 sports apps; data-provider price lists (Opta/Stats Perform, Sportradar, Genius Sports) for the
 licensed-data decision; and a sports-only device split from a paid panel.
+
+## 10. Round 2 — what the research says about an articles-first launch (2026-09-25)
+
+The owner moved the launch to articles (D17). The research supports it, and shapes how:
+
+- **Trust is the product.** Trust in news is 37%, and readers prefer human-made news (I11, I13). The
+  Trust Project asks for the type of work to be labelled, and for readers to be able to act on
+  errors (S33). The owner's rule — every article lists the sources used and the sources investigated
+  but not used — goes further than the usual practice: we saw no site in the benchmark that publishes
+  what it looked at and set aside (we measured home pages, not every article page, so this is an
+  observation, not a survey). It is the site's clearest point of difference.
+- **Short, scannable pieces fit how people read now.** Discovery runs through feeds (I11). Readers
+  arriving from a feed decide fast, so 800–3,200 characters under headings, with the headings listed
+  at the top, suits them (S7 on visible navigation applies inside the article too).
+- **Explaining the evidence is a gap worth taking.** The stats sites we measured (§3.3) are built
+  around numbers, ratings and predictions. Stats Perform sells automation (I10, I16),
+  and the automated recaps that went wrong (I32, I33) are the counter-model: gameformative explains,
+  cites and signs.
+- **The data work is not lost.** Data articles are one kind of article (Sport analytics), and the
+  data pages become a later phase (§8 P1–P11 still hold for it).

@@ -103,4 +103,80 @@ league filter, Load more, theme toggle both ways, More sheet (focus in, Escape, 
 <p><strong>Gate.</strong> <code>python3 gameformative/check.py</code>: CLEAN — every link and anchor, docs cross-links, one
 <code>h1</code>/title/lang per page, banner, one asset version, data and pages reproduce byte for byte, 48
 contrast pairs pass AA in both themes, inert controls marked.</p>
+<h2 id="round-2-2026-09-25-articles-first">Round 2 — 2026-09-25 — articles first</h2>
+<p><strong>The ask.</strong> The owner set the launch to articles only (D17), gave the positioning and the topic
+list, set the house rules — 800–3,200 characters, always segmented, sources used and investigated at
+the end — and sent the first article draft.</p>
+<p><strong>Built.</strong> <code>content.py</code> gained <code>TOPICS</code>, <code>RULES</code> and a new article model (topic, kind, standfirst,
+headed segments, <code>sources_used</code>, <code>sources_investigated</code>); <code>build.py</code> gained the topic bar (replacing
+the results strip), an articles-first home, <code>articles/</code> (index + six articles), <code>topics/</code> (index +
+eleven pages), the rewritten How we work page, redirects from the six old <code>/analysis/</code> URLs, and a
+"later phase" notice on the data pages, which left the main navigation. <code>check.py</code> gained check 12.</p>
+<p><strong>Checked before building.</strong> The draft's five links were requested and the two used sources read —
+both support the text (<a href="inputs.html"><code>03-sources.md</code></a> §3). One claim in our own explainer (tie-breakers) had no
+source; two were found and opened, one failed with HTTP 500 (D24). All six articles were measured
+against the rules before any page was built:</p>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>Article</th>
+<th>Characters</th>
+<th>Segments</th>
+<th>Used</th>
+<th>Investigated</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Your GPS says “injury risk.” (owner's draft)</td>
+<td>2,358</td>
+<td>7</td>
+<td>2</td>
+<td>3</td>
+</tr>
+<tr>
+<td>Five from five (Premier League)</td>
+<td>1,032</td>
+<td>3</td>
+<td>2</td>
+<td>3</td>
+</tr>
+<tr>
+<td>Europe’s big five after a month</td>
+<td>844</td>
+<td>3</td>
+<td>5</td>
+<td>3</td>
+</tr>
+<tr>
+<td>How Spain won the 2026 World Cup</td>
+<td>891</td>
+<td>3</td>
+<td>2</td>
+<td>3</td>
+</tr>
+<tr>
+<td>One goal in four after the 75th minute</td>
+<td>869</td>
+<td>3</td>
+<td>2</td>
+<td>3</td>
+</tr>
+<tr>
+<td>How to read a table in September</td>
+<td>1,478</td>
+<td>5</td>
+<td>3</td>
+<td>2</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>The gate bites.</strong> A deliberately broken page (three paragraphs removed, one source list
+renamed) failed with "352 characters, outside 800–3200" and "no linked source in the
+'investigated' list"; rebuilt, clean.</p>
+<p><strong>Measured.</strong> 32 site pages at 375 and 1440 px (redirect stubs checked separately — both tested
+land on the new URL): 0 px overflow, one <code>h1</code>, 0 console errors. At 375 px two small targets were
+found and fixed — a short contents link ("Form", 40 × 44) and the topic-page breadcrumb (73 × 26).
+Load more reveals the sixth article and hides itself. Empty topics first read "first in
+preparation", which implied work that does not exist; now "none published yet" (D25).</p>
 <footer>gameformative.com · project documentation, 2026</footer></div></body></html>

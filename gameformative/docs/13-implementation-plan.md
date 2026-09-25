@@ -9,7 +9,7 @@ direction (ask A0) — none are promised here.*
 | # | Milestone | Outcome |
 |---|---|---|
 | M0 | Direction approved | owner's "approved" or changes on the prototype and style guide (A0) |
-| M1 | Static launch on open data | gameformative.com live with the prototype's page set on a daily openfootball refresh; newsroom named; corrections page live |
+| M1 | **Articles launch** (round 2) | gameformative.com live with the article site: home, latest, topics, articles under the house rules, How we work; newsroom named; corrections page live. The data pages stay a later phase |
 | M2 | Licensed data | xG, shots, ratings, possession filling the panels the prototype marks unavailable |
 | M3 | Live | live score strip and match centre with the accessibility rules of `12-technical-design.md` §5 |
 | M4 | Growth | newsletter, social stat cards, the first regional expansion (A6) |
@@ -18,6 +18,7 @@ direction (ask A0) — none are promised here.*
 
 | # | Issue | Milestone | Definition of Done |
 |---|---|---|---|
+| 0 | Editorial workflow: draft → source check (every link requested, used sources read) → rules check → named editor's sign-off → publish | M1 | no article publishes without a recorded source check and the editor's name; the gate's check 12 passes |
 | 1 | Deploy the generated site to the host (ADR-01) with the domain | M1 | `https://gameformative.com/` serves the home page; HTTPS; 404 page; curl-verified |
 | 2 | Scheduled refresh: fetch → convert → build → gate → publish | M1 | runs daily; a failing assert blocks publish and alerts; the published "data to" date advances |
 | 3 | Remove the prototype banner; replace sample copy with newsroom copy | M1 | no "sample" text on any page; every article bylined to a named person or the desk with a named editor |

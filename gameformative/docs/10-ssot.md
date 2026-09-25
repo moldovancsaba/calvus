@@ -24,6 +24,12 @@ on How we count; if the two ever disagree, this table is the definition and the 
 | Analysis / Explainer | human-written pieces (in the prototype: sample copy from the data desk) |
 | Data desk | the byline for pieces with no named author |
 | Data to | the latest date with a recorded result across the leagues shown |
+| Article | a piece in one topic, of one kind (Explainer, Analysis, News, Opinion), with a headline, an optional standfirst, headed segments and two source lists |
+| Body characters | the characters of the standfirst and every paragraph, spaces included; headline, segment headings, charts and source lists excluded (D19) |
+| Segment | a part of an article under its own heading; every article has at least three |
+| Sources used | the sources the article's text relies on, each with a link, publisher and a line on what it contributed |
+| Sources investigated but not used | sources opened or requested for the article and set aside, each with the reason |
+| Topic | one of the eleven sections in `content.py` `TOPICS` |
 
 ## Entities
 
@@ -55,6 +61,10 @@ on How we count; if the two ever disagree, this table is the definition and the 
 | R11 | Every chart has a text alternative and its numbers as a table | `build.py` `figure()` | the rendered look |
 | R12 | Inert controls: `aria-disabled` + a title saying why | `build.py` | `check.py` §11 |
 | R13 | Automated text is labelled and links to the policy | `build.py` `roundup()` | the rendered look |
+| R14 | Every article has 800–3,200 body characters | `content.py` `RULES`, `build.py` `check_rules()` | `check.py` §12 |
+| R15 | Every article has at least three segments, each headed | same | `check.py` §12 |
+| R16 | Every article lists sources used and sources investigated but not used, each linked, with a note | same | `check.py` §12 |
+| R17 | A source is linked only if it was requested on the day; one we could not read is marked so in the docs | editorial | `03-sources.md` §3 |
 
 ## Settings
 

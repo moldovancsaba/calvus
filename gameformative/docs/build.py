@@ -43,7 +43,9 @@ vals = dict(
     wc_matches=S["wc2026"]["matches"], wc_goals=S["wc2026"]["goals"], pl_matches=len(S["pl2526"]["table"]) * (len(S["pl2526"]["table"]) - 1),
     pl_goals=S["pl2526"]["goals"], inputs=len(S["inputs"]),
 )
-site = [p for p in HERE.parent.rglob("*.html") if "docs" not in p.relative_to(HERE.parent).parts]
+import sys; sys.path.insert(0, str(HERE.parent)); import content as C
+vals.update(topics=len(C.TOPICS), articles=len(C.articles(S)), min_chars=f"{C.RULES['min_chars']:,}", max_chars=f"{C.RULES['max_chars']:,}")
+site = [p for p in HERE.parent.rglob("*.html") if "docs" not in p.relative_to(HERE.parent).parts and "analysis" not in p.relative_to(HERE.parent).parts]
 sizes = [p.stat().st_size for p in site]
 vals.update(page_kb_min=round(min(sizes) / 1000), page_kb_max=round(max(sizes) / 1000),
             js_kb=round((HERE.parent / "assets" / "site.js").stat().st_size / 1000))

@@ -8,7 +8,7 @@ import content as C
 
 HERE = pathlib.Path(__file__).parent
 S = json.loads((HERE / "data" / "stats.json").read_text(encoding="utf-8"))
-V = "9"  # asset version — bump when tokens.css, site.css or site.js change
+V = "12"  # asset version — bump when tokens.css, site.css or site.js change
 FONTS = '<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&display=swap">'
 LEAGUES = S["leagues"]
 LG = {l["id"]: l for l in LEAGUES}
@@ -52,9 +52,9 @@ def brand(depth):
 
 # ------------------------------------------------------------------ chrome
 def banner():
-    return (f'<div class="proto-banner"><strong>Prototype — gameformative.com, 2026.</strong> Results, tables and the World Cup are real data '
-            f'(openfootball, public domain) to {DATA_TO}; the articles are sample editorial copy with every figure computed from that data. '
-            'Search, sign-in and the newsletter are shown but not built.</div>')
+    return ('<div class="proto-banner"><strong>Prototype — gameformative.com, 2026.</strong> The launch is articles only. '
+            'The lead article is the owner’s own draft; the data articles are sample copy whose every figure comes from openfootball’s public-domain results '
+            f'(to {DATA_TO}). Search, sign-in and the newsletter are shown but not built.</div>')
 
 
 def header(current, depth):
@@ -71,40 +71,32 @@ def header(current, depth):
 </div></header>"""
 
 
-def strip(depth):
-    chips = []
-    for l in LEAGUES:
-        for m in l["latest"]:
-            hw, aw = (m["hs"] > m["as_"]), (m["as_"] > m["hs"])
-            chips.append(f'<a class="gf-chip-match" href="{up(depth)}stats/{l["slug"]}.html#results" aria-label="{esc(l["name"])}: {esc(m["hname"])} {m["hs"]}, {esc(m["aname"])} {m["as_"]}, full time">'
-                         f'<span class="lg">{esc(l["name"])} · FT</span>'
-                         f'<span class="t {"win" if hw else "lose" if aw else ""}">{esc(m["hcode"])}</span><span class="s">{m["hs"]}</span>'
-                         f'<span class="t {"win" if aw else "lose" if hw else ""}">{esc(m["acode"])}</span><span class="s">{m["as_"]}</span></a>')
-    return f"""<section class="gf-strip" data-strip aria-label="Latest results"><div class="gf-wrap gf-strip-row">
-  <p class="gf-strip-label" style="margin:0"><b>Latest</b>results to {esc(C.short_date(S["data_to"]))}</p>
-  <div class="gf-strip-scroll" tabindex="0" aria-label="Latest results, scroll sideways">{"".join(chips)}</div>
-  <div class="gf-strip-btns"><button class="gf-icon-btn" type="button" data-strip-dir="-1" aria-label="Scroll results back">{icon("left")}</button><button class="gf-icon-btn" type="button" data-strip-dir="1" aria-label="Scroll results forward">{icon("right")}</button></div>
-</div></section>"""
+def topicbar(depth, current_topic=None):
+    """Every topic, always visible under the header — scrolls sideways on phones (visible navigation, S7)."""
+    items = "".join(f'<li><a href="{up(depth)}topics/{s}.html"' + (' aria-current="page"' if s == current_topic else "") + f'>{esc(n)}</a></li>' for s, n, _ in C.TOPICS)
+    return f'<nav class="gf-topicbar" aria-label="Topics"><div class="gf-wrap"><ul tabindex="0" aria-label="Topics, scroll sideways">{items}</ul></div></nav>'
 
 
 def tabbar(current, depth):
-    ic = {"Home": "home", "Scores": "scores", "Tables & stats": "stats", "Analysis": "analysis"}
+    ic = {"Home": "home", "Latest": "analysis", "Topics": "scores", "How we work": "stats"}
     items = []
     for label, href, short in C.NAV:
         if label not in C.TABBAR: continue
         items.append(f'<li><a href="{up(depth)}{href}"' + (' aria-current="page"' if label == current else "") + f'>{icon(ic[label])}<span>{esc(short)}</span></a></li>')
-    items.append(f'<li><button type="button" data-sheet-open aria-expanded="false" aria-controls="gf-more"' + (' aria-current="page"' if current in ("World Cup 2026", "How we count") else "") + f'>{icon("more")}<span>More</span></button></li>')
+    items.append(f'<li><button type="button" data-sheet-open aria-expanded="false" aria-controls="gf-more">{icon("more")}<span>More</span></button></li>')
     return f'<nav class="gf-tabbar" aria-label="Sections"><ul>{"".join(items)}</ul></nav>'
 
 
 def sheet(depth):
     links = "".join(f'<li><a href="{up(depth)}{href}">{esc(label)}</a></li>' for label, href, _ in C.NAV)
-    leagues = "".join(f'<li><a href="{up(depth)}stats/{l["slug"]}.html">{esc(l["name"])}</a></li>' for l in LEAGUES)
+    topics = "".join(f'<li><a href="{up(depth)}topics/{s}.html">{esc(n)}</a></li>' for s, n, _ in C.TOPICS)
     return f"""<div class="gf-sheet" id="gf-more" hidden role="dialog" aria-modal="true" aria-labelledby="gf-more-h"><div class="gf-sheet-panel">
   <div class="gf-sheet-head"><h2 id="gf-more-h">More</h2><button class="gf-icon-btn" type="button" data-sheet-close aria-label="Close">{icon("close")}</button></div>
   <ul>{links}</ul>
-  <h2 class="gf-kicker" style="margin-top:18px">Leagues</h2>
-  <ul>{leagues}</ul>
+  <h2 class="gf-kicker" style="margin-top:18px">Topics</h2>
+  <ul>{topics}</ul>
+  <h2 class="gf-kicker" style="margin-top:18px">A later phase</h2>
+  <ul><li><a href="{up(depth)}stats/index.html">Data pages (preview)</a></li></ul>
   <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:18px">
     <button class="gf-btn gf-btn--quiet" type="button" data-theme-toggle aria-pressed="false">{icon("theme")} Theme</button>
     <a class="gf-btn gf-btn--quiet is-unavailable" href="#" aria-disabled="true" title="Accounts are not built in the prototype" onclick="return false">Sign in</a>
@@ -115,21 +107,23 @@ def sheet(depth):
 def footer(depth):
     u = up(depth)
     sec = "".join(f'<li><a href="{u}{href}">{esc(label)}</a></li>' for label, href, _ in C.NAV[1:])
-    lg = "".join(f'<li><a href="{u}stats/{l["slug"]}.html">{esc(l["name"])}</a></li>' for l in LEAGUES)
-    std = "".join(f'<li><a href="{u}how-we-count/index.html#{a}">{t}</a></li>' for a, t in (("glossary", "Glossary"), ("data", "Where the data comes from"), ("corrections", "Corrections"), ("automation", "Automation and AI"), ("labels", "Labels we use")))
+    tp = "".join(f'<li><a href="{u}topics/{s}.html">{esc(n)}</a></li>' for s, n, _ in C.TOPICS)
+    std = "".join(f'<li><a href="{u}how-we-count/index.html#{a}">{t}</a></li>' for a, t in (("rules", "Article rules"), ("sources", "How we source"), ("corrections", "Corrections"), ("automation", "Automation and AI"), ("labels", "Labels we use")))
     return f"""<footer class="gf-footer"><div class="gf-wrap">
   <div class="gf-footer-grid">
-    <div class="about">{brand(depth)}<p style="margin-top:8px">{esc(C.SITE["tagline"])} Results and tables from openfootball, public-domain data (CC0 1.0).</p></div>
-    <div><h2>Sections</h2><ul>{sec}</ul></div>
-    <div><h2>Leagues</h2><ul>{lg}</ul></div>
+    <div class="about">{brand(depth)}<p style="margin-top:8px">{esc(C.SITE["tagline"])} Every article lists the sources we used and the sources we investigated but did not use.</p></div>
+    <div><h2>Sections</h2><ul>{sec}</ul><h2 style="margin-top:16px">A later phase</h2><ul><li><a href="{u}stats/index.html">Data pages (preview)</a></li></ul></div>
+    <div class="topics"><h2>Topics</h2><ul>{tp}</ul></div>
     <div><h2>Standards</h2><ul>{std}</ul></div>
   </div>
-  <div class="gf-footer-bottom"><span>© 2026 gameformative.com</span><span>Data to {esc(DATA_TO)}</span></div>
+  <div class="gf-footer-bottom"><span>© 2026 gameformative.com</span><span>Articles checked against their sources</span></div>
 </div></footer>"""
 
 
-def page(path, title, desc, current, body, depth, jsonld=None, show_strip=True):
+def page(path, title, desc, current, body, depth, jsonld=None, topic=None, later=False, extra_head=""):
     ld = f'<script type="application/ld+json">{json.dumps(jsonld, ensure_ascii=False)}</script>' if jsonld else ""
+    notice = (f'<div class="gf-later"><div class="gf-wrap"><p><b>A later phase.</b> gameformative launches with articles only; these data pages preview what comes after. '
+              f'<a href="{up(depth)}index.html">Back to the articles</a></p></div></div>') if later else ""
     html_out = f"""<!doctype html>
 <html lang="en">
 <head>
@@ -138,7 +132,7 @@ def page(path, title, desc, current, body, depth, jsonld=None, show_strip=True):
 <meta name="description" content="{esc(desc)}">
 <meta name="theme-color" content="#F7F6F2" media="(prefers-color-scheme: light)"><meta name="theme-color" content="#0B0F1A" media="(prefers-color-scheme: dark)">
 <script>try{{var t=localStorage.getItem("gf-theme");if(t==="dark"||t==="light")document.documentElement.setAttribute("data-theme",t)}}catch(e){{}}</script>
-{FONTS}
+{extra_head}{FONTS}
 <link rel="stylesheet" href="{up(depth)}assets/tokens.css?v={V}">
 <link rel="stylesheet" href="{up(depth)}assets/site.css?v={V}">
 {ld}
@@ -146,7 +140,8 @@ def page(path, title, desc, current, body, depth, jsonld=None, show_strip=True):
 <body>
 {banner()}
 {header(current, depth)}
-{strip(depth) if show_strip else ""}
+{topicbar(depth, topic)}
+{notice}
 <main id="main" class="gf-main"><div class="gf-wrap">
 {body}
 </div></main>
@@ -378,6 +373,16 @@ def cover(spec, title):
             x = 28 + (i % 5) * 56; y = 52 + (i // 5) * 58
             svg += f'<rect class="{cls}" x="{x}" y="{y}" width="46" height="46" rx="8"/><text class="k-big" x="{x + 23}" y="{y + 33}" font-size="26" text-anchor="middle" style="fill:#0B0F1A">{r}</text>'
         svg += '<text class="k-small" x="24" y="30" font-size="11">EXPLAINER · PPG · GD · FORM</text>'
+    elif t == "evidence":
+        # The seed review's two pooled estimates (Sport Mont 2026, doi 10.26773/smj.260219): OR 1.33
+        # (95% CI 0.85–2.07, not significant) and RR 2.33 (1.65–3.30). A line at 1 = no effect.
+        X = lambda v: 40 + 240 * v / 3.5
+        svg += f'<line class="k-faint" x1="{X(1):.1f}" x2="{X(1):.1f}" y1="52" y2="150" stroke-dasharray="4 4"/>'
+        for y, lo, mid, hi_, cls, lab in ((82, 0.85, 1.33, 2.07, "k-line", "ODDS RATIO 1.33"), (128, 1.65, 2.33, 3.30, "k-line2", "RELATIVE RISK 2.33")):
+            svg += f'<line class="{cls}" x1="{X(lo):.1f}" x2="{X(hi_):.1f}" y1="{y}" y2="{y}"/><circle class="{"k-bar" if cls == "k-line" else "k-bar2"}" cx="{X(mid):.1f}" cy="{y}" r="9"/>'
+            svg += f'<text class="k-small" x="{X(lo):.1f}" y="{y - 16}" font-size="10">{lab}</text>'
+        svg += f'<text class="k-small" x="{X(1) + 4:.1f}" y="164" font-size="9">1 = NO EFFECT</text>'
+        svg += '<text class="k-small" x="24" y="30" font-size="11">ONE REVIEW · TWO ANSWERS · “HIGH LOAD”</text>'
     return f'<span class="gf-cover">{svg}</svg></span>'
 
 
@@ -392,9 +397,25 @@ def label(kind):
     return f'<span class="gf-label{" gf-label--explainer" if kind == "Explainer" else ""}">{esc(kind)}</span>'
 
 
+def topic_link(a, depth):
+    tp = C.TOPIC[a["topic"]]
+    return f'<a class="gf-topiclink" href="{up(depth)}topics/{tp["slug"]}.html">{esc(tp["name"])}</a>'
+
+
+def excerpt(a, n=170):
+    """A card's text: the standfirst, or — for an article without one — the opening of its first paragraph."""
+    if a["standfirst"]: return a["standfirst"]
+    first = next(x for _, items in a["segments"] for x in items if isinstance(x, str))
+    return first if len(first) <= n else first[:first.rfind(" ", 0, n)] + "…"
+
+
 def story_card(a, depth, h="h3"):
-    return (f'<a class="gf-story-card" href="{up(depth)}analysis/{a["slug"]}.html">{cover(a["cover"], a["title"])}'
-            f'<span class="body">{label(a["kind"])}<{h}>{esc(a["title"])}</{h}><p>{esc(a["dek"])}</p><span class="gf-meta">{esc(C.SITE["published"])}</span></span></a>')
+    return (f'<article class="gf-story-card"><a class="gf-card-link" href="{up(depth)}articles/{a["slug"]}.html">{cover(a["cover"], a["title"])}'
+            f'<span class="body"><span class="gf-cardmeta">{esc(C.TOPIC[a["topic"]]["name"])} · {esc(a["kind"])}</span><{h}>{esc(a["title"])}</{h}><p>{esc(excerpt(a))}</p><span class="gf-meta">{esc(C.SITE["published"])} · {reading(a)}</span></span></a></article>')
+
+
+def reading(a):
+    return f"{max(1, round(C.body_chars(a) / 1000))} min read"
 
 
 def snapshot(l, depth, n=5):
@@ -425,46 +446,28 @@ def roundup(l):
 # ------------------------------------------------------------------ pages
 def build_home():
     d = 0
-    lead = ARTICLES[0]
-    side = snapshot(LG["en"], d, 6)
-    ex = ARTICLES[4]
-    explainer = (f'<a class="gf-card" href="analysis/{ex["slug"]}.html" style="text-decoration:none;color:inherit;display:flex;flex-direction:column;gap:8px">{label(ex["kind"])}'
-                 f'<span style="font-size:19px;font-weight:750;font-stretch:85%;color:var(--gf-ink);line-height:1.15">{esc(ex["title"])}</span><span class="gf-meta">{esc(ex["dek"])}</span></a>')
-    def tile(n):
-        unit = f"<small>{esc(n['unit'])}</small>" if n["unit"] else ""
-        acc = " gf-stat--accent" if n.get("accent") else ""
-        return f'<a class="gf-stat{acc}" href="{n["href"]}" style="text-decoration:none"><span class="n">{esc(n["n"])}{unit}</span><span class="what">{esc(n["what"])}</span><span class="ctx">{esc(n["ctx"])}</span></a>'
-    nums = "".join(tile(n) for n in C.numbers(S))
-    cards = "".join(story_card(a, d) for a in ARTICLES[1:4])
-    snaps = "".join(snapshot(l, d) for l in LEAGUES[1:])
-    w = S["wc2026"]; f = w["final"]["row"]; ts = w["scorers"][0]
-    wc = f"""<section class="gf-section gf-band" aria-labelledby="wc-h"><div class="gf-band-grid">
-  <div><p class="gf-kicker">World Cup 2026 · in review</p><h2 id="wc-h" class="gf-display" style="font-size:clamp(30px,6vw,48px);margin-bottom:12px">{esc(w["champion"])} are world champions</h2>
-    <div class="gf-scoreline"><span class="team">{esc(f["home"])}</span><span class="score">{f["hs"]}–{f["as_"]}</span><span class="team">{esc(f["away"])}</span></div>
-    <p style="margin-top:12px">After extra time, {esc(C.nice_date(f["date"]))}, {esc(w["final"]["ground"])}.</p>
-    <p style="display:flex;gap:10px;flex-wrap:wrap"><a class="gf-btn" href="world-cup-2026/index.html">The tournament in numbers</a><a class="gf-btn gf-btn--ghost" style="color:#9DB0FF;border-color:#9DB0FF" href="world-cup-2026/final.html">Match centre: the final</a></p></div>
-  <div class="gf-stats-row" style="grid-template-columns:repeat(2,minmax(0,1fr))">
-    <div class="gf-stat"><span class="n">{w["goals"]}</span><span class="what">goals</span><span class="ctx">in {w["matches"]} matches</span></div>
-    <div class="gf-stat"><span class="n">{w["gpg"]:.2f}</span><span class="what">per game</span><span class="ctx">{w["extra_time"]} went to extra time</span></div>
-    <div class="gf-stat"><span class="n">{ts["goals"]}</span><span class="what">{esc(ts["name"])}</span><span class="ctx">top scorer, {esc(ts["team"])}</span></div>
-    <div class="gf-stat"><span class="n">{w["attendance"]["avg"]:,}</span><span class="what">average crowd</span><span class="ctx">{w["attendance"]["total"]:,} in total</span></div>
-  </div></div></section>"""
-    roundups = "".join(roundup(l).replace("{UP}", up(d)) for l in LEAGUES[:3])
-    body = f"""<h1 class="gf-sr">gameformative — football, explained by the numbers</h1>
+    lead, rest = ARTICLES[0], ARTICLES[1:]
+    latest = "".join(f'<li><a href="articles/{a["slug"]}.html"><span class="gf-cardmeta">{esc(C.TOPIC[a["topic"]]["name"])}</span><span class="t">{esc(a["title"])}</span><span class="gf-meta">{reading(a)}</span></a></li>' for a in rest[:4])
+    cards = "".join(story_card(a, d) for a in rest[:3])
+    count = {s: sum(1 for a in ARTICLES if a["topic"] == s) for s, _, _ in C.TOPICS}
+    tiles = "".join(f'<li><a class="gf-topic-tile" href="topics/{s}.html"><span class="n">{esc(n)}</span><span class="b">{esc(b)}</span>'
+                    f'<span class="c">{count[s]} article{"s" if count[s] != 1 else ""}' + ("" if count[s] else " · none published yet") + '</span></a></li>' for s, n, b in C.TOPICS)
+    body = f"""<h1 class="gf-sr">gameformative — sport, explained</h1>
 <div class="gf-lead">
-  <a class="gf-lead-story" href="analysis/{lead["slug"]}.html">{cover(lead["cover"], lead["title"])}
-    <span style="display:block;margin-top:14px">{label(lead["kind"])}</span>
-    <h2>{esc(lead["title"])}</h2><p>{esc(lead["dek"])}</p><span class="gf-meta">{esc(C.SITE["byline"])} · {esc(C.SITE["published"])}</span></a>
-  <aside class="gf-rail" aria-label="Premier League table and explainer">{side}{explainer}</aside>
+  <a class="gf-lead-story" href="articles/{lead["slug"]}.html">{cover(lead["cover"], lead["title"])}
+    <span class="gf-cardmeta" style="display:block;margin-top:14px">{esc(C.TOPIC[lead["topic"]]["name"])} · {esc(lead["kind"])}</span>
+    <h2>{esc(lead["title"])}</h2><p>{esc(excerpt(lead, 230))}</p><span class="gf-meta">{esc(lead["byline"])} · {esc(C.SITE["published"])} · {reading(lead)}</span></a>
+  <aside class="gf-rail" aria-labelledby="latest-h"><div class="gf-card gf-latest"><h2 id="latest-h" class="gf-kicker">Latest</h2><ol>{latest}</ol><a class="gf-btn gf-btn--quiet" href="articles/index.html">All articles</a></div></aside>
 </div>
-<section class="gf-section" aria-labelledby="num-h"><div class="gf-section-head"><h2 id="num-h">The numbers this week</h2><a href="stats/index.html">All stats</a></div><div class="gf-stats-row">{nums}</div></section>
-<section class="gf-section" aria-labelledby="an-h"><div class="gf-section-head"><h2 id="an-h">Analysis</h2><a href="analysis/index.html">More analysis</a></div><div class="gf-grid gf-grid--3">{cards}</div></section>
-<section class="gf-section" aria-labelledby="lg-h"><div class="gf-section-head"><h2 id="lg-h">Across Europe</h2><a href="stats/index.html">Tables & stats</a></div><div class="gf-grid gf-grid--4">{snaps}</div></section>
-{wc}
-<section class="gf-section" aria-labelledby="ru-h"><div class="gf-section-head"><h2 id="ru-h">The round in numbers</h2><a href="scores/index.html">All results</a></div><div class="gf-grid gf-grid--3">{roundups}</div></section>
-<section class="gf-section gf-band" aria-labelledby="nl-h"><div class="gf-band-grid"><div><p class="gf-kicker">Newsletter</p><h2 id="nl-h" class="gf-display" style="font-size:clamp(26px,5vw,38px)">The Monday numbers</h2><p>The weekend’s results, what changed in the tables, one chart that explains it. Once a week.</p></div>
+<section class="gf-section" aria-labelledby="an-h"><div class="gf-section-head"><h2 id="an-h">More to read</h2><a href="articles/index.html">All articles</a></div><div class="gf-grid gf-grid--3">{cards}</div></section>
+<section class="gf-section" aria-labelledby="tp-h"><div class="gf-section-head"><h2 id="tp-h">Topics</h2><a href="topics/index.html">All topics</a></div><ul class="gf-topic-grid">{tiles}</ul></section>
+<section class="gf-section gf-band" aria-labelledby="pr-h"><div class="gf-band-grid"><div><p class="gf-kicker">How we work</p><h2 id="pr-h" class="gf-display" style="font-size:clamp(28px,5.5vw,44px)">Every source on the table</h2>
+<p>Each article ends with two lists: the sources we used, and the sources we investigated but did not use — with the reason. Articles run from 800 to 3,200 characters, always in segments you can scan.</p>
+<p><a class="gf-btn" href="how-we-count/index.html#sources">How we source</a></p></div>
+<ul class="gf-promise"><li><b>{C.RULES["min_chars"]:,}–{C.RULES["max_chars"]:,}</b><span>characters of body text per article</span></li><li><b>{C.RULES["min_segments"]}+</b><span>headed segments, every time</span></li><li><b>2</b><span>source lists: used, and investigated but not used</span></li></ul></div></section>
+<section class="gf-section gf-band" aria-labelledby="nl-h"><div class="gf-band-grid"><div><p class="gf-kicker">Newsletter</p><h2 id="nl-h" class="gf-display" style="font-size:clamp(26px,5vw,38px)">The Monday brief</h2><p>The week’s best reads across sport science, tactics, tech and the business of sport. Once a week.</p></div>
 <form class="gf-signup" onsubmit="return false" aria-describedby="nl-note"><label class="gf-sr" for="nl-email">E-mail address</label><input id="nl-email" type="email" placeholder="you@example.com" disabled><button class="gf-btn is-unavailable" type="submit" aria-disabled="true" title="The newsletter is not built in the prototype">Subscribe</button><p id="nl-note" class="gf-meta" style="grid-column:1/-1;margin:0">Not built in the prototype — nothing is collected. Consent and sender are set before launch.</p></form></div></section>"""
-    page("index.html", "gameformative — football, explained by the numbers", C.SITE["description"], "Home", body, d,
+    page("index.html", "gameformative — sport, explained", C.SITE["description"], "Home", body, d,
          jsonld={"@context": "https://schema.org", "@type": "WebSite", "name": "gameformative", "url": "https://gameformative.com/", "description": C.SITE["description"]})
 
 
@@ -481,7 +484,7 @@ def build_scores():
 <div class="gf-seg" data-filter role="group" aria-label="Filter by league">{btns}</div>
 {"".join(blocks)}
 <div class="gf-inert" style="margin-top:28px"><h3>Live scores</h3><p style="margin:0">A live feed with minute-by-minute updates needs a licensed real-time data provider; the prototype shows final results only. On the live site the score strip and this page update in place, announced politely to screen readers, with a pause control.</p></div>"""
-    page("scores/index.html", "Results and fixtures — gameformative", "Latest results and next fixtures in the Premier League, LaLiga, Bundesliga, Serie A and Ligue 1.", "Scores", body, d)
+    page("scores/index.html", "Results and fixtures — gameformative", "Latest results and next fixtures in the Premier League, LaLiga, Bundesliga, Serie A and Ligue 1.", None, body, d, later=True)
 
 
 def build_stats_hub():
@@ -489,12 +492,12 @@ def build_stats_hub():
     rows = "".join(f'<li><a class="gf-card" style="display:grid;grid-template-columns:1fr auto;gap:6px 12px;text-decoration:none;color:inherit" href="{l["slug"]}.html"><span><b style="font-size:20px;color:var(--gf-ink)">{esc(l["name"])}</b><br><span class="gf-meta">{esc(l["country"])} · matchday {l["rounds_done"]} · leader {esc(l["table"][0]["name"])} ({l["table"][0]["pts"]} pts)</span></span><span class="gf-stat" style="border:0;padding:0;text-align:right"><span class="n" style="font-size:34px">{l["agg"]["gpg"]:.2f}</span><span class="ctx">goals / game</span></span></a></li>' for l in LEAGUES)
     body = f"""<div class="gf-pagehead"><p class="gf-kicker">Tables & stats</p><h1>Europe’s big five, 2026/27</h1><p>Full tables with home and away splits, form, points per game and the points race for each league — and the five compared. Every figure is computed from the recorded results to {esc(DATA_TO)}.</p></div>
 <ul class="gf-grid gf-grid--2" style="list-style:none;margin:0;padding:0">{rows}</ul>
-<section class="gf-section" aria-labelledby="cmp-h"><div class="gf-section-head"><h2 id="cmp-h">The five compared</h2><a href="../analysis/big-five-first-month.html">Read the analysis</a></div>
+<section class="gf-section" aria-labelledby="cmp-h"><div class="gf-section-head"><h2 id="cmp-h">The five compared</h2><a href="../articles/big-five-first-month.html">Read the analysis</a></div>
 <div class="gf-grid gf-grid--2">{chart("gpg-big5")}{chart("outcomes-big5")}</div></section>
 <section class="gf-section" aria-labelledby="arc-h"><div class="gf-section-head"><h2 id="arc-h">Season reviews</h2></div>
 <div class="gf-grid gf-grid--2"><a class="gf-card" href="premier-league-2025-26.html" style="text-decoration:none;color:inherit"><span class="gf-label gf-label--data">Complete season</span><h3 style="font-size:24px;font-stretch:85%;margin:8px 0 4px">Premier League 2025/26</h3><p class="gf-meta" style="margin:0">Final table, the points race over 38 matchdays, top scorers, goals by minute, attendances.</p></a>
 <a class="gf-card" href="../world-cup-2026/index.html" style="text-decoration:none;color:inherit"><span class="gf-label gf-label--data">Complete tournament</span><h3 style="font-size:24px;font-stretch:85%;margin:8px 0 4px">World Cup 2026</h3><p class="gf-meta" style="margin:0">All 104 matches: groups, the bracket, scorers and the final.</p></a></div></section>"""
-    page("stats/index.html", "Tables & stats — gameformative", "Tables, form and statistics for Europe's big five football leagues, 2026/27.", "Tables & stats", body, d)
+    page("stats/index.html", "Tables & stats — gameformative", "Tables, form and statistics for Europe's big five football leagues, 2026/27.", None, body, d, later=True)
 
 
 def build_league(l):
@@ -516,7 +519,7 @@ def build_league(l):
 <div class="gf-pagehead"><p class="gf-kicker">{esc(l["country"])} · 2026/27</p><h1>{esc(l["name"])}</h1><p>After matchday {l["rounds_done"]} — {l["played"]} of {l["fixtures"]} matches played, results to {esc(C.nice_date(l["last_date"]))}. Ordered by points, goal difference, goals scored.</p></div>
 <div class="gf-stats-row">{tiles}</div>
 <section class="gf-section" aria-labelledby="t-h"><div class="gf-section-head"><h2 id="t-h">Table</h2></div>{views}
-<div class="gf-table-foot"><span class="gf-key"><i class="top"></i>Top four</span><span class="gf-key"><i class="bottom"></i>Bottom three</span><span>Form: oldest left · W won · D drawn · L lost</span><span>Tap a column heading to sort</span><span>Tie order is the site’s own; <a href="../how-we-count/index.html#tables">official tie-breakers differ</a></span></div></section>
+<div class="gf-table-foot"><span class="gf-key"><i class="top"></i>Top four</span><span class="gf-key"><i class="bottom"></i>Bottom three</span><span>Form: oldest left · W won · D drawn · L lost</span><span>Tap a column heading to sort</span><span>Tie order is the site’s own; <a href="../how-we-count/index.html#data">official tie-breakers differ</a></span></div></section>
 <section class="gf-section" aria-labelledby="r-h"><div class="gf-section-head"><h2 id="r-h">Form and leaders</h2></div>
 <div class="gf-grid gf-grid--2">{race_figure(l, "race")}
 <div class="gf-grid">{figure("Team leaders", "Across all matches so far.", bars([(best_att["name"], "most goals scored", best_att["gf"], "hi"), (best_def["name"], "fewest conceded", best_def["ga"], ""), (home_best["name"], f"best at home · {home_best['home']['w']}W {home_best['home']['d']}D {home_best['home']['l']}L", home_best["home"]["pts"], ""), (away_best["name"], f"best away · {away_best['away']['w']}W {away_best['away']['d']}D {away_best['away']['l']}L", away_best["away"]["pts"], "")], fmt=lambda v: str(v)), SRC + " Values: goals, goals, home points, away points.", "leaders")}
@@ -524,7 +527,7 @@ def build_league(l):
 <section class="gf-section" id="results" aria-labelledby="res-h"><div class="gf-section-head"><h2 id="res-h">Matchday {l["rounds_done"]} results</h2><a href="../scores/index.html">All leagues</a></div>
 <div class="gf-grid gf-grid--2"><div>{results_list(l["latest"])}</div><div>{roundup(l).replace("{UP}", up(d))}<h3 class="gf-kicker" style="margin-top:18px">Next fixtures · as scheduled</h3>{results_list(l["upcoming"][:5], fixtures=True)}</div></div></section>
 <div class="gf-inert" style="margin-top:28px"><h3>Expected goals, shots and player ratings</h3><p style="margin:0">Shown on the live site from a licensed event-data provider (shot-level data: xG, shots, possession, player ratings). The prototype’s public-domain source carries results only, so these panels are not filled — and never estimated.</p></div>"""
-    page(f"stats/{l['slug']}.html", f"{l['name']} table and stats 2026/27 — gameformative", f"{l['name']} 2026/27: table, home and away, form, points per game, points race and results.", "Tables & stats", body, d)
+    page(f"stats/{l['slug']}.html", f"{l['name']} table and stats 2026/27 — gameformative", f"{l['name']} 2026/27: table, home and away, form, points per game, points race and results.", None, body, d, later=True)
 
 
 def build_pl2526():
@@ -544,10 +547,10 @@ def build_pl2526():
 <div class="gf-stats-row">{tiles_h}</div>
 <section class="gf-section" aria-labelledby="ft-h"><div class="gf-section-head"><h2 id="ft-h">Final table</h2></div>{lt}<p class="gf-sr" aria-live="polite" id="p25-live"></p>
 <div class="gf-table-foot"><span>Form: the last five matches of the season</span><span>Tap a column heading to sort</span></div></section>
-<section class="gf-section" aria-labelledby="rc-h"><div class="gf-section-head"><h2 id="rc-h">How it was won</h2><a href="../analysis/premier-league-five-matchdays-in.html">Five matchdays in, this season</a></div><div class="gf-grid gf-grid--2">{race}{chart("after5-2526")}</div></section>
-<section class="gf-section" aria-labelledby="gl-h"><div class="gf-section-head"><h2 id="gl-h">Goals</h2><a href="../analysis/premier-league-2025-26-goals-by-minute.html">Read the analysis</a></div><div class="gf-grid gf-grid--2">{chart("minutes-2526")}{chart("scorers-2526")}</div>
+<section class="gf-section" aria-labelledby="rc-h"><div class="gf-section-head"><h2 id="rc-h">How it was won</h2><a href="../articles/premier-league-five-matchdays-in.html">Five matchdays in, this season</a></div><div class="gf-grid gf-grid--2">{race}{chart("after5-2526")}</div></section>
+<section class="gf-section" aria-labelledby="gl-h"><div class="gf-section-head"><h2 id="gl-h">Goals</h2><a href="../articles/premier-league-2025-26-goals-by-minute.html">Read the analysis</a></div><div class="gf-grid gf-grid--2">{chart("minutes-2526")}{chart("scorers-2526")}</div>
 <p class="gf-note">Largest crowd: {att["top"]["n"]:,} at {esc(att["top"]["ground"])}, {esc(att["top"]["home"])} v {esc(att["top"]["away"])}, {esc(C.nice_date(att["top"]["date"]))}. {p["pens"]} penalties scored and {p["owngoals"]} own goals across the season.</p></section>"""
-    page("stats/premier-league-2025-26.html", "Premier League 2025/26 season review — gameformative", "The complete 2025/26 Premier League: final table, title race, top scorers, goals by minute and attendances.", "Tables & stats", body, d)
+    page("stats/premier-league-2025-26.html", "Premier League 2025/26 season review — gameformative", "The complete 2025/26 Premier League: final table, title race, top scorers, goals by minute and attendances.", None, body, d, later=True)
 
 
 def tie(m, final=False):
@@ -574,10 +577,10 @@ def build_wc():
 <div class="gf-stats-row" style="grid-template-columns:repeat(2,minmax(0,1fr))"><div class="gf-stat"><span class="n">{w["goals"]}</span><span class="what">goals</span><span class="ctx">{w["gpg"]:.2f} per game</span></div><div class="gf-stat"><span class="n">{w["extra_time"]}</span><span class="what">extra times</span><span class="ctx">{w["shootouts"]} shoot-outs</span></div><div class="gf-stat"><span class="n">{ts["goals"]}</span><span class="what">{esc(ts["name"])}</span><span class="ctx">top scorer, {esc(ts["team"])}</span></div><div class="gf-stat"><span class="n">{w["attendance"]["avg"]:,}</span><span class="what">average crowd</span><span class="ctx">{w["owngoals"]} own goals · {w["pens_scored"]} penalties</span></div></div></div></section>
 <section class="gf-section" aria-labelledby="ko-h"><div class="gf-section-head"><h2 id="ko-h">The knockout rounds</h2></div><div class="gf-bracket">{br}</div>
 <p class="gf-note">Third place: {esc(w["third"]["home"])} {w["third"]["hs"]}–{w["third"]["as_"]} {esc(w["third"]["away"])}, {esc(C.nice_date(w["third"]["date"], False))} — the highest-scoring match of the tournament.</p></section>
-<section class="gf-section" aria-labelledby="gs-h"><div class="gf-section-head"><h2 id="gs-h">Goals</h2><a href="../analysis/how-spain-won-the-world-cup.html">How Spain won it</a></div>
+<section class="gf-section" aria-labelledby="gs-h"><div class="gf-section-head"><h2 id="gs-h">Goals</h2><a href="../articles/how-spain-won-the-world-cup.html">How Spain won it</a></div>
 <div class="gf-grid gf-grid--2">{chart("wc-stages")}{figure("Top scorers", "Own goals excluded; penalties counted.", bars([(s["name"], s["team"], s["goals"], "hi" if i == 0 else "") for i, s in enumerate(sc)]), SRC + " Names as the source records them.", "wcscorers", simple_table(["Player", "Team", "Goals", "Penalties"], [[s["name"], s["team"], s["goals"], s["pens"]] for s in sc], "Top scorers"))}</div></section>
 <section class="gf-section" aria-labelledby="gr-h"><div class="gf-section-head"><h2 id="gr-h">The groups</h2></div><p class="gf-meta">✓ reached the round of 32 (the top two in each group and the eight best third-placed teams). Ordered by points, goal difference, goals scored; FIFA’s full tie-breakers are not applied here.</p><div class="gf-groups">{"".join(groups)}</div></section>"""
-    page("world-cup-2026/index.html", "World Cup 2026 in numbers — gameformative", "The 2026 World Cup, all 104 matches: the bracket, the groups, top scorers and the final.", "World Cup 2026", body, d)
+    page("world-cup-2026/index.html", "World Cup 2026 in numbers — gameformative", "The 2026 World Cup, all 104 matches: the bracket, the groups, top scorers and the final.", None, body, d, later=True)
 
 
 def build_final():
@@ -601,98 +604,168 @@ def build_final():
 <section class="gf-section" aria-labelledby="lu-h"><div class="gf-section-head"><h2 id="lu-h">Line-ups</h2></div><div class="gf-lineups">{lu}</div></section></div>
 <aside class="gf-rail" aria-label="Match statistics"><div class="gf-inert"><h3>Match statistics</h3><p style="margin:0">Possession, shots, xG and passes come from a licensed event-data provider on the live site. The prototype’s public-domain source records goals, line-ups, substitutions and attendance — shown here in full — and nothing is estimated.</p></div>
 <div class="gf-card"><h3 style="font-size:18px;font-stretch:85%;margin-bottom:6px">The road to the final</h3>{"".join(f'<p style="margin:0 0 6px;font-size:14.5px"><b>{esc(r["round"])}</b> · {esc(r["home"])} {r["hs"]}–{r["as_"]} {esc(r["away"])}{" (aet)" if r["how"] == "aet" else ""}</p>' for r in w["results"] if "Spain" in (r["home"], r["away"]) and not r["group"] and r["round"] != "Final")}</div>
-<a class="gf-btn gf-btn--ghost" href="../analysis/how-spain-won-the-world-cup.html">How Spain won the World Cup</a></aside></div>"""
-    page("world-cup-2026/final.html", "Spain 1–0 Argentina (aet): World Cup 2026 final, match centre — gameformative", "Match centre for the 2026 World Cup final: key moments, line-ups and substitutions.", "World Cup 2026", body, d, jsonld=ld)
+<a class="gf-btn gf-btn--ghost" href="../articles/how-spain-won-the-world-cup.html">How Spain won the World Cup</a></aside></div>"""
+    page("world-cup-2026/final.html", "Spain 1–0 Argentina (aet): World Cup 2026 final, match centre — gameformative", "Match centre for the 2026 World Cup final: key moments, line-ups and substitutions.", None, body, d, jsonld=ld, later=True)
+
+
+def source_list(items, kind):
+    li = []
+    for s in items:
+        date = f", {esc(s['date'])}" if s.get("date") else ""
+        li.append(f'<li><a href="{esc(s["url"])}" rel="noopener">{esc(s["title"])}</a><span class="pub"> — {esc(s["publisher"])}{date}</span>'
+                  f'<span class="why">{esc(s["note"])}</span></li>')
+    return f'<ol class="gf-source-list" data-sources="{kind}">{"".join(li)}</ol>'
+
+
+def check_rules(a):
+    """The owner's house rules — the build stops on any breach (check.py measures the same on the page)."""
+    n = C.body_chars(a); R = C.RULES
+    assert R["min_chars"] <= n <= R["max_chars"], f"{a['slug']}: {n} characters, outside {R['min_chars']}–{R['max_chars']}"
+    assert len(a["segments"]) >= R["min_segments"], f"{a['slug']}: {len(a['segments'])} segments, needs {R['min_segments']}"
+    assert all(h for h, _ in a["segments"]), f"{a['slug']}: a segment without a heading"
+    assert a["sources_used"] and a["sources_investigated"], f"{a['slug']}: both source lists are required"
+    for s in a["sources_used"] + a["sources_investigated"]:
+        assert s["url"].startswith("https://") and s["title"] and s["publisher"] and s["note"], f"{a['slug']}: incomplete source {s}"
 
 
 def build_article(a):
     d = 1
+    check_rules(a)
     blocks = []
-    for b in a["body"]:
-        if isinstance(b, tuple): blocks.append(chart(b[1]))
-        elif b.startswith("## "): blocks.append(f"<h2>{esc(b[3:])}</h2>")
-        else: blocks.append(f"<p>{esc(b)}</p>")
-    kf = "".join(f"<li>{esc(k)}</li>" for k in a["keyfacts"])
-    others = [x for x in ARTICLES if x is not a][:3]
-    rail = "".join(story_card(x, d, "h3") for x in others[:2])
-    related = {"en": "../stats/premier-league.html", "all": "../stats/index.html", "wc": "../world-cup-2026/index.html"}[a["league"]]
-    ld = {"@context": "https://schema.org", "@type": "NewsArticle", "headline": a["title"], "description": a["dek"], "datePublished": C.SITE["published_iso"],
-          "author": {"@type": "Organization", "name": C.SITE["byline"]}, "publisher": {"@type": "Organization", "name": "gameformative"},
-          "isBasedOn": "https://github.com/openfootball"}
-    body = f"""<div class="gf-article-layout"><article class="gf-article">
-<header class="gf-article-head">{label(a["kind"])}<h1>{esc(a["title"])}</h1><p class="dek">{esc(a["dek"])}</p>
-<div class="gf-byline"><span>By <b>{esc(C.SITE["byline"])}</b></span><span>{esc(C.SITE["published"])}</span><span>Data to {esc(DATA_TO)}</span></div></header>
-<section class="gf-keyfacts" aria-labelledby="kf-h"><h2 id="kf-h">Key numbers</h2><ul>{kf}</ul></section>
+    for i, (h, items) in enumerate(a["segments"], 1):
+        inner = "".join(chart(x[1]) if isinstance(x, tuple) else f"<p data-count>{esc(x)}</p>" for x in items)
+        blocks.append(f'<section class="gf-seg-block" aria-labelledby="s{i}"><h2 id="s{i}">{esc(h)}</h2>{inner}</section>')
+    toc = "".join(f'<li><a href="#s{i}">{esc(h)}</a></li>' for i, (h, _) in enumerate(a["segments"], 1))
+    others = [x for x in ARTICLES if x is not a]
+    same = [x for x in others if x["topic"] == a["topic"]]
+    rail = "".join(story_card(x, d, "h3") for x in (same + [x for x in others if x not in same])[:2])
+    n = C.body_chars(a)
+    origin = ("From the editorial desk’s draft; checked against its sources before publishing." if a["origin"] == "owner"
+              else "Written by the data desk. Every figure is computed from public-domain match records by the site’s own converter; nothing is estimated.")
+    ld = {"@context": "https://schema.org", "@type": "NewsArticle", "headline": a["title"], "description": excerpt(a), "datePublished": C.SITE["published_iso"],
+          "articleSection": C.TOPIC[a["topic"]]["name"], "author": {"@type": "Organization", "name": a["byline"]}, "publisher": {"@type": "Organization", "name": "gameformative"},
+          "citation": [s["url"] for s in a["sources_used"]]}
+    sf = f'<p class="dek" data-count>{esc(a["standfirst"])}</p>' if a["standfirst"] else ""
+    body = f"""<div class="gf-article-layout"><article class="gf-article" data-article data-min="{C.RULES["min_chars"]}" data-max="{C.RULES["max_chars"]}" data-segments="{C.RULES["min_segments"]}">
+<header class="gf-article-head"><p class="gf-cardmeta">{topic_link(a, d)} · {esc(a["kind"])}</p><h1>{esc(a["title"])}</h1>{sf}
+<div class="gf-byline"><span>By <b>{esc(a["byline"])}</b></span><span>{esc(C.SITE["published"])}</span><span>{reading(a)}</span><span>{len(a["segments"])} segments</span></div></header>
+<nav class="gf-toc-box" aria-label="In this article"><h2 class="gf-kicker">In this article</h2><ol>{toc}</ol></nav>
 <div class="gf-body">{"".join(blocks)}</div>
-<aside class="gf-transparency" aria-label="How this article was made"><p style="margin:0"><b>How this was made.</b> Written by the gameformative data desk. Every figure is computed from openfootball’s public-domain match records by the site’s own converter; nothing is estimated or taken from another publication. Found an error? <a href="../how-we-count/index.html#corrections">Our corrections policy</a>.</p></aside>
-<p style="margin-top:20px"><a class="gf-btn gf-btn--ghost" href="{related}">See the full numbers</a></p>
+<section class="gf-sources" aria-labelledby="src-h"><h2 id="src-h">Sources</h2>
+<h3>Sources used</h3>{source_list(a["sources_used"], "used")}
+<h3>Sources investigated but not used</h3>{source_list(a["sources_investigated"], "investigated")}
+<p class="gf-meta">Links checked on {esc(C.SITE["published"])}. {esc(origin)} Body text: {n:,} characters. Found an error? <a href="../how-we-count/index.html#corrections">Our corrections policy</a>.</p></section>
 </article>
-<aside class="gf-rail" aria-label="More analysis"><h2 class="gf-kicker">More analysis</h2>{rail}</aside></div>"""
-    page(f"analysis/{a['slug']}.html", f"{a['title']} — gameformative", a["dek"], "Analysis", body, d, jsonld=ld)
+<aside class="gf-rail" aria-label="More to read"><h2 class="gf-kicker">More to read</h2>{rail}</aside></div>"""
+    page(f"articles/{a['slug']}.html", f"{a['title']} — gameformative", excerpt(a), "Latest", body, d, jsonld=ld, topic=a["topic"])
 
 
-def build_analysis_index():
+def list_item(a, depth, hidden=False):
+    return (f'<article class="gf-list-item"{" data-more hidden" if hidden else ""}><a class="gf-card-link" href="{up(depth)}articles/{a["slug"]}.html">{cover(a["cover"], a["title"])}'
+            f'<span class="body"><span class="gf-cardmeta">{esc(C.TOPIC[a["topic"]]["name"])} · {esc(a["kind"])}</span><h2>{esc(a["title"])}</h2>'
+            f'<p style="margin:0;color:var(--gf-muted)">{esc(excerpt(a))}</p><span class="gf-meta">{esc(C.SITE["published"])} · {reading(a)}</span></span></a></article>')
+
+
+def build_articles_index():
     d = 1
-    extra = [dict(href="../stats/premier-league-2025-26.html", kind="Season review", title="Premier League 2025/26, the complete season", dek="Final table, the title race over 38 matchdays, top scorers, goals by minute and attendances.", cover=dict(type="minutes")),
-             dict(href="../world-cup-2026/index.html", kind="Tournament review", title="World Cup 2026 in numbers", dek="The bracket, the twelve groups, the scorers and the final.", cover=dict(type="final"))]
-    items = [dict(href=f"{a['slug']}.html", kind=a["kind"], title=a["title"], dek=a["dek"], cover=a["cover"]) for a in ARTICLES] + extra
     SHOW = 5
-    li = "".join(f'<a class="gf-list-item" href="{i["href"]}"{" data-more hidden" if n >= SHOW else ""}>{cover(i["cover"], i["title"])}<span class="body">{label(i["kind"]) if i["kind"] in ("Analysis", "Explainer") else data_label(i["kind"])}<h2>{esc(i["title"])}</h2><p style="margin:0;color:var(--gf-muted)">{esc(i["dek"])}</p><span class="gf-meta">{esc(C.SITE["published"])}</span></span></a>' for n, i in enumerate(items))
-    body = f"""<div class="gf-pagehead"><p class="gf-kicker">Analysis</p><h1>The numbers behind the game</h1><p>Analysis and explainers from the data desk. Every figure is computed from the recorded results; each piece says what the data can and cannot show.</p></div>
-<div class="gf-list">{li}</div>
-<button class="gf-btn gf-btn--quiet gf-loadmore" type="button" data-loadmore="4">Load more</button>"""
-    page("analysis/index.html", "Analysis — gameformative", "Football analysis and explainers built on the numbers.", "Analysis", body, d)
+    li = "".join(list_item(a, d, n >= SHOW) for n, a in enumerate(ARTICLES))
+    more = '<button class="gf-btn gf-btn--quiet gf-loadmore" type="button" data-loadmore="4">Load more</button>' if len(ARTICLES) > SHOW else ""
+    body = f"""<div class="gf-pagehead"><p class="gf-kicker">Latest</p><h1>All articles</h1><p>News, research, tactics and the business of sport — explained. Every article ends with the sources we used and the sources we investigated but did not use.</p></div>
+<div class="gf-list">{li}</div>{more}"""
+    page("articles/index.html", "Latest articles — gameformative", "The latest gameformative articles across every topic.", "Latest", body, d)
+
+
+def build_topics():
+    d = 1
+    tiles = []
+    for s, n, b in C.TOPICS:
+        arts = [a for a in ARTICLES if a["topic"] == s]
+        tiles.append(f'<li><a class="gf-topic-tile" href="{s}.html"><span class="n">{esc(n)}</span><span class="b">{esc(b)}</span><span class="c">{len(arts)} article{"s" if len(arts) != 1 else ""}{"" if arts else " · none published yet"}</span></a></li>')
+        if arts:
+            inner = f'<div class="gf-list">{"".join(list_item(a, d) for a in arts)}</div>'
+        else:
+            inner = (f'<div class="gf-inert"><h2 style="font-size:20px;margin-bottom:6px">No {esc(n.lower())} articles published yet</h2>'
+                     f'<p style="margin:0">This topic is part of the launch plan. Every article published here follows the same rules: {C.RULES["min_chars"]:,}–{C.RULES["max_chars"]:,} characters, '
+                     f'at least {C.RULES["min_segments"]} headed segments, and the sources used and investigated listed at the end.</p></div>')
+        others = "".join(f'<li><a href="{x}.html">{esc(m)}</a></li>' for x, m, _ in C.TOPICS if x != s)
+        body = f"""<div class="gf-pagehead"><p class="gf-kicker"><a href="index.html">Topics</a></p><h1>{esc(n)}</h1><p>{esc(b)}</p></div>
+{inner}
+<section class="gf-section" aria-labelledby="ot-h"><div class="gf-section-head"><h2 id="ot-h">Other topics</h2></div><ul class="gf-toc">{others}</ul></section>"""
+        page(f"topics/{s}.html", f"{n} — gameformative", b, "Topics", body, d, topic=s)
+    body = f"""<div class="gf-pagehead"><p class="gf-kicker">Topics</p><h1>What we cover</h1><p>Sport, explained from eleven angles — from the research lab to the sponsor’s balance sheet.</p></div>
+<ul class="gf-topic-grid">{"".join(tiles)}</ul>"""
+    page("topics/index.html", "Topics — gameformative", "Every gameformative topic: news, sport science, tactics, analytics, data, tech, development, fans, sponsorship and goods.", "Topics", body, d)
+
+
+def build_redirects():
+    """The articles lived under /analysis/ until 2026-09-25 (live then) — never delete a live URL."""
+    moved = [(f"analysis/{a['slug']}.html", f"../articles/{a['slug']}.html", a["title"]) for a in ARTICLES if a["origin"] == "data"]
+    moved.append(("analysis/index.html", "../articles/index.html", "All articles"))
+    for old, new, title in moved:
+        OUT[old] = f"""<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Moved: {esc(title)} — gameformative</title>
+<meta name="robots" content="noindex"><link rel="canonical" href="{new}"><meta http-equiv="refresh" content="0; url={new}"></head>
+<body><div class="proto-banner">Prototype — gameformative.com, 2026.</div><h1>This page has moved</h1><p><a href="{new}">{esc(title)}</a></p></body>
+</html>
+"""
 
 
 def build_method():
     d = 1
     gl = "".join(f"<dt>{esc(t)}</dt><dd>{esc(x)}</dd>" for t, x in C.GLOSSARY)
-    inputs = "".join(f"<li><code>{esc(k)}</code></li>" for k in S["inputs"])
-    body = f"""<div class="gf-pagehead"><p class="gf-kicker">How we count</p><h1>Method, glossary and standards</h1><p>What every number on gameformative means, where it comes from, what the data cannot show, and how we label, automate and correct.</p></div>
-<ul class="gf-toc"><li><a href="#glossary">Glossary</a></li><li><a href="#data">Data</a></li><li><a href="#tables">Tables</a></li><li><a href="#labels">Labels</a></li><li><a href="#automation">Automation and AI</a></li><li><a href="#corrections">Corrections</a></li><li><a href="#accessibility">Accessibility</a></li></ul>
+    R = C.RULES
+    body = f"""<div class="gf-pagehead"><p class="gf-kicker">How we work</p><h1>Our standards</h1><p>What gameformative publishes, how every article is built and sourced, how we label, automate and correct — and what our numbers mean.</p></div>
+<ul class="gf-toc"><li><a href="#rules">Article rules</a></li><li><a href="#sources">How we source</a></li><li><a href="#labels">Labels</a></li><li><a href="#automation">Automation and AI</a></li><li><a href="#corrections">Corrections</a></li><li><a href="#data">Data</a></li><li><a href="#glossary">Glossary</a></li><li><a href="#accessibility">Accessibility</a></li></ul>
 <div class="gf-prose">
+<h2 id="rules">Article rules</h2>
+<p>gameformative is a sport analysis and education site: news, tactics, techniques and the science of sport, across eleven topics. Every article follows three rules.</p>
+<dl><dt>Length</dt><dd>{R["min_chars"]:,} to {R["max_chars"]:,} characters of body text — the standfirst and every paragraph, spaces included. Headline, segment headings, charts and the source lists are not counted. Long enough to explain, short enough to finish.</dd>
+<dt>Segments</dt><dd>At least {R["min_segments"]} segments, each under its own heading, listed at the top of the article so you can jump to the part you need.</dd>
+<dt>Sources</dt><dd>Two lists close every article: the sources used, and the sources investigated but not used — each with a line on why.</dd></dl>
+<h2 id="sources">How we source</h2>
+<p>We read the source itself — the paper, the dataset, the report — not a summary of it. We list what we used so you can check us, and what we looked at and set aside so you can see what we chose not to rely on and why. Links are checked on the day of publication. Where a publisher blocks us from reading a source, we say so rather than cite it unread.</p>
+<h2 id="labels">Labels we use</h2><dl><dt>Explainer</dt><dd>How something works and how to read it.</dd><dt>Analysis</dt><dd>Reporting that interprets evidence or data.</dd><dt>News</dt><dd>What happened, sourced and dated.</dd><dt>Automated</dt><dd>Text a template fills from data, published without a human edit — always labelled, only ever stating computed facts. Used on the data pages only.</dd><dt>Opinion</dt><dd>Reserved for signed columns; none are published yet.</dd></dl>
+<h2 id="automation">Automation and AI</h2><p>The “in numbers” round-ups on the data pages are written by a fixed template, not a language model, and carry the <b>Automated</b> label. If gameformative publishes text generated by an AI system, it says so on the piece unless an editor has reviewed it and a named person takes editorial responsibility — the standard set by Article 50 of the EU AI Act, applicable from 2 August 2026. AI-generated or manipulated images or video are always labelled. No image on this site is AI-generated.</p>
+<h2 id="corrections">Corrections</h2><p>When we get something wrong we correct it promptly, say on the page what was wrong and when it changed, and list the change on a public corrections page. The corrections page and the reporting form open with the live site; in the prototype this section states the policy.</p>
+<h2 id="data">Data</h2><p>The data articles and the data pages (a later phase) use <a href="https://github.com/openfootball">openfootball</a>’s results, dedicated to the public domain under CC0 1.0. The site’s converter checks every file — goals for equal goals against, points reconcile, two files for one competition agree match by match — and refuses to publish a table that does not add up. Results are recorded to {esc(DATA_TO)}. Shots, possession, expected goals and live events need a licensed provider; where a figure would need them, the page says so instead of estimating it. Tables are ordered by points, goal difference, goals scored, then name; official tie-breakers differ by competition.</p>
 <h2 id="glossary">Glossary</h2><dl>{gl}</dl>
-<h2 id="data">Where the data comes from</h2>
-<p>Results, goals, line-ups, substitutions and attendances come from <a href="https://github.com/openfootball">openfootball</a>, a volunteer-maintained football data project whose files are dedicated to the public domain under CC0 1.0 — free to use with no restrictions. The files used for this edition:</p><ul>{inputs}</ul>
-<p>The site’s converter reads those files, checks them (every table’s goals for equal its goals against; points reconcile with results; where the source has two files for the same competition they agree match by match; every goal list matches its score) and refuses to publish if a check fails. Results are recorded to {esc(DATA_TO)}. The source records them by hand, so a result can appear a few days after the match; we show the date the data runs to on every page.</p>
-<p>What the source does not carry, we do not show: shots, possession, expected goals (xG), player ratings and live minute-by-minute events need a licensed provider. Those panels are marked in place, and nothing is estimated to fill them.</p>
-<h2 id="tables">How tables are ordered</h2><p>Points, then goal difference, then goals scored, then name. That is our rule on every table. Official tie-breakers differ — LaLiga and Serie A use head-to-head results first; FIFA’s group rules add further steps — so for teams level on points an official table can differ from ours. Home and away tables count only those matches.</p>
-<h2 id="labels">Labels we use</h2><dl><dt>Analysis</dt><dd>Reporting that interprets the numbers, written and checked by the data desk.</dd><dt>Explainer</dt><dd>How a measure works and how to read it.</dd><dt>Automated</dt><dd>Text a template fills from the match data, published without a human edit. Always labelled, always factual, never a quote or an opinion.</dd><dt>Season review · Tournament review</dt><dd>Complete competitions, every figure final.</dd><dt>Opinion</dt><dd>Reserved for signed columns; none are published yet.</dd></dl>
-<h2 id="automation">Automation and AI</h2><p>The “in numbers” round-ups are written by a fixed template from the results, not by a language model, and carry the <b>Automated</b> label. If gameformative ever publishes text generated by an AI system, it will say so on the piece unless an editor has reviewed it and a named person takes editorial responsibility — the standard set by Article 50 of the EU AI Act, applicable from 2 August 2026. AI-generated or manipulated images or video are always labelled. No image on this site is AI-generated.</p>
-<h2 id="corrections">Corrections</h2><p>When we get something wrong we correct it promptly, say on the page what was wrong and when it changed, and list the change on a public corrections page. Data errors in the source are reported upstream to openfootball as well as corrected here. The corrections page and the reporting form open with the live site; in the prototype this section states the policy.</p>
-<h2 id="accessibility">Accessibility</h2><p>Every chart has a text alternative and its numbers as a table; colour never carries meaning alone (form guides print the letter; outcome bars print H, D and A); text meets WCAG 2.2 AA contrast in the light and dark themes; every control is at least 44 pixels square on a phone; motion follows the system’s reduced-motion setting.</p>
+<h2 id="accessibility">Accessibility</h2><p>Every chart has a text alternative and its numbers as a table; colour never carries meaning alone; text meets WCAG 2.2 AA contrast in the light and dark themes; every control is at least 44 pixels square on a phone; motion follows the system’s reduced-motion setting.</p>
 </div>"""
-    page("how-we-count/index.html", "How we count: method, glossary and standards — gameformative", "What every number on gameformative means, where the data comes from, and how we label, automate and correct.", "How we count", body, d)
+    page("how-we-count/index.html", "How we work: our standards — gameformative", "gameformative's article rules, sourcing, labels, automation and AI policy, corrections and glossary.", "How we work", body, d)
 
 
 def build_styleguide():
     d = 1
     toks = [("--gf-ground", "Ground"), ("--gf-surface", "Surface"), ("--gf-sunk", "Sunk"), ("--gf-ink", "Ink"), ("--gf-text", "Text"), ("--gf-muted", "Muted"), ("--gf-line", "Line"),
-            ("--gf-blue", "Form Blue — brand, links, W"), ("--gf-orange", "Energy Orange — accent, L"), ("--gf-draw", "Draw grey — D"), ("--gf-band", "Band")]
+            ("--gf-blue", "Form Blue — brand, links"), ("--gf-orange", "Energy Orange — accent"), ("--gf-draw", "Neutral chip"), ("--gf-band", "Band")]
     sw = "".join(f'<div class="gf-swatch"><i style="background:var({t})"></i><div><b>{esc(n)}</b><br><code>{t}</code></div></div>' for t, n in toks)
-    l = LG["en"]
-    body = f"""<div class="gf-pagehead"><p class="gf-kicker">Design system · v1</p><h1>gameformative style guide</h1><p>The tokens and components every page is built from, live. Switch the theme to see both palettes. Reasoning and sources: the project’s design document.</p></div>
+    a = ARTICLES[0]
+    body = f"""<div class="gf-pagehead"><p class="gf-kicker">Design system · v2</p><h1>gameformative style guide</h1><p>The tokens and components every page is built from, live. Switch the theme to see both palettes.</p></div>
 <section class="gf-section" aria-labelledby="c-h"><div class="gf-section-head"><h2 id="c-h">Colour</h2></div><div class="gf-swatches">{sw}</div></section>
 <section class="gf-section" aria-labelledby="t-h"><div class="gf-section-head"><h2 id="t-h">Type — Archivo, one variable family</h2></div>
 <p class="gf-display" style="font-size:56px;line-height:1;color:var(--gf-ink);margin-bottom:8px">Display 72% width · 800</p>
-<p style="font-size:26px;font-stretch:85%;font-weight:750;color:var(--gf-ink)">Card headline 85% · 750</p><p style="font-size:18px">Body 100% · 400 — tabular numerals everywhere: 1,045 · 2.75 · 41,643</p><p class="gf-kicker">Kicker · 800 · tracked caps</p></section>
-<section class="gf-section" aria-labelledby="k-h"><div class="gf-section-head"><h2 id="k-h">Labels, buttons, form</h2></div>
+<p style="font-size:26px;font-stretch:85%;font-weight:750;color:var(--gf-ink)">Card headline 85% · 750</p><p style="font-size:18px">Body 100% · 400 — tabular numerals: 1,045 · 2.33 · 3,200</p><p class="gf-kicker">Kicker · 800 · tracked caps</p></section>
+<section class="gf-section" aria-labelledby="k-h"><div class="gf-section-head"><h2 id="k-h">Labels and buttons</h2></div>
 <p style="display:flex;gap:8px;flex-wrap:wrap">{label("Analysis")}{label("Explainer")}<span class="gf-label gf-label--automated">Automated</span><span class="gf-label gf-label--data">Season review</span></p>
-<p style="display:flex;gap:10px;flex-wrap:wrap"><a class="gf-btn" href="#k-h">Primary</a><a class="gf-btn gf-btn--ghost" href="#k-h">Secondary</a><a class="gf-btn gf-btn--quiet" href="#k-h">Quiet</a><a class="gf-btn gf-btn--quiet is-unavailable" href="#k-h" aria-disabled="true" onclick="return false" title="Inert controls look like this">Inert</a></p>
-<p>{form(l["table"][0]["form"])} {form(l["table"][-1]["form"])}</p></section>
-<section class="gf-section" aria-labelledby="s-h"><div class="gf-section-head"><h2 id="s-h">Stat tiles, snapshot, story card</h2></div>
-<div class="gf-grid gf-grid--3"><div class="gf-stat gf-stat--accent"><span class="n">3.81</span><span class="what">goals per game</span><span class="ctx">Stat tile with accent</span></div>{snapshot(l, d, 4)}{story_card(ARTICLES[1], d)}</div></section>
-<section class="gf-section" aria-labelledby="ch-h"><div class="gf-section-head"><h2 id="ch-h">Charts</h2></div><div class="gf-grid gf-grid--2">{chart("gpg-big5")}{chart("minutes-2526")}</div></section>
-<section class="gf-section" aria-labelledby="tb-h"><div class="gf-section-head"><h2 id="tb-h">Table</h2></div><div data-views><div class="gf-seg gf-seg--xs" role="group" aria-label="Table columns"><button type="button" class="gf-xs-toggle" data-cols aria-pressed="false">All columns</button></div>{league_table(l, "all", tid="sg")}</div><p class="gf-sr" aria-live="polite" id="sg-live"></p></section>"""
+<p style="display:flex;gap:10px;flex-wrap:wrap"><a class="gf-btn" href="#k-h">Primary</a><a class="gf-btn gf-btn--ghost" href="#k-h">Secondary</a><a class="gf-btn gf-btn--quiet" href="#k-h">Quiet</a><a class="gf-btn gf-btn--quiet is-unavailable" href="#k-h" aria-disabled="true" onclick="return false" title="Inert controls look like this">Inert</a></p></section>
+<section class="gf-section" aria-labelledby="s-h"><div class="gf-section-head"><h2 id="s-h">Story card, topic tile</h2></div>
+<div class="gf-grid gf-grid--3">{story_card(ARTICLES[0], d)}{story_card(ARTICLES[2], d)}<ul class="gf-topic-grid" style="grid-template-columns:1fr"><li><a class="gf-topic-tile" href="../topics/sport-science.html"><span class="n">Sport science</span><span class="b">{esc(C.TOPIC["sport-science"]["blurb"])}</span><span class="c">topic tile</span></a></li></ul></div></section>
+<section class="gf-section" aria-labelledby="src-h"><div class="gf-section-head"><h2 id="src-h">The source lists</h2></div><div class="gf-sources" style="margin-top:0"><h3>Sources used</h3>{source_list(a["sources_used"][:1], "used")}<h3>Sources investigated but not used</h3>{source_list(a["sources_investigated"][:1], "investigated")}</div></section>
+<section class="gf-section" aria-labelledby="ch-h"><div class="gf-section-head"><h2 id="ch-h">Charts</h2></div><div class="gf-grid gf-grid--2">{chart("gpg-big5")}{chart("minutes-2526")}</div></section>"""
     page("styleguide/index.html", "Style guide — gameformative", "The gameformative design system: tokens and components, live.", None, body, d)
 
 
 def build_all():
-    build_home(); build_scores(); build_stats_hub()
+    build_home(); build_articles_index(); build_topics(); build_method(); build_styleguide()
+    for a in ARTICLES: build_article(a)
+    build_redirects()
+    # the data pages — a later phase, kept live and linked from the footer
+    build_scores(); build_stats_hub()
     for l in LEAGUES: build_league(l)
     build_pl2526(); build_wc(); build_final()
-    for a in ARTICLES: build_article(a)
-    build_analysis_index(); build_method(); build_styleguide()
+
 
 
 if __name__ == "__main__":

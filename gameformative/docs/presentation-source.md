@@ -2,93 +2,85 @@
 
 ## Where it stands {#situation}
 
-<p class="lead-p">gameformative.com was registered on 25 September 2026. Its DNS points at Vercel, and the domain serves a 404: there is no site, brand, audience or content yet.</p>
+<p class="lead-p">gameformative.com was registered on 25 September 2026. Its DNS points at Vercel, and the domain serves a 404: there is no site, brand, audience or content yet. The plan is to launch with articles, "to have a base with informative great edutainment content in the sport industry".</p>
 
 The market it enters is measured:
 
-- **Football is the world's sport.** 51% of people globally call themselves fans (Nielsen, 2025).
-- **The leaders put scores before stories.** Every top sports site we measured in Germany, India and China opens with live scores or latest results.
-- **The stats sites own the numbers.** Opta Analyst reaches about a million readers a month on data-led writing (Stats Perform). FotMob gets 72.9% of its traffic direct (Similarweb, August 2026).
+- **Sport is the world's shared subject.** 51% of people globally call themselves football fans (Nielsen, 2025).
+- **Readers find news in feeds first.** Social and video networks (54%) now beat publishers' own sites and apps (51%) as a way into news (Reuters Institute, 2026).
+- **The expert sites sell numbers.** The statistics sites we measured are built around tables, ratings and predictions. Opta Analyst reaches about a million readers a month on data-led writing (Stats Perform).
 
 ## The complication {#complication}
 
-- **Readers find news in feeds first.** Social and video networks (54%) now beat publishers' own sites and apps (51%) as a way into news (Reuters Institute, 2026).
-- **Trust is low, and automation is under scrutiny.** Trust in news is 37% (Reuters Institute, 2026). Only 12% of people are comfortable with news made entirely by AI (Reuters Institute, 2025). Since 2 August 2026, the EU AI Act requires AI-generated news text to be disclosed unless an editor is responsible for it.
-- **The data fans expect is licensed.** xG, shots and player ratings come from licensed providers, and their prices are not public. Using the wrong free source is a legal risk: StatsBomb's and NBA.com's terms forbid commercial use.
-
-A new site has to be worth a direct visit, visibly sourced and human-edited, and legal about its data from the first page.
+- **Trust in news is 37%** (Reuters Institute, 2026).
+- **Readers prefer human-made news.** Only 12% are comfortable with news made entirely by AI (Reuters Institute, 2025).
+- **Automated sports recaps are already drawing criticism.** They have been faulted for thin copy and have carried factual errors (MLS, 2025; ESPN, 2024).
+- **Sources are usually hidden.** A reader rarely sees what an article relied on, and never what it looked at and left out.
+- **The law has moved.** Since 2 August 2026, the EU AI Act requires AI-generated news text to be disclosed unless a named editor is responsible for it.
 
 ## The question {#question}
 
-Can gameformative launch as a credible football analytics and news site on data it may legally use today? And what does it need to become a daily habit?
+Can a new sport site earn a reader's trust from its first article, and make research, tactics and the business of sport a pleasure to read?
 
 ## The answer {#answer}
 
-**Yes. The prototype shows how.** It runs on real, public-domain data (openfootball, CC0) and covers:
+**Articles that show their work.** gameformative covers {{topics}} topics:
 
-- {{leagues}} leagues with {{league_matches}} results and {{league_goals}} goals to {{data_to}};
-- the complete 2025/26 Premier League: {{pl_matches}} matches and {{pl_goals}} goals;
-- all {{wc_matches}} matches and {{wc_goals}} goals of the 2026 World Cup.
+- international news;
+- sport science;
+- tactics & technique;
+- sport analytics;
+- data intelligence;
+- sport tech;
+- athlete development;
+- fan engagement;
+- sponsorship;
+- training goods;
+- sport goods.
 
-Every figure on every page is computed from {{inputs}} source files by a converter that refuses to publish a table that does not add up.
+Every article follows three house rules, and the build refuses to publish one that breaks them:
 
-What it gives each party:
+1. **{{min_chars}}–{{max_chars}} characters**, long enough to explain and short enough to finish;
+2. **always in headed segments**, listed at the top so a reader can jump to what they need;
+3. **two source lists at the end:** the sources used, and the sources investigated but not used, each with a line on why.
 
-- **For readers:**
-  - scores first on every page;
-  - tables that work on a phone;
-  - charts that read in black and white;
-  - a page that says what every number means and where it comes from.
-- **For the editors:**
-  - copy that cannot silently go out of date, because the build stops if a data refresh makes a sentence untrue;
-  - automated round-ups that are labelled as such;
-  - a corrections and AI policy already written.
-- **For the owner:**
-  - a brand read from the 2027 colour forecasts (WGSN × Coloro's projected Luminous Blue and Energy Orange), which is also the colour-blind-safe pair;
-  - a design system ready to hand to developers;
-  - a plan whose open decisions are all business decisions.
+**The first article is the owner's own draft.** It is about GPS load data and injury risk. Before it went in, every link was requested and both used sources were read, and they support the text.
 
 ## The value {#value}
 
-- **Measured:** data cost on open data is zero. Pages weigh {{page_kb_min}}–{{page_kb_max}} kB of HTML, with no images and {{js_kb}} kB of script, well inside the Core Web Vitals budget the leaders miss (NBA.com: 5.1 s to first byte on our measurement).
-- **Benchmark:** a data-led football publication can reach about a million monthly readers (Opta Analyst). Direct traffic dominates at the stats sites (FotMob, 72.9%).
-- **The honest finding:** open data carries the tables, reviews and analysis product, but not the live and xG product. The licence for event data is the one cost that decides whether gameformative competes with FotMob and Opta Analyst or sits beside them. Its price is not public, so no return figure is given until quotes are in.
+- **Measured.** The prototype has {{articles}} articles across {{topics}} topics. Pages weigh {{page_kb_min}}–{{page_kb_max}} kB of HTML, with no images and {{js_kb}} kB of script. The article rules are checked on every rendered page, and a deliberately broken article fails the check.
+- **The honest finding.** The difference from the sites we measured is the sourcing: the two lists at the end of every piece. We saw no site in our benchmark that publishes what it investigated and set aside. The cost of that difference is editorial time, and it grows with every article. No revenue figure is given until the business model is chosen.
 
 ## Proof — what is real {#proof}
 
 | Real | Sample | Shown, not built |
 |---|---|---|
-| every result, table, scorer, line-up, attendance; every chart | the article copy (from the data desk; every figure computed) | search, sign-in, newsletter, xG/shots/ratings panels, live scores |
+| the owner's first article, and its sources, checked; the football data behind the data articles (openfootball, public domain) | the data articles' copy, written from the data, with every figure computed | search, sign-in, newsletter; topic pages with no article yet say so plainly |
 
-Measured on every page at 375 px and 1440 px: 0 px horizontal overflow, no tap target under 44 px on phones, one heading per page. Contrast is checked in the light and dark themes on every build.
+Measured on every page at 375 px and 1440 px: 0 px horizontal overflow, no tap target under 44 px on phones, one heading per page, and no console errors. Contrast is checked in the light and dark themes on every build.
 
 ## Risk removed, value added {#risk}
 
-- **Legal data only:** the licences were read before a single row was used.
-- **No invented people, quotes or images:** the byline is the data desk, and the covers are drawn from the numbers.
-- **Automation is labelled:** it comes from a template, not a language model. The policy follows Article 50 of the EU AI Act.
-- **Accessibility is designed in, not retrofitted:** colour is never used alone, every chart has a data table, and there are 44 px targets and a dark theme.
+- **Sources you can check:** the links are requested on the day of publication. A source we could not read is recorded as such, never cited as read.
+- **No invented people, quotes or images:** the covers are drawn from the numbers each article is about.
+- **The rules are code, not good intentions:** the build and the gate both enforce them.
+- **Accessibility is designed in:** colour is never used alone, every chart has its numbers as a table, targets are 44 px, and there is a dark theme.
 
 ## Delivery and what is needed next {#delivery}
 
-1. **M1 — static launch on open data.** Deploy to the domain, refresh daily, name the newsroom, open the corrections page.
-2. **M2 — licensed data.** xG, shots and ratings.
-3. **M3 — live.** Score strip and match centre.
-4. **M4 — growth.** Newsletter, social stat cards, the first regional expansion.
-
-After the decision, the owner chooses a data provider, names an editor-in-chief, and confirms the business model.
+1. **M1 — the articles launch.** Deploy to the domain. Name the editor who signs off each piece; the first draft is itself marked for staff review. Write the first articles for the empty topics. Open the corrections page.
+2. **Later — the data pages.** The football statistics built in round 1 are kept live as a preview: tables, the World Cup, a match centre.
 
 ## The one decision {#decision}
 
-<p class="lead-p"><strong>Approve the direction</strong>: the design system, the page set and the open-data-first approach. Then M1 starts and provider quotes are requested.</p>
+<p class="lead-p"><strong>Approve the articles-first direction</strong>: the topics, the article template, and the house rules as implemented, counting characters as the body text, without headings or sources. Then name the editor, and M1 starts.</p>
 
-<a class="cta" href="../index.html">Open the prototype</a> <a class="cta" href="../styleguide/index.html">See the design system</a>
+<a class="cta" href="../index.html">Open the prototype</a> <a class="cta" href="../articles/gps-injury-risk-which-math.html">Read the first article</a>
 
 ## Appendix — what to click {#appendix}
 
-- **Home:** [the home page](../index.html).
-- **A league:** a [league table](../stats/premier-league.html). On a phone, press "All columns"; sort by any heading; switch Overall, Home and Away.
-- **Tournament:** the [World Cup bracket](../world-cup-2026/index.html) and [the final's match centre](../world-cup-2026/final.html).
-- **Analysis:** an [analysis piece](../analysis/how-spain-won-the-world-cup.html), and under any chart "Show the numbers as a table".
-- **Standards:** [How we count](../how-we-count/index.html).
-- **Theme:** the theme button in the header switches light and dark.
+- **Home:** [the home page](../index.html). The topic bar under the header lists every topic.
+- **The first article:** [the GPS article](../articles/gps-injury-risk-which-math.html). Try "In this article" at the top, then the two source lists at the end.
+- **A topic:** [Sport science](../topics/sport-science.html) has an article; [Sponsorship](../topics/sponsorship.html) shows how an empty topic reads.
+- **The rules, in public:** [How we work](../how-we-count/index.html).
+- **The later phase:** the [data pages](../stats/index.html).

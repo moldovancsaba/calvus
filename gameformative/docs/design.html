@@ -256,4 +256,51 @@ figures aligns. Fallback: Arial Narrow, then the system sans.</p>
 <h2 id="motion">Motion</h2>
 <p>Only colour transitions on hover; smooth scrolling of the strip only when the reader has not asked
 for reduced motion. Nothing auto-plays, nothing auto-advances.</p>
+<h2 id="round-2-articles-first-2026-09-25">Round 2 — articles first (2026-09-25)</h2>
+<p>The tokens, type and colour are unchanged. What changed is the structure:</p>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th></th>
+<th>Phone</th>
+<th>Desktop</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Navigation</td>
+<td>tab bar: Home · Latest · Topics · Standards · More</td>
+<td>top nav: Home · Latest · Topics · How we work</td>
+</tr>
+<tr>
+<td>Under the header</td>
+<td><strong>topic bar</strong> — all eleven topics, swipe sideways; the current topic highlighted</td>
+<td>the same, one row</td>
+</tr>
+<tr>
+<td>Home</td>
+<td>lead article (cover, topic · kind, headline, opening, byline, reading time), Latest list, more cards, topic tiles (compact), the sourcing promise band, newsletter (inert)</td>
+<td>lead + Latest rail; three cards; topic tiles 3-up; bands</td>
+</tr>
+<tr>
+<td>Article</td>
+<td>topic · kind, headline, standfirst, byline with reading time and segment count, <strong>In this article</strong> (the segment headings, linked), headed segments, charts where the piece has data, <strong>Sources</strong> — used, then investigated but not used, each with publisher and a one-line reason; "More to read" below</td>
+<td>720 px text column with a sticky "More to read" rail</td>
+</tr>
+<tr>
+<td>Topic page</td>
+<td>name, what it covers, its articles — or a plain "none published yet" panel</td>
+<td>the same</td>
+</tr>
+</tbody>
+</table></div>
+<p>New components: <code>.gf-topicbar</code>, <code>.gf-cardmeta</code> (topic · kind), <code>.gf-latest</code>, <code>.gf-topic-tile</code> and
+<code>.gf-topic-grid</code>, <code>.gf-promise</code> (the three rules as figures), <code>.gf-toc-box</code>, <code>.gf-seg-block</code>,
+<code>.gf-sources</code> and <code>.gf-source-list</code> (the "investigated" list set in text colour, the "used" list in
+link blue, so the two read differently without relying on colour alone — each has its own heading),
+<code>.gf-later</code> (the data pages' notice). Story cards and list items are now an <code>&lt;article&gt;</code> around one
+link, so screen readers announce each as an article.</p>
+<p>The cover of the first article is drawn from its seed source's two numbers: the pooled odds ratio
+(1.33, CI 0.85–2.07) and the pooled relative risk (2.33, CI 1.65–3.30) on one scale with the
+no-effect line at 1 — the article's argument in one picture, and no photograph needed.</p>
 <footer>gameformative.com · project documentation, 2026</footer></div></body></html>

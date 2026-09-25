@@ -102,3 +102,26 @@ figures aligns. Fallback: Arial Narrow, then the system sans.
 
 Only colour transitions on hover; smooth scrolling of the strip only when the reader has not asked
 for reduced motion. Nothing auto-plays, nothing auto-advances.
+
+## Round 2 — articles first (2026-09-25)
+
+The tokens, type and colour are unchanged. What changed is the structure:
+
+| | Phone | Desktop |
+|---|---|---|
+| Navigation | tab bar: Home · Latest · Topics · Standards · More | top nav: Home · Latest · Topics · How we work |
+| Under the header | **topic bar** — all eleven topics, swipe sideways; the current topic highlighted | the same, one row |
+| Home | lead article (cover, topic · kind, headline, opening, byline, reading time), Latest list, more cards, topic tiles (compact), the sourcing promise band, newsletter (inert) | lead + Latest rail; three cards; topic tiles 3-up; bands |
+| Article | topic · kind, headline, standfirst, byline with reading time and segment count, **In this article** (the segment headings, linked), headed segments, charts where the piece has data, **Sources** — used, then investigated but not used, each with publisher and a one-line reason; "More to read" below | 720 px text column with a sticky "More to read" rail |
+| Topic page | name, what it covers, its articles — or a plain "none published yet" panel | the same |
+
+New components: `.gf-topicbar`, `.gf-cardmeta` (topic · kind), `.gf-latest`, `.gf-topic-tile` and
+`.gf-topic-grid`, `.gf-promise` (the three rules as figures), `.gf-toc-box`, `.gf-seg-block`,
+`.gf-sources` and `.gf-source-list` (the "investigated" list set in text colour, the "used" list in
+link blue, so the two read differently without relying on colour alone — each has its own heading),
+`.gf-later` (the data pages' notice). Story cards and list items are now an `<article>` around one
+link, so screen readers announce each as an article.
+
+The cover of the first article is drawn from its seed source's two numbers: the pooled odds ratio
+(1.33, CI 0.85–2.07) and the pooled relative risk (2.33, CI 1.65–3.30) on one scale with the
+no-effect line at 1 — the article's argument in one picture, and no photograph needed.

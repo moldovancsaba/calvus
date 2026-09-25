@@ -20,7 +20,8 @@ If a refreshed dataset breaks a copy premise, `build.py` stops and names the sen
 
 | Object | Fields | Notes |
 |---|---|---|
-| Article | slug, kind (Analysis, Explainer), league (en, all, wc), title, dek, key facts[], body[], cover | body items: a paragraph, a `## ` heading, or `("chart", id)` |
+| Article | slug, topic, kind, byline, origin (owner draft or data desk), title, standfirst (optional), segments [(heading, [paragraph or ("chart", id)])], sources_used[], sources_investigated[], cover | round 2; `check_rules()` enforces `RULES` before a page is written |
+| Source | title, publisher (with date where known), url, note | the note says what it contributed, or why it was not used |
 | Chart | id → a figure built by `build.py` `chart()` | nine ids today; each renders title, subtitle, the chart, source, data table |
 | Cover | type (race, bars, final, minutes, explainer) | an SVG drawn from the data; decorative |
 | Round-up | derived from a league's latest round | template only; labelled Automated |
@@ -41,8 +42,7 @@ If a refreshed dataset breaks a copy premise, `build.py` stops and names the sen
 
 ## 4. Page templates
 
-`build.py` has one function per template: home, scores, stats hub, league (×5), season review,
-World Cup, match centre, article (×5), analysis index, how we count, style guide. Shared chrome:
+`build.py` has one function per template: home, latest (articles index), article (×6), topics index and topic (×11), how we work, style guide, redirects from `/analysis/`; and the data pages of the later phase — scores, stats hub, league (×5), season review, World Cup, match centre. Shared chrome:
 banner, header, results strip, footer, tab bar, More sheet. Every page: one `h1` (visually hidden
 on the home page, where the lead headline is an `h2` inside a link), `lang="en"`, a description,
 light and dark `theme-color`, JSON-LD where it applies (WebSite, NewsArticle, SportsEvent).

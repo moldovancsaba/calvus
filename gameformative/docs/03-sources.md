@@ -14,6 +14,8 @@ what the inputs can support. Written 2026-09-25. The research sources are listed
 | 4 | openfootball `football.json` — `2026-27/{en,es,de,it,fr}.1.json`, `2025-26/en.1.json`, `2025-26/en.1-full.json` | every league result, table and derived figure; 2025/26 scorers, minutes, attendances. CC0 1.0 |
 | 5 | openfootball `worldcup.json` — `2026/worldcup.json`, `2026/worldcup-full.json` | all 104 World Cup matches, scorers, line-ups, substitutions, attendance. CC0 1.0 |
 | 6 | The research of 2026-09-25 (`01-research.md`) | the palette, type, layout, navigation, table, chart, trust and automation decisions |
+| 7 | The owner's second message of 2026-09-25: articles first; the positioning; the topic list; 800–3,200 characters, always segmented; sources used and investigated at the end | the round-2 site structure, the house rules and their gate (D17–D20) |
+| 8 | The owner's first article draft — `docs/reports/gameformative-article-latest.md`, management repository, branch `cursor/gameformative-client-9b8a`, read 2026-09-25 | the lead article, word for word (D22) |
 
 The raw files are committed in `data/raw/`; `data/fetch.py` re-downloads them and
 `data/convert.py` turns them into `data/stats.json`. The SHA-256 prefix of every input is written
@@ -51,3 +53,26 @@ into `stats.json` and listed on the How we count page.
    match by the converter.
 10. **Blocked research sites.** Nine sites refused automated fetches (`01-research.md` §0); their
     designs are not part of the benchmark.
+
+## 3. The first article's sources, checked (2026-09-25, 21:42 UTC)
+
+Every link in the owner's draft was requested with `curl`; the two used sources were read.
+
+| Source | In the draft as | Result | Supports the text? |
+|---|---|---|---|
+| Sport Mont 2026, 24(1), 169–178 — doi 10.26773/smj.260219 | used (the seed) | resolves to sportmont.ucg.ac.me; abstract read | **Yes.** Twelve studies reviewed, four pooled; OR-based pooling "no significant association" (OR 1.33, 95% CI 0.85–2.07), RR-based "more than doubling injury risk" (RR 2.33, 1.65–3.30); definitions and thresholds "varied substantially". The draft's "either disappears—or more than doubles" matches. |
+| Frontiers in Public Health, 13 Aug 2026 — doi 10.3389/fpubh.2026.1896651 | used | resolves; abstract read | **Yes.** "small-to-moderate association" (g = 0.35); "does not support its use as a stand-alone causal or predictive model". The draft's "modest injury link … stand-alone crystal ball" matches. |
+| PMC11366842 (Sensors) | investigated, not used | resolves; abstract read | — (not used) |
+| doi 10.3390/s26134228 (Sensors, MDPI) | investigated, not used | resolves to mdpi.com, which **refused the request (HTTP 403)** | not read |
+| Springer, doi 10.1007/s44163-026-01021-9 | investigated, not used | resolves to link.springer.com, which served a **JavaScript challenge** | not read |
+
+Gaps from round 2:
+
+11. **Two investigated sources could not be read** by us (MDPI 403, Springer challenge). They are
+    listed as the draft lists them — as investigated and not used — which is accurate; their
+    content is not something the article relies on.
+12. **The draft's source notes are editorial shorthand** ("Seed", "curiosity gap"); shipped as
+    written, with the question to the owner (ask A9).
+13. **The draft's own header says "not published — staff gate".** The prototype shows it as the
+    lead because the owner sent it as the first article; publishing it on the real site needs the
+    named editor's sign-off (ask A2).

@@ -1,9 +1,10 @@
 # gameformative — project documentation
 
-gameformative.com is a football analytics and news site: results and tables for Europe's big five
-leagues, season and tournament reviews, analysis and explainers built on the numbers, and one page
-that says what every number means. The prototype runs on real public-domain data (openfootball,
-CC0). The presentation for the owner: [presentation.html](presentation.html). The prototype:
+gameformative.com is a sport analytical and educational infotainment site — news, tactics,
+techniques and the science of sport across eleven topics. It launches with articles only; every
+article runs 800–3,200 characters in headed segments and ends with the sources used and the
+sources investigated but not used. The football statistics built in round 1 (real public-domain
+data, openfootball CC0) are a later phase, kept live. The presentation for the owner: [presentation.html](presentation.html). The prototype:
 [home page](../index.html). The design system, live: [style guide](../styleguide/index.html).
 
 | Document | What it holds |
@@ -52,3 +53,16 @@ root `check.py`; clean.
 **2026-09-25 — sources register.** The owner asked that the documentation list every source
 researched with a short summary of what we learned: `01a-source-register.md`, one row per source,
 with its status (measured, opened, secondary, blocked, snippet only, projection).
+
+**2026-09-25 — round 2: articles first.** The owner set the launch to articles only, repositioned
+gameformative as a sport analysis and education site across ten named topics ("and similar"), set
+the house rules (800–3,200 characters, always segmented, sources used and investigated at the end,
+not counted) and sent the first article draft. The draft's five links were requested and the two
+used sources read — both support the text; two investigated sources could not be read (MDPI 403,
+Springer challenge). Built: eleven topics (the owner's ten plus Tactics & technique, from the owner's
+own description), a topic bar, an articles-first home, `articles/` with the owner's piece as the lead
+and the five data pieces restructured into headed segments with honest source lists, topic pages,
+How we work, redirects from `/analysis/`, and the data pages moved to "a later phase". An unsourced
+claim in our own explainer was sourced (D24). The rules are enforced by the build and by a new gate
+check measured on the rendered pages; a deliberately broken page proved it fails. Measured at 375 and
+1440 px, clean. Decisions D17–D25; asks A8–A10.

@@ -7,7 +7,10 @@
  8 data/stats.json reproduces byte for byte from data/raw/ (convert.py --check, which also runs the
    data asserts);  9 every generated page reproduces from content.py + stats.json (build.py --check);
 10 every token text pair meets WCAG 2.2 AA contrast in the light and the dark theme;
-11 every inert control is marked (aria-disabled and a title that says why)."""
+11 every inert control is marked (aria-disabled and a title that says why);
+12 the owner's article rules, measured on every rendered article page: 800–3,200 characters of body
+   text (standfirst + paragraphs, spaces included), at least three headed segments, and both source
+   lists — used, and investigated but not used — each with at least one linked source."""
 import re, sys, subprocess, pathlib
 HERE = pathlib.Path(__file__).resolve().parent; ROOT = HERE.parent
 SITE = sorted(p for p in HERE.rglob("*.html") if "docs" not in p.relative_to(HERE).parts)
@@ -49,6 +52,22 @@ for script in (["data/convert.py", "--check"], ["build.py", "--check"]):
     r = subprocess.run([sys.executable, str(HERE / script[0]), script[1]], capture_output=True, text=True, cwd=HERE / pathlib.Path(script[0]).parent)
     if r.returncode != 0: findings.append(f"reproduce  {script[0]} --check: {(r.stdout + r.stderr).strip().splitlines()[-1] if (r.stdout + r.stderr).strip() else 'failed'}")
 
+# the article rules, measured on the page, independently of build.py's own assert
+import html as _html
+articles = sorted(p for p in (HERE / "articles").glob("*.html") if p.name != "index.html")
+if not articles: findings.append("articles  no article pages found")
+for f in articles:
+    t2 = text[f]; m = re.search(r'data-article data-min="(\d+)" data-max="(\d+)" data-segments="(\d+)"', t2)
+    if not m: findings.append(f"article  {f.relative_to(ROOT)}: no article rules on the page"); continue
+    lo, hi, segs = map(int, m.groups())
+    body = "".join(_html.unescape(re.sub(r"<[^>]+>", "", x)) for x in re.findall(r"<p[^>]*\bdata-count\b[^>]*>(.*?)</p>", t2, re.S))
+    if not lo <= len(body) <= hi: findings.append(f"article  {f.relative_to(ROOT)}: {len(body)} characters, outside {lo}–{hi}")
+    n_seg = len(re.findall(r'<section class="gf-seg-block"[^>]*><h2', t2))
+    if n_seg < segs: findings.append(f"article  {f.relative_to(ROOT)}: {n_seg} headed segments, needs {segs}")
+    for kind in ("used", "investigated"):
+        lst = re.search(rf'<ol class="gf-source-list" data-sources="{kind}">(.*?)</ol>', t2, re.S)
+        if not lst or not re.search(r'<li><a href="https://', lst.group(1)): findings.append(f"article  {f.relative_to(ROOT)}: no linked source in the '{kind}' list")
+
 # contrast: every text token on every ground token, both themes
 def lum(h):
     c = [int(h[i:i + 2], 16) / 255 for i in (1, 3, 5)]
@@ -68,6 +87,6 @@ for theme, T in (("light", light), ("dark", dark)):
         r = ratio(T[fg], T[bg]); pairs_checked += 1
         if r < need: findings.append(f"contrast  {theme}: {fg} on {bg} is {r:.2f}:1, needs {need}:1")
 
-print(f"checked {len(ALL)} files ({len(SITE)} site, {len(DOCS)} docs), {refs} references, {pairs_checked} contrast pairs, asset version {sorted(versions)}")
+print(f"checked {len(ALL)} files ({len(SITE)} site, {len(DOCS)} docs), {refs} references, {len(articles)} articles against the house rules, {pairs_checked} contrast pairs, asset version {sorted(versions)}")
 if findings: print("\n".join(findings)); print(f"GATE: {len(findings)} finding(s)"); sys.exit(1)
 print("GATE: CLEAN")

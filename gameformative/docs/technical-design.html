@@ -48,8 +48,13 @@ If a refreshed dataset breaks a copy premise, <code>build.py</code> stops and na
 <tbody>
 <tr>
 <td>Article</td>
-<td>slug, kind (Analysis, Explainer), league (en, all, wc), title, dek, key facts[], body[], cover</td>
-<td>body items: a paragraph, a <code>##</code> heading, or <code>("chart", id)</code></td>
+<td>slug, topic, kind, byline, origin (owner draft or data desk), title, standfirst (optional), segments [(heading, [paragraph or ("chart", id)])], sources_used[], sources_investigated[], cover</td>
+<td>round 2; <code>check_rules()</code> enforces <code>RULES</code> before a page is written</td>
+</tr>
+<tr>
+<td>Source</td>
+<td>title, publisher (with date where known), url, note</td>
+<td>the note says what it contributed, or why it was not used</td>
 </tr>
 <tr>
 <td>Chart</td>
@@ -117,8 +122,7 @@ If a refreshed dataset breaks a copy premise, <code>build.py</code> stops and na
 </tbody>
 </table></div>
 <h2 id="4-page-templates">4. Page templates</h2>
-<p><code>build.py</code> has one function per template: home, scores, stats hub, league (×5), season review,
-World Cup, match centre, article (×5), analysis index, how we count, style guide. Shared chrome:
+<p><code>build.py</code> has one function per template: home, latest (articles index), article (×6), topics index and topic (×11), how we work, style guide, redirects from <code>/analysis/</code>; and the data pages of the later phase — scores, stats hub, league (×5), season review, World Cup, match centre. Shared chrome:
 banner, header, results strip, footer, tab bar, More sheet. Every page: one <code>h1</code> (visually hidden
 on the home page, where the lead headline is an <code>h2</code> inside a link), <code>lang="en"</code>, a description,
 light and dark <code>theme-color</code>, JSON-LD where it applies (WebSite, NewsArticle, SportsEvent).</p>

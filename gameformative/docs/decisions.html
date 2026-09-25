@@ -93,4 +93,45 @@ real text at every width. Cover graphics stay SVG (decorative, <code>aria-hidden
 <p><strong>D16 — 2026-09-25 — The browser was used only on the local prototype.</strong> By: owner (declined an
 external site in the in-app browser). Why: owner's call. Effect: the benchmark is built from
 measured HTML and CSS, not rendered pages (<a href="research.html"><code>01-research.md</code></a> §0).</p>
+<p><strong>D17 — 2026-09-25 — The launch is articles only.</strong> By: owner ("At the very beginning we will start
+with articles only to have a base with informative great edutainment content in the sport
+industry"). What changed: gameformative is repositioned from a football statistics site to a sport
+analytical and educational infotainment site — news, tactics, techniques, scientific research — and
+the home page, navigation and topic structure are article-led. Replaced: D10's results strip (now the
+topic bar) and the data-led home page. The data pages were live, so they stay (never delete a live
+URL), out of the main navigation, marked "a later phase" and linked from the footer and More.</p>
+<p><strong>D18 — 2026-09-25 — The house rules for every article.</strong> By: owner. 800–3,200 characters, always
+segmented, and two source lists at the end — the sources used and the sources investigated but not
+used, not counted in the length. Enforced twice: <code>build.py</code> stops on a breach (<code>check_rules</code>), and
+<code>check.py</code> measures the rendered page independently (check 12).</p>
+<p><strong>D19 — 2026-09-25 — What a "character" is.</strong> By: the team; to confirm with the owner (ask A8).
+Characters of body text — the standfirst and every paragraph, spaces included. Headline, segment
+headings, charts and the source lists are not counted. Why: it matches the count in the owner's own
+draft (2,364 there; 2,358 by this definition — the difference is paragraph separators), and it is
+what a reader reads.</p>
+<p><strong>D20 — 2026-09-25 — Eleven topics.</strong> By: the owner's list, plus one the owner's own description
+names. International news, Sport science, Sport tech, Fan engagement, Sport analytics, Sponsorship,
+Data intelligence, Athlete development, Training goods, Sport goods — the owner's ten — and Tactics &amp;
+technique, from "news, tactics, techniques, scientific research". Each topic has a page; a topic
+with nothing published says so plainly.</p>
+<p><strong>D21 — 2026-09-25 — Articles move from /analysis/ to /articles/, with redirects.</strong> By: the team. Why:
+the articles are no longer only analysis. The six old URLs (live since the first push) now redirect
+(meta refresh, canonical, noindex) — none is deleted.</p>
+<p><strong>D22 — 2026-09-25 — The owner's draft ships as written.</strong> By: the team, per <code>PROTOTYPING.md</code> §3.1.
+The first article is the owner's draft of 2026-09-25 (<code>docs/reports/gameformative-article-latest.md</code>
+in the management repository, branch <code>cursor/gameformative-client-9b8a</code>), word for word — headline,
+seven segments, both source lists with their notes. Removed: only the internal status block above
+the article (status, version, scores, article id, a line about internal rules), which is not article
+copy. Not added: a standfirst (the draft has none; cards show the opening of the first paragraph).
+Its two used sources were opened and their abstracts support the text (<a href="inputs.html"><code>03-sources.md</code></a> §3).</p>
+<p><strong>D23 — 2026-09-25 — The data articles gain honest "investigated" lists.</strong> By: the team. Each lists
+sources the research of 2026-09-25 actually opened or requested and set aside, with the real reason
+(licence, a 403, proprietary data). None is invented for the look of the list.</p>
+<p><strong>D24 — 2026-09-25 — An unsourced claim became a sourced one.</strong> By: the team. The explainer's "LaLiga
+and Serie A use head-to-head results first" came from general knowledge; under D18 it needed a
+source. Flashscore España (LaLiga) and DAZN Italia (Serie A) were opened and confirm it; DAZN adds
+Serie A's play-off, which the copy now mentions. A third page (365Scores) returned HTTP 500 and is
+listed as investigated.</p>
+<p><strong>D25 — 2026-09-25 — Empty topics say "none published yet".</strong> By: the team. An earlier wording, "first
+in preparation", implied work that does not exist.</p>
 <footer>gameformative.com · project documentation, 2026</footer></div></body></html>

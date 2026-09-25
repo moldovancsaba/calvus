@@ -198,6 +198,21 @@ a consent pop-up or an advert added by script after page load is therefore not i
 | S33 | The Trust Project, Trust Indicators | Opened | Eight indicators, including the type of work (news, analysis, opinion) and actionable feedback. Our labels and the How we count page. |
 | S34 | Nieman Lab on the Guardian live-blog format; live-blog "difficult to understand" statistic | **Blocked** (403) / snippet only | Not used. |
 
+## 9. Article sources checked (round 2, 2026-09-25)
+
+The sources behind the articles. Each article lists its own; this is the record of the check.
+
+| # | Source | Status | What we learned |
+|---|---|---|---|
+| AR1 | Sport Mont 2026, "Wearable-Monitored External Workload (GPS/GNSS/IMU) and Lower-Limb Muscle Injuries in Football" (doi 10.26773/smj.260219) | Opened (abstract) | Twelve studies, four pooled. Odds-ratio pooling gave no significant link (OR 1.33, 0.85–2.07); relative-risk pooling gave more than double the risk (RR 2.33, 1.65–3.30). Speed zones, sprint metrics and ACWR formulas "varied substantially". The seed of the GPS article. |
+| AR2 | Frontiers in Public Health, 13 Aug 2026, "Acute:chronic workload ratio and load management for team sports: a multilevel meta-analysis" | Opened (abstract) | 16 studies, 797 athletes: a small-to-moderate link (g = 0.35); the ratio is "not supported … as a stand-alone causal or predictive model". |
+| AR3 | PMC11366842, machine learning and training load in soccer (Sensors) | Opened (abstract) | 25 professional players with a first non-contact muscle injury; ML on external and internal load. Investigated, not used by the article. |
+| AR4 | Sensors (MDPI), doi 10.3390/s26134228 | **Blocked** (403) | Not read; listed by the draft as investigated, not used. |
+| AR5 | Discover Artificial Intelligence (Springer), doi 10.1007/s44163-026-01021-9 | **Blocked** (JavaScript challenge) | Not read; listed by the draft as investigated, not used. |
+| AR6 | Flashscore España, LaLiga tie-break criteria | Opened | For two teams level on points, the goal difference in the matches between them comes first; three or more teams use a mini-table of their matches. |
+| AR7 | DAZN Italia, Serie A "chi vince a pari punti" | Opened | Head-to-head points first, then head-to-head goal difference, overall goal difference, goals, a draw; a play-off (spareggio) for the title. |
+| AR8 | 365Scores, LaLiga tie-break criteria | **Failed** (HTTP 500) | Not read; listed as investigated. |
+
 ## What we did not research, and why
 
 - **Paid panels** (Similarweb Pro, Comscore, Nielsen full reports, Statista) are behind logins or

@@ -16,7 +16,22 @@ what the prototype is, what in it is real, and where it stands.*
 Owner, 2026-09-25. Later the same day: "In our documentation you need to list all sources you
 researched with a short summary what we learned" — answered by `01a-source-register.md`.
 
-## Who and what
+## Round 2 — articles first (owner, 2026-09-25, later the same day)
+
+> "At the very beginning we will start with articles only to have a base with informative great
+> edutainment content in the sport industry … Gameformative will be a sport analytical and
+> educational infotainment media site to support readers with news, tactics, techniques, scientific
+> research about sport and related subjects." Topics: international news, sport science news, sport
+> tech news, fan engagement, sport analytics, sponsorship, data intelligence in sport, athletes
+> development, training goods, sport goods, "and similar topics". Articles "not shorter than 800
+> characters and not longer than 3200. Always segmented", and at the end — not counted — "all
+> source … not only we used but next to it the articles and source we investigated but not used".
+
+**What that changed:** the product is now an article site first; the statistics described below are
+a later phase, kept live and linked from the footer (D17). The first article is the owner's own
+draft (D22). The rules are enforced by the build and the gate (D18, `07-gate.md` check 12).
+
+## Who and what (round 1 — the statistics site, now a later phase)
 
 - **The product:** gameformative.com, a new football **analytics + news + statistics** site in
   English: results and tables, analysis and explainers built on the numbers, season and tournament

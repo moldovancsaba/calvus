@@ -45,3 +45,39 @@ league filter, Load more, theme toggle both ways, More sheet (focus in, Escape, 
 **Gate.** `python3 gameformative/check.py`: CLEAN — every link and anchor, docs cross-links, one
 `h1`/title/lang per page, banner, one asset version, data and pages reproduce byte for byte, 48
 contrast pairs pass AA in both themes, inert controls marked.
+
+## Round 2 — 2026-09-25 — articles first
+
+**The ask.** The owner set the launch to articles only (D17), gave the positioning and the topic
+list, set the house rules — 800–3,200 characters, always segmented, sources used and investigated at
+the end — and sent the first article draft.
+
+**Built.** `content.py` gained `TOPICS`, `RULES` and a new article model (topic, kind, standfirst,
+headed segments, `sources_used`, `sources_investigated`); `build.py` gained the topic bar (replacing
+the results strip), an articles-first home, `articles/` (index + six articles), `topics/` (index +
+eleven pages), the rewritten How we work page, redirects from the six old `/analysis/` URLs, and a
+"later phase" notice on the data pages, which left the main navigation. `check.py` gained check 12.
+
+**Checked before building.** The draft's five links were requested and the two used sources read —
+both support the text (`03-sources.md` §3). One claim in our own explainer (tie-breakers) had no
+source; two were found and opened, one failed with HTTP 500 (D24). All six articles were measured
+against the rules before any page was built:
+
+| Article | Characters | Segments | Used | Investigated |
+|---|---|---|---|---|
+| Your GPS says “injury risk.” (owner's draft) | 2,358 | 7 | 2 | 3 |
+| Five from five (Premier League) | 1,032 | 3 | 2 | 3 |
+| Europe’s big five after a month | 844 | 3 | 5 | 3 |
+| How Spain won the 2026 World Cup | 891 | 3 | 2 | 3 |
+| One goal in four after the 75th minute | 869 | 3 | 2 | 3 |
+| How to read a table in September | 1,478 | 5 | 3 | 2 |
+
+**The gate bites.** A deliberately broken page (three paragraphs removed, one source list
+renamed) failed with "352 characters, outside 800–3200" and "no linked source in the
+'investigated' list"; rebuilt, clean.
+
+**Measured.** 32 site pages at 375 and 1440 px (redirect stubs checked separately — both tested
+land on the new URL): 0 px overflow, one `h1`, 0 console errors. At 375 px two small targets were
+found and fixed — a short contents link ("Form", 40 × 44) and the topic-page breadcrumb (73 × 26).
+Load more reveals the sixth article and hides itself. Empty topics first read "first in
+preparation", which implied work that does not exist; now "none published yet" (D25).

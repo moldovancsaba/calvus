@@ -38,7 +38,14 @@ so a developer can lift `tokens.css` as the design-token file.*
 | `.gf-bracket`, `.gf-tie`, `.gf-groups` | Bracket, Tie, GroupTables | knock-out tree, groups |
 | `.gf-matchhead`, `.gf-timeline`, `.gf-lineups` | MatchHeader, EventTimeline (a `role="log"` live island in M3), Lineups | match |
 | `.gf-label` (+ `--explainer`, `--automated`, `--data`) | ContentLabel | article kind |
-| `.gf-transparency`, `.gf-keyfacts` | HowThisWasMade, KeyNumbers | article meta |
 | `.gf-inert` | UnavailablePanel (disappears when the data exists) | — |
 | `.gf-band`, `.gf-signup` | Band, NewsletterSignup | — |
+| `.gf-topicbar` | TopicBar | topics config |
+| `.gf-cardmeta`, `.gf-topiclink` | ArticleMeta (topic · kind) | article |
+| `.gf-latest` | LatestList | recent articles |
+| `.gf-topic-grid`, `.gf-topic-tile` | TopicGrid, TopicTile | topic + article count |
+| `.gf-promise` | SourcingPromise | the house rules |
+| `.gf-toc-box`, `.gf-seg-block` | ArticleContents, ArticleSegment | segments |
+| `.gf-sources`, `.gf-source-list[data-sources]` | SourceLists (used / investigated) | sources |
+| `.gf-later` | LaterPhaseNotice | — |
 | `.proto-banner` | removed at M1 | — |

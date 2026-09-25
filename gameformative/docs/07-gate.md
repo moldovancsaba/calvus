@@ -17,13 +17,18 @@ read the exit code, not the last line.*
    memory — running every data assert (goals for = goals against, points reconcile, the two files
    of a competition agree match by match, goal lists match scores, every team in the name table,
    the bracket resolves) — and fails if the committed file differs by a byte.
-9. **The pages reproduce**: `build.py --check` regenerates all 19 pages in memory (which also runs
+9. **The pages reproduce**: `build.py --check` regenerates every generated page in memory (39 since round 2, the redirects included) (which also runs
    every copy premise in `content.py`) and fails if a committed page differs — so a hand edit to a
    generated page cannot survive.
 10. **Contrast**: 24 text/background pairs from `tokens.css`, in the light and the dark theme (48
     checks), against WCAG 2.2 AA — 4.5:1 for text, 3:1 for the blue and orange as chart marks.
 11. **Inert controls are marked**: every `is-unavailable` element has `aria-disabled="true"` and a
     `title` that says why.
+12. **The owner's article rules, measured on the page** (added 2026-09-25, round 2): every
+    `articles/*.html` has 800–3,200 characters of body text (the text of every `data-count`
+    paragraph — standfirst and paragraphs, spaces included), at least three headed segments, and
+    both source lists — used, and investigated but not used — each with at least one `https` link.
+    This is independent of `build.py`, which asserts the same rules before it writes a page.
 
 The root `check.py` adds: no studio name on any project page, no tooling in footers, eyebrows,
 titles or the documentation brand, no internal documentation link in the presentation, and a
@@ -52,3 +57,9 @@ The phone width measured is 375 px, the owner's stated reference for this projec
 - **No prototype banner on documentation pages** — they are not the site.
 - **Desktop density below 44 px** is allowed by the method; the only such controls are the league
   tabs' pill height at desktop widths (40 px), which rise to 44 px on phones.
+
+## Round 2 measured pass (2026-09-25)
+
+32 site pages (home, latest, six articles, topics index and eleven topic pages, How we work, style
+guide, and the ten data pages) at 375 and 1440 px: 0 px overflow, one `h1` each, no tap target under
+44 px at 375, 0 console errors; the old `/analysis/` URLs redirect to `/articles/`.

@@ -101,6 +101,30 @@ on How we count; if the two ever disagree, this table is the definition and the 
 <td>Data to</td>
 <td>the latest date with a recorded result across the leagues shown</td>
 </tr>
+<tr>
+<td>Article</td>
+<td>a piece in one topic, of one kind (Explainer, Analysis, News, Opinion), with a headline, an optional standfirst, headed segments and two source lists</td>
+</tr>
+<tr>
+<td>Body characters</td>
+<td>the characters of the standfirst and every paragraph, spaces included; headline, segment headings, charts and source lists excluded (D19)</td>
+</tr>
+<tr>
+<td>Segment</td>
+<td>a part of an article under its own heading; every article has at least three</td>
+</tr>
+<tr>
+<td>Sources used</td>
+<td>the sources the article's text relies on, each with a link, publisher and a line on what it contributed</td>
+</tr>
+<tr>
+<td>Sources investigated but not used</td>
+<td>sources opened or requested for the article and set aside, each with the reason</td>
+</tr>
+<tr>
+<td>Topic</td>
+<td>one of the eleven sections in <code>content.py</code> <code>TOPICS</code></td>
+</tr>
 </tbody>
 </table></div>
 <h2 id="entities">Entities</h2>
@@ -243,6 +267,30 @@ on How we count; if the two ever disagree, this table is the definition and the 
 <td>Automated text is labelled and links to the policy</td>
 <td><code>build.py</code> <code>roundup()</code></td>
 <td>the rendered look</td>
+</tr>
+<tr>
+<td>R14</td>
+<td>Every article has 800–3,200 body characters</td>
+<td><code>content.py</code> <code>RULES</code>, <code>build.py</code> <code>check_rules()</code></td>
+<td><code>check.py</code> §12</td>
+</tr>
+<tr>
+<td>R15</td>
+<td>Every article has at least three segments, each headed</td>
+<td>same</td>
+<td><code>check.py</code> §12</td>
+</tr>
+<tr>
+<td>R16</td>
+<td>Every article lists sources used and sources investigated but not used, each linked, with a note</td>
+<td>same</td>
+<td><code>check.py</code> §12</td>
+</tr>
+<tr>
+<td>R17</td>
+<td>A source is linked only if it was requested on the day; one we could not read is marked so in the docs</td>
+<td>editorial</td>
+<td><a href="inputs.html"><code>03-sources.md</code></a> §3</td>
 </tr>
 </tbody>
 </table></div>
