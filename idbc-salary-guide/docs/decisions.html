@@ -353,6 +353,13 @@ decision is added here first. "Owner" is the studio side; "client" is IDBC.</em>
 <td>owner</td>
 <td>the live <code>IDBC_bertabla</code> sheet</td>
 </tr>
+<tr>
+<td>D44</td>
+<td>2026-09-25</td>
+<td><strong>In the salary table, positions alternate a lighter and a slightly darker aqua; area-name rows bold.</strong> The owner asked for the Bérek rows to change shade between positions (e.g. Gyártás, Termelés, Mérnökség — Project Manager, then — Engineering Team Leader (Junior)), within the section's colour. Replaces D43's per-area alternation in rows 470–3938. Done with conditional formatting, not hand-painted blocks, so the shading follows the rows when positions are added, removed or moved: base fill <code>#EEF9F9</code> (lighter) on 470–3938; rule 1 <code>=REGEXMATCH($A470;"-NAME$")</code> → <code>#C2E9E9</code>, bold (the 13 area-name rows); rule 2 <code>=ISEVEN(COUNTIF($A$470:$A470;"*-POZICIO"))</code> → <code>#D3EEEE</code> (every second position; a position is the 8 rows from its <code>-POZICIO</code> row). Sheets shows the formulas with Hungarian function names (<code>PAROSE</code>, <code>DARABTELI</code>). Checked: both rules stored on <code>A470:F3938</code>, 432 positions of 8 rows each, rendered shading matches the rule at the owner's example (rows 3129–3136 darker, 3137– lighter) and at an area boundary (3281 bold); 0 values changed, hidden rows unchanged, <code>idbcsync.py --check</code> 0 files changed. A new area or position keeps the pattern as long as its ids follow <code>SAL-&lt;area&gt;-NAME</code> and <code>SAL-&lt;area&gt;-nnn-POZICIO</code></td>
+<td>owner</td>
+<td>the live <code>IDBC_bertabla</code> sheet</td>
+</tr>
 </tbody>
 </table></div>
 <h2>Standing rules that came out of these</h2>

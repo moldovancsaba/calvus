@@ -1225,3 +1225,16 @@ before. Section ranges: 2–66, 67–110, 111–386, 387–406, 407–440, 441�
 470, 1767, 1864, 2201, 2322, 2523, 2580, 2605, 2630, 2943, 3064, 3281, 3818), 3939–3976,
 3977–4007, 4008–4064, 4065–4185, 4186–4253, 4254–4277, 4278–4290, 4291–4412, 4413–17665. Fresh
 export: fills exactly as in D43, 0 values changed, `idbcsync.py --check` 0 files changed.
+
+## Salary positions shaded in IDBCSYNC (2026-09-25, D44)
+
+The owner asked for the Bérek rows to alternate a lighter and a slightly darker shade of the
+section's aqua between positions. The salary table is 13 area-name rows and 432 positions of
+exactly 8 rows each, every one starting with its `-POZICIO` row (read from the export), so the
+shading is two conditional-formatting rules on `A470:F3938` rather than 216 painted blocks:
+area-name rows `#C2E9E9` bold, every second position `#D3EEEE`, the rest the static base
+`#EEF9F9`. This replaces D43's alternation by area. Fresh export: both rules present with
+those formulas and colours, base fill uniform, 0 values changed, hidden rows unchanged,
+`idbcsync.py --check` 0 files changed; on screen, the owner's example (Project Manager →
+Engineering Team Leader (Junior), rows 3136/3137) and an area boundary (row 3281) render as
+the rules say.
