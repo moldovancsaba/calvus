@@ -1257,6 +1257,8 @@ Person count, C-10) now needs its row shown before it can be typed in.
 The owner asked for the Expert Pool data in bold: rows 4066–4185, all columns, 600 cells, set
 bold. The owner had meanwhile hidden rows 2–469, shown column A and made the rows compact by
 hand; the block below the salary table was shown to reach the Expert Pool rows and, at the
-owner's word, left shown. Fresh export: 600/600 bold, no other bold changed, 0 values changed;
-hidden now only 2–469; `idbcsync.py --check` 0 files changed. The earlier hidden-row counts
+owner's word, left shown. That showed the whole hidden run, including the technical rows,
+survey figures and blank rows (4291–18024), which the owner had not meant to show; those
+were hidden again. Fresh export: 600/600 bold, no other bold changed, 0 values changed;
+hidden 2–469 and 4291–18024, visible 470–4290; `idbcsync.py --check` 0 files changed. The earlier hidden-row counts
 (D37, D42, D45) are history; visibility is the owner's to set and never affects the sync.

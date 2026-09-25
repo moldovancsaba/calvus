@@ -239,6 +239,6 @@ registration page and the blank rows at the bottom; 3,765 rows stay visible. Val
 unchanged. The Qualified Person count the client was asked for (C-10) is now in a hidden row.
 
 **2026-09-25 — Expert Pool data bold; row visibility by hand (D46).** The Expert Pool data rows
-(4066–4185) are bold. The owner now shows and hides rows by hand (currently rows 2–469 hidden,
-everything from the salary table down visible, column A shown); the sync ignores visibility.
+(4066–4185) are bold. The owner now shows and hides rows by hand (currently rows 2–469 and 4291–18024 hidden,
+470–4290 visible, column A shown); the sync ignores visibility.
 
