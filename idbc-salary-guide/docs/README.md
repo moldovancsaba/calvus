@@ -12,7 +12,7 @@ every project.
 | 01 research | `01-research.md` | What was read (the client's specs, mockups, data, copy), the one external measurement, what was not researched and why |
 | 02 audit | `02-audit.md` | idbc.hu measured; the spec vs. the data; the client's data as it stands; defects found in the material |
 | 03 sources and assets | `../data/SOURCES-AND-GAPS.md` | Every source file and what it contributed, every gap, every change round with measurements — the running record since July |
-| 04 decisions | `04-decisions.md` | D1–D45, dated, with who and why |
+| 04 decisions | `04-decisions.md` | D1–D46, dated, with who and why |
 | 05 design | `05-design.md` | Where the look comes from (the client's mockups), tokens, layout |
 | 06 build log | `../data/SOURCES-AND-GAPS.md` | the dated change notes are the build log |
 | 07 gate | `07-gate.md` | The one-command gate, the measured pass, deliberate deviations |
@@ -237,4 +237,8 @@ by two conditional-formatting rules that follow the ids, so the pattern survives
 request: every row mentioning "csempe" (area names, SAP catalogue, Expert Pool tiles), the
 registration page and the blank rows at the bottom; 3,765 rows stay visible. Values and sync
 unchanged. The Qualified Person count the client was asked for (C-10) is now in a hidden row.
+
+**2026-09-25 — Expert Pool data bold; row visibility by hand (D46).** The Expert Pool data rows
+(4066–4185) are bold. The owner now shows and hides rows by hand (currently rows 2–469 hidden,
+everything from the salary table down visible, column A shown); the sync ignores visibility.
 

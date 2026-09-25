@@ -1251,3 +1251,12 @@ optional salary fields, not empty rows. Fresh export: 551 newly hidden rows, exa
 intended set, none un-hidden, 0 values changed, 3,765 visible; `idbcsync.py --check` 0 files
 changed. Because the Expert Pool tiles are hidden, `EXPERT-27-DARAB` (the missing Qualified
 Person count, C-10) now needs its row shown before it can be typed in.
+
+## Expert Pool data bold; row visibility managed by hand (2026-09-25, D46)
+
+The owner asked for the Expert Pool data in bold: rows 4066–4185, all columns, 600 cells, set
+bold. The owner had meanwhile hidden rows 2–469, shown column A and made the rows compact by
+hand; the block below the salary table was shown to reach the Expert Pool rows and, at the
+owner's word, left shown. Fresh export: 600/600 bold, no other bold changed, 0 values changed;
+hidden now only 2–469; `idbcsync.py --check` 0 files changed. The earlier hidden-row counts
+(D37, D42, D45) are history; visibility is the owner's to set and never affects the sync.
