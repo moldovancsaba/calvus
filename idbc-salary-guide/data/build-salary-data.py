@@ -16,41 +16,61 @@ import openpyxl
 BERTABLA, TALENT = sys.argv[1], (sys.argv[2] if len(sys.argv) > 2 else None)
 OUT = __file__.rsplit("/", 1)[0] + "/guide-data.json"
 
-# Area codes in the sheet -> the names the site uses. Where the trends pages already name the
-# area (areas.json), that name is reused so one area reads the same everywhere; the sheet splits
-# Sales and Marketing, which the trends survey pools — kept split here, it is the client's table.
-# Order and naming is the Bérek page's own taxonomy (client feedback, 2026-09-22) — deliberately
-# different wording from Piaci trendek's separate area list in places (e.g. "Pénzügy és számvitel"
-# vs. "Pénzügy, Számvitel", "Office Support" vs. its own Office Support wording); do not reconcile
-# the two, they are verified as intentionally separate.
-AREA_NAME = {
-    "IT": "IT",
+# The Bérek page's own area taxonomy and display order (client feedback, 2026-09-22) —
+# deliberately different wording from Piaci trendek's separate area list in places (e.g.
+# "Pénzügy és számvitel" vs. "Pénzügy, Számvitel", "Office Support" vs. its own Office Support
+# wording); do not reconcile the two, they are verified as intentionally separate.
+CANONICAL_AREAS = [
+    "IT",
     # "IT Contracting" is a verified real data gap, not a bug: the bértábla sheet has no rows for
     # it today (only the separate market-trends survey data carries it as a segment). Kept here so
-    # the code is ready for it, but with no sheet code mapped to it, it will simply never appear in
-    # the rendered <select> (zero matching rows) until the client supplies IT Contracting salary
+    # the code is ready for it; with no sheet row mapped to it, it will simply never appear in the
+    # rendered <select> (zero matching rows) until the client supplies IT Contracting salary
     # figures, or confirms the segment is already folded into "IT".
-    "IT_CONTRACTING": "IT Contracting",
-    "SAP": "SAP",
-    "PENZUGY": "Pénzügy és számvitel",
-    "Sales": "Sales",
-    "Marketing": "Marketing",
-    "HR": "HR",
-    "Retail": "Retail",
-    "Office Support": "Office Support",
+    "IT Contracting",
+    "SAP", "Pénzügy és számvitel", "Sales", "Marketing", "HR", "Retail", "Office Support",
+    "Business Service Center (BSC)", "Logisztika, Szállítás", "Gyártás, Termelés, Mérnökség",
+    "Építőipar, Ingatlan", "Pharma, Life Sciences",
+]
+AREA_ORDER = CANONICAL_AREAS  # display order of the Bérek filter
+
+def _norm(s):
+    return " ".join(str(s).split()).casefold()
+
+# The sheet's own `terulet` column held short internal codes (BSC, PENZUGY, GYARTAS, ...) through
+# 2026-09-24. On 2026-09-25 the client's sheet was found to hold the site's own full display text
+# instead — apparently retyped by hand to match what shipped, not a deliberate format change asked
+# for — which broke this converter outright (it asserted on six "unmapped" areas). Every raw value
+# a sync might ever see is normalized here rather than assumed to be one format or the other: a
+# case/whitespace-insensitive match against the canonical text needs no entry below at all; the
+# entries below are for the old short codes and for small spelling drift caught in the wild.
+AREA_ALIASES = {
     "BSC": "Business Service Center (BSC)",
+    "PENZUGY": "Pénzügy és számvitel",
     "LOGISZTIKA": "Logisztika, Szállítás",
     "GYARTAS": "Gyártás, Termelés, Mérnökség",
     "CP": "Építőipar, Ingatlan",
     "PHARMA": "Pharma, Life Sciences",
+    "IT_CONTRACTING": "IT Contracting",
+    "Pharma, Life Science": "Pharma, Life Sciences",  # sheet had the singular, 2026-09-25
+    "Pénzügy és Számvitel": "Pénzügy és számvitel",  # sheet had this casing, 2026-09-25
 }
-AREA_ORDER = list(AREA_NAME)  # display order of the Bérek filter
+AREA_LOOKUP = {_norm(a): a for a in CANONICAL_AREAS}
+for raw, canon in AREA_ALIASES.items():
+    AREA_LOOKUP[_norm(raw)] = canon
 
-# Talent Insight area label -> sheet area code.
+def area_name(raw):
+    """The sheet's raw `terulet` value -> the canonical display name, or None if genuinely
+    unrecognized (a real new area needs a CANONICAL_AREAS/AREA_ALIASES entry, not a guess)."""
+    return AREA_LOOKUP.get(_norm(raw))
+
+# Talent Insight area label -> the canonical area name (see CANONICAL_AREAS above).
 TI_AREA = {
-    "BSC": "BSC", "Finance": "PENZUGY", "Sales": "Sales", "Marketing": "Marketing", "HR": "HR",
-    "Admin / Ügyfélszolgálat": "Office Support", "Retail": "Retail", "Gyártás": "GYARTAS",
-    "Logisztika": "LOGISZTIKA", "Építőipar": "CP", "Pharma": "PHARMA", "IT": "IT", "SAP": "SAP",
+    "BSC": "Business Service Center (BSC)", "Finance": "Pénzügy és számvitel", "Sales": "Sales",
+    "Marketing": "Marketing", "HR": "HR", "Admin / Ügyfélszolgálat": "Office Support",
+    "Retail": "Retail", "Gyártás": "Gyártás, Termelés, Mérnökség",
+    "Logisztika": "Logisztika, Szállítás", "Építőipar": "Építőipar, Ingatlan",
+    "Pharma": "Pharma, Life Sciences", "IT": "IT", "SAP": "SAP",
 }
 # Talent Insight position label -> sheet TOP3 position, where the two spellings differ.
 # Reviewed pair by pair on 2026-09-18; identical labels need no entry.
@@ -89,16 +109,16 @@ hi = next(i for i, r in enumerate(rows) if r[0] == "rekord_azonosito")
 hdr = [h for h in rows[hi] if h]
 raw = [dict(zip(hdr, r)) for r in rows[hi + 1:] if r[1] is not None and r[3] is not None]
 IN_SHEET = "linkedin_talent_insight" in hdr
-unknown = sorted({r["terulet"] for r in raw} - set(AREA_NAME))
-assert not unknown, f"unmapped area codes in the sheet: {unknown}"
+unknown = sorted({r["terulet"] for r in raw if area_name(r["terulet"]) is None})
+assert not unknown, f"unmapped area codes/names in the sheet: {unknown}"
 
 web = []
-for r in sorted(raw, key=lambda r: AREA_ORDER.index(r["terulet"])):
+for r in sorted(raw, key=lambda r: AREA_ORDER.index(area_name(r["terulet"]))):
     szint = (r["tapasztalati_szint"] or "").strip() or None
     web.append({
         "id": slug(f"{r['terulet']}-{r['pozicio']}-{szint or 'TOP3'}"),
-        "kod": r["terulet"],
-        "terulet": AREA_NAME[r["terulet"]],
+        "kod": r["terulet"],  # the sheet's raw value, whatever format it was in — provenance only
+        "terulet": area_name(r["terulet"]),
         "szint": szint,
         "pozicio": str(r["pozicio"]).strip(),
         "top3": bool(r["top3"]),
@@ -111,8 +131,15 @@ for r in sorted(raw, key=lambda r: AREA_ORDER.index(r["terulet"])):
         web[-1]["linkedin"] = num(r["linkedin_talent_insight"])
 
 pool = []
+pool_skipped = []
 for r in wb["EXPERT_POOL_IMPORT"].iter_rows(min_row=2, values_only=True):
     if not r[0]: continue
+    # A row missing its count (darab) is a real, still-open data gap (the client is still
+    # sourcing that figure — see 19-implementation-prerequisites.md C-3) not a sync failure:
+    # skip it rather than crash the whole import or invent a number for it.
+    if r[2] is None:
+        pool_skipped.append((r[0], r[1]))
+        continue
     pool.append({"iparag": r[0], "pozicio": r[1], "darab": int(r[2])})
     if IN_SHEET and len(r) > 3 and num(r[3]) is not None: pool[-1]["linkedin"] = num(r[3])
 readme = "\n".join(str(r[0]) for r in wb["UTMUTATO"].iter_rows(values_only=True) if r[0])
@@ -124,7 +151,7 @@ if IN_SHEET:
     ti_top3 = []
     for r in raw:
         if not r["top3"]: continue
-        ti_area = next(k for k, v in TI_AREA.items() if v == r["terulet"])
+        ti_area = next(k for k, v in TI_AREA.items() if v == area_name(r["terulet"]))
         ti_top3.append({"terulet": ti_area, "pozicio": (r.get("talent_insight_pozicio") or str(r["pozicio"])).strip(),
                         "linkedin": num(r.get("linkedin_talent_insight"))})
     matched = sum("linkedin" in w for w in top3_by_key.values())
@@ -154,3 +181,6 @@ print(f"webBertabla: {len(web)} rows, {len(areas)} areas, {sum(w['top3'] for w i
       f"{matched} with a Talent Insight count, {sum(1 for w in web if w['top3'] and 'linkedin' not in w)} TOP3 rows without one")
 for a, (n, t) in areas.items(): print(f"  {a}: {n} rows, TOP3 {t}")
 print(f"expertPool: {len(pool)} rows, {sum('linkedin' in p for p in pool)} with a Talent Insight count")
+if pool_skipped:
+    print(f"expertPool: {len(pool_skipped)} row(s) skipped, no count (darab) in the sheet yet:")
+    for iparag, pozicio in pool_skipped: print(f"  {iparag} / {pozicio}")

@@ -78,7 +78,7 @@ every project.</p>
 <tr>
 <td>04 decisions</td>
 <td><a href="decisions.html"><code>04-decisions.md</code></a></td>
-<td>D1–D34, dated, with who and why</td>
+<td>D1–D35, dated, with who and why</td>
 </tr>
 <tr>
 <td>05 design</td>
@@ -226,6 +226,23 @@ answered, not changed: the client asked whether BSC's "Sales Project Manager" sh
 bértábla sheet's own <code>szint</code> column, read verbatim (D34). Gate clean; verified with real
 SVG coordinates, not just a visual glance, on Bérek (BSC and IT), SAP and Expert Pool at
 390 and 1440, no console errors.</p>
+<p><strong>2026-09-25 — live sync built, a real converter break found first (D35).</strong> The client
+asked for sync (or at least an on-demand option) to the <code>IDBC_bertabla</code> sheet. Read the
+actual live sheet before building anything — it hard-failed the converter: the <code>terulet</code>
+column had been hand-retyped to the site's full display names instead of the old short
+codes, plus two spelling variants. Per the owner's direct instruction, the sheet was
+corrected to the prototype's canonical naming (Find &amp; Replace, 42 + 15 cells, scoped and
+case-exact) rather than the prototype adapting to the sheet; the converter was separately
+hardened to tolerate either naming style so a future hand-edit can't silently break it
+again. A second, unrelated break — an Expert Pool row with no headcount — now skips
+gracefully instead of crashing the whole import. Re-running the corrected converter
+surfaced a real, substantial update already sitting in the sheet: Expert Pool's entire
+category system replaced (15 → 29 rows, a new IT/Non-IT taxonomy) and three SAP/Építőipar
+position names reworded — applied as the client's actual current data. A new tab was added
+directly to the live sheet requesting the two genuine remaining gaps (IT Contracting salary
+rows, the missing Qualified Person headcount). <code>.github/workflows/idbc-sync-bertabla.yml</code>
+(manual trigger only, gated, auto-commits on a real diff) is the ADR-2 upgrade path,
+confirmed working end to end against the live sheet before being relied on.</p>
 <footer>IDBC Talent Market &amp; Salary Guide 2026 · documentation</footer>
 </div>
 </body>

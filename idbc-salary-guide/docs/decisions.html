@@ -289,6 +289,13 @@ decision is added here first. "Owner" is the studio side; "client" is IDBC.</em>
 <td>owner, tracing the data path before answering</td>
 <td>none — data-only question</td>
 </tr>
+<tr>
+<td>D35</td>
+<td>2026-09-25</td>
+<td><strong>Live sync built (ADR-2's upgrade path) — and a real break in the converter found and fixed before it could ship.</strong> The client asked for live (or on-demand) sync to the <code>IDBC_bertabla</code> sheet. Before building the sync, the sheet was actually read (its public export, since the sheet is shared "anyone with the link can view/edit") — not assumed compatible — and the converter hard-failed against it: the sheet's own <code>terulet</code> column had been retyped by hand at some point to hold the site's full display names ("Business Service Center (BSC)") instead of the old short codes (<code>BSC</code>) <code>build-salary-data.py</code> expected, with two further spelling variants ("Pénzügy és Számvitel", "Pharma, Life Science" singular). Per the owner's explicit instruction, <strong>the sheet was corrected to the prototype's canonical naming</strong> (Find &amp; Replace, scoped to <code>WEB_BERTABLA_IMPORT</code>, match case + whole-cell: 42 + 15 cells), not the other way around; the converter was separately made resilient to either naming style (<code>AREA_ALIASES</code>/<code>area_name()</code>, case/whitespace-insensitive) so a future hand-edit doesn't silently break the pipeline again. A second break, unrelated to naming: <code>EXPERT_POOL_IMPORT</code> now carries a <code>Non-IT / Qualified Person</code> row with no headcount — the converter previously crashed on this; it now skips an incomplete row and prints it rather than inventing a number or blocking every other row. Re-running the corrected converter surfaced a real, substantial content update already sitting in the sheet: Expert Pool's entire category system replaced (15 rows, old Finance/Pharma-specific roles → 29 rows, a new IT/Non-IT taxonomy) and 3 SAP/Építőipar position names reworded — applied to <code>guide-data.json</code> as the client's real current data, not held back. A new tab, "HIÁNYZÓ ADATOK - kérés", added directly to the live sheet requesting the two genuine remaining gaps in the client's own words: IT Contracting salary rows, and the missing Qualified Person headcount</td>
+<td>owner, live-verified against the actual sheet at every step</td>
+<td><code>data/build-salary-data.py</code>, <code>data/guide-data.json</code>, <code>.github/workflows/idbc-sync-bertabla.yml</code>, the live <code>IDBC_bertabla</code> sheet</td>
+</tr>
 </tbody>
 </table></div>
 <h2>Standing rules that came out of these</h2>

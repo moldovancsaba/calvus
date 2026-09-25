@@ -12,7 +12,7 @@ every project.
 | 01 research | `01-research.md` | What was read (the client's specs, mockups, data, copy), the one external measurement, what was not researched and why |
 | 02 audit | `02-audit.md` | idbc.hu measured; the spec vs. the data; the client's data as it stands; defects found in the material |
 | 03 sources and assets | `../data/SOURCES-AND-GAPS.md` | Every source file and what it contributed, every gap, every change round with measurements — the running record since July |
-| 04 decisions | `04-decisions.md` | D1–D34, dated, with who and why |
+| 04 decisions | `04-decisions.md` | D1–D35, dated, with who and why |
 | 05 design | `05-design.md` | Where the look comes from (the client's mockups), tokens, layout |
 | 06 build log | `../data/SOURCES-AND-GAPS.md` | the dated change notes are the build log |
 | 07 gate | `07-gate.md` | The one-command gate, the measured pass, deliberate deviations |
@@ -131,3 +131,21 @@ answered, not changed: the client asked whether BSC's "Sales Project Manager" sh
 bértábla sheet's own `szint` column, read verbatim (D34). Gate clean; verified with real
 SVG coordinates, not just a visual glance, on Bérek (BSC and IT), SAP and Expert Pool at
 390 and 1440, no console errors.
+
+**2026-09-25 — live sync built, a real converter break found first (D35).** The client
+asked for sync (or at least an on-demand option) to the `IDBC_bertabla` sheet. Read the
+actual live sheet before building anything — it hard-failed the converter: the `terulet`
+column had been hand-retyped to the site's full display names instead of the old short
+codes, plus two spelling variants. Per the owner's direct instruction, the sheet was
+corrected to the prototype's canonical naming (Find & Replace, 42 + 15 cells, scoped and
+case-exact) rather than the prototype adapting to the sheet; the converter was separately
+hardened to tolerate either naming style so a future hand-edit can't silently break it
+again. A second, unrelated break — an Expert Pool row with no headcount — now skips
+gracefully instead of crashing the whole import. Re-running the corrected converter
+surfaced a real, substantial update already sitting in the sheet: Expert Pool's entire
+category system replaced (15 → 29 rows, a new IT/Non-IT taxonomy) and three SAP/Építőipar
+position names reworded — applied as the client's actual current data. A new tab was added
+directly to the live sheet requesting the two genuine remaining gaps (IT Contracting salary
+rows, the missing Qualified Person headcount). `.github/workflows/idbc-sync-bertabla.yml`
+(manual trigger only, gated, auto-commits on a real diff) is the ADR-2 upgrade path,
+confirmed working end to end against the live sheet before being relied on.

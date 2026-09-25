@@ -77,7 +77,7 @@ case study).
 
 ## 5. Decision register
 
-`04-decisions.md` (D1–D34). Technical decisions in this package are ADRs in
+`04-decisions.md` (D1–D35). Technical decisions in this package are ADRs in
 `11-architecture.md` §11, PROPOSED until flipped; the flip is the next D-number.
 
 ## 6. Rules register

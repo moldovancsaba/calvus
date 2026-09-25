@@ -12,12 +12,14 @@ production build, not before the next review.*
 |---|---|---|---|
 | C-1 (ask #1) | The home page's structure demo (copy already received: intro signed Dohos Ágnes and Illés József, methodology, six chamber logos, podcast playlist, sample sizes) | a new home page | the trends page is the home |
 | C-2 (ask #2) | The Bérek and Expert Pool structure demos | layout adjustments, if any | the current pages |
-| C-3 (asks #3–4) | Four LinkedIn Talent Insight counts (two Építőipar, two Expert Community) | TOP3 pills on Bérek; tile market lines | the pill / line is absent, by rule (no figure invented) |
+| C-3 (ask #3) | Two Építőipar Talent Insight counts | TOP3 pills on Bérek | the pill is absent, by rule (no figure invented) |
+| ~~C-3 (ask #4)~~ | ~~Two Expert Community Talent Insight counts~~ — **superseded 2026-09-25**: the sheet's Expert Pool tab was found completely restructured (15 → 29 rows, a new IT/Non-IT taxonomy) with a LinkedIn count already filled in for all 29 — the two originally-missing rows (`Pharma / Team Leader`, `Finance / Desk Analyst`) no longer exist under the new categories | Expert Pool tile market lines | — |
 | C-4 (asks #5–7) | Seven area videos, four area key thoughts, two case-study videos | `terulet/` media slot and highlight box; `esettanulmanyok/` | labelled placeholders |
 | C-5 (ask #12) | Chamber logos, podcast embed | the home page (with C-1) | — |
 | C-6 (ask #15) | IDBC's own hero photographs, or confirmation that the stock photographs stay | every page hero | stock (Unsplash) and one idbc.hu image |
 | C-7 (ask #16, 2026-09-22) | The source Excel's "Téma besorolás" sheet checked for two survey questions missing from the parsed data (a home-office/recruiting-impact question; two non-IT AI employer questions) | `guide-data.json`'s topics, if the data exists | absent — may be genuine survey segmentation (IT respondents consistently get extra questions elsewhere too), not a parsing bug |
-| C-8 (ask #17, 2026-09-22) | "IT Contracting" salary figures for Bérek, or confirmation the segment is folded into "IT" | `data/build-salary-data.py`'s `AREA_NAME`, already has the slot ready | the filter option simply doesn't appear (zero rows) |
+| C-8 (ask #17, 2026-09-22) | "IT Contracting" salary figures for Bérek, or confirmation the segment is folded into "IT" | `data/build-salary-data.py`'s `CANONICAL_AREAS`, already has the slot ready | the filter option simply doesn't appear (zero rows); asked directly in the sheet's own new "HIÁNYZÓ ADATOK - kérés" tab, 2026-09-25 |
+| C-10 (2026-09-25) | `EXPERT_POOL_IMPORT`'s `Non-IT / Qualified Person` row has no headcount | `salary.expertPool` | the row is skipped by the converter (not invented, not crashed on); asked directly in the sheet's "HIÁNYZÓ ADATOK - kérés" tab |
 | C-9 (ask #18, 2026-09-22) | Expert Pool page text content (client says previously sent; not received in this round) | `expert-pool/index.html` | the existing copy stays |
 
 ## 2. Decisions before publication

@@ -63,12 +63,17 @@ the source file, not a re-ask:</p>
 <tr>
 <td>17</td>
 <td>"IT Contracting" as a Bérek salary segment — the bértábla sheet has no rows for it (the separate market-trends survey data does have it)</td>
-<td>IT Contracting salary figures from the client, or confirmation the segment is already folded into "IT" today. Code is ready (<code>build-salary-data.py</code>'s <code>AREA_NAME</code>); it will just show zero rows until data lands.</td>
+<td>IT Contracting salary figures from the client, or confirmation the segment is already folded into "IT" today. Code is ready (<code>build-salary-data.py</code>'s <code>CANONICAL_AREAS</code>); it will just show zero rows until data lands. <strong>Asked directly in the sheet itself</strong> on 2026-09-25 — a new tab, "HIÁNYZÓ ADATOK - kérés".</td>
 </tr>
 <tr>
 <td>18</td>
 <td>Expert Pool page text content — the client says this was sent previously; it never reached this implementation round</td>
 <td>Resend, or point to where it lives.</td>
+</tr>
+<tr>
+<td>21</td>
+<td><code>EXPERT_POOL_IMPORT</code>'s <code>Non-IT / Qualified Person</code> row has no headcount (2026-09-25 sync)</td>
+<td>The number, or confirmation the row should be removed. <strong>Asked directly in the sheet itself</strong> on 2026-09-25 — same new tab.</td>
 </tr>
 </tbody>
 </table></div>
@@ -162,7 +167,7 @@ the source file, not a re-ask:</p>
 <h2>Closed</h2>
 <p>See the process log in <a href="index.html"><code>README.md</code></a> for every item closed by a client mail round (2026-08-24,
 2026-08-25, 2026-09-01, 2026-09-08, 2026-09-18, 2026-09-22, 2026-09-24, 2026-09-25).</p>
-<p>Two 2026-09-25 items answered without needing anything further from the client:</p>
+<p>Three 2026-09-25 items answered without needing anything further from the client:</p>
 <div class="tbl"><table>
 <thead>
 <tr>
@@ -181,6 +186,11 @@ the source file, not a re-ask:</p>
 <td>20</td>
 <td>Whether BSC's "Sales Project Manager" showing "Manager" is Drive-editable</td>
 <td>Yes — it's the bértábla sheet's own <code>szint</code> column for that row, read verbatim; blank it there and re-run the converter to remove it, D34</td>
+</tr>
+<tr>
+<td>22</td>
+<td>Live (or on-demand) sync to the <code>IDBC_bertabla</code> sheet</td>
+<td>Built — <code>.github/workflows/idbc-sync-bertabla.yml</code>, manual trigger, gated, auto-commits on a real diff. Along the way: the sheet's own area naming had drifted from the site's and was corrected in the sheet; Expert Pool's whole category system had already changed in the sheet (15 → 29 rows, new IT/Non-IT taxonomy) and is now live on the site, D35</td>
 </tr>
 </tbody>
 </table></div>

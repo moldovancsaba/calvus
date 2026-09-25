@@ -308,7 +308,7 @@ are a developer task with a checklist (<code>12</code> §4); monitoring is the h
 <td>ADR-2</td>
 <td>Build-time data import, not a runtime Sheets API</td>
 <td>runtime API (the spec)</td>
-<td>§3: data is periodic and needs transformation; the converters exist and are deterministic. A scheduled import that runs the same converters is the upgrade path if the client wants "edit the Sheet, see it live".</td>
+<td>§3: data is periodic and needs transformation; the converters exist and are deterministic. <strong>Upgrade path taken 2026-09-25</strong>: <code>.github/workflows/idbc-sync-bertabla.yml</code>, a manually-triggered (<code>workflow_dispatch</code>, no schedule) GitHub Action — downloads <code>IDBC_bertabla</code> via its public export URL (the sheet is shared "anyone with the link can view/edit," so no service-account credentials are needed), runs the same <code>build-salary-data.py</code> a human runs today, gates the result with <code>check.py</code>, and pushes to <code>main</code> only if the gate passes and the data actually changed. Still build-time, still deterministic and reviewable (the gate runs before every commit) — just triggerable on demand instead of only by a human running the converter locally. Does not cover the survey/trends half (<code>build-guide-data.py</code>): that source is a one-off emailed Excel file, not a live Sheet with a stable URL.</td>
 </tr>
 <tr>
 <td>ADR-3</td>

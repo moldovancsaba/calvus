@@ -1,0 +1,57 @@
+name: IDBC — sync IDBC_bertabla
+
+# On-demand sync (ADR-2's upgrade path, idbc-salary-guide/docs/11-architecture.md): pulls the
+# client's IDBC_bertabla Google Sheet via its public export URL (no credentials — the sheet is
+# shared "anyone with the link can view/edit"), runs the same converter a human runs manually
+# today, gates the result, and pushes straight to main if the gate passes. Nothing runs on a
+# schedule; it only fires when someone clicks "Run workflow".
+#
+# This does NOT cover the market-trends/survey half of the data (build-guide-data.py) — that
+# source is a one-off Excel file emailed by the client, not a live Google Sheet with a stable
+# URL. Add a second job here if the client ever puts that data in a Sheet too.
+
+on:
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install converter dependencies
+        run: pip install openpyxl
+
+      - name: Download the live sheet
+        run: |
+          curl -sL -o /tmp/IDBC_bertabla.xlsx \
+            "https://docs.google.com/spreadsheets/d/1aQA6Kw5k1U9LQMiWYgcn__m2YCuGmEhx79QFSzE0hJg/export?format=xlsx"
+          file /tmp/IDBC_bertabla.xlsx | grep -q "Excel" || {
+            echo "::error::download did not return a real .xlsx — the sheet's sharing may have changed (needs \"Anyone with the link\" view access)"
+            exit 1
+          }
+
+      - name: Rebuild guide-data.json from the sheet
+        run: python3 idbc-salary-guide/data/build-salary-data.py /tmp/IDBC_bertabla.xlsx
+
+      - name: Run the repo gate
+        run: python3 check.py
+
+      - name: Commit and push if the data actually changed
+        run: |
+          if git diff --quiet -- idbc-salary-guide/data/guide-data.json; then
+            echo "No change from the sheet — nothing to sync."
+            exit 0
+          fi
+          git config user.name "idbc-data-sync"
+          git config user.email "idbc-data-sync@users.noreply.github.com"
+          git add idbc-salary-guide/data/guide-data.json
+          git commit -m "IDBC_bertabla sync: pull the latest salary-band sheet"
+          git push

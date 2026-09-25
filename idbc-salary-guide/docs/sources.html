@@ -851,6 +851,146 @@ position name would be guessing at intent for one specific row, not fixing a def
 reading the live SVG's own coordinates rather than eyeballing screenshots — labels align
 to their dots in every case checked, no horizontal overflow, no console errors.
 <code>idbc-salary-guide/check.py</code> and the root <code>check.py</code> both <code>GATE: CLEAN</code>.</p>
+<h2>Live sync built for <code>IDBC_bertabla</code> — a converter break found and fixed first (2026-09-25)</h2>
+<p>The client asked for a live sync, or at least an on-demand option, to the salary sheet (§ "The
+data pipeline" above documents this as fully manual up to this point). Before building
+anything, the actual live sheet was read — its public export, downloaded with <code>curl</code> at
+<code>https://docs.google.com/spreadsheets/d/1aQA6Kw5k1U9LQMiWYgcn__m2YCuGmEhx79QFSzE0hJg/export?format=xlsx</code>,
+works with no credentials because the sheet is shared "anyone with the link can view/edit" — not
+assumed compatible with today's converter.</p>
+<p><strong>It wasn't.</strong> <code>build-salary-data.py</code> hard-failed with <code>unmapped area codes in the sheet</code>,
+naming six areas. The sheet's own <code>terulet</code> column (<code>WEB_BERTABLA_IMPORT</code>) had been hand-retyped
+at some point to hold the site's full display names ("Business Service Center (BSC)") instead of
+the short internal codes (<code>BSC</code>, <code>PENZUGY</code>, <code>GYARTAS</code>, <code>LOGISZTIKA</code>, <code>CP</code>, <code>PHARMA</code>) the converter
+expected — apparently to match what the site now shows, not a deliberate request to change the
+sheet's format. Two of the retyped values also carried small spelling drift from the canonical
+text: <code>Pénzügy és Számvitel</code> (wrong casing) and <code>Pharma, Life Science</code> (singular, missing the
+final "s").</p>
+<p>Per the owner's direct instruction — the prototype's naming is correct; fix the sheet, not the
+prototype — both were corrected directly in the live sheet via Find &amp; Replace, scoped to
+<code>WEB_BERTABLA_IMPORT!A1:L2000</code> only, case-sensitive and whole-cell-match on, verified by
+re-downloading the export afterward and re-counting: <code>Pénzügy és számvitel</code> now 42 cells,
+<code>Pharma, Life Sciences</code> now 15 cells, both matching the row counts found before the fix. Separately
+— since a sheet a human can freely retype should not be able to silently break an automated
+sync again — <code>build-salary-data.py</code> was hardened to recognize either naming style: <code>AREA_ALIASES</code>
+maps the old short codes (kept for any older re-export) and the two spelling variants just found
+to the canonical name; <code>area_name()</code> normalizes case and whitespace before matching, so this exact
+failure mode can't recur without an assertion naming exactly what's unrecognized.</p>
+<p><strong>A second, unrelated break in the same sheet</strong>: <code>EXPERT_POOL_IMPORT</code> now has a <code>Non-IT / Qualified
+Person</code> row with an empty <code>darab</code> (headcount) cell — the converter previously did <code>int(r[2])</code>
+unconditionally and crashed on <code>None</code>. Fixed to skip a row with no count (printing it, per this
+project's "no figure invented" rule) rather than lose every other row in the sheet to one gap.</p>
+<p><strong>Re-running the corrected converter against the live sheet surfaced real content the client had
+already added, never pulled in until now</strong> — this is exactly what a sync is for:
+- <code>expertPool</code>: 15 rows → 29 rows. The client replaced the Expert Pool category system entirely —
+  gone are the old Finance/Pharma-specific rows this file's 2026-09-18 entry described; in their
+  place, an IT/Non-IT taxonomy (Architect, Business &amp; System Analyst, Cloud &amp; DevOps, Data &amp; AI,
+  IT Helpdesk, ... on the IT side; Qualified Person and others on the Non-IT side), 29 of 30 rows
+  with a real LinkedIn Talent Insight count already attached.
+- Three <code>webBertabla</code> position names reworded (matched by <code>pozicio</code>+<code>szint</code>+<code>min</code>+<code>max</code> against
+  the pre-sync data to confirm these are renames, not new/deleted rows): "Mechanical Designe
+  Engineer" → "Mechanical Design Engineer" (typo fixed), "SAP Consultant (FI/CO, MM, SD, PP,
+  EWM)" → "Senior SAP Consultant (MM, SD, FI/CO, EWM)", "SAP Architect/ Lead Developer" → "SAP
+  Solution Architect/ Lead Developer".
+- Row and area counts otherwise unchanged: still 432 <code>webBertabla</code> rows, 13 areas, 39 TOP3 rows,
+  now all 39 with a Talent Insight count (was 37 of 39 on 2026-09-18). <code>topics</code>, <code>datasets</code>,
+  <code>sapProducts</code>, <code>siteMap</code> and <code>filterDimensions</code> — everything <code>build-guide-data.py</code> owns —
+  diffed byte-identical, confirming this converter still touches only its own half as documented.</p>
+<p><strong>Still genuinely missing, not fixed here</strong> — a new tab, "HIÁNYZÓ ADATOK - kérés", was added
+directly to the live sheet (not just this file) naming both in the client's own language: IT
+Contracting has no salary rows in <code>WEB_BERTABLA_IMPORT</code> at all (the separate market-trends survey
+data does carry it as a segment — see the 2026-09-22 entry above — so this isn't invented, just
+still unfilled), and the <code>Non-IT / Qualified Person</code> row above needs its headcount.</p>
+<p><strong>The sync itself</strong>: <code>.github/workflows/idbc-sync-bertabla.yml</code>, <code>workflow_dispatch</code> only (a
+manual "Run workflow" click — nothing runs on a schedule), downloads the same public export
+<code>curl</code> proved works, runs this converter, runs the full repo gate, and pushes straight to <code>main</code>
+only if the gate passes and the resulting JSON actually differs — matching the owner's choice of
+on-demand trigger with auto-deploy (no PR review step) once the gate is green. This is ADR-2's
+named upgrade path (<a href="architecture.html"><code>11-architecture.md</code></a>), exercised end-to-end against the real sheet — not
+merely written — before being relied on. It does not cover the market-trends/survey half
+(<code>build-guide-data.py</code>): that source is a one-off Excel file the client emailed, not a Google
+Sheet with a stable URL, so there is nothing with a public export to sync from yet.</p>
+<h2>Live sync built, a real converter break found and fixed first (2026-09-25)</h2>
+<p>The client asked to have "a live sync or at least the option to sync" to the Google Sheet.
+This closes ADR-2's named upgrade path (<a href="architecture.html"><code>11-architecture.md</code></a>) — build-time import stays the
+architecture, now triggerable on demand instead of only by a human running the converter.</p>
+<p><strong>The sheet was read before anything was built, not assumed compatible.</strong> The client's own
+sharing link (<code>.../edit?usp=sharing</code>) turned out to already allow anonymous view <em>and edit</em>
+access, and the sheet's public <code>?format=xlsx</code> export URL returns a real workbook with no
+credentials needed — confirmed directly with <code>curl</code>, not assumed from the sheet's
+"Anyone with the link" label. Running the existing <code>build-salary-data.py</code> against that
+export failed immediately: <code>assert not unknown, f"unmapped area codes in the sheet: ..."</code>
+listed six areas. Read the sheet's <code>WEB_BERTABLA_IMPORT</code> tab directly to see why: its
+<code>terulet</code> column, which held short internal codes (<code>BSC</code>, <code>PENZUGY</code>, <code>GYARTAS</code>, <code>LOGISZTIKA</code>,
+<code>CP</code>, <code>PHARMA</code>) through the 2026-09-18 rebuild, now held the site's own full display text
+instead (<code>"Business Service Center (BSC)"</code>, etc.) — apparently hand-retyped at some point to
+match what the site now shows, not a change anyone asked for. Two of the retyped values also
+drifted from the exact canonical text: <code>"Pénzügy és Számvitel"</code> (wrong case) and <code>"Pharma,
+Life Science"</code> (singular, should be plural per the client's own 2026-09-22 wording).</p>
+<p><strong>Fixed at the source, per the owner's direct instruction ("the naming was ok on the
+prototype... update the sheet, not the prototype")</strong>: opened the sheet directly (anonymous
+edit access) and ran Find &amp; Replace on <code>WEB_BERTABLA_IMPORT</code> only, case-exact and whole-cell,
+for both variants — 42 cells (<code>Pénzügy és Számvitel</code> → <code>Pénzügy és számvitel</code>) and 15 cells
+(<code>Pharma, Life Science</code> → <code>Pharma, Life Sciences</code>), confirmed by the dialog's own "N
+előfordulása helyettesítve" count matching the rows found by direct inspection beforehand.
+Re-downloaded the sheet's export afterward and re-read the <code>terulet</code> column to confirm the
+edit actually landed, rather than trusting the UI alone.</p>
+<p><strong>Also hardened the converter itself</strong>, since a sheet a client can freely retype is a sheet
+that will eventually be retyped again: <code>build-salary-data.py</code>'s <code>AREA_NAME</code> (a straight
+code→name dict) became <code>CANONICAL_AREAS</code> + <code>AREA_ALIASES</code> + <code>area_name()</code>, a
+case/whitespace-insensitive lookup that accepts either the old short codes or the current
+full text and normalizes small spelling drift via an explicit alias table (never a fuzzy
+auto-correct, which could paper over a genuinely new, different area name) — a
+sheet already using the exact canonical text needs no alias entry at all. <code>TI_AREA</code>'s
+Talent-Insight reverse lookup (<code>next(k for k, v in TI_AREA.items() if v == r["terulet"])</code>)
+had the identical bug one line later and got the identical fix.</p>
+<p><strong>A second, independent break, found by actually running the converter, not just reading
+the sheet</strong>: <code>EXPERT_POOL_IMPORT</code> now has a <code>Non-IT / Qualified Person</code> row with an empty
+<code>darab</code> (headcount) column — <code>int(r[2])</code> on <code>None</code> crashed the whole import. This is a real,
+still-open content gap (nobody has supplied that number yet), not a sync failure, so the
+converter now skips a row with no count (printing which one) instead of crashing everything
+else or inventing a number for it.</p>
+<p><strong>Re-running the corrected converter against the corrected sheet surfaced real, substantial
+content the client had already put there</strong>, verified field-by-field against the previous
+<code>guide-data.json</code> (keyed by area+position+level, not by row position, since the corrected
+naming also changed the sheet's natural row order) before accepting it:
+- Three <code>webBertabla</code> position names reworded: <code>"Mechanical Designe Engineer"</code> →
+  <code>"Mechanical Design Engineer"</code> (a typo fixed), <code>"SAP Consultant (FI/CO, MM, SD, PP, EWM)"</code>
+  → <code>"Senior SAP Consultant (MM, SD, FI/CO, EWM)"</code>, <code>"SAP Architect/ Lead Developer"</code> →
+  <code>"SAP Solution Architect/ Lead Developer"</code> — zero other field changes on any of the 432
+  rows (min/idbc/max/juttatas/top3 all identical), so this is purely a naming update, not a
+  figures change.
+- <code>expertPool</code> replaced wholesale: 15 rows under the old category system (<code>Finance</code>,
+  <code>Pharma</code>, <code>IT</code>, granular roles like "Treasury Specialist", "Clinical Research Associate")
+  are gone; 29 rows under a new <code>IT</code> / <code>Non-IT</code> taxonomy (Architect, Business &amp; System
+  Analyst, Cloud &amp; DevOPS, Data &amp; AI, ... for IT; Accountant, Actuary, Compliance Specialist,
+  ... for Non-IT) are there instead, each with its own LinkedIn Talent Insight count already
+  filled in. This looks like the client restructuring their own Expert Community offering,
+  not a data-entry accident — applied as their real current data. Note in passing, not
+  changed (it's the client's own copy, not ours to silently correct): <code>EXPERT_POOL_IMPORT</code>
+  spells one IT row "Infrastructuion Engineer".
+- This also <strong>retires</strong> the earlier-documented gap about two specific missing Talent Insight
+  counts (<code>Pharma / Team Leader</code>, <code>Finance / Desk Analyst</code>, <a href="prerequisites.html"><code>19-implementation-prerequisites.md</code></a>
+  C-3) — those exact category/position pairs no longer exist in the new taxonomy, so the gap
+  isn't closed so much as superseded.</p>
+<p><strong>A new tab, "HIÁNYZÓ ADATOK - kérés", added directly to the live sheet</strong> (not a local repo
+file the client would never see) asking, in Hungarian, for the two gaps that are still
+genuinely open after all the above: IT Contracting salary rows for <code>WEB_BERTABLA_IMPORT</code>
+(the separate market-trends survey data already treats IT Contracting as its own segment;
+the salary sheet still doesn't), and the missing <code>Non-IT / Qualified Person</code> headcount.</p>
+<p><strong><code>.github/workflows/idbc-sync-bertabla.yml</code></strong> — manual trigger only (<code>workflow_dispatch</code>,
+no schedule), downloads the sheet's public export, runs <code>build-salary-data.py</code>, runs
+<code>check.py</code>, and commits+pushes only if the gate passes and <code>guide-data.json</code> actually
+changed. No credentials stored anywhere (the public export URL needs none); the commit
+identity is a plain <code>idbc-data-sync</code> bot account, never an AI/assistant name. Confirmed
+working end to end: the manual run described above (download → corrected converter → gate)
+is exactly what this workflow automates, run by hand first specifically to verify it before
+relying on the automated version. Does not cover <code>build-guide-data.py</code> (the survey/trends
+half) — that source is a one-off emailed Excel file with no stable Sheet URL to poll.</p>
+<p>Measured: <code>idbc-salary-guide/check.py</code> and the root <code>check.py</code> both <code>GATE: CLEAN</code> after the
+sync; Bérek and Expert Pool re-rendered locally and read via their live DOM/console (not
+screenshots alone) to confirm the new area list and the new Expert Pool taxonomy display
+with no console errors and no horizontal overflow.</p>
 <footer>IDBC Talent Market &amp; Salary Guide 2026 · documentation</footer>
 </div>
 </body>
