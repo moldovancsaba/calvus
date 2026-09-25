@@ -11,14 +11,15 @@ does. Terms are the SSOT's (`10-ssot.md`); the decisions are in `04-decisions.md
 |---|---|---|
 | **IDBC** (the client) | a research guide that presents its 2026 survey and its bértábla as a product: market trends by area, salary bands, the SAP guide, the Expert Community, case studies; leads through registration | the survey workbook, the bértábla sheet, the Talent Insight counts, the copy, the design demos |
 | **A reader** — a company representative or a candidate | the trends and the bands behind a registration | an account (company / candidate), a privacy-notice acknowledgement; marketing consent only separately (R12) |
-| **The studio** | — | the converters, the pages, the documentation |
+| **The studio** | — | the sync, the pages, the documentation |
 
 ## 2. The data — what is real, and how a figure reaches a page (R1, R6, R10)
 
-- **No figure is invented.** Every number traces to a client file: the survey workbook
-  (`build-guide-data.py`), the bértábla and the Talent Insight workbook
-  (`build-salary-data.py`). A re-run is byte-identical; a renamed position fails the build
-  rather than guessing (R6).
+- **No figure is invented.** Every number and text comes from one place, the `IDBCSYNC`
+  tab of the client's sheet (D37): the survey results, the bértábla with its Talent Insight
+  counts, the Expert Pool, the SAP catalogue, the area texts and the page copy. The sync
+  (`data/idbcsync.py`, every 15 minutes) is deterministic — the same sheet gives the same
+  site — and refuses a value it cannot read rather than guessing (R6).
 - **The survey** is tabulated as twelve datasets: the whole sample (*Összesített adatok*,
   first and default — R2) and eleven areas, each with employee and employer sides and
   their crosstabs (experience band; company size). A question with no data under a chosen

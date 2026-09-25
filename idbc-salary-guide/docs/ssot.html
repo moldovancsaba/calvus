@@ -38,8 +38,8 @@ footer{margin-top:56px;padding-top:18px;border-top:1px solid var(--line);font-si
 <nav class="docnav" aria-label="Project documentation"><span class="docnav-brand">IDBC Salary Guide · documentation</span><a href="index.html">Overview</a><a href="bemutato.html">Bemutató</a><a href="brief.html">Brief</a><a href="research.html">Research</a><a href="audit.html">Audit</a><a href="sources.html">Sources & gaps</a><a href="decisions.html">Decisions</a><a href="design.html">Design</a><a href="gate.html">Gate</a><a href="client-asks.html">Register of asks</a><a href="prerequisites.html">Prerequisites</a><a href="business-logic.html">Business logic</a><a href="ssot.html" aria-current=page>SSOT</a><a href="architecture.html">Architecture</a><a href="technical-design.html">Technical design</a><a href="implementation-plan.html">Implementation plan</a><a href="token-map.html">Token map</a></nav>
 <header><p class="eyebrow">IDBC Salary Guide · project documentation</p><h1>IDBC Salary Guide — single source of truth (SSOT)</h1></header>
 <p><em>Definitions the technical documents (<code>11</code>–<code>14</code>) use without redefining. Everything is read
-from what the prototype holds (<code>data/guide-data.json</code>, <code>data/areas.json</code>, the two converters,
-the pages). Written 2026-09-18.</em></p>
+from what the prototype holds (the <code>IDBCSYNC</code> sheet tab, <code>data/idbcsync.py</code>, the files it
+writes, the pages). Written 2026-09-18; the data sections updated 2026-09-25 for D37.</em></p>
 <h2>1. Glossary</h2>
 <div class="tbl"><table>
 <thead>
@@ -49,6 +49,10 @@ the pages). Written 2026-09-18.</em></p>
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>IDBCSYNC</td>
+<td>The <code>IDBCSYNC</code> tab of the client's <code>IDBC_bertabla</code> Google Sheet: one row per value (<code>id</code>, <code>változó</code>, <code>érték</code>, <code>megjelenés</code>, <code>segítség</code>). The only source of every text and figure on the guide; <code>data/idbcsync.py</code> reads <code>id</code> and <code>érték</code> only (D37).</td>
+</tr>
 <tr>
 <td>Survey</td>
 <td>IDBC's 2026 research: two questionnaires (employee, employer), June–August 2026; the client's published sample sizes are 1 552 and 148 responses.</td>
@@ -83,11 +87,11 @@ the pages). Written 2026-09-18.</em></p>
 </tr>
 <tr>
 <td>Area (bértábla)</td>
-<td>One of 13 area codes in the salary sheet; display names are mapped in <code>build-salary-data.py</code> (D23). Not the same set as the trends areas.</td>
+<td>One of 13 salary areas, each with one name row (<code>SAL-&lt;key&gt;-NAME</code>) and a fixed key (<code>kod</code>) — SAP's key keeps its rows on the SAP page whatever the area is called (D37). Not the same set as the trends areas.</td>
 </tr>
 <tr>
 <td>Bértábla</td>
-<td>The client's <code>IDBC_bertabla</code> Google Sheet, <code>WEB_BERTABLA_IMPORT</code> tab: one row per area + position + level.</td>
+<td>The salary table: one row per area + position + level. Until 2026-09-25 the sheet's <code>WEB_BERTABLA_IMPORT</code> tab; since D37 IDBCSYNC's <code>SAL-</code> rows (the old tab is hidden and no longer read).</td>
 </tr>
 <tr>
 <td>TOP3 row</td>
@@ -107,11 +111,11 @@ the pages). Written 2026-09-18.</em></p>
 </tr>
 <tr>
 <td>Expert Pool / Expert Community</td>
-<td>IDBC's candidate community; the pool sheet gives a count per industry + position (15 rows).</td>
+<td>IDBC's candidate community; a count per industry + position (IDBCSYNC <code>EXPERT-</code> rows: 30, one — Qualified Person — without a count yet, so not shown).</td>
 </tr>
 <tr>
 <td>SAP catalogue</td>
-<td>20 items in 5 categories (<code>sapProducts</code>), from the client's SAP spec.</td>
+<td>25 items in 5 categories (<code>sapProducts</code>, IDBCSYNC <code>SAPPROD-</code> rows), from the client's SAP spec.</td>
 </tr>
 <tr>
 <td>Inert control</td>
@@ -142,23 +146,23 @@ the pages). Written 2026-09-18.</em></p>
 </tr>
 <tr>
 <td>Dataset</td>
-<td><code>__total__</code> + IT · IT Contracting · Pénzügy és számvitel · Sales &amp; Marketing · HR · BSC · Építőipar, ingatlan · Gyártás, termelés, mérnökség · Office Support &amp; Ügyfélszolgálat · Logisztika és szállítás · Pharma &amp; Life Sciences</td>
+<td><code>__total__</code> + one per trends area, keyed by the area's slug and labelled with its name, in the areas' order (D37)</td>
 </tr>
 <tr>
 <td>Employee segment</td>
-<td>kevesebb, mint 1 év · 1-2 év · 3-5 év · 6-10 év · 11-20 év · 20+ év (offered per topic only where a non-zero row exists, D6)</td>
+<td>kevesebb, mint 1 év · 1-2 év · 3-5 év · 6-10 év · 11-20 év · több, mint 20 év — IDBCSYNC <code>SURVEY-EMPLOYEE-SEG1…6</code> (offered per topic only where a non-zero row exists, D6)</td>
 </tr>
 <tr>
 <td>Employer segment</td>
-<td>50 fő alatti · 51-100 · 101-350 · 351-1000 · 1000+</td>
+<td>50 fő alatti · 51-100 fő · 101-350 fő · 351-1000 fő · 1000 fő feletti — <code>SURVEY-EMPLOYER-SEG1…5</code></td>
 </tr>
 <tr>
 <td>Question kind</td>
 <td>single · multi · weighted (stacked chart; weighted bar 1–4)</td>
 </tr>
 <tr>
-<td>Bértábla area code → name</td>
-<td>BSC · PENZUGY → Pénzügy és számvitel · Sales · Marketing · HR · Office Support → Office Support &amp; Ügyfélszolgálat · Retail · GYARTAS → Gyártás, termelés, mérnökség · LOGISZTIKA → Logisztika és szállítás · CP → Építőipar, ingatlan · PHARMA → Pharma &amp; Life Sciences · IT · SAP</td>
+<td>Bértábla area (sheet order)</td>
+<td>IT · SAP · Pénzügy és számvitel · Sales · Marketing · HR · Retail · Office Support · Business Service Center (BSC) · Logisztika, Szállítás · Gyártás, Termelés, Mérnökség · Építőipar, Ingatlan · Pharma, Life Sciences</td>
 </tr>
 <tr>
 <td>Level order</td>
@@ -166,7 +170,7 @@ the pages). Written 2026-09-18.</em></p>
 </tr>
 <tr>
 <td>Pool industry</td>
-<td>Pharma · IT · Finance</td>
+<td>IT · Non-IT</td>
 </tr>
 <tr>
 <td>Area media</td>
@@ -182,68 +186,70 @@ the pages). Written 2026-09-18.</em></p>
 </tr>
 </tbody>
 </table></div>
-<h2>3. Canonical entities (as in <code>guide-data.json</code>)</h2>
+<h2>3. Canonical entities (as in <code>guide-data.json</code>, all written by <code>data/idbcsync.py</code> from IDBCSYNC)</h2>
 <div class="tbl"><table>
 <thead>
 <tr>
 <th>Entity</th>
 <th>Key fields</th>
-<th>Source</th>
+<th>IDBCSYNC rows</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td><code>datasets[id]</code></td>
-<td><code>label</code>, <code>questionSet</code>, <code>employee{base, cross}</code>, <code>employer{base, cross}</code>; <code>base[question] = {kind, options[], percent[], count[], weighted?}</code>; <code>cross[question][segment]</code> likewise</td>
-<td>survey workbook via <code>build-guide-data.py &lt;workbook&gt;</code>; the trends page's dataset select is <code>#datasetSelect</code> (renamed from <code>editionSelect</code> 2026-09-18 — "edition" was the July term)</td>
+<td><code>datasets[slug]</code></td>
+<td><code>label</code>, <code>questionSet</code>, <code>employee{base, cross}</code>, <code>employer{base, cross}</code>; <code>base[question]</code> = <code>{kind: "simple", items[{label, percent, count}]}</code> or <code>{kind: "weighted", scaleMax, items[{label, value}]}</code>; <code>cross[question]</code> = <code>{kind: "matrix-percent", groups[], items[{label: segment, values[{group, percent, count}]}]}</code></td>
+<td><code>SURVEY-&lt;AREA&gt;-&lt;SIDE&gt;-Qnn-[SEGk-](N\|OPTmm)</code>; question text and answer labels once per question (<code>SURVEY-&lt;SIDE&gt;-Qnn-TEXT</code>, <code>-OPTmm</code>); <code>count</code> = percent × respondents (<code>…-N</code>)</td>
 </tr>
 <tr>
 <td><code>topics[]</code></td>
-<td><code>topic</code>, <code>questionSets{set: {employee[], employer[]}}</code> — the question lists per set</td>
-<td>workbook's "Téma besorolás" tab + client renames (D7)</td>
+<td><code>topic</code>, <code>questionSets{set: {Munkavállalók[], Munkáltatók[]}}</code> — the question lists per set</td>
+<td><code>SURVEY-TOPICt-NAME</code>, membership <code>SURVEY-TOPICt-SETn-&lt;SIDE&gt;-kk</code> (hidden)</td>
+</tr>
+<tr>
+<td><code>segments</code></td>
+<td><code>employee[]</code>, <code>employer[]</code> — labels in dropdown order</td>
+<td><code>SURVEY-&lt;SIDE&gt;-SEGk</code></td>
+</tr>
+<tr>
+<td><code>keepSourceOrder[]</code></td>
+<td>questions whose answers keep the questionnaire order</td>
+<td><code>SURVEY-&lt;SIDE&gt;-Qnn-SORREND</code> = igen</td>
+</tr>
+<tr>
+<td><code>totalKey</code>, <code>totalLabel</code></td>
+<td><code>__total__</code>, <em>Összesített adatok</em></td>
+<td><code>SURVEY-TOTAL-LABEL</code></td>
 </tr>
 <tr>
 <td><code>salary.webBertabla[]</code></td>
 <td><code>id</code>, <code>kod</code>, <code>terulet</code>, <code>szint</code>, <code>pozicio</code>, <code>top3</code>, <code>min</code>, <code>idbc</code>, <code>max</code>, <code>juttatas</code>, <code>linkedin?</code></td>
-<td>bértábla via <code>build-salary-data.py</code></td>
-</tr>
-<tr>
-<td><code>salary.talentInsightTop3[]</code></td>
-<td><code>terulet</code>, <code>pozicio</code>, <code>linkedin</code> — the TOP3 list as the Talent Insight report names it</td>
-<td>bértábla TOP3 rows: <code>linkedin_talent_insight</code>, <code>talent_insight_pozicio</code> (D29)</td>
+<td><code>SAL-&lt;key&gt;-NAME</code>, <code>SAL-&lt;key&gt;-nnn-&lt;FIELD&gt;</code></td>
 </tr>
 <tr>
 <td><code>salary.expertPool[]</code></td>
 <td><code>iparag</code>, <code>pozicio</code>, <code>darab</code>, <code>linkedin?</code></td>
-<td><code>EXPERT_POOL_IMPORT</code> incl. <code>linkedin_talent_insight</code> (D29)</td>
-</tr>
-<tr>
-<td><code>salary.readme</code></td>
-<td>the sheet's UTMUTATO text verbatim</td>
-<td>bértábla</td>
+<td><code>EXPERT-nn-&lt;FIELD&gt;</code></td>
 </tr>
 <tr>
 <td><code>sapProducts[]</code></td>
 <td><code>category</code>, <code>items[]</code></td>
-<td>SAP spec</td>
-</tr>
-<tr>
-<td><code>filterDimensions</code></td>
-<td>every intended filter with <code>available: true/false/"partial"</code> and why</td>
-<td><code>Szűrők</code> doc vs data</td>
-</tr>
-<tr>
-<td><code>siteMap.intendedPages[]</code></td>
-<td>page, status, note</td>
-<td>specs; statuses maintained by hand</td>
+<td><code>SAPPROD-CATn-NAME</code>, <code>-ITEMm</code></td>
 </tr>
 <tr>
 <td><code>areas.json.areas[]</code></td>
-<td><code>slug</code>, <code>name</code>, <code>edition</code> (question set), <code>media</code>, <code>summary</code></td>
-<td>client texts (D13), media list (D20)</td>
+<td><code>slug</code>, <code>name</code>, <code>edition</code> (question set), <code>summary</code>, <code>media</code></td>
+<td><code>AREA-&lt;SLUG&gt;-NAME</code>, <code>-SUMMARY</code>, <code>-MEDIA</code>, <code>-EDITION</code></td>
+</tr>
+<tr>
+<td>page texts</td>
+<td>every marked element and script text</td>
+<td>the row named by <code>data-sync</code> / <code>data-sync-attr</code> / <code>data-sync-href</code> / <code>/*sync:ID*/</code></td>
 </tr>
 </tbody>
 </table></div>
+<p>Removed 2026-09-25 (D37), read by no page: <code>generatedFrom</code>, <code>salary.talentInsightTop3</code>,
+<code>salary.readme</code>, <code>filterDimensions</code>, <code>siteMap</code>, and <code>areas.json</code>'s <code>dataKey</code> bridge.</p>
 <p>Entities the production build adds (defined here, designed in <code>12</code>): <strong>Account</strong> (name,
 e-mail, company, position, type, consent, created), <strong>Lead</strong> (an account handed to
 IDBC's CRM), <strong>Download</strong> (an Excel export event), <strong>Media</strong> (video URL per area /
@@ -271,7 +277,7 @@ case study).</p>
 </tr>
 <tr>
 <td>Asset version</td>
-<td><code>?v=7</code> on <code>top3-chart.js</code> and <code>chart.css</code> — bump on every change</td>
+<td><code>?v=</code> on <code>top3-chart.js</code> (9) and <code>chart.css</code> (7) — bump on every change; the sync bumps <code>top3-chart.js</code> itself when a chart text changes in the sheet</td>
 </tr>
 <tr>
 <td>Tap floor</td>
@@ -284,7 +290,7 @@ case study).</p>
 </tbody>
 </table></div>
 <h2>5. Decision register</h2>
-<p><a href="decisions.html"><code>04-decisions.md</code></a> (D1–D36). Technical decisions in this package are ADRs in
+<p><a href="decisions.html"><code>04-decisions.md</code></a> (D1–D37). Technical decisions in this package are ADRs in
 <a href="architecture.html"><code>11-architecture.md</code></a> §11, PROPOSED until flipped; the flip is the next D-number.</p>
 <h2>6. Rules register</h2>
 <div class="tbl"><table>

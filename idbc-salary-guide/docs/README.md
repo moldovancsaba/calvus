@@ -12,7 +12,7 @@ every project.
 | 01 research | `01-research.md` | What was read (the client's specs, mockups, data, copy), the one external measurement, what was not researched and why |
 | 02 audit | `02-audit.md` | idbc.hu measured; the spec vs. the data; the client's data as it stands; defects found in the material |
 | 03 sources and assets | `../data/SOURCES-AND-GAPS.md` | Every source file and what it contributed, every gap, every change round with measurements — the running record since July |
-| 04 decisions | `04-decisions.md` | D1–D36, dated, with who and why |
+| 04 decisions | `04-decisions.md` | D1–D37, dated, with who and why |
 | 05 design | `05-design.md` | Where the look comes from (the client's mockups), tokens, layout |
 | 06 build log | `../data/SOURCES-AND-GAPS.md` | the dated change notes are the build log |
 | 07 gate | `07-gate.md` | The one-command gate, the measured pass, deliberate deviations |
@@ -167,3 +167,22 @@ making IDBCSYNC the tab the site is built from is the next, separate step.
 **2026-09-25 — Regisztráció's Ajánlatkérés fixed.** The one page the 2026-09-22 round missed
 now opens the in-guide `kapcsolat/` page too (desktop and phone menu checked); IDBCSYNC row 7
 updated to say so. No page links to `idbc.hu/ajanlatkeres/` any more (D30 complete).
+
+**2026-09-25 — IDBCSYNC becomes the single source, synced every 15 minutes (D37).** The owner
+asked for IDBCSYNC to be the source of all data on the prototype, a 15-minute sync, every other
+tab hidden, the rows nobody needs to edit hidden and the technical `id` column hidden. D36's
+rows could describe the site but not rebuild it, so the tab was rebuilt as one editable value
+per row (17,637 rows) and the site wired to it: every visible text on the eight pages carries
+a `data-sync` marker, every on-screen text in the page scripts a `/*sync:ID*/` marker, and
+`data/idbcsync.py` rebuilds the data files and the page texts from the sheet, replacing both
+old converters. Proven equal before it went live — the converter rebuilt the data with no
+difference, and 584 home filter combinations, the 11 area pages, Bérek, SAP and Expert Pool
+rendered the same HTML as the live site; the only intended visible change is the Piaci
+trendek dropdown now using the areas' current names in tile order. The rows went into the
+sheet through short-lived files on this project's Pages, were frozen to plain text, verified
+cell by cell (0 differences) and the files removed; the sheet then shows only IDBCSYNC, with
+column A and the 13,371 survey-figure and technical rows hidden, and the value column set to
+plain text. The sync (`.github/workflows/idbc-sync-bertabla.yml`) runs every 15 minutes and on
+demand, and refuses a sheet error before anything is published. Flagged: anyone with the
+sheet's link can edit it, and so the live guide.
+

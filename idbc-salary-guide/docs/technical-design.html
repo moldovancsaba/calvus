@@ -136,22 +136,39 @@ smaller JSON (charts, filters). Chart and tooltip code is <code>top3-chart.js</c
 </tbody>
 </table></div>
 <h2>3. Data pipeline</h2>
-<pre><code>client workbook(s) ──▶ build-guide-data.py ──▶ guide-data.json ──▶ split.py ──▶ data/trends-*.json
-                  └──▶ build-salary-data.py ─┘                       ├──▶ data/salary.json, pool.json, sap-products.json
-                                                                     └──▶ exports/salary-guide-2026.xlsx
+<pre><code>IDBCSYNC (sheet tab) ──▶ export .xlsx ──▶ data/idbcsync.py ──▶ guide-data.json, areas.json, page texts
+                                                           └──▶ (production) split.py ──▶ data/trends-*.json,
+                                                                  salary.json, pool.json, sap-products.json,
+                                                                  exports/salary-guide-2026.xlsx
 </code></pre>
 <ul>
-<li>The two converters stay as they are (deterministic, asserting); both take their input
-  workbooks as arguments and write next to themselves (the survey converter's hard-coded
-  Downloads path was removed 2026-09-18; SG-020 is therefore only the documentation line).</li>
-<li><code>split.py</code> (to write) cuts <code>guide-data.json</code> into per-page files and builds the Excel
-  (openpyxl): one sheet per bértábla area + Expert Pool + Talent Insight, with the same
-  labels as the pages and the footnote.</li>
-<li>Checklist for a data round: run the converter(s) → read the printed summaries (rows,
-  areas, matches) → <code>git diff</code> the JSON → gate → deploy → verify one figure on the live
-  page against the workbook.</li>
-<li>Optional later: a scheduled job that downloads the Drive files and runs the same
-  chain, opening a review instead of deploying (ADR-2 upgrade path).</li>
+<li><strong>One source (D37).</strong> Every text and figure is one row of <code>IDBCSYNC</code>: <code>id</code> (technical,
+  hidden), <code>változó</code> (what it is), <code>érték</code> (the value — the only column read besides <code>id</code>),
+  <code>megjelenés</code> (where it shows), <code>segítség</code> (what to type). Rows the client never needs to
+  touch — survey figures, screen-reader labels, technical keys — sit in one hidden block at
+  the end. Rows whose <code>id</code> starts with <code>#</code> are section headings and are ignored.</li>
+<li><strong>How a row reaches a page.</strong> Data rows build <code>guide-data.json</code> and <code>areas.json</code> by id
+  pattern (<code>AREA-</code>, <code>SAL-</code>, <code>EXPERT-</code>, <code>SAPPROD-</code>, <code>SURVEY-</code>). Page texts are marked in the
+  HTML: <code>data-sync="ID"</code> on an element holding only text (a line break in the cell is a
+  <code>&lt;br&gt;</code>), <code>data-sync-attr="alt:ID;title:ID"</code> for attributes, <code>data-sync-href="tel:ID"</code> /
+  <code>"mailto:ID"</code> for contact links, and <code>/*sync:ID*/"…"</code> for a text inside a page script or
+  <code>assets/top3-chart.js</code> (a <code>{placeholder}</code> there is filled in by the page; unknown
+  placeholders are refused). Only files that change are written; a changed chart text bumps
+  <code>top3-chart.js?v=</code> on every page.</li>
+<li><strong>Validation before anything is written</strong>: every marked id exists in the sheet; numbers
+  are numbers (spaces and "Ft" tolerated), percentages 0–100, TOP3 <code>igen</code>/<code>nem</code>, media
+  <code>video</code>/<code>highlight</code>; a cell Google turned into a date is refused with the row named. A
+  cleared position (salary row, Expert Pool tile, SAP item) is dropped from the page; an
+  Expert Pool row without a count is left out with a warning.</li>
+<li><strong>The job</strong>: <code>.github/workflows/idbc-sync-bertabla.yml</code>, every 15 minutes and on
+  demand: download → <code>idbcsync.py</code> → <code>check.py</code> → commit and push only on a change. GitHub
+  runs schedules on a best-effort basis (a run can start late) and pauses scheduled
+  workflows after 60 days without repository activity.</li>
+<li><strong>Adding rows</strong> (a new position, a new SAP item) needs a new <code>id</code>, so it is a studio task
+  or needs the hidden <code>A</code> column shown; changing and clearing values never does.</li>
+<li><code>split.py</code> (production, to write) cuts <code>guide-data.json</code> into per-page files and builds
+  the Excel (openpyxl): one sheet per bértábla area + Expert Pool + Talent Insight, with the
+  same labels as the pages and the footnote.</li>
 </ul>
 <h2>4. JSON slices (ADR-4)</h2>
 <div class="tbl"><table>
@@ -170,7 +187,7 @@ smaller JSON (charts, filters). Chart and tooltip code is <code>top3-chart.js</c
 </tr>
 <tr>
 <td><code>salary.json</code></td>
-<td><code>webBertabla</code>, <code>talentInsightTop3</code></td>
+<td><code>webBertabla</code></td>
 <td>~110 KB</td>
 </tr>
 <tr>
@@ -182,11 +199,6 @@ smaller JSON (charts, filters). Chart and tooltip code is <code>top3-chart.js</c
 <td><code>sap-products.json</code></td>
 <td><code>sapProducts</code></td>
 <td>&lt; 10 KB</td>
-</tr>
-<tr>
-<td><code>meta.json</code></td>
-<td><code>filterDimensions</code>, <code>siteMap</code>, <code>readme</code></td>
-<td>documentation only, not loaded by pages</td>
 </tr>
 </tbody>
 </table></div>

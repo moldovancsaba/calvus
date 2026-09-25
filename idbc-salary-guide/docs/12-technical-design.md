@@ -32,32 +32,48 @@ smaller JSON (charts, filters). Chart and tooltip code is `top3-chart.js` unchan
 ## 3. Data pipeline
 
 ```
-client workbook(s) ──▶ build-guide-data.py ──▶ guide-data.json ──▶ split.py ──▶ data/trends-*.json
-                  └──▶ build-salary-data.py ─┘                       ├──▶ data/salary.json, pool.json, sap-products.json
-                                                                     └──▶ exports/salary-guide-2026.xlsx
+IDBCSYNC (sheet tab) ──▶ export .xlsx ──▶ data/idbcsync.py ──▶ guide-data.json, areas.json, page texts
+                                                           └──▶ (production) split.py ──▶ data/trends-*.json,
+                                                                  salary.json, pool.json, sap-products.json,
+                                                                  exports/salary-guide-2026.xlsx
 ```
 
-- The two converters stay as they are (deterministic, asserting); both take their input
-  workbooks as arguments and write next to themselves (the survey converter's hard-coded
-  Downloads path was removed 2026-09-18; SG-020 is therefore only the documentation line).
-- `split.py` (to write) cuts `guide-data.json` into per-page files and builds the Excel
-  (openpyxl): one sheet per bértábla area + Expert Pool + Talent Insight, with the same
-  labels as the pages and the footnote.
-- Checklist for a data round: run the converter(s) → read the printed summaries (rows,
-  areas, matches) → `git diff` the JSON → gate → deploy → verify one figure on the live
-  page against the workbook.
-- Optional later: a scheduled job that downloads the Drive files and runs the same
-  chain, opening a review instead of deploying (ADR-2 upgrade path).
+- **One source (D37).** Every text and figure is one row of `IDBCSYNC`: `id` (technical,
+  hidden), `változó` (what it is), `érték` (the value — the only column read besides `id`),
+  `megjelenés` (where it shows), `segítség` (what to type). Rows the client never needs to
+  touch — survey figures, screen-reader labels, technical keys — sit in one hidden block at
+  the end. Rows whose `id` starts with `#` are section headings and are ignored.
+- **How a row reaches a page.** Data rows build `guide-data.json` and `areas.json` by id
+  pattern (`AREA-`, `SAL-`, `EXPERT-`, `SAPPROD-`, `SURVEY-`). Page texts are marked in the
+  HTML: `data-sync="ID"` on an element holding only text (a line break in the cell is a
+  `<br>`), `data-sync-attr="alt:ID;title:ID"` for attributes, `data-sync-href="tel:ID"` /
+  `"mailto:ID"` for contact links, and `/*sync:ID*/"…"` for a text inside a page script or
+  `assets/top3-chart.js` (a `{placeholder}` there is filled in by the page; unknown
+  placeholders are refused). Only files that change are written; a changed chart text bumps
+  `top3-chart.js?v=` on every page.
+- **Validation before anything is written**: every marked id exists in the sheet; numbers
+  are numbers (spaces and "Ft" tolerated), percentages 0–100, TOP3 `igen`/`nem`, media
+  `video`/`highlight`; a cell Google turned into a date is refused with the row named. A
+  cleared position (salary row, Expert Pool tile, SAP item) is dropped from the page; an
+  Expert Pool row without a count is left out with a warning.
+- **The job**: `.github/workflows/idbc-sync-bertabla.yml`, every 15 minutes and on
+  demand: download → `idbcsync.py` → `check.py` → commit and push only on a change. GitHub
+  runs schedules on a best-effort basis (a run can start late) and pauses scheduled
+  workflows after 60 days without repository activity.
+- **Adding rows** (a new position, a new SAP item) needs a new `id`, so it is a studio task
+  or needs the hidden `A` column shown; changing and clearing values never does.
+- `split.py` (production, to write) cuts `guide-data.json` into per-page files and builds
+  the Excel (openpyxl): one sheet per bértábla area + Expert Pool + Talent Insight, with the
+  same labels as the pages and the footnote.
 
 ## 4. JSON slices (ADR-4)
 
 | File | Content | Approx. size |
 |---|---|---|
 | `trends-total.json`, `trends-<area>.json` ×11 | one dataset + `topics` | ~90 KB each |
-| `salary.json` | `webBertabla`, `talentInsightTop3` | ~110 KB |
+| `salary.json` | `webBertabla` | ~110 KB |
 | `pool.json` | `expertPool` | < 5 KB |
 | `sap-products.json` | `sapProducts` | < 10 KB |
-| `meta.json` | `filterDimensions`, `siteMap`, `readme` | documentation only, not loaded by pages |
 
 ## 5. Registration and gate
 

@@ -193,9 +193,11 @@ paywall yes, as WordPress users.</p>
 <li><strong>Teaser → registration → guide</strong>: public teaser (the client's home mockup) → register
    (the field list, D19 page) → e-mail confirmation → any guide page. Logged-out hits on
    guide URLs redirect to registration and back.</li>
-<li><strong>Data update</strong>: client sends a workbook → developer runs <code>build-guide-data.py</code> or
-   <code>build-salary-data.py</code> → JSON changes reviewed in a diff → deploy; converter asserts
-   (question resolution, Talent Insight matching) fail the build on a mismatch.</li>
+<li><strong>Data update</strong>: the client edits the <code>IDBCSYNC</code> tab of <code>IDBC_bertabla</code> → within about
+   15 minutes a scheduled job rebuilds the data and page texts (<code>data/idbcsync.py</code>), gates
+   them and deploys; a value the converter cannot accept (a date where text belongs, a word
+   in a salary, an unknown placeholder) stops the job and the live site keeps its last good
+   version (D37).</li>
 <li><strong>Filter</strong>: client-side as in the prototype; the page loads only its own JSON slice.</li>
 <li><strong>Excel download</strong>: link to the generated file; event to GTM; login required.</li>
 <li><strong>Ajánlatkérés / join</strong>: form → e-mail to IDBC + entry stored + CRM webhook.</li>
@@ -308,7 +310,7 @@ are a developer task with a checklist (<code>12</code> §4); monitoring is the h
 <td>ADR-2</td>
 <td>Build-time data import, not a runtime Sheets API</td>
 <td>runtime API (the spec)</td>
-<td>§3: data is periodic and needs transformation; the converters exist and are deterministic. <strong>Upgrade path taken 2026-09-25</strong>: <code>.github/workflows/idbc-sync-bertabla.yml</code>, a manually-triggered (<code>workflow_dispatch</code>, no schedule) GitHub Action — downloads <code>IDBC_bertabla</code> via its public export URL (the sheet is shared "anyone with the link can view/edit," so no service-account credentials are needed), runs the same <code>build-salary-data.py</code> a human runs today, gates the result with <code>check.py</code>, and pushes to <code>main</code> only if the gate passes and the data actually changed. Still build-time, still deterministic and reviewable (the gate runs before every commit) — just triggerable on demand instead of only by a human running the converter locally. Does not cover the survey/trends half (<code>build-guide-data.py</code>): that source is a one-off emailed Excel file, not a live Sheet with a stable URL.</td>
+<td>§3: data is periodic and needs transformation; the conversion is deterministic and validated before anything is published. <strong>Upgrade path taken 2026-09-25 (D35, then D37)</strong>: the prototype is built from one sheet tab, <code>IDBCSYNC</code>, by <code>.github/workflows/idbc-sync-bertabla.yml</code> — every 15 minutes and on demand it downloads <code>IDBC_bertabla</code> through its public export URL (the sheet is shared "anyone with the link", so no service-account credentials), runs <code>data/idbcsync.py</code> (which writes <code>guide-data.json</code>, <code>areas.json</code> and every marked page text), gates the result with <code>check.py</code>, and pushes to <code>main</code> only when something changed. Still build-time: a reader never waits on Google, a sheet error never reaches the page, and every change is a reviewable commit. Production keeps the same shape (a scheduled import into the CMS's data files), with the sheet restricted to named editors — "anyone with the link can edit" is acceptable for a prototype, not for a published guide.</td>
 </tr>
 <tr>
 <td>ADR-3</td>

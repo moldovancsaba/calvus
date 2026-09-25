@@ -1,13 +1,14 @@
 # IDBC Salary Guide — single source of truth (SSOT)
 
 *Definitions the technical documents (`11`–`14`) use without redefining. Everything is read
-from what the prototype holds (`data/guide-data.json`, `data/areas.json`, the two converters,
-the pages). Written 2026-09-18.*
+from what the prototype holds (the `IDBCSYNC` sheet tab, `data/idbcsync.py`, the files it
+writes, the pages). Written 2026-09-18; the data sections updated 2026-09-25 for D37.*
 
 ## 1. Glossary
 
 | Term | Meaning here |
 |---|---|
+| IDBCSYNC | The `IDBCSYNC` tab of the client's `IDBC_bertabla` Google Sheet: one row per value (`id`, `változó`, `érték`, `megjelenés`, `segítség`). The only source of every text and figure on the guide; `data/idbcsync.py` reads `id` and `érték` only (D37). |
 | Survey | IDBC's 2026 research: two questionnaires (employee, employer), June–August 2026; the client's published sample sizes are 1 552 and 148 responses. |
 | Question set | Which questionnaire variant a dataset follows: *Általános* or *IT + Contracting*. Two exist; each topic lists its questions per set. Formerly "edition". |
 | Dataset | One tabulation of the survey: the whole sample (`__total__`, labelled *Összesített adatok*) or one of 11 areas. 12 datasets. |
@@ -16,14 +17,14 @@ the pages). Written 2026-09-18.*
 | Segment | A crosstab dimension value: experience band on the employee side, company size on the employer side. *Összesített adatok* is the pseudo-segment for the whole dataset. |
 | Weighted question | The two "Jelöld 1-4-ig terjedő skálán…" questions, shown only as a weighted average (D16). |
 | Area (trends) | One of 11 areas with a summary text, a media slot and its own dataset (`areas.json`). |
-| Area (bértábla) | One of 13 area codes in the salary sheet; display names are mapped in `build-salary-data.py` (D23). Not the same set as the trends areas. |
-| Bértábla | The client's `IDBC_bertabla` Google Sheet, `WEB_BERTABLA_IMPORT` tab: one row per area + position + level. |
+| Area (bértábla) | One of 13 salary areas, each with one name row (`SAL-<key>-NAME`) and a fixed key (`kod`) — SAP's key keeps its rows on the SAP page whatever the area is called (D37). Not the same set as the trends areas. |
+| Bértábla | The salary table: one row per area + position + level. Until 2026-09-25 the sheet's `WEB_BERTABLA_IMPORT` tab; since D37 IDBCSYNC's `SAL-` rows (the old tab is hidden and no longer read). |
 | TOP3 row | A standalone bértábla row flagged `x`: the three highlighted positions of an area, with min / IDBC / max and usually no level. 39 exist. |
 | Level | `tapasztalati_szint`: Trainee · Junior · Medior · Senior · Team Leader · Manager, or none. |
 | Band | min–max monthly gross HUF; on TOP3 rows also the IDBC recommendation. Labelled per D5. |
 | Talent Insight count | LinkedIn Talent Insight's number of professionals in Hungary for a position; on TOP3 rows (`linkedin`) and pool rows. Always printed with a star and the footnote. |
-| Expert Pool / Expert Community | IDBC's candidate community; the pool sheet gives a count per industry + position (15 rows). |
-| SAP catalogue | 20 items in 5 categories (`sapProducts`), from the client's SAP spec. |
+| Expert Pool / Expert Community | IDBC's candidate community; a count per industry + position (IDBCSYNC `EXPERT-` rows: 30, one — Qualified Person — without a count yet, so not shown). |
+| SAP catalogue | 25 items in 5 categories (`sapProducts`, IDBCSYNC `SAPPROD-` rows), from the client's SAP spec. |
 | Inert control | A control shown in place with class `is-unavailable`, `aria-disabled` and a `title` saying why: Excel export, EN, Kijelentkezés, form submits. |
 | Gate | `python3 idbc-salary-guide/check.py` (run by the root `check.py`) + the measured pass (`07-gate.md`). |
 
@@ -33,31 +34,34 @@ the pages). Written 2026-09-18.*
 |---|---|
 | Topic | the four above, in that order |
 | Question set | Általános · IT + Contracting |
-| Dataset | `__total__` + IT · IT Contracting · Pénzügy és számvitel · Sales & Marketing · HR · BSC · Építőipar, ingatlan · Gyártás, termelés, mérnökség · Office Support & Ügyfélszolgálat · Logisztika és szállítás · Pharma & Life Sciences |
-| Employee segment | kevesebb, mint 1 év · 1-2 év · 3-5 év · 6-10 év · 11-20 év · 20+ év (offered per topic only where a non-zero row exists, D6) |
-| Employer segment | 50 fő alatti · 51-100 · 101-350 · 351-1000 · 1000+ |
+| Dataset | `__total__` + one per trends area, keyed by the area's slug and labelled with its name, in the areas' order (D37) |
+| Employee segment | kevesebb, mint 1 év · 1-2 év · 3-5 év · 6-10 év · 11-20 év · több, mint 20 év — IDBCSYNC `SURVEY-EMPLOYEE-SEG1…6` (offered per topic only where a non-zero row exists, D6) |
+| Employer segment | 50 fő alatti · 51-100 fő · 101-350 fő · 351-1000 fő · 1000 fő feletti — `SURVEY-EMPLOYER-SEG1…5` |
 | Question kind | single · multi · weighted (stacked chart; weighted bar 1–4) |
-| Bértábla area code → name | BSC · PENZUGY → Pénzügy és számvitel · Sales · Marketing · HR · Office Support → Office Support & Ügyfélszolgálat · Retail · GYARTAS → Gyártás, termelés, mérnökség · LOGISZTIKA → Logisztika és szállítás · CP → Építőipar, ingatlan · PHARMA → Pharma & Life Sciences · IT · SAP |
+| Bértábla area (sheet order) | IT · SAP · Pénzügy és számvitel · Sales · Marketing · HR · Retail · Office Support · Business Service Center (BSC) · Logisztika, Szállítás · Gyártás, Termelés, Mérnökség · Építőipar, Ingatlan · Pharma, Life Sciences |
 | Level order | Trainee · Junior · Medior · Senior · Team Leader · Manager · (none) |
-| Pool industry | Pharma · IT · Finance |
+| Pool industry | IT · Non-IT |
 | Area media | video · highlight |
 | Account type (registration) | cég · jelölt |
 | Nav | Piaci trendek · Bérek · SAP · Expert Pool · Esettanulmányok · Ajánlatkérés · Kijelentkezés |
 
-## 3. Canonical entities (as in `guide-data.json`)
+## 3. Canonical entities (as in `guide-data.json`, all written by `data/idbcsync.py` from IDBCSYNC)
 
-| Entity | Key fields | Source |
+| Entity | Key fields | IDBCSYNC rows |
 |---|---|---|
-| `datasets[id]` | `label`, `questionSet`, `employee{base, cross}`, `employer{base, cross}`; `base[question] = {kind, options[], percent[], count[], weighted?}`; `cross[question][segment]` likewise | survey workbook via `build-guide-data.py <workbook>`; the trends page's dataset select is `#datasetSelect` (renamed from `editionSelect` 2026-09-18 — "edition" was the July term) |
-| `topics[]` | `topic`, `questionSets{set: {employee[], employer[]}}` — the question lists per set | workbook's "Téma besorolás" tab + client renames (D7) |
-| `salary.webBertabla[]` | `id`, `kod`, `terulet`, `szint`, `pozicio`, `top3`, `min`, `idbc`, `max`, `juttatas`, `linkedin?` | bértábla via `build-salary-data.py` |
-| `salary.talentInsightTop3[]` | `terulet`, `pozicio`, `linkedin` — the TOP3 list as the Talent Insight report names it | bértábla TOP3 rows: `linkedin_talent_insight`, `talent_insight_pozicio` (D29) |
-| `salary.expertPool[]` | `iparag`, `pozicio`, `darab`, `linkedin?` | `EXPERT_POOL_IMPORT` incl. `linkedin_talent_insight` (D29) |
-| `salary.readme` | the sheet's UTMUTATO text verbatim | bértábla |
-| `sapProducts[]` | `category`, `items[]` | SAP spec |
-| `filterDimensions` | every intended filter with `available: true/false/"partial"` and why | `Szűrők` doc vs data |
-| `siteMap.intendedPages[]` | page, status, note | specs; statuses maintained by hand |
-| `areas.json.areas[]` | `slug`, `name`, `edition` (question set), `media`, `summary` | client texts (D13), media list (D20) |
+| `datasets[slug]` | `label`, `questionSet`, `employee{base, cross}`, `employer{base, cross}`; `base[question]` = `{kind: "simple", items[{label, percent, count}]}` or `{kind: "weighted", scaleMax, items[{label, value}]}`; `cross[question]` = `{kind: "matrix-percent", groups[], items[{label: segment, values[{group, percent, count}]}]}` | `SURVEY-<AREA>-<SIDE>-Qnn-[SEGk-](N\|OPTmm)`; question text and answer labels once per question (`SURVEY-<SIDE>-Qnn-TEXT`, `-OPTmm`); `count` = percent × respondents (`…-N`) |
+| `topics[]` | `topic`, `questionSets{set: {Munkavállalók[], Munkáltatók[]}}` — the question lists per set | `SURVEY-TOPICt-NAME`, membership `SURVEY-TOPICt-SETn-<SIDE>-kk` (hidden) |
+| `segments` | `employee[]`, `employer[]` — labels in dropdown order | `SURVEY-<SIDE>-SEGk` |
+| `keepSourceOrder[]` | questions whose answers keep the questionnaire order | `SURVEY-<SIDE>-Qnn-SORREND` = igen |
+| `totalKey`, `totalLabel` | `__total__`, *Összesített adatok* | `SURVEY-TOTAL-LABEL` |
+| `salary.webBertabla[]` | `id`, `kod`, `terulet`, `szint`, `pozicio`, `top3`, `min`, `idbc`, `max`, `juttatas`, `linkedin?` | `SAL-<key>-NAME`, `SAL-<key>-nnn-<FIELD>` |
+| `salary.expertPool[]` | `iparag`, `pozicio`, `darab`, `linkedin?` | `EXPERT-nn-<FIELD>` |
+| `sapProducts[]` | `category`, `items[]` | `SAPPROD-CATn-NAME`, `-ITEMm` |
+| `areas.json.areas[]` | `slug`, `name`, `edition` (question set), `summary`, `media` | `AREA-<SLUG>-NAME`, `-SUMMARY`, `-MEDIA`, `-EDITION` |
+| page texts | every marked element and script text | the row named by `data-sync` / `data-sync-attr` / `data-sync-href` / `/*sync:ID*/` |
+
+Removed 2026-09-25 (D37), read by no page: `generatedFrom`, `salary.talentInsightTop3`,
+`salary.readme`, `filterDimensions`, `siteMap`, and `areas.json`'s `dataKey` bridge.
 
 Entities the production build adds (defined here, designed in `12`): **Account** (name,
 e-mail, company, position, type, consent, created), **Lead** (an account handed to
@@ -71,13 +75,13 @@ case study).
 | Default dataset / segment | `__total__` / *Összesített adatok* |
 | Chart breakpoint | compact layout ≤ 700 px viewport |
 | Table card mode | container width < 600 px |
-| Asset version | `?v=7` on `top3-chart.js` and `chart.css` — bump on every change |
+| Asset version | `?v=` on `top3-chart.js` (9) and `chart.css` (7) — bump on every change; the sync bumps `top3-chart.js` itself when a chart text changes in the sheet |
 | Tap floor | 44 px below 980 px |
 | Currency format | `hu-HU` grouping, ` Ft`; millions abbreviated `1,25M` in the compact chart |
 
 ## 5. Decision register
 
-`04-decisions.md` (D1–D36). Technical decisions in this package are ADRs in
+`04-decisions.md` (D1–D37). Technical decisions in this package are ADRs in
 `11-architecture.md` §11, PROPOSED until flipped; the flip is the next D-number.
 
 ## 6. Rules register

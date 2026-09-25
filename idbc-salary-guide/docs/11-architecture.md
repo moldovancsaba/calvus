@@ -84,9 +84,11 @@ paywall yes, as WordPress users.
 1. **Teaser → registration → guide**: public teaser (the client's home mockup) → register
    (the field list, D19 page) → e-mail confirmation → any guide page. Logged-out hits on
    guide URLs redirect to registration and back.
-2. **Data update**: client sends a workbook → developer runs `build-guide-data.py` or
-   `build-salary-data.py` → JSON changes reviewed in a diff → deploy; converter asserts
-   (question resolution, Talent Insight matching) fail the build on a mismatch.
+2. **Data update**: the client edits the `IDBCSYNC` tab of `IDBC_bertabla` → within about
+   15 minutes a scheduled job rebuilds the data and page texts (`data/idbcsync.py`), gates
+   them and deploys; a value the converter cannot accept (a date where text belongs, a word
+   in a salary, an unknown placeholder) stops the job and the live site keeps its last good
+   version (D37).
 3. **Filter**: client-side as in the prototype; the page loads only its own JSON slice.
 4. **Excel download**: link to the generated file; event to GTM; login required.
 5. **Ajánlatkérés / join**: form → e-mail to IDBC + entry stored + CRM webhook.
@@ -132,7 +134,7 @@ All **PROPOSED** 2026-09-18.
 | ADR | Decision | Options | Why |
 |---|---|---|---|
 | ADR-1 | Inside idbc.hu's WordPress, not a separate site | (a) inside; (b) `guide.idbc.hu` static site + Cloudflare Access/Netlify Identity; (c) separate Next/Astro app | (b) cannot do typed registration, consent and CRM hand-off without building an auth service anyway; (c) is a second stack for a marketing section. (a) reuses users, WPML, GTM, hosting. |
-| ADR-2 | Build-time data import, not a runtime Sheets API | runtime API (the spec) | §3: data is periodic and needs transformation; the converters exist and are deterministic. **Upgrade path taken 2026-09-25**: `.github/workflows/idbc-sync-bertabla.yml`, a manually-triggered (`workflow_dispatch`, no schedule) GitHub Action — downloads `IDBC_bertabla` via its public export URL (the sheet is shared "anyone with the link can view/edit," so no service-account credentials are needed), runs the same `build-salary-data.py` a human runs today, gates the result with `check.py`, and pushes to `main` only if the gate passes and the data actually changed. Still build-time, still deterministic and reviewable (the gate runs before every commit) — just triggerable on demand instead of only by a human running the converter locally. Does not cover the survey/trends half (`build-guide-data.py`): that source is a one-off emailed Excel file, not a live Sheet with a stable URL. |
+| ADR-2 | Build-time data import, not a runtime Sheets API | runtime API (the spec) | §3: data is periodic and needs transformation; the conversion is deterministic and validated before anything is published. **Upgrade path taken 2026-09-25 (D35, then D37)**: the prototype is built from one sheet tab, `IDBCSYNC`, by `.github/workflows/idbc-sync-bertabla.yml` — every 15 minutes and on demand it downloads `IDBC_bertabla` through its public export URL (the sheet is shared "anyone with the link", so no service-account credentials), runs `data/idbcsync.py` (which writes `guide-data.json`, `areas.json` and every marked page text), gates the result with `check.py`, and pushes to `main` only when something changed. Still build-time: a reader never waits on Google, a sheet error never reaches the page, and every change is a reviewable commit. Production keeps the same shape (a scheduled import into the CMS's data files), with the sheet restricted to named editors — "anyone with the link can edit" is acceptable for a prototype, not for a published guide. |
 | ADR-3 | Paywall = WordPress users with a `guide_reader` role and type/consent meta | membership plugin; external identity provider | the registration is five fields and a type; a membership plugin is heavier than the need; leads must land where IDBC can read them |
 | ADR-4 | Per-page JSON slices, ≤ 300 KB each | one 1,1 MB file (the prototype) | the prototype fetches everything on every page; fine for review, not for a section of a lean site |
 | ADR-5 | Excel generated from the JSON at build | client-supplied file | the CTA has been inert since July because no file exists; generated, it can never disagree with the pages |

@@ -3,8 +3,9 @@
 This documents every file in the client's Drive folder (`IDBC`, folder id
 `1aOhkzvH0YtJVFkaIq85QsrCaqb4_JTQv`) that feeds this project, how each one
 was used, and where the currently deployed page diverges from what the
-client's own specs and mockups actually describe. `guide-data.json` in this
-folder is the single consolidated data source built from all of it.
+client's own specs and mockups actually describe. Since 2026-09-25 (D37) every value
+from all of it lives in one place, the `IDBCSYNC` tab of `IDBC_bertabla`; `guide-data.json`,
+`areas.json` and the page texts are generated from that tab by `idbcsync.py`.
 
 ## Source files and what they contributed
 
@@ -1014,3 +1015,85 @@ more.
 survey Excel, not from IDBCSYNC, and `idbc-sync-bertabla.yml` still reads the former. Making
 IDBCSYNC the tab the prototype is generated from is a separate step — and a structural one,
 since the page templates hold their static text in HTML today, not in data.
+
+## IDBCSYNC becomes the single source — every text and figure, synced every 15 minutes (2026-09-25)
+
+Owner directive: IDBCSYNC is the SSOT for all data on the prototype, synced every 15 minutes;
+the other tabs hidden; the rows nobody needs to edit hidden; the technical `id` column hidden
+(`04-decisions.md` D37).
+
+**Why the backfilled rows could not simply be read.** They described the site rather than
+being able to rebuild it: area summaries were cut at 200 characters, respondent counts sat
+only inside the help text, the Bérek area list was one comma-separated cell, and a page text
+had no link back to the element that shows it. So the tab was rebuilt, one editable value per
+row, and the site was wired to it.
+
+**The rows — 17,637** (plus section headings, ids starting with `#`, which are ignored):
+
+| Block | Ids | Visible | What a person edits there |
+|---|---|---|---|
+| Every page text | `SHARED-…` (header, footer, chart legend — one row for all pages), `HOME-`, `TERULET-`, `BEREK-`, `SAP-`, `POOL-`, `ESETT-`, `REG-`, `KAPCS-` | yes (screen-reader labels hidden) | headings, paragraphs, buttons, form labels, image descriptions, tooltips, messages shown by the page scripts |
+| Areas | `AREA-<slug>-NAME/-SUMMARY/-MEDIA` | yes (`-EDITION` hidden) | the name (used by the home tile, the Piaci trendek dropdown and the area page), the full summary, video or highlight |
+| Bértábla | `SAL-<area>-NAME`, `SAL-<area>-nnn-POZICIO/SZINT/TOP3/MIN/IDBC/MAX/JUTTATAS/LINKEDIN` | yes | every salary row of Bérek and SAP |
+| Expert Pool | `EXPERT-nn-IPARAG/POZICIO/DARAB/LINKEDIN` | yes | every tile, including Qualified Person, which appears once its count is filled in |
+| SAP catalogue | `SAPPROD-CATn-NAME/-ITEMm` | yes | categories and items |
+| Survey texts | `SURVEY-TOTAL-LABEL`, `SURVEY-TOPICt-NAME`, `SURVEY-<SIDE>-SEGk`, `SURVEY-<SIDE>-Qnn-TEXT/-OPTmm` | yes | topic names, filter values, question texts, answer labels — each once, for every area |
+| Survey figures and keys | `SURVEY-<AREA>-<SIDE>-Qnn-[SEGk-](N\|OPTmm)`, topic membership, question sets, scale maxima, answer-order flags | hidden | — |
+
+4,266 rows are visible; the 13,371 hidden ones are one contiguous block at the end.
+
+**How the pages take their text.** A one-time tool marked all 317 texts on the eight pages:
+`data-sync="ID"` on an element that holds only text, a style-neutral `<idbc-t>` wrapper where
+text shares its element with a link or an input (a `span` wrapper would have been styled as
+the Expert Pool legend's colour dot), `data-sync-attr` for `alt`/`title`/`placeholder`/
+`aria-label`/meta description, `data-sync-href` so the footer phone and e-mail links follow
+their text. The texts the page scripts put on screen carry `/*sync:ID*/` — 31 rows of their
+own (empty-state messages, tooltips, the chart legend, the salary-level labels, the area
+page's media placeholders) and 8 that reuse the matching page text (table headers on phone
+cards, the read-more buttons); where they contain a value (`{terulet}`, `{n}`, `{max}`, …) the page fills it
+in and the sync refuses any placeholder the page does not know. The segment lists, the
+"keep answer order" question and the Összesített adatok label were hard-coded in the scripts;
+they now come from the data, so renaming them in the sheet cannot break a filter.
+
+**`idbcsync.py`** replaces `build-salary-data.py` and `build-guide-data.py` (removed). It
+reads `id` and `érték`, validates everything first and writes nothing on an error, naming the
+row: a date where text belongs (Google turns `1-5` into a date unless the cell is text), a
+word in a number, a percentage outside 0–100, an unknown media type or placeholder, a marked
+text whose row is missing. Values are HTML-escaped (a `<script>` typed into a cell shows as
+text). It writes only files that change and bumps `top3-chart.js?v=` when a chart text
+changes. Numbers accept spaces and "Ft"; decimals accept a comma.
+
+**Proven equal before switching.** From the generated rows the converter rebuilt the data
+with zero differences in any survey payload (all 594), salary row, area text, topic or SAP
+item; the "(N fő)" counts, now derived from percent × respondents, reproduce all 1,846
+source rows. Rendered in the browser against the live site: 584 Piaci trendek filter
+combinations, all 11 area pages with every topic and segment, Bérek for every area at 1440
+and 390 px, SAP and Expert Pool — identical HTML apart from the new marker attributes; every
+page's visible text, attributes, links and title identical; the three wrapped texts measure
+the same at both widths; no console errors. Intended differences: the Piaci trendek
+"Szegmens" dropdown now lists the areas by their current names in tile order (it still
+carried the pre-2026-09-22 names: "BSC", "Sales & Marketing", "Office Support &
+Ügyfélszolgálat" …); two trailing spaces in Expert Pool names are gone; Bérek and SAP split on
+the fixed key `kod`, not on the area's name.
+
+**Removed from `guide-data.json`**, read by no page: `generatedFrom`, `talentInsightTop3`,
+`readme`, `siteMap`, `filterDimensions`; from `areas.json`, the `dataKey` bridge (the survey
+data is now keyed by the area's slug).
+
+**Into the sheet.** The old 13,160 rows were cleared, the grid extended to 18,001 rows, and
+the new rows pulled in the same way as D36 — four tab-separated parts of under 1 MB on this
+project's Pages, `IMPORTDATA` + `REGEXEXTRACT` (line breaks inside a value travelled as `¶` and
+were turned back into real line breaks by `SUBSTITUTE`), then frozen with Irányított
+beillesztés → Csak az értékek. One surprise: `IMPORTDATA` treats a line starting with `#` as a
+comment, so 14 of the 15 section-heading rows (ids `#…`) arrived as `#N/A`; they were retyped
+by hand. Verified from a fresh export: all 17,637 rows equal to the generated rows in all five
+columns, no formula left, nothing below the data, and `idbcsync.py --check` against the
+export changes no file. Then the tabs other than IDBCSYNC were hidden (`LISTAK` already was),
+column A hidden, rows 4268–17638 hidden (the 13,371 survey figures and technical rows, one
+block), and column C set to plain text so a typed `1-5` stays text. The import files were
+removed from the repo.
+
+**Adding** a row (a new position, IT Contracting's salaries when they arrive) needs a new id,
+so it is a studio task or needs column A shown; changing or clearing values never does —
+a cleared position, tile or SAP item disappears from the page.
+

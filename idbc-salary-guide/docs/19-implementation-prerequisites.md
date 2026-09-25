@@ -18,8 +18,8 @@ production build, not before the next review.*
 | C-5 (ask #12) | Chamber logos, podcast embed | the home page (with C-1) | — |
 | C-6 (ask #15) | IDBC's own hero photographs, or confirmation that the stock photographs stay | every page hero | stock (Unsplash) and one idbc.hu image |
 | C-7 (ask #16, 2026-09-22) | The source Excel's "Téma besorolás" sheet checked for two survey questions missing from the parsed data (a home-office/recruiting-impact question; two non-IT AI employer questions) | `guide-data.json`'s topics, if the data exists | absent — may be genuine survey segmentation (IT respondents consistently get extra questions elsewhere too), not a parsing bug |
-| C-8 (ask #17, 2026-09-22) | "IT Contracting" salary figures for Bérek, or confirmation the segment is folded into "IT" | `data/build-salary-data.py`'s `CANONICAL_AREAS`, already has the slot ready | the filter option simply doesn't appear (zero rows); asked directly in the sheet's own new "HIÁNYZÓ ADATOK - kérés" tab, 2026-09-25 |
-| C-10 (2026-09-25) | `EXPERT_POOL_IMPORT`'s `Non-IT / Qualified Person` row has no headcount | `salary.expertPool` | the row is skipped by the converter (not invented, not crashed on); asked directly in the sheet's "HIÁNYZÓ ADATOK - kérés" tab |
+| C-8 (ask #17, 2026-09-22) | "IT Contracting" salary figures for Bérek, or confirmation the segment is folded into "IT" | new `SAL-` rows in `IDBCSYNC` (a new id per row, so a studio task once the figures arrive; D37) | the filter option simply doesn't appear (zero rows); asked directly in the sheet's own new "HIÁNYZÓ ADATOK - kérés" tab, 2026-09-25 |
+| C-10 (2026-09-25) | The `Non-IT / Qualified Person` Expert Pool row has no headcount | `IDBCSYNC` `EXPERT-27-DARAB` — the tile appears on the next sync once the number is typed in | the tile is left out (not invented, not crashed on); asked in the sheet's "HIÁNYZÓ ADATOK - kérés" tab |
 | C-9 (ask #18, 2026-09-22) | Expert Pool page text content (client says previously sent; not received in this round) | `expert-pool/index.html` | the existing copy stays |
 
 ## 2. Decisions before publication

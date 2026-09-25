@@ -187,33 +187,33 @@
 </head>
 <body>
   <header class="site-header">
-    <nav class="navbar" aria-label="Fő navigáció">
-      <a class="brand" href="../index.html" aria-label="IDBC Group">
-        <span class="brand-main">IDBC</span>
-        <span class="brand-sub">salary guide</span>
+    <nav class="navbar" aria-label="Fő navigáció" data-sync-attr="aria-label:SHARED-HEADER-ARIA-LABEL-FO-NAVIGACIO">
+      <a class="brand" href="../index.html" aria-label="IDBC Group" data-sync-attr="aria-label:SHARED-HEADER-ARIA-LABEL-IDBC-GROUP">
+        <span class="brand-main" data-sync="SHARED-HEADER-IDBC">IDBC</span>
+        <span class="brand-sub" data-sync="SHARED-HEADER-SALARY-GUIDE">salary guide</span>
       </a>
-      <button class="menu-toggle" type="button" aria-label="Menü megnyitása" aria-expanded="false">☰</button>
+      <button class="menu-toggle" type="button" aria-label="Menü megnyitása" aria-expanded="false" data-sync-attr="aria-label:SHARED-HEADER-ARIA-LABEL-MENU-MEGNYITASA">☰</button>
 
       <ul class="nav-links">
-        <li><a href="../index.html#trends">Piaci trendek</a></li>
-        <li><a href="../berezes/index.html">Bérek</a></li>
-        <li><a href="../sap/index.html">SAP</a></li>
-        <li><a href="../expert-pool/index.html">Expert Pool</a></li>
-        <li><a href="../esettanulmanyok/index.html">Esettanulmányok</a></li>
+        <li><a href="../index.html#trends" data-sync="SHARED-HEADER-PIACI-TRENDEK">Piaci trendek</a></li>
+        <li><a href="../berezes/index.html" data-sync="SHARED-HEADER-BEREK">Bérek</a></li>
+        <li><a href="../sap/index.html" data-sync="SHARED-HEADER-SAP">SAP</a></li>
+        <li><a href="../expert-pool/index.html" data-sync="SHARED-HEADER-EXPERT-POOL">Expert Pool</a></li>
+        <li><a href="../esettanulmanyok/index.html" data-sync="SHARED-HEADER-ESETTANULMANYOK">Esettanulmányok</a></li>
       </ul>
 
       <div class="nav-actions">
-        <a class="button button-primary" href="../kapcsolat/index.html">Ajánlatkérés</a>
+        <a class="button button-primary" href="../kapcsolat/index.html" data-sync="SHARED-HEADER-AJANLATKERES">Ajánlatkérés</a>
         <button class="button button-logout is-unavailable" type="button" aria-disabled="true"
-          title="A be- és kijelentkezés a prototípusban még nincs bekötve">Kijelentkezés</button>
+          title="A be- és kijelentkezés a prototípusban még nincs bekötve" data-sync="SHARED-HEADER-KIJELENTKEZES" data-sync-attr="title:SHARED-HEADER-TITLE-A-BE-ES-KIJELENTKEZES">Kijelentkezés</button>
       </div>
     </nav>
   </header>
 
   <section class="area-headerband">
     <div class="container">
-      <a class="back-link" href="../index.html#trends">← Vissza a munkaerő-piaci trendekhez</a>
-      <p class="eyebrow">Területi összefoglaló</p>
+      <a class="back-link" href="../index.html#trends" data-sync="TERULET-A-VISSZA-A-MUNKAERO-PIACI">← Vissza a munkaerő-piaci trendekhez</a>
+      <p class="eyebrow" data-sync="TERULET-P-TERULETI-OSSZEFOGLALO">Területi összefoglaló</p>
       <h1 id="areaTitle">Terület</h1>
     </div>
   </section>
@@ -223,26 +223,26 @@
       <div class="area-summary">
         <div class="summary-text">
           <div class="summary-body is-clamped" id="summaryBody"></div>
-          <button class="read-more" id="readMore" aria-expanded="false">Olvass tovább</button>
+          <button class="read-more" id="readMore" aria-expanded="false" data-sync="TERULET-BUTTON-OLVASS-TOVABB">Olvass tovább</button>
         </div>
         <div class="media-stack">
           <div class="area-media" id="areaMedia"></div>
           <article class="contact-card">
-            <img src="https://idbc.hu/uploads/2025/11/Baranyai_Zsolt-1.webp" alt="Baranyai Zsolt portréfotó" />
+            <img src="https://idbc.hu/uploads/2025/11/Baranyai_Zsolt-1.webp" alt="Baranyai Zsolt portréfotó"  data-sync-attr="alt:TERULET-ALT-BARANYAI-ZSOLT-PORTREFOTO"/>
             <div>
-              <h3>Baranyai Zsolt</h3>
-              <p>Head of SAP and ECM BU, Partner</p>
-              <a class="cta-button" href="mailto:contact@idbc.hu?subject=Talent%20Market%20%26%20Salary%20Guide%202026%20konzult%C3%A1ci%C3%B3">Kapcsolatfelvétel</a>
+              <h3 data-sync="TERULET-H3-BARANYAI-ZSOLT">Baranyai Zsolt</h3>
+              <p data-sync="TERULET-P-HEAD-OF-SAP-AND">Head of SAP and ECM BU, Partner</p>
+              <a class="cta-button" href="mailto:contact@idbc.hu?subject=Talent%20Market%20%26%20Salary%20Guide%202026%20konzult%C3%A1ci%C3%B3" data-sync="TERULET-A-KAPCSOLATFELVETEL" data-sync-href="mailto:SHARED-FOOTER-CONTACT-IDBC-HU">Kapcsolatfelvétel</a>
             </div>
           </article>
         </div>
       </div>
 
       <div class="results-head">
-        <h2>A terület kutatási eredményei</h2>
+        <h2 data-sync="TERULET-H2-A-TERULET-KUTATASI-EREDMENYEI">A terület kutatási eredményei</h2>
         <div class="topic-filter">
           <label>
-            <span>Téma</span>
+            <span data-sync="TERULET-SPAN-TEMA">Téma</span>
             <select id="topicSelect"></select>
           </label>
         </div>
@@ -250,22 +250,22 @@
 
       <div class="panels">
         <article class="panel">
-          <h3>Munkavállalók</h3>
-          <p class="panel-note">A munkavállalói oldal válaszai</p>
+          <h3 data-sync="TERULET-H3-MUNKAVALLALOK">Munkavállalók</h3>
+          <p class="panel-note" data-sync="TERULET-P-A-MUNKAVALLALOI-OLDAL-VALASZAI">A munkavállalói oldal válaszai</p>
           <div class="segment-select">
             <label>
-              <span>Válaszok szűrése tapasztalati szint szerint</span>
+              <span data-sync="TERULET-SPAN-VALASZOK-SZURESE-TAPASZTALATI-SZINT">Válaszok szűrése tapasztalati szint szerint</span>
               <select id="empSegmentSelect"></select>
             </label>
           </div>
           <div class="chart-area" id="employeeChart"></div>
         </article>
         <article class="panel">
-          <h3>Munkáltatók</h3>
-          <p class="panel-note">A munkáltatói oldal válaszai</p>
+          <h3 data-sync="TERULET-H3-MUNKALTATOK">Munkáltatók</h3>
+          <p class="panel-note" data-sync="TERULET-P-A-MUNKALTATOI-OLDAL-VALASZAI">A munkáltatói oldal válaszai</p>
           <div class="segment-select">
             <label>
-              <span>Válaszok szűrése cégméret szerint</span>
+              <span data-sync="TERULET-SPAN-VALASZOK-SZURESE-CEGMERET-SZERINT">Válaszok szűrése cégméret szerint</span>
               <select id="erSegmentSelect"></select>
             </label>
           </div>
@@ -277,8 +277,8 @@
 
   <footer class="site-footer">
     <div class="container">
-      <span>IDBC Salary Guide — Talent Market &amp; Salary Guide 2026</span>
-      <span><a href="../index.html#trends">Vissza a trendekhez</a></span>
+      <span data-sync="SHARED-FOOTER-IDBC-SALARY-GUIDE-TALENT">IDBC Salary Guide — Talent Market &amp; Salary Guide 2026</span>
+      <span><a href="../index.html#trends" data-sync="SHARED-FOOTER-VISSZA-A-TRENDEKHEZ">Vissza a trendekhez</a></span>
     </div>
   </footer>
 
@@ -311,7 +311,9 @@
     const fmtPct = p => (Math.round(p * 10) / 10).toString().replace('.', ',') + '%';
     const PALETTE = ["#c9e5d8","#b5dbc8","#94cbaa","#6aae81","#4ba184","#3c8a70","#2f6f5c","#a5df8f","#8fd474","#55aa8b","#dcd08a","#e0a45a"];
     const paletteColor = i => PALETTE[i % PALETTE.length];
-    const NO_DATA = 'A kiválasztott szűrési feltételekhez nem érhető el adat.';
+    const NO_DATA = /*sync:SHARED-JS-NO-DATA*/"A kiválasztott szűrési feltételekhez nem érhető el adat.";
+    // Sheet texts with {placeholders} (IDBCSYNC): fill them in without touching anything else.
+    const fill = (s, v) => s.replace(/\{(\w+)\}/g, (m, k) => (k in v ? v[k] : m));
 
     const [AREAS, DATA] = await Promise.all([
       fetch('../data/areas.json', { cache: 'no-cache' }).then(r => r.json()).then(d => d.areas),
@@ -322,18 +324,18 @@
     const area = AREAS.find(a => a.slug === slug) || AREAS[0];
 
     // ---------- summary ----------
-    document.title = `${area.name} – Területi összefoglaló – Talent Market & Salary Guide 2026`;
+    document.title = fill(/*sync:TERULET-JS-TITLE*/"{terulet} – Területi összefoglaló – Talent Market & Salary Guide 2026", { terulet: area.name });
     el('areaTitle').textContent = area.name;
     // Placeholders in the client's two shapes; the final video / key thought replaces the inner markup.
     const mediaEl = el('areaMedia');
     if (area.media === 'video') {
       mediaEl.classList.add('is-video');
       mediaEl.setAttribute('role', 'img');
-      mediaEl.setAttribute('aria-label', `Videó helye – ${area.name}`);
-      mediaEl.innerHTML = '<span class="play-button" aria-hidden="true"></span><p class="media-note">A terület videója ide kerül</p>';
+      mediaEl.setAttribute('aria-label', fill(/*sync:TERULET-JS-VIDEO-ARIA*/"Videó helye – {terulet}", { terulet: area.name }));
+      mediaEl.innerHTML = `<span class="play-button" aria-hidden="true"></span><p class="media-note">${esc(/*sync:TERULET-JS-VIDEO-NOTE*/"A terület videója ide kerül")}</p>`;
     } else {
       mediaEl.classList.add('is-highlight');
-      mediaEl.innerHTML = `<blockquote>„A(z) ${esc(area.name)} terület kulcsgondolata ide kerül”</blockquote>`;
+      mediaEl.innerHTML = `<blockquote>${esc(fill(/*sync:TERULET-JS-KEYTHOUGHT*/"„A(z) {terulet} terület kulcsgondolata ide kerül”", { terulet: area.name }))}</blockquote>`;
     }
     el('summaryBody').innerHTML = area.summary.split('\n\n')
       .map(t => `<p>${esc(t)}</p>`).join('');
@@ -358,7 +360,7 @@
     }
     btn.addEventListener('click', () => {
       expanded = !expanded;
-      btn.textContent = expanded ? 'Mutass kevesebbet' : 'Olvass tovább';
+      btn.textContent = expanded ? /*sync:TERULET-JS-READ-LESS*/"Mutass kevesebbet" : /*sync:TERULET-BUTTON-OLVASS-TOVABB*/"Olvass tovább";
       btn.setAttribute('aria-expanded', String(expanded));
       body.classList.toggle('is-clamped', !expanded);
       applyClamp();
@@ -370,12 +372,9 @@
     // ---------- research results ----------
     // `edition` still selects which question set applies (the survey instrument itself only
     // ever had two variants — general and IT/IT Contracting — see data/SOURCES-AND-GAPS.md), but
-    // the actual figures now come from this area's own real crosstab, not a pooled sample.
-    //
-    // guide-data.json's `datasets` object is keyed by the area's ORIGINAL name (the converter's
-    // output predates the 2026-09 taxonomy rename in areas.json), so the join uses `dataKey` —
-    // areas.json's bridge field — rather than the current, renamed `area.name` used for display.
-    const dsKey = DATA.datasets[area.dataKey] ? area.dataKey : DATA.totalKey;
+    // the actual figures come from this area's own real crosstab, not a pooled sample.
+    // guide-data.json keys each area's survey data by the area's slug.
+    const dsKey = DATA.datasets[area.slug] ? area.slug : DATA.totalKey;
     const dataset = DATA.datasets[dsKey];
     const areaData = dataset;
 
@@ -391,9 +390,10 @@
     // Same segment-filter behaviour as the main trends page (see ../index.html): a per-side
     // dropdown (tapasztalati szint / cégméret) that only offers segments with real data for the
     // current topic, and hides itself when the aggregate would be the only option.
-    const EXPERIENCE_ORDER = ["kevesebb, mint 1 év", "1-2 év", "3-5 év", "6-10 év", "11-20 év", "több, mint 20 év"];
-    const COMPANY_SIZE_ORDER = ["50 fő alatti", "51-100 fő", "101-350 fő", "351-1000 fő", "1000 fő feletti"];
-    const ALL_SEGMENT = DATA.totalLabel || 'Összesített adatok';
+    // Segment labels and their order come from the data (IDBCSYNC), not from the page.
+    const EXPERIENCE_ORDER = DATA.segments.employee;
+    const COMPANY_SIZE_ORDER = DATA.segments.employer;
+    const ALL_SEGMENT = DATA.totalLabel;
 
     function collectSegmentsForTopic(topic, side, sideKey, canonicalOrder) {
       const cross = areaData[side].cross;
@@ -527,7 +527,7 @@
           <div class="bar bar-compact"><span class="segment" style="width:${(it.value / max * 100).toFixed(1)}%;background:${paletteColor(3)}"></span></div>
           <div class="answer-value">${it.value.toFixed(2).replace('.', ',')}</div>
         </div>`).join('');
-      return `<section class="question-block"><h4 class="question-title">${esc(title)} <span class="scale-hint">(súlyozott átlag, 1–${max} skála)</span></h4>${rows}</section>`;
+      return `<section class="question-block"><h4 class="question-title">${esc(title)} <span class="scale-hint">${esc(fill(/*sync:SHARED-JS-SCALE-HINT*/"(súlyozott átlag, 1–{max} skála)", { max }))}</span></h4>${rows}</section>`;
     }
 
     function renderPanel(target, side, sideKey, segmentValue) {
@@ -542,7 +542,7 @@
         if (c.kind === 'weighted') return renderWeighted(q, c);
         return '';
       }).join('');
-      target.innerHTML = html || `<p class="no-data">${NO_DATA}</p>`;
+      target.innerHTML = html || `<p class="no-data">${esc(NO_DATA)}</p>`;
     }
 
     function renderAll() {

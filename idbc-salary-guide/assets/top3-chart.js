@@ -6,18 +6,20 @@
   const COLOR_IDBC = '#55aa8b';  // IDBC szakértői által javasolt bér
   const COLOR_MAX = '#245d54';   // jelöltek által elvárt bér
 
+  // The texts below carry a sync marker: they come from the IDBCSYNC sheet (data/idbcsync.py rewrites them).
   const LABEL = {
-    min: 'Vállalatok által kínált bér',
-    idbc: 'IDBC szakértői által javasolt bér',
-    max: 'Jelöltek által elvárt bér',
+    min: /*sync:SHARED-CHART-MIN*/"Vállalatok által kínált bér",
+    idbc: /*sync:SHARED-CHART-IDBC*/"IDBC szakértői által javasolt bér",
+    max: /*sync:SHARED-CHART-MAX*/"Jelöltek által elvárt bér",
   };
 
   // LinkedIn Talent Insight market count per TOP3 position (client, 2026-09): a pill under the
   // role name, and one explanatory footnote under the chart. Rendered only where a row carries
   // the number, so a position the client's list does not cover shows no pill.
   const hufFormat = new Intl.NumberFormat('hu-HU');
-  const TALENT_NOTE = '*Elérhető szakértők száma Magyarországon LinkedIn Talent Insight adatai alapján.';
-  const talentText = n => `${hufFormat.format(n)} elérhető jelölt*`;
+  const TALENT_NOTE = /*sync:SHARED-CHART-TALENT-NOTE*/"*Elérhető szakértők száma Magyarországon LinkedIn Talent Insight adatai alapján.";
+  const talentText = n => /*sync:SHARED-CHART-TALENT-PILL*/"{n} elérhető jelölt*".replace('{n}', () => hufFormat.format(n));
+  const LEGEND_LABEL = /*sync:SHARED-CHART-LEGEND-ARIA*/"Jelmagyarázat";
   const fmtHuf = n => (n === null || n === undefined) ? '–' : hufFormat.format(n) + ' Ft';
 
   // Compact millions for the narrow layout: 1 250 000 -> "1,25M", 1 300 000 -> "1,3M".
@@ -145,10 +147,10 @@
     }).join('');
 
     return `
-      <ul class="top3-chart-legend" aria-label="Jelmagyarázat">
-        <li><span style="background:${COLOR_MIN}"></span>${LABEL.min}</li>
-        <li><span style="background:${COLOR_IDBC}"></span>${LABEL.idbc}</li>
-        <li><span style="background:${COLOR_MAX}"></span>${LABEL.max}</li>
+      <ul class="top3-chart-legend" aria-label="${escapeHtml(LEGEND_LABEL)}">
+        <li><span style="background:${COLOR_MIN}"></span>${escapeHtml(LABEL.min)}</li>
+        <li><span style="background:${COLOR_IDBC}"></span>${escapeHtml(LABEL.idbc)}</li>
+        <li><span style="background:${COLOR_MAX}"></span>${escapeHtml(LABEL.max)}</li>
       </ul>
       <div class="top3-compact">${blocks}</div>
       ${talentNote(rows)}`;
@@ -249,10 +251,10 @@
     const summary = rows.map(r => `${r.pozicio}: ${fmtHuf(r.min)} – ${fmtHuf(r.max)}`).join('; ');
 
     return `
-      <ul class="top3-chart-legend" aria-label="Jelmagyarázat">
-        <li><span style="background:${COLOR_MIN}"></span>${LABEL.min}</li>
-        <li><span style="background:${COLOR_IDBC}"></span>${LABEL.idbc}</li>
-        <li><span style="background:${COLOR_MAX}"></span>${LABEL.max}</li>
+      <ul class="top3-chart-legend" aria-label="${escapeHtml(LEGEND_LABEL)}">
+        <li><span style="background:${COLOR_MIN}"></span>${escapeHtml(LABEL.min)}</li>
+        <li><span style="background:${COLOR_IDBC}"></span>${escapeHtml(LABEL.idbc)}</li>
+        <li><span style="background:${COLOR_MAX}"></span>${escapeHtml(LABEL.max)}</li>
       </ul>
       <div class="top3-chart-scroll">
         <svg class="top3-chart" viewBox="0 0 ${W} ${H}" role="group" aria-label="${escapeHtml((opts.chartLabel || 'TOP 3 pozíció havi bérértékei') + '. ' + summary)}">

@@ -10,9 +10,10 @@ Static HTML/CSS/JS wireframe and prototype pages (Lexodont dental site,
 IDBC Salary Guide, Holdvölgy, DiscountDirect, business.direct), no package manager, no
 test runner.
 Generators exist and must be re-run after editing their sources: `python3 holdvolgy/build.py`
-(site pages, HU + EN, from `build.py` content and `data/catalogue.json`); the two IDBC data
-converters (`idbc-salary-guide/data/build-guide-data.py <workbook>`,
-`build-salary-data.py <bértábla>` — the Talent Insight counts are columns in the bértábla sheet since 2026-09-21; the old second argument is a fallback); and `python3 build-docs.py` at the
+(site pages, HU + EN, from `build.py` content and `data/catalogue.json`); the IDBC sync
+(`idbc-salary-guide/data/idbcsync.py <IDBC_bertabla.xlsx>` — since 2026-09-25 every text and
+figure of the IDBC guide comes from the sheet's `IDBCSYNC` tab and a GitHub Action runs this
+every 15 minutes; edit the sheet, never a marked text in the pages, or the next sync reverts it); and `python3 build-docs.py` at the
 root, which renders every project's documentation from markdown. `python3 check.py` at the
 root is the gate (it runs the four project gates and a repo-wide link audit).
 Deployed to GitHub Pages straight from the `main` branch — there is no CI

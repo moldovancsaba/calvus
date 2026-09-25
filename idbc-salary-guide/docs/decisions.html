@@ -303,6 +303,13 @@ decision is added here first. "Owner" is the studio side; "client" is IDBC.</em>
 <td>owner (scope, twice confirmed), studio (method)</td>
 <td>the live <code>IDBC_bertabla</code> sheet, <code>IDBCSYNC</code> tab</td>
 </tr>
+<tr>
+<td>D37</td>
+<td>2026-09-25</td>
+<td><strong>IDBCSYNC is the single source of every text and figure on the guide, synced every 15 minutes.</strong> Owner directive: use <code>IDBCSYNC</code> as the SSOT for all data, sync every 15 minutes, hide the other tabs, hide the rows nobody needs to edit, hide the technical <code>id</code> column. D36's rows described the site but could not rebuild it (area summaries cut at 200 characters, respondent counts only inside help text, lists packed into one cell), so the tab was rebuilt as one editable value per row: 17,637 rows, 4,266 left visible (every page text, area texts, the bértábla, Expert Pool, the SAP catalogue, survey questions and answer labels) and 13,371 hidden (survey figures, screen-reader labels, technical keys). Every visible text on the eight pages carries <code>data-sync="ID"</code> (attributes <code>data-sync-attr</code>, phone and e-mail links <code>data-sync-href</code>), every on-screen text in the page scripts and <code>assets/top3-chart.js</code> a <code>/*sync:ID*/</code> marker; header and footer texts are one row for all pages, and the home tiles, the Piaci trendek dropdown and the area pages read the area's one name row. <code>data/idbcsync.py</code> rebuilds <code>guide-data.json</code>, <code>areas.json</code> and the page texts from the sheet's export and replaces both old converters (<code>build-guide-data.py</code>, <code>build-salary-data.py</code>, removed; the unused <code>talentInsightTop3</code>, <code>readme</code>, <code>siteMap</code>, <code>filterDimensions</code> blocks and <code>areas.json</code>'s <code>dataKey</code> bridge went with them). Survey labels are stored once per question, percentages once per cell, the respondent count once per segment — the "(N fő)" tooltip count is derived from them and reproduces all 1,846 source rows exactly. Proven before switching: rebuilt from the rows, the data had zero differences in any survey payload, salary row or area text, and 584 home filter combinations, 11 area pages, Bérek (every area, 1440 and 390 px), SAP and Expert Pool rendered the same HTML as the live site. Intended differences only: the Piaci trendek "Szegmens" dropdown shows the areas' current names in tile order (it still showed the names from before 2026-09-22); two trailing spaces in Expert Pool position names trimmed; Bérek and SAP split on a fixed area key (<code>kod</code>), so renaming the SAP area in the sheet cannot move SAP rows onto Bérek. A sheet error (a date where text belongs, a word in a salary, an unknown <code>{placeholder}</code>, a missing row) stops the sync before anything is written and names the row; every value is HTML-escaped. Flagged to the owner: the sheet is editable by anyone with its link, so anyone holding the link can change the live guide within about 15 minutes.</td>
+<td></td>
+<td></td>
+</tr>
 </tbody>
 </table></div>
 <h2>Standing rules that came out of these</h2>
@@ -312,6 +319,7 @@ decision is added here first. "Owner" is the studio side; "client" is IDBC.</em>
 <li>One template per repeated thing (area pages, tiles, chart) — never eleven copies (D11).</li>
 <li>In fine-tuning, only the reported item changes; nothing is restructured or hidden unasked (D24, D25).</li>
 <li>Client feedback naming a backend/CMS capability the prototype cannot have (accounts, a rich-text editor, live data sync) is flagged back, never faked with static content pretending to be dynamic (D30).</li>
+<li>Every text and figure on the guide comes from the <code>IDBCSYNC</code> sheet tab; change the sheet, not the page — a hand edit to a marked text is overwritten by the next sync (D37).</li>
 </ul>
 <footer>IDBC Talent Market &amp; Salary Guide 2026 · documentation</footer>
 </div>

@@ -64,16 +64,17 @@ does. Terms are the SSOT's (<a href="ssot.html"><code>10-ssot.md</code></a>); th
 <tr>
 <td><strong>The studio</strong></td>
 <td>—</td>
-<td>the converters, the pages, the documentation</td>
+<td>the sync, the pages, the documentation</td>
 </tr>
 </tbody>
 </table></div>
 <h2>2. The data — what is real, and how a figure reaches a page (R1, R6, R10)</h2>
 <ul>
-<li><strong>No figure is invented.</strong> Every number traces to a client file: the survey workbook
-  (<code>build-guide-data.py</code>), the bértábla and the Talent Insight workbook
-  (<code>build-salary-data.py</code>). A re-run is byte-identical; a renamed position fails the build
-  rather than guessing (R6).</li>
+<li><strong>No figure is invented.</strong> Every number and text comes from one place, the <code>IDBCSYNC</code>
+  tab of the client's sheet (D37): the survey results, the bértábla with its Talent Insight
+  counts, the Expert Pool, the SAP catalogue, the area texts and the page copy. The sync
+  (<code>data/idbcsync.py</code>, every 15 minutes) is deterministic — the same sheet gives the same
+  site — and refuses a value it cannot read rather than guessing (R6).</li>
 <li><strong>The survey</strong> is tabulated as twelve datasets: the whole sample (<em>Összesített adatok</em>,
   first and default — R2) and eleven areas, each with employee and employer sides and
   their crosstabs (experience band; company size). A question with no data under a chosen

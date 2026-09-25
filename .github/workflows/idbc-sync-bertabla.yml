@@ -1,24 +1,29 @@
-name: IDBC — sync IDBC_bertabla
+name: IDBC — sync from IDBCSYNC
 
-# On-demand sync (ADR-2's upgrade path, idbc-salary-guide/docs/11-architecture.md): pulls the
-# client's IDBC_bertabla Google Sheet via its public export URL (no credentials — the sheet is
-# shared "anyone with the link can view/edit"), runs the same converter a human runs manually
-# today, gates the result, and pushes straight to main if the gate passes. Nothing runs on a
-# schedule; it only fires when someone clicks "Run workflow".
-#
-# This does NOT cover the market-trends/survey half of the data (build-guide-data.py) — that
-# source is a one-off Excel file emailed by the client, not a live Google Sheet with a stable
-# URL. Add a second job here if the client ever puts that data in a Sheet too.
+# The IDBC Salary Guide is built from one place: the IDBCSYNC tab of the client's IDBC_bertabla
+# Google Sheet (idbc-salary-guide/docs/11-architecture.md ADR-2, decision D37). This pulls the
+# sheet through its public export URL (no credentials — the sheet is shared "anyone with the
+# link"), rebuilds the data files and every page text with idbc-salary-guide/data/idbcsync.py,
+# runs the repo gate, and pushes to main only when something actually changed. A sheet error
+# (a date where text belongs, a word in a salary, an unknown {placeholder}) stops the run before
+# anything is written — the live site keeps its last good version and the log names the row.
 
 on:
+  schedule:
+    - cron: "*/15 * * * *"   # every 15 minutes; GitHub may start a scheduled run a few minutes late
   workflow_dispatch: {}
 
 permissions:
   contents: write
 
+concurrency:
+  group: idbc-sync
+  cancel-in-progress: false
+
 jobs:
   sync:
     runs-on: ubuntu-latest
+    timeout-minutes: 10
     steps:
       - uses: actions/checkout@v4
 
@@ -38,20 +43,23 @@ jobs:
             exit 1
           }
 
-      - name: Rebuild guide-data.json from the sheet
-        run: python3 idbc-salary-guide/data/build-salary-data.py /tmp/IDBC_bertabla.xlsx
+      - name: Rebuild the guide from IDBCSYNC
+        run: python3 idbc-salary-guide/data/idbcsync.py /tmp/IDBC_bertabla.xlsx
 
       - name: Run the repo gate
         run: python3 check.py
 
-      - name: Commit and push if the data actually changed
+      - name: Commit and push if anything changed
         run: |
-          if git diff --quiet -- idbc-salary-guide/data/guide-data.json; then
-            echo "No change from the sheet — nothing to sync."
+          cd idbc-salary-guide
+          FILES="data/guide-data.json data/areas.json assets/top3-chart.js index.html berezes/index.html sap/index.html expert-pool/index.html esettanulmanyok/index.html regisztracio/index.html kapcsolat/index.html terulet/index.html"
+          if git diff --quiet -- $FILES; then
+            echo "No change in IDBCSYNC — nothing to sync."
             exit 0
           fi
           git config user.name "idbc-data-sync"
           git config user.email "idbc-data-sync@users.noreply.github.com"
-          git add idbc-salary-guide/data/guide-data.json
-          git commit -m "IDBC_bertabla sync: pull the latest salary-band sheet"
+          git add -- $FILES
+          git commit -m "IDBC Salary Guide: sync from IDBCSYNC" -m "$(git diff --cached --stat | tail -1)"
+          git pull --rebase origin main
           git push
