@@ -151,3 +151,4 @@ DPIA decision. Rules R12–R14.
 | `12-technical-design.md` | templates, data pipeline, registration, export, media, analytics | a design detail changes |
 | `13-implementation-plan.md` | milestones, issues with DoD, blocked register, risks | scope or sequencing changes |
 | `14-token-map.md` | page tokens and components → production | a token or component changes |
+| `16-developer-handover.md` | the practical path for a developer: run, rebuild, the sheet, the data, the interactive parts | the sheet, the sync or an interactive part changes |

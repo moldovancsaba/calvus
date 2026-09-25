@@ -24,7 +24,8 @@ every project.
 | 12 technical design | `12-technical-design.md` | Templates, content model, data pipeline, JSON slices, registration and gate, forms, media, analytics, performance, operations |
 | 13 implementation plan | `13-implementation-plan.md` | M0–M6, SG-000..081 with DoD, blocked register, risks, Release 1 |
 | 14 token map | `14-token-map.md` | Page tokens → one stylesheet; components → templates |
-| 15 idbc.hu alignment | `15-idbc-hu-alignment.md` | idbc.hu measured next to the prototype; what changes, the decisions first, the phased plan (2026-09-25, not built) |
+| 15 idbc.hu alignment | `15-idbc-hu-alignment.md` | idbc.hu measured next to the prototype; what changes, the decisions first, the phased plan (2026-09-25; delivered the same day, D39) |
+| 16 developer handover | `16-developer-handover.md` | **For developers taking the prototype live**: running and rebuilding it, the `IDBCSYNC` sheet and its rules, three ways to get the data out, how the survey, salary and Expert Pool parts work and move to production (2026-09-25) |
 
 
 ## Process log
@@ -241,4 +242,11 @@ unchanged. The Qualified Person count the client was asked for (C-10) is now in 
 **2026-09-25 — Expert Pool data bold; row visibility by hand (D46).** The Expert Pool data rows
 (4066–4185) are bold. The owner now shows and hides rows by hand (currently rows 2–469 and 4291–18024 hidden,
 470–4290 visible, column A shown); the sync ignores visibility.
+
+**2026-09-25 — developer handover written (`16-developer-handover.md`).** At the owner's
+request, a guide for developers who take the prototype into the live environment: running and
+rebuilding it, the `IDBCSYNC` sheet (columns, what the sync accepts, id families, who may
+change what), three ways to get the data out, and the survey, salary and Expert Pool parts in
+detail — code, data, controls, the rules they apply, and what changes in production. Written
+from the code, not from memory.
 

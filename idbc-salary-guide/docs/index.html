@@ -36,7 +36,7 @@ footer{margin-top:56px;padding-top:18px;border-top:1px solid var(--line);font-si
 </head>
 <body>
 <div class="wrap">
-<nav class="docnav" aria-label="Project documentation"><span class="docnav-brand">IDBC Salary Guide · documentation</span><a href="index.html" aria-current=page>Overview</a><a href="bemutato.html">Bemutató</a><a href="brief.html">Brief</a><a href="research.html">Research</a><a href="audit.html">Audit</a><a href="sources.html">Sources & gaps</a><a href="decisions.html">Decisions</a><a href="design.html">Design</a><a href="gate.html">Gate</a><a href="client-asks.html">Register of asks</a><a href="prerequisites.html">Prerequisites</a><a href="business-logic.html">Business logic</a><a href="ssot.html">SSOT</a><a href="architecture.html">Architecture</a><a href="technical-design.html">Technical design</a><a href="implementation-plan.html">Implementation plan</a><a href="token-map.html">Token map</a><a href="idbc-hu-alignment.html">idbc.hu alignment</a></nav>
+<nav class="docnav" aria-label="Project documentation"><span class="docnav-brand">IDBC Salary Guide · documentation</span><a href="index.html" aria-current=page>Overview</a><a href="bemutato.html">Bemutató</a><a href="brief.html">Brief</a><a href="research.html">Research</a><a href="audit.html">Audit</a><a href="sources.html">Sources & gaps</a><a href="decisions.html">Decisions</a><a href="design.html">Design</a><a href="gate.html">Gate</a><a href="client-asks.html">Register of asks</a><a href="prerequisites.html">Prerequisites</a><a href="business-logic.html">Business logic</a><a href="ssot.html">SSOT</a><a href="architecture.html">Architecture</a><a href="technical-design.html">Technical design</a><a href="implementation-plan.html">Implementation plan</a><a href="token-map.html">Token map</a><a href="idbc-hu-alignment.html">idbc.hu alignment</a><a href="developer-handover.html">Developer handover</a></nav>
 <header><p class="eyebrow">IDBC Salary Guide · project documentation</p><h1>IDBC Salary Guide — project documentation</h1></header>
 <p>The whole project next to the prototype: what it is, what the client gave, what was
 decided, what was measured, what production needs. Each file is dated inside; this index
@@ -139,7 +139,12 @@ every project.</p>
 <tr>
 <td>15 idbc.hu alignment</td>
 <td><a href="idbc-hu-alignment.html"><code>15-idbc-hu-alignment.md</code></a></td>
-<td>idbc.hu measured next to the prototype; what changes, the decisions first, the phased plan (2026-09-25, not built)</td>
+<td>idbc.hu measured next to the prototype; what changes, the decisions first, the phased plan (2026-09-25; delivered the same day, D39)</td>
+</tr>
+<tr>
+<td>16 developer handover</td>
+<td><a href="developer-handover.html"><code>16-developer-handover.md</code></a></td>
+<td><strong>For developers taking the prototype live</strong>: running and rebuilding it, the <code>IDBCSYNC</code> sheet and its rules, three ways to get the data out, how the survey, salary and Expert Pool parts work and move to production (2026-09-25)</td>
 </tr>
 </tbody>
 </table></div>
@@ -329,6 +334,12 @@ unchanged. The Qualified Person count the client was asked for (C-10) is now in 
 <p><strong>2026-09-25 — Expert Pool data bold; row visibility by hand (D46).</strong> The Expert Pool data rows
 (4066–4185) are bold. The owner now shows and hides rows by hand (currently rows 2–469 and 4291–18024 hidden,
 470–4290 visible, column A shown); the sync ignores visibility.</p>
+<p><strong>2026-09-25 — developer handover written (<a href="developer-handover.html"><code>16-developer-handover.md</code></a>).</strong> At the owner's
+request, a guide for developers who take the prototype into the live environment: running and
+rebuilding it, the <code>IDBCSYNC</code> sheet (columns, what the sync accepts, id families, who may
+change what), three ways to get the data out, and the survey, salary and Expert Pool parts in
+detail — code, data, controls, the rules they apply, and what changes in production. Written
+from the code, not from memory.</p>
 <footer>IDBC Talent Market &amp; Salary Guide 2026 · documentation</footer>
 </div>
 </body>
