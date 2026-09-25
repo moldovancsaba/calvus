@@ -35,7 +35,7 @@ footer{margin-top:56px;padding-top:18px;border-top:1px solid var(--line);font-si
 </head>
 <body>
 <div class="wrap">
-<nav class="docnav" aria-label="Project documentation"><span class="docnav-brand">IDBC Salary Guide · documentation</span><a href="index.html">Overview</a><a href="bemutato.html">Bemutató</a><a href="brief.html">Brief</a><a href="research.html">Research</a><a href="audit.html">Audit</a><a href="sources.html" aria-current=page>Sources & gaps</a><a href="decisions.html">Decisions</a><a href="design.html">Design</a><a href="gate.html">Gate</a><a href="client-asks.html">Register of asks</a><a href="prerequisites.html">Prerequisites</a><a href="business-logic.html">Business logic</a><a href="ssot.html">SSOT</a><a href="architecture.html">Architecture</a><a href="technical-design.html">Technical design</a><a href="implementation-plan.html">Implementation plan</a><a href="token-map.html">Token map</a></nav>
+<nav class="docnav" aria-label="Project documentation"><span class="docnav-brand">IDBC Salary Guide · documentation</span><a href="index.html">Overview</a><a href="bemutato.html">Bemutató</a><a href="brief.html">Brief</a><a href="research.html">Research</a><a href="audit.html">Audit</a><a href="sources.html" aria-current=page>Sources & gaps</a><a href="decisions.html">Decisions</a><a href="design.html">Design</a><a href="gate.html">Gate</a><a href="client-asks.html">Register of asks</a><a href="prerequisites.html">Prerequisites</a><a href="business-logic.html">Business logic</a><a href="ssot.html">SSOT</a><a href="architecture.html">Architecture</a><a href="technical-design.html">Technical design</a><a href="implementation-plan.html">Implementation plan</a><a href="token-map.html">Token map</a><a href="idbc-hu-alignment.html">idbc.hu alignment</a></nav>
 <header><p class="eyebrow">IDBC Salary Guide · project documentation</p><h1>IDBC Salary Guide — data sources and design-intent audit</h1></header>
 <p>This documents every file in the client's Drive folder (<code>IDBC</code>, folder id
 <code>1aOhkzvH0YtJVFkaIq85QsrCaqb4_JTQv</code>) that feeds this project, how each one
@@ -1212,6 +1212,26 @@ removed from the repo.</p>
 <p><strong>Adding</strong> a row (a new position, IT Contracting's salaries when they arrive) needs a new id,
 so it is a studio task or needs column A shown; changing or clearing values never does —
 a cleared position, tile or SAP item disappears from the page.</p>
+<h2>idbc.hu alignment — plan and Phase 0 (2026-09-25)</h2>
+<p>idbc.hu was measured page by page (header, hero, section titles, cards, buttons, forms,
+footer, type scale, container, colours) and set next to the prototype in
+<code>docs/15-idbc-hu-alignment.md</code> (D38). The colours already match; the typeface (Gilroy,
+commercial, served without cross-origin headers so it cannot be borrowed), the scale and the
+shell do not. Nothing in the pages changed yet.</p>
+<p><strong>Phase 0 — facts.</strong> The prototype's footer disagreed with idbc.hu on the phone
+(+36 30 479 0090 vs <strong>8</strong>090) and the floor (5. vs <strong>13.</strong> emelet). Both are IDBCSYNC rows, so
+they were corrected in the sheet (C17, C20), not in the pages; the next sync carries them to
+all seven pages with that footer. The legal links (idbc.hu: Panaszbejelentő → FaceUp,
+Adatkezelési tájékoztató → <code>/adatvedelem/</code>) wait for the footer rebuild (Phase 2).</p>
+<p><strong>Caught before publishing.</strong> The corrected phone, typed as <code>+36 30 479 8090</code>, was read by
+Sheets as a formula and exported as <code>#ERROR!</code> — despite the column's plain-text format — and
+the converter accepted any text, so the next sync would have printed <code>#ERROR!</code> in every
+footer. No run happened in between. The cell was retyped as <code>'+36 30 479 8090</code> (the sheet's
+own way to force text), the row's help text now says so, and <code>idbcsync.py</code> refuses every
+Sheets error value (<code>#ERROR!</code>, <code>#REF!</code>, <code>#N/A</code>, <code>#VALUE!</code>, <code>#NAME?</code>, <code>#DIV/0!</code>, <code>#NUM!</code>,
+<code>#NULL!</code>, <code>#SPILL!</code>, <code>#CALC!</code>) with the row named.</p>
+<p><strong>Schedule.</strong> In its first hour the 15-minute schedule (<code>*/15</code>) produced no run at all —
+GitHub delays or drops runs on the busy quarter-hour marks — so it moved to <code>7,22,37,52</code>.</p>
 <footer>IDBC Talent Market &amp; Salary Guide 2026 · documentation</footer>
 </div>
 </body>

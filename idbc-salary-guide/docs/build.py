@@ -25,6 +25,7 @@ PAGES = [  # (source, output, nav label)
     ("12-technical-design.md", "technical-design.html", "Technical design"),
     ("13-implementation-plan.md", "implementation-plan.html", "Implementation plan"),
     ("14-token-map.md", "token-map.html", "Token map"),
+    ("15-idbc-hu-alignment.md", "idbc-hu-alignment.html", "idbc.hu alignment"),
 ]
 CSS = (HERE / "docs.css").read_text(encoding="utf-8")
 

@@ -1097,3 +1097,28 @@ removed from the repo.
 so it is a studio task or needs column A shown; changing or clearing values never does —
 a cleared position, tile or SAP item disappears from the page.
 
+## idbc.hu alignment — plan and Phase 0 (2026-09-25)
+
+idbc.hu was measured page by page (header, hero, section titles, cards, buttons, forms,
+footer, type scale, container, colours) and set next to the prototype in
+`docs/15-idbc-hu-alignment.md` (D38). The colours already match; the typeface (Gilroy,
+commercial, served without cross-origin headers so it cannot be borrowed), the scale and the
+shell do not. Nothing in the pages changed yet.
+
+**Phase 0 — facts.** The prototype's footer disagreed with idbc.hu on the phone
+(+36 30 479 0090 vs **8**090) and the floor (5. vs **13.** emelet). Both are IDBCSYNC rows, so
+they were corrected in the sheet (C17, C20), not in the pages; the next sync carries them to
+all seven pages with that footer. The legal links (idbc.hu: Panaszbejelentő → FaceUp,
+Adatkezelési tájékoztató → `/adatvedelem/`) wait for the footer rebuild (Phase 2).
+
+**Caught before publishing.** The corrected phone, typed as `+36 30 479 8090`, was read by
+Sheets as a formula and exported as `#ERROR!` — despite the column's plain-text format — and
+the converter accepted any text, so the next sync would have printed `#ERROR!` in every
+footer. No run happened in between. The cell was retyped as `'+36 30 479 8090` (the sheet's
+own way to force text), the row's help text now says so, and `idbcsync.py` refuses every
+Sheets error value (`#ERROR!`, `#REF!`, `#N/A`, `#VALUE!`, `#NAME?`, `#DIV/0!`, `#NUM!`,
+`#NULL!`, `#SPILL!`, `#CALC!`) with the row named.
+
+**Schedule.** In its first hour the 15-minute schedule (`*/15`) produced no run at all —
+GitHub delays or drops runs on the busy quarter-hour marks — so it moved to `7,22,37,52`.
+

@@ -31,6 +31,7 @@ TOKENS = {"HOME-JS-TOOLTIP-COUNT": {"n"}, "SHARED-JS-SCALE-HINT": {"max"},
           "POOL-JS-TIP": {"iparag", "pozicio", "darab", "osszes", "arany"},
           "SHARED-CHART-TALENT-PILL": {"n"}}
 MEDIA = {"video", "highlight"}
+SHEET_ERROR = re.compile(r"#(ERROR!|REF!|N/A|VALUE!|NAME\?|DIV/0!|NUM!|NULL!|SPILL!|CALC!)")
 YES, NO = {"igen", "i", "x", "true", "1", "yes"}, {"nem", "n", "", "false", "0", "no"}
 
 errors, warnings = [], []
@@ -48,7 +49,14 @@ def cell_text(v, rid):
         return ""
     if isinstance(v, float):
         return str(int(v)) if v.is_integer() else repr(v)
-    return str(v).replace("\r\n", "\n").strip()
+    s = str(v).replace("\r\n", "\n").strip()
+    if SHEET_ERROR.fullmatch(s):
+        # A value typed with a leading + or = becomes a formula, and a broken one exports as its
+        # error code — which would otherwise be published as the text itself.
+        errors.append(f"{rid}: a cella hibát jelez ({s}) — ha az érték + vagy = jellel kezdődik, "
+                      f"írj elé aposztrófot (pl. '+36 30 …)")
+        return ""
+    return s
 
 
 def read_sheet(path):

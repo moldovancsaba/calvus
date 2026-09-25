@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>IDBC Salary Guide — aligning the prototype with idbc.hu · IDBC Salary Guide</title>
+<style>/* IDBC Salary Guide — documentation pages, on the guide's own tokens (dark green, light ground, Inter). */
+:root{--ground:#eef5ec;--card:#ffffff;--ink:#101818;--text:#2a3333;--muted:rgba(16,24,24,.66);--accent:#a5df8f;--accent-deep:#245d54;--line:rgba(19,35,35,.18);--line-soft:rgba(19,35,35,.08);--note:#e3efdf}
+*{box-sizing:border-box}
+body{margin:0;background:var(--ground);color:var(--text);font-family:"Inter","Montserrat","Segoe UI",Arial,sans-serif;font-size:15.5px;line-height:1.6;padding-block:0 64px;padding-inline:clamp(16px,4vw,40px)}
+.wrap{max-width:74ch;margin-inline:auto}
+.docnav{display:flex;flex-wrap:wrap;gap:4px 18px;align-items:center;padding:16px 0;border-bottom:1px solid var(--line);font-size:12px;letter-spacing:.06em;text-transform:uppercase}
+.docnav a{color:var(--muted);text-decoration:none;min-height:44px;min-width:44px;display:inline-flex;align-items:center;border-bottom:2px solid transparent}
+.docnav a:hover,.docnav a[aria-current]{color:var(--ink);border-color:var(--accent)}
+.docnav-brand{color:var(--accent-deep);font-weight:800;margin-right:6px}
+.docnav-hub{margin-left:auto}
+header{padding-block:40px 24px;border-bottom:1px solid var(--line);margin-bottom:28px}
+.eyebrow{font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--accent-deep);margin:0 0 12px;font-weight:800}
+h1,h2,h3{color:var(--ink);line-height:1.1;text-wrap:balance;margin:0;letter-spacing:-.02em}
+h1{font-size:clamp(30px,6vw,46px);font-weight:900}
+h2{font-size:clamp(23px,4vw,30px);font-weight:900;margin:48px 0 14px;padding-top:20px;border-top:1px solid var(--line)}
+h3{font-size:18px;margin:30px 0 8px;font-weight:800}
+p{margin:0 0 14px} strong{color:var(--ink);font-weight:800}
+ul,ol{padding-left:22px;margin:0 0 16px} li{margin:5px 0} li>ul{margin:6px 0 0}
+code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.86em;background:var(--note);padding:1px 5px;border-radius:4px;color:var(--ink);overflow-wrap:anywhere}
+pre{overflow-x:auto;padding:14px 16px;border:1px solid var(--line);border-radius:10px;background:var(--card);font-size:12px;line-height:1.35}
+pre code{background:none;padding:0;font-size:inherit}
+a{color:var(--accent-deep)} :focus-visible{outline:2px solid var(--accent-deep);outline-offset:2px}
+.tbl{overflow-x:auto;margin:14px 0 22px;border:1px solid var(--line);border-radius:10px;background:var(--card)}
+table{border-collapse:collapse;width:100%;font-size:13.5px;min-width:560px}
+th{text-align:left;font-weight:800;color:var(--ink);background:var(--note);padding:10px 12px;border-bottom:1px solid var(--line);font-size:11.5px;letter-spacing:.06em;text-transform:uppercase}
+td{padding:10px 12px;border-top:1px solid var(--line-soft);vertical-align:top;background:var(--card)} td:first-child{color:var(--ink)}
+footer{margin-top:56px;padding-top:18px;border-top:1px solid var(--line);font-size:12px;color:var(--muted)}
+</style>
+</head>
+<body>
+<div class="wrap">
+<nav class="docnav" aria-label="Project documentation"><span class="docnav-brand">IDBC Salary Guide · documentation</span><a href="index.html">Overview</a><a href="bemutato.html">Bemutató</a><a href="brief.html">Brief</a><a href="research.html">Research</a><a href="audit.html">Audit</a><a href="sources.html">Sources & gaps</a><a href="decisions.html">Decisions</a><a href="design.html">Design</a><a href="gate.html">Gate</a><a href="client-asks.html">Register of asks</a><a href="prerequisites.html">Prerequisites</a><a href="business-logic.html">Business logic</a><a href="ssot.html">SSOT</a><a href="architecture.html">Architecture</a><a href="technical-design.html">Technical design</a><a href="implementation-plan.html">Implementation plan</a><a href="token-map.html">Token map</a><a href="idbc-hu-alignment.html" aria-current=page>idbc.hu alignment</a></nav>
+<header><p class="eyebrow">IDBC Salary Guide · project documentation</p><h1>IDBC Salary Guide — aligning the prototype with idbc.hu</h1></header>
+<p><em>What idbc.hu looks like, measured, next to what the prototype does today; what has to
+change, in which order, and what needs a decision first. Written 2026-09-25 from the live
+site (home, <code>/go/sap/</code>, <code>/talent/</code>, a blog article, <code>/kapcsolat/</code>) at 1440 and 375 px.
+Phase 0 applied the same day (D38); phases 1–6 wait on the decisions in §5.</em></p>
+<h2>1. Why</h2>
+<p>The guide is meant to live inside idbc.hu (ADR-1, <a href="architecture.html"><code>11-architecture.md</code></a>); the client's own
+home mockup already places it in that template. The prototype's look came from the client's
+2026-07/08 HTML demos (<a href="design.html"><code>05-design.md</code></a>), which share idbc.hu's colours but not its type, scale
+or components. Aligning now means the client reviews the guide as it will actually look, and
+the production build (ADR-6: transcribe the prototype) inherits idbc.hu's design instead of a
+second one.</p>
+<h2>2. idbc.hu, measured</h2>
+<p>WordPress theme on Bootstrap 5 with its own stylesheet (<code>/includes/css/style.css</code>), Gilroy
+self-hosted in five weights (Light–Heavy), a light noise-texture page ground, dark sections.
+Every page is built from a small set of section templates:</p>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>Template</th>
+<th>Where</th>
+<th>What it is</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Header</td>
+<td>every page</td>
+<td>floating dark bar (<code>#121c1b</code>), 1312 px wide, 79 px tall, bottom corners 32 px; SVG logo "IDBC group" (100 px); EN/HU pills (active green); 5 links 15/600 in <code>#f5f9f2</code>; two 40 px buttons in a green-outlined group ("Ajánlatkérés", "CV feltöltés"); sticky; hamburger (green) below 1200 px</td>
+</tr>
+<tr>
+<td>Hero</td>
+<td>service pages</td>
+<td>dark band (<code>#14201f</code>), photo(s) with 32 px corners, centred dark card (top corners 32 px) with <code>h1</code> 62/48 bold white, one line 20 px, two 56 px buttons (green filled + green outline)</td>
+</tr>
+<tr>
+<td>Hero type 2</td>
+<td>articles, contact</td>
+<td>light green band, <code>h1</code> 40/48, author chip</td>
+</tr>
+<tr>
+<td>Section title</td>
+<td>every section</td>
+<td><code>h1.section-title</code> 56/64 bold <code>#121c1b</code>, left or centred; no eyebrow</td>
+</tr>
+<tr>
+<td>Numbers</td>
+<td>home</td>
+<td>four <code>#35715c</code> cards, 32 px corners, figure 56/64 weight 800 in <code>#daf1d0</code>, uppercase label</td>
+</tr>
+<tr>
+<td>Service rows</td>
+<td>home, GO</td>
+<td>green (<code>#a4dd8c</code>) cards, photo left, title 24/32 bold, arrow button in a dark square</td>
+</tr>
+<tr>
+<td>Callout</td>
+<td>home</td>
+<td>light green (<code>#daf1d0</code>) panel, 24–32 px corners, black button</td>
+</tr>
+<tr>
+<td>Accordions</td>
+<td>Talent, Projects, GO</td>
+<td>expandable rows</td>
+</tr>
+<tr>
+<td>Dark card carousel</td>
+<td>home, GO, Talent</td>
+<td><code>#14201f</code> band, light cards (<code>#f5f9f2</code>, 24 px corners), author chip, tags</td>
+</tr>
+<tr>
+<td>Partner quotes</td>
+<td>most pages</td>
+<td>light cards, 40 px corners, green glow <code>0 0 34px #65b1a1</code></td>
+</tr>
+<tr>
+<td>Contact form</td>
+<td>bottom of every page</td>
+<td>dark panel, 56 px corners, green glow <code>0 32px 128px #a4dd8c</code>; green title; segmented toggle (Állást keresek / Cégként…); white inner card; underline inputs (2 px bottom border)</td>
+</tr>
+<tr>
+<td>Article body</td>
+<td>blog</td>
+<td>840 px measure, text 18/27, <code>h2</code> 32/48</td>
+</tr>
+<tr>
+<td>Footer</td>
+<td>every page</td>
+<td><code>#121c1b</code>, top corners 56 px, logo, "Your professional boost!", phone, e-mail, address, 5 social icons, four link columns, bottom bar (© line, Panaszbejelentő, Adatkezelési tájékoztató); text <code>#a2a9a8</code></td>
+</tr>
+</tbody>
+</table></div>
+<p>Buttons: 8 px corners, weight 600; 40 px (header), 56 px (default, 20 px text), 64 px
+(<code>__lg</code>); variants green, green-outline, black (with a soft light glow), black-outline.
+Container 1280 px; section padding 48 px desktop / 32 px phone; phone side padding 16 px.
+Type scale (theme variables): title 56/64 → 28/36 on phones, <code>h1</code> 40/48, <code>h2</code> 32/48, <code>h3</code>
+24/32, <code>h5</code> 20/26, body 16/28.</p>
+<h2>3. Side by side</h2>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th></th>
+<th>idbc.hu</th>
+<th>Prototype today</th>
+<th>Change</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Dark</td>
+<td><code>#121c1b</code>, sections <code>#14201f</code></td>
+<td><code>#132323</code>, footer <code>#0b1818</code></td>
+<td>take idbc.hu's</td>
+</tr>
+<tr>
+<td>Green</td>
+<td><code>#a4dd8c</code></td>
+<td><code>#a5df8f</code></td>
+<td>take idbc.hu's</td>
+</tr>
+<tr>
+<td>Mid / pale greens</td>
+<td><code>#35715c</code>, <code>#4ca283</code>, <code>#daf1d0</code></td>
+<td>chart ramp <code>#55aa8b</code>, <code>#245d54</code></td>
+<td>chart ramp to idbc.hu greens (check contrast)</td>
+</tr>
+<tr>
+<td>Ground</td>
+<td>light + noise texture</td>
+<td><code>#eef5ec</code> + dot pattern</td>
+<td>light ground + texture</td>
+</tr>
+<tr>
+<td>Typeface</td>
+<td>Gilroy 400–800</td>
+<td>Inter 700–900</td>
+<td>Gilroy if licensed (§5), else the closest free face</td>
+</tr>
+<tr>
+<td>Section title</td>
+<td>56/64 bold, no eyebrow</td>
+<td>eyebrow (12 px uppercase) + <code>h2</code> 52/51</td>
+<td>drop eyebrows or restyle; 56/64 titles</td>
+</tr>
+<tr>
+<td>Header</td>
+<td>79 px, 1312 wide, links 15/600, 40 px buttons, SVG logo</td>
+<td>42 px, 980 wide, links 11/800, 25 px buttons, text logo</td>
+<td>rebuild to idbc.hu's header</td>
+</tr>
+<tr>
+<td>Hero</td>
+<td>photo band + centred card, <code>h1</code> 62, two 56 px buttons</td>
+<td>photo + card bottom-left, <code>h1</code> 42</td>
+<td>idbc.hu hero (service pages) or type 2 (articles)</td>
+</tr>
+<tr>
+<td>Cards</td>
+<td>24 / 32 / 40 px corners, flat or glow</td>
+<td>14 / 18 / 28 px, drop shadow</td>
+<td>idbc.hu radii and treatments</td>
+</tr>
+<tr>
+<td>Buttons</td>
+<td>8 px, 40/56/64 px, weight 600, glow</td>
+<td>8–10 px, 25–44 px, weight 900, 10–13 px text</td>
+<td>idbc.hu button set</td>
+</tr>
+<tr>
+<td>Selects / filters</td>
+<td>(none on idbc.hu)</td>
+<td>green filled selects</td>
+<td>keep, restyled with idbc.hu tokens and 56 px height</td>
+</tr>
+<tr>
+<td>Container</td>
+<td>1280</td>
+<td>1210</td>
+<td>1280</td>
+</tr>
+<tr>
+<td>Forms</td>
+<td>underline inputs, segmented toggle, glowing dark panel</td>
+<td>boxed inputs</td>
+<td>idbc.hu form</td>
+</tr>
+<tr>
+<td>Footer</td>
+<td>full idbc.hu footer</td>
+<td>short guide footer</td>
+<td>idbc.hu footer</td>
+</tr>
+</tbody>
+</table></div>
+<p>The data components have no idbc.hu equivalent and stay as the client designed them —
+TOP3 chart, salary tables, Expert Pool tiles, survey charts and filters — restyled with the
+tokens only (typeface, colours, radii); their behaviour and figures do not change.</p>
+<h2>4. Facts that differ today (content, not design)</h2>
+<p>The prototype's footer disagrees with idbc.hu:</p>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th></th>
+<th>idbc.hu</th>
+<th>Prototype (IDBCSYNC row)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Phone</td>
+<td>+36 30 479 <strong>8</strong>090</td>
+<td>was +36 30 479 <strong>0</strong>090 (<code>SHARED-FOOTER-36-30-479-0090</code>) — corrected in the sheet, Phase 0</td>
+</tr>
+<tr>
+<td>Address</td>
+<td>Duna Tower Irodaház A torony <strong>13.</strong> emelet</td>
+<td>was … <strong>5.</strong> emelet (<code>SHARED-FOOTER-CIM-DUNA-TOWER-IRODAHAZ</code>) — corrected in the sheet, Phase 0</td>
+</tr>
+<tr>
+<td>Legal links</td>
+<td>Panaszbejelentő → FaceUp page; Adatkezelési tájékoztató → <code>/adatvedelem/</code></td>
+<td>"Panaszszabályzat" and "Adatkezelési tájékoztató", both <code>href="#"</code></td>
+</tr>
+<tr>
+<td>Social</td>
+<td>LinkedIn, Facebook, Instagram, TikTok, YouTube</td>
+<td>none</td>
+</tr>
+</tbody>
+</table></div>
+<p>These are text rows in IDBCSYNC (fixed in the sheet, not the pages); the two link targets
+are page markup today and would become sheet rows with the footer rebuild.</p>
+<h2>5. Decisions needed before building</h2>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>#</th>
+<th>Decision</th>
+<th>Options</th>
+<th>Recommendation</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>A-1</td>
+<td>Typeface</td>
+<td>(a) IDBC confirms its Gilroy web licence covers the prototype's host, and the studio self-hosts the files; (b) a free near-match (Urbanist / Outfit) until production, where the guide sits on idbc.hu and inherits Gilroy</td>
+<td>ask IDBC; build with (b) until they answer — idbc.hu serves the font without cross-origin headers, so it cannot be borrowed from their server</td>
+</tr>
+<tr>
+<td>A-2</td>
+<td>Which design wins where idbc.hu and the client's own demos differ (hero card position, eyebrows, green summary cards, compact header)</td>
+<td>idbc.hu / demos, per component</td>
+<td>idbc.hu for the shell and page chrome; the demos for the data components — confirm with the client, since they reviewed the current pages three times</td>
+</tr>
+<tr>
+<td>A-3</td>
+<td>Header content</td>
+<td>(a) idbc.hu's own navigation (Szolgáltatások, Karrier…) with the guide as a sub-navigation; (b) idbc.hu's header shape with the guide's five links</td>
+<td>(b) for the prototype, (a) is production's job; logo = idbc.hu's SVG, linking to idbc.hu</td>
+</tr>
+<tr>
+<td>A-4</td>
+<td>Footer content</td>
+<td>(a) idbc.hu's full footer (links to idbc.hu pages, social); (b) idbc.hu's shape with guide links</td>
+<td>(a) — it is what a reader will see on idbc.hu</td>
+</tr>
+<tr>
+<td>A-5</td>
+<td>Photography</td>
+<td>stock (today) / idbc.hu's own photos (with permission)</td>
+<td>idbc.hu's own (already client ask C-6)</td>
+</tr>
+<tr>
+<td>A-6</td>
+<td>Correct the footer facts in §4 now</td>
+<td>yes / wait for the rebuild</td>
+<td>yes — two sheet edits, no design change</td>
+</tr>
+</tbody>
+</table></div>
+<h2>6. Plan</h2>
+<p>Each phase ends with the gate (<code>check.py</code>), a measured pass at 390 and 1440, no console
+errors, the IDBCSYNC check (§7) and a dated entry in <a href="sources.html"><code>SOURCES-AND-GAPS.md</code></a>.</p>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>Phase</th>
+<th>Work</th>
+<th>Done when</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>0 — facts</strong> (done 2026-09-25)</td>
+<td>§4 phone and floor fixed in IDBCSYNC (A-6); the phone is typed <code>'+36 …</code> — without the apostrophe Sheets reads it as a formula and exports <code>#ERROR!</code>, which the sync now refuses</td>
+<td>the live footer matches idbc.hu</td>
+</tr>
+<tr>
+<td><strong>1 — one stylesheet</strong></td>
+<td>the <code>:root</code> block every page repeats today becomes <code>assets/site.css</code> with idbc.hu's tokens (colours, type scale, radii, spacing, container 1280, buttons, ground texture) and the chosen face (A-1); pages keep only their page-specific rules</td>
+<td>every page loads one token file; a script compares every page's computed tokens with idbc.hu's measured values (the SG-010 check from <a href="token-map.html"><code>14-token-map.md</code></a>, brought forward)</td>
+</tr>
+<tr>
+<td><strong>2 — shell</strong></td>
+<td>header and footer rebuilt on idbc.hu's pattern on all eight pages (A-3, A-4): SVG logo, EN/HU pills, 15 px links, 40 px button group, sticky bar, green hamburger; full footer with social links and the real legal targets</td>
+<td>header and footer measure within 2 px of idbc.hu at 1440 and 375</td>
+</tr>
+<tr>
+<td><strong>3 — page chrome</strong></td>
+<td>heroes (service hero on Kezdőoldal, Bérek, SAP, Expert Pool; type 2 on Esettanulmányok, Regisztráció, Kapcsolat, area pages); section titles 56/64; the home figures ("11+ év", "11 terület"…) as idbc.hu's numbers cards; buttons; callouts; the contact and registration forms as idbc.hu's form; article pages at 840 px, 18/27</td>
+<td>each page's chrome is idbc.hu's template, side-by-side screenshots in the log</td>
+</tr>
+<tr>
+<td><strong>4 — data components</strong></td>
+<td>charts, tables, filters, tiles restyled with the tokens only; chart ramp moved to idbc.hu greens if contrast holds</td>
+<td>every chart and table renders the same figures as before (the render comparison used for D37), only style differs</td>
+</tr>
+<tr>
+<td><strong>5 — phone</strong></td>
+<td>idbc.hu's phone scale (titles 28/36, 16 px sides, 32 px sections), menu, 44 px tap floor kept</td>
+<td>375 px pass on every page, no horizontal scroll</td>
+</tr>
+<tr>
+<td><strong>6 — record</strong></td>
+<td><a href="design.html"><code>05-design.md</code></a>, <a href="token-map.html"><code>14-token-map.md</code></a>, decisions, bemutató updated</td>
+<td>docs match the pages</td>
+</tr>
+</tbody>
+</table></div>
+<h2>7. Keeping IDBCSYNC intact</h2>
+<p>Every visible text is a sheet row now (D37), so the rebuild follows three rules:</p>
+<ol>
+<li><strong>Kept texts keep their ids</strong> — moving an element keeps its <code>data-sync</code> attribute, so
+   whatever the client has edited survives.</li>
+<li><strong>New texts get rows before the pages go live.</strong> A page that references an id the sheet
+   lacks stops the sync, so new rows (header links, footer columns, social labels, hero
+   buttons) are added to the sheet first — the converter only warns about rows no page uses
+   yet — then the pages are pushed.</li>
+<li><strong>Read the sheet before touching it.</strong> The client edits it every day now; any import
+   starts from a fresh export, never from the studio's copy.</li>
+</ol>
+<h2>8. Risks</h2>
+<ul>
+<li><strong>Licence</strong> — Gilroy is a commercial face; nothing ships until A-1 is answered.</li>
+<li><strong>Client-approved layouts</strong> — the current pages were reviewed and corrected three times;
+  A-2 has to be the client's call, not the studio's.</li>
+<li><strong>Cached assets</strong> — the shared stylesheet and chart script carry <code>?v=</code> and are bumped on
+  every change.</li>
+<li><strong>A moving source</strong> — IDBCSYNC changes under the work; §7 keeps it safe.</li>
+</ul>
+<h2>9. Order and size</h2>
+<p>Phase 0 is minutes. Phases 1–2 are the foundation and change every page at once; 3 is page by
+page; 4 and 5 are small once 1 exists. Each phase can go live on its own.</p>
+<footer>IDBC Talent Market &amp; Salary Guide 2026 · documentation</footer>
+</div>
+</body>
+</html>

@@ -10,7 +10,9 @@ name: IDBC — sync from IDBCSYNC
 
 on:
   schedule:
-    - cron: "*/15 * * * *"   # every 15 minutes; GitHub may start a scheduled run a few minutes late
+    # Every 15 minutes, off the quarter-hour marks: GitHub starts runs scheduled on :00/:15/:30/:45
+    # late or not at all under load (the first hour of this schedule produced no run on those marks).
+    - cron: "7,22,37,52 * * * *"
   workflow_dispatch: {}
 
 permissions:

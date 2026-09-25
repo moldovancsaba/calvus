@@ -53,7 +53,9 @@ IDBCSYNC (sheet tab) ──▶ export .xlsx ──▶ data/idbcsync.py ──▶
   `top3-chart.js?v=` on every page.
 - **Validation before anything is written**: every marked id exists in the sheet; numbers
   are numbers (spaces and "Ft" tolerated), percentages 0–100, TOP3 `igen`/`nem`, media
-  `video`/`highlight`; a cell Google turned into a date is refused with the row named. A
+  `video`/`highlight`; a cell Google turned into a date, or a formula error (`#ERROR!`,
+  `#REF!` … — what a value typed with a leading `+` or `=` becomes), is refused with the row
+  named. Such values are typed with a leading apostrophe (`'+36 30 …`), the sheet's own way. A
   cleared position (salary row, Expert Pool tile, SAP item) is dropped from the page; an
   Expert Pool row without a count is left out with a warning.
 - **The job**: `.github/workflows/idbc-sync-bertabla.yml`, every 15 minutes and on

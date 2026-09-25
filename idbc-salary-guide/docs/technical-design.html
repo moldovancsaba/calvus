@@ -35,7 +35,7 @@ footer{margin-top:56px;padding-top:18px;border-top:1px solid var(--line);font-si
 </head>
 <body>
 <div class="wrap">
-<nav class="docnav" aria-label="Project documentation"><span class="docnav-brand">IDBC Salary Guide · documentation</span><a href="index.html">Overview</a><a href="bemutato.html">Bemutató</a><a href="brief.html">Brief</a><a href="research.html">Research</a><a href="audit.html">Audit</a><a href="sources.html">Sources & gaps</a><a href="decisions.html">Decisions</a><a href="design.html">Design</a><a href="gate.html">Gate</a><a href="client-asks.html">Register of asks</a><a href="prerequisites.html">Prerequisites</a><a href="business-logic.html">Business logic</a><a href="ssot.html">SSOT</a><a href="architecture.html">Architecture</a><a href="technical-design.html" aria-current=page>Technical design</a><a href="implementation-plan.html">Implementation plan</a><a href="token-map.html">Token map</a></nav>
+<nav class="docnav" aria-label="Project documentation"><span class="docnav-brand">IDBC Salary Guide · documentation</span><a href="index.html">Overview</a><a href="bemutato.html">Bemutató</a><a href="brief.html">Brief</a><a href="research.html">Research</a><a href="audit.html">Audit</a><a href="sources.html">Sources & gaps</a><a href="decisions.html">Decisions</a><a href="design.html">Design</a><a href="gate.html">Gate</a><a href="client-asks.html">Register of asks</a><a href="prerequisites.html">Prerequisites</a><a href="business-logic.html">Business logic</a><a href="ssot.html">SSOT</a><a href="architecture.html">Architecture</a><a href="technical-design.html" aria-current=page>Technical design</a><a href="implementation-plan.html">Implementation plan</a><a href="token-map.html">Token map</a><a href="idbc-hu-alignment.html">idbc.hu alignment</a></nav>
 <header><p class="eyebrow">IDBC Salary Guide · project documentation</p><h1>IDBC Salary Guide — technical design</h1></header>
 <p><em>The detail under <a href="architecture.html"><code>11-architecture.md</code></a>, on the PROPOSED stack. Written 2026-09-18.</em></p>
 <h2>1. Page kinds → templates</h2>
@@ -157,7 +157,9 @@ smaller JSON (charts, filters). Chart and tooltip code is <code>top3-chart.js</c
   <code>top3-chart.js?v=</code> on every page.</li>
 <li><strong>Validation before anything is written</strong>: every marked id exists in the sheet; numbers
   are numbers (spaces and "Ft" tolerated), percentages 0–100, TOP3 <code>igen</code>/<code>nem</code>, media
-  <code>video</code>/<code>highlight</code>; a cell Google turned into a date is refused with the row named. A
+  <code>video</code>/<code>highlight</code>; a cell Google turned into a date, or a formula error (<code>#ERROR!</code>,
+  <code>#REF!</code> … — what a value typed with a leading <code>+</code> or <code>=</code> becomes), is refused with the row
+  named. Such values are typed with a leading apostrophe (<code>'+36 30 …</code>), the sheet's own way. A
   cleared position (salary row, Expert Pool tile, SAP item) is dropped from the page; an
   Expert Pool row without a count is left out with a warning.</li>
 <li><strong>The job</strong>: <code>.github/workflows/idbc-sync-bertabla.yml</code>, every 15 minutes and on

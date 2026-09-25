@@ -12,7 +12,7 @@ every project.
 | 01 research | `01-research.md` | What was read (the client's specs, mockups, data, copy), the one external measurement, what was not researched and why |
 | 02 audit | `02-audit.md` | idbc.hu measured; the spec vs. the data; the client's data as it stands; defects found in the material |
 | 03 sources and assets | `../data/SOURCES-AND-GAPS.md` | Every source file and what it contributed, every gap, every change round with measurements — the running record since July |
-| 04 decisions | `04-decisions.md` | D1–D37, dated, with who and why |
+| 04 decisions | `04-decisions.md` | D1–D38, dated, with who and why |
 | 05 design | `05-design.md` | Where the look comes from (the client's mockups), tokens, layout |
 | 06 build log | `../data/SOURCES-AND-GAPS.md` | the dated change notes are the build log |
 | 07 gate | `07-gate.md` | The one-command gate, the measured pass, deliberate deviations |
@@ -24,6 +24,7 @@ every project.
 | 12 technical design | `12-technical-design.md` | Templates, content model, data pipeline, JSON slices, registration and gate, forms, media, analytics, performance, operations |
 | 13 implementation plan | `13-implementation-plan.md` | M0–M6, SG-000..081 with DoD, blocked register, risks, Release 1 |
 | 14 token map | `14-token-map.md` | Page tokens → one stylesheet; components → templates |
+| 15 idbc.hu alignment | `15-idbc-hu-alignment.md` | idbc.hu measured next to the prototype; what changes, the decisions first, the phased plan (2026-09-25, not built) |
 
 
 ## Process log
@@ -185,4 +186,13 @@ column A and the 13,371 survey-figure and technical rows hidden, and the value c
 plain text. The sync (`.github/workflows/idbc-sync-bertabla.yml`) runs every 15 minutes and on
 demand, and refuses a sheet error before anything is published. Flagged: anyone with the
 sheet's link can edit it, and so the live guide.
+
+**2026-09-25 — idbc.hu measured; alignment plan; Phase 0 (D38).** The owner asked to learn
+idbc.hu and plan the prototype's alignment with it. Home, `/go/sap/`, `/talent/`, a blog
+article and `/kapcsolat/` were measured at 1440 and 375 px against the prototype
+(`15-idbc-hu-alignment.md`): same colours, different typeface, scale and shell. The plan's
+Phase 0 went out the same day — the footer's phone and floor corrected in IDBCSYNC to
+idbc.hu's. A phone typed with a leading `+` turned into a formula error in the sheet before
+any sync ran; the sync now refuses Sheets error values. The 15-minute schedule moved off the
+quarter-hour marks, where GitHub had not started a single run in the first hour.
 

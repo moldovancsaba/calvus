@@ -35,7 +35,7 @@ footer{margin-top:56px;padding-top:18px;border-top:1px solid var(--line);font-si
 </head>
 <body>
 <div class="wrap">
-<nav class="docnav" aria-label="Project documentation"><span class="docnav-brand">IDBC Salary Guide · documentation</span><a href="index.html" aria-current=page>Overview</a><a href="bemutato.html">Bemutató</a><a href="brief.html">Brief</a><a href="research.html">Research</a><a href="audit.html">Audit</a><a href="sources.html">Sources & gaps</a><a href="decisions.html">Decisions</a><a href="design.html">Design</a><a href="gate.html">Gate</a><a href="client-asks.html">Register of asks</a><a href="prerequisites.html">Prerequisites</a><a href="business-logic.html">Business logic</a><a href="ssot.html">SSOT</a><a href="architecture.html">Architecture</a><a href="technical-design.html">Technical design</a><a href="implementation-plan.html">Implementation plan</a><a href="token-map.html">Token map</a></nav>
+<nav class="docnav" aria-label="Project documentation"><span class="docnav-brand">IDBC Salary Guide · documentation</span><a href="index.html" aria-current=page>Overview</a><a href="bemutato.html">Bemutató</a><a href="brief.html">Brief</a><a href="research.html">Research</a><a href="audit.html">Audit</a><a href="sources.html">Sources & gaps</a><a href="decisions.html">Decisions</a><a href="design.html">Design</a><a href="gate.html">Gate</a><a href="client-asks.html">Register of asks</a><a href="prerequisites.html">Prerequisites</a><a href="business-logic.html">Business logic</a><a href="ssot.html">SSOT</a><a href="architecture.html">Architecture</a><a href="technical-design.html">Technical design</a><a href="implementation-plan.html">Implementation plan</a><a href="token-map.html">Token map</a><a href="idbc-hu-alignment.html">idbc.hu alignment</a></nav>
 <header><p class="eyebrow">IDBC Salary Guide · project documentation</p><h1>IDBC Salary Guide — project documentation</h1></header>
 <p>The whole project next to the prototype: what it is, what the client gave, what was
 decided, what was measured, what production needs. Each file is dated inside; this index
@@ -78,7 +78,7 @@ every project.</p>
 <tr>
 <td>04 decisions</td>
 <td><a href="decisions.html"><code>04-decisions.md</code></a></td>
-<td>D1–D37, dated, with who and why</td>
+<td>D1–D38, dated, with who and why</td>
 </tr>
 <tr>
 <td>05 design</td>
@@ -134,6 +134,11 @@ every project.</p>
 <td>14 token map</td>
 <td><a href="token-map.html"><code>14-token-map.md</code></a></td>
 <td>Page tokens → one stylesheet; components → templates</td>
+</tr>
+<tr>
+<td>15 idbc.hu alignment</td>
+<td><a href="idbc-hu-alignment.html"><code>15-idbc-hu-alignment.md</code></a></td>
+<td>idbc.hu measured next to the prototype; what changes, the decisions first, the phased plan (2026-09-25, not built)</td>
 </tr>
 </tbody>
 </table></div>
@@ -276,6 +281,14 @@ column A and the 13,371 survey-figure and technical rows hidden, and the value c
 plain text. The sync (<code>.github/workflows/idbc-sync-bertabla.yml</code>) runs every 15 minutes and on
 demand, and refuses a sheet error before anything is published. Flagged: anyone with the
 sheet's link can edit it, and so the live guide.</p>
+<p><strong>2026-09-25 — idbc.hu measured; alignment plan; Phase 0 (D38).</strong> The owner asked to learn
+idbc.hu and plan the prototype's alignment with it. Home, <code>/go/sap/</code>, <code>/talent/</code>, a blog
+article and <code>/kapcsolat/</code> were measured at 1440 and 375 px against the prototype
+(<a href="idbc-hu-alignment.html"><code>15-idbc-hu-alignment.md</code></a>): same colours, different typeface, scale and shell. The plan's
+Phase 0 went out the same day — the footer's phone and floor corrected in IDBCSYNC to
+idbc.hu's. A phone typed with a leading <code>+</code> turned into a formula error in the sheet before
+any sync ran; the sync now refuses Sheets error values. The 15-minute schedule moved off the
+quarter-hour marks, where GitHub had not started a single run in the first hour.</p>
 <footer>IDBC Talent Market &amp; Salary Guide 2026 · documentation</footer>
 </div>
 </body>
