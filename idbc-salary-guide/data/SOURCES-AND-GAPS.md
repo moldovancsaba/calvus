@@ -1032,15 +1032,17 @@ row, and the site was wired to it.
 
 | Block | Ids | Visible | What a person edits there |
 |---|---|---|---|
-| Every page text | `SHARED-…` (header, footer, chart legend — one row for all pages), `HOME-`, `TERULET-`, `BEREK-`, `SAP-`, `POOL-`, `ESETT-`, `REG-`, `KAPCS-` | yes (screen-reader labels hidden) | headings, paragraphs, buttons, form labels, image descriptions, tooltips, messages shown by the page scripts |
+| Every page text | `SHARED-…` (header, footer, chart legend — one row for all pages), `HOME-`, `TERULET-`, `BEREK-`, `SAP-`, `POOL-`, `ESETT-`, `REG-`, `KAPCS-` | yes (screen-reader labels hidden; the header and footer rows hidden since D42) | headings, paragraphs, buttons, form labels, image descriptions, tooltips, messages shown by the page scripts |
 | Areas | `AREA-<slug>-NAME/-SUMMARY/-MEDIA` | yes (`-EDITION` hidden) | the name (used by the home tile, the Piaci trendek dropdown and the area page), the full summary, video or highlight |
 | Bértábla | `SAL-<area>-NAME`, `SAL-<area>-nnn-POZICIO/SZINT/TOP3/MIN/IDBC/MAX/JUTTATAS/LINKEDIN` | yes | every salary row of Bérek and SAP |
 | Expert Pool | `EXPERT-nn-IPARAG/POZICIO/DARAB/LINKEDIN` | yes | every tile, including Qualified Person, which appears once its count is filled in |
 | SAP catalogue | `SAPPROD-CATn-NAME/-ITEMm` | yes | categories and items |
-| Survey texts | `SURVEY-TOTAL-LABEL`, `SURVEY-TOPICt-NAME`, `SURVEY-<SIDE>-SEGk`, `SURVEY-<SIDE>-Qnn-TEXT/-OPTmm` | yes | topic names, filter values, question texts, answer labels — each once, for every area |
+| Survey texts | `SURVEY-TOTAL-LABEL`, `SURVEY-TOPICt-NAME`, `SURVEY-<SIDE>-SEGk`, `SURVEY-<SIDE>-Qnn-TEXT/-OPTmm` | yes until D42, hidden since | topic names, filter values, question texts, answer labels — each once, for every area |
 | Survey figures and keys | `SURVEY-<AREA>-<SIDE>-Qnn-[SEGk-](N\|OPTmm)`, topic membership, question sets, scale maxima, answer-order flags | hidden | — |
 
-4,266 rows are visible; the 13,371 hidden ones are one contiguous block at the end.
+4,266 rows are visible; the 13,371 hidden ones are one contiguous block at the end. Since
+D42 (2026-09-25) the header and footer rows and the whole survey section are hidden in place
+too: 3,957 visible.
 
 **How the pages take their text.** A one-time tool marked all 317 texts on the eight pages:
 `data-sync="ID"` on an element that holds only text, a style-neutral `<idbc-t>` wrapper where
@@ -1197,3 +1199,14 @@ largest distance from a label to its dot 20 units (edge rows on phones), 0 on de
 row 2936 (`SAL-BUSINESS-SERVICE-CENTER-BSC-039-SZINT`, visible, value `Manager`). Clearing the
 cell removes it on the next sync; tried on a copy of the export, an empty level passes the
 sync's checks. Not changed; the client decides.
+
+## Survey and header/footer rows hidden (2026-09-25, D42)
+
+The owner asked for the survey rows and the header and footer rows of `IDBCSYNC` to be hidden.
+Hidden in place from the Name Box range and the row menu, in two ranges: 3–59 (57 header and
+footer rows) and 111–386 (the survey section: its heading, `SURVEY-TOTAL-LABEL`, the four
+topic names, 163 employee and 107 employer question/answer rows). Kept visible: row 2 (the
+tab's instructions) and rows 60–66 (TOP3 legend, LinkedIn note and pill, the survey "no data"
+and weighted-scale messages). Fresh export: 333 rows newly hidden and no others, 0 values
+changed, no survey or header/footer id left visible, column A still hidden; `idbcsync.py
+--check` on it: 0 files would change. 3,957 rows visible (was 4,290).

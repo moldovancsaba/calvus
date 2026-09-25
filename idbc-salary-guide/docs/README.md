@@ -12,7 +12,7 @@ every project.
 | 01 research | `01-research.md` | What was read (the client's specs, mockups, data, copy), the one external measurement, what was not researched and why |
 | 02 audit | `02-audit.md` | idbc.hu measured; the spec vs. the data; the client's data as it stands; defects found in the material |
 | 03 sources and assets | `../data/SOURCES-AND-GAPS.md` | Every source file and what it contributed, every gap, every change round with measurements — the running record since July |
-| 04 decisions | `04-decisions.md` | D1–D41, dated, with who and why |
+| 04 decisions | `04-decisions.md` | D1–D42, dated, with who and why |
 | 05 design | `05-design.md` | Where the look comes from (the client's mockups), tokens, layout |
 | 06 build log | `../data/SOURCES-AND-GAPS.md` | the dated change notes are the build log |
 | 07 gate | `07-gate.md` | The one-command gate, the measured pass, deliberate deviations |
@@ -218,4 +218,9 @@ import tabs (EXPERT_POOL_IMPORT, WEB_BERTABLA_IMPORT) were visible again in the 
 unhid them after 12:06 UTC), left as they are. GitHub has still not started a scheduled sync
 run (none by 12:54 UTC, two hours after the schedule went in); the sync runs by manual
 dispatch until it does.
+
+**2026-09-25 — survey and header/footer rows hidden in IDBCSYNC (D42).** At the owner's
+request: rows 3–59 (header and footer) and 111–386 (the survey section: topics, questions,
+answer labels) are hidden where they stand; 3,957 rows stay visible. Values untouched, the
+sync sees no change. Still no scheduled sync run by 13:10 UTC.
 

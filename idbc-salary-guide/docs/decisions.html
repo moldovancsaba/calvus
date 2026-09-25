@@ -339,6 +339,13 @@ decision is added here first. "Owner" is the studio side; "client" is IDBC.</em>
 <td>client, second look at the chart</td>
 <td><code>assets/top3-chart.js</code>, <code>assets/chart.css</code>, the pages that load them</td>
 </tr>
+<tr>
+<td>D42</td>
+<td>2026-09-25</td>
+<td><strong>The survey rows and the header and footer rows are hidden in IDBCSYNC.</strong> Owner directive. Hidden where they stand, nothing moved or changed: rows 3–59 (<code>SHARED-HEADER-…</code>, <code>SHARED-FOOTER-…</code>, 57 rows) and the whole survey section, rows 111–386 (its heading, the total label, the four topic names and every <code>SURVEY-EMPLOYEE/EMPLOYER-…</code> question and answer label, 276 rows). Row 2 stays visible because it carries the tab's instructions, as do rows 60–66 (the TOP3 legend, the LinkedIn note and pill, and two survey chart messages, which are shared labels, not header or footer). Visible rows: 4,290 → 3,957. Checked on a fresh export: 333 rows newly hidden, exactly those; 0 values changed; the sync reads the export with 0 files changed, so the site is untouched. Editing a hidden text now means showing its rows first (the arrows at the row numbers)</td>
+<td>owner</td>
+<td>the live <code>IDBC_bertabla</code> sheet</td>
+</tr>
 </tbody>
 </table></div>
 <h2>Standing rules that came out of these</h2>

@@ -1122,7 +1122,7 @@ row, and the site was wired to it.</p>
 <tr>
 <td>Every page text</td>
 <td><code>SHARED-…</code> (header, footer, chart legend — one row for all pages), <code>HOME-</code>, <code>TERULET-</code>, <code>BEREK-</code>, <code>SAP-</code>, <code>POOL-</code>, <code>ESETT-</code>, <code>REG-</code>, <code>KAPCS-</code></td>
-<td>yes (screen-reader labels hidden)</td>
+<td>yes (screen-reader labels hidden; the header and footer rows hidden since D42)</td>
 <td>headings, paragraphs, buttons, form labels, image descriptions, tooltips, messages shown by the page scripts</td>
 </tr>
 <tr>
@@ -1152,7 +1152,7 @@ row, and the site was wired to it.</p>
 <tr>
 <td>Survey texts</td>
 <td><code>SURVEY-TOTAL-LABEL</code>, <code>SURVEY-TOPICt-NAME</code>, <code>SURVEY-&lt;SIDE&gt;-SEGk</code>, <code>SURVEY-&lt;SIDE&gt;-Qnn-TEXT/-OPTmm</code></td>
-<td>yes</td>
+<td>yes until D42, hidden since</td>
 <td>topic names, filter values, question texts, answer labels — each once, for every area</td>
 </tr>
 <tr>
@@ -1163,7 +1163,9 @@ row, and the site was wired to it.</p>
 </tr>
 </tbody>
 </table></div>
-<p>4,266 rows are visible; the 13,371 hidden ones are one contiguous block at the end.</p>
+<p>4,266 rows are visible; the 13,371 hidden ones are one contiguous block at the end. Since
+D42 (2026-09-25) the header and footer rows and the whole survey section are hidden in place
+too: 3,957 visible.</p>
 <p><strong>How the pages take their text.</strong> A one-time tool marked all 317 texts on the eight pages:
 <code>data-sync="ID"</code> on an element that holds only text, a style-neutral <code>&lt;idbc-t&gt;</code> wrapper where
 text shares its element with a link or an input (a <code>span</code> wrapper would have been styled as
@@ -1298,6 +1300,15 @@ largest distance from a label to its dot 20 units (edge rows on phones), 0 on de
 row 2936 (<code>SAL-BUSINESS-SERVICE-CENTER-BSC-039-SZINT</code>, visible, value <code>Manager</code>). Clearing the
 cell removes it on the next sync; tried on a copy of the export, an empty level passes the
 sync's checks. Not changed; the client decides.</p>
+<h2>Survey and header/footer rows hidden (2026-09-25, D42)</h2>
+<p>The owner asked for the survey rows and the header and footer rows of <code>IDBCSYNC</code> to be hidden.
+Hidden in place from the Name Box range and the row menu, in two ranges: 3–59 (57 header and
+footer rows) and 111–386 (the survey section: its heading, <code>SURVEY-TOTAL-LABEL</code>, the four
+topic names, 163 employee and 107 employer question/answer rows). Kept visible: row 2 (the
+tab's instructions) and rows 60–66 (TOP3 legend, LinkedIn note and pill, the survey "no data"
+and weighted-scale messages). Fresh export: 333 rows newly hidden and no others, 0 values
+changed, no survey or header/footer id left visible, column A still hidden; <code>idbcsync.py
+--check</code> on it: 0 files would change. 3,957 rows visible (was 4,290).</p>
 <footer>IDBC Talent Market &amp; Salary Guide 2026 · documentation</footer>
 </div>
 </body>
