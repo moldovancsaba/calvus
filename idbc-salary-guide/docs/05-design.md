@@ -72,7 +72,9 @@ keeps only what is specific to that page and loads before it.
   idbc.hu's three link columns, bottom bar with Panaszbejelentő and Adatkezelési tájékoztató
   (linked to idbc.hu's own pages).
 - **TOP3 chart, tables, survey charts, Expert Pool tiles**: unchanged in layout and figures
-  (1,142 rendered states compared before and after), on the new tokens.
+  (1,142 rendered states compared before and after), on the new tokens. One later change at
+  the client's request (D41): TOP3 amounts that sit close together stack upward over their
+  own dots instead of spreading sideways.
 
 ## Measured at
 

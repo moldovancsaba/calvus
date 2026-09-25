@@ -43,10 +43,9 @@ an ask is never a presentation blocker) the open items are the client's pending 
 deliveries and the decisions for publication, listed in <a href="prerequisites.html"><code>19-implementation-prerequisites.md</code></a>.</em></p>
 <h2>Open for the next review</h2>
 <p>A 2026-09-22 feedback mail mixed real prototype fixes (closed this round, see
-<a href="index.html"><code>README.md</code></a>'s process log and <a href="sources.html"><code>SOURCES-AND-GAPS.md</code></a>'s 2026-09-22 entry) with three items
-this studio cannot resolve without more from the client. The client repeated #16 on
-2026-09-25 (its own mail, unchanged) — the parsed data still doesn't have it; still needs
-the source file, not a re-ask:</p>
+<a href="index.html"><code>README.md</code></a>'s process log and <a href="sources.html"><code>SOURCES-AND-GAPS.md</code></a>'s 2026-09-22 entry) with items this
+studio cannot resolve without more from the client (#16 from that mail is closed since
+2026-09-25, D40):</p>
 <div class="tbl"><table>
 <thead>
 <tr>
@@ -56,11 +55,6 @@ the source file, not a re-ask:</p>
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>16</td>
-<td>Two survey questions ("current home office policy's effect on recruiting success"; two AI questions for non-IT employers) don't exist anywhere in the parsed research data</td>
-<td>The source Excel's "Téma besorolás" sheet checked — this repo has no copy of it. If the data exists, it's a converter fix; if those segments were genuinely never asked, it's not something to fabricate.</td>
-</tr>
 <tr>
 <td>17</td>
 <td>"IT Contracting" as a Bérek salary segment — the bértábla sheet has no rows for it (the separate market-trends survey data does have it)</td>
@@ -168,7 +162,7 @@ the source file, not a re-ask:</p>
 <h2>Closed</h2>
 <p>See the process log in <a href="index.html"><code>README.md</code></a> for every item closed by a client mail round (2026-08-24,
 2026-08-25, 2026-09-01, 2026-09-08, 2026-09-18, 2026-09-22, 2026-09-24, 2026-09-25).</p>
-<p>Three 2026-09-25 items answered without needing anything further from the client:</p>
+<p>2026-09-25 items answered without needing anything further from the client:</p>
 <div class="tbl"><table>
 <thead>
 <tr>
@@ -179,14 +173,19 @@ the source file, not a re-ask:</p>
 </thead>
 <tbody>
 <tr>
+<td>16</td>
+<td>Survey questions missing from the employer charts: Home office "Milyen hatással van a jelenlegi home office policy a toborzás sikerességére?" (every area); AI "Rendelkezik a vállalatod dedikált költségkerettel…?" and "Mire használja a vállalatod AI eszközöket a toborzási folyamat során?" (non-IT areas)</td>
+<td>Fixed in <code>IDBCSYNC</code>, D40. The 2026-09-22 answer ("absent from the parsed data") was wrong: the answers were there for all 12 data sets; only the rows that put a question into a topic were missing. Four topic rows added (hidden, technical); the questions now show in every area and company-size view</td>
+</tr>
+<tr>
 <td>19</td>
 <td>TOP3 chart labels "skewing" when values sit close together</td>
-<td>Fixed — a label-placement bug, reached every page sharing the chart, D33</td>
+<td>Fixed in two rounds: D33 centred a crowded group over its dots; the client's second look asked for the amounts to move up instead, so crowded labels now stack upward over their own dots, D41</td>
 </tr>
 <tr>
 <td>20</td>
 <td>Whether BSC's "Sales Project Manager" showing "Manager" is Drive-editable</td>
-<td>Yes — it's the bértábla sheet's own <code>szint</code> column for that row, read verbatim; blank it there and re-run the converter to remove it, D34</td>
+<td>Yes. Since D37 it is <code>IDBCSYNC</code> row 2936 (<code>SAL-BUSINESS-SERVICE-CENTER-BSC-039-SZINT</code>, visible, value <code>Manager</code>); clearing the cell removes the grey line on the next sync (an empty level is accepted, checked), D34. Left as it is until the client decides</td>
 </tr>
 <tr>
 <td>22</td>

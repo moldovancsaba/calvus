@@ -97,10 +97,10 @@ production build, not before the next review.</em></p>
 <td>stock (Unsplash) and one idbc.hu image</td>
 </tr>
 <tr>
-<td>C-7 (ask #16, 2026-09-22)</td>
-<td>The source Excel's "Téma besorolás" sheet checked for two survey questions missing from the parsed data (a home-office/recruiting-impact question; two non-IT AI employer questions)</td>
-<td><code>guide-data.json</code>'s topics, if the data exists</td>
-<td>absent — may be genuine survey segmentation (IT respondents consistently get extra questions elsewhere too), not a parsing bug</td>
+<td>~~C-7~~ (ask #16, 2026-09-22)</td>
+<td>~~The source Excel's "Téma besorolás" sheet checked for survey questions missing from the parsed data~~ — <strong>resolved 2026-09-25, D40</strong>: the answers were in the data for every area all along; four topic rows were missing and are now in <code>IDBCSYNC</code></td>
+<td><code>SURVEY-TOPIC…</code> rows in <code>IDBCSYNC</code></td>
+<td>nothing pending</td>
 </tr>
 <tr>
 <td>C-8 (ask #17, 2026-09-22)</td>

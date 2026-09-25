@@ -1159,3 +1159,41 @@ rows, `aria-expanded` follows. No console errors. `check.py` clean. The browser 
 screenshots after a programmatic scroll sometimes return a stale frame; a second capture shows
 the page — recorded here so it is not mistaken for a rendering bug.
 
+
+## Client feedback on the published prototype (2026-09-25, D40–D41)
+
+**Survey questions.** The client listed, on the employer side: Home office lacks "Milyen
+hatással van a jelenlegi home office policy a toborzás sikerességére?" in every area; AI lacks
+"Rendelkezik a vállalatod dedikált költségkerettel AI fejlesztésekre vagy kezdeményezésekre?"
+and "Mire használja a vállalatod AI eszközöket a toborzási folyamat során?" outside IT. Read in
+`IDBCSYNC`: all three (employer Q13, Q09, Q08) have their text, answer labels and figures for
+all 12 data sets, base view and company-size breakdown (BSC, for example: 19 employer
+respondents each). What was missing were the topic rows (`SURVEY-TOPIC{t}-SET{n}-EMPLOYER-{kk}`),
+which say which question appears in which topic and in what order: Q09 and Q08 were only in the
+IT + Contracting set's AI topic, Q13 in no topic ("jelenleg egyik témában sem"). The 2026-09-22
+note that these questions were absent from the parsed data was wrong. Four rows appended to the
+sheet (rows 17662–17665, hidden like the other technical rows): Q13 third in Home office for
+both sets; Q09 then Q08 fourth and fifth in AI for the general set. Q13's seven "megjelenés"
+cells changed to "téma: Home office" (Find & Replace, this tab, match case: 7 replacements).
+Checked on a fresh export: 27 cells changed, nothing else; column A and the new rows hidden.
+Rendered: 560 employer charts on Kezdőoldal (12 data sets × every company size × Home office
+and AI) all show figures; Home office 3 questions and AI 5 everywhere; an area page (HR) the
+same at every company size; no console errors.
+
+**TOP3 labels.** After the morning's fix (D33) the client still saw close amounts spread
+sideways (BSC Supply Chain: 600 000 / 630 000 / 650 000; IT Support: 790 000 / 800 000 /
+800 000) and asked for one of them to move up a little instead. `layoutLabels` now keeps every
+amount centred over its own dot and moves a label that would touch an already placed one up a
+row. Label widths use measured Outfit character widths (about 5.3 px per character at the wide
+chart's 10 px, 7.7 px at the phone chart's 13 px) plus room for the hover enlargement. The
+first phone run still had touching labels (a 14-unit row step is less than a 13 px label's full
+height); the step is 17 units and the phone chart's drawing is 104 units tall (was 84). Measured
+on the rendered SVG, all 12 Bérek areas and SAP, 390 and 1440 px, after a clean load
+confirming `top3-chart.js?v=12`: no overlaps, nothing outside the chart, no label on a dot,
+largest distance from a label to its dot 20 units (edge rows on phones), 0 on desktop.
+`chart.css?v=9`: the tooltip uses the page font instead of Inter.
+
+**BSC "Manager".** The grey line under Sales Project Manager is that row's level, `IDBCSYNC`
+row 2936 (`SAL-BUSINESS-SERVICE-CENTER-BSC-039-SZINT`, visible, value `Manager`). Clearing the
+cell removes it on the next sync; tried on a copy of the export, an empty level passes the
+sync's checks. Not changed; the client decides.

@@ -48,47 +48,26 @@
     return { min: Math.floor(lo / step) * step, max: Math.ceil(hi / step) * step, step };
   }
 
-  // Value labels sit above their dot. When two dots are close the labels would collide, so
-  // they need nudging apart — but nudging with a single left-to-right cascade (the original
-  // approach) anchors the whole run on the leftmost dot and only ever pushes right, so a
-  // tight cluster of 3 close values drifts its 2nd and 3rd labels well clear of their own
-  // dots (client, 2026-09-25: "when the amounts are close together, the amounts skew" —
-  // confirmed live: a label could land 90px+ from the dot it names). Fixed with a min/max
-  // cascade: run the same left-to-right push, then a mirrored right-to-left push, and average
-  // the two per point. For points with room to spare both cascades already equal the natural
-  // x, so nothing changes; for a colliding run this centers the whole group on its natural
-  // midpoint instead of dragging it rightward. Same fix reaches both chart layouts (this and
-  // the mobile "compact" one below) and every page that loads this file (Bérek, SAP, Expert
-  // Pool), since they all call this one function.
-  // ponytail: proportional-width estimate, not real text measurement — good
-  // enough for tabular HUF strings at one fixed font size. Measure with
-  // getComputedTextLength if the label font or content ever varies.
-  function layoutLabels(points, plotMin, plotMax) {
-    const halfWidth = p => (p.text.length * 5.6 + 8) / 2;
+  // Value labels sit centred above their own dot. When two labels would overlap, the later one
+  // moves up a row instead of sideways (client, 2026-09-25: "if they are very close, one of them
+  // should move up a little, because now they drift far apart"). The earlier approach spread a
+  // tight cluster horizontally, which kept the labels readable but could put a label 40–90 px
+  // from the dot it names. Now every label stays over its dot; a cluster of three close values
+  // uses up to three rows. `charWidth` is measured per layout (Outfit, 2026-09-25: about 5.3 px
+  // per character at the wide chart's 10 px, 7.7 px at the compact chart's 13 px), plus room
+  // for the hover enlargement. Every page that loads this file (Bérek, SAP, Expert Pool) and both
+  // chart layouts use this one function.
+  function layoutLabels(points, plotMin, plotMax, charWidth) {
     const gap = 6;
-    points.forEach(p => { p.hw = halfWidth(p); });
-
-    const n = points.length;
-    const minLayout = new Array(n);
-    let prevRight = -Infinity;
-    points.forEach((p, i) => {
-      minLayout[i] = Math.max(p.x, prevRight + gap + p.hw);
-      prevRight = minLayout[i] + p.hw;
+    const placed = [];
+    points.forEach(p => {
+      p.hw = (p.text.length * charWidth + 8) / 2;
+      p.labelX = Math.min(Math.max(p.x, plotMin + p.hw), plotMax - p.hw);
+      let tier = 0;
+      while (placed.some(q => q.tier === tier && p.labelX - p.hw < q.right + gap && p.labelX + p.hw > q.left - gap)) tier++;
+      p.tier = tier;
+      placed.push({ left: p.labelX - p.hw, right: p.labelX + p.hw, tier });
     });
-    const maxLayout = new Array(n);
-    let nextLeft = Infinity;
-    for (let i = n - 1; i >= 0; i--) {
-      maxLayout[i] = Math.min(points[i].x, nextLeft - gap - points[i].hw);
-      nextLeft = maxLayout[i] - points[i].hw;
-    }
-    points.forEach((p, i) => { p.labelX = (minLayout[i] + maxLayout[i]) / 2; });
-
-    // Keep the now-evenly-spaced group inside the plot bounds as one block.
-    const first = points[0], last = points[n - 1];
-    const leftOvershoot = plotMin - (first.labelX - first.hw);
-    if (leftOvershoot > 0) points.forEach(p => { p.labelX += leftOvershoot; });
-    const rightOvershoot = (last.labelX + last.hw) - plotMax;
-    if (rightOvershoot > 0) points.forEach(p => { p.labelX -= rightOvershoot; });
   }
 
   // Narrow layout (client request, 2026-09-16): instead of one wide chart with the role names
@@ -96,7 +75,8 @@
   // chart below — so nothing needs sideways scrolling. All blocks share one domain so the
   // bands stay comparable, and values are abbreviated to millions.
   function renderCompactChart(rows, opts) {
-    const W = 340, PLOT_MIN = 10, PLOT_MAX = 330, MID = 46, AXIS_Y = 76, H = 84;
+    // Room above the band for up to three label rows (TIER = one 13 px label's full height).
+    const W = 340, PLOT_MIN = 10, PLOT_MAX = 330, MID = 66, AXIS_Y = 96, H = 104, TIER = 17;
     const values = rows.flatMap(r => [r.min, r.max, r.idbc].filter(v => v != null));
     const domain = niceDomain(values);
     const xPos = v => PLOT_MIN + ((v - domain.min) / (domain.max - domain.min)) * (PLOT_MAX - PLOT_MIN);
@@ -112,10 +92,10 @@
       ].filter(p => p.value != null);
       points.forEach(p => { p.x = xPos(p.value); p.text = fmtMillions(p.value); });
       points.sort((a, b) => a.x - b.x);
-      layoutLabels(points, PLOT_MIN, PLOT_MAX);
+      layoutLabels(points, PLOT_MIN, PLOT_MAX, 8.2);
 
       let defs = '', body = '';
-      body += ticks.map(t => `<line class="grid-line" x1="${xPos(t).toFixed(1)}" y1="14" x2="${xPos(t).toFixed(1)}" y2="${MID + 12}" />`).join('');
+      body += ticks.map(t => `<line class="grid-line" x1="${xPos(t).toFixed(1)}" y1="${MID - 32}" x2="${xPos(t).toFixed(1)}" y2="${MID + 12}" />`).join('');
       // Every chart carries its own value scale (client request, 2026-09-16).
       body += ticks.map(t => `<text class="axis-label" x="${xPos(t).toFixed(1)}" y="${AXIS_Y}" text-anchor="middle">${escapeHtml(fmtMillions(t))}</text>`).join('');
       body += `<line class="row-line" x1="${PLOT_MIN}" y1="${MID}" x2="${PLOT_MAX}" y2="${MID}" />`;
@@ -128,7 +108,7 @@
       points.forEach(p => {
         const tip = `${r.pozicio} – ${LABEL[p.key]}: ${fmtHuf(p.value)}`;
         body += `<g class="salary-point" role="img" tabindex="0" aria-label="${escapeHtml(tip)}" data-tooltip="${escapeHtml(tip)}">` +
-          `<text class="value-label" x="${p.labelX.toFixed(1)}" y="${MID - 14}" text-anchor="middle">${escapeHtml(p.text)}</text>` +
+          `<text class="value-label" x="${p.labelX.toFixed(1)}" y="${MID - 14 - p.tier * TIER}" text-anchor="middle">${escapeHtml(p.text)}</text>` +
           `<circle class="salary-dot" cx="${p.x.toFixed(1)}" cy="${MID}" r="6" fill="${p.color}" />` +
           `</g>`;
       });
@@ -207,7 +187,7 @@
         p.text = fmtHuf(p.value);
       });
       points.sort((a, b) => a.x - b.x);
-      layoutLabels(points, PLOT_MIN - 40, PLOT_MAX + 40);
+      layoutLabels(points, PLOT_MIN - 40, PLOT_MAX + 40, 5.9);
 
       body += `<line class="row-line" x1="${PLOT_MIN}" y1="${y}" x2="${PLOT_MAX}" y2="${y}" />`;
 
@@ -235,7 +215,7 @@
       points.forEach(p => {
         const tip = `${r.pozicio} – ${LABEL[p.key]}: ${p.text}`;
         body += `<g class="salary-point" role="img" tabindex="0" aria-label="${escapeHtml(tip)}" data-tooltip="${escapeHtml(tip)}">` +
-          `<text class="value-label" x="${p.labelX.toFixed(1)}" y="${(y - 16).toFixed(1)}" text-anchor="middle">${escapeHtml(p.text)}</text>` +
+          `<text class="value-label" x="${p.labelX.toFixed(1)}" y="${(y - 16 - p.tier * 13).toFixed(1)}" text-anchor="middle">${escapeHtml(p.text)}</text>` +
           `<circle class="salary-dot" cx="${p.x.toFixed(1)}" cy="${y}" r="7" fill="${p.color}" />` +
           `</g>`;
       });

@@ -7,14 +7,12 @@ deliveries and the decisions for publication, listed in `19-implementation-prere
 ## Open for the next review
 
 A 2026-09-22 feedback mail mixed real prototype fixes (closed this round, see
-`README.md`'s process log and `SOURCES-AND-GAPS.md`'s 2026-09-22 entry) with three items
-this studio cannot resolve without more from the client. The client repeated #16 on
-2026-09-25 (its own mail, unchanged) — the parsed data still doesn't have it; still needs
-the source file, not a re-ask:
+`README.md`'s process log and `SOURCES-AND-GAPS.md`'s 2026-09-22 entry) with items this
+studio cannot resolve without more from the client (#16 from that mail is closed since
+2026-09-25, D40):
 
 | # | Item | What's needed |
 |---|---|---|
-| 16 | Two survey questions ("current home office policy's effect on recruiting success"; two AI questions for non-IT employers) don't exist anywhere in the parsed research data | The source Excel's "Téma besorolás" sheet checked — this repo has no copy of it. If the data exists, it's a converter fix; if those segments were genuinely never asked, it's not something to fabricate. |
 | 17 | "IT Contracting" as a Bérek salary segment — the bértábla sheet has no rows for it (the separate market-trends survey data does have it) | IT Contracting salary figures from the client, or confirmation the segment is already folded into "IT" today. Since D37 the figures go into `IDBCSYNC` as new `SAL-` rows (new ids, so the studio adds them once the figures arrive); the area appears in the Bérek filter as soon as it has one row. **Asked directly in the sheet itself** on 2026-09-25 — a new tab, "HIÁNYZÓ ADATOK - kérés". |
 | 18 | Expert Pool page text content — the client says this was sent previously; it never reached this implementation round | Resend, or point to where it lives. |
 | 21 | `EXPERT_POOL_IMPORT`'s `Non-IT / Qualified Person` row has no headcount (2026-09-25 sync) | The number, or confirmation the row should be removed. **Asked directly in the sheet itself** on 2026-09-25 — same new tab. |
@@ -44,10 +42,11 @@ the source file, not a re-ask:
 See the process log in `README.md` for every item closed by a client mail round (2026-08-24,
 2026-08-25, 2026-09-01, 2026-09-08, 2026-09-18, 2026-09-22, 2026-09-24, 2026-09-25).
 
-Three 2026-09-25 items answered without needing anything further from the client:
+2026-09-25 items answered without needing anything further from the client:
 
 | # | Item | Answer |
 |---|---|---|
-| 19 | TOP3 chart labels "skewing" when values sit close together | Fixed — a label-placement bug, reached every page sharing the chart, D33 |
-| 20 | Whether BSC's "Sales Project Manager" showing "Manager" is Drive-editable | Yes — it's the bértábla sheet's own `szint` column for that row, read verbatim; blank it there and re-run the converter to remove it, D34 |
+| 16 | Survey questions missing from the employer charts: Home office "Milyen hatással van a jelenlegi home office policy a toborzás sikerességére?" (every area); AI "Rendelkezik a vállalatod dedikált költségkerettel…?" and "Mire használja a vállalatod AI eszközöket a toborzási folyamat során?" (non-IT areas) | Fixed in `IDBCSYNC`, D40. The 2026-09-22 answer ("absent from the parsed data") was wrong: the answers were there for all 12 data sets; only the rows that put a question into a topic were missing. Four topic rows added (hidden, technical); the questions now show in every area and company-size view |
+| 19 | TOP3 chart labels "skewing" when values sit close together | Fixed in two rounds: D33 centred a crowded group over its dots; the client's second look asked for the amounts to move up instead, so crowded labels now stack upward over their own dots, D41 |
+| 20 | Whether BSC's "Sales Project Manager" showing "Manager" is Drive-editable | Yes. Since D37 it is `IDBCSYNC` row 2936 (`SAL-BUSINESS-SERVICE-CENTER-BSC-039-SZINT`, visible, value `Manager`); clearing the cell removes the grey line on the next sync (an empty level is accepted, checked), D34. Left as it is until the client decides |
 | 22 | Live (or on-demand) sync to the `IDBC_bertabla` sheet | Built — `.github/workflows/idbc-sync-bertabla.yml`, manual trigger, gated, auto-commits on a real diff. Along the way: the sheet's own area naming had drifted from the site's and was corrected in the sheet; Expert Pool's whole category system had already changed in the sheet (15 → 29 rows, new IT/Non-IT taxonomy) and is now live on the site, D35 |

@@ -325,6 +325,20 @@ decision is added here first. "Owner" is the studio side; "client" is IDBC.</em>
 <td></td>
 <td></td>
 </tr>
+<tr>
+<td>D40</td>
+<td>2026-09-25</td>
+<td><strong>The missing survey questions were missing from the topics, not from the data; corrected in IDBCSYNC.</strong> The client's feedback: on the employer side, Home office lacks "Milyen hatással van a jelenlegi home office policy a toborzás sikerességére?" in every area, and AI lacks "Rendelkezik a vállalatod dedikált költségkerettel AI fejlesztésekre vagy kezdeményezésekre?" and "Mire használja a vállalatod AI eszközöket a toborzási folyamat során?" outside IT. Read from the sheet, not assumed: the three questions (employer Q13, Q09, Q08) have text, answer labels and figures for all 12 data sets. Q09 and Q08 were only in the IT + Contracting question set's AI topic, and Q13 was in no topic at all (its rows said "jelenleg egyik témában sem"). The 2026-09-22 answer (C-7, "absent from the parsed data") was wrong. Four hidden technical rows added at the end of <code>IDBCSYNC</code>: Q13 as the 3rd Home office question in both sets (<code>SURVEY-TOPIC2-SET1/SET2-EMPLOYER-03</code>), and Q09 then Q08 as the 4th and 5th AI questions in the general set (<code>SURVEY-TOPIC3-SET1-EMPLOYER-04/05</code>), in the client's order. Q13's seven "megjelenés" cells now say "téma: Home office". No code change: the sync already builds topics from these rows. Checked on a fresh export (27 cells changed, nothing else), then on the rendered pages: 560 employer charts across 12 data sets, every company size and both topics, all with figures, none missing; area pages the same</td>
+<td>client feedback, traced in the sheet</td>
+<td>the live <code>IDBC_bertabla</code> sheet, <code>data/guide-data.json</code> (via the sync)</td>
+</tr>
+<tr>
+<td>D41</td>
+<td>2026-09-25</td>
+<td><strong>TOP3 labels that crowd each other stack upward, over their own dots.</strong> After D33 the client still saw close amounts spread sideways (BSC: 600 000 / 630 000 / 650 000) and asked for "valamelyik csússzon feljebb picit". <code>layoutLabels</code> in <code>assets/top3-chart.js</code> no longer shifts labels sideways: each amount stays centred over its dot (moved in only at the chart's edges), and a label that would touch one already placed goes up one row, as often as needed. Label rows are 13 drawing units apart on the wide chart and 17 on the phone chart, whose drawing grew from 84 to 104 units tall to fit three rows. Measured on the rendered SVG for all 12 Bérek areas and SAP at 390 and 1440 px: no label overlaps another, none leaves the chart, none covers a dot, and a label is never more than 20 units off its dot (only at the edges on phones). <code>top3-chart.js?v=12</code>, <code>chart.css?v=9</code> (its tooltip font follows the page font)</td>
+<td>client, second look at the chart</td>
+<td><code>assets/top3-chart.js</code>, <code>assets/chart.css</code>, the pages that load them</td>
+</tr>
 </tbody>
 </table></div>
 <h2>Standing rules that came out of these</h2>

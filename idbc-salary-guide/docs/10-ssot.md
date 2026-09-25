@@ -76,13 +76,13 @@ case study).
 | Chart breakpoint | compact layout ≤ 700 px viewport |
 | Header menu breakpoint | links fold behind the menu icon below 1200 px (idbc.hu's) |
 | Table card mode | container width < 600 px |
-| Asset version | `?v=` on `top3-chart.js` (10), `chart.css` (8), `site.css` and `site.js` (1) — bump on every change; the sync bumps `top3-chart.js` itself when a chart text changes in the sheet |
+| Asset version | `?v=` on `top3-chart.js` (12), `chart.css` (9), `site.css` and `site.js` (1) — bump on every change; the sync bumps `top3-chart.js` itself when a chart text changes in the sheet |
 | Tap floor | 44 px below 980 px |
 | Currency format | `hu-HU` grouping, ` Ft`; millions abbreviated `1,25M` in the compact chart |
 
 ## 5. Decision register
 
-`04-decisions.md` (D1–D39). Technical decisions in this package are ADRs in
+`04-decisions.md` (D1–D41). Technical decisions in this package are ADRs in
 `11-architecture.md` §11, PROPOSED until flipped; the flip is the next D-number.
 
 ## 6. Rules register

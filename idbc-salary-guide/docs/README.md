@@ -12,7 +12,7 @@ every project.
 | 01 research | `01-research.md` | What was read (the client's specs, mockups, data, copy), the one external measurement, what was not researched and why |
 | 02 audit | `02-audit.md` | idbc.hu measured; the spec vs. the data; the client's data as it stands; defects found in the material |
 | 03 sources and assets | `../data/SOURCES-AND-GAPS.md` | Every source file and what it contributed, every gap, every change round with measurements — the running record since July |
-| 04 decisions | `04-decisions.md` | D1–D39, dated, with who and why |
+| 04 decisions | `04-decisions.md` | D1–D41, dated, with who and why |
 | 05 design | `05-design.md` | Where the look comes from (the client's mockups), tokens, layout |
 | 06 build log | `../data/SOURCES-AND-GAPS.md` | the dated change notes are the build log |
 | 07 gate | `07-gate.md` | The one-command gate, the measured pass, deliberate deviations |
@@ -204,4 +204,18 @@ components kept their layouts and — checked across all 1,142 rendered states �
 The new footer's 29 texts went into IDBCSYNC before the pages, so the sync never broke. Open
 with the client: whether idbc.hu or their demos win where the two differ (A-2), the Gilroy
 licence (A-1), their own photographs (C-6).
+
+**2026-09-25 — client feedback on the published prototype (D40, D41).** Three survey
+questions missing from the employer charts: the answers were in the sheet for every area; four
+rows that place a question in a topic were missing. Added to `IDBCSYNC` (hidden, technical):
+Home office now shows three employer questions in both question sets, AI five in the general
+set, in the client's order. This corrects the 2026-09-22 answer (C-7), which said the data was
+absent. The TOP3 chart's close amounts now stack upward over their own dots instead of
+spreading sideways (the client's "valamelyik csússzon feljebb picit"), measured clean for every
+Bérek area and SAP on phone and desktop. BSC's grey "Manager": yes, editable in the sheet
+(`IDBCSYNC` row 2936, `SAL-BUSINESS-SERVICE-CENTER-BSC-039-SZINT`); not changed. Noted: two
+import tabs (EXPERT_POOL_IMPORT, WEB_BERTABLA_IMPORT) were visible again in the sheet (someone
+unhid them after 12:06 UTC), left as they are. GitHub has still not started a scheduled sync
+run (none by 12:54 UTC, two hours after the schedule went in); the sync runs by manual
+dispatch until it does.
 

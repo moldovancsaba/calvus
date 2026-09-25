@@ -141,7 +141,7 @@
   background: var(--dark, #121c1b);
   color: #fff;
   box-shadow: 0 8px 22px rgba(0, 0, 0, .22);
-  font-family: "Inter", "Montserrat", "Segoe UI", Arial, sans-serif;
+  font-family: var(--font, "Outfit", system-ui, sans-serif);
   font-size: 12px;
   font-weight: 900;
   line-height: 1.25;
