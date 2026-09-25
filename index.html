@@ -4,6 +4,12 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Calvus - Project Hub</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Montserrat:wght@600;700&family=Source+Serif+4:wght@600;700&family=Baloo+2:wght@600;700;800&family=Roboto+Slab:wght@600;700&family=Bodoni+Moda:opsz,wght@6..96,500;6..96,700&family=Archivo:wdth,wght@112.5,600&display=swap"
+    />
     <style>
       :root {
         --bg: #f7f7f7;
@@ -24,44 +30,146 @@
       h1 { margin: 0 0 10px; font-size: clamp(1.8rem, 3vw, 2.4rem); }
       .lead { margin: 0 0 28px; color: var(--muted); }
       .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px; }
-      .card { background: var(--surface); border: 1px solid var(--line); border-radius: 14px; overflow: hidden; }
-      .card-body { padding: 18px; }
-      .card h2 { margin: 0 0 8px; font-size: 1.1rem; }
-      .card p { margin: 0 0 14px; color: var(--muted); }
 
-      /* A live, always-current miniature of the project's own home page — never a screenshot
-         that can go stale, since it's the same page the "Open project" link goes to. The iframe
-         is sized to 4x the visible box and scaled back down, so it stays responsive at any card
-         width instead of being tuned to one fixed pixel size. */
-      .card-preview {
-        position: relative;
-        height: 170px;
+      /* Each card is styled from that project's own design tokens (colour, corner radius,
+         heading font, button shape) instead of one shared hub look — the hub should read as a
+         shelf of the actual projects, not a list with a coat of hub paint. Every project sets
+         its own values for these custom properties below; a card with no modifier class falls
+         back to the hub's own neutral defaults here. */
+      .card {
+        --card-bg: var(--surface);
+        --card-ink: var(--text);
+        --card-muted: var(--muted);
+        --card-stripe: var(--accent);
+        --card-radius: 14px;
+        --card-font-display: inherit;
+        --card-btn-radius: 999px;
+        --card-btn-bg: var(--accent);
+        --card-btn-text: #fff;
+        --card-btn-line: var(--accent);
+        --card-btn-outline-ink: var(--accent);
+        background: var(--card-bg);
+        border: 1px solid var(--line);
+        border-radius: var(--card-radius);
         overflow: hidden;
-        background: var(--bg);
-        border-bottom: 1px solid var(--line);
       }
-      .card-preview iframe {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 400%;
-        height: 400%;
-        transform: scale(0.25);
-        transform-origin: top left;
-        border: 0;
-        pointer-events: none;
+      .card::before { content: ''; display: block; height: 6px; background: var(--card-stripe); }
+      .card-body { padding: 20px; }
+      .card h2 {
+        margin: 0 0 8px;
+        font-size: 1.2rem;
+        font-family: var(--card-font-display);
+        color: var(--card-ink);
       }
+      .card p { margin: 0 0 14px; color: var(--card-muted); }
       .link {
         display: inline-block;
         padding: 10px 14px;
-        border-radius: 999px;
-        border: 1px solid var(--accent);
-        color: #fff;
-        background: var(--accent);
+        border-radius: var(--card-btn-radius);
+        border: 1.5px solid var(--card-btn-line);
         text-decoration: none;
-        font-weight: 600;
+        font-weight: 700;
+        font-size: 0.92rem;
       }
+      .link.primary { background: var(--card-btn-bg); color: var(--card-btn-text); }
+      .link.secondary { background: transparent; color: var(--card-btn-outline-ink); }
       .links { display: flex; flex-wrap: wrap; gap: 10px; }
+
+      /* One block per project, values read from that project's own tokens.css / :root —
+         lexodont.hu/styles.css, idbc-salary-guide/index.html, discountdirect/index.html,
+         business-direct/assets/tokens.css, nepszabadsag/assets/tokens.css,
+         bizdrankazoldet/assets/tokens.css, holdvolgy/assets/tokens.css. */
+      .card--lexodont {
+        --card-bg: #e2e2e2;
+        --card-ink: #2e2e2e;
+        --card-muted: #4f4f4f;
+        --card-stripe: #4a4a4a;
+        --card-radius: 0px;
+        --card-font-display: "Inter", system-ui, sans-serif;
+        --card-btn-radius: 0px;
+        --card-btn-bg: #4a4a4a;
+        --card-btn-text: #efefef;
+        --card-btn-line: #8f8f8f;
+        --card-btn-outline-ink: #2e2e2e;
+      }
+      .card--idbc {
+        --card-bg: #eef5ec;
+        --card-ink: #101818;
+        --card-muted: rgba(16, 24, 24, .66);
+        --card-stripe: #a5df8f;
+        --card-radius: 20px;
+        --card-font-display: "Inter", "Montserrat", sans-serif;
+        --card-btn-radius: 10px;
+        --card-btn-bg: #a5df8f;
+        --card-btn-text: #132323;
+        --card-btn-line: #132323;
+        --card-btn-outline-ink: #132323;
+      }
+      .card--discountdirect {
+        --card-bg: #f8fafc;
+        --card-ink: #111827;
+        --card-muted: #64748b;
+        --card-stripe: #3b5bdb;
+        --card-radius: 14px;
+        --card-font-display: "Inter", system-ui, sans-serif;
+        --card-btn-radius: 999px;
+        --card-btn-bg: #3b5bdb;
+        --card-btn-text: #fff;
+        --card-btn-line: #3b5bdb;
+        --card-btn-outline-ink: #3b5bdb;
+      }
+      .card--bizdirect {
+        --card-bg: #f8fafc;
+        --card-ink: #111827;
+        --card-muted: #64748b;
+        --card-stripe: #0f766e;
+        --card-radius: 14px;
+        --card-font-display: -apple-system, "Segoe UI", Roboto, sans-serif;
+        --card-btn-radius: 999px;
+        --card-btn-bg: #0f766e;
+        --card-btn-text: #fff;
+        --card-btn-line: #0f766e;
+        --card-btn-outline-ink: #0f766e;
+      }
+      .card--nepszabadsag {
+        --card-bg: #ffffff;
+        --card-ink: #111111;
+        --card-muted: #6b6b6b;
+        --card-stripe: #c8f000;
+        --card-radius: 6px;
+        --card-font-display: "Source Serif 4", "Noto Serif", Georgia, serif;
+        --card-btn-radius: 999px;
+        --card-btn-bg: #1d4fd7;
+        --card-btn-text: #fff;
+        --card-btn-line: #1d4fd7;
+        --card-btn-outline-ink: #1d4fd7;
+      }
+      .card--bzz {
+        --card-bg: #f2ffe5;
+        --card-ink: #0f3f43;
+        --card-muted: #4e6a66;
+        --card-stripe: #b3ff66;
+        --card-radius: 24px;
+        --card-font-display: "Baloo 2", "Roboto Slab", Georgia, serif;
+        --card-btn-radius: 50px;
+        --card-btn-bg: #007982;
+        --card-btn-text: #fff;
+        --card-btn-line: #007982;
+        --card-btn-outline-ink: #007982;
+      }
+      .card--holdvolgy {
+        --card-bg: #fafafa;
+        --card-ink: #1d1d1b;
+        --card-muted: #666666;
+        --card-stripe: #b8a689;
+        --card-radius: 2px;
+        --card-font-display: "Bodoni Moda", Didot, serif;
+        --card-btn-radius: 2px;
+        --card-btn-bg: #8b705b;
+        --card-btn-text: #fff;
+        --card-btn-line: #b8a689;
+        --card-btn-outline-ink: #1d1d1b;
+      }
       .site-header {
         position: sticky;
         top: 0;
@@ -187,123 +295,102 @@
       <p class="lead">Client-facing wireframe projects managed in parallel. The method and the requirements every project follows: <a href="./prototyping.html">How we prototype</a>. Every project compared with every other: <a href="./hub-audit.html">Hub audit</a>
           <a href="./product.html">The product standard</a> (2026-09-20).</p>
       <section class="grid">
-        <article class="card">
-          <div class="card-preview" aria-hidden="true">
-            <iframe src="./lexodont.hu/index.html" title="Előnézet: lexodont.hu" loading="lazy" tabindex="-1"></iframe>
-          </div>
+        <article class="card card--lexodont">
           <div class="card-body">
           <h2>lexodont.hu</h2>
           <p>Dental clinic wireframe (March–April 2026) in a polished and a Balsamiq-style variant — the structure lexodont.hu was built from; documented as the record.</p>
           <div class="links">
-            <a class="link" href="./lexodont.hu/index.html">Open project</a>
-            <a class="link" href="./lexodont.hu_balsamic/index.html">Open Balsamiq version</a>
-            <a class="link" href="./lexodont.hu/docs/bemutato.html">Bemutató (HU)</a>
-            <a class="link" href="./lexodont.hu/docs/index.html">Project documentation</a>
+            <a class="link primary" href="./lexodont.hu/index.html">Open project</a>
+            <a class="link secondary" href="./lexodont.hu_balsamic/index.html">Open Balsamiq version</a>
+            <a class="link secondary" href="./lexodont.hu/docs/bemutato.html">Bemutató (HU)</a>
+            <a class="link secondary" href="./lexodont.hu/docs/index.html">Project documentation</a>
           </div>
           </div>
         </article>
-        <article class="card">
-          <div class="card-preview" aria-hidden="true">
-            <iframe src="./idbc-salary-guide/index.html" title="Előnézet: IDBC Salary Guide" loading="lazy" tabindex="-1"></iframe>
-          </div>
+        <article class="card card--idbc">
           <div class="card-body">
           <h2>IDBC Salary Guide</h2>
           <p>Real market-trends survey data, salary bands and expert pool - filterable by segment, topic, area and experience level.</p>
           <div class="links">
-            <a class="link" href="./idbc-salary-guide/index.html">Open dashboard</a>
-            <a class="link" href="./idbc-salary-guide/berezes/index.html">Bérsávok</a>
-            <a class="link" href="./idbc-salary-guide/sap/index.html">SAP piaci trendek</a>
-            <a class="link" href="./idbc-salary-guide/expert-pool/index.html">Expert Pool</a>
-            <a class="link" href="./idbc-salary-guide/esettanulmanyok/index.html">Esettanulmányok</a>
-            <a class="link" href="./idbc-salary-guide/regisztracio/index.html">Regisztráció</a>
-            <a class="link" href="./idbc-salary-guide/docs/bemutato.html">Bemutató (HU)</a>
-            <a class="link" href="./idbc-salary-guide/docs/index.html">Project documentation</a>
+            <a class="link primary" href="./idbc-salary-guide/index.html">Open dashboard</a>
+            <a class="link secondary" href="./idbc-salary-guide/berezes/index.html">Bérsávok</a>
+            <a class="link secondary" href="./idbc-salary-guide/sap/index.html">SAP piaci trendek</a>
+            <a class="link secondary" href="./idbc-salary-guide/expert-pool/index.html">Expert Pool</a>
+            <a class="link secondary" href="./idbc-salary-guide/esettanulmanyok/index.html">Esettanulmányok</a>
+            <a class="link secondary" href="./idbc-salary-guide/regisztracio/index.html">Regisztráció</a>
+            <a class="link secondary" href="./idbc-salary-guide/docs/bemutato.html">Bemutató (HU)</a>
+            <a class="link secondary" href="./idbc-salary-guide/docs/index.html">Project documentation</a>
           </div>
           </div>
         </article>
-        <article class="card">
-          <div class="card-preview" aria-hidden="true">
-            <iframe src="./discountdirect/index.html" title="Előnézet: DiscountDirect" loading="lazy" tabindex="-1"></iframe>
-          </div>
+        <article class="card card--discountdirect">
           <div class="card-body">
           <h2>DiscountDirect</h2>
           <p>Messaging app wireframe connecting sellers and buyers - personalised offers driven by recommendations and purchase history, with channel selection, instant flash campaigns and automated personalised offer lists.</p>
           <div class="links">
-            <a class="link" href="./discountdirect/index.html">Open prototype</a>
-            <a class="link" href="./discountdirect/executive.html">Executive summary</a>
-            <a class="link" href="./discountdirect/research.html">Research</a>
-            <a class="link" href="./discountdirect/business-logic.html">Business logic</a>
-            <a class="link" href="./discountdirect/ssot.html">SSOT</a>
-            <a class="link" href="./discountdirect/architecture.html">Architecture</a>
-            <a class="link" href="./discountdirect/technical-design.html">Technical design</a>
-            <a class="link" href="./discountdirect/implementation-plan.html">Implementation plan</a>
-            <a class="link" href="./discountdirect/bemutato.html">Bemutató (HU)</a>
-            <a class="link" href="./discountdirect/docs.html">Project documentation</a>
+            <a class="link primary" href="./discountdirect/index.html">Open prototype</a>
+            <a class="link secondary" href="./discountdirect/executive.html">Executive summary</a>
+            <a class="link secondary" href="./discountdirect/research.html">Research</a>
+            <a class="link secondary" href="./discountdirect/business-logic.html">Business logic</a>
+            <a class="link secondary" href="./discountdirect/ssot.html">SSOT</a>
+            <a class="link secondary" href="./discountdirect/architecture.html">Architecture</a>
+            <a class="link secondary" href="./discountdirect/technical-design.html">Technical design</a>
+            <a class="link secondary" href="./discountdirect/implementation-plan.html">Implementation plan</a>
+            <a class="link secondary" href="./discountdirect/bemutato.html">Bemutató (HU)</a>
+            <a class="link secondary" href="./discountdirect/docs.html">Project documentation</a>
           </div>
           </div>
         </article>
-        <article class="card">
-          <div class="card-preview" aria-hidden="true">
-            <iframe src="./business-direct/index.html" title="Előnézet: business.direct" loading="lazy" tabindex="-1"></iframe>
-          </div>
+        <article class="card card--bizdirect">
           <div class="card-body">
           <h2>business.direct</h2>
           <p>A standalone product for classified media owners — listing platforms, directories, marketplaces of local businesses — to run the three jobs their business never stops needing: marketing (content generated from the listings and delivered to every medium), B2B sales (every listed business contacted and acquired as a paying advertiser through a lawful pipeline) and retention (churn seen weeks ahead and answered with a touch), with a human gate on everything and the owner's economics — listing price, advertiser CAC and LTV, visitor cost and value, churn, the next dollar — as a screen. Example persona and first buyer: ClassScout (Your Field NYC); the prototype runs on their real listings. State: prototype, presentation, executive summary, the value document, every service verified, eighteen modules with pseudo code, nine sprints; the documentation is being replaced under the audit's programme.</p>
           <div class="links">
-            <a class="link" href="./business-direct/index.html">Prototype (platform · provider · family)</a>
-            <a class="link" href="./business-direct/docs/presentation.html">Presentation</a>
-            <a class="link" href="./business-direct/docs/layouts.html">Layout frames (gate 2)</a>
-            <a class="link" href="./business-direct/docs/design-system.html">Design system</a>
-            <a class="link" href="./business-direct/docs/product-specification.html">Product specification</a>
-            <a class="link" href="./business-direct/docs/economics.html">Economics</a>
-            <a class="link" href="./business-direct/docs/index.html">Project documentation</a>
+            <a class="link primary" href="./business-direct/index.html">Prototype (platform · provider · family)</a>
+            <a class="link secondary" href="./business-direct/docs/presentation.html">Presentation</a>
+            <a class="link secondary" href="./business-direct/docs/layouts.html">Layout frames (gate 2)</a>
+            <a class="link secondary" href="./business-direct/docs/design-system.html">Design system</a>
+            <a class="link secondary" href="./business-direct/docs/product-specification.html">Product specification</a>
+            <a class="link secondary" href="./business-direct/docs/economics.html">Economics</a>
+            <a class="link secondary" href="./business-direct/docs/index.html">Project documentation</a>
           </div>
           </div>
         </article>
-        <article class="card">
-          <div class="card-preview" aria-hidden="true">
-            <iframe src="./nepszabadsag/index.html" title="Előnézet: Népszabadság" loading="lazy" tabindex="-1"></iframe>
-          </div>
+        <article class="card card--nepszabadsag">
           <div class="card-body">
           <h2>Népszabadság</h2>
           <p>The relaunch of Népszabadság as an online paper with a weekly print edition, launching 2026-10-08: a pre-registration landing page and the site itself (címlap, rovatfront, cikkoldal), designed in Figma. State: first version built 2026-09-21 — four pages generated from one content source, real headlines read from the Figma file, one full Cikkoldal with its paywall mechanic, ten real licensed photographs, a live-countdown landing page; measured clean at 390 and 1440. The Figma's Népszava sub-brand front is deliberately not built, at the owner's instruction. Next: rovat fronts for the remaining categories and the technical package.</p>
           <div class="links">
-            <a class="link" href="./nepszabadsag/index.html">Prototype (Címlap)</a>
-            <a class="link" href="./nepszabadsag/regisztracio/index.html">Elő-regisztráció</a>
-            <a class="link" href="./nepszabadsag/docs/bemutato.html">Bemutató (HU)</a>
-            <a class="link" href="./nepszabadsag/docs/index.html">Project documentation</a>
+            <a class="link primary" href="./nepszabadsag/index.html">Prototype (Címlap)</a>
+            <a class="link secondary" href="./nepszabadsag/regisztracio/index.html">Elő-regisztráció</a>
+            <a class="link secondary" href="./nepszabadsag/docs/bemutato.html">Bemutató (HU)</a>
+            <a class="link secondary" href="./nepszabadsag/docs/index.html">Project documentation</a>
           </div>
           </div>
         </article>
-        <article class="card">
-          <div class="card-preview" aria-hidden="true">
-            <iframe src="./bizdrankazoldet/index.html" title="Előnézet: Bízd ránk a zöldet" loading="lazy" tabindex="-1"></iframe>
-          </div>
+        <article class="card card--bzz">
           <div class="card-body">
           <h2>Bízd ránk a zöldet</h2>
           <p>The playful office-plant brand of Gourmet Garden Kft. / Grofie (Budapest): office plant design, rental and care for companies, maintenance included. The brief: research how a silly-but-professional green service is presented in 2026 to earn trust, show reliability, own an identity and sell through its customer journey — then prototype it in Hungarian. State: the prototype built from the client's own material (their kit, photographs, illustrations, Reels) — seven Hungarian pages designed separately for phone and desktop; the presentation in Hungarian; next: the client's material for the samples.</p>
           <div class="links">
-            <a class="link" href="./bizdrankazoldet/index.html">Prototype (HU)</a>
-            <a class="link" href="./bizdrankazoldet/docs/bemutato.html">Bemutató (HU)</a>
-            <a class="link" href="./bizdrankazoldet/docs/research.html">Research</a>
-            <a class="link" href="./bizdrankazoldet/docs/design-system.html">Design system</a>
-            <a class="link" href="./bizdrankazoldet/docs/index.html">Project documentation</a>
+            <a class="link primary" href="./bizdrankazoldet/index.html">Prototype (HU)</a>
+            <a class="link secondary" href="./bizdrankazoldet/docs/bemutato.html">Bemutató (HU)</a>
+            <a class="link secondary" href="./bizdrankazoldet/docs/research.html">Research</a>
+            <a class="link secondary" href="./bizdrankazoldet/docs/design-system.html">Design system</a>
+            <a class="link secondary" href="./bizdrankazoldet/docs/index.html">Project documentation</a>
           </div>
           </div>
         </article>
-        <article class="card">
-          <div class="card-preview" aria-hidden="true">
-            <iframe src="./holdvolgy/index.html" title="Előnézet: Holdvölgy" loading="lazy" tabindex="-1"></iframe>
-          </div>
+        <article class="card card--holdvolgy">
           <div class="card-body">
           <h2>Holdvölgy 2026</h2>
           <p>Tokaji winery rebuilt on its own brand after benchmark research - home page as two designed experiences (desktop editorial estate, phone hospitality-and-buying tool), generated in HU and EN from one content source; approved through three gates, all documented.</p>
           <div class="links">
-            <a class="link" href="./holdvolgy/index.html">Open home (HU)</a>
-            <a class="link" href="./holdvolgy/en/index.html">Home (EN)</a>
-            <a class="link" href="./holdvolgy/borok.html">Borok</a>
-            <a class="link" href="./holdvolgy/docs/bemutato.html">Bemutató (HU)</a>
-            <a class="link" href="./holdvolgy/docs/index.html">Project documentation</a>
+            <a class="link primary" href="./holdvolgy/index.html">Open home (HU)</a>
+            <a class="link secondary" href="./holdvolgy/en/index.html">Home (EN)</a>
+            <a class="link secondary" href="./holdvolgy/borok.html">Borok</a>
+            <a class="link secondary" href="./holdvolgy/docs/bemutato.html">Bemutató (HU)</a>
+            <a class="link secondary" href="./holdvolgy/docs/index.html">Project documentation</a>
           </div>
           </div>
         </article>
