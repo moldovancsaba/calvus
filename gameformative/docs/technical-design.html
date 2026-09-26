@@ -30,7 +30,7 @@ footer{margin-top:48px;padding-top:16px;border-top:1px solid var(--gf-line);font
 <pre><code>data/fetch.py      downloads 9 openfootball files → data/raw/          (run only to refresh)
 data/convert.py    raw/ → stats.json, with the data asserts           (--check: reproduce only)
 content.py         article copy, nav, glossary — figures read from stats.json, premises asserted
-build.py           content.py + stats.json → 19 pages                 (--check: reproduce only)
+build.py           content.py + stats.json → every page               (--check: reproduce only)
 check.py           the gate (07-gate.md)
 docs/build.py      docs markdown → HTML, and presentation.html from presentation-source.md
 </code></pre>
@@ -123,10 +123,10 @@ If a refreshed dataset breaks a copy premise, <code>build.py</code> stops and na
 </table></div>
 <h2 id="4-page-templates">4. Page templates</h2>
 <p><code>build.py</code> has one function per template: home, latest (articles index), article (×6), topics index and topic (×11), how we work, style guide, redirects from <code>/analysis/</code>; and the data pages of the later phase — scores, stats hub, league (×5), season review, World Cup, match centre. Shared chrome:
-banner, header, results strip, footer, tab bar, More sheet. Every page: one <code>h1</code> (visually hidden
+banner, header, desk bar, footer, tab bar, More sheet (and the later-phase notice on the data pages). Every page: one <code>h1</code> (visually hidden
 on the home page, where the lead headline is an <code>h2</code> inside a link), <code>lang="en"</code>, a description,
 light and dark <code>theme-color</code>, JSON-LD where it applies (WebSite, NewsArticle, SportsEvent).</p>
-<h2 id="5-the-live-match-centre-specified-not-built">5. The live match centre (specified, not built)</h2>
+<h2 id="5-the-live-match-centre-later-phase-specified-not-built">5. The live match centre (later phase — specified, not built)</h2>
 <ul>
 <li><strong>Data</strong>: provider push (or 5 s poll) into a per-match JSON at the edge: score, minute, events.</li>
 <li><strong>Score region</strong>: <code>role="status"</code>, <code>aria-live="polite"</code>, <code>aria-atomic="true"</code> — present in the DOM
@@ -139,6 +139,17 @@ light and dark <code>theme-color</code>, JSON-LD where it applies (WebSite, News
 <li><strong>Stats panel</strong>: possession, shots, xG, passes from the licensed provider; until then, the inert
   panel the prototype shows.</li>
 </ul>
+<h2 id="5a-how-an-article-gets-onto-the-site">5a. How an article gets onto the site</h2>
+<ol>
+<li>The content team drafts in <code>../temp-startup-content/drafts/&lt;slug&gt;.md</code> from the template, and
+   <code>check-draft.py</code> confirms the house rules (it counts exactly as the build does).</li>
+<li>The named editor approves (<code>status: ready-for-editor</code> → approved).</li>
+<li>The maintainer moves the article into <code>content.py</code> <code>articles()</code> — slug, desk, subject, kind,
+   byline, origin, title, standfirst, segments, both source lists, cover — then runs <code>build.py</code>
+   (which asserts the rules again) and the gate (which measures them on the page).</li>
+<li>A future converter can read the draft format directly; the format is fixed so that it can
+   (<a href="plan.html"><code>13-implementation-plan.md</code></a> issue 7).</li>
+</ol>
 <h2 id="6-state-and-interaction">6. State and interaction</h2>
 <div class="tbl"><table>
 <thead>

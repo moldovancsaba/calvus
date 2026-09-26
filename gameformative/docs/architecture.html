@@ -25,16 +25,21 @@ footer{margin-top:48px;padding-top:16px;border-top:1px solid var(--gf-line);font
 </style></head>
 <body><div class="wrap"><nav class="docnav" aria-label="Project documentation"><span class="docnav-brand">game<b>formative</b></span><a href="index.html">Overview</a><a href="brief.html">Brief</a><a href="research.html">Research</a><a href="source-register.html">Sources researched</a><a href="evidence.html">Evidence</a><a href="audit.html">Audit</a><a href="inputs.html">Inputs and gaps</a><a href="decisions.html">Decisions</a><a href="design.html">Design</a><a href="build-log.html">Build log</a><a href="gate.html">Gate</a><a href="asks.html">Asks</a><a href="ssot.html">SSOT</a><a href="architecture.html" aria-current=page>Architecture</a><a href="technical-design.html">Technical design</a><a href="plan.html">Plan</a><a href="token-map.html">Token map</a><a href="responsible-data.html">Responsible data</a><a href="presentation.html">Presentation</a><a href="../index.html">Prototype</a></nav>
 <header><p class="eyebrow">gameformative · project documentation</p><h1>Architecture — the real build (proposed)</h1></header>
-<p><em>Written 2026-09-25. The prototype is static HTML generated in this repository; this is the proposed
-architecture for gameformative.com in production. Every stack decision is an ADR in status
-</em><em>PROPOSED</em><em> until the owner flips it (the flip is the next D-number in <a href="decisions.html"><code>04-decisions.md</code></a>).</em></p>
+<p><em>Written 2026-09-25; updated 2026-09-26 for the articles-first launch. The prototype is static HTML
+generated in this repository; this is the proposed architecture for gameformative.com in
+production. Every stack decision is an ADR in status </em><em>PROPOSED</em><em> until the owner flips it (the flip
+is the next D-number in <a href="decisions.html"><code>04-decisions.md</code></a>).</em></p>
 <h2 id="context">Context</h2>
-<pre><code> data providers ──► ingest ──► stats store ──► site renderer ──► CDN ──► readers (phone ≈ desktop)
- (openfootball CC0;            (results,        (static pages +        │
-  licensed event/live feed)     tables,          live islands)          └─► newsletter, social cards
-                                aggregates)
- newsroom CMS ────────────────────────────────► (articles, labels, corrections)
+<pre><code> content team ──► drafts ──► source + rules check ──► named editor ──► site renderer ──► CDN ──► readers
+ (articles)       (template)  (links requested,        (sign-off)      (static pages)          (phone ≈ desktop)
+                               800–3,200, segments,                          │
+                               both source lists)                            └─► newsletter, social cards
+ ─ ─ ─ later phase ─ ─ ─
+ data providers ──► ingest ──► stats store ──► data pages, live islands
+ (openfootball CC0; licensed event/live feed)
 </code></pre>
+<p>The launch is the upper line: an editorial pipeline and a static site. The lower line is the
+data-pages phase, kept in the prototype as a preview.</p>
 <h2 id="the-target-measured">The target, measured</h2>
 <div class="tbl"><table>
 <thead>
@@ -56,13 +61,13 @@ architecture for gameformative.com in production. Every stack decision is an ADR
 <td>INP</td>
 <td>≤ 200 ms</td>
 <td>S1</td>
-<td>6 kB of script, all event handlers local</td>
+<td>about 5 kB of script, all event handlers local</td>
 </tr>
 <tr>
 <td>CLS</td>
 <td>≤ 0.1</td>
-<td>S1; tickers and ads must reserve space</td>
-<td>strip and tiles have fixed heights; no ads</td>
+<td>S1; anything that loads late must reserve its space</td>
+<td>fixed-height bars and tiles; no ads</td>
 </tr>
 <tr>
 <td>Time to first byte</td>
@@ -77,31 +82,44 @@ architecture for gameformative.com in production. Every stack decision is an ADR
 <td>contrast gated; 44 px targets measured</td>
 </tr>
 <tr>
-<td>Data freshness (live)</td>
+<td>Article rules</td>
+<td>every published article within the house rules</td>
+<td>the owner's rules (D18)</td>
+<td>asserted by the build, measured by the gate (check 12)</td>
+</tr>
+<tr>
+<td>Source integrity</td>
+<td>every linked source resolved on the day, every used source read</td>
+<td>trust is the product (<a href="research.html"><code>01-research.md</code></a> §10)</td>
+<td>done by hand for the first article (<a href="inputs.html"><code>03-sources.md</code></a> §3); to automate (issue 0)</td>
+</tr>
+<tr>
+<td>Data correctness (later phase)</td>
+<td>every published table reconciles</td>
+<td>a stats page's whole product</td>
+<td>converter asserts (R2–R7)</td>
+</tr>
+<tr>
+<td>Data freshness (later phase, live)</td>
 <td>score change on page ≤ 10 s after the provider</td>
 <td>a live match centre is only useful live</td>
 <td>not built (no feed)</td>
-</tr>
-<tr>
-<td>Data correctness</td>
-<td>every published table reconciles</td>
-<td>a stats site's whole product</td>
-<td>converter asserts (R2–R7)</td>
 </tr>
 </tbody>
 </table></div>
 <h2 id="containers">Containers</h2>
 <ol>
-<li><strong>Ingest</strong> — pulls openfootball (daily) and the licensed provider (push or poll), normalises
-   names through the reviewed team table, runs the same asserts as <code>data/convert.py</code>, and refuses to
-   publish a competition that does not reconcile.</li>
-<li><strong>Stats store</strong> — matches, events, line-ups, and the derived tables and aggregates, versioned by
-   input hash (as <code>stats.json</code> records its inputs today).</li>
-<li><strong>Site renderer</strong> — pre-renders every page that changes only when data changes (tables, reviews,
-   articles); live islands (score strip, match centre) hydrate from a small JSON endpoint.</li>
-<li><strong>Newsroom CMS</strong> — articles with kind labels, byline, the "how this was made" note, correction
-   history; automated round-ups rendered by template from the store, labelled.</li>
-<li><strong>CDN / host</strong> — static pages and JSON at the edge; purge on data change.</li>
+<li><strong>Editorial pipeline</strong> — drafts in the template format; an automatic check of the house rules
+   (<code>check-draft.py</code> today) and of every source link; the named editor's sign-off recorded with the
+   article.</li>
+<li><strong>Content store</strong> — articles as structured data (desk, subject, kind, segments, both source
+   lists, correction history), versioned; <code>content.py</code> is its prototype.</li>
+<li><strong>Site renderer</strong> — pre-renders every page; rebuilds on publish and on correction.</li>
+<li><strong>CDN / host</strong> — static pages at the edge; purge on publish.</li>
+<li><strong>Later phase — ingest and stats store</strong> — pulls openfootball daily and a licensed provider,
+   normalises names through the reviewed team table, runs the same asserts as <code>data/convert.py</code>,
+   refuses to publish a competition that does not reconcile; live islands (score strip, match
+   centre) hydrate from a small JSON endpoint.</li>
 </ol>
 <h2 id="architecture-decision-records">Architecture decision records</h2>
 <p><strong>ADR-01 — Host on Vercel. PROPOSED.</strong> Options: Vercel; GitHub Pages; Cloudflare Pages; own servers.
@@ -116,7 +134,7 @@ JavaScript — the prototype is already the static half.</p>
 Python (the converter and generator already exist and are gated); a JavaScript framework (Astro,
 Next.js). Python keeps <code>convert.py</code>'s asserts as the ingest gate unchanged; a framework is worth it
 only if the live islands grow into an app. Revisit at M3.</p>
-<p><strong>ADR-04 — Licensed event data from one provider. PROPOSED, blocked on ask A1.</strong> Options: Opta /
+<p><strong>ADR-04 — Licensed event data from one provider (later phase). PROPOSED, blocked on ask A1.</strong> Options: Opta /
 Stats Perform, Sportradar, Genius Sports; or no event data. Without one, xG, ratings and live
 scores stay unavailable. Decided on price and terms, which are not public (register I14–I16).</p>
 <p><strong>ADR-05 — Fonts self-hosted. PROPOSED.</strong> The prototype loads Archivo from Google Fonts; production
@@ -124,13 +142,17 @@ self-hosts the subset it uses (one request fewer, no third-party request before 
 <p><strong>ADR-06 — Consent and analytics minimal by default. PROPOSED.</strong> Options: a full CMP with ad-tech
 (the German leaders, DE2–DE5); a privacy-first analytics tool with no personal data and no banner
 until ads or a newsletter need consent. See <a href="responsible-data.html"><code>18-responsible-data.md</code></a>.</p>
+<p><strong>ADR-07 — Articles as structured data, not free HTML. PROPOSED.</strong> Options: a general-purpose CMS
+with free-form rich text; structured articles (desk, subject, kind, headed segments, two typed source
+lists) rendered by templates. The house rules and the source lists are only enforceable on
+structure — the prototype's build and gate prove it. A headless CMS can hold the structure; the
+choice of product follows the owner's hosting and team decisions.</p>
 <h2 id="flows">Flows</h2>
 <ul>
-<li><strong>Result arrives</strong> → ingest validates → store updates → renderer rebuilds that league's pages,
-  the home page and the strip → CDN purge. Target: minutes (non-live), seconds for the live islands.</li>
-<li><strong>Correction</strong> → editor edits the piece → correction note appended with date → corrections page
-  lists it.</li>
-<li><strong>Automated round-up</strong> → round complete in the store → template renders the card → labelled
-  Automated, published without edit (the template can only state what the data says).</li>
+<li><strong>Article published</strong> → the editor signs off → the rules and link checks pass → the renderer
+  rebuilds the article, its desk and subject pages, the home and latest pages → CDN purge.</li>
+<li><strong>Correction</strong> → the editor edits the piece → a correction note with the date is appended → the
+  corrections page lists it.</li>
+<li><strong>Later phase — result arrives</strong> → ingest validates → store updates → the data pages rebuild.</li>
 </ul>
 <footer>gameformative.com · project documentation, 2026</footer></div></body></html>

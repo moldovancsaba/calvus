@@ -27,10 +27,11 @@ footer{margin-top:48px;padding-top:16px;border-top:1px solid var(--gf-line);font
 <header><p class="eyebrow">gameformative · project documentation</p><h1>Design system — as built</h1></header>
 <p><em>Tokens and components as implemented in <code>assets/tokens.css</code> and <code>assets/site.css</code>, shown live on
 the style guide (<code>../styleguide/index.html</code>). Every choice traces to <a href="research.html"><code>01-research.md</code></a>; the reason is
-given in <a href="decisions.html"><code>04-decisions.md</code></a>. Written 2026-09-25.</em></p>
+given in <a href="decisions.html"><code>04-decisions.md</code></a>. Written 2026-09-25; rewritten 2026-09-26 to describe the site as it is —
+how it got here is in <a href="build-log.html"><code>06-build-log.md</code></a>.</em></p>
 <h2 id="the-idea">The idea</h2>
-<p><strong>The numbers are the picture.</strong> No photographs; every cover, tile and chart is drawn from the data
-the story is about (D9). The page structure follows the leaders the research measured — ink navy
+<p><strong>The numbers are the picture.</strong> No photographs; every cover and chart is drawn from the numbers
+the story is about (D9) — the lead article's cover is its seed study's two estimates on one scale. The page structure follows the leaders the research measured — ink navy
 bands, white or off-white surfaces, one saturated accent — and the colours are read from the 2027
 forecasts (projections: WGSN × Coloro Luminous Blue and Energy Orange). The logo mark is a form line
 rising to an orange point: a run of results, the latest one highlighted.</p>
@@ -91,13 +92,13 @@ rising to an orange point: a run of results, the latest one highlighted.</p>
 <td><code>--gf-blue</code></td>
 <td><code>#1F47E0</code></td>
 <td><code>#7C95FF</code></td>
-<td><strong>Form Blue</strong>: brand, links, primary buttons, W chips, the highlighted series</td>
+<td><strong>Form Blue</strong>: brand, links, primary buttons, desk accents, the highlighted series</td>
 </tr>
 <tr>
 <td><code>--gf-orange</code></td>
 <td><code>#E0560B</code></td>
 <td><code>#FF8A3D</code></td>
-<td><strong>Energy Orange</strong>: the one accent — L chips, the second series, the "notice this" bar</td>
+<td><strong>Energy Orange</strong>: the one accent — article counts, the second series, the "notice this" bar</td>
 </tr>
 <tr>
 <td><code>--gf-orange-ink</code></td>
@@ -115,7 +116,7 @@ rising to an orange point: a run of results, the latest one highlighted.</p>
 <td><code>--gf-band</code></td>
 <td><code>#0C1222</code></td>
 <td><code>#050811</code></td>
-<td>the ink bands (World Cup, newsletter, footer, covers) in both themes</td>
+<td>the ink bands (how we source, newsletter, footer, covers) in both themes</td>
 </tr>
 </tbody>
 </table></div>
@@ -124,9 +125,9 @@ publishes hex values (register T6). <strong>Contrast is a gate check, not a clai
 every text pair (ink, text, muted, blue, orange-ink on ground, surface and sunk; the on-colours on
 blue, orange, draw and band; blue and orange as marks against the surface at 3:1) in both themes —
 48 pairs, all passing WCAG 2.2 AA.</p>
-<p><strong>Colour never carries meaning alone.</strong> Form chips print W, D or L; outcome bars print H, D and A
-with their percentages; the highlighted series in a chart also has a heavier or dashed stroke and a
-direct label; the top-four and bottom-three table bands have a printed key.</p>
+<p><strong>Colour never carries meaning alone.</strong> The two source lists each have their own heading; the
+current desk in the desk bar is marked with <code>aria-current</code>, not only a tint; in charts the highlighted
+series also has a heavier or dashed stroke and a direct label, and form chips print W, D or L.</p>
 <h2 id="type">Type</h2>
 <p>One variable family, <strong>Archivo</strong> (Google Fonts, <code>wdth</code> 62–125, <code>wght</code> 400–900), in three widths:</p>
 <div class="tbl"><table>
@@ -184,45 +185,33 @@ figures aligns. Fallback: Arial Narrow, then the system sans.</p>
 <tbody>
 <tr>
 <td>Navigation</td>
-<td>brand, search, theme on top; <strong>five-tab bar</strong> at the bottom (Home, Scores, Stats, Analysis, More)</td>
+<td>brand, search, theme on top; <strong>tab bar</strong> at the bottom: Home · Latest · Desks · Standards · More</td>
 <td>as phone</td>
-<td>brand, <strong>six-item top nav</strong>, search, theme, sign-in; no tab bar</td>
+<td>brand, <strong>top nav</strong> (Home · Latest · Desks · How we work), search, theme, sign-in; no tab bar</td>
 </tr>
 <tr>
-<td>Results strip</td>
-<td>swipe; compact label</td>
-<td>swipe + arrow buttons</td>
-<td>swipe + arrow buttons</td>
+<td>Under the header</td>
+<td><strong>desk bar</strong> — the eight desks, swipe sideways; the current desk highlighted</td>
+<td>the same</td>
+<td>the same, one row</td>
 </tr>
 <tr>
 <td>Home</td>
-<td>one column: lead, the table, numbers (2×2), stories, leagues, bands</td>
+<td>lead article (cover, desk · kind, headline, opening, byline, reading time), Latest list, three cards, the eight desk tiles, the "how we source" band, newsletter (inert)</td>
 <td>two-column grids</td>
-<td>lead story + table rail; 4-up numbers, 3-up stories, 4-up leagues</td>
-</tr>
-<tr>
-<td>League table</td>
-<td><strong>compact</strong> (#, Team, P, GD, Pts) + "All columns"; team codes</td>
-<td>full</td>
-<td>full, sortable, overall / home / away</td>
-</tr>
-<tr>
-<td>Charts</td>
-<td>full width; HTML labels at real size</td>
-<td>two-up</td>
-<td>two-up</td>
-</tr>
-<tr>
-<td>World Cup bracket</td>
-<td>each round as a grid of ties</td>
-<td>as phone</td>
-<td>five-column bracket tree, ties aligned to their feeders</td>
+<td>lead + Latest rail; three cards; desk tiles 3-up</td>
 </tr>
 <tr>
 <td>Article</td>
-<td>single column; rail below</td>
+<td>desk · kind · subject; headline; the desk's job; standfirst; byline with reading time and segments; <strong>In this article</strong>; headed segments; charts where the piece has data; <strong>Sources used</strong>; <strong>Sources investigated but not used</strong>; "More to read" below</td>
 <td>as phone</td>
-<td>720 px text column + sticky rail</td>
+<td>720 px text column + sticky "More to read" rail</td>
+</tr>
+<tr>
+<td>Desk / subject page</td>
+<td>name, what it is for, its articles — or a plain "none published yet" panel; the other desks / subjects</td>
+<td>as phone</td>
+<td>as phone, list items two-column</td>
 </tr>
 </tbody>
 </table></div>
@@ -230,83 +219,46 @@ figures aligns. Fallback: Arial Narrow, then the system sans.</p>
 <ul>
 <li><strong>Header</strong>: brand (mark + "game<strong>formative</strong>"), top nav (desktop), search (inert), theme toggle,
   sign-in (inert, desktop). Sticky, translucent.</li>
-<li><strong>Results strip</strong>: the latest round of all five leagues, one chip per match (league, codes, score,
-  winner in bold), linking to the league's results; arrow buttons on wider screens.</li>
+<li><strong>Desk bar</strong> (<code>.gf-topicbar</code>): the eight desks; scrolls sideways on phones; the current desk is
+  <code>aria-current</code> and tinted.</li>
 <li><strong>Tab bar and More sheet</strong>: five tabs; More opens a dialog (focus moves in, Escape closes and
-  returns focus).</li>
-<li><strong>Labels</strong>: Analysis (blue), Explainer (neutral), Automated (orange), Season/Tournament review
-  (muted). Every piece carries one.</li>
-<li><strong>Stat tile</strong>: a condensed figure, what it counts, its context; the accent tile has an orange top
-  rule.</li>
-<li><strong>Story card / list item / lead story</strong>: data-graphic cover, label, headline, dek, date.</li>
-<li><strong>League snapshot</strong>: top five, last three results as form chips, points.</li>
-<li><strong>League table</strong>: sortable headers (buttons, announced to screen readers), sticky header and team
-  column, zone bands with a key, form chips, overall / home / away views, compact phone mode.</li>
-<li><strong>Results list</strong>: home — score — away, winner in bold, date; fixtures show kick-off time.</li>
-<li><strong>Charts</strong>: bars (ranking), stacked bars (part-to-whole), columns (distribution by minute), lines
-  (points race) — chosen by the FT Visual Vocabulary; each in a figure with title, subtitle, source
-  and "Show the numbers as a table".</li>
-<li><strong>Band</strong>: ink navy block for the World Cup review and the newsletter, in both themes.</li>
-<li><strong>Match head, timeline, line-ups</strong>: the match centre; goals and substitutions by minute.</li>
-<li><strong>Bracket</strong>: the knockout rounds in tree order (the converter walks back from the final).</li>
-<li><strong>Inert panel</strong>: dashed box that says what is not built and why (xG, live data, statistics).</li>
-<li><strong>Transparency note</strong>: on every article — who wrote it, where every figure comes from, the
-  corrections link.</li>
+  returns focus) with the sections, the desks, All subjects, the later-phase data pages, theme and
+  sign-in.</li>
+<li><strong>Article meta</strong> (<code>.gf-cardmeta</code>): "Desk · Kind" on cards; "Desk · Kind · Subject: …" on the
+  article, with the desk's job underneath (<code>.gf-deskline</code>).</li>
+<li><strong>Lead story, story card, list item</strong>: data-graphic cover, meta, headline, the standfirst (or the
+  opening of the first paragraph), date and reading time. Cards and list items are an <code>&lt;article&gt;</code>
+  around one link.</li>
+<li><strong>Latest list</strong> (<code>.gf-latest</code>), <strong>desk tile</strong> (<code>.gf-desk-tile</code>: name large, the desk's job, the
+  article count in orange), <strong>subject tile</strong> (<code>.gf-topic-tile</code>).</li>
+<li><strong>In this article</strong> (<code>.gf-toc-box</code>): the segment headings, linked.</li>
+<li><strong>Segment</strong> (<code>.gf-seg-block</code>): a heading and its paragraphs; the paragraphs carry <code>data-count</code>,
+  which is what the gate measures.</li>
+<li><strong>Source lists</strong> (<code>.gf-sources</code>): <em>Sources used</em> in link blue, <em>Sources investigated but not used</em>
+  in text colour, each entry: title (link) — publisher, date — one line on what it contributed or
+  why it was set aside; then the link-check date and the body length.</li>
+<li><strong>How we source band</strong> (<code>.gf-promise</code>): the three house rules as figures.</li>
+<li><strong>Charts</strong>: bars (ranking), stacked bars (part-to-whole), columns (distribution), lines (a race) —
+  chosen by the FT Visual Vocabulary; HTML labels at real size on every width; each with title,
+  subtitle, source and "Show the numbers as a table".</li>
+<li><strong>Labels</strong>: Analysis (blue), Explainer (neutral), Automated (orange, data pages only).</li>
+<li><strong>Inert panel</strong>: dashed box that says plainly what is not there and why ("none published yet",
+  "not built in the prototype").</li>
+<li><strong>Later-phase notice</strong> (<code>.gf-later</code>): the strip on the data pages that says they are a preview.</li>
 </ul>
+<p>The data pages (a later phase) keep their own components — league table with overall / home / away
+and a compact phone mode, results list, stat tiles, bracket, group tables, match head, timeline and
+line-ups — as built in round 1 (<a href="build-log.html"><code>06-build-log.md</code></a>).</p>
 <h2 id="motion">Motion</h2>
-<p>Only colour transitions on hover; smooth scrolling of the strip only when the reader has not asked
-for reduced motion. Nothing auto-plays, nothing auto-advances.</p>
-<h2 id="round-2-articles-first-2026-09-25">Round 2 — articles first (2026-09-25)</h2>
-<p>The tokens, type and colour are unchanged. What changed is the structure:</p>
-<div class="tbl"><table>
-<thead>
-<tr>
-<th></th>
-<th>Phone</th>
-<th>Desktop</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Navigation</td>
-<td>tab bar: Home · Latest · Topics · Standards · More</td>
-<td>top nav: Home · Latest · Topics · How we work</td>
-</tr>
-<tr>
-<td>Under the header</td>
-<td><strong>topic bar</strong> — all eleven topics, swipe sideways; the current topic highlighted</td>
-<td>the same, one row</td>
-</tr>
-<tr>
-<td>Home</td>
-<td>lead article (cover, topic · kind, headline, opening, byline, reading time), Latest list, more cards, topic tiles (compact), the sourcing promise band, newsletter (inert)</td>
-<td>lead + Latest rail; three cards; topic tiles 3-up; bands</td>
-</tr>
-<tr>
-<td>Article</td>
-<td>topic · kind, headline, standfirst, byline with reading time and segment count, <strong>In this article</strong> (the segment headings, linked), headed segments, charts where the piece has data, <strong>Sources</strong> — used, then investigated but not used, each with publisher and a one-line reason; "More to read" below</td>
-<td>720 px text column with a sticky "More to read" rail</td>
-</tr>
-<tr>
-<td>Topic page</td>
-<td>name, what it covers, its articles — or a plain "none published yet" panel</td>
-<td>the same</td>
-</tr>
-</tbody>
-</table></div>
-<p>New components: <code>.gf-topicbar</code>, <code>.gf-cardmeta</code> (topic · kind), <code>.gf-latest</code>, <code>.gf-topic-tile</code> and
-<code>.gf-topic-grid</code>, <code>.gf-promise</code> (the three rules as figures), <code>.gf-toc-box</code>, <code>.gf-seg-block</code>,
-<code>.gf-sources</code> and <code>.gf-source-list</code> (the "investigated" list set in text colour, the "used" list in
-link blue, so the two read differently without relying on colour alone — each has its own heading),
-<code>.gf-later</code> (the data pages' notice). Story cards and list items are now an <code>&lt;article&gt;</code> around one
-link, so screen readers announce each as an article.</p>
-<p>The cover of the first article is drawn from its seed source's two numbers: the pooled odds ratio
-(1.33, CI 0.85–2.07) and the pooled relative risk (2.33, CI 1.65–3.30) on one scale with the
-no-effect line at 1 — the article's argument in one picture, and no photograph needed.</p>
-<h2 id="round-3-the-eight-desks-2026-09-25">Round 3 — the eight desks (2026-09-25)</h2>
-<p>The desk bar (the same component as the round-2 topic bar) lists Discover · Define · Design ·
-Develop · Data · Drive · Defend · Deal under the header. Desk tiles carry the desk name large, the
-owner's one-line job description in body text, and the article count. Article headers read
-"Desk · Kind · Subject: …" with the desk's job underneath; cards read "Desk · Kind". The eight
-names all begin with D — a pattern the brand can use later (a D-mark per desk), not built yet.</p>
+<p>Only colour transitions on hover; nothing auto-plays, nothing auto-advances; smooth scrolling only
+when the reader has not asked for reduced motion.</p>
+<h2 id="next-for-the-design-not-built">Next for the design (not built)</h2>
+<ul>
+<li>A <strong>D-mark per desk</strong> — all eight names begin with D, a pattern the brand can carry (an icon or a
+  letterform per desk on tiles, covers and the desk bar). Needs the owner's and client's approval
+  before it is drawn.</li>
+<li><strong>Covers for desks without data</strong>: the data-graphic covers suit Data and the lead; Discover, Deal
+  and Develop pieces will need a cover rule of their own (a number from the seed, a timeline, a
+  typographic quote) once articles arrive.</li>
+</ul>
 <footer>gameformative.com · project documentation, 2026</footer></div></body></html>

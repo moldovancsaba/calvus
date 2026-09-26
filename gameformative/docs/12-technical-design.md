@@ -8,7 +8,7 @@
 data/fetch.py      downloads 9 openfootball files → data/raw/          (run only to refresh)
 data/convert.py    raw/ → stats.json, with the data asserts           (--check: reproduce only)
 content.py         article copy, nav, glossary — figures read from stats.json, premises asserted
-build.py           content.py + stats.json → 19 pages                 (--check: reproduce only)
+build.py           content.py + stats.json → every page               (--check: reproduce only)
 check.py           the gate (07-gate.md)
 docs/build.py      docs markdown → HTML, and presentation.html from presentation-source.md
 ```
@@ -43,11 +43,11 @@ If a refreshed dataset breaks a copy premise, `build.py` stops and names the sen
 ## 4. Page templates
 
 `build.py` has one function per template: home, latest (articles index), article (×6), topics index and topic (×11), how we work, style guide, redirects from `/analysis/`; and the data pages of the later phase — scores, stats hub, league (×5), season review, World Cup, match centre. Shared chrome:
-banner, header, results strip, footer, tab bar, More sheet. Every page: one `h1` (visually hidden
+banner, header, desk bar, footer, tab bar, More sheet (and the later-phase notice on the data pages). Every page: one `h1` (visually hidden
 on the home page, where the lead headline is an `h2` inside a link), `lang="en"`, a description,
 light and dark `theme-color`, JSON-LD where it applies (WebSite, NewsArticle, SportsEvent).
 
-## 5. The live match centre (specified, not built)
+## 5. The live match centre (later phase — specified, not built)
 
 - **Data**: provider push (or 5 s poll) into a per-match JSON at the edge: score, minute, events.
 - **Score region**: `role="status"`, `aria-live="polite"`, `aria-atomic="true"` — present in the DOM
@@ -59,6 +59,17 @@ light and dark `theme-color`, JSON-LD where it applies (WebSite, NewsArticle, Sp
 - **Markup**: `LiveBlogPosting` for text coverage; `BroadcastEvent` for any live video.
 - **Stats panel**: possession, shots, xG, passes from the licensed provider; until then, the inert
   panel the prototype shows.
+
+## 5a. How an article gets onto the site
+
+1. The content team drafts in `../temp-startup-content/drafts/<slug>.md` from the template, and
+   `check-draft.py` confirms the house rules (it counts exactly as the build does).
+2. The named editor approves (`status: ready-for-editor` → approved).
+3. The maintainer moves the article into `content.py` `articles()` — slug, desk, subject, kind,
+   byline, origin, title, standfirst, segments, both source lists, cover — then runs `build.py`
+   (which asserts the rules again) and the gate (which measures them on the page).
+4. A future converter can read the draft format directly; the format is fixed so that it can
+   (`13-implementation-plan.md` issue 7).
 
 ## 6. State and interaction
 

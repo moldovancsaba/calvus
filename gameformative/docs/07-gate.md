@@ -39,15 +39,19 @@ repo-wide link audit.
 The method's measured pass (`PROTOTYPING.md` §3.3) runs in the app's browser pane on a local
 server: every page loaded in a same-origin iframe at an explicit width, measured from one script.
 
-| Criterion | Target | Result 2026-09-25 |
+| Criterion | Target | Result 2026-09-26 (after the round-4 clean-up) |
 |---|---|---|
-| Horizontal overflow at 375 px | 0 px | 0 px on all 19 pages |
-| Horizontal overflow at 1440 px | 0 px | 0 px on all 19 pages |
-| Tap targets under 44 × 44 at 375 px | none | none on all 19 pages (inline links in running text exempt, per WCAG 2.5.8) |
-| … with the More menu open | none | none (measured on four pages) |
-| `h1` per page | 1 | 1 on all 19 pages, both widths |
+| Horizontal overflow at 375 px | 0 px | 0 px on all 41 site pages and all 19 documentation pages |
+| Horizontal overflow at 1440 px | 0 px | 0 px on all 41 site pages and all 19 documentation pages |
+| Tap targets under 44 × 44 at 375 px | none | none on any of the 60 pages (inline links in running text exempt, per WCAG 2.5.8) |
+| `h1` per page | 1 | 1 on every page, both widths |
 | Console errors | 0 | 0 |
-| Interactions | work | table sort (announced), overall/home/away, All columns, league filter, Load more, theme toggle (both ways, remembered), More sheet (focus in, Escape out, focus returned) — all exercised |
+| Interactions | work | Load more (5 → 6 articles), theme toggle both ways, More sheet (opens; Escape closes and returns focus), on a data page All columns, sort by goals for, the home view — all exercised |
+
+The 41 site pages: home, latest, the desks index and eight desk pages, the subjects index and eleven
+subject pages, six articles, How we work, the style guide, and the ten later-phase data pages. The
+seven redirects from `/analysis/` are checked to land on `/articles/`. Earlier passes are in
+`06-build-log.md`.
 
 The phone width measured is 375 px, the owner's stated reference for this project; `PROTOTYPING.md`
 §3.3 names 390 — 375 is the stricter of the two.
@@ -57,14 +61,3 @@ The phone width measured is 375 px, the owner's stated reference for this projec
 - **No prototype banner on documentation pages** — they are not the site.
 - **Desktop density below 44 px** is allowed by the method; the only such controls are the league
   tabs' pill height at desktop widths (40 px), which rise to 44 px on phones.
-
-## Round 2 measured pass (2026-09-25)
-
-32 site pages (home, latest, six articles, topics index and eleven topic pages, How we work, style
-guide, and the ten data pages) at 375 and 1440 px: 0 px overflow, one `h1` each, no tap target under
-44 px at 375, 0 console errors; the old `/analysis/` URLs redirect to `/articles/`.
-
-## Round 3 measured pass (2026-09-25)
-
-41 site pages (round 2's 32 plus the desks index and eight desk pages) at 375 and 1440 px: 0 px
-overflow, one `h1`, no tap target under 44 px at 375 after one fix, 0 console errors.

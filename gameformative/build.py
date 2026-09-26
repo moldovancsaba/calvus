@@ -8,7 +8,7 @@ import content as C
 
 HERE = pathlib.Path(__file__).parent
 S = json.loads((HERE / "data" / "stats.json").read_text(encoding="utf-8"))
-V = "14"  # asset version — bump when tokens.css, site.css or site.js change
+V = "15"  # asset version — bump when tokens.css, site.css or site.js change
 FONTS = '<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&display=swap">'
 LEAGUES = S["leagues"]
 LG = {l["id"]: l for l in LEAGUES}
@@ -36,7 +36,6 @@ def icon(name):
         "theme": '<circle cx="12" cy="12" r="8"/><path d="M12 4a8 8 0 0 0 0 16z" fill="currentColor"/>',
         "search": '<circle cx="11" cy="11" r="6.5"/><path d="m16 16 4.5 4.5"/>',
         "close": '<path d="M6 6l12 12M18 6 6 18"/>',
-        "left": '<path d="M15 5l-7 7 7 7"/>', "right": '<path d="M9 5l7 7-7 7"/>',
     }
     return f'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">{paths[name]}</svg>'
 
@@ -53,7 +52,7 @@ def brand(depth):
 # ------------------------------------------------------------------ chrome
 def banner():
     return ('<div class="proto-banner"><strong>Prototype — gameformative.com, 2026.</strong> The launch is articles only. '
-            'The lead article is the owner’s own draft; the data articles are sample copy whose every figure comes from openfootball’s public-domain results '
+            'The lead article is the editorial desk’s draft; the data articles are sample copy whose every figure comes from openfootball’s public-domain results '
             f'(to {DATA_TO}). Search, sign-in and the newsletter are shown but not built.</div>')
 
 
@@ -426,13 +425,6 @@ def story_card(a, depth, h="h3"):
 
 def reading(a):
     return f"{max(1, round(C.body_chars(a) / 1000))} min read"
-
-
-def snapshot(l, depth, n=5):
-    li = "".join(f'<li><span class="p">{r["pos"]}</span><span class="t">{esc(r["name"])}</span>{form(r["form"][-3:])}<span class="pts">{r["pts"]}</span></li>' for r in l["table"][:n])
-    return (f'<section class="gf-snap" aria-labelledby="snap-{l["id"]}"><div class="gf-snap-head"><h3 id="snap-{l["id"]}">{esc(l["name"])}</h3>'
-            f'<a href="{up(depth)}stats/{l["slug"]}.html">Full table<span class="gf-sr"> — {esc(l["name"])}</span></a></div>'
-            f'<p class="gf-meta" style="padding:6px 14px 0;margin:0">After matchday {l["rounds_done"]} · last three results · points</p><ol>{li}</ol></section>')
 
 
 def roundup(l):

@@ -26,7 +26,8 @@ footer{margin-top:48px;padding-top:16px;border-top:1px solid var(--gf-line);font
 <body><div class="wrap"><nav class="docnav" aria-label="Project documentation"><span class="docnav-brand">game<b>formative</b></span><a href="index.html">Overview</a><a href="brief.html">Brief</a><a href="research.html">Research</a><a href="source-register.html">Sources researched</a><a href="evidence.html">Evidence</a><a href="audit.html">Audit</a><a href="inputs.html">Inputs and gaps</a><a href="decisions.html">Decisions</a><a href="design.html">Design</a><a href="build-log.html">Build log</a><a href="gate.html">Gate</a><a href="asks.html">Asks</a><a href="ssot.html">SSOT</a><a href="architecture.html">Architecture</a><a href="technical-design.html">Technical design</a><a href="plan.html">Plan</a><a href="token-map.html" aria-current=page>Token map</a><a href="responsible-data.html">Responsible data</a><a href="presentation.html">Presentation</a><a href="../index.html">Prototype</a></nav>
 <header><p class="eyebrow">gameformative · project documentation</p><h1>Token map — prototype to production</h1></header>
 <p><em>Every token and component the prototype defines, and what it becomes in the real build. Written
-2026-09-25. The prototype's names (<code>--gf-*</code>, <code>.gf-*</code>) are the production names: nothing is renamed,
+2026-09-25; updated 2026-09-26 (the results strip, league snapshot and article key-facts box were
+removed from the prototype and from this map). The prototype's names (<code>--gf-*</code>, <code>.gf-*</code>) are the production names: nothing is renamed,
 so a developer can lift <code>tokens.css</code> as the design-token file.</em></p>
 <h2 id="tokens">Tokens</h2>
 <div class="tbl"><table>
@@ -121,11 +122,6 @@ so a developer can lift <code>tokens.css</code> as the design-token file.</em></
 <td>nav config</td>
 </tr>
 <tr>
-<td><code>.gf-strip</code>, <code>.gf-chip-match</code></td>
-<td>ScoreStrip (a live island in M3)</td>
-<td>latest round / live feed</td>
-</tr>
-<tr>
 <td><code>.gf-table</code> + <code>[data-views]</code> + <code>.gf-sort</code></td>
 <td>LeagueTable (views, sort, compact mode)</td>
 <td>table rows</td>
@@ -144,11 +140,6 @@ so a developer can lift <code>tokens.css</code> as the design-token file.</em></
 <td><code>.gf-story-card</code>, <code>.gf-lead-story</code>, <code>.gf-list-item</code>, <code>.gf-cover</code></td>
 <td>StoryCard, LeadStory, StoryListItem, DataCover</td>
 <td>article + cover spec</td>
-</tr>
-<tr>
-<td><code>.gf-snap</code></td>
-<td>LeagueSnapshot</td>
-<td>top rows</td>
 </tr>
 <tr>
 <td><code>.gf-figure</code>, <code>.gf-bars</code>, <code>.gf-stack</code>, <code>.gf-cols</code>, <code>.gf-line</code>, <code>.gf-data</code></td>
@@ -187,13 +178,8 @@ so a developer can lift <code>tokens.css</code> as the design-token file.</em></
 </tr>
 <tr>
 <td><code>.gf-topicbar</code></td>
-<td>TopicBar</td>
-<td>topics config</td>
-</tr>
-<tr>
-<td><code>.gf-cardmeta</code>, <code>.gf-topiclink</code></td>
-<td>ArticleMeta (topic · kind)</td>
-<td>article</td>
+<td>DeskBar</td>
+<td>desks config</td>
 </tr>
 <tr>
 <td><code>.gf-latest</code></td>
@@ -201,9 +187,14 @@ so a developer can lift <code>tokens.css</code> as the design-token file.</em></
 <td>recent articles</td>
 </tr>
 <tr>
-<td><code>.gf-topic-grid</code>, <code>.gf-topic-tile</code></td>
-<td>TopicGrid, TopicTile</td>
-<td>topic + article count</td>
+<td><code>.gf-topic-grid</code>, <code>.gf-desk-tile</code>, <code>.gf-topic-tile</code></td>
+<td>TileGrid, DeskTile, SubjectTile</td>
+<td>desk / subject + article count</td>
+</tr>
+<tr>
+<td><code>.gf-cardmeta</code>, <code>.gf-deskline</code>, <code>.gf-subject</code></td>
+<td>ArticleMeta, DeskLine, SubjectTag</td>
+<td>article</td>
 </tr>
 <tr>
 <td><code>.gf-promise</code></td>

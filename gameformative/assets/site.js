@@ -38,14 +38,6 @@
   });
   document.addEventListener("keydown", function (e) { if (e.key === "Escape" && sheet && !sheet.hidden) closeSheet(); });
 
-  // Score strip arrows
-  document.querySelectorAll("[data-strip]").forEach(function (strip) {
-    var sc = strip.querySelector(".gf-strip-scroll");
-    strip.querySelectorAll("[data-strip-dir]").forEach(function (b) {
-      b.addEventListener("click", function () { sc.scrollBy({ left: (+b.dataset.stripDir) * sc.clientWidth * 0.8, behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth" }); });
-    });
-  });
-
   // Sortable tables: a button in each sortable header; numbers sort high→low first.
   document.querySelectorAll("table[data-sortable]").forEach(function (table) {
     var body = table.tBodies[0];

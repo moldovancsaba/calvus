@@ -15,8 +15,8 @@ when it starts to matter. Written 2026-09-25.*
 | A6 | Markets and languages after English: the research points to German (table-heavy), Hindi/English with cricket (India), Chinese with NBA/CBA (China) | owner | expansion rounds | open |
 | A7 | Confirm Vercel as the host (the domain already points there, `02-audit.md`) | owner | deployment of the real build | open — proposed in ADR-01 |
 | A8 | Confirm what counts as a "character" for the 800–3,200 rule: body text (standfirst + paragraphs, spaces included), headings and sources excluded (D19) | owner | nothing — the prototype runs on this definition | open |
-| A9 | The source notes in the first article use editorial shorthand ("Seed", "curiosity gap", "deferred so…"). Keep them as written, or rewrite them for readers? | owner | nothing — shipped as written (D22) | open |
+| A9 | The source notes in the first article use editorial shorthand ("Seed", "curiosity gap", "deferred so…"). Keep them as written, or rewrite them for readers? | owner | nothing — shipped as written (D22) | open — the content team writes new notes for readers until answered |
 | A11 | The GPS article's desk: Define (chosen — literacy about a metric) or Defend (injury systems, load practice)? (D28) | owner | nothing — one line to change | open |
-| A10 | Who writes the next articles, and in which topics first (six of the eight desks have none yet) | owner | a topic page having content | open |
+| A10 | Who writes the next articles | owner | — | **closed 2026-09-26** — the content creation team, with the handover pack in `../temp-startup-content/` |
 
 Closed asks move to the process log in `README.md` with the date they closed.

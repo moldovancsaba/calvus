@@ -151,3 +151,20 @@ navigation: desks say what a piece does for you, subjects say what it is about.
 The GPS article → **Define** (its own source note says it "stays on definition literacy", and its
 question is "which math are we using?"); **Defend** (injury systems, load practice) is the other
 fit. The table explainer → Define. The four data analyses → Data.
+
+**D29 — 2026-09-26 — Content creation moves to the content team.** By: owner ("Drop the content
+creation part as I already passed it now to the content creation team"). The find pass's results,
+the article plan, a draft template and a rules checker were handed over in
+`../temp-startup-content/`. The prototype's work is the site, its system and its documentation; new
+articles arrive as drafts from the content team (`12-technical-design.md` §5a).
+
+**D30 — 2026-09-26 — "The editorial desk's draft", not "the owner's".** By: the team, before the
+client reads closely. The prototype banner and the presentation said the lead article was "the
+owner's own draft"; a client reads "owner" as themselves. Now "the editorial desk's draft".
+
+**D31 — 2026-09-26 — The documentation describes the site as it is.** By: the team. After three rounds
+in one day the brief, design, architecture, plan and token map carried each round as an appendix,
+so their opening sections described a site that no longer existed (a results strip, a stats-first
+home, topics as sections). They were rewritten to the current state; the history stays in the build
+log, the decisions and the process log. The code left behind by the earlier rounds — the results
+strip, the league snapshot, the article key-facts box, the SVG chart classes — was removed.

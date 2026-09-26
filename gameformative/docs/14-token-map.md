@@ -1,7 +1,8 @@
 # Token map — prototype to production
 
 *Every token and component the prototype defines, and what it becomes in the real build. Written
-2026-09-25. The prototype's names (`--gf-*`, `.gf-*`) are the production names: nothing is renamed,
+2026-09-25; updated 2026-09-26 (the results strip, league snapshot and article key-facts box were
+removed from the prototype and from this map). The prototype's names (`--gf-*`, `.gf-*`) are the production names: nothing is renamed,
 so a developer can lift `tokens.css` as the design-token file.*
 
 ## Tokens
@@ -27,12 +28,10 @@ so a developer can lift `tokens.css` as the design-token file.*
 | Prototype class | Production component | Data |
 |---|---|---|
 | `.gf-header`, `.gf-nav`, `.gf-tabbar`, `.gf-sheet` | Header, Nav, TabBar, MoreSheet | nav config |
-| `.gf-strip`, `.gf-chip-match` | ScoreStrip (a live island in M3) | latest round / live feed |
 | `.gf-table` + `[data-views]` + `.gf-sort` | LeagueTable (views, sort, compact mode) | table rows |
 | `.gf-form` | FormGuide | last five results |
 | `.gf-stat`, `.gf-stats-row` | StatTile | aggregate |
 | `.gf-story-card`, `.gf-lead-story`, `.gf-list-item`, `.gf-cover` | StoryCard, LeadStory, StoryListItem, DataCover | article + cover spec |
-| `.gf-snap` | LeagueSnapshot | top rows |
 | `.gf-figure`, `.gf-bars`, `.gf-stack`, `.gf-cols`, `.gf-line`, `.gf-data` | ChartFigure with Bar, StackedBar, Column, Line and DataTable variants | chart spec |
 | `.gf-results` | ResultsList | matches |
 | `.gf-bracket`, `.gf-tie`, `.gf-groups` | Bracket, Tie, GroupTables | knock-out tree, groups |
@@ -40,10 +39,10 @@ so a developer can lift `tokens.css` as the design-token file.*
 | `.gf-label` (+ `--explainer`, `--automated`, `--data`) | ContentLabel | article kind |
 | `.gf-inert` | UnavailablePanel (disappears when the data exists) | — |
 | `.gf-band`, `.gf-signup` | Band, NewsletterSignup | — |
-| `.gf-topicbar` | TopicBar | topics config |
-| `.gf-cardmeta`, `.gf-topiclink` | ArticleMeta (topic · kind) | article |
+| `.gf-topicbar` | DeskBar | desks config |
 | `.gf-latest` | LatestList | recent articles |
-| `.gf-topic-grid`, `.gf-topic-tile` | TopicGrid, TopicTile | topic + article count |
+| `.gf-topic-grid`, `.gf-desk-tile`, `.gf-topic-tile` | TileGrid, DeskTile, SubjectTile | desk / subject + article count |
+| `.gf-cardmeta`, `.gf-deskline`, `.gf-subject` | ArticleMeta, DeskLine, SubjectTag | article |
 | `.gf-promise` | SourcingPromise | the house rules |
 | `.gf-toc-box`, `.gf-seg-block` | ArticleContents, ArticleSegment | segments |
 | `.gf-sources`, `.gf-source-list[data-sources]` | SourceLists (used / investigated) | sources |

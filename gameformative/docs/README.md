@@ -23,7 +23,7 @@ data, openfootball CC0) are a later phase, kept live. The presentation for the o
 | `08-client-asks.md` | the asks A0–A7, none blocking the review |
 | `10-ssot.md` | glossary, entities, the rules register, settings, document map |
 | `11-architecture.md` | the real build: targets, containers, ADR-01–06 (PROPOSED) |
-| `12-technical-design.md` | the pipeline, content model, data mapping, templates, the live match centre spec |
+| `12-technical-design.md` | the pipeline, content model, how an article gets onto the site, data mapping, templates, the live match centre spec (later phase) |
 | `13-implementation-plan.md` | milestones M0–M4, issues with a Definition of Done, blocked register, risks |
 | `14-token-map.md` | prototype tokens and components → production |
 | `18-responsible-data.md` | what is stored (nothing personal), the policy record, the gate |
@@ -83,3 +83,11 @@ finding lives), `article-plan.md` (the first eight, conflicts resolved, 14 reser
 four briefs), `article-template.md`, and `check-draft.py`, which counts characters exactly as the
 site does (tested against the owner's article: 2,358). Research already in this folder is linked,
 not copied. The folder is temporary.
+
+**2026-09-26 — round 4: clean-up and current-state documentation.** Content creation moved to the
+content team (D29). "The owner's own draft" became "the editorial desk's draft" on client-facing pages
+(D30). Code left by round 1 was removed — 25 unused style classes, the strip script, two dead
+generator functions — and the brief, design, architecture, technical design, plan, token map, SSOT
+and responsible-data documents now describe the site as it is, the history kept here and in the
+build log (D31). Measured: 41 site pages and 19 documentation pages at 375 and 1440 px, clean. From
+now on every change is delivered to the hub when it is ready (owner, 2026-09-26).

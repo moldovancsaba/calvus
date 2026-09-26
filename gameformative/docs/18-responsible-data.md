@@ -24,11 +24,11 @@ the font (Google Fonts), which production removes by self-hosting (ADR-05).
 | Child-data rule | a child is an age, never a name; no profiling or targeting on a minor's data, with or without consent | accounts |
 | Consent per channel | newsletter: double opt-in naming the sender and the channel; no pre-ticked boxes | newsletter (A5) |
 | High-privacy defaults | analytics without personal data and without cross-site tracking; ads only with consent (ADR-06) | analytics, ads (A4) |
-| Frequency cap | newsletter weekly ("The Monday numbers"), nothing more without a new opt-in | newsletter |
+| Frequency cap | newsletter weekly ("The Monday brief"), nothing more without a new opt-in | newsletter |
 | Opt-out | one-click unsubscribe in every mail, honoured immediately; postal address in every commercial mail | newsletter |
 | AI disclosure | automated text labelled; AI-generated text labelled unless human-reviewed under named editorial responsibility; AI imagery always labelled | publishing |
 | Retention | subscriber data until unsubscribe + 30 days; server logs 30 days | newsletter, hosting |
-| Published policy | a privacy page and the automation policy (How we count) | launch |
+| Published policy | a privacy page and the automation policy (How we work) | launch |
 
 **The gate:** no feature that stores or contacts a person goes live while its row above says
 "to fill". The prototype's disabled newsletter form says so on the page ("nothing is collected;

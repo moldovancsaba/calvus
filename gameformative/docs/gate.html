@@ -65,34 +65,29 @@ server: every page loaded in a same-origin iframe at an explicit width, measured
 <tr>
 <th>Criterion</th>
 <th>Target</th>
-<th>Result 2026-09-25</th>
+<th>Result 2026-09-26 (after the round-4 clean-up)</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td>Horizontal overflow at 375 px</td>
 <td>0 px</td>
-<td>0 px on all 19 pages</td>
+<td>0 px on all 41 site pages and all 19 documentation pages</td>
 </tr>
 <tr>
 <td>Horizontal overflow at 1440 px</td>
 <td>0 px</td>
-<td>0 px on all 19 pages</td>
+<td>0 px on all 41 site pages and all 19 documentation pages</td>
 </tr>
 <tr>
 <td>Tap targets under 44 × 44 at 375 px</td>
 <td>none</td>
-<td>none on all 19 pages (inline links in running text exempt, per WCAG 2.5.8)</td>
-</tr>
-<tr>
-<td>… with the More menu open</td>
-<td>none</td>
-<td>none (measured on four pages)</td>
+<td>none on any of the 60 pages (inline links in running text exempt, per WCAG 2.5.8)</td>
 </tr>
 <tr>
 <td><code>h1</code> per page</td>
 <td>1</td>
-<td>1 on all 19 pages, both widths</td>
+<td>1 on every page, both widths</td>
 </tr>
 <tr>
 <td>Console errors</td>
@@ -102,10 +97,14 @@ server: every page loaded in a same-origin iframe at an explicit width, measured
 <tr>
 <td>Interactions</td>
 <td>work</td>
-<td>table sort (announced), overall/home/away, All columns, league filter, Load more, theme toggle (both ways, remembered), More sheet (focus in, Escape out, focus returned) — all exercised</td>
+<td>Load more (5 → 6 articles), theme toggle both ways, More sheet (opens; Escape closes and returns focus), on a data page All columns, sort by goals for, the home view — all exercised</td>
 </tr>
 </tbody>
 </table></div>
+<p>The 41 site pages: home, latest, the desks index and eight desk pages, the subjects index and eleven
+subject pages, six articles, How we work, the style guide, and the ten later-phase data pages. The
+seven redirects from <code>/analysis/</code> are checked to land on <code>/articles/</code>. Earlier passes are in
+<a href="build-log.html"><code>06-build-log.md</code></a>.</p>
 <p>The phone width measured is 375 px, the owner's stated reference for this project; <code>PROTOTYPING.md</code>
 §3.3 names 390 — 375 is the stricter of the two.</p>
 <h2 id="deliberate-deviations">Deliberate deviations</h2>
@@ -114,11 +113,4 @@ server: every page loaded in a same-origin iframe at an explicit width, measured
 <li><strong>Desktop density below 44 px</strong> is allowed by the method; the only such controls are the league
   tabs' pill height at desktop widths (40 px), which rise to 44 px on phones.</li>
 </ul>
-<h2 id="round-2-measured-pass-2026-09-25">Round 2 measured pass (2026-09-25)</h2>
-<p>32 site pages (home, latest, six articles, topics index and eleven topic pages, How we work, style
-guide, and the ten data pages) at 375 and 1440 px: 0 px overflow, one <code>h1</code> each, no tap target under
-44 px at 375, 0 console errors; the old <code>/analysis/</code> URLs redirect to <code>/articles/</code>.</p>
-<h2 id="round-3-measured-pass-2026-09-25">Round 3 measured pass (2026-09-25)</h2>
-<p>41 site pages (round 2's 32 plus the desks index and eight desk pages) at 375 and 1440 px: 0 px
-overflow, one <code>h1</code>, no tap target under 44 px at 375 after one fix, 0 console errors.</p>
 <footer>gameformative.com · project documentation, 2026</footer></div></body></html>

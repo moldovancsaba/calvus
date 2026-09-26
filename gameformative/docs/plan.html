@@ -25,7 +25,8 @@ footer{margin-top:48px;padding-top:16px;border-top:1px solid var(--gf-line);font
 </style></head>
 <body><div class="wrap"><nav class="docnav" aria-label="Project documentation"><span class="docnav-brand">game<b>formative</b></span><a href="index.html">Overview</a><a href="brief.html">Brief</a><a href="research.html">Research</a><a href="source-register.html">Sources researched</a><a href="evidence.html">Evidence</a><a href="audit.html">Audit</a><a href="inputs.html">Inputs and gaps</a><a href="decisions.html">Decisions</a><a href="design.html">Design</a><a href="build-log.html">Build log</a><a href="gate.html">Gate</a><a href="asks.html">Asks</a><a href="ssot.html">SSOT</a><a href="architecture.html">Architecture</a><a href="technical-design.html">Technical design</a><a href="plan.html" aria-current=page>Plan</a><a href="token-map.html">Token map</a><a href="responsible-data.html">Responsible data</a><a href="presentation.html">Presentation</a><a href="../index.html">Prototype</a></nav>
 <header><p class="eyebrow">gameformative · project documentation</p><h1>Implementation plan</h1></header>
-<p><em>From the approved prototype to gameformative.com. Written 2026-09-25. Milestones, issues with a
+<p><em>From the approved prototype to gameformative.com. Written 2026-09-25; re-cut 2026-09-26 for the
+articles-first launch (the data work moved to M3). Milestones, issues with a
 Definition of Done, the blocked register, risks. Dates are set when the owner approves the
 direction (ask A0) — none are promised here.</em></p>
 <h2 id="milestones">Milestones</h2>
@@ -41,27 +42,22 @@ direction (ask A0) — none are promised here.</em></p>
 <tr>
 <td>M0</td>
 <td>Direction approved</td>
-<td>owner's "approved" or changes on the prototype and style guide (A0)</td>
+<td>the owner's and the client's "approved", or changes, on the prototype and style guide (A0)</td>
 </tr>
 <tr>
 <td>M1</td>
-<td><strong>Articles launch</strong> (round 2)</td>
-<td>gameformative.com live with the article site: home, latest, topics, articles under the house rules, How we work; newsroom named; corrections page live. The data pages stay a later phase</td>
+<td><strong>Articles launch</strong></td>
+<td>gameformative.com live with the article site: home, latest, the eight desks, subjects, articles under the house rules, How we work; the named editor signing off; the corrections page live. The content team supplies the articles</td>
 </tr>
 <tr>
 <td>M2</td>
-<td>Licensed data</td>
-<td>xG, shots, ratings, possession filling the panels the prototype marks unavailable</td>
+<td>Growth</td>
+<td>newsletter, social cards from the articles' own graphics, search</td>
 </tr>
 <tr>
 <td>M3</td>
-<td>Live</td>
-<td>live score strip and match centre with the accessibility rules of <a href="technical-design.html"><code>12-technical-design.md</code></a> §5</td>
-</tr>
-<tr>
-<td>M4</td>
-<td>Growth</td>
-<td>newsletter, social stat cards, the first regional expansion (A6)</td>
+<td><strong>Later phase — data pages</strong></td>
+<td>the football statistics pages on a daily open-data refresh, then licensed data (xG, ratings) and live scores</td>
 </tr>
 </tbody>
 </table></div>
@@ -78,9 +74,9 @@ direction (ask A0) — none are promised here.</em></p>
 <tbody>
 <tr>
 <td>0</td>
-<td>Editorial workflow: draft → source check (every link requested, used sources read) → rules check → named editor's sign-off → publish</td>
+<td>Editorial workflow: draft → rules check → link check (every link requested) → named editor's sign-off → publish</td>
 <td>M1</td>
-<td>no article publishes without a recorded source check and the editor's name; the gate's check 12 passes</td>
+<td>no article publishes without a passing rules check, a recorded link check and the editor's name; the gate's check 12 passes</td>
 </tr>
 <tr>
 <td>1</td>
@@ -90,81 +86,81 @@ direction (ask A0) — none are promised here.</em></p>
 </tr>
 <tr>
 <td>2</td>
-<td>Scheduled refresh: fetch → convert → build → gate → publish</td>
+<td>Remove the prototype banner and the sample data articles, or replace them with newsroom articles</td>
 <td>M1</td>
-<td>runs daily; a failing assert blocks publish and alerts; the published "data to" date advances</td>
+<td>no "sample" text on any page; every article bylined to a named person, or the desk with a named editor</td>
 </tr>
 <tr>
 <td>3</td>
-<td>Remove the prototype banner; replace sample copy with newsroom copy</td>
+<td>Corrections page and error-report form</td>
 <td>M1</td>
-<td>no "sample" text on any page; every article bylined to a named person or the desk with a named editor</td>
+<td>a public page listing corrections with dates; the form reaches the editor; linked from every article</td>
 </tr>
 <tr>
 <td>4</td>
-<td>Corrections page and error-report form</td>
-<td>M1</td>
-<td>a public page listing corrections with dates; the form sends to the editor; linked from every article</td>
-</tr>
-<tr>
-<td>5</td>
 <td>Self-host and subset Archivo (ADR-05)</td>
 <td>M1</td>
 <td>no third-party font request; LCP unchanged or better</td>
 </tr>
 <tr>
-<td>6</td>
-<td>Search</td>
+<td>5</td>
+<td>Canonical URLs, sitemap, structured data audit</td>
 <td>M1</td>
-<td>teams, competitions and articles searchable; the header control becomes live</td>
+<td>valid in Google's Rich Results test for NewsArticle</td>
+</tr>
+<tr>
+<td>6</td>
+<td>Covers for every desk (<a href="design.html"><code>05-design.md</code></a>, next)</td>
+<td>M1</td>
+<td>every article has a cover drawn from its own content; no stock or AI imagery</td>
 </tr>
 <tr>
 <td>7</td>
-<td>Canonical URLs, sitemap, structured data audit</td>
+<td>A converter from the draft format to the content store</td>
 <td>M1</td>
-<td>valid in Google's Rich Results test for NewsArticle and SportsEvent</td>
+<td>a <code>ready-for-editor</code> draft that passes <code>check-draft.py</code> becomes a page with no hand-copying; the build's rules assert agrees with the checker</td>
 </tr>
 <tr>
 <td>8</td>
-<td>Official tie-breakers per competition (D13)</td>
-<td>M1</td>
-<td>each league's published rules applied; tested with constructed level-on-points cases</td>
+<td>Search over articles, desks and subjects</td>
+<td>M2</td>
+<td>the header control becomes live</td>
 </tr>
 <tr>
 <td>9</td>
-<td>Provider contract and ingest (ADR-04)</td>
-<td>M2</td>
-<td>provider data flows into the store with the same reconciliation asserts</td>
-</tr>
-<tr>
-<td>10</td>
-<td>xG, shots, ratings panels</td>
-<td>M2</td>
-<td>the inert panels filled; glossary names the provider's definitions (S25)</td>
-</tr>
-<tr>
-<td>11</td>
-<td>Live islands: score strip and match centre</td>
-<td>M3</td>
-<td>≤ 10 s from provider to page; polite atomic announcements; a pause control; reduced motion honoured</td>
-</tr>
-<tr>
-<td>12</td>
 <td>Newsletter (A5)</td>
-<td>M4</td>
+<td>M2</td>
 <td>double opt-in; sender named; unsubscribe in every mail; <a href="responsible-data.html"><code>18-responsible-data.md</code></a> record filled</td>
 </tr>
 <tr>
+<td>10</td>
+<td>Social cards from each article's cover and one key line</td>
+<td>M2</td>
+<td>one card per article, alt text included</td>
+</tr>
+<tr>
+<td>11</td>
+<td>Data pages on a daily open-data refresh: fetch → convert → build → gate</td>
+<td>M3</td>
+<td>runs daily; a failing assert blocks publish; the "data to" date advances</td>
+</tr>
+<tr>
+<td>12</td>
+<td>Official tie-breakers per competition (D13)</td>
+<td>M3</td>
+<td>each league's published rules applied; tested with constructed level-on-points cases</td>
+</tr>
+<tr>
 <td>13</td>
-<td>Social stat cards (vertical and square images generated from the charts)</td>
-<td>M4</td>
-<td>one card per analysis, alt text included</td>
+<td>Provider contract and ingest (ADR-04); xG, shots, ratings panels</td>
+<td>M3</td>
+<td>provider data flows in with the same reconciliation asserts; the inert panels filled</td>
 </tr>
 <tr>
 <td>14</td>
-<td>First expansion market (A6)</td>
-<td>M4</td>
-<td>licensed data for that sport verified; language and navigation reviewed with a native editor</td>
+<td>Live islands: score strip and match centre</td>
+<td>M3</td>
+<td>≤ 10 s from provider to page; polite atomic announcements; a pause control; reduced motion honoured</td>
 </tr>
 </tbody>
 </table></div>
@@ -179,14 +175,14 @@ direction (ask A0) — none are promised here.</em></p>
 </thead>
 <tbody>
 <tr>
-<td>Issues 9–11</td>
-<td>A1 — a data provider chosen and contracted</td>
-<td>M2, M3</td>
+<td>Issues 0, 2</td>
+<td>A2 — the named editor</td>
+<td>M1</td>
 </tr>
 <tr>
-<td>Issue 3</td>
-<td>A2 — a newsroom named</td>
-<td>M1</td>
+<td>Issue 13–14</td>
+<td>A1 — a data provider chosen and contracted</td>
+<td>M3</td>
 </tr>
 <tr>
 <td>Photo-led formats</td>
@@ -196,12 +192,12 @@ direction (ask A0) — none are promised here.</em></p>
 <tr>
 <td>Ads, paywall, consent design</td>
 <td>A4</td>
-<td>the consent part of issue 12 and ADR-06</td>
+<td>the consent part of issue 9 and ADR-06</td>
 </tr>
 <tr>
-<td>Issue 12</td>
+<td>Issue 9</td>
 <td>A5</td>
-<td>M4</td>
+<td>M2</td>
 </tr>
 </tbody>
 </table></div>
@@ -216,9 +212,14 @@ direction (ask A0) — none are promised here.</em></p>
 </thead>
 <tbody>
 <tr>
-<td>The open source lags or stops</td>
+<td>Too few articles at launch for eight desks</td>
+<td>a desk empty at launch</td>
+<td>empty desks say so plainly already; the content team's plan puts a first article on every desk (<code>../temp-startup-content/article-plan.md</code>)</td>
+</tr>
+<tr>
+<td>The open source lags or stops (later phase)</td>
 <td>no new result for 3 days in season</td>
-<td>the "data to" date is on every page already; M2's provider becomes the primary source</td>
+<td>the "data to" date is on every data page; the licensed provider becomes the primary source</td>
 </tr>
 <tr>
 <td>A provider's terms forbid a use (betting, redistribution)</td>
@@ -243,6 +244,7 @@ direction (ask A0) — none are promised here.</em></p>
 </tbody>
 </table></div>
 <h2 id="release-scope-for-m1">Release scope for M1</h2>
-<p>Everything the prototype shows, on the daily open-data refresh, with the newsroom named and the
-corrections page live. Not in M1: licensed data, live scores, accounts, newsletter, other sports.</p>
+<p>The article site as the prototype shows it — home, latest, the eight desks, subjects, articles,
+How we work — with the content team's articles, the named editor signing off and the corrections
+page live. Not in M1: the data pages, licensed data, live scores, accounts, newsletter, search.</p>
 <footer>gameformative.com · project documentation, 2026</footer></div></body></html>

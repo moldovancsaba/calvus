@@ -38,7 +38,7 @@ Every article follows three house rules, and the build refuses to publish one th
 2. **always in headed segments**, listed at the top so a reader can jump to what they need;
 3. **two source lists at the end:** the sources used, and the sources investigated but not used, each with a line on why.
 
-**The first article is the owner's own draft.** It is about GPS load data and injury risk. Before it went in, every link was requested and both used sources were read, and they support the text.
+**The first article is the editorial desk's draft.** It is about GPS load data and injury risk. Before it went in, every link was requested and both used sources were read, and they support the text.
 
 ## The value {#value}
 
@@ -49,7 +49,7 @@ Every article follows three house rules, and the build refuses to publish one th
 
 | Real | Sample | Shown, not built |
 |---|---|---|
-| the owner's first article, and its sources, checked; the football data behind the data articles (openfootball, public domain) | the data articles' copy, written from the data, with every figure computed | search, sign-in, newsletter; topic pages with no article yet say so plainly |
+| the first article (the editorial desk's draft), and its sources, checked; the football data behind the data articles (openfootball, public domain) | the data articles' copy, written from the data, with every figure computed | search, sign-in, newsletter; topic pages with no article yet say so plainly |
 
 Measured on every page at 375 px and 1440 px: 0 px horizontal overflow, no tap target under 44 px on phones, one heading per page, and no console errors. Contrast is checked in the light and dark themes on every build.
 
@@ -62,7 +62,7 @@ Measured on every page at 375 px and 1440 px: 0 px horizontal overflow, no tap t
 
 ## Delivery and what is needed next {#delivery}
 
-1. **M1 — the articles launch.** Deploy to the domain. Name the editor who signs off each piece; the first draft is itself marked for staff review. Write the first articles for the empty topics. Open the corrections page.
+1. **M1 — the articles launch.** Deploy to the domain. Name the editor who signs off each piece; the first draft is itself marked for staff review. The content team writes the first article for every desk. Open the corrections page.
 2. **Later — the data pages.** The football statistics built in round 1 are kept live as a preview: tables, the World Cup, a match centre.
 
 ## The one decision {#decision}

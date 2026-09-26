@@ -91,3 +91,20 @@ pages (D27). `check_rules()` and `check.py` §12 now require a valid desk.
 
 **Measured.** 41 site pages at 375 and 1440 px: 0 px overflow, one `h1`, 0 console errors. At 375 px
 the "Data" desk link in four article headers was 36 × 44 — fixed (min width 44). Re-measured clean.
+
+## Round 4 — 2026-09-26 — clean-up and current-state documentation
+
+**Wording.** "The owner's own draft" → "the editorial desk's draft" in the prototype banner and the
+presentation (D30).
+
+**Code removed** (left over from round 1, unused since round 2): the results-strip styles and its
+script handler, the league-snapshot component and its styles, the article key-facts and
+transparency-note styles, the early SVG chart classes (`.c-*`), the arrow icons; the print rule now
+hides the desk bar instead of the strip. Measured by listing every class the stylesheet defines
+against every class the generated pages use: 25 unused before, 0 after. `site.css` 41.6 → 37.0 kB,
+`site.js` 5.9 → 5.4 kB.
+
+**Documentation.** `00-brief`, `05-design`, `11-architecture`, `12-technical-design`,
+`13-implementation-plan`, `14-token-map`, `10-ssot`, `18-responsible-data` rewritten or corrected to
+the current state (D31); ADR-07 (articles as structured data) proposed; the plan re-cut — M1 the
+articles launch, the data work M3.

@@ -186,4 +186,17 @@ bar; <code>desks/</code> — an index and eight pages, six of them honestly empt
 pages (D27). <code>check_rules()</code> and <code>check.py</code> §12 now require a valid desk.</p>
 <p><strong>Measured.</strong> 41 site pages at 375 and 1440 px: 0 px overflow, one <code>h1</code>, 0 console errors. At 375 px
 the "Data" desk link in four article headers was 36 × 44 — fixed (min width 44). Re-measured clean.</p>
+<h2 id="round-4-2026-09-26-clean-up-and-current-state-documentation">Round 4 — 2026-09-26 — clean-up and current-state documentation</h2>
+<p><strong>Wording.</strong> "The owner's own draft" → "the editorial desk's draft" in the prototype banner and the
+presentation (D30).</p>
+<p><strong>Code removed</strong> (left over from round 1, unused since round 2): the results-strip styles and its
+script handler, the league-snapshot component and its styles, the article key-facts and
+transparency-note styles, the early SVG chart classes (<code>.c-*</code>), the arrow icons; the print rule now
+hides the desk bar instead of the strip. Measured by listing every class the stylesheet defines
+against every class the generated pages use: 25 unused before, 0 after. <code>site.css</code> 41.6 → 37.0 kB,
+<code>site.js</code> 5.9 → 5.4 kB.</p>
+<p><strong>Documentation.</strong> <code>00-brief</code>, <code>05-design</code>, <code>11-architecture</code>, <code>12-technical-design</code>,
+<code>13-implementation-plan</code>, <code>14-token-map</code>, <code>10-ssot</code>, <code>18-responsible-data</code> rewritten or corrected to
+the current state (D31); ADR-07 (articles as structured data) proposed; the plan re-cut — M1 the
+articles launch, the data work M3.</p>
 <footer>gameformative.com · project documentation, 2026</footer></div></body></html>

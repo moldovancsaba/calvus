@@ -2,7 +2,7 @@
 
 *The one place where every term the other documents use is defined. Written 2026-09-25. The
 reader-facing wording of the same terms lives in one place too — `content.py` `GLOSSARY`, rendered
-on How we count; if the two ever disagree, this table is the definition and the glossary is fixed.*
+on How we work (`how-we-count/`); if the two ever disagree, this table is the definition and the glossary is fixed.*
 
 ## Glossary
 
@@ -77,10 +77,13 @@ on How we count; if the two ever disagree, this table is the definition and the 
 | Phone breakpoint / desktop breakpoint | 720 / 1000 px | `site.css` |
 | Items before "Load more" | 5 | `build.py` `build_analysis_index` |
 | Theme choice storage | `localStorage["gf-theme"]`, per device | `site.js` |
+| Desks | eight, in `DESKS` order (Discover → Deal) | `content.py` |
+| Subjects | eleven, in `TOPICS` order | `content.py` |
+| Article rules | 800–3,200 body characters, ≥ 3 segments, both source lists | `content.py` `RULES` |
 
 ## Document map
 
 `00` brief · `01` research · `01a` sources researched · `01b` evidence · `02` audit · `03` inputs
 and gaps · `04` decisions · `05` design · `06` build log · `07` gate · `08` asks · `10` this ·
 `11` architecture · `12` technical design · `13` implementation plan · `14` token map · `18`
-responsible data · presentation.
+responsible data · presentation · `../temp-startup-content/` (the content team's handover pack, temporary).
