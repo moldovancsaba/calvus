@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>System blueprint — the low-level technical design · gameformative</title><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&display=swap"><link rel="stylesheet" href="../assets/tokens.css"><style>/* gameformative — project documentation on the project's own tokens (../assets/tokens.css): off-white ground, Archivo, one blue, one orange. */
+body{margin:0;background:var(--gf-ground);color:var(--gf-text);font-family:var(--gf-font);font-size:16.5px;line-height:1.62;padding:0 clamp(16px,4vw,40px) 64px;font-variant-numeric:tabular-nums}
+*{box-sizing:border-box}.wrap{max-width:80ch;margin:0 auto}
+.docnav{display:flex;flex-wrap:wrap;gap:0 14px;align-items:center;padding:10px 0;border-bottom:3px solid var(--gf-ink);font-size:13.5px}
+.docnav a{color:var(--gf-blue);text-decoration:none;min-height:44px;min-width:44px;justify-content:center;display:inline-flex;align-items:center;font-weight:600}
+.docnav a[aria-current]{box-shadow:inset 0 -3px 0 var(--gf-orange)}
+.docnav-brand{font-weight:800;font-stretch:72%;font-size:20px;color:var(--gf-ink);margin-right:8px}
+.docnav-brand b{font-weight:900}
+header .eyebrow{margin:28px 0 4px;font-size:12px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--gf-blue)}
+h1{font-stretch:72%;font-weight:800;font-size:clamp(34px,6vw,52px);line-height:1.04;margin:0 0 16px;color:var(--gf-ink);letter-spacing:-.01em}
+h2{font-stretch:80%;font-weight:800;font-size:28px;line-height:1.1;margin:44px 0 10px;padding-top:12px;border-top:3px solid var(--gf-ink);color:var(--gf-ink)}
+h3{font-weight:750;font-size:18px;margin:26px 0 8px;color:var(--gf-ink)}h4{font-size:16px;margin:20px 0 6px;color:var(--gf-ink)}
+p{margin:0 0 12px}li{margin:4px 0}p,li,td,dd{overflow-wrap:anywhere}strong{font-weight:750;color:var(--gf-ink)}em{color:var(--gf-muted)}a{color:var(--gf-blue);overflow-wrap:anywhere}
+code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.84em;background:var(--gf-blue-soft);padding:1px 5px;border-radius:4px;overflow-wrap:anywhere}
+.tbl{overflow-x:auto;margin:12px 0 20px;border:1px solid var(--gf-line);border-radius:10px;background:var(--gf-surface)}
+table{border-collapse:collapse;width:100%;font-size:14px;min-width:560px}
+th{text-align:left;font-weight:800;background:var(--gf-sunk);padding:10px 12px;border-bottom:2px solid var(--gf-ink);font-size:11.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--gf-ink)}
+td{padding:9px 12px;border-top:1px solid var(--gf-line);vertical-align:top}
+pre{overflow-x:auto;padding:14px 16px;border:1px solid var(--gf-line);background:var(--gf-surface);border-radius:10px;font-size:12.5px;line-height:1.4}
+pre code{background:none;padding:0}
+blockquote{margin:14px 0;padding:12px 16px;border-left:4px solid var(--gf-orange);background:var(--gf-surface);border-radius:0 10px 10px 0}
+footer{margin-top:48px;padding-top:16px;border-top:1px solid var(--gf-line);font-size:12.5px;color:var(--gf-muted)}
+</style></head>
+<body><div class="wrap"><nav class="docnav" aria-label="Project documentation"><span class="docnav-brand">game<b>formative</b></span><a href="index.html">Overview</a><a href="brief.html">Brief</a><a href="research.html">Research</a><a href="source-register.html">Sources researched</a><a href="evidence.html">Evidence</a><a href="audit.html">Audit</a><a href="inputs.html">Inputs and gaps</a><a href="decisions.html">Decisions</a><a href="design.html">Design</a><a href="build-log.html">Build log</a><a href="gate.html">Gate</a><a href="asks.html">Asks</a><a href="ssot.html">SSOT</a><a href="architecture.html">Architecture</a><a href="technical-design.html">Technical design</a><a href="plan.html">Plan</a><a href="token-map.html">Token map</a><a href="source-catalogue.html">Source catalogue</a><a href="responsible-data.html">Responsible data</a><a href="system-blueprint.html" aria-current=page>System blueprint</a><a href="presentation.html">Presentation</a><a href="../index.html">Prototype</a></nav>
+<header><p class="eyebrow">gameformative · project documentation</p><h1>System blueprint — the low-level technical design</h1></header>
+<p><em>The document a developer builds gameformative.com from. Written 2026-09-26 after the client's review
+("please update all documentation … to be able to pass to the developers including architecture
+plan, low level technical design with pseudo codes"). It is stack-neutral: the modules, contracts,
+state machines, jobs and pseudo code hold whichever framework and CMS the owner picks; the stack is
+proposed, with every service verified and priced on the day, in <a href="architecture.html"><code>11-architecture.md</code></a> (ADRs) and the
+services research in <a href="evidence.html"><code>01b-evidence.md</code></a>. Discoverability (AI search, sharing, SEO, links) is specified
+in <code>15-discoverability.md</code>; the source catalogue in <a href="source-catalogue.html"><code>16-source-catalogue.md</code></a>. Every module names the
+prototype code it comes from, so nothing built in the prototype is lost.</em></p>
+<h2 id="1-the-system-in-one-drawing">1. The system in one drawing</h2>
+<pre><code>                      ┌──────────────── editorial ────────────────┐
+ content team ─► CMS (structured articles, sources, catalogue) ─► review ─► named editor approves
+                      │  validation on save: house rules, catalogue, links  │
+                      └───────────────────────────┬────────────────────────┘
+                                                  │ publish event (webhook)
+                                                  ▼
+ ┌──────────── build (static-first) ────────────────────────────────────────────────────────────┐
+ │ fetch content → validate (M1, M2) → render pages (M4) + head/meta (M5) + share images (M6)    │
+ │ → discovery files (M7: sitemap, news sitemap, feed, robots, llms.txt) → search index (M8)       │
+ │ → gate (M13: the prototype's check.py, ported) → deploy to CDN                                  │
+ └───────────────────────────────────────────────┬──────────────────────────────────────────────┘
+                                                 ▼
+             CDN / host (static + a few functions) ─► readers, crawlers, answer engines, messengers
+                                                 │
+ jobs:  on publish → IndexNow ping (M10)   weekly → link check + archive (M9)   daily → backups
+ later phase: data ingest (M14) → stats store → data pages
+</code></pre>
+<h2 id="2-repository-layout-proposed">2. Repository layout (proposed)</h2>
+<pre><code>/content-model/        schemas: article, source-ref, catalogue-entry, desk, subject, correction
+/src/rules/            house rules + catalogue rules (M1, M2) — shared by CMS validation, build and gate
+/src/render/           page templates (M4), head/meta builder (M5)
+/src/share/            share-image generator (M6)
+/src/discovery/        sitemap, news sitemap, feed, robots, llms.txt (M7)
+/src/jobs/             link-check + archive (M9), IndexNow (M10), backups
+/src/gate/             the build gate (M13) — every check of the prototype's check.py
+/public/               static assets (tokens.css, site.css, site.js, icons, fonts self-hosted)
+/tests/                unit (rules), contract (schemas), e2e (pages), accessibility, visual
+</code></pre>
+<h2 id="3-data-contracts">3. Data contracts</h2>
+<p><strong>Article</strong></p>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Required</th>
+<th>Rule</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>slug</code></td>
+<td>string</td>
+<td>yes</td>
+<td>lowercase words joined by hyphens; immutable after first publish (a change leaves a redirect)</td>
+</tr>
+<tr>
+<td><code>desk</code></td>
+<td>enum(8)</td>
+<td>yes</td>
+<td>discover · define · design · develop · data · drive · defend · deal</td>
+</tr>
+<tr>
+<td><code>subject</code></td>
+<td>enum(11)</td>
+<td>yes</td>
+<td>the subject tags (<a href="ssot.html"><code>10-ssot.md</code></a>)</td>
+</tr>
+<tr>
+<td><code>kind</code></td>
+<td>enum</td>
+<td>yes</td>
+<td>Explainer · Analysis · News · Opinion (signed columns only)</td>
+</tr>
+<tr>
+<td><code>title</code></td>
+<td>string</td>
+<td>yes</td>
+<td>≤ 110 characters (share-card and title-link fit)</td>
+</tr>
+<tr>
+<td><code>standfirst</code></td>
+<td>string</td>
+<td>no</td>
+<td>counted in the body length</td>
+</tr>
+<tr>
+<td><code>segments</code></td>
+<td>Segment[]</td>
+<td>yes</td>
+<td>≥ 3</td>
+</tr>
+<tr>
+<td><code>sources_used</code></td>
+<td>SourceRef[]</td>
+<td>yes</td>
+<td>≥ 1; each resolves to a catalogue entry that was read</td>
+</tr>
+<tr>
+<td><code>sources_investigated</code></td>
+<td>SourceRef[]</td>
+<td>yes</td>
+<td>≥ 1</td>
+</tr>
+<tr>
+<td><code>byline</code></td>
+<td>Person or Desk</td>
+<td>yes</td>
+<td>a named person, or the desk with a named editor</td>
+</tr>
+<tr>
+<td><code>editor</code></td>
+<td>Person</td>
+<td>yes to publish</td>
+<td>the named editor who approved (EU AI Act Art. 50(4) editorial responsibility)</td>
+</tr>
+<tr>
+<td><code>published_at</code>, <code>updated_at</code></td>
+<td>datetime</td>
+<td>set by workflow</td>
+<td>ISO 8601 with zone</td>
+</tr>
+<tr>
+<td><code>cover</code></td>
+<td>CoverSpec</td>
+<td>yes</td>
+<td>drawn from the article's content (§4 M6)</td>
+</tr>
+<tr>
+<td><code>corrections</code></td>
+<td>Correction[]</td>
+<td>no</td>
+<td>append-only</td>
+</tr>
+<tr>
+<td><code>status</code></td>
+<td>enum</td>
+<td>yes</td>
+<td>the workflow state (§5)</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Segment</strong>: <code>{ heading: string (required), blocks: (Paragraph | Chart)[] }</code> — a Paragraph is text
+(counted), a Chart is <code>{ chart_id, data, caption, table }</code> (not counted).</p>
+<p><strong>SourceRef</strong>: <code>{ url: string, note: string }</code> — <code>url</code> keys the catalogue; <code>note</code> is this article's
+line on the source.</p>
+<p><strong>CatalogueEntry</strong>: <a href="source-catalogue.html"><code>16-source-catalogue.md</code></a> §2.</p>
+<p><strong>Correction</strong>: <code>{ at: datetime, what_was_wrong: string, what_changed: string, by: Person }</code>.</p>
+<h2 id="4-modules">4. Modules</h2>
+<h3 id="m1-house-rules-from-the-prototypes-contentpy-rules-buildpy-check_rules-temp-startup-contentcheck-draftpy">M1 — House rules (from the prototype's <code>content.py</code> <code>RULES</code>, <code>build.py</code> <code>check_rules</code>, <code>temp-startup-content/check-draft.py</code>)</h3>
+<p>Owns: the definition of the rules and the one function every layer calls — CMS validation on save,
+the build, and the gate.</p>
+<pre><code>RULES = { min_chars: 800, max_chars: 3200, min_segments: 3 }
+
+function body_chars(article):
+    text = (article.standfirst or &quot;&quot;)
+    for seg in article.segments:
+        for block in seg.blocks where block is Paragraph:
+            text += plain_text(block)            # markdown stripped, link text kept, spaces kept
+    return length(text)                          # headline, headings, charts, sources: not counted
+
+function validate_article(article, catalogue) -&gt; list of problems:
+    problems = []
+    n = body_chars(article)
+    if n &lt; RULES.min_chars or n &gt; RULES.max_chars: problems += &quot;body {n}: outside 800–3,200&quot;
+    if count(article.segments) &lt; RULES.min_segments: problems += &quot;fewer than 3 segments&quot;
+    if any(seg.heading is empty): problems += &quot;a segment without a heading&quot;
+    if article.desk not in DESKS: problems += &quot;not one of the eight desks&quot;
+    if empty(article.sources_used) or empty(article.sources_investigated): problems += &quot;both source lists required&quot;
+    for ref in article.sources_used + article.sources_investigated:
+        problems += validate_source_ref(ref, catalogue)              # M2
+    for ref in article.sources_used:
+        if catalogue[ref.url].checked.status == NOT_READ: problems += &quot;cites as used a source we could not read&quot;
+    return problems
+</code></pre>
+<p>Tests: the owner's first article → 2,358 characters, 7 segments, valid; boundary cases 799 / 800 /
+3,200 / 3,201; a segment without a heading; a used source marked not-read.</p>
+<h3 id="m2-source-catalogue-from-cataloguepy-build_catalogue">M2 — Source catalogue (from <code>catalogue.py</code>, <code>build_catalogue</code>)</h3>
+<p>Owns: catalogue entries, their check history, and the catalogue pages.</p>
+<pre><code>function validate_source_ref(ref, catalogue):
+    if ref.url not in catalogue: return [&quot;uncatalogued source {ref.url}&quot;]
+    if not ref.note: return [&quot;source note missing&quot;]
+    if not ref.url.startswith(&quot;https://&quot;): return [&quot;insecure or relative source URL&quot;]
+    return []
+
+function canonical_source_url(url):
+    if url matches doi pattern: return &quot;https://doi.org/&quot; + doi(url)          # Crossref display form
+    return strip_tracking_parameters(url)
+
+function catalogue_page_data(catalogue, articles):
+    for entry in catalogue:
+        entry.cited_in    = [a for a in articles if entry.url in urls(a.sources_used)]
+        entry.consulted   = [a for a in articles if entry.url in urls(a.sources_investigated)]
+        assert entry.cited_in or entry.consulted          # no orphans
+    return group_by(entry.type, catalogue), group_by(entry.publisher, catalogue)
+</code></pre>
+<h3 id="m3-editorial-workflow-5">M3 — Editorial workflow (§5)</h3>
+<p>Owns: states, transitions, roles, the audit log; blocks publication without an editor.</p>
+<h3 id="m4-renderer-from-buildpy-page-functions">M4 — Renderer (from <code>build.py</code> page functions)</h3>
+<p>Owns: every page type and its data. Page types: home, latest (paginated), article, desk, desks index,
+subject, subjects index, source catalogue (and per-source pages at scale), how we work, corrections,
+style guide (not indexed). Later phase: the data pages.</p>
+<pre><code>function render_site(content):
+    pages = []
+    pages += home(latest(content.articles, 1), content.desks)
+    pages += latest_pages(content.articles, per_page = 12)            # &quot;Load more&quot; = next page link
+    for a in content.articles where a.status == published:
+        pages += article_page(a, related = same_desk_first(a, content.articles, 2))
+    for d in DESKS: pages += desk_page(d, articles_on(d))
+    for s in SUBJECTS: pages += subject_page(s, articles_tagged(s))
+    pages += catalogue_pages(content.catalogue, content.articles)      # M2
+    pages += how_we_work(), corrections_page(content)
+    for p in pages: p.head = build_head(p)                             # M5
+    return pages
+</code></pre>
+<p>Every page: one <code>h1</code>, <code>lang="en-GB"</code>, skip link, the desk bar, the footer; no layout shift from late
+content (fixed-height bars; images with width and height).</p>
+<h3 id="m5-head-and-metadata-from-buildpy-social-the-json-ld-blocks">M5 — Head and metadata (from <code>build.py</code> <code>social</code>, the JSON-LD blocks)</h3>
+<p>Owns: title, description, canonical, robots, Open Graph, X card, icons, feed link, JSON-LD.</p>
+<pre><code>function build_head(page):
+    head = []
+    head += &lt;title&gt;{page.title} — gameformative&lt;/title&gt;                    # ≤ 60 chars before the suffix where possible
+    head += &lt;meta name=description content={page.summary}&gt;                 # 120–160 chars
+    head += &lt;link rel=canonical href={SITE_URL + page.path}&gt;
+    head += robots(page)                                                   # &quot;index, follow, max-image-preview:large&quot;
+                                                                           # prototype/staging: &quot;noindex, follow&quot;
+    head += open_graph(page)          # og:type (article|website), og:title, og:description, og:url,
+                                      # og:image (+width 1200, height 630, alt, type), og:site_name, og:locale
+    head += x_card(page)              # twitter:card=summary_large_image, title, description, image, image:alt
+    if page.type == article:
+        head += article:published_time, article:modified_time, article:section (desk), article:tag (subject)
+        head += json_ld(NewsArticle(page), BreadcrumbList(home → desk → article))
+    if page.type == home: head += json_ld(WebSite, Organization)
+    if page.type == catalogue: head += json_ld(CollectionPage(ItemList(ScholarlyArticle|CreativeWork)))
+    head += icons(favicon.svg, icon-32.png, apple-touch-icon 180, manifest), rss alternate
+    return head
+
+function NewsArticle(a):
+    return { headline: a.title, description: summary(a), datePublished, dateModified,
+             mainEntityOfPage: url(a), image: [share_image_url(a)], inLanguage: &quot;en-GB&quot;,
+             articleSection: desk_name(a), keywords: [desk_name(a), subject_name(a)],
+             author: person_or_desk(a.byline), publisher: Organization(logo 512×512),
+             citation: [ { @type: ScholarlyArticle|CreativeWork, name, url, identifier: doi_url } for s in a.sources_used ] }
+</code></pre>
+<h3 id="m6-share-images-from-toolsrender_imagespy">M6 — Share images (from <code>tools/render_images.py</code>)</h3>
+<p>Owns: one 1200×630 image per article and one default; the icon set.</p>
+<pre><code>function share_image(a):
+    card = template(brand, kicker = desk + &quot; · &quot; + kind, headline = a.title (size steps 64/56/50 px by length),
+                    art = cover(a.cover), footer = &quot;Sources listed: {used} used · {investigated} investigated&quot;)
+    png = render(card, 1200 × 630)            # headless browser or an image library (ADR in 11-architecture)
+    png = quantise(png, 256 colours); strip metadata
+    assert size(png) ≤ 300 kB and dims == 1200 × 630
+    store at /share/{slug}-{content_hash}.png  # content-hashed name, so messengers never show a stale card
+</code></pre>
+<p>Regenerate on publish and whenever the headline, desk or cover changes.</p>
+<h3 id="m7-discovery-files-from-build_discovery">M7 — Discovery files (from <code>build_discovery</code>)</h3>
+<pre><code>function sitemap(pages):       # every indexable page; &lt;lastmod&gt; = updated_at; split at 50,000 URLs
+function news_sitemap(articles published in the last 48 h)      # if Google News is pursued (15-discoverability §3)
+function feed(articles, n = 30):   # RSS 2.0 (+ atom:link self); title, link, guid, pubDate, category = desk, description
+function robots():             # User-agent rules per 15-discoverability §1 (decision A12) + &quot;Sitemap: &lt;url&gt;&quot;
+function llms_txt():           # site summary, articles, desks, standards, catalogue — markdown per llmstxt.org
+</code></pre>
+<h3 id="m8-site-search">M8 — Site search</h3>
+<p>Owns: an index of articles, desks, subjects and catalogue entries built at deploy time; the search
+page; the header control (inert in the prototype). The engine is an ADR (static index or hosted).</p>
+<h3 id="m9-link-check-and-archive-job">M9 — Link check and archive (job)</h3>
+<pre><code>weekly job link_check():
+    for entry in catalogue:
+        r = request(entry.url, method = HEAD then GET, timeout = 15 s, user_agent = &quot;gameformative-linkcheck (+contact url)&quot;)
+        record(entry, status = r.status, final_url = r.url, at = now)
+        if r.status in (404, 410) or r.error: open_task(editor, entry, &quot;source unreachable&quot;)
+        if entry is used by any article and no archived copy: request_archive(entry.url)   # Internet Archive, rate-limited
+    report: counts by status; entries changed since last run
+</code></pre>
+<p>Blocked responses (403, bot challenges) are recorded as "blocked", not as broken.</p>
+<h3 id="m10-indexnow-on-publish-job">M10 — IndexNow on publish (job)</h3>
+<pre><code>on publish or update or delete(page):
+    post { host, key, keyLocation, urlList: [page.url] } to the IndexNow endpoint     # 15-discoverability §3
+    on failure: retry with backoff; never block the publish
+</code></pre>
+<h3 id="m11-corrections">M11 — Corrections</h3>
+<p>Append-only corrections on each article (shown at its foot with dates), a public corrections page,
+and an error-report form that reaches the editor. A correction updates <code>updated_at</code>, the sitemap
+<code>lastmod</code>, and triggers M10.</p>
+<h3 id="m12-analytics-and-consent">M12 — Analytics and consent</h3>
+<p>Privacy-first analytics without personal data by default (no banner needed until advertising or a
+newsletter requires consent); events: page view, article read depth (25/50/75/100%), source-link
+clicks (which sources readers open), share clicks by channel. Settings in <a href="responsible-data.html"><code>18-responsible-data.md</code></a>.</p>
+<h3 id="m13-the-gate-from-checkpy">M13 — The gate (from <code>check.py</code>)</h3>
+<p>Every check of the prototype's gate, run in CI before deploy: links and anchors resolve; one <code>h1</code>,
+title and <code>lang</code> per page; token contrast AA in both themes; inert controls marked; the house rules
+measured on the rendered page; every source linked to its catalogue entry; canonical, OG, X card,
+share image exists and fits the budget; JSON-LD parses; sitemap and feed parse and list only real
+pages. A red gate never deploys.</p>
+<h3 id="m14-data-pages-later-phase-from-dataconvertpy-the-data-templates">M14 — Data pages (later phase; from <code>data/convert.py</code>, the data templates)</h3>
+<p>Ingest openfootball daily and a licensed provider; normalise names through the reviewed team table;
+reconcile (goals for = goals against; points; files agree match by match; goal lists match scores);
+refuse to publish a competition that fails. Live islands per <a href="technical-design.html"><code>12-technical-design.md</code></a> §5.</p>
+<h2 id="5-the-editorial-workflow-state-machine">5. The editorial workflow (state machine)</h2>
+<pre><code> draft ──submit──► in_review ──request changes──► changes_requested ──resubmit──► in_review
+                      │
+                      └─approve (editor; rules + links pass)─► approved ──schedule──► scheduled ──time──► published
+ published ──correct (editor)──► published (+ correction, updated_at)
+ published ──withdraw (editor-in-chief; reason required)──► withdrawn (page shows a withdrawal note; URL kept)
+</code></pre>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>Transition</th>
+<th>Who</th>
+<th>Guard</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>submit</td>
+<td>writer</td>
+<td><code>validate_article</code> returns no problems</td>
+</tr>
+<tr>
+<td>approve</td>
+<td>named editor</td>
+<td>re-validate; every link requested within 24 h; the editor ≠ the writer</td>
+</tr>
+<tr>
+<td>publish</td>
+<td>system</td>
+<td>approved and scheduled time reached</td>
+</tr>
+<tr>
+<td>correct</td>
+<td>editor</td>
+<td>correction note required</td>
+</tr>
+<tr>
+<td>withdraw</td>
+<td>editor-in-chief</td>
+<td>reason required; URL never deleted</td>
+</tr>
+</tbody>
+</table></div>
+<p>Every transition writes an audit event <code>{article, from, to, by, at, note}</code>.</p>
+<h2 id="6-security">6. Security</h2>
+<p>CMS behind single sign-on with roles (writer, editor, editor-in-chief, admin); least privilege for
+build tokens; secrets in the host's secret store, never in the repository; security headers (CSP
+restricted to self and the font/analytics origins, HSTS, X-Content-Type-Options, Referrer-Policy
+strict-origin-when-cross-origin, Permissions-Policy); dependency updates weekly; no third-party
+share widgets or trackers (the share bar is plain links).</p>
+<h2 id="7-tests">7. Tests</h2>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>Level</th>
+<th>What</th>
+<th>Tool class</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Unit</td>
+<td>M1 rules (boundaries), M2 catalogue rules, M5 head builder, M7 sitemap/feed</td>
+<td>the framework's unit runner</td>
+</tr>
+<tr>
+<td>Contract</td>
+<td>every content document validates against its schema</td>
+<td>schema validator in CI</td>
+</tr>
+<tr>
+<td>End-to-end</td>
+<td>every page: overflow 0 at 375 and 1440, one <code>h1</code>, 44 px targets on phones, no console errors; share bar; Load more; theme</td>
+<td>headless browser</td>
+</tr>
+<tr>
+<td>Accessibility</td>
+<td>WCAG 2.2 AA automated rules + a manual keyboard/screen-reader pass per template</td>
+<td>axe-class scanner + manual</td>
+</tr>
+<tr>
+<td>Visual</td>
+<td>per template at 375 and 1440, light and dark</td>
+<td>screenshot diff</td>
+</tr>
+<tr>
+<td>Discovery</td>
+<td>OG/X tags present and image fetchable; JSON-LD valid; sitemap/feed valid</td>
+<td>the gate (M13) + the platforms' debuggers at launch</td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="8-operations">8. Operations</h2>
+<p>Deploy on every publish (static rebuild; incremental where the framework allows). Rollback = redeploy
+the previous build. Content backed up daily (CMS export) and kept 30 days. Monitoring: uptime, build
+failures, link-check report, Core Web Vitals field data. Runbook entries: failed build, broken
+source spike, share cards stale in a messenger (rename the image by content hash, re-scrape in the
+platform's debugger).</p>
+<h2 id="9-prototype-module-map">9. Prototype → module map</h2>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>Prototype</th>
+<th>Module</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>content.py</code> <code>RULES</code>, <code>body_chars</code>; <code>build.py</code> <code>check_rules</code>; <code>temp-startup-content/check-draft.py</code></td>
+<td>M1</td>
+</tr>
+<tr>
+<td><code>catalogue.py</code>; <code>build.py</code> <code>build_catalogue</code>, <code>source_list</code></td>
+<td>M2</td>
+</tr>
+<tr>
+<td>(not in the prototype)</td>
+<td>M3</td>
+</tr>
+<tr>
+<td><code>build.py</code> page functions; <code>assets/tokens.css</code>, <code>site.css</code>, <code>site.js</code></td>
+<td>M4</td>
+</tr>
+<tr>
+<td><code>build.py</code> <code>social</code>, <code>abs_url</code>, JSON-LD blocks</td>
+<td>M5</td>
+</tr>
+<tr>
+<td><code>tools/render_images.py</code></td>
+<td>M6</td>
+</tr>
+<tr>
+<td><code>build.py</code> <code>build_discovery</code>, <code>indexable</code></td>
+<td>M7</td>
+</tr>
+<tr>
+<td>(inert header control)</td>
+<td>M8</td>
+</tr>
+<tr>
+<td>the manual link checks of 2026-09-25 (<a href="inputs.html"><code>03-sources.md</code></a> §3)</td>
+<td>M9</td>
+</tr>
+<tr>
+<td>—</td>
+<td>M10, M11, M12</td>
+</tr>
+<tr>
+<td><code>check.py</code></td>
+<td>M13</td>
+</tr>
+<tr>
+<td><code>data/convert.py</code>, <code>data/teams.py</code>, the data page functions</td>
+<td>M14</td>
+</tr>
+</tbody>
+</table></div>
+<footer>gameformative.com · project documentation, 2026</footer></div></body></html>

@@ -26,7 +26,9 @@ data, openfootball CC0) are a later phase, kept live. The presentation for the o
 | `12-technical-design.md` | the pipeline, content model, how an article gets onto the site, data mapping, templates, the live match centre spec (later phase) |
 | `13-implementation-plan.md` | milestones M0–M4, issues with a Definition of Done, blocked register, risks |
 | `14-token-map.md` | prototype tokens and components → production |
+| `16-source-catalogue.md` | the catalogue's model, rules and page — spec for developers (D32) |
 | `18-responsible-data.md` | what is stored (nothing personal), the policy record, the gate |
+| `20-system-blueprint.md` | the low-level technical design: modules, data contracts, pseudo code, the editorial state machine, tests, ops — the document for developers |
 
 Regenerate: `python3 gameformative/data/convert.py` (only after a fetch), `python3
 gameformative/build.py`, `python3 gameformative/docs/build.py`, then `python3 check.py` at the root.

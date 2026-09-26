@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>The source catalogue — specification · gameformative</title><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&display=swap"><link rel="stylesheet" href="../assets/tokens.css"><style>/* gameformative — project documentation on the project's own tokens (../assets/tokens.css): off-white ground, Archivo, one blue, one orange. */
+body{margin:0;background:var(--gf-ground);color:var(--gf-text);font-family:var(--gf-font);font-size:16.5px;line-height:1.62;padding:0 clamp(16px,4vw,40px) 64px;font-variant-numeric:tabular-nums}
+*{box-sizing:border-box}.wrap{max-width:80ch;margin:0 auto}
+.docnav{display:flex;flex-wrap:wrap;gap:0 14px;align-items:center;padding:10px 0;border-bottom:3px solid var(--gf-ink);font-size:13.5px}
+.docnav a{color:var(--gf-blue);text-decoration:none;min-height:44px;min-width:44px;justify-content:center;display:inline-flex;align-items:center;font-weight:600}
+.docnav a[aria-current]{box-shadow:inset 0 -3px 0 var(--gf-orange)}
+.docnav-brand{font-weight:800;font-stretch:72%;font-size:20px;color:var(--gf-ink);margin-right:8px}
+.docnav-brand b{font-weight:900}
+header .eyebrow{margin:28px 0 4px;font-size:12px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--gf-blue)}
+h1{font-stretch:72%;font-weight:800;font-size:clamp(34px,6vw,52px);line-height:1.04;margin:0 0 16px;color:var(--gf-ink);letter-spacing:-.01em}
+h2{font-stretch:80%;font-weight:800;font-size:28px;line-height:1.1;margin:44px 0 10px;padding-top:12px;border-top:3px solid var(--gf-ink);color:var(--gf-ink)}
+h3{font-weight:750;font-size:18px;margin:26px 0 8px;color:var(--gf-ink)}h4{font-size:16px;margin:20px 0 6px;color:var(--gf-ink)}
+p{margin:0 0 12px}li{margin:4px 0}p,li,td,dd{overflow-wrap:anywhere}strong{font-weight:750;color:var(--gf-ink)}em{color:var(--gf-muted)}a{color:var(--gf-blue);overflow-wrap:anywhere}
+code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.84em;background:var(--gf-blue-soft);padding:1px 5px;border-radius:4px;overflow-wrap:anywhere}
+.tbl{overflow-x:auto;margin:12px 0 20px;border:1px solid var(--gf-line);border-radius:10px;background:var(--gf-surface)}
+table{border-collapse:collapse;width:100%;font-size:14px;min-width:560px}
+th{text-align:left;font-weight:800;background:var(--gf-sunk);padding:10px 12px;border-bottom:2px solid var(--gf-ink);font-size:11.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--gf-ink)}
+td{padding:9px 12px;border-top:1px solid var(--gf-line);vertical-align:top}
+pre{overflow-x:auto;padding:14px 16px;border:1px solid var(--gf-line);background:var(--gf-surface);border-radius:10px;font-size:12.5px;line-height:1.4}
+pre code{background:none;padding:0}
+blockquote{margin:14px 0;padding:12px 16px;border-left:4px solid var(--gf-orange);background:var(--gf-surface);border-radius:0 10px 10px 0}
+footer{margin-top:48px;padding-top:16px;border-top:1px solid var(--gf-line);font-size:12.5px;color:var(--gf-muted)}
+</style></head>
+<body><div class="wrap"><nav class="docnav" aria-label="Project documentation"><span class="docnav-brand">game<b>formative</b></span><a href="index.html">Overview</a><a href="brief.html">Brief</a><a href="research.html">Research</a><a href="source-register.html">Sources researched</a><a href="evidence.html">Evidence</a><a href="audit.html">Audit</a><a href="inputs.html">Inputs and gaps</a><a href="decisions.html">Decisions</a><a href="design.html">Design</a><a href="build-log.html">Build log</a><a href="gate.html">Gate</a><a href="asks.html">Asks</a><a href="ssot.html">SSOT</a><a href="architecture.html">Architecture</a><a href="technical-design.html">Technical design</a><a href="plan.html">Plan</a><a href="token-map.html">Token map</a><a href="source-catalogue.html" aria-current=page>Source catalogue</a><a href="responsible-data.html">Responsible data</a><a href="system-blueprint.html">System blueprint</a><a href="presentation.html">Presentation</a><a href="../index.html">Prototype</a></nav>
+<header><p class="eyebrow">gameformative · project documentation</p><h1>The source catalogue — specification</h1></header>
+<p><em>For developers and editors. The client asked for "a scientific catalog to visit from the articles
+to see our trusted knowledge sources we work with" (review, 2026-09-26). This is what the catalogue
+is, how it is modelled, how it is shown, and the rules that keep it honest. Built in the prototype on
+2026-09-26: <code>catalogue.py</code> (the data), <code>sources/index.html</code> (the page), <code>build.py</code> and <code>check.py</code> (the
+rules) — D32.</em></p>
+<h2 id="1-what-it-is-for">1. What it is for</h2>
+<p>Readers see, for any article, not only the sources it cites but <strong>what kind of sources they are,
+who publishes them, and how we checked them</strong> — and from any source, every article that relies on
+it. Editors get one register of every source ever used or set aside, so a source is described once,
+checked once per publication, and re-checked when it changes.</p>
+<h2 id="2-the-model">2. The model</h2>
+<p>One entry per source, keyed by its canonical URL (the DOI resolver URL where a DOI exists).</p>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Rule</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>id</code></td>
+<td>slug</td>
+<td>unique; stable forever (it is the anchor <code>#src-&lt;id&gt;</code> and, at scale, the page <code>sources/&lt;id&gt;</code>)</td>
+</tr>
+<tr>
+<td><code>title</code></td>
+<td>text</td>
+<td>the source's own title, in its language</td>
+</tr>
+<tr>
+<td><code>publisher</code></td>
+<td>text</td>
+<td>the journal, body, outlet or project</td>
+</tr>
+<tr>
+<td><code>date</code></td>
+<td>ISO date or year</td>
+<td>only when read on the source</td>
+</tr>
+<tr>
+<td><code>issue</code></td>
+<td>text</td>
+<td>volume(issue), pages — research only</td>
+</tr>
+<tr>
+<td><code>type</code></td>
+<td>enum</td>
+<td><code>research</code> · <code>official</code> · <code>dataset</code> · <code>stats</code> · <code>reporting</code> · <code>reference</code></td>
+</tr>
+<tr>
+<td><code>doi</code></td>
+<td>text</td>
+<td>shown as <code>https://doi.org/&lt;doi&gt;</code>, the form Crossref asks for</td>
+</tr>
+<tr>
+<td><code>licence</code></td>
+<td>text</td>
+<td>only when read (e.g. openfootball: CC0 1.0)</td>
+</tr>
+<tr>
+<td><code>checked</code></td>
+<td>(date, what we did)</td>
+<td>"Abstract read…", "Downloaded and converted…", or "Not read: …" — never more than we did</td>
+</tr>
+</tbody>
+</table></div>
+<p>An <strong>article</strong> keeps its own note on each source it lists (what the source contributed to <em>this</em>
+article, or why it was set aside), and refers to the catalogue by URL. One fact, one place: the
+source's identity lives in the catalogue, its role lives in the article.</p>
+<h2 id="3-the-types-and-how-we-weigh-them">3. The types and how we weigh them</h2>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>Type</th>
+<th>Meaning</th>
+<th>Can be <em>used</em> when</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Peer-reviewed research</td>
+<td>a study in a peer-reviewed journal</td>
+<td>at least the abstract was read; the article says when only the abstract was read</td>
+</tr>
+<tr>
+<td>Official body</td>
+<td>a governing body, league, federation, regulator or court speaking for itself</td>
+<td>the document was read</td>
+</tr>
+<tr>
+<td>Open dataset</td>
+<td>primary data we download and recompute</td>
+<td>the licence allows it (StatsBomb's does not)</td>
+</tr>
+<tr>
+<td>Statistics provider</td>
+<td>a commercial or community statistics site</td>
+<td>its terms allow the use</td>
+</tr>
+<tr>
+<td>Reporting</td>
+<td>journalism from an identified outlet</td>
+<td>attributed to the outlet</td>
+</tr>
+<tr>
+<td>Reference</td>
+<td>a glossary, definition page or method note</td>
+<td>the page was read</td>
+</tr>
+</tbody>
+</table></div>
+<p>A source whose <code>checked</code> status is "Not read" can <strong>only</strong> appear under <em>investigated but not used</em>.</p>
+<h2 id="4-the-rules-as-code">4. The rules, as code</h2>
+<pre><code>on build:
+  for article in articles:
+    for s in article.sources_used + article.sources_investigated:
+      require s.url in CATALOGUE                         # every source is catalogued
+    for s in article.sources_used:
+      require not CATALOGUE[s.url].checked.startswith(&quot;Not read&quot;)   # never cite unread
+  require every CATALOGUE entry is used or consulted by some article   # no orphans
+  require ids unique
+
+on gate (independent of the build, on the rendered pages):
+  for every source &lt;li&gt; in every article: require a link to sources/index.html#src-&lt;id&gt;
+  require every such anchor exists on the catalogue page
+</code></pre>
+<h2 id="5-the-page">5. The page</h2>
+<p><code>sources/index.html</code>: an introduction with the counts (computed, never typed); a jump list by type;
+one section per type, each entry showing title (link to the source), publisher · issue · date ·
+DOI, licence, "Checked <date>: <what we did>", <strong>Cited in</strong> (articles) and <strong>Consulted, not cited,
+for</strong> (articles); a list of publishers and institutions. JSON-LD: <code>CollectionPage</code> with an
+<code>ItemList</code> of <code>ScholarlyArticle</code> (research) or <code>CreativeWork</code>, with DOIs as <code>identifier</code>.</p>
+<p>Every source entry in every article links to its catalogue anchor, labelled with its type
+("Peer-reviewed research · catalogue entry").</p>
+<h2 id="6-at-scale-production">6. At scale (production)</h2>
+<ul>
+<li><strong>One page per source</strong> (<code>/sources/&lt;id&gt;</code>) once the catalogue passes about 100 entries, and one page
+  per publisher (<code>/sources/publishers/&lt;slug&gt;</code>) — each a hub that links every article citing it
+  (internal linking; see <code>15-discoverability.md</code> §5). The anchors stay valid as redirects.</li>
+<li><strong>Link checking</strong>: a weekly job requests every catalogued URL; a failure opens a task for the
+  editor and, for a <em>used</em> source, adds an archived copy link (Internet Archive) after review.</li>
+<li><strong>Change detection</strong>: for official documents that are revised (e.g. the WADA List), the checked
+  date is renewed when the article is updated.</li>
+<li><strong>Filters</strong>: by type, publisher, desk, year; open access where the publisher states it.</li>
+</ul>
+<footer>gameformative.com · project documentation, 2026</footer></div></body></html>

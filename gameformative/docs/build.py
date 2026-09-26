@@ -14,7 +14,8 @@ PAGES = [
     ("07-gate.md", "gate.html", "Gate"), ("08-client-asks.md", "asks.html", "Asks"),
     ("10-ssot.md", "ssot.html", "SSOT"), ("11-architecture.md", "architecture.html", "Architecture"),
     ("12-technical-design.md", "technical-design.html", "Technical design"), ("13-implementation-plan.md", "plan.html", "Plan"),
-    ("14-token-map.md", "token-map.html", "Token map"), ("18-responsible-data.md", "responsible-data.html", "Responsible data"),
+    ("14-token-map.md", "token-map.html", "Token map"), ("16-source-catalogue.md", "source-catalogue.html", "Source catalogue"),
+    ("18-responsible-data.md", "responsible-data.html", "Responsible data"), ("20-system-blueprint.md", "system-blueprint.html", "System blueprint"),
 ]
 CSS = (HERE / "docs.css").read_text(encoding="utf-8")
 FONTS = '<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&display=swap">'
