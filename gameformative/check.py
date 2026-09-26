@@ -11,7 +11,11 @@
 12 the owner's article rules, measured on every rendered article page: one of the eight desks (its
    desk page exists), 800–3,200 characters of body text (standfirst + paragraphs, spaces included),
    at least three headed segments, and both source lists — used, and investigated but not used —
-   each with at least one linked source."""
+   each with at least one linked source, and every source linked to its catalogue entry;
+13 discovery (added 2026-09-26): every page has a canonical URL, Open Graph and X-card tags whose
+   image exists locally, and valid JSON-LD; sitemap.xml and feed.xml parse and point only at pages
+   that exist, and the sitemap lists every article, desk and subject page; every article has a
+   1200×630 share image within 300 kB; the icon set exists."""
 import re, sys, subprocess, pathlib
 HERE = pathlib.Path(__file__).resolve().parent; ROOT = HERE.parent
 SITE = sorted(p for p in HERE.rglob("*.html") if "docs" not in p.relative_to(HERE).parts)
@@ -69,6 +73,65 @@ for f in articles:
     for kind in ("used", "investigated"):
         lst = re.search(rf'<ol class="gf-source-list" data-sources="{kind}">(.*?)</ol>', t2, re.S)
         if not lst or not re.search(r'<li><a href="https://', lst.group(1)): findings.append(f"article  {f.relative_to(ROOT)}: no linked source in the '{kind}' list")
+
+# 12b every article source links to its catalogue entry (the anchor itself is checked by §2)
+for f in articles:
+    for m in re.finditer(r'<ol class="gf-source-list" data-sources="\w+">(.*?)</ol>', text[f], re.S):
+        for li in re.findall(r"<li>(.*?)</li>", m.group(1), re.S):
+            if 'href="../sources/index.html#src-' not in li: findings.append(f"catalogue  {f.relative_to(ROOT)}: a source with no catalogue link")
+
+# 13 discovery
+import json as _json, struct, xml.etree.ElementTree as ET
+bases = set()
+for f in SITE:
+    t2 = text[f]
+    if 'http-equiv="refresh"' in t2: continue  # redirect stubs
+    can = re.search(r'<link rel="canonical" href="([^"]+)"', t2)
+    if not can: findings.append(f"discovery  {f.relative_to(ROOT)}: no canonical"); continue
+    rel = f.relative_to(HERE).as_posix()
+    base = can.group(1)[: len(can.group(1)) - len(rel[:-10] if rel.endswith("index.html") else rel)] if (can.group(1).endswith(rel) or rel.endswith("index.html")) else None
+    bases.add(base)
+    for tag in ("og:title", "og:description", "og:url", "og:image", "og:type"):
+        if f'property="{tag}"' not in t2: findings.append(f"discovery  {f.relative_to(ROOT)}: no {tag}")
+    if 'name="twitter:card" content="summary_large_image"' not in t2: findings.append(f"discovery  {f.relative_to(ROOT)}: no X card")
+    img = re.search(r'property="og:image" content="([^"]+)"', t2)
+    if img and base and not (HERE / img.group(1)[len(base):]).exists(): findings.append(f"discovery  {f.relative_to(ROOT)}: og:image {img.group(1)} does not exist")
+    for block in re.findall(r'<script type="application/ld\+json">(.*?)</script>', t2, re.S):
+        try: _json.loads(block)
+        except ValueError as e: findings.append(f"discovery  {f.relative_to(ROOT)}: JSON-LD does not parse ({e})")
+if len(bases) != 1 or None in bases: findings.append(f"discovery  canonical URLs do not share one base: {sorted(map(str, bases))}")
+base = next(iter(bases)) if len(bases) == 1 else ""
+def local(u):
+    p = HERE / u[len(base):]
+    return p / "index.html" if (u.endswith("/") or p.is_dir()) else p
+try:
+    locs = [e.text for e in ET.parse(HERE / "sitemap.xml").getroot().iter("{http://www.sitemaps.org/schemas/sitemap/0.9}loc")]
+    for u in locs:
+        if not u.startswith(base) or not local(u).exists(): findings.append(f"discovery  sitemap lists {u}, which does not exist")
+    for d in ("articles", "desks", "topics"):
+        for f in (HERE / d).glob("*.html"):
+            if f.name == "index.html": continue
+            if base + f.relative_to(HERE).as_posix() not in locs: findings.append(f"discovery  sitemap misses {f.relative_to(HERE)}")
+except (ET.ParseError, FileNotFoundError) as e: findings.append(f"discovery  sitemap.xml: {e}")
+try:
+    items = ET.parse(HERE / "feed.xml").getroot().findall("./channel/item")
+    if len(items) != len(articles): findings.append(f"discovery  feed.xml has {len(items)} items for {len(articles)} articles")
+    for it in items:
+        if not local(it.findtext("link")).exists(): findings.append(f"discovery  feed item {it.findtext('link')} does not exist")
+except (ET.ParseError, FileNotFoundError) as e: findings.append(f"discovery  feed.xml: {e}")
+def png_size(p):
+    b = p.read_bytes()[:24]
+    return struct.unpack(">II", b[16:24]) if b[:8] == b"\x89PNG\r\n\x1a\n" else None
+for f in articles + [HERE / "default.html"]:
+    img = HERE / "assets" / "share" / (f.stem + ".png")
+    if not img.exists(): findings.append(f"discovery  no share image for {f.stem}"); continue
+    if png_size(img) != (1200, 630): findings.append(f"discovery  {img.name} is {png_size(img)}, not 1200×630")
+    if img.stat().st_size > 300_000: findings.append(f"discovery  {img.name} is {img.stat().st_size:,} bytes, over 300 kB")
+for name, size in (("icon-32.png", (32, 32)), ("icon-192.png", (192, 192)), ("icon-512.png", (512, 512)), ("apple-touch-icon.png", (180, 180))):
+    p2 = HERE / "assets" / "icons" / name
+    if not p2.exists() or png_size(p2) != size: findings.append(f"discovery  icon {name} missing or not {size}")
+for name in ("robots.txt", "llms.txt", "manifest.webmanifest", "assets/icons/favicon.svg"):
+    if not (HERE / name).exists(): findings.append(f"discovery  {name} missing")
 
 # contrast: every text token on every ground token, both themes
 def lum(h):

@@ -1,0 +1,31 @@
+# gameformative
+
+> gameformative — sport analysis and education: news, tactics, techniques and the science of sport, every article with its sources listed, used and investigated. Every article is 800–3,200 characters in headed segments and ends with two source lists: the sources used and the sources investigated but not used.
+
+The site is organised in eight desks, each defined by what an article does for the reader. Every cited source has an entry in the source catalogue saying what kind of source it is and how it was checked.
+
+## Articles
+
+- [Your GPS says “injury risk.” The new football evidence says: which math are we using?](https://moldovancsaba.github.io/calvus/gameformative/articles/gps-injury-risk-which-math.html): Define desk. Your GPS watch says the team is “overcooked.” The medical staff hears “injury risk.” But a 2026 football review found something awkward: depending on how researchers cut…
+- [Five from five: what Man City’s perfect start does — and doesn’t — tell us](https://moldovancsaba.github.io/calvus/gameformative/articles/premier-league-five-matchdays-in.html): Data desk. 15 points from 5 matches is the best start in the league. Last season, the team with 15 after five finished fifth.
+- [Europe’s big five after a month: the Bundesliga scores most, the Premier League draws most](https://moldovancsaba.github.io/calvus/gameformative/articles/big-five-first-month.html): Data desk. 3.81 goals a game in Germany, 2.82 in England — and not a single goalless draw yet in Serie A.
+- [How Spain won the 2026 World Cup: 14 scored, 1 conceded](https://moldovancsaba.github.io/calvus/gameformative/articles/how-spain-won-the-world-cup.html): Data desk. Eight matches, one goal against, and a final settled in extra time by a substitute. The tournament in numbers.
+- [One goal in four came after the 75th minute: the 2025/26 Premier League by the clock](https://moldovancsaba.github.io/calvus/gameformative/articles/premier-league-2025-26-goals-by-minute.html): Data desk. 270 of 1,045 goals arrived in the last quarter-hour of normal time, more than twice as many as in the first fifteen minutes.
+- [Points per game, goal difference and form: how to read a table in September](https://moldovancsaba.github.io/calvus/gameformative/articles/how-to-read-an-early-season-table.html): Define desk. Leagues that have played different numbers of rounds, teams with a game in hand, a run of five results — three tools for reading a table before it settles.
+
+## Desks
+
+- [Discover](https://moldovancsaba.github.io/calvus/gameformative/desks/discover.html): Something new: tech, method, science finding, financing model
+- [Define](https://moldovancsaba.github.io/calvus/gameformative/desks/define.html): Literacy: what a term/metric/rule means, and how not to get fooled
+- [Design](https://moldovancsaba.github.io/calvus/gameformative/desks/design.html): How to build: team, tactic, training system, experience
+- [Develop](https://moldovancsaba.github.io/calvus/gameformative/desks/develop.html): Pathways: athletes and coaches getting better over time
+- [Data](https://moldovancsaba.github.io/calvus/gameformative/desks/data.html): Analytics: models, tracking, measurement, decision support
+- [Drive](https://moldovancsaba.github.io/calvus/gameformative/desks/drive.html): What moves results: incentives, culture, leadership, audience levers
+- [Defend](https://moldovancsaba.github.io/calvus/gameformative/desks/defend.html): Risk and integrity: injury systems, load practice, governance
+- [Deal](https://moldovancsaba.github.io/calvus/gameformative/desks/deal.html): Money and rights: sponsorship, media rights, commercial structures
+
+## Standards and sources
+
+- [How we work](https://moldovancsaba.github.io/calvus/gameformative/how-we-count/): the desks, the article rules, how we source, labels, automation and AI, corrections.
+- [Source catalogue](https://moldovancsaba.github.io/calvus/gameformative/sources/): every source cited or consulted, with its type, publisher and how it was checked.
+- [RSS feed](https://moldovancsaba.github.io/calvus/gameformative/feed.xml): the latest articles.

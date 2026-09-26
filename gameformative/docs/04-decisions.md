@@ -168,3 +168,25 @@ so their opening sections described a site that no longer existed (a results str
 home, topics as sections). They were rewritten to the current state; the history stays in the build
 log, the decisions and the process log. The code left behind by the earlier rounds — the results
 strip, the league snapshot, the article key-facts box, the SVG chart classes — was removed.
+
+**D32 — 2026-09-26 — A source catalogue, one entry per source.** By: the client ("have scientific
+catalog to visit from the articles to see our trusted knowledge sources we work with"). `catalogue.py`
+holds every source any article cites or consulted, keyed by URL: canonical title, publisher, date,
+type (peer-reviewed research, official body, open dataset, statistics provider, reporting,
+reference), DOI, licence where verified, and how we checked it. `sources/index.html` shows them by
+type with the articles that cite or consulted each; every entry in an article's source lists links to
+its catalogue entry. The build stops if an article cites an uncatalogued source, or lists as *used*
+a source we could not read; the gate checks every link.
+
+**D33 — 2026-09-26 — The prototype stays out of search indexes.** By: the team. Every page now carries
+a canonical URL, but on the prototype's host (GitHub Pages) with `noindex, follow` — so no copy of the
+site ever competes with gameformative.com. The base URL is one setting (`content.py` `SITE["url"]`);
+production switches it to https://gameformative.com/ and drops `noindex`.
+
+**D34 — 2026-09-26 — Share-ready by default.** By: the client (social and instant-messaging
+sharing). Every page has Open Graph and X-card tags; every article a 1200×630 share image drawn from
+its desk, headline, cover graphic and source counts (about 30 kB each, rendered by
+`tools/render_images.py` with local Chrome); an icon set and a web manifest; a share bar of plain links
+(no third-party widgets) that becomes the phone's own share sheet where the browser offers one.
+Sitemap, RSS feed, robots.txt and llms.txt are generated. The full specification follows the
+research round now in progress (`15-discoverability.md`).

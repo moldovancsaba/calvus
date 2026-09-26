@@ -18,6 +18,10 @@ Two kinds of article live here:
 SITE = dict(
     name="gameformative",
     domain="gameformative.com",
+    # Absolute base for canonical, Open Graph, sitemap and feed URLs. The prototype is served from
+    # GitHub Pages; production sets "https://gameformative.com/" (docs/15-discoverability.md).
+    url="https://moldovancsaba.github.io/calvus/gameformative/",
+    production_url="https://gameformative.com/",
     tagline="Sport, explained.",
     description="gameformative — sport analysis and education: news, tactics, techniques and the science of sport, every article with its sources listed, used and investigated.",
     published="25 September 2026",
@@ -63,6 +67,7 @@ NAV = [  # label, path from the site root, short label for the phone tab bar
     ("Home", "index.html", "Home"),
     ("Latest", "articles/index.html", "Latest"),
     ("Desks", "desks/index.html", "Desks"),
+    ("Sources", "sources/index.html", "Sources"),
     ("How we work", "how-we-count/index.html", "Standards"),
 ]
 TABBAR = ["Home", "Latest", "Desks", "How we work"]  # + "More", the fifth tab

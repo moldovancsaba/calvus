@@ -199,4 +199,19 @@ against every class the generated pages use: 25 unused before, 0 after. <code>si
 <code>13-implementation-plan</code>, <code>14-token-map</code>, <code>10-ssot</code>, <code>18-responsible-data</code> rewritten or corrected to
 the current state (D31); ADR-07 (articles as structured data) proposed; the plan re-cut — M1 the
 articles launch, the data work M3.</p>
+<h2 id="round-5-2026-09-26-source-catalogue-sharing-and-discovery-groundwork-client-review">Round 5 — 2026-09-26 — source catalogue, sharing and discovery groundwork (client review)</h2>
+<p><strong>Built.</strong> <code>catalogue.py</code> (26 sources); <code>sources/index.html</code> (by type; cited in / consulted for; a
+publisher list); a catalogue link on every article source; canonical, Open Graph and X-card tags on
+every page with <code>noindex</code> on the prototype; NewsArticle JSON-LD with image, citations (DOIs as
+identifiers) and a BreadcrumbList; WebSite and Organization on the home page; <code>sitemap.xml</code>,
+<code>feed.xml</code>, <code>robots.txt</code>, <code>llms.txt</code>, <code>manifest.webmanifest</code>; share images and icons
+(<code>tools/render_images.py</code>); the share bar. "Sources" joins the top navigation.</p>
+<p><strong>Gate.</strong> Check 12b (every source links its catalogue entry) and 13 (canonical, OG/X tags whose image
+exists, JSON-LD parses, sitemap and feed parse and point at real pages, the sitemap lists every
+article/desk/subject page, share images 1200×630 within 300 kB, icons). Proved to bite: with the
+default share image removed, 36 pages failed.</p>
+<p><strong>Measured.</strong> 42 site pages at 375 and 1440 px. Found and fixed: catalogue title links 20–43 px tall
+(now 44 px blocks), two short publisher links (min width 44 px); on phones the share bar collapses to
+the native share sheet and "Copy link" where the browser offers one. 0 px overflow, one <code>h1</code>, 0 console
+errors.</p>
 <footer>gameformative.com · project documentation, 2026</footer></div></body></html>

@@ -34,6 +34,11 @@ The root `check.py` adds: no studio name on any project page, no tooling in foot
 titles or the documentation brand, no internal documentation link in the presentation, and a
 repo-wide link audit.
 
+13. **Discovery** (added 2026-09-26): canonical on every page; Open Graph and X-card tags whose image
+    exists locally; JSON-LD that parses; `sitemap.xml` and `feed.xml` that parse and list only real
+    pages (and the sitemap every article, desk and subject page); a 1200×630 share image within
+    300 kB for every article; the icon set. 12b: every article source links its catalogue entry.
+
 ## What is measured in the browser (not by the script)
 
 The method's measured pass (`PROTOTYPING.md` §3.3) runs in the app's browser pane on a local

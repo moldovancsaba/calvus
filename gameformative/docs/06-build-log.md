@@ -108,3 +108,22 @@ against every class the generated pages use: 25 unused before, 0 after. `site.cs
 `13-implementation-plan`, `14-token-map`, `10-ssot`, `18-responsible-data` rewritten or corrected to
 the current state (D31); ADR-07 (articles as structured data) proposed; the plan re-cut — M1 the
 articles launch, the data work M3.
+
+## Round 5 — 2026-09-26 — source catalogue, sharing and discovery groundwork (client review)
+
+**Built.** `catalogue.py` (26 sources); `sources/index.html` (by type; cited in / consulted for; a
+publisher list); a catalogue link on every article source; canonical, Open Graph and X-card tags on
+every page with `noindex` on the prototype; NewsArticle JSON-LD with image, citations (DOIs as
+identifiers) and a BreadcrumbList; WebSite and Organization on the home page; `sitemap.xml`,
+`feed.xml`, `robots.txt`, `llms.txt`, `manifest.webmanifest`; share images and icons
+(`tools/render_images.py`); the share bar. "Sources" joins the top navigation.
+
+**Gate.** Check 12b (every source links its catalogue entry) and 13 (canonical, OG/X tags whose image
+exists, JSON-LD parses, sitemap and feed parse and point at real pages, the sitemap lists every
+article/desk/subject page, share images 1200×630 within 300 kB, icons). Proved to bite: with the
+default share image removed, 36 pages failed.
+
+**Measured.** 42 site pages at 375 and 1440 px. Found and fixed: catalogue title links 20–43 px tall
+(now 44 px blocks), two short publisher links (min width 44 px); on phones the share bar collapses to
+the native share sheet and "Copy link" where the browser offers one. 0 px overflow, one `h1`, 0 console
+errors.

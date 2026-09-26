@@ -38,6 +38,22 @@
   });
   document.addEventListener("keydown", function (e) { if (e.key === "Escape" && sheet && !sheet.hidden) closeSheet(); });
 
+  // Share: the native share sheet where available, and copy-link; the plain links need no script
+  document.querySelectorAll("[data-share]").forEach(function (box) {
+    var url = box.dataset.url, title = box.dataset.title, status = box.querySelector("[data-share-status]");
+    var nat = box.querySelector("[data-share-native]");
+    if (nat && navigator.share) {
+      nat.hidden = false; box.classList.add("has-native");
+      nat.addEventListener("click", function () { navigator.share({ title: title, url: url }).catch(function () {}); });
+    }
+    var copy = box.querySelector("[data-copy]");
+    if (copy) copy.addEventListener("click", function () {
+      function done(ok) { status.textContent = ok ? "Link copied" : "Copy failed — select the address bar instead"; copy.textContent = ok ? "Link copied" : "Copy link"; setTimeout(function () { copy.textContent = "Copy link"; }, 2500); }
+      if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(url).then(function () { done(true); }, function () { done(false); });
+      else done(false);
+    });
+  });
+
   // Sortable tables: a button in each sortable header; numbers sort high→low first.
   document.querySelectorAll("table[data-sortable]").forEach(function (table) {
     var body = table.tBodies[0];

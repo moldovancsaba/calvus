@@ -4,12 +4,15 @@ Reads content.py (copy) and data/stats.json (every figure, computed by data/conv
 every page. No dependencies. --check regenerates in memory and fails if a committed page differs, so
 a hand edit to a generated page cannot survive the gate."""
 import json, pathlib, sys, html as H
+from urllib.parse import quote
 import content as C
+import catalogue as K
 
 HERE = pathlib.Path(__file__).parent
 S = json.loads((HERE / "data" / "stats.json").read_text(encoding="utf-8"))
-V = "15"  # asset version — bump when tokens.css, site.css or site.js change
+V = "20"  # asset version — bump when tokens.css, site.css or site.js change
 FONTS = '<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&display=swap">'
+SITE_URL = C.SITE["url"]
 LEAGUES = S["leagues"]
 LG = {l["id"]: l for l in LEAGUES}
 ARTICLES = C.articles(S)
@@ -77,7 +80,7 @@ def deskbar(depth, current_desk=None):
 
 
 def tabbar(current, depth):
-    ic = {"Home": "home", "Latest": "analysis", "Desks": "scores", "How we work": "stats"}
+    ic = {"Home": "home", "Latest": "analysis", "Desks": "scores", "Sources": "analysis", "How we work": "stats"}
     items = []
     for label, href, short in C.NAV:
         if label not in C.TABBAR: continue
@@ -108,7 +111,7 @@ def footer(depth):
     u = up(depth)
     sec = "".join(f'<li><a href="{u}{href}">{esc(label)}</a></li>' for label, href, _ in C.NAV[1:])
     tp = "".join(f'<li><a href="{u}desks/{s}.html">{esc(n)}</a></li>' for s, n, _ in C.DESKS) + f'<li><a href="{u}topics/index.html">All subjects</a></li>'
-    std = "".join(f'<li><a href="{u}how-we-count/index.html#{a}">{t}</a></li>' for a, t in (("desks", "The eight desks"), ("rules", "Article rules"), ("sources", "How we source"), ("corrections", "Corrections"), ("automation", "Automation and AI"), ("labels", "Labels we use")))
+    std = f'<li><a href="{u}sources/index.html">Source catalogue</a></li>' + "".join(f'<li><a href="{u}how-we-count/index.html#{a}">{t}</a></li>' for a, t in (("desks", "The eight desks"), ("rules", "Article rules"), ("sources", "How we source"), ("corrections", "Corrections"), ("automation", "Automation and AI"), ("labels", "Labels we use")))
     return f"""<footer class="gf-footer"><div class="gf-wrap">
   <div class="gf-footer-grid">
     <div class="about">{brand(depth)}<p style="margin-top:8px">{esc(C.SITE["tagline"])} Every article lists the sources we used and the sources we investigated but did not use.</p></div>
@@ -120,8 +123,39 @@ def footer(depth):
 </div></footer>"""
 
 
-def page(path, title, desc, current, body, depth, jsonld=None, desk=None, later=False, extra_head=""):
-    ld = f'<script type="application/ld+json">{json.dumps(jsonld, ensure_ascii=False)}</script>' if jsonld else ""
+def abs_url(path):
+    return SITE_URL + (path[:-10] if path.endswith("index.html") else path)
+
+
+def social(path, title, desc, depth, og):
+    """Canonical, robots, Open Graph and X-card tags (docs/15-discoverability.md §2–§4)."""
+    og = og or {}
+    img = og.get("image", "assets/share/default.png")
+    alt = og.get("image_alt", "gameformative — sport, explained. Eight desks: Discover, Define, Design, Develop, Data, Drive, Defend, Deal.")
+    kind = og.get("type", "website")
+    tags = [f'<link rel="canonical" href="{esc(abs_url(path))}">',
+            # the prototype stays out of search indexes so it never competes with gameformative.com (D33)
+            '<meta name="robots" content="noindex, follow, max-image-preview:large">',
+            f'<meta property="og:site_name" content="gameformative"><meta property="og:locale" content="en_GB">',
+            f'<meta property="og:type" content="{kind}"><meta property="og:title" content="{esc(og.get("title", title))}">',
+            f'<meta property="og:description" content="{esc(desc)}"><meta property="og:url" content="{esc(abs_url(path))}">',
+            f'<meta property="og:image" content="{esc(SITE_URL + img)}"><meta property="og:image:type" content="image/png">',
+            '<meta property="og:image:width" content="1200"><meta property="og:image:height" content="630">',
+            f'<meta property="og:image:alt" content="{esc(alt)}">',
+            '<meta name="twitter:card" content="summary_large_image">',
+            f'<meta name="twitter:title" content="{esc(og.get("title", title))}"><meta name="twitter:description" content="{esc(desc)}">',
+            f'<meta name="twitter:image" content="{esc(SITE_URL + img)}"><meta name="twitter:image:alt" content="{esc(alt)}">']
+    if kind == "article":
+        tags.append(f'<meta property="article:published_time" content="{og["published"]}"><meta property="article:section" content="{esc(og["section"])}"><meta property="article:tag" content="{esc(og["tag"])}">')
+    u = up(depth)
+    tags.append(f'<link rel="icon" href="{u}assets/icons/favicon.svg" type="image/svg+xml"><link rel="icon" href="{u}assets/icons/icon-32.png" sizes="32x32" type="image/png">'
+                f'<link rel="apple-touch-icon" href="{u}assets/icons/apple-touch-icon.png"><link rel="manifest" href="{u}manifest.webmanifest">'
+                f'<link rel="alternate" type="application/rss+xml" title="gameformative — latest articles" href="{u}feed.xml">')
+    return "\n".join(tags)
+
+
+def page(path, title, desc, current, body, depth, jsonld=None, desk=None, later=False, extra_head="", og=None):
+    ld = "".join(f'<script type="application/ld+json">{json.dumps(j, ensure_ascii=False)}</script>' for j in (jsonld if isinstance(jsonld, list) else [jsonld] if jsonld else []))
     notice = (f'<div class="gf-later"><div class="gf-wrap"><p><b>A later phase.</b> gameformative launches with articles only; these data pages preview what comes after. '
               f'<a href="{up(depth)}index.html">Back to the articles</a></p></div></div>') if later else ""
     html_out = f"""<!doctype html>
@@ -130,6 +164,7 @@ def page(path, title, desc, current, body, depth, jsonld=None, desk=None, later=
 <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
 <title>{esc(title)}</title>
 <meta name="description" content="{esc(desc)}">
+{social(path, title, desc, depth, og)}
 <meta name="theme-color" content="#F7F6F2" media="(prefers-color-scheme: light)"><meta name="theme-color" content="#0B0F1A" media="(prefers-color-scheme: dark)">
 <script>try{{var t=localStorage.getItem("gf-theme");if(t==="dark"||t==="light")document.documentElement.setAttribute("data-theme",t)}}catch(e){{}}</script>
 {extra_head}{FONTS}
@@ -478,7 +513,8 @@ def build_home():
 <section class="gf-section gf-band" aria-labelledby="nl-h"><div class="gf-band-grid"><div><p class="gf-kicker">Newsletter</p><h2 id="nl-h" class="gf-display" style="font-size:clamp(26px,5vw,38px)">The Monday brief</h2><p>The week’s best reads across sport science, tactics, tech and the business of sport. Once a week.</p></div>
 <form class="gf-signup" onsubmit="return false" aria-describedby="nl-note"><label class="gf-sr" for="nl-email">E-mail address</label><input id="nl-email" type="email" placeholder="you@example.com" disabled><button class="gf-btn is-unavailable" type="submit" aria-disabled="true" title="The newsletter is not built in the prototype">Subscribe</button><p id="nl-note" class="gf-meta" style="grid-column:1/-1;margin:0">Not built in the prototype — nothing is collected. Consent and sender are set before launch.</p></form></div></section>"""
     page("index.html", "gameformative — sport, explained", C.SITE["description"], "Home", body, d,
-         jsonld={"@context": "https://schema.org", "@type": "WebSite", "name": "gameformative", "url": "https://gameformative.com/", "description": C.SITE["description"]})
+         jsonld=[{"@context": "https://schema.org", "@type": "WebSite", "name": "gameformative", "url": SITE_URL, "description": C.SITE["description"], "inLanguage": "en-GB"},
+                 {"@context": "https://schema.org", "@type": "Organization", "name": "gameformative", "url": SITE_URL, "logo": SITE_URL + "assets/icons/icon-512.png"}])
 
 
 def build_scores():
@@ -618,12 +654,14 @@ def build_final():
     page("world-cup-2026/final.html", "Spain 1–0 Argentina (aet): World Cup 2026 final, match centre — gameformative", "Match centre for the 2026 World Cup final: key moments, line-ups and substitutions.", None, body, d, jsonld=ld, later=True)
 
 
-def source_list(items, kind):
+def source_list(items, kind, depth=1):
     li = []
     for s in items:
         date = f", {esc(s['date'])}" if s.get("date") else ""
+        k = K.CATALOGUE[s["url"]]
         li.append(f'<li><a href="{esc(s["url"])}" rel="noopener">{esc(s["title"])}</a><span class="pub"> — {esc(s["publisher"])}{date}</span>'
-                  f'<span class="why">{esc(s["note"])}</span></li>')
+                  f'<span class="why">{esc(s["note"])}</span>'
+                  f'<a class="gf-catlink" href="{up(depth)}sources/index.html#src-{k["id"]}">{esc(K.TYPES[k["type"]][0])} · catalogue entry<span class="gf-sr">: {esc(k["title"])}</span></a></li>')
     return f'<ol class="gf-source-list" data-sources="{kind}">{"".join(li)}</ol>'
 
 
@@ -637,6 +675,9 @@ def check_rules(a):
     assert a["desk"] in C.DESK, f"{a['slug']}: desk {a['desk']!r} is not one of the eight"
     for s in a["sources_used"] + a["sources_investigated"]:
         assert s["url"].startswith("https://") and s["title"] and s["publisher"] and s["note"], f"{a['slug']}: incomplete source {s}"
+        assert s["url"] in K.CATALOGUE, f"{a['slug']}: {s['url']} has no entry in catalogue.py"
+    for s in a["sources_used"]:
+        assert not K.CATALOGUE[s["url"]]["checked"][1].startswith("Not read"), f"{a['slug']}: cites as used a source we could not read: {s['url']}"
 
 
 def build_article(a):
@@ -653,13 +694,25 @@ def build_article(a):
     n = C.body_chars(a)
     origin = ("From the editorial desk’s draft; checked against its sources before publishing." if a["origin"] == "owner"
               else "Written by the data desk. Every figure is computed from public-domain match records by the site’s own converter; nothing is estimated.")
-    ld = {"@context": "https://schema.org", "@type": "NewsArticle", "headline": a["title"], "description": excerpt(a), "datePublished": C.SITE["published_iso"],
-          "articleSection": C.DESK[a["desk"]]["name"], "keywords": C.TOPIC[a["topic"]]["name"], "author": {"@type": "Organization", "name": a["byline"]}, "publisher": {"@type": "Organization", "name": "gameformative"},
-          "citation": [s["url"] for s in a["sources_used"]]}
+    url = abs_url(f"articles/{a['slug']}.html")
+    org = {"@type": "Organization", "name": "gameformative", "url": SITE_URL, "logo": {"@type": "ImageObject", "url": SITE_URL + "assets/icons/icon-512.png", "width": 512, "height": 512}}
+    ld = [{"@context": "https://schema.org", "@type": "NewsArticle", "headline": a["title"], "description": excerpt(a),
+           "datePublished": C.SITE["published_iso"], "dateModified": C.SITE["published_iso"], "mainEntityOfPage": url, "url": url,
+           "image": [SITE_URL + f"assets/share/{a['slug']}.png"], "inLanguage": "en-GB",
+           "articleSection": C.DESK[a["desk"]]["name"], "keywords": [C.DESK[a["desk"]]["name"], C.TOPIC[a["topic"]]["name"]],
+           "wordCount": len(" ".join(x for _, items in a["segments"] for x in items if isinstance(x, str)).split()),
+           "author": {"@type": "Organization", "name": a["byline"], "url": SITE_URL + "how-we-count/index.html"}, "publisher": org,
+           "citation": [{"@type": "ScholarlyArticle" if K.CATALOGUE[s["url"]]["type"] == "research" else "CreativeWork", "name": K.CATALOGUE[s["url"]]["title"], "url": s["url"],
+                         **({"identifier": "https://doi.org/" + K.CATALOGUE[s["url"]]["doi"]} if K.CATALOGUE[s["url"]].get("doi") else {})} for s in a["sources_used"]]},
+          {"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [
+              {"@type": "ListItem", "position": 1, "name": "Home", "item": SITE_URL},
+              {"@type": "ListItem", "position": 2, "name": C.DESK[a["desk"]]["name"], "item": abs_url(f"desks/{a['desk']}.html")},
+              {"@type": "ListItem", "position": 3, "name": a["title"], "item": url}]}]
+    share = share_bar(url, a["title"])
     sf = f'<p class="dek" data-count>{esc(a["standfirst"])}</p>' if a["standfirst"] else ""
     body = f"""<div class="gf-article-layout"><article class="gf-article" data-article data-desk="{a["desk"]}" data-min="{C.RULES["min_chars"]}" data-max="{C.RULES["max_chars"]}" data-segments="{C.RULES["min_segments"]}">
 <header class="gf-article-head"><p class="gf-cardmeta">{desk_link(a, d)} · {esc(a["kind"])} · <span class="gf-subject">Subject: {topic_link(a, d)}</span></p><p class="gf-deskline">{esc(C.DESK[a["desk"]]["name"])} — {esc(C.DESK[a["desk"]]["does"])}</p><h1>{esc(a["title"])}</h1>{sf}
-<div class="gf-byline"><span>By <b>{esc(a["byline"])}</b></span><span>{esc(C.SITE["published"])}</span><span>{reading(a)}</span><span>{len(a["segments"])} segments</span></div></header>
+<div class="gf-byline"><span>By <b>{esc(a["byline"])}</b></span><span>{esc(C.SITE["published"])}</span><span>{reading(a)}</span><span>{len(a["segments"])} segments</span></div>{share}</header>
 <nav class="gf-toc-box" aria-label="In this article"><h2 class="gf-kicker">In this article</h2><ol>{toc}</ol></nav>
 <div class="gf-body">{"".join(blocks)}</div>
 <section class="gf-sources" aria-labelledby="src-h"><h2 id="src-h">Sources</h2>
@@ -668,7 +721,22 @@ def build_article(a):
 <p class="gf-meta">Links checked on {esc(C.SITE["published"])}. {esc(origin)} Body text: {n:,} characters. Found an error? <a href="../how-we-count/index.html#corrections">Our corrections policy</a>.</p></section>
 </article>
 <aside class="gf-rail" aria-label="More to read"><h2 class="gf-kicker">More to read</h2>{rail}</aside></div>"""
-    page(f"articles/{a['slug']}.html", f"{a['title']} — gameformative", excerpt(a), "Latest", body, d, jsonld=ld, desk=a["desk"])
+    og = dict(type="article", title=a["title"], image=f"assets/share/{a['slug']}.png", image_alt=f"{C.DESK[a['desk']]['name']} · {a['title']}",
+              published=C.SITE["published_iso"], section=C.DESK[a["desk"]]["name"], tag=C.TOPIC[a["topic"]]["name"])
+    page(f"articles/{a['slug']}.html", f"{a['title']} — gameformative", excerpt(a), "Latest", body, d, jsonld=ld, desk=a["desk"], og=og)
+
+
+def share_bar(url, title):
+    """Plain share links — no third-party widgets, no tracking; the native share sheet where the
+    browser has one (docs/15-discoverability.md §4)."""
+    u, tt = quote(url, safe=""), quote(title, safe="")
+    links = [("WhatsApp", f"https://wa.me/?text={tt}%20{u}"), ("Telegram", f"https://t.me/share/url?url={u}&text={tt}"),
+             ("X", f"https://x.com/intent/post?url={u}&text={tt}"), ("LinkedIn", f"https://www.linkedin.com/sharing/share-offsite/?url={u}"),
+             ("Facebook", f"https://www.facebook.com/sharer/sharer.php?u={u}"), ("Email", f"mailto:?subject={tt}&body={u}")]
+    a = "".join(f'<a class="gf-share-link" href="{esc(h)}" rel="noopener" target="_blank">{n}<span class="gf-sr"> — share this article</span></a>' for n, h in links)
+    return (f'<div class="gf-share" data-share data-url="{esc(url)}" data-title="{esc(title)}"><span class="gf-share-label">Share</span>'
+            f'<button class="gf-share-link" type="button" data-share-native hidden>Share…</button>{a}'
+            f'<button class="gf-share-link" type="button" data-copy>Copy link</button><span class="gf-sr" aria-live="polite" data-share-status></span></div>')
 
 
 def list_item(a, depth, hidden=False):
@@ -728,6 +796,55 @@ def build_topics():
     page("topics/index.html", "Subjects — gameformative", "Every gameformative subject: news, sport science, tactics, analytics, data, tech, development, fans, sponsorship and goods.", None, body, d)
 
 
+def build_catalogue():
+    """The source catalogue: every source any article cites or consulted, grouped by type, each with
+    how we checked it and the articles that use it (docs/16-source-catalogue.md)."""
+    d = 1
+    used, consulted = {}, {}
+    for a in ARTICLES:
+        for s in a["sources_used"]: used.setdefault(s["url"], []).append(a)
+        for s in a["sources_investigated"]: consulted.setdefault(s["url"], []).append(a)
+    entries = {u: k for u, k in K.CATALOGUE.items() if u in used or u in consulted}
+    unused = [k["id"] for u, k in K.CATALOGUE.items() if u not in entries]
+    assert not unused, f"catalogue entries no article uses: {unused}"
+    def art_links(lst):
+        return ", ".join(f'<a href="../articles/{a["slug"]}.html">{esc(a["title"])}</a>' for a in lst)
+    sections, counts = [], {}
+    for tkey, (tlabel, tdesc) in K.TYPES.items():
+        items = sorted(((u, k) for u, k in entries.items() if k["type"] == tkey), key=lambda x: (x[1]["publisher"], x[1]["title"]))
+        counts[tkey] = len(items)
+        if not items: continue
+        cards = []
+        for u, k in items:
+            bits = [esc(k["publisher"])] + ([esc(k["issue"])] if k.get("issue") else []) + ([C.nice_date(k["date"]) if len(k["date"]) == 10 else esc(k["date"])] if k.get("date") else [])
+            doi = f' · DOI <a href="https://doi.org/{esc(k["doi"])}" rel="noopener">{esc(k["doi"])}</a>' if k.get("doi") else ""
+            lic = f'<p class="lic">Licence: {esc(k["licence"])}</p>' if k.get("licence") else ""
+            role = []
+            if u in used: role.append(f'<p class="role"><b>Cited in:</b> {art_links(used[u])}</p>')
+            if u in consulted: role.append(f'<p class="role"><b>Consulted, not cited, for:</b> {art_links(consulted[u])}</p>')
+            cards.append(f'<article class="gf-src" id="src-{k["id"]}"><h3><a href="{esc(u)}" rel="noopener">{esc(k["title"])}</a></h3>'
+                         f'<p class="meta">{" · ".join(bits)}{doi}</p>{lic}'
+                         f'<p class="check"><b>Checked {esc(C.nice_date(k["checked"][0]))}:</b> {esc(k["checked"][1])}</p>{"".join(role)}</article>')
+        sections.append(f'<section class="gf-section" aria-labelledby="t-{tkey}"><div class="gf-section-head"><h2 id="t-{tkey}">{esc(tlabel)}</h2><span class="gf-meta">{len(items)}</span></div>'
+                        f'<p class="gf-meta" style="margin:-6px 0 12px">{esc(tdesc)}</p><div class="gf-src-list">{"".join(cards)}</div></section>')
+    pubs = {}
+    for u, k in entries.items(): pubs.setdefault(k["publisher"], []).append(k["id"])
+    publist = "".join(f'<li><a href="#src-{ids[0]}">{esc(p)}</a> <span class="gf-meta">{len(ids)}</span></li>' for p, ids in sorted(pubs.items(), key=lambda x: x[0].lower()))
+    n_cited = sum(1 for u in entries if u in used)
+    toc = "".join(f'<li><a href="#t-{t}">{esc(K.TYPES[t][0])} ({n})</a></li>' for t, n in counts.items() if n)
+    body = f"""<div class="gf-pagehead"><p class="gf-kicker">Sources</p><h1>The source catalogue</h1><p>Every source our articles cite or consulted — what kind of source it is, who publishes it, exactly how we checked it, and the articles that use it. {len(entries)} sources from {len(pubs)} publishers; {n_cited} cited, the rest consulted and set aside with a reason.</p></div>
+<ul class="gf-toc">{toc}<li><a href="#publishers">Publishers</a></li></ul>
+{"".join(sections)}
+<section class="gf-section" aria-labelledby="publishers"><div class="gf-section-head"><h2 id="publishers">Publishers and institutions</h2></div><ul class="gf-publist">{publist}</ul>
+<p class="gf-meta">How we choose and check sources: <a href="../how-we-count/index.html#sources">How we source</a>.</p></section>"""
+    ld = {"@context": "https://schema.org", "@type": "CollectionPage", "name": "The gameformative source catalogue", "url": SITE_URL + "sources/index.html",
+          "mainEntity": {"@type": "ItemList", "numberOfItems": len(entries), "itemListElement": [
+              {"@type": "ListItem", "position": i + 1, "item": {"@type": "ScholarlyArticle" if k["type"] == "research" else "CreativeWork", "name": k["title"], "url": u,
+               "publisher": {"@type": "Organization", "name": k["publisher"]}, **({"identifier": f"https://doi.org/{k['doi']}"} if k.get("doi") else {})}}
+              for i, (u, k) in enumerate(sorted(entries.items(), key=lambda x: x[1]["id"]))]}}
+    page("sources/index.html", "The source catalogue — gameformative", "Every source gameformative articles cite or consulted: type, publisher, how we checked it, and the articles that use it.", "Sources", body, d, jsonld=ld)
+
+
 def build_redirects():
     """The articles lived under /analysis/ until 2026-09-25 (live then) — never delete a live URL."""
     moved = [(f"analysis/{a['slug']}.html", f"../articles/{a['slug']}.html", a["title"]) for a in ARTICLES if a["origin"] == "data"]
@@ -758,7 +875,7 @@ def build_method():
 <dt>Segments</dt><dd>At least {R["min_segments"]} segments, each under its own heading, listed at the top of the article so you can jump to the part you need.</dd>
 <dt>Sources</dt><dd>Two lists close every article: the sources used, and the sources investigated but not used — each with a line on why.</dd></dl>
 <h2 id="sources">How we source</h2>
-<p>We read the source itself — the paper, the dataset, the report — not a summary of it. We list what we used so you can check us, and what we looked at and set aside so you can see what we chose not to rely on and why. Links are checked on the day of publication. Where a publisher blocks us from reading a source, we say so rather than cite it unread.</p>
+<p>We read the source itself — the paper, the dataset, the report — not a summary of it. We list what we used so you can check us, and what we looked at and set aside so you can see what we chose not to rely on and why. Links are checked on the day of publication. Where a publisher blocks us from reading a source, we say so rather than cite it unread. Every source — used or set aside — has an entry in the <a href="../sources/index.html">source catalogue</a>: what kind of source it is, who publishes it, and how we checked it.</p>
 <h2 id="labels">Labels we use</h2><dl><dt>Explainer</dt><dd>How something works and how to read it.</dd><dt>Analysis</dt><dd>Reporting that interprets evidence or data.</dd><dt>News</dt><dd>What happened, sourced and dated.</dd><dt>Automated</dt><dd>Text a template fills from data, published without a human edit — always labelled, only ever stating computed facts. Used on the data pages only.</dd><dt>Opinion</dt><dd>Reserved for signed columns; none are published yet.</dd></dl>
 <h2 id="automation">Automation and AI</h2><p>The “in numbers” round-ups on the data pages are written by a fixed template, not a language model, and carry the <b>Automated</b> label. If gameformative publishes text generated by an AI system, it says so on the piece unless an editor has reviewed it and a named person takes editorial responsibility — the standard set by Article 50 of the EU AI Act, applicable from 2 August 2026. AI-generated or manipulated images or video are always labelled. No image on this site is AI-generated.</p>
 <h2 id="corrections">Corrections</h2><p>When we get something wrong we correct it promptly, say on the page what was wrong and when it changed, and list the change on a public corrections page. The corrections page and the reporting form open with the live site; in the prototype this section states the policy.</p>
@@ -790,8 +907,79 @@ def build_styleguide():
     page("styleguide/index.html", "Style guide — gameformative", "The gameformative design system: tokens and components, live.", None, body, d)
 
 
+def indexable():
+    """The pages that belong in search: the article site. The style guide, the later-phase data pages
+    and the redirects are left out (docs/15-discoverability.md §3)."""
+    pages = ["index.html", "articles/index.html", "desks/index.html", "topics/index.html", "sources/index.html", "how-we-count/index.html"]
+    pages += [f"articles/{a['slug']}.html" for a in ARTICLES] + [f"desks/{s}.html" for s, _, _ in C.DESKS] + [f"topics/{s}.html" for s, _, _ in C.TOPICS]
+    return pages
+
+
+def build_discovery():
+    """sitemap.xml, feed.xml (RSS 2.0), robots.txt, llms.txt, manifest.webmanifest — generated, so the
+    gate can check they reproduce. In production they sit at the domain root."""
+    iso = C.SITE["published_iso"]
+    urls = "".join(f"  <url><loc>{esc(abs_url(p))}</loc><lastmod>{iso}</lastmod></url>\n" for p in indexable())
+    OUT["sitemap.xml"] = f'<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n{urls}</urlset>\n'
+    rfc = "Fri, 25 Sep 2026 08:00:00 +0000"  # the prototype's publication date; production uses each article's own
+    items = "".join(f"""  <item>
+    <title>{esc(a["title"])}</title>
+    <link>{esc(abs_url(f"articles/{a['slug']}.html"))}</link>
+    <guid isPermaLink="true">{esc(abs_url(f"articles/{a['slug']}.html"))}</guid>
+    <pubDate>{rfc}</pubDate>
+    <category>{esc(C.DESK[a["desk"]]["name"])}</category>
+    <description>{esc(excerpt(a))}</description>
+  </item>
+""" for a in ARTICLES)
+    OUT["feed.xml"] = f"""<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+<channel>
+  <title>gameformative — latest articles</title>
+  <link>{esc(SITE_URL)}</link>
+  <atom:link href="{esc(SITE_URL)}feed.xml" rel="self" type="application/rss+xml"/>
+  <description>{esc(C.SITE["description"])}</description>
+  <language>en-gb</language>
+  <lastBuildDate>{rfc}</lastBuildDate>
+{items}</channel>
+</rss>
+"""
+    OUT["robots.txt"] = f"""# gameformative — robots.txt
+# The prototype's copy; in production this file is served from the domain root, where crawlers read it.
+# The AI-crawler section follows docs/15-discoverability.md §1 and the owner's decision (ask A12).
+User-agent: *
+Allow: /
+
+Sitemap: {SITE_URL}sitemap.xml
+"""
+    arts = "".join(f"- [{a['title']}]({abs_url('articles/' + a['slug'] + '.html')}): {C.DESK[a['desk']]['name']} desk. {excerpt(a)}\n" for a in ARTICLES)
+    desks = "".join(f"- [{n}]({abs_url('desks/' + s + '.html')}): {d}\n" for s, n, d in C.DESKS)
+    OUT["llms.txt"] = f"""# gameformative
+
+> {C.SITE["description"]} Every article is 800–3,200 characters in headed segments and ends with two source lists: the sources used and the sources investigated but not used.
+
+The site is organised in eight desks, each defined by what an article does for the reader. Every cited source has an entry in the source catalogue saying what kind of source it is and how it was checked.
+
+## Articles
+
+{arts}
+## Desks
+
+{desks}
+## Standards and sources
+
+- [How we work]({abs_url("how-we-count/index.html")}): the desks, the article rules, how we source, labels, automation and AI, corrections.
+- [Source catalogue]({abs_url("sources/index.html")}): every source cited or consulted, with its type, publisher and how it was checked.
+- [RSS feed]({SITE_URL}feed.xml): the latest articles.
+"""
+    OUT["manifest.webmanifest"] = json.dumps({"name": "gameformative", "short_name": "gameformative", "description": C.SITE["description"],
+        "start_url": "./", "scope": "./", "display": "browser", "background_color": "#F7F6F2", "theme_color": "#0C1222",
+        "icons": [{"src": "assets/icons/icon-192.png", "sizes": "192x192", "type": "image/png"}, {"src": "assets/icons/icon-512.png", "sizes": "512x512", "type": "image/png"},
+                  {"src": "assets/icons/favicon.svg", "sizes": "any", "type": "image/svg+xml"}]}, indent=1, ensure_ascii=False) + "\n"
+
+
 def build_all():
-    build_home(); build_articles_index(); build_desks(); build_topics(); build_method(); build_styleguide()
+    build_home(); build_articles_index(); build_desks(); build_topics(); build_catalogue(); build_method(); build_styleguide()
+    build_discovery()
     for a in ARTICLES: build_article(a)
     build_redirects()
     # the data pages — a later phase, kept live and linked from the footer

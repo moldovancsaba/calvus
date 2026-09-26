@@ -1,0 +1,7 @@
+# gameformative — robots.txt
+# The prototype's copy; in production this file is served from the domain root, where crawlers read it.
+# The AI-crawler section follows docs/15-discoverability.md §1 and the owner's decision (ask A12).
+User-agent: *
+Allow: /
+
+Sitemap: https://moldovancsaba.github.io/calvus/gameformative/sitemap.xml
