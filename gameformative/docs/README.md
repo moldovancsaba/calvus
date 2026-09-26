@@ -73,3 +73,13 @@ Design, Develop, Data, Drive, Defend, Deal — each defined by what the article 
 They are now the site's sections (desk bar, desk pages, desk tiles, How we work); every article sits
 on one desk, enforced by the build and the gate; the round-2 topics stay as subject tags, their live
 pages kept (D26–D28). Measured at 375 and 1440 px, clean. Ask A11: the GPS article's desk.
+
+**2026-09-26 — content handover pack.** The owner asked for one "find" pass (no scheduled job
+existed; the pass was run directly: four research passes, 24 article candidates across the eight
+desks, every seed opened) and then for everything content-related gathered so far to be collected
+for the content creator: `../temp-startup-content/` — `CONTENT-HANDOVER.md` (the product, desks,
+house rules, sourcing workflow, editorial responsibility, what is published, where every other
+finding lives), `article-plan.md` (the first eight, conflicts resolved, 14 reserves), `find/` (the
+four briefs), `article-template.md`, and `check-draft.py`, which counts characters exactly as the
+site does (tested against the owner's article: 2,358). Research already in this folder is linked,
+not copied. The folder is temporary.
