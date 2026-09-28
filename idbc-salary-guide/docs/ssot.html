@@ -42,11 +42,11 @@ footer{margin-top:56px;padding-top:18px;border-top:1px solid var(--line);font-si
 from what the prototype holds (the <code>IDBCSYNC</code> sheet tab, <code>data/idbcsync.py</code>, the files it
 writes, the pages). Written 2026-09-18; the data sections updated 2026-09-25 for D37.</em></p>
 <blockquote>
-<p><strong>Since 2026-09-28 (D47) the guide is back on the previous data structure</strong>: salary and Expert Pool
-from the sheet's <code>WEB_BERTABLA_IMPORT</code> and <code>EXPERT_POOL_IMPORT</code> tabs (<code>data/build-salary-data.py</code>, run
-on demand), the survey from the client's workbook (<code>data/build-guide-data.py</code>), page texts and
-<code>areas.json</code> edited in the repo. What this document says about <code>IDBCSYNC</code> and <code>idbcsync.py</code> describes
-the parked setup (D37, in history at <code>7d43ed3</code>).</p>
+<p><strong>Since 2026-09-28 (D47, D48) the JSON files are the source</strong>: every value the pages show is in
+<code>data/guide-data.json</code> or <code>data/areas.json</code>; salary and Expert Pool are refreshed from the sheet's
+<code>WEB_BERTABLA_IMPORT</code> and <code>EXPERT_POOL_IMPORT</code> tabs by <code>data/build-salary-data.py</code> (run on demand).
+The current JSON shape and where each value lives: <a href="developer-handover.html"><code>16-developer-handover.md</code></a> §3. What this document
+says about <code>IDBCSYNC</code> and <code>idbcsync.py</code> describes the parked setup (D37, in history at <code>7d43ed3</code>).</p>
 </blockquote>
 <h2>1. Glossary</h2>
 <div class="tbl"><table>
@@ -302,7 +302,7 @@ case study).</p>
 </tbody>
 </table></div>
 <h2>5. Decision register</h2>
-<p><a href="decisions.html"><code>04-decisions.md</code></a> (D1–D47). Technical decisions in this package are ADRs in
+<p><a href="decisions.html"><code>04-decisions.md</code></a> (D1–D48). Technical decisions in this package are ADRs in
 <a href="architecture.html"><code>11-architecture.md</code></a> §11, PROPOSED until flipped; the flip is the next D-number.</p>
 <h2>6. Rules register</h2>
 <div class="tbl"><table>

@@ -12,11 +12,12 @@ test runner.
 Generators exist and must be re-run after editing their sources: `python3 holdvolgy/build.py`
 (site pages, HU + EN, from `build.py` content and `data/catalogue.json`); the IDBC salary
 converter (`idbc-salary-guide/data/build-salary-data.py <IDBC_bertabla.xlsx>` — since 2026-09-28
-the guide is back on the sheet's previous structure, D47: salary and Expert Pool from the
-`WEB_BERTABLA_IMPORT` and `EXPERT_POOL_IMPORT` tabs, run on demand by a GitHub Action; the survey
-half of `guide-data.json` comes from the client's research workbook via `build-guide-data.py`;
-page texts and `areas.json` are edited in the repo — the `data-sync` markers in the pages are
-inert; the `IDBCSYNC` tab and `idbcsync.py` are parked, in git history at `7d43ed3`); and `python3 build-docs.py` at the
+the IDBC guide's JSON files are its source, D47–D48: every value the pages show is in
+`data/guide-data.json` or `data/areas.json`; salary and Expert Pool are refreshed from the sheet's
+`WEB_BERTABLA_IMPORT` and `EXPERT_POOL_IMPORT` tabs by this converter, run on demand by a GitHub
+Action; the client's survey corrections live in `data/survey_edits.py`; page texts are edited in
+the HTML — the `data-sync` markers are inert; the `IDBCSYNC` tab and `idbcsync.py` are parked, in
+git history at `7d43ed3`; where every value lives: `idbc-salary-guide/docs/16-developer-handover.md`); and `python3 build-docs.py` at the
 root, which renders every project's documentation from markdown. `python3 check.py` at the
 root is the gate (it runs every project gate and a repo-wide link audit).
 gameformative (added 2026-09-25) is generated too: `python3 gameformative/build.py` (pages, from

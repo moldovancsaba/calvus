@@ -79,7 +79,7 @@ every project.</p>
 <tr>
 <td>04 decisions</td>
 <td><a href="decisions.html"><code>04-decisions.md</code></a></td>
-<td>D1–D47, dated, with who and why</td>
+<td>D1–D48, dated, with who and why</td>
 </tr>
 <tr>
 <td>05 design</td>
@@ -144,7 +144,7 @@ every project.</p>
 <tr>
 <td>16 developer handover</td>
 <td><a href="developer-handover.html"><code>16-developer-handover.md</code></a></td>
-<td><strong>For developers taking the prototype live</strong>: running and rebuilding it, the <code>IDBCSYNC</code> sheet and its rules, three ways to get the data out, how the survey, salary and Expert Pool parts work and move to production (2026-09-25)</td>
+<td><strong>For developers taking the prototype live</strong>: running it, where every value lives (the JSON files are the source), refreshing salary from the sheet, how the survey, salary and Expert Pool parts work and move to production (rewritten 2026-09-28)</td>
 </tr>
 </tbody>
 </table></div>
@@ -347,6 +347,12 @@ the sheet was not changed. All UI work stays. To check with the owner: the old a
 Piaci trendek dropdown and the three survey questions from D40, which are missing again. Where the
 documents below describe <code>IDBCSYNC</code> as the source (<code>10</code>, <code>12</code>, <code>16</code>), that describes the parked
 setup (D37), not the current one.</p>
+<p><strong>2026-09-28 — the JSON files are the source; ready for the developers (D48).</strong> The owner
+chose the simple setup: every value the pages show is in <code>guide-data.json</code> or <code>areas.json</code>. The
+client's corrections that D47 had lost are back in the JSON (the Piaci trendek area names and
+order, the three employer questions), kept in <code>data/survey_edits.py</code> so a rebuild keeps them.
+Everything the pages read now equals the version the client reviewed on 2026-09-25.
+<a href="developer-handover.html"><code>16-developer-handover.md</code></a> rewritten for this setup.</p>
 <footer>IDBC Talent Market &amp; Salary Guide 2026 · documentation</footer>
 </div>
 </body>

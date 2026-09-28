@@ -38,18 +38,12 @@ footer{margin-top:56px;padding-top:18px;border-top:1px solid var(--line);font-si
 <div class="wrap">
 <nav class="docnav" aria-label="Project documentation"><span class="docnav-brand">IDBC Salary Guide · documentation</span><a href="index.html">Overview</a><a href="bemutato.html">Bemutató</a><a href="brief.html">Brief</a><a href="research.html">Research</a><a href="audit.html">Audit</a><a href="sources.html">Sources & gaps</a><a href="decisions.html">Decisions</a><a href="design.html">Design</a><a href="gate.html">Gate</a><a href="client-asks.html">Register of asks</a><a href="prerequisites.html">Prerequisites</a><a href="business-logic.html">Business logic</a><a href="ssot.html">SSOT</a><a href="architecture.html">Architecture</a><a href="technical-design.html">Technical design</a><a href="implementation-plan.html">Implementation plan</a><a href="token-map.html">Token map</a><a href="idbc-hu-alignment.html">idbc.hu alignment</a><a href="developer-handover.html" aria-current=page>Developer handover</a></nav>
 <header><p class="eyebrow">IDBC Salary Guide · project documentation</p><h1>IDBC Salary Guide — developer handover</h1></header>
-<p><em>For a developer who takes the prototype into the live environment, and for anyone who reads or
-edits the <code>IDBCSYNC</code> sheet. What the prototype is made of, how the data gets out of the sheet,
-how the three interactive parts — survey, salary, Expert Pool — work, and how they move to
-production. The target system is designed in <a href="architecture.html"><code>11-architecture.md</code></a> and <a href="technical-design.html"><code>12-technical-design.md</code></a>
-(PROPOSED); this is the practical path to it. Written 2026-09-25 from the code as it stands.</em></p>
-<blockquote>
-<p><strong>Since 2026-09-28 (D47) the guide is back on the previous data structure</strong>: salary and Expert Pool
-from the sheet's <code>WEB_BERTABLA_IMPORT</code> and <code>EXPERT_POOL_IMPORT</code> tabs (<code>data/build-salary-data.py</code>, run
-on demand), the survey from the client's workbook (<code>data/build-guide-data.py</code>), page texts and
-<code>areas.json</code> edited in the repo. What this document says about <code>IDBCSYNC</code> and <code>idbcsync.py</code> describes
-the parked setup (D37, in history at <code>7d43ed3</code>).</p>
-</blockquote>
+<p><em>For a developer who takes the prototype into the live environment. What the prototype is made
+of, where every value lives, how the three interactive parts — survey, salary, Expert Pool —
+work, and how they move to production. The target system is designed in <a href="architecture.html"><code>11-architecture.md</code></a>
+and <a href="technical-design.html"><code>12-technical-design.md</code></a> (PROPOSED); this is the practical path to it. Written 2026-09-25,
+rewritten 2026-09-28 for the data setup the owner chose (D47, D48): </em><em>the JSON files are the
+source.</em>**</p>
 <h2>1. What you get</h2>
 <div class="tbl"><table>
 <thead>
@@ -63,7 +57,7 @@ the parked setup (D37, in history at <code>7d43ed3</code>).</p>
 <tr>
 <td>Live prototype</td>
 <td><a href="https://moldovancsaba.github.io/calvus/idbc-salary-guide/">https://moldovancsaba.github.io/calvus/idbc-salary-guide/</a></td>
-<td>the acceptance reference: production transcribes it, it does not redesign it (ADR-6)</td>
+<td>the acceptance reference: production transcribes it, it does not redesign it (ADR-6); every client correction up to 2026-09-25 is in it</td>
 </tr>
 <tr>
 <td>Repository</td>
@@ -81,19 +75,14 @@ the parked setup (D37, in history at <code>7d43ed3</code>).</p>
 <td>loaded by every page; each page's own <code>&lt;style&gt;</code> holds only its own rules</td>
 </tr>
 <tr>
-<td>Data</td>
-<td><code>data/guide-data.json</code> (survey, salary, Expert Pool, SAP catalogue; 1,1 MB), <code>data/areas.json</code> (the 11 areas)</td>
-<td><strong>generated — never edit by hand</strong></td>
+<td><strong>Data</strong></td>
+<td><code>data/guide-data.json</code> (survey, salary, Expert Pool, SAP catalogue; 1,1 MB) and <code>data/areas.json</code> (the 11 areas)</td>
+<td><strong>the source of every value the pages show</strong> — the pages read nothing else</td>
 </tr>
 <tr>
-<td>Sync</td>
-<td><code>data/idbcsync.py</code> + <code>.github/workflows/idbc-sync-bertabla.yml</code></td>
-<td>sheet → data files and page texts, validated</td>
-</tr>
-<tr>
-<td>Source</td>
-<td>Google Sheet <code>IDBC_bertabla</code>, tab <strong><code>IDBCSYNC</code></strong></td>
-<td>every text and figure on the guide, one row each (D37)</td>
+<td>Data tools</td>
+<td><code>data/build-salary-data.py</code>, <code>data/build-guide-data.py</code>, <code>data/survey_edits.py</code>, <code>.github/workflows/idbc-sync-bertabla.yml</code></td>
+<td>refresh parts of the JSON from their original sources (§3)</td>
 </tr>
 <tr>
 <td>Documentation</td>
@@ -102,255 +91,180 @@ the parked setup (D37, in history at <code>7d43ed3</code>).</p>
 </tr>
 </tbody>
 </table></div>
-<h2>2. Run it and rebuild it locally</h2>
+<h2>2. Run it locally</h2>
 <p>The pages load their JSON with <code>fetch</code>, so they need a web server (a <code>file://</code> URL shows empty
 charts).</p>
 <pre><code>git clone https://github.com/moldovancsaba/calvus.git
 cd calvus
 python3 -m http.server 8000        # then open http://localhost:8000/idbc-salary-guide/
-</code></pre>
-<p>Rebuild from the live sheet (Python 3 and <code>openpyxl</code>):</p>
-<pre><code>pip install openpyxl
-
-# download the sheet (the same URL the scheduled job uses)
-curl -sL -o /tmp/IDBC_bertabla.xlsx \
-  &quot;https://docs.google.com/spreadsheets/d/1aQA6Kw5k1U9LQMiWYgcn__m2YCuGmEhx79QFSzE0hJg/export?format=xlsx&quot;
-
-# validate only, write nothing
-python3 idbc-salary-guide/data/idbcsync.py /tmp/IDBC_bertabla.xlsx --check
-
-# write the data files and the page texts
-python3 idbc-salary-guide/data/idbcsync.py /tmp/IDBC_bertabla.xlsx
 
 # the gate: read the exit code, 0 = clean
 python3 check.py
 </code></pre>
-<p><code>--check</code> prints the counts (rows, areas, salary rows, Expert Pool rows, survey datasets) and
-which files would change. Any error prints the row and stops with exit 1 before anything is
-written. The messages are in Hungarian because the sheet's editors read them.</p>
-<h2>3. The sheet: <code>IDBCSYNC</code></h2>
-<h3>3.1 Columns</h3>
+<h2>3. Where every value lives</h2>
+<h3>3.1 The map</h3>
 <div class="tbl"><table>
 <thead>
 <tr>
-<th>Column</th>
-<th>Read by the sync</th>
-<th>Content</th>
+<th>What the site shows</th>
+<th>Lives in</th>
+<th>Comes from</th>
+<th>To change it</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>A <code>id</code></td>
-<td>yes</td>
-<td>the technical key; the sync, the pages and the data all refer to it — never change it</td>
+<td>Salary rows (Bérek, SAP): position, level, TOP3 flag, min / IDBC / max, benefits, LinkedIn count</td>
+<td><code>guide-data.json</code> → <code>salary.webBertabla</code></td>
+<td>Google Sheet <code>IDBC_bertabla</code>, tab <code>WEB_BERTABLA_IMPORT</code></td>
+<td>edit the sheet tab, then run the sync (§3.2) — an edit made only in the JSON is overwritten by the next sync</td>
 </tr>
 <tr>
-<td>B <code>változó</code></td>
-<td>no</td>
-<td>what the value is, in words</td>
+<td>Expert Pool tiles: industry, position, count, LinkedIn count</td>
+<td><code>guide-data.json</code> → <code>salary.expertPool</code></td>
+<td>the same sheet, tab <code>EXPERT_POOL_IMPORT</code></td>
+<td>the same as above</td>
 </tr>
 <tr>
-<td>C <code>érték</code></td>
-<td><strong>yes</strong></td>
-<td>the value itself — the only cell an editor changes</td>
+<td>Survey figures, answer labels, question texts</td>
+<td><code>guide-data.json</code> → <code>datasets</code></td>
+<td>the client's research workbook <em>Salary Guide- kutatási eredmények-final.xlsx</em> (final; not in the repository)</td>
+<td>edit the JSON (the workbook is final and is not re-imported)</td>
 </tr>
 <tr>
-<td>D <code>megjelenés</code></td>
-<td>no</td>
-<td>where it shows on the site</td>
+<td>Survey topics and which question shows where</td>
+<td><code>guide-data.json</code> → <code>topics</code></td>
+<td>the workbook's topic sheet + <code>data/survey_edits.py</code> (the client's later additions, D40)</td>
+<td>add the change to <code>survey_edits.py</code> and run it, so a rebuild keeps it</td>
 </tr>
 <tr>
-<td>E <code>segítség</code></td>
-<td>no</td>
-<td>what may be typed there</td>
-</tr>
-</tbody>
-</table></div>
-<p>The header row is found by its names (<code>id</code>, <code>érték</code>), so columns can be moved. Rows whose <code>id</code>
-starts with <code>#</code> are section headings and are skipped. Row visibility, colours, bold, frozen rows
-and conditional formatting are never read (D42–D46): hide, colour and group freely.</p>
-<h3>3.2 What the sync accepts</h3>
-<ul>
-<li><strong>Everything is text.</strong> A value Google turns into a date (<code>1-5</code> → a date) or into a formula
-  (a leading <code>+</code> or <code>=</code>) is refused and names the row; type it with a leading apostrophe
-  (<code>'+36 30 479 8090</code>).</li>
-<li><strong>Numbers</strong>: salaries and counts are whole numbers; spaces, dots and <code>Ft</code> are tolerated.
-  Survey percentages 0–100. Weighted scores 0–<code>SCALEMAX</code>.</li>
-<li><strong>Flags</strong>: <code>TOP3</code> is <code>igen</code>/<code>nem</code> (also <code>i</code>, <code>x</code>, <code>yes</code>, <code>1</code>; empty = <code>nem</code>); area media is
-  <code>video</code> or <code>highlight</code>; <code>SORREND</code> is <code>igen</code>/<code>nem</code>.</li>
-<li><strong>Placeholders</strong>: a text used by a page script may contain only its own <code>{placeholders}</code>
-  (e.g. <code>{terulet}</code>, <code>{n}</code>); an unknown one stops the build.</li>
-<li><strong>Ids are unique</strong>; an id the pages use but the sheet lacks stops the build.</li>
-<li><strong>Any error → nothing written.</strong> In the scheduled job this means the site keeps its last good
-  version and the job log names the row.</li>
-</ul>
-<h3>3.3 Id families</h3>
-<div class="tbl"><table>
-<thead>
-<tr>
-<th>Id pattern</th>
-<th>Becomes</th>
-<th>Shown on</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>SHARED-…</code>, <code>HOME-…</code>, <code>TERULET-…</code>, <code>BEREK-…</code>, <code>SAP-…</code>, <code>POOL-…</code>, <code>ESETT-…</code>, <code>REG-…</code>, <code>KAPCS-…</code></td>
-<td>page texts, placed by markers in the HTML (§3.5)</td>
-<td>the page named in the prefix; <code>SHARED-</code> = header, footer, chart legend on every page</td>
+<td>Piaci trendek dataset names and order</td>
+<td><code>guide-data.json</code> → <code>datasets[…].label</code> and key order</td>
+<td><code>data/survey_edits.py</code>, from <code>areas.json</code> (the client's names, D31)</td>
+<td>change the area's name in <code>areas.json</code>, run <code>survey_edits.py</code></td>
 </tr>
 <tr>
-<td><code>AREA-&lt;slug&gt;-NAME / -SUMMARY / -MEDIA / -EDITION</code></td>
+<td>Area pages and home tiles: name, summary, video / highlight, question set</td>
 <td><code>areas.json</code></td>
-<td>area pages, home area tiles, the survey's dataset names; <code>-EDITION</code> picks the area's question set</td>
+<td>the client's area texts (D13, D20)</td>
+<td>edit <code>areas.json</code></td>
 </tr>
 <tr>
-<td><code>SAL-&lt;area&gt;-NAME</code>, <code>SAL-&lt;area&gt;-nnn-POZICIO / SZINT / TOP3 / MIN / IDBC / MAX / JUTTATAS / LINKEDIN</code></td>
+<td>SAP catalogue: 5 categories, 25 items</td>
+<td><code>guide-data.json</code> → <code>sapProducts</code></td>
+<td>the client's SAP spec, entered 2026-07</td>
+<td>edit the JSON</td>
+</tr>
+<tr>
+<td>Every page text: headings, paragraphs, buttons, header, footer, forms</td>
+<td>the page's HTML</td>
+<td>the client's copy, as last corrected</td>
+<td>edit the HTML</td>
+</tr>
+<tr>
+<td>Bérek area names and order</td>
+<td><code>data/build-salary-data.py</code> (<code>CANONICAL_AREAS</code>, <code>AREA_ALIASES</code>)</td>
+<td>the client's Bérek list (D31)</td>
+<td>edit the list, run the sync</td>
+</tr>
+<tr>
+<td>Survey settings: segment orders, the question kept in questionnaire order</td>
+<td>page constants in <code>index.html</code> and <code>terulet/index.html</code></td>
+<td>the questionnaire, the client (D32)</td>
+<td>edit both pages</td>
+</tr>
+</tbody>
+</table></div>
+<p>The pages read the JSON only. The sheet, the workbook and the scripts are upstream tools: nothing
+reaches a page unless it is in <code>guide-data.json</code> or <code>areas.json</code> (or the page's own HTML).</p>
+<h3>3.2 Refreshing salary and Expert Pool from the sheet</h3>
+<pre><code>pip install openpyxl
+
+# download the sheet (the export URL the workflow uses)
+curl -sL -o /tmp/IDBC_bertabla.xlsx \
+  &quot;https://docs.google.com/spreadsheets/d/1aQA6Kw5k1U9LQMiWYgcn__m2YCuGmEhx79QFSzE0hJg/export?format=xlsx&quot;
+
+# rewrite salary.webBertabla and salary.expertPool in guide-data.json; the survey half is kept
+python3 idbc-salary-guide/data/build-salary-data.py /tmp/IDBC_bertabla.xlsx
+</code></pre>
+<p>The same runs in GitHub: Actions → "IDBC — sync IDBC_bertabla" → Run workflow. It downloads the
+sheet, runs the converter and the gate, and commits <code>guide-data.json</code> only when something
+changed. It does not run on a schedule.</p>
+<p>What the converter reads: in <code>WEB_BERTABLA_IMPORT</code>, the table under the header row that starts
+with <code>rekord_azonosito</code> — <code>terulet</code>, <code>tapasztalati_szint</code>, <code>pozicio</code>, <code>top3</code>,
+<code>vallalatok_altal_kinalt_huf</code>, <code>idbc_javasolt_ber_huf</code>, <code>jeloltek_altal_elvart_huf</code>,
+<code>juttatasi_megjegyzes</code>, <code>linkedin_talent_insight</code>; in <code>EXPERT_POOL_IMPORT</code>, <code>iparag</code>, <code>pozicio</code>,
+<code>darab</code>, <code>linkedin_talent_insight</code>. A <code>terulet</code> value it cannot map to a Bérek area stops it. An
+Expert Pool row without <code>darab</code> is skipped and printed (Qualified Person, today).</p>
+<h3>3.3 Survey edits</h3>
+<p><code>data/survey_edits.py</code> holds the client's decisions made after the workbook: the three employer
+questions added on 2026-09-25 (Home office: the recruiting-impact question; AI, general set: the
+budget and the recruiting questions) and the dataset names and order taken from <code>areas.json</code>. It
+is safe to run any number of times; <code>build-guide-data.py</code> runs it too, so a rebuild from the
+workbook keeps the edits. It stops if a question has no figures in a dataset.</p>
+<pre><code>python3 idbc-salary-guide/data/survey_edits.py
+</code></pre>
+<h3>3.4 The JSON, field by field</h3>
+<p><code>guide-data.json</code>:</p>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>Key</th>
+<th>Content</th>
+<th>Read by</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>totalKey</code>, <code>totalLabel</code></td>
+<td><code>__total__</code>, <em>Összesített adatok</em> — the whole-sample dataset</td>
+<td>survey</td>
+</tr>
+<tr>
+<td><code>datasets</code></td>
+<td>the whole sample + one per area, <strong>keyed by the area's original name</strong> (e.g. <code>"BSC"</code>, <code>"Sales &amp; Marketing"</code>); each <code>{label, questionSet, employee: {base, cross}, employer: {base, cross}}</code></td>
+<td>survey</td>
+</tr>
+<tr>
+<td><code>topics</code></td>
+<td><code>[{topic, questionSets: {"Általános" / "IT + Contracting": {"Munkavállalók": [question texts], "Munkáltatók": [...]}}}]</code></td>
+<td>survey</td>
+</tr>
+<tr>
 <td><code>salary.webBertabla</code></td>
-<td>Bérek, SAP (§5.2)</td>
+<td><code>[{id, kod, terulet, szint, pozicio, top3, min, idbc, max, juttatas, linkedin?}]</code> — <code>kod = "SAP"</code> for the SAP page</td>
+<td>Bérek, SAP</td>
 </tr>
 <tr>
-<td><code>EXPERT-nn-IPARAG / POZICIO / DARAB / LINKEDIN</code></td>
 <td><code>salary.expertPool</code></td>
-<td>Expert Pool (§5.3)</td>
+<td><code>[{iparag, pozicio, darab, linkedin?}]</code></td>
+<td>Expert Pool</td>
 </tr>
 <tr>
-<td><code>SAPPROD-CATn-NAME / -ITEMm</code></td>
 <td><code>sapProducts</code></td>
-<td>SAP catalogue tiles</td>
+<td><code>[{category, items[]}]</code></td>
+<td>SAP</td>
 </tr>
 <tr>
-<td><code>SURVEY-…</code></td>
-<td><code>topics</code>, <code>segments</code>, <code>datasets</code>, <code>keepSourceOrder</code>, <code>totalLabel</code></td>
-<td>Piaci trendek and area pages (§5.1)</td>
+<td><code>generatedFrom</code>, <code>siteMap</code>, <code>filterDimensions</code>, <code>salary.readme</code>, <code>salary.talentInsightTop3</code></td>
+<td>provenance and reference blocks</td>
+<td>no page</td>
 </tr>
 </tbody>
 </table></div>
-<p><strong>Row order matters</strong> for lists: the order of topics, of questions inside a topic, of survey
-segments, of SAP items, of salary areas and positions and of Expert Pool tiles is the sheet's
-order. Do not sort the tab.</p>
-<h3>3.4 Editing: what anyone can do, what needs a developer</h3>
-<div class="tbl"><table>
-<thead>
-<tr>
-<th>Change</th>
-<th>Who</th>
-<th>How</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Change a text or a number</td>
-<td>any editor</td>
-<td>type into column C; it reaches the site on the next sync</td>
-</tr>
-<tr>
-<td>Remove a salary position, an Expert Pool tile or an SAP item</td>
-<td>any editor</td>
-<td>clear its name (<code>POZICIO</code> / <code>NAME</code> / <code>ITEMm</code>); the row is dropped from the page. An Expert Pool tile without <code>DARAB</code> is left out with a warning</td>
-</tr>
-<tr>
-<td>Add a salary position</td>
-<td>developer (or an editor with column A shown)</td>
-<td>8 new rows <code>SAL-&lt;area&gt;-nnn-…</code> with the next free <code>nnn</code> of that area, inside the area's block</td>
-</tr>
-<tr>
-<td>Add an Expert Pool tile</td>
-<td>developer</td>
-<td>4 rows <code>EXPERT-nn-…</code> with the next free <code>nn</code></td>
-</tr>
-<tr>
-<td>Add a survey question to a topic</td>
-<td>developer</td>
-<td>a row <code>SURVEY-TOPICt-SETn-&lt;SIDE&gt;-kk</code> whose value is the question's <code>Qnn</code>, placed where it should appear (D40 did exactly this)</td>
-</tr>
-<tr>
-<td>Add a new page text</td>
-<td>developer</td>
-<td>a row with a new id <strong>and</strong> a marker in the page (§3.5)</td>
-</tr>
-<tr>
-<td>Delete a row, change an id, sort the tab</td>
-<td>nobody</td>
-<td>the sync stops (missing id) or the order on the site changes</td>
-</tr>
-</tbody>
-</table></div>
-<h3>3.5 How a page text finds its row</h3>
-<p><code>idbcsync.py</code> rewrites the prototype's HTML in place, by marker:</p>
-<div class="tbl"><table>
-<thead>
-<tr>
-<th>Marker</th>
-<th>Example</th>
-<th>Effect</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>data-sync="ID"</code></td>
-<td><code>&lt;h1 data-sync="BEREK-H1-…"&gt;Bérsávok&lt;/h1&gt;</code></td>
-<td>the element's text (a line break in the cell becomes <code>&lt;br&gt;</code>); the element must hold text only</td>
-</tr>
-<tr>
-<td><code>data-sync-attr="name:ID;name:ID"</code></td>
-<td><code>alt</code>, <code>title</code>, <code>placeholder</code>, <code>content</code></td>
-<td>the attribute's value</td>
-</tr>
-<tr>
-<td><code>data-sync-href="tel:ID"</code> / <code>"mailto:ID"</code></td>
-<td>footer phone and e-mail</td>
-<td>the link target</td>
-</tr>
-<tr>
-<td><code>/*sync:ID*/"…"</code></td>
-<td>inside a page script or <code>top3-chart.js</code></td>
-<td>the string literal; a changed chart text also bumps <code>top3-chart.js?v=</code> on every page</td>
-</tr>
-</tbody>
-</table></div>
-<h2>4. Getting the data out</h2>
-<p>Pick one way and keep one source (R1: nothing is edited between the sheet and the pages).</p>
-<div class="tbl"><table>
-<thead>
-<tr>
-<th>Way</th>
-<th>Use when</th>
-<th>How</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><strong>A. Take the generated JSON</strong></td>
-<td>the first production build</td>
-<td>copy <code>data/guide-data.json</code> and <code>data/areas.json</code> from <code>main</code>; split per page (ADR-4, <code>12</code> §4); the renderers read exactly this shape (entities in <a href="ssot.html"><code>10-ssot.md</code></a> §3)</td>
-</tr>
-<tr>
-<td><strong>B. Run <code>idbcsync.py</code> in the production pipeline</strong></td>
-<td>the sheet stays the source after launch (ADR-2)</td>
-<td>a scheduled job: export the sheet as <code>.xlsx</code> → <code>idbcsync.py --check</code> → build → split → publish the JSON into the site's data directory; on any error keep the previous files and alert</td>
-</tr>
-<tr>
-<td><strong>C. Read the sheet in another language</strong></td>
-<td>a stack without Python</td>
-<td>port <code>build()</code> from <code>idbcsync.py</code> (the id grammar and the checks in §3.2, about 190 lines); read the <code>.xlsx</code> export or the tab as CSV (<code>…/export?format=csv&amp;gid=&lt;IDBCSYNC tab id&gt;</code>)</td>
-</tr>
-</tbody>
-</table></div>
-<p>Not recommended: calling the Google Sheets API when a page loads — a credential, a quota and a
-failure mode on every page view, for data that changes a few times a year (<code>11</code> §3).</p>
-<p><strong>Page texts in production — decide once.</strong> In the prototype the sheet also owns every page
-text. In production either (a) the sheet keeps them: the job writes them into the templates or a
-<code>texts.json</code> the templates read; or (b) the CMS editor owns them: the page-text rows
-(<code>SHARED-</code> … <code>KAPCS-</code>) are retired from the sheet. Keeping both would make two sources for one
-text. The data rows (<code>AREA-</code>, <code>SAL-</code>, <code>EXPERT-</code>, <code>SAPPROD-</code>, <code>SURVEY-</code>) stay in the sheet in
-either case.</p>
-<p><strong>Access.</strong> The prototype's sheet is shared "anyone with the link can edit" for the review; the
-job only needs "anyone with the link can view". For production, restrict editing to named
-people; if view-by-link is also closed, the job needs a service account and the Drive/Sheets
-API with a stored secret.</p>
-<h2>5. The interactive parts</h2>
-<h3>5.1 Survey — Piaci trendek (home) and the area pages</h3>
+<p><code>base[question]</code> is <code>{kind: "simple", items: [{label, percent, count}]}</code> or
+<code>{kind: "weighted", scaleMax, items: [{label, value}]}</code>; <code>cross[question]</code> is
+<code>{kind: "matrix-percent", groups: [answers], items: [{label: segment, values: [{group, percent, count}]}]}</code>.</p>
+<p><code>areas.json</code>: <code>{areas: [{slug, name, dataKey, edition, summary, media}]}</code> — <code>slug</code> is the area
+page's <code>?terulet=</code> value, <code>dataKey</code> the area's dataset key in <code>guide-data.json</code>, <code>edition</code> its
+question set, <code>media</code> <code>video</code> or <code>highlight</code>.</p>
+<h3>3.5 Leftovers, harmless</h3>
+<p>The pages carry <code>data-sync</code> attributes and <code>/*sync:…*/</code> comments from a sheet-driven setup that
+ran on 2026-09-25 (D37) and is parked (D47); nothing reads them now. The sheet's <code>IDBCSYNC</code> tab
+(hidden) is a complete copy of every value as of 2026-09-25 and is not used. Both can be removed
+in production.</p>
+<h2>4. The interactive parts</h2>
+<h3>4.1 Survey — Piaci trendek (home) and the area pages</h3>
 <div class="tbl"><table>
 <thead>
 <tr>
@@ -365,11 +279,11 @@ API with a stored secret.</p>
 </tr>
 <tr>
 <td>Data</td>
-<td><code>guide-data.json</code>: <code>datasets</code>, <code>topics</code>, <code>segments</code>, <code>totalKey</code> / <code>totalLabel</code>, <code>keepSourceOrder</code>; the area page also loads <code>areas.json</code></td>
+<td><code>guide-data.json</code>: <code>datasets</code>, <code>topics</code>, <code>totalKey</code> / <code>totalLabel</code>; the area page also loads <code>areas.json</code></td>
 </tr>
 <tr>
 <td>Controls</td>
-<td>home: dataset <code>#datasetSelect</code> (Összesített adatok + 11 areas), topic <code>#topicSelect</code>, employee segment <code>#empSegmentSelect</code> (experience), employer segment <code>#erSegmentSelect</code> (company size); panels <code>#b2cChart</code> (Munkavállalók), <code>#b2bChart</code> (Munkáltatók). Area page: the dataset is fixed by <code>?terulet=&lt;slug&gt;</code> (unknown slug → the first area; an area without data → the whole sample); topic and the two segment selects; panels <code>#employeeChart</code>, <code>#employerChart</code></td>
+<td>home: dataset <code>#datasetSelect</code> (Összesített adatok + 11 areas, the client's names in tile order), topic <code>#topicSelect</code>, employee segment <code>#empSegmentSelect</code> (experience), employer segment <code>#erSegmentSelect</code> (company size); panels <code>#b2cChart</code> (Munkavállalók), <code>#b2bChart</code> (Munkáltatók). Area page: <code>?terulet=&lt;slug&gt;</code> picks the area; its dataset is <code>datasets[area.dataKey]</code> (an unknown slug → the first area; an area without data → the whole sample); topic and the two segment selects; panels <code>#employeeChart</code>, <code>#employerChart</code></td>
 </tr>
 </tbody>
 </table></div>
@@ -377,37 +291,26 @@ API with a stored secret.</p>
 <code>topics[topic].questionSets[dataset.questionSet][side]</code>. For each question: with <em>Összesített
 adatok</em> selected the chart comes from <code>datasets[d][side].base[question]</code>; with a real segment
 from that segment's row in <code>cross[question]</code>. Then it is drawn by kind.</p>
-<p><strong>Data shapes</strong> (<a href="ssot.html"><code>10-ssot.md</code></a> §3): <code>base</code> is <code>{kind: "simple", items: [{label, percent, count}]}</code>
-or <code>{kind: "weighted", scaleMax, items: [{label, value}]}</code>; <code>cross</code> is
-<code>{kind: "matrix-percent", groups: [answers], items: [{label: segment, values: [{group, percent, count}]}]}</code>.
-<code>count</code> = percent × the respondents of that cell, shown in the tooltip as "(n fő)".</p>
 <p><strong>Rules the code applies</strong> (numbers from <a href="ssot.html"><code>10-ssot.md</code></a> §6):</p>
 <ul>
 <li><em>Összesített adatok</em> is first and the default; a real segment is offered only if at least one
   question of the topic has a non-zero row for it; a segment dropdown with no real choice is
-  hidden (R2).</li>
+  hidden (R2). Segment order: the page constants (experience bands, company sizes).</li>
 <li>A question with no data under the chosen segment is left out — the whole-sample figures are
-  never shown in its place; if the whole panel empties, one sentence (<code>SHARED-JS-NO-DATA</code>)
-  replaces it (R3). On the home page a topic with no question for the dataset's question set
-  shows <code>HOME-JS-NO-QUESTION</code>; the area page shows the no-data sentence.</li>
+  never shown in its place; if the whole panel empties, one sentence replaces it (R3). On the
+  home page a topic with no question for the dataset's question set says so.</li>
 <li>Answers nobody chose (0 %) are dropped.</li>
 <li>Shape: up to 5 single-choice answers → one stacked bar with a legend; multi-choice (the
   percentages add up to more than 110 %) or more than 5 answers → one bar per answer.</li>
-<li>Order: questions flagged <code>SORREND = igen</code> keep the questionnaire's order; answer scales that
-  are numeric ranges or home-office days keep scale order; everything else is sorted by
-  percentage.</li>
+<li>Order: the recruiting-strategy question keeps the questionnaire's order (page constant,
+  D32); answer scales that are numeric ranges or home-office days keep scale order; everything
+  else is sorted by percentage.</li>
 <li>The two 1–4 scale questions show the weighted average only, with "(súlyozott átlag, 1–4
-  skála)" (R4).</li>
+  skála)" (R4). <code>count</code> = percent × respondents, shown in the tooltip as "(n fő)".</li>
 </ul>
-<p><strong>Sheet rows.</strong> <code>SURVEY-TOTAL-LABEL</code>, <code>SURVEY-TOTAL-EDITION</code>, <code>SURVEY-SETn-NAME</code> (question sets),
-<code>SURVEY-TOPICt-NAME</code>, membership <code>SURVEY-TOPICt-SETn-&lt;SIDE&gt;-kk</code> = <code>Qnn</code> (order = display order),
-<code>SURVEY-&lt;SIDE&gt;-SEGk</code> (segment labels), <code>SURVEY-&lt;SIDE&gt;-Qnn-TEXT / -OPTmm / -SCALEMAX / -SORREND</code>
-(question text, answer labels — each once for all areas), and the figures
-<code>SURVEY-&lt;DATASET&gt;-&lt;SIDE&gt;-Qnn-[SEGk-](N|OPTmm)</code> (respondents and percentages per dataset,
-hidden). A question text must be unique on its side.</p>
 <p><strong>In production.</strong> Keep the renderer client-side (it is filter-driven); load only the page's
-dataset (<code>trends-total.json</code>, <code>trends-&lt;slug&gt;.json</code>, <code>12</code> §4) instead of the 1,1 MB file.</p>
-<h3>5.2 Salary — Bérek and SAP</h3>
+dataset instead of the 1,1 MB file (<code>12</code> §4).</p>
+<h3>4.2 Salary — Bérek and SAP</h3>
 <div class="tbl"><table>
 <thead>
 <tr>
@@ -422,11 +325,11 @@ dataset (<code>trends-total.json</code>, <code>trends-&lt;slug&gt;.json</code>, 
 </tr>
 <tr>
 <td>Data</td>
-<td><code>salary.webBertabla</code>: <code>{id, kod, terulet, szint, pozicio, top3, min, idbc, max, juttatas, linkedin?}</code>. SAP shows the rows with <code>kod = "SAP"</code>, Bérek all the others — the key is fixed, so renaming the SAP area in the sheet cannot move rows between the pages (D37)</td>
+<td><code>salary.webBertabla</code>. SAP shows the rows with <code>kod = "SAP"</code>, Bérek all the others</td>
 </tr>
 <tr>
 <td>Controls</td>
-<td>Bérek: area <code>#teruletSelect</code> (areas in sheet order); chart <code>#top3Panel</code>; table <code>.table-wrap table</code>. SAP: no filter; catalogue <code>#productGrid</code> from <code>sapProducts</code></td>
+<td>Bérek: area <code>#teruletSelect</code> (the Bérek areas in the converter's order); chart <code>#top3Panel</code>; table <code>.table-wrap table</code>. SAP: no filter; catalogue <code>#productGrid</code> from <code>sapProducts</code></td>
 </tr>
 </tbody>
 </table></div>
@@ -435,24 +338,20 @@ dataset (<code>trends-total.json</code>, <code>trends-&lt;slug&gt;.json</code>, 
 <code>IDBCChart.attachTooltip(container)</code> then binds the tooltips (call it after every re-render).
 Above 700 px of viewport one wide chart; at 700 px and below one small chart per position with
 its own scale in millions (<code>1,25M</code>) — the pages re-render when the viewport crosses 700 px.
-Each position shows three points: offered (<code>min</code>, light green), IDBC recommended (<code>idbc</code>),
-expected (<code>max</code>, dark green); amounts close together stack upward over their own dots (D41). A
-LinkedIn count adds the pill "n elérhető jelölt*" and the footnote. An area with no TOP3 row
-shows a sentence instead of the chart.</p>
+Each position shows three points: offered (<code>min</code>, light green <code>#a4dd8c</code>), IDBC recommended
+(<code>idbc</code>, <code>#4ca283</code>), expected (<code>max</code>, dark green <code>#35715c</code>); amounts close together stack upward
+over their own dots (D41). A LinkedIn count adds the pill "n elérhető jelölt*" and the footnote.
+An area with no TOP3 row shows a sentence instead of the chart.</p>
 <p><strong>Table.</strong> Every position of the area, TOP3 ones included (R10). One <code>&lt;tbody&gt;</code> per position;
-its levels sorted Trainee → Junior → Medior → Senior → Team Leader → Manager; Junior, Medior
-and Senior carry their experience text (<code>BEREK-JS-SZINT-…</code>). Columns: level, minimum, maximum,
-other benefits. Below 600 px of <strong>container</strong> width (a CSS container query) the table turns
-into cards: each position is a card with its band (min–max) and a toggle, collapsed at first.</p>
-<p><strong>Sheet rows.</strong> <code>SAL-&lt;area&gt;-NAME</code> (the area's name in the dropdown and titles), then 8 rows per
-position <code>SAL-&lt;area&gt;-nnn-POZICIO / SZINT / TOP3 / MIN / IDBC / MAX / JUTTATAS / LINKEDIN</code>.
-<code>MIN</code>/<code>IDBC</code>/<code>MAX</code> whole numbers; <code>LINKEDIN</code> optional; clearing <code>POZICIO</code> removes the position.
-In the sheet the positions alternate two shades and each area's name row is bold (D44).</p>
+its levels sorted Trainee → Junior → Medior → Senior → Team Leader → Manager; Junior, Medior and
+Senior carry their experience text. Columns: level, minimum, maximum, other benefits. Below
+600 px of <strong>container</strong> width (a CSS container query) the table turns into cards: each position
+is a card with its band (min–max) and a toggle, collapsed at first.</p>
 <p><strong>In production.</strong> Render the table on the server with the same markup (<code>role</code> attributes,
 <code>data-label</code> cells, one <code>&lt;tbody&gt;</code> per position) so card mode works without JavaScript; keep the
 chart client-side with <code>top3-chart.js</code> unchanged (<code>12</code> §7); generate the Excel from the same
 JSON (ADR-5).</p>
-<h3>5.3 Expert Pool</h3>
+<h3>4.3 Expert Pool</h3>
 <div class="tbl"><table>
 <thead>
 <tr>
@@ -467,7 +366,7 @@ JSON (ADR-5).</p>
 </tr>
 <tr>
 <td>Data</td>
-<td><code>salary.expertPool</code>: <code>{iparag, pozicio, darab, linkedin?}</code> — a row without <code>darab</code> is not in the file (the sync warns)</td>
+<td><code>salary.expertPool</code> — a row without <code>darab</code> is not in the file</td>
 </tr>
 <tr>
 <td>Controls</td>
@@ -479,30 +378,28 @@ JSON (ADR-5).</p>
 when a LinkedIn count exists, and a bar labelled IDBC Expert Community whose width is <code>darab</code>
 divided by the largest <code>darab</code> of the </em><em>whole</em>* pool, so switching industries compares like with
 like. The IDBC headcount itself is not printed on the tile (D32); it is in the tooltip with the
-industry total and the share. The footnote shows only when a starred number is on screen.</p>
-<p><strong>Sheet rows.</strong> <code>EXPERT-nn-IPARAG / POZICIO / DARAB / LINKEDIN</code>, in the section "EXPERT POOL —
-CSEMPÉK" (bold, D46). Qualified Person (<code>EXPERT-27</code>) has no <code>DARAB</code> or <code>LINKEDIN</code> yet, so it is
-not shown (C-10).</p>
+industry total and the share. The footnote shows only when a starred number is on screen.
+Qualified Person has no count yet, so it is not shown (C-10).</p>
 <p><strong>In production.</strong> A small <code>pool.json</code>; the same markup; keep <code>attachTooltip</code> (or lift it out of
 <code>top3-chart.js</code> into a shared helper).</p>
-<h2>6. From prototype to production, step by step</h2>
+<h2>5. From prototype to production, step by step</h2>
 <ol>
-<li><strong>Decide</strong> the ADRs (<code>11</code> §11) and who owns the page texts (§4). Milestone M0 in <code>13</code>.</li>
+<li><strong>Decide</strong> the ADRs (<code>11</code> §11). Milestone M0 in <code>13</code>.</li>
 <li><strong>Shell</strong>: the tokens of <code>assets/site.css</code> into the theme (<a href="token-map.html"><code>14-token-map.md</code></a>); header and
    footer as template parts.</li>
-<li><strong>Templates</strong>: transcribe each page's markup; keep the ids and classes the scripts use
-   (§5).</li>
+<li><strong>Templates</strong>: transcribe each page's markup; keep the ids and classes the scripts use (§4).</li>
 <li><strong>Scripts</strong>: move the inline scripts into files; merge the two survey copies; point each
    <code>fetch('…/data/guide-data.json')</code> at the page's own slice; keep <code>escapeHtml</code> and the <code>fill()</code>
    placeholder helper.</li>
-<li><strong>Data job</strong>: scheduled export → <code>idbcsync.py</code> → split → publish, keeping the last good
-   version on error; restrict the sheet's editors.</li>
-<li><strong>Verify</strong> against the prototype: same figures for sampled values in every part (survey per
-   dataset, topic and segment; salary per area; every tile), the gate criteria in <a href="gate.html"><code>07-gate.md</code></a>
-   at 375 px and desktop, page weight within budget.</li>
+<li><strong>Data</strong>: take <code>guide-data.json</code> and <code>areas.json</code> as they are and split them per page
+   (ADR-4); for salary updates keep the sheet → <code>build-salary-data.py</code> step (§3.2) as the one
+   way in.</li>
+<li><strong>Verify</strong> against the prototype: the same figures for sampled values in every part (survey
+   per dataset, topic and segment; salary per area; every tile), the gate criteria in
+   <a href="gate.html"><code>07-gate.md</code></a> at 375 px and desktop, page weight within budget.</li>
 <li><strong>Keep</strong> the prototype URL live; it stays the reference until launch.</li>
 </ol>
-<h2>7. Open items a developer should know (2026-09-25)</h2>
+<h2>6. Open items (2026-09-28)</h2>
 <div class="tbl"><table>
 <thead>
 <tr>
@@ -513,13 +410,8 @@ not shown (C-10).</p>
 </thead>
 <tbody>
 <tr>
-<td>Scheduled sync</td>
-<td>GitHub has not started a scheduled run of the workflow; every sync so far was started by hand (Actions → "IDBC — sync from IDBCSYNC" → Run workflow). Production should use a scheduler it controls</td>
-<td>README process log</td>
-</tr>
-<tr>
-<td>Data gaps</td>
-<td>IT Contracting salaries (C-8), Qualified Person counts (C-10), two Építőipar Talent Insight counts (C-3)</td>
+<td>Content still to come from the client</td>
+<td>home page structure demo (C-1), area videos and key thoughts (C-4), chamber logos and podcast (C-5), own photographs (C-6), IT Contracting salaries (C-8), Qualified Person count (C-10), two Építőipar Talent Insight counts (C-3)</td>
 <td><a href="prerequisites.html"><code>19-implementation-prerequisites.md</code></a></td>
 </tr>
 <tr>
@@ -536,6 +428,11 @@ not shown (C-10).</p>
 <td>Data size</td>
 <td>one 1,1 MB JSON on every page; split per page (ADR-4)</td>
 <td><code>12</code> §4</td>
+</tr>
+<tr>
+<td>Raw sources</td>
+<td>the research workbook and the July Drive files are not in the repository; keep the originals in the client's Drive</td>
+<td><a href="sources.html"><code>SOURCES-AND-GAPS.md</code></a></td>
 </tr>
 </tbody>
 </table></div>

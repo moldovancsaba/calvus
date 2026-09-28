@@ -140,7 +140,7 @@ for r in wb["EXPERT_POOL_IMPORT"].iter_rows(min_row=2, values_only=True):
     if r[2] is None:
         pool_skipped.append((r[0], r[1]))
         continue
-    pool.append({"iparag": r[0], "pozicio": r[1], "darab": int(r[2])})
+    pool.append({"iparag": str(r[0]).strip(), "pozicio": str(r[1]).strip(), "darab": int(r[2])})
     if IN_SHEET and len(r) > 3 and num(r[3]) is not None: pool[-1]["linkedin"] = num(r[3])
 readme = "\n".join(str(r[0]) for r in wb["UTMUTATO"].iter_rows(values_only=True) if r[0])
 

@@ -381,6 +381,13 @@ decision is added here first. "Owner" is the studio side; "client" is IDBC.</em>
 <td>owner</td>
 <td><code>data/</code>, <code>.github/workflows/idbc-sync-bertabla.yml</code>, <code>index.html</code>, <code>terulet/index.html</code>, <code>CLAUDE.md</code></td>
 </tr>
+<tr>
+<td>D48</td>
+<td>2026-09-28</td>
+<td><strong>The JSON files are the source; the client's corrections restored in them; ready for the developers.</strong> Owner: "make it simple and solid … the json file is fully ok … best if everything comes from them". Every value the pages show lives in <code>data/guide-data.json</code> or <code>data/areas.json</code>; the sheet tabs, the research workbook and the scripts only feed them. No sheet tab is wired in (the owner's new <code>IDBC_MANUAL</code> tab stays empty: a second editable copy would drift from the JSON). Restored in the JSON what D47 had lost, as the client reviewed it on 2026-09-25: the Piaci trendek dataset names and order from <code>areas.json</code> (the client's names, D31) and the three employer questions (D40), both kept in <code>data/survey_edits.py</code>, which <code>build-guide-data.py</code> also runs; Expert Pool names trimmed in <code>build-salary-data.py</code> (a trailing space showed as "AR Specialist : 2 fő" in the tooltip). Proven: everything the pages read — dataset names and order, all survey figures and breakdowns, topics, segment and order settings, salary rows, the SAP split, Expert Pool, the SAP catalogue, the area texts — equals the version the client reviewed (<code>9dbd026</code>), and the page code equals it apart from the data-reading lines; rendered: 584 home filter states and 1,741 charts with data, Home office 3 and AI 5 employer questions in every area, all 11 area pages on their own figures, Expert Pool tooltips clean, no console errors. <a href="developer-handover.html"><code>16-developer-handover.md</code></a> rewritten for this setup</td>
+<td>owner</td>
+<td><code>data/</code>, <code>docs/16-developer-handover.md</code></td>
+</tr>
 </tbody>
 </table></div>
 <h2>Standing rules that came out of these</h2>

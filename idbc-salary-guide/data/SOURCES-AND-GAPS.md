@@ -1288,3 +1288,27 @@ instead of three and the general AI employer topic three instead of five (D40's 
 lived only in `IDBCSYNC`). Rendered: 584 home filter states, 1,555 charts, all with data; each
 of the 11 area pages shows its own area's figures; Bérek 12 areas with TOP3 chart and table;
 SAP chart, table and catalogue; Expert Pool 15 + 14 tiles; no console errors.
+
+## The JSON files are the source; the client's corrections restored (2026-09-28, D48)
+
+The owner asked for a simple, solid setup with the JSON files as the source. Where every value
+lives is now one table in `docs/16-developer-handover.md` §3.1. The owner's new `IDBC_MANUAL`
+tab was left empty: a list of the non-sheet values was built (446 rows) but not imported, since
+an editable copy in the sheet that the site does not read would drift from the JSON; the
+temporary file for it was removed.
+
+Restored in the JSON what the D47 switch had lost, exactly as the client reviewed it on
+2026-09-25 (`9dbd026`):
+
+- the Piaci trendek dataset dropdown: the client's names from `areas.json` in tile order (D31);
+- the three employer questions (D40): the Home office recruiting-impact question in both
+  question sets, the AI budget and recruiting questions in the general set, in that order;
+- two Expert Pool names without their trailing space (the tooltip read "AR Specialist : 2 fő").
+
+The first two live in `data/survey_edits.py` (idempotent; `build-guide-data.py` runs it, so a
+rebuild from the workbook keeps them); the third in `build-salary-data.py`, which now trims pool
+names. Checked field by field: dataset names and order, every survey figure and breakdown, the
+topics, the segment and order settings, the salary rows and the SAP split, the Expert Pool, the
+SAP catalogue and the area texts equal `9dbd026`'s. Rendered: 584 home filter states, 1,741
+charts, all with data; Home office 3 and AI 5 employer questions in every area; each area page on
+its own figures; no console errors.

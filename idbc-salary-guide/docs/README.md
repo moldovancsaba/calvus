@@ -12,7 +12,7 @@ every project.
 | 01 research | `01-research.md` | What was read (the client's specs, mockups, data, copy), the one external measurement, what was not researched and why |
 | 02 audit | `02-audit.md` | idbc.hu measured; the spec vs. the data; the client's data as it stands; defects found in the material |
 | 03 sources and assets | `../data/SOURCES-AND-GAPS.md` | Every source file and what it contributed, every gap, every change round with measurements — the running record since July |
-| 04 decisions | `04-decisions.md` | D1–D47, dated, with who and why |
+| 04 decisions | `04-decisions.md` | D1–D48, dated, with who and why |
 | 05 design | `05-design.md` | Where the look comes from (the client's mockups), tokens, layout |
 | 06 build log | `../data/SOURCES-AND-GAPS.md` | the dated change notes are the build log |
 | 07 gate | `07-gate.md` | The one-command gate, the measured pass, deliberate deviations |
@@ -25,7 +25,7 @@ every project.
 | 13 implementation plan | `13-implementation-plan.md` | M0–M6, SG-000..081 with DoD, blocked register, risks, Release 1 |
 | 14 token map | `14-token-map.md` | Page tokens → one stylesheet; components → templates |
 | 15 idbc.hu alignment | `15-idbc-hu-alignment.md` | idbc.hu measured next to the prototype; what changes, the decisions first, the phased plan (2026-09-25; delivered the same day, D39) |
-| 16 developer handover | `16-developer-handover.md` | **For developers taking the prototype live**: running and rebuilding it, the `IDBCSYNC` sheet and its rules, three ways to get the data out, how the survey, salary and Expert Pool parts work and move to production (2026-09-25) |
+| 16 developer handover | `16-developer-handover.md` | **For developers taking the prototype live**: running it, where every value lives (the JSON files are the source), refreshing salary from the sheet, how the survey, salary and Expert Pool parts work and move to production (rewritten 2026-09-28) |
 
 
 ## Process log
@@ -257,4 +257,11 @@ the sheet was not changed. All UI work stays. To check with the owner: the old a
 Piaci trendek dropdown and the three survey questions from D40, which are missing again. Where the
 documents below describe `IDBCSYNC` as the source (`10`, `12`, `16`), that describes the parked
 setup (D37), not the current one.
+
+**2026-09-28 — the JSON files are the source; ready for the developers (D48).** The owner
+chose the simple setup: every value the pages show is in `guide-data.json` or `areas.json`. The
+client's corrections that D47 had lost are back in the JSON (the Piaci trendek area names and
+order, the three employer questions), kept in `data/survey_edits.py` so a rebuild keeps them.
+Everything the pages read now equals the version the client reviewed on 2026-09-25.
+`16-developer-handover.md` rewritten for this setup.
 

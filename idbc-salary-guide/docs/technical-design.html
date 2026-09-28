@@ -40,11 +40,11 @@ footer{margin-top:56px;padding-top:18px;border-top:1px solid var(--line);font-si
 <header><p class="eyebrow">IDBC Salary Guide · project documentation</p><h1>IDBC Salary Guide — technical design</h1></header>
 <p><em>The detail under <a href="architecture.html"><code>11-architecture.md</code></a>, on the PROPOSED stack. Written 2026-09-18.</em></p>
 <blockquote>
-<p><strong>Since 2026-09-28 (D47) the guide is back on the previous data structure</strong>: salary and Expert Pool
-from the sheet's <code>WEB_BERTABLA_IMPORT</code> and <code>EXPERT_POOL_IMPORT</code> tabs (<code>data/build-salary-data.py</code>, run
-on demand), the survey from the client's workbook (<code>data/build-guide-data.py</code>), page texts and
-<code>areas.json</code> edited in the repo. What this document says about <code>IDBCSYNC</code> and <code>idbcsync.py</code> describes
-the parked setup (D37, in history at <code>7d43ed3</code>).</p>
+<p><strong>Since 2026-09-28 (D47, D48) the JSON files are the source</strong>: every value the pages show is in
+<code>data/guide-data.json</code> or <code>data/areas.json</code>; salary and Expert Pool are refreshed from the sheet's
+<code>WEB_BERTABLA_IMPORT</code> and <code>EXPERT_POOL_IMPORT</code> tabs by <code>data/build-salary-data.py</code> (run on demand).
+The current JSON shape and where each value lives: <a href="developer-handover.html"><code>16-developer-handover.md</code></a> §3. What this document
+says about <code>IDBCSYNC</code> and <code>idbcsync.py</code> describes the parked setup (D37, in history at <code>7d43ed3</code>).</p>
 </blockquote>
 <h2>1. Page kinds → templates</h2>
 <div class="tbl"><table>

@@ -4,11 +4,11 @@
 from what the prototype holds (the `IDBCSYNC` sheet tab, `data/idbcsync.py`, the files it
 writes, the pages). Written 2026-09-18; the data sections updated 2026-09-25 for D37.*
 
-> **Since 2026-09-28 (D47) the guide is back on the previous data structure**: salary and Expert Pool
-> from the sheet's `WEB_BERTABLA_IMPORT` and `EXPERT_POOL_IMPORT` tabs (`data/build-salary-data.py`, run
-> on demand), the survey from the client's workbook (`data/build-guide-data.py`), page texts and
-> `areas.json` edited in the repo. What this document says about `IDBCSYNC` and `idbcsync.py` describes
-> the parked setup (D37, in history at `7d43ed3`).
+> **Since 2026-09-28 (D47, D48) the JSON files are the source**: every value the pages show is in
+> `data/guide-data.json` or `data/areas.json`; salary and Expert Pool are refreshed from the sheet's
+> `WEB_BERTABLA_IMPORT` and `EXPERT_POOL_IMPORT` tabs by `data/build-salary-data.py` (run on demand).
+> The current JSON shape and where each value lives: `16-developer-handover.md` §3. What this document
+> says about `IDBCSYNC` and `idbcsync.py` describes the parked setup (D37, in history at `7d43ed3`).
 
 ## 1. Glossary
 
@@ -88,7 +88,7 @@ case study).
 
 ## 5. Decision register
 
-`04-decisions.md` (D1–D47). Technical decisions in this package are ADRs in
+`04-decisions.md` (D1–D48). Technical decisions in this package are ADRs in
 `11-architecture.md` §11, PROPOSED until flipped; the flip is the next D-number.
 
 ## 6. Rules register

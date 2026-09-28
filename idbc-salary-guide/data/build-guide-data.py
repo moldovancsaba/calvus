@@ -266,6 +266,10 @@ new = {
     "filterDimensions": old["filterDimensions"],
 }
 
+# The client's later editorial decisions (dataset names and order, questions added to topics).
+import survey_edits
+survey_edits.apply(new, json.load(io.open(OUT.rsplit("/", 1)[0] + "/areas.json", encoding="utf-8")))
+
 # The salary block (including the Talent Insight counts) is owned by build-salary-data.py.
 io.open(OUT, "w", encoding="utf-8").write(json.dumps(new, ensure_ascii=False, separators=(",", ":")))
 
