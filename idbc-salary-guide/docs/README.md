@@ -12,7 +12,7 @@ every project.
 | 01 research | `01-research.md` | What was read (the client's specs, mockups, data, copy), the one external measurement, what was not researched and why |
 | 02 audit | `02-audit.md` | idbc.hu measured; the spec vs. the data; the client's data as it stands; defects found in the material |
 | 03 sources and assets | `../data/SOURCES-AND-GAPS.md` | Every source file and what it contributed, every gap, every change round with measurements — the running record since July |
-| 04 decisions | `04-decisions.md` | D1–D46, dated, with who and why |
+| 04 decisions | `04-decisions.md` | D1–D47, dated, with who and why |
 | 05 design | `05-design.md` | Where the look comes from (the client's mockups), tokens, layout |
 | 06 build log | `../data/SOURCES-AND-GAPS.md` | the dated change notes are the build log |
 | 07 gate | `07-gate.md` | The one-command gate, the measured pass, deliberate deviations |
@@ -249,4 +249,12 @@ rebuilding it, the `IDBCSYNC` sheet (columns, what the sync accepts, id families
 change what), three ways to get the data out, and the survey, salary and Expert Pool parts in
 detail — code, data, controls, the rules they apply, and what changes in production. Written
 from the code, not from memory.
+
+**2026-09-28 — back to the previous data structure (D47).** At the owner's request the guide
+reads the sheet's previous tabs again (`WEB_BERTABLA_IMPORT`, `EXPERT_POOL_IMPORT`) and the
+survey data from the client's workbook, as at `c929b3a`; the `IDBCSYNC` tab is no longer read and
+the sheet was not changed. All UI work stays. To check with the owner: the old area names in the
+Piaci trendek dropdown and the three survey questions from D40, which are missing again. Where the
+documents below describe `IDBCSYNC` as the source (`10`, `12`, `16`), that describes the parked
+setup (D37), not the current one.
 

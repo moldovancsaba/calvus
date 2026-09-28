@@ -1353,6 +1353,28 @@ survey figures and blank rows (4291–18024), which the owner had not meant to s
 were hidden again. Fresh export: 600/600 bold, no other bold changed, 0 values changed;
 hidden 2–469 and 4291–18024, visible 470–4290; <code>idbcsync.py --check</code> 0 files changed. The earlier hidden-row counts
 (D37, D42, D45) are history; visibility is the owner's to set and never affects the sync.</p>
+<h2>Back to the previous data structure (2026-09-28, D47)</h2>
+<p>The owner asked to go back to the version that used the sheet's previous data structure,
+keeping the UI fixes and not changing the sheet. Found in the history: <code>c929b3a</code> (2026-09-25
+12:05), the last commit before <code>IDBCSYNC</code> took over (<code>6abfa2f</code>, D37). At that version the salary
+and Expert Pool data came from <code>WEB_BERTABLA_IMPORT</code> and <code>EXPERT_POOL_IMPORT</code> through
+<code>build-salary-data.py</code>, the survey from the client's research workbook through
+<code>build-guide-data.py</code>, and the page and area texts lived in the repo.</p>
+<p><strong>Restored</strong>: the two converters, <code>guide-data.json</code>, <code>areas.json</code> and the on-demand workflow from
+<code>c929b3a</code>; <code>idbcsync.py</code> removed. <strong>Kept</strong>: all page markup, styles and scripts from D38–D46.
+<strong>Changed back in the pages</strong>: only the data-reading lines that D37 had moved into the data — the
+experience and company-size orders and the keep-order question are page constants again, and the
+area page joins its survey data through <code>areas.json</code>'s <code>dataKey</code>.</p>
+<p><strong>Checked</strong>: the old converter run on the live sheet (2026-09-28) writes a <code>guide-data.json</code>
+identical to <code>c929b3a</code>'s — the old tabs have not changed since. Against the <code>IDBCSYNC</code> build:
+salary rows (432), their figures and order, the SAP catalogue and the 11 area texts are
+identical; two Expert Pool names carry a trailing space again (invisible); the Piaci trendek
+dataset dropdown shows the old area names and order ("Sales &amp; Marketing", "BSC", "Office
+Support &amp; Ügyfélszolgálat" …); the survey's Home office employer topic has two questions again
+instead of three and the general AI employer topic three instead of five (D40's additions
+lived only in <code>IDBCSYNC</code>). Rendered: 584 home filter states, 1,555 charts, all with data; each
+of the 11 area pages shows its own area's figures; Bérek 12 areas with TOP3 chart and table;
+SAP chart, table and catalogue; Expert Pool 15 + 14 tiles; no console errors.</p>
 <footer>IDBC Talent Market &amp; Salary Guide 2026 · documentation</footer>
 </div>
 </body>

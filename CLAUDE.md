@@ -10,10 +10,13 @@ Static HTML/CSS/JS wireframe and prototype pages (Lexodont dental site,
 IDBC Salary Guide, Holdvölgy, DiscountDirect, business.direct), no package manager, no
 test runner.
 Generators exist and must be re-run after editing their sources: `python3 holdvolgy/build.py`
-(site pages, HU + EN, from `build.py` content and `data/catalogue.json`); the IDBC sync
-(`idbc-salary-guide/data/idbcsync.py <IDBC_bertabla.xlsx>` — since 2026-09-25 every text and
-figure of the IDBC guide comes from the sheet's `IDBCSYNC` tab and a GitHub Action runs this
-every 15 minutes; edit the sheet, never a marked text in the pages, or the next sync reverts it); and `python3 build-docs.py` at the
+(site pages, HU + EN, from `build.py` content and `data/catalogue.json`); the IDBC salary
+converter (`idbc-salary-guide/data/build-salary-data.py <IDBC_bertabla.xlsx>` — since 2026-09-28
+the guide is back on the sheet's previous structure, D47: salary and Expert Pool from the
+`WEB_BERTABLA_IMPORT` and `EXPERT_POOL_IMPORT` tabs, run on demand by a GitHub Action; the survey
+half of `guide-data.json` comes from the client's research workbook via `build-guide-data.py`;
+page texts and `areas.json` are edited in the repo — the `data-sync` markers in the pages are
+inert; the `IDBCSYNC` tab and `idbcsync.py` are parked, in git history at `7d43ed3`); and `python3 build-docs.py` at the
 root, which renders every project's documentation from markdown. `python3 check.py` at the
 root is the gate (it runs every project gate and a repo-wide link audit).
 gameformative (added 2026-09-25) is generated too: `python3 gameformative/build.py` (pages, from

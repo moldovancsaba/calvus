@@ -43,6 +43,13 @@ edits the <code>IDBCSYNC</code> sheet. What the prototype is made of, how the da
 how the three interactive parts — survey, salary, Expert Pool — work, and how they move to
 production. The target system is designed in <a href="architecture.html"><code>11-architecture.md</code></a> and <a href="technical-design.html"><code>12-technical-design.md</code></a>
 (PROPOSED); this is the practical path to it. Written 2026-09-25 from the code as it stands.</em></p>
+<blockquote>
+<p><strong>Since 2026-09-28 (D47) the guide is back on the previous data structure</strong>: salary and Expert Pool
+from the sheet's <code>WEB_BERTABLA_IMPORT</code> and <code>EXPERT_POOL_IMPORT</code> tabs (<code>data/build-salary-data.py</code>, run
+on demand), the survey from the client's workbook (<code>data/build-guide-data.py</code>), page texts and
+<code>areas.json</code> edited in the repo. What this document says about <code>IDBCSYNC</code> and <code>idbcsync.py</code> describes
+the parked setup (D37, in history at <code>7d43ed3</code>).</p>
+</blockquote>
 <h2>1. What you get</h2>
 <div class="tbl"><table>
 <thead>

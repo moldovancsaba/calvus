@@ -374,6 +374,13 @@ decision is added here first. "Owner" is the studio side; "client" is IDBC.</em>
 <td>owner</td>
 <td>the live <code>IDBC_bertabla</code> sheet</td>
 </tr>
+<tr>
+<td>D47</td>
+<td>2026-09-28</td>
+<td><strong>Back to the previous data structure; the UI work kept; the sheet not changed.</strong> Owner directive: the guide reads the Google Sheet's previous structure again and the <code>IDBCSYNC</code> tab is no longer used; every UI change stays; nothing in the sheet is edited. The version found: <code>c929b3a</code> (2026-09-25, the last commit before D37). Restored from it: <code>data/build-salary-data.py</code> (salary and Expert Pool from <code>WEB_BERTABLA_IMPORT</code> and <code>EXPERT_POOL_IMPORT</code>), <code>data/build-guide-data.py</code> (the survey half, from the client's research workbook), <code>data/guide-data.json</code>, <code>data/areas.json</code> (with its <code>dataKey</code> bridge), and the sync workflow (run on demand, no schedule). Removed: <code>data/idbcsync.py</code> (in history at <code>7d43ed3</code>). Kept: every page's markup, styles and scripts (D38–D46: idbc.hu's design, the TOP3 label stacking, all texts as last synced); only the lines that read the data went back to the old shape — the segment orders and the keep-order question as page constants, and the area page's join through <code>dataKey</code>. The <code>data-sync</code> markers stay in the pages, inert. Proven: the old converter run on the live sheet reproduces <code>c929b3a</code>'s <code>guide-data.json</code> byte for byte; home survey 584 filter states and 1,555 charts with data; all 11 area pages show their own area's figures; Bérek (12 areas), SAP and Expert Pool (29 tiles) render; no console errors. Differences the owner will see against the IDBCSYNC build: the Piaci trendek dataset dropdown shows the old area names and order; the three survey questions added on 2026-09-25 (D40) are missing again; salary, Expert Pool figures, the SAP catalogue and the area texts are identical</td>
+<td>owner</td>
+<td><code>data/</code>, <code>.github/workflows/idbc-sync-bertabla.yml</code>, <code>index.html</code>, <code>terulet/index.html</code>, <code>CLAUDE.md</code></td>
+</tr>
 </tbody>
 </table></div>
 <h2>Standing rules that came out of these</h2>

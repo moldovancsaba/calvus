@@ -6,6 +6,12 @@ how the three interactive parts — survey, salary, Expert Pool — work, and ho
 production. The target system is designed in `11-architecture.md` and `12-technical-design.md`
 (PROPOSED); this is the practical path to it. Written 2026-09-25 from the code as it stands.*
 
+> **Since 2026-09-28 (D47) the guide is back on the previous data structure**: salary and Expert Pool
+> from the sheet's `WEB_BERTABLA_IMPORT` and `EXPERT_POOL_IMPORT` tabs (`data/build-salary-data.py`, run
+> on demand), the survey from the client's workbook (`data/build-guide-data.py`), page texts and
+> `areas.json` edited in the repo. What this document says about `IDBCSYNC` and `idbcsync.py` describes
+> the parked setup (D37, in history at `7d43ed3`).
+
 ## 1. What you get
 
 | Piece | Where | Role |

@@ -435,9 +435,8 @@
     const NO_DATA_MESSAGE = /*sync:SHARED-JS-NO-DATA*/"A kiválasztott szűrési feltételekhez nem érhető el adat.";
 
     // ---------- Trends section ----------
-    // Segment labels and their order come from the data (IDBCSYNC), not from the page.
-    const EXPERIENCE_ORDER = DATA.segments.employee;
-    const COMPANY_SIZE_ORDER = DATA.segments.employer;
+    const EXPERIENCE_ORDER = ["kevesebb, mint 1 év", "1-2 év", "3-5 év", "6-10 év", "11-20 év", "több, mint 20 év"];
+    const COMPANY_SIZE_ORDER = ["50 fő alatti", "51-100 fő", "101-350 fő", "351-1000 fő", "1000 fő feletti"];
 
 
     // Range-bucket questions ("Nem kaptam béremelést", "1-5", "6-10", ... "21+") are ordinal:
@@ -480,8 +479,9 @@
     // the options are business postures ("Fluktuációt kezelünk", "10-50 fővel bővülünk", ...), not
     // a numeric scale, so isOrdinalScale correctly does not treat it as one — but percentage sort
     // still scrambles the order the client authored the question in.
-    // Which questions these are is set per question in IDBCSYNC (the …-SORREND rows).
-    const KEEP_SOURCE_ORDER = new Set(DATA.keepSourceOrder);
+    const KEEP_SOURCE_ORDER = new Set([
+      'Mi jellemzi céged toborzási stratégiáját a 2026-os évben?',
+    ]);
 
     const datasetSelect = document.querySelector('#datasetSelect');
     const topicSelect = document.querySelector('#topicSelect');
@@ -500,7 +500,7 @@
     // Pseudo-segment meaning "no filter — show the whole sample". Always first in the list, and
     // the default on load, so the panels start fully populated instead of on whichever real
     // segment happens to sort first (which can be one with zero respondents for the current topic).
-    const ALL_SEGMENT = DATA.totalLabel;
+    const ALL_SEGMENT = DATA.totalLabel || 'Összesített adatok';
 
     // A row exists for every canonical segment value even when nobody in that segment answered —
     // its percentages are just all 0. Only count a segment as real data for this topic+side if at

@@ -2,6 +2,12 @@
 
 *The detail under `11-architecture.md`, on the PROPOSED stack. Written 2026-09-18.*
 
+> **Since 2026-09-28 (D47) the guide is back on the previous data structure**: salary and Expert Pool
+> from the sheet's `WEB_BERTABLA_IMPORT` and `EXPERT_POOL_IMPORT` tabs (`data/build-salary-data.py`, run
+> on demand), the survey from the client's workbook (`data/build-guide-data.py`), page texts and
+> `areas.json` edited in the repo. What this document says about `IDBCSYNC` and `idbcsync.py` describes
+> the parked setup (D37, in history at `7d43ed3`).
+
 ## 1. Page kinds → templates
 
 | Prototype | Template | Data it loads | Editable by marketing |

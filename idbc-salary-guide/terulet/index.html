@@ -338,8 +338,11 @@
     // `edition` still selects which question set applies (the survey instrument itself only
     // ever had two variants — general and IT/IT Contracting — see data/SOURCES-AND-GAPS.md), but
     // the actual figures come from this area's own real crosstab, not a pooled sample.
-    // guide-data.json keys each area's survey data by the area's slug.
-    const dsKey = DATA.datasets[area.slug] ? area.slug : DATA.totalKey;
+    //
+    // guide-data.json's `datasets` object is keyed by the area's ORIGINAL name (the converter's
+    // output predates the 2026-09 taxonomy rename in areas.json), so the join uses `dataKey` —
+    // areas.json's bridge field — rather than the current, renamed `area.name` used for display.
+    const dsKey = DATA.datasets[area.dataKey] ? area.dataKey : DATA.totalKey;
     const dataset = DATA.datasets[dsKey];
     const areaData = dataset;
 
@@ -356,9 +359,9 @@
     // dropdown (tapasztalati szint / cégméret) that only offers segments with real data for the
     // current topic, and hides itself when the aggregate would be the only option.
     // Segment labels and their order come from the data (IDBCSYNC), not from the page.
-    const EXPERIENCE_ORDER = DATA.segments.employee;
-    const COMPANY_SIZE_ORDER = DATA.segments.employer;
-    const ALL_SEGMENT = DATA.totalLabel;
+    const EXPERIENCE_ORDER = ["kevesebb, mint 1 év", "1-2 év", "3-5 év", "6-10 év", "11-20 év", "több, mint 20 év"];
+    const COMPANY_SIZE_ORDER = ["50 fő alatti", "51-100 fő", "101-350 fő", "351-1000 fő", "1000 fő feletti"];
+    const ALL_SEGMENT = DATA.totalLabel || 'Összesített adatok';
 
     function collectSegmentsForTopic(topic, side, sideKey, canonicalOrder) {
       const cross = areaData[side].cross;

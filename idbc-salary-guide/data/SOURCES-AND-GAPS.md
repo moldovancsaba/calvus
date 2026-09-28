@@ -1262,3 +1262,29 @@ survey figures and blank rows (4291–18024), which the owner had not meant to s
 were hidden again. Fresh export: 600/600 bold, no other bold changed, 0 values changed;
 hidden 2–469 and 4291–18024, visible 470–4290; `idbcsync.py --check` 0 files changed. The earlier hidden-row counts
 (D37, D42, D45) are history; visibility is the owner's to set and never affects the sync.
+
+## Back to the previous data structure (2026-09-28, D47)
+
+The owner asked to go back to the version that used the sheet's previous data structure,
+keeping the UI fixes and not changing the sheet. Found in the history: `c929b3a` (2026-09-25
+12:05), the last commit before `IDBCSYNC` took over (`6abfa2f`, D37). At that version the salary
+and Expert Pool data came from `WEB_BERTABLA_IMPORT` and `EXPERT_POOL_IMPORT` through
+`build-salary-data.py`, the survey from the client's research workbook through
+`build-guide-data.py`, and the page and area texts lived in the repo.
+
+**Restored**: the two converters, `guide-data.json`, `areas.json` and the on-demand workflow from
+`c929b3a`; `idbcsync.py` removed. **Kept**: all page markup, styles and scripts from D38–D46.
+**Changed back in the pages**: only the data-reading lines that D37 had moved into the data — the
+experience and company-size orders and the keep-order question are page constants again, and the
+area page joins its survey data through `areas.json`'s `dataKey`.
+
+**Checked**: the old converter run on the live sheet (2026-09-28) writes a `guide-data.json`
+identical to `c929b3a`'s — the old tabs have not changed since. Against the `IDBCSYNC` build:
+salary rows (432), their figures and order, the SAP catalogue and the 11 area texts are
+identical; two Expert Pool names carry a trailing space again (invisible); the Piaci trendek
+dataset dropdown shows the old area names and order ("Sales & Marketing", "BSC", "Office
+Support & Ügyfélszolgálat" …); the survey's Home office employer topic has two questions again
+instead of three and the general AI employer topic three instead of five (D40's additions
+lived only in `IDBCSYNC`). Rendered: 584 home filter states, 1,555 charts, all with data; each
+of the 11 area pages shows its own area's figures; Bérek 12 areas with TOP3 chart and table;
+SAP chart, table and catalogue; Expert Pool 15 + 14 tiles; no console errors.
