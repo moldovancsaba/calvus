@@ -98,21 +98,21 @@ production build, not before the next review.</em></p>
 </tr>
 <tr>
 <td>~~C-7~~ (ask #16, 2026-09-22)</td>
-<td>~~The source Excel's "Téma besorolás" sheet checked for survey questions missing from the parsed data~~ — <strong>resolved 2026-09-25, D40</strong>: the answers were in the data for every area all along; four topic rows were missing and are now in <code>IDBCSYNC</code></td>
-<td><code>SURVEY-TOPIC…</code> rows in <code>IDBCSYNC</code></td>
+<td>~~The source Excel's "Téma besorolás" sheet checked for survey questions missing from the parsed data~~ — <strong>resolved 2026-09-25, D40</strong>: the answers were in the data for every area all along; only their place in the topics was missing, now in the data (since D48 kept in <code>data/survey_edits.py</code>)</td>
+<td><code>topics</code> in <code>guide-data.json</code></td>
 <td>nothing pending</td>
 </tr>
 <tr>
 <td>C-8 (ask #17, 2026-09-22)</td>
 <td>"IT Contracting" salary figures for Bérek, or confirmation the segment is folded into "IT"</td>
-<td>new <code>SAL-</code> rows in <code>IDBCSYNC</code> (a new id per row, so a studio task once the figures arrive; D37)</td>
-<td>the filter option simply doesn't appear (zero rows); asked directly in the sheet's own new "HIÁNYZÓ ADATOK - kérés" tab, 2026-09-25</td>
+<td>new rows in the sheet's <code>WEB_BERTABLA_IMPORT</code> tab with <code>terulet</code> = IT Contracting; the converter already lists the area, so it appears in the Bérek filter on the next sync</td>
+<td>the filter option simply doesn't appear (zero rows); asked directly in the sheet's own "HIÁNYZÓ ADATOK - kérés" tab, 2026-09-25</td>
 </tr>
 <tr>
 <td>C-10 (2026-09-25)</td>
-<td>The <code>Non-IT / Qualified Person</code> Expert Pool row has no headcount</td>
-<td><code>IDBCSYNC</code> <code>EXPERT-27-DARAB</code> — the tile appears on the next sync once the number is typed in</td>
-<td>the tile is left out (not invented, not crashed on); asked in the sheet's "HIÁNYZÓ ADATOK - kérés" tab (since D45 the row is hidden with the other Expert Pool tile rows — show the rows to type the number)</td>
+<td>The <code>Non-IT / Qualified Person</code> Expert Pool row has no headcount (nor a LinkedIn count)</td>
+<td>the sheet's <code>EXPERT_POOL_IMPORT</code> tab, row 28: <code>darab</code> (column C) and <code>linkedin_talent_insight</code> (column D) — the tile appears on the next sync once the count is typed in</td>
+<td>the tile is left out (not invented, not crashed on); asked in the sheet's "HIÁNYZÓ ADATOK - kérés" tab</td>
 </tr>
 <tr>
 <td>C-9 (ask #18, 2026-09-22)</td>

@@ -380,7 +380,7 @@
     const expertGrid = document.querySelector('#expertGrid');
     const talentNote = document.querySelector('#talentNote');
     const fmt = new Intl.NumberFormat('hu-HU');
-    // Sheet texts with {placeholders} (IDBCSYNC): fill them in without touching anything else.
+    // Texts with {placeholders}: fill them in without touching anything else.
     const fill = (s, v) => s.replace(/\{(\w+)\}/g, (m, k) => (k in v ? v[k] : m));
 
     function populateExpertFilter() {

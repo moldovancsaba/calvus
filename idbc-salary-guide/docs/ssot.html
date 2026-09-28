@@ -38,16 +38,10 @@ footer{margin-top:56px;padding-top:18px;border-top:1px solid var(--line);font-si
 <div class="wrap">
 <nav class="docnav" aria-label="Project documentation"><span class="docnav-brand">IDBC Salary Guide · documentation</span><a href="index.html">Overview</a><a href="bemutato.html">Bemutató</a><a href="brief.html">Brief</a><a href="research.html">Research</a><a href="audit.html">Audit</a><a href="sources.html">Sources & gaps</a><a href="decisions.html">Decisions</a><a href="design.html">Design</a><a href="gate.html">Gate</a><a href="client-asks.html">Register of asks</a><a href="prerequisites.html">Prerequisites</a><a href="business-logic.html">Business logic</a><a href="ssot.html" aria-current=page>SSOT</a><a href="architecture.html">Architecture</a><a href="technical-design.html">Technical design</a><a href="implementation-plan.html">Implementation plan</a><a href="token-map.html">Token map</a><a href="idbc-hu-alignment.html">idbc.hu alignment</a><a href="developer-handover.html">Developer handover</a></nav>
 <header><p class="eyebrow">IDBC Salary Guide · project documentation</p><h1>IDBC Salary Guide — single source of truth (SSOT)</h1></header>
-<p><em>Definitions the technical documents (<code>11</code>–<code>14</code>) use without redefining. Everything is read
-from what the prototype holds (the <code>IDBCSYNC</code> sheet tab, <code>data/idbcsync.py</code>, the files it
-writes, the pages). Written 2026-09-18; the data sections updated 2026-09-25 for D37.</em></p>
-<blockquote>
-<p><strong>Since 2026-09-28 (D47, D48) the JSON files are the source</strong>: every value the pages show is in
-<code>data/guide-data.json</code> or <code>data/areas.json</code>; salary and Expert Pool are refreshed from the sheet's
-<code>WEB_BERTABLA_IMPORT</code> and <code>EXPERT_POOL_IMPORT</code> tabs by <code>data/build-salary-data.py</code> (run on demand).
-The current JSON shape and where each value lives: <a href="developer-handover.html"><code>16-developer-handover.md</code></a> §3. What this document
-says about <code>IDBCSYNC</code> and <code>idbcsync.py</code> describes the parked setup (D37, in history at <code>7d43ed3</code>).</p>
-</blockquote>
+<p><em>Definitions the technical documents (<code>11</code>–<code>16</code>) use without redefining. Everything is read
+from what the prototype holds (the two JSON files, the converters in <code>data/</code>, the pages).
+Written 2026-09-18; the data sections rewritten 2026-09-28 for D47–D48 (the JSON files are
+the source).</em></p>
 <h2>1. Glossary</h2>
 <div class="tbl"><table>
 <thead>
@@ -58,8 +52,12 @@ says about <code>IDBCSYNC</code> and <code>idbcsync.py</code> describes the park
 </thead>
 <tbody>
 <tr>
+<td>Data files</td>
+<td><code>data/guide-data.json</code> and <code>data/areas.json</code>: every value the pages show, and the only files they read (D48). Upstream: the <code>IDBC_bertabla</code> Google Sheet's <code>WEB_BERTABLA_IMPORT</code> and <code>EXPERT_POOL_IMPORT</code> tabs (salary, Expert Pool — <code>data/build-salary-data.py</code>), the research workbook (survey — <code>data/build-guide-data.py</code> with <code>data/survey_edits.py</code>), the client's copy (areas, SAP catalogue, page texts).</td>
+</tr>
+<tr>
 <td>IDBCSYNC</td>
-<td>The <code>IDBCSYNC</code> tab of the client's <code>IDBC_bertabla</code> Google Sheet: one row per value (<code>id</code>, <code>változó</code>, <code>érték</code>, <code>megjelenés</code>, <code>segítség</code>). The only source of every text and figure on the guide; <code>data/idbcsync.py</code> reads <code>id</code> and <code>érték</code> only (D37).</td>
+<td>A tab of the same sheet that held every value as one row each and drove the guide on 2026-09-25 (D37); parked since D47, hidden, not read.</td>
 </tr>
 <tr>
 <td>Survey</td>
@@ -95,11 +93,11 @@ says about <code>IDBCSYNC</code> and <code>idbcsync.py</code> describes the park
 </tr>
 <tr>
 <td>Area (bértábla)</td>
-<td>One of 13 salary areas, each with one name row (<code>SAL-&lt;key&gt;-NAME</code>) and a fixed key (<code>kod</code>) — SAP's key keeps its rows on the SAP page whatever the area is called (D37). Not the same set as the trends areas.</td>
+<td>One of 13 salary areas; the sheet's <code>terulet</code> value, mapped to the Bérek name by <code>CANONICAL_AREAS</code> / <code>AREA_ALIASES</code> in <code>build-salary-data.py</code>. <code>kod</code> keeps the sheet's raw value; the SAP page shows the rows whose <code>kod</code> is <code>SAP</code>. Not the same set as the trends areas (D31).</td>
 </tr>
 <tr>
 <td>Bértábla</td>
-<td>The salary table: one row per area + position + level. Until 2026-09-25 the sheet's <code>WEB_BERTABLA_IMPORT</code> tab; since D37 IDBCSYNC's <code>SAL-</code> rows (the old tab is hidden and no longer read).</td>
+<td>The salary table: one row per area + position + level, from the sheet's <code>WEB_BERTABLA_IMPORT</code> tab into <code>salary.webBertabla</code>.</td>
 </tr>
 <tr>
 <td>TOP3 row</td>
@@ -119,11 +117,11 @@ says about <code>IDBCSYNC</code> and <code>idbcsync.py</code> describes the park
 </tr>
 <tr>
 <td>Expert Pool / Expert Community</td>
-<td>IDBC's candidate community; a count per industry + position (IDBCSYNC <code>EXPERT-</code> rows: 30, one — Qualified Person — without a count yet, so not shown).</td>
+<td>IDBC's candidate community; a count per industry + position, from the sheet's <code>EXPERT_POOL_IMPORT</code> tab (30 rows; Qualified Person has no count yet, so 29 are shown).</td>
 </tr>
 <tr>
 <td>SAP catalogue</td>
-<td>25 items in 5 categories (<code>sapProducts</code>, IDBCSYNC <code>SAPPROD-</code> rows), from the client's SAP spec.</td>
+<td>25 items in 5 categories (<code>sapProducts</code> in <code>guide-data.json</code>), from the client's SAP spec.</td>
 </tr>
 <tr>
 <td>Inert control</td>
@@ -154,15 +152,15 @@ says about <code>IDBCSYNC</code> and <code>idbcsync.py</code> describes the park
 </tr>
 <tr>
 <td>Dataset</td>
-<td><code>__total__</code> + one per trends area, keyed by the area's slug and labelled with its name, in the areas' order (D37)</td>
+<td><code>__total__</code> + one per trends area, keyed by the area's original name (<code>areas.json</code> <code>dataKey</code>), labelled with its current name and in the tiles' order (<code>survey_edits.py</code>, D48)</td>
 </tr>
 <tr>
 <td>Employee segment</td>
-<td>kevesebb, mint 1 év · 1-2 év · 3-5 év · 6-10 év · 11-20 év · több, mint 20 év — IDBCSYNC <code>SURVEY-EMPLOYEE-SEG1…6</code> (offered per topic only where a non-zero row exists, D6)</td>
+<td>kevesebb, mint 1 év · 1-2 év · 3-5 év · 6-10 év · 11-20 év · több, mint 20 év — the order is a constant in <code>index.html</code> and <code>terulet/index.html</code> (offered per topic only where a non-zero row exists, D6)</td>
 </tr>
 <tr>
 <td>Employer segment</td>
-<td>50 fő alatti · 51-100 fő · 101-350 fő · 351-1000 fő · 1000 fő feletti — <code>SURVEY-EMPLOYER-SEG1…5</code></td>
+<td>50 fő alatti · 51-100 fő · 101-350 fő · 351-1000 fő · 1000 fő feletti — the same two pages</td>
 </tr>
 <tr>
 <td>Question kind</td>
@@ -194,70 +192,61 @@ says about <code>IDBCSYNC</code> and <code>idbcsync.py</code> describes the park
 </tr>
 </tbody>
 </table></div>
-<h2>3. Canonical entities (as in <code>guide-data.json</code>, all written by <code>data/idbcsync.py</code> from IDBCSYNC)</h2>
+<h2>3. Canonical entities (as in the data files)</h2>
 <div class="tbl"><table>
 <thead>
 <tr>
 <th>Entity</th>
 <th>Key fields</th>
-<th>IDBCSYNC rows</th>
+<th>Comes from</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td><code>datasets[slug]</code></td>
+<td><code>datasets[key]</code></td>
 <td><code>label</code>, <code>questionSet</code>, <code>employee{base, cross}</code>, <code>employer{base, cross}</code>; <code>base[question]</code> = <code>{kind: "simple", items[{label, percent, count}]}</code> or <code>{kind: "weighted", scaleMax, items[{label, value}]}</code>; <code>cross[question]</code> = <code>{kind: "matrix-percent", groups[], items[{label: segment, values[{group, percent, count}]}]}</code></td>
-<td><code>SURVEY-&lt;AREA&gt;-&lt;SIDE&gt;-Qnn-[SEGk-](N\|OPTmm)</code>; question text and answer labels once per question (<code>SURVEY-&lt;SIDE&gt;-Qnn-TEXT</code>, <code>-OPTmm</code>); <code>count</code> = percent × respondents (<code>…-N</code>)</td>
+<td>the research workbook (<code>build-guide-data.py</code>); names and order <code>survey_edits.py</code></td>
 </tr>
 <tr>
 <td><code>topics[]</code></td>
-<td><code>topic</code>, <code>questionSets{set: {Munkavállalók[], Munkáltatók[]}}</code> — the question lists per set</td>
-<td><code>SURVEY-TOPICt-NAME</code>, membership <code>SURVEY-TOPICt-SETn-&lt;SIDE&gt;-kk</code> (hidden)</td>
-</tr>
-<tr>
-<td><code>segments</code></td>
-<td><code>employee[]</code>, <code>employer[]</code> — labels in dropdown order</td>
-<td><code>SURVEY-&lt;SIDE&gt;-SEGk</code></td>
-</tr>
-<tr>
-<td><code>keepSourceOrder[]</code></td>
-<td>questions whose answers keep the questionnaire order</td>
-<td><code>SURVEY-&lt;SIDE&gt;-Qnn-SORREND</code> = igen</td>
+<td><code>topic</code>, <code>questionSets{set: {Munkavállalók[], Munkáltatók[]}}</code> — the question lists per set, in display order</td>
+<td>the workbook's topic sheet + <code>build-guide-data.py</code> (renames, D7) + <code>survey_edits.py</code> (D40)</td>
 </tr>
 <tr>
 <td><code>totalKey</code>, <code>totalLabel</code></td>
 <td><code>__total__</code>, <em>Összesített adatok</em></td>
-<td><code>SURVEY-TOTAL-LABEL</code></td>
+<td><code>build-guide-data.py</code></td>
 </tr>
 <tr>
 <td><code>salary.webBertabla[]</code></td>
 <td><code>id</code>, <code>kod</code>, <code>terulet</code>, <code>szint</code>, <code>pozicio</code>, <code>top3</code>, <code>min</code>, <code>idbc</code>, <code>max</code>, <code>juttatas</code>, <code>linkedin?</code></td>
-<td><code>SAL-&lt;key&gt;-NAME</code>, <code>SAL-&lt;key&gt;-nnn-&lt;FIELD&gt;</code></td>
+<td>sheet tab <code>WEB_BERTABLA_IMPORT</code> (<code>build-salary-data.py</code>)</td>
 </tr>
 <tr>
 <td><code>salary.expertPool[]</code></td>
 <td><code>iparag</code>, <code>pozicio</code>, <code>darab</code>, <code>linkedin?</code></td>
-<td><code>EXPERT-nn-&lt;FIELD&gt;</code></td>
+<td>sheet tab <code>EXPERT_POOL_IMPORT</code> (<code>build-salary-data.py</code>)</td>
 </tr>
 <tr>
 <td><code>sapProducts[]</code></td>
 <td><code>category</code>, <code>items[]</code></td>
-<td><code>SAPPROD-CATn-NAME</code>, <code>-ITEMm</code></td>
+<td>the client's SAP spec, in the JSON</td>
 </tr>
 <tr>
 <td><code>areas.json.areas[]</code></td>
-<td><code>slug</code>, <code>name</code>, <code>edition</code> (question set), <code>summary</code>, <code>media</code></td>
-<td><code>AREA-&lt;SLUG&gt;-NAME</code>, <code>-SUMMARY</code>, <code>-MEDIA</code>, <code>-EDITION</code></td>
+<td><code>slug</code> (the area page's <code>?terulet=</code>), <code>name</code>, <code>dataKey</code> (its dataset key), <code>edition</code> (question set), <code>summary</code>, <code>media</code></td>
+<td>the client's area texts, in the JSON</td>
 </tr>
 <tr>
 <td>page texts</td>
-<td>every marked element and script text</td>
-<td>the row named by <code>data-sync</code> / <code>data-sync-attr</code> / <code>data-sync-href</code> / <code>/*sync:ID*/</code></td>
+<td>every heading, paragraph, button, label</td>
+<td>the page's HTML</td>
 </tr>
 </tbody>
 </table></div>
-<p>Removed 2026-09-25 (D37), read by no page: <code>generatedFrom</code>, <code>salary.talentInsightTop3</code>,
-<code>salary.readme</code>, <code>filterDimensions</code>, <code>siteMap</code>, and <code>areas.json</code>'s <code>dataKey</code> bridge.</p>
+<p>Present, read by no page: <code>generatedFrom</code>, <code>siteMap</code>, <code>filterDimensions</code>, <code>salary.readme</code>,
+<code>salary.talentInsightTop3</code>. The survey's segment order and the question kept in questionnaire
+order are page constants (§2, <a href="developer-handover.html"><code>16-developer-handover.md</code></a> §4.1).</p>
 <p>Entities the production build adds (defined here, designed in <code>12</code>): <strong>Account</strong> (name,
 e-mail, company, position, type, consent, created), <strong>Lead</strong> (an account handed to
 IDBC's CRM), <strong>Download</strong> (an Excel export event), <strong>Media</strong> (video URL per area /
@@ -289,7 +278,7 @@ case study).</p>
 </tr>
 <tr>
 <td>Asset version</td>
-<td><code>?v=</code> on <code>top3-chart.js</code> (12), <code>chart.css</code> (9), <code>site.css</code> and <code>site.js</code> (1) — bump on every change; the sync bumps <code>top3-chart.js</code> itself when a chart text changes in the sheet</td>
+<td><code>?v=</code> on <code>top3-chart.js</code> (12), <code>chart.css</code> (9), <code>site.css</code> and <code>site.js</code> (1) — bump on every change</td>
 </tr>
 <tr>
 <td>Tap floor</td>

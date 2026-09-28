@@ -65,17 +65,21 @@ does. Terms are the SSOT's (<a href="ssot.html"><code>10-ssot.md</code></a>); th
 <tr>
 <td><strong>The studio</strong></td>
 <td>—</td>
-<td>the sync, the pages, the documentation</td>
+<td>the data files and their converters, the pages, the documentation</td>
 </tr>
 </tbody>
 </table></div>
 <h2>2. The data — what is real, and how a figure reaches a page (R1, R6, R10)</h2>
 <ul>
-<li><strong>No figure is invented.</strong> Every number and text comes from one place, the <code>IDBCSYNC</code>
-  tab of the client's sheet (D37): the survey results, the bértábla with its Talent Insight
-  counts, the Expert Pool, the SAP catalogue, the area texts and the page copy. The sync
-  (<code>data/idbcsync.py</code>, every 15 minutes) is deterministic — the same sheet gives the same
-  site — and refuses a value it cannot read rather than guessing (R6).</li>
+<li><strong>No figure is invented.</strong> Every number and text the pages show is in two JSON files,
+  <code>data/guide-data.json</code> and <code>data/areas.json</code> — the guide's source since D48 — and each
+  traces to a client file: the bértábla with its Talent Insight counts and the Expert Pool
+  from the sheet's <code>WEB_BERTABLA_IMPORT</code> and <code>EXPERT_POOL_IMPORT</code> tabs (refreshed on demand
+  by <code>data/build-salary-data.py</code>), the survey from the research workbook, the area texts
+  and the SAP catalogue from the client's copy; the page copy is in the pages. The
+  converter is deterministic — the same sheet gives the same data — and stops on a value it
+  cannot map rather than guessing (R6). Where each value lives and how to change it:
+  <a href="developer-handover.html"><code>16-developer-handover.md</code></a> §3.</li>
 <li><strong>The survey</strong> is tabulated as twelve datasets: the whole sample (<em>Összesített adatok</em>,
   first and default — R2) and eleven areas, each with employee and employer sides and
   their crosstabs (experience band; company size). A question with no data under a chosen

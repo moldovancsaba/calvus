@@ -38,14 +38,8 @@ footer{margin-top:56px;padding-top:18px;border-top:1px solid var(--line);font-si
 <div class="wrap">
 <nav class="docnav" aria-label="Project documentation"><span class="docnav-brand">IDBC Salary Guide · documentation</span><a href="index.html">Overview</a><a href="bemutato.html">Bemutató</a><a href="brief.html">Brief</a><a href="research.html">Research</a><a href="audit.html">Audit</a><a href="sources.html">Sources & gaps</a><a href="decisions.html">Decisions</a><a href="design.html">Design</a><a href="gate.html">Gate</a><a href="client-asks.html">Register of asks</a><a href="prerequisites.html">Prerequisites</a><a href="business-logic.html">Business logic</a><a href="ssot.html">SSOT</a><a href="architecture.html">Architecture</a><a href="technical-design.html" aria-current=page>Technical design</a><a href="implementation-plan.html">Implementation plan</a><a href="token-map.html">Token map</a><a href="idbc-hu-alignment.html">idbc.hu alignment</a><a href="developer-handover.html">Developer handover</a></nav>
 <header><p class="eyebrow">IDBC Salary Guide · project documentation</p><h1>IDBC Salary Guide — technical design</h1></header>
-<p><em>The detail under <a href="architecture.html"><code>11-architecture.md</code></a>, on the PROPOSED stack. Written 2026-09-18.</em></p>
-<blockquote>
-<p><strong>Since 2026-09-28 (D47, D48) the JSON files are the source</strong>: every value the pages show is in
-<code>data/guide-data.json</code> or <code>data/areas.json</code>; salary and Expert Pool are refreshed from the sheet's
-<code>WEB_BERTABLA_IMPORT</code> and <code>EXPERT_POOL_IMPORT</code> tabs by <code>data/build-salary-data.py</code> (run on demand).
-The current JSON shape and where each value lives: <a href="developer-handover.html"><code>16-developer-handover.md</code></a> §3. What this document
-says about <code>IDBCSYNC</code> and <code>idbcsync.py</code> describes the parked setup (D37, in history at <code>7d43ed3</code>).</p>
-</blockquote>
+<p><em>The detail under <a href="architecture.html"><code>11-architecture.md</code></a>, on the PROPOSED stack. Written 2026-09-18; §3
+rewritten 2026-09-28 for D47–D48.</em></p>
 <h2>1. Page kinds → templates</h2>
 <div class="tbl"><table>
 <thead>
@@ -144,40 +138,36 @@ smaller JSON (charts, filters). Chart and tooltip code is <code>top3-chart.js</c
 </tbody>
 </table></div>
 <h2>3. Data pipeline</h2>
-<pre><code>IDBCSYNC (sheet tab) ──▶ export .xlsx ──▶ data/idbcsync.py ──▶ guide-data.json, areas.json, page texts
-                                                           └──▶ (production) split.py ──▶ data/trends-*.json,
-                                                                  salary.json, pool.json, sap-products.json,
-                                                                  exports/salary-guide-2026.xlsx
+<pre><code>sheet IDBC_bertabla: WEB_BERTABLA_IMPORT, EXPERT_POOL_IMPORT ──▶ build-salary-data.py ─┐
+research workbook (final) ──▶ build-guide-data.py + survey_edits.py ──────────────────────┤
+client copy: area texts, SAP catalogue ─────────────────────────────────────────────────────┤
+                                                                                            ▼
+                                    data/guide-data.json, data/areas.json  ◀── the pages read only these
+                                                                                            │
+                        (production) split.py ──▶ data/trends-*.json, salary.json, pool.json,
+                                                  sap-products.json, exports/salary-guide-2026.xlsx
 </code></pre>
 <ul>
-<li><strong>One source (D37).</strong> Every text and figure is one row of <code>IDBCSYNC</code>: <code>id</code> (technical,
-  hidden), <code>változó</code> (what it is), <code>érték</code> (the value — the only column read besides <code>id</code>),
-  <code>megjelenés</code> (where it shows), <code>segítség</code> (what to type). Rows the client never needs to
-  touch — survey figures, screen-reader labels, technical keys — sit in one hidden block at
-  the end; since D42 the header and footer rows and the survey texts are hidden where they
-  stand (show the row group to edit them; hiding never changes what the sync reads). Rows whose <code>id</code> starts with <code>#</code> are section headings and are ignored.
-  Each section has its own pastel background and a bold heading row (D43); formatting is never read.</li>
-<li><strong>How a row reaches a page.</strong> Data rows build <code>guide-data.json</code> and <code>areas.json</code> by id
-  pattern (<code>AREA-</code>, <code>SAL-</code>, <code>EXPERT-</code>, <code>SAPPROD-</code>, <code>SURVEY-</code>). Page texts are marked in the
-  HTML: <code>data-sync="ID"</code> on an element holding only text (a line break in the cell is a
-  <code>&lt;br&gt;</code>), <code>data-sync-attr="alt:ID;title:ID"</code> for attributes, <code>data-sync-href="tel:ID"</code> /
-  <code>"mailto:ID"</code> for contact links, and <code>/*sync:ID*/"…"</code> for a text inside a page script or
-  <code>assets/top3-chart.js</code> (a <code>{placeholder}</code> there is filled in by the page; unknown
-  placeholders are refused). Only files that change are written; a changed chart text bumps
-  <code>top3-chart.js?v=</code> on every page.</li>
-<li><strong>Validation before anything is written</strong>: every marked id exists in the sheet; numbers
-  are numbers (spaces and "Ft" tolerated), percentages 0–100, TOP3 <code>igen</code>/<code>nem</code>, media
-  <code>video</code>/<code>highlight</code>; a cell Google turned into a date, or a formula error (<code>#ERROR!</code>,
-  <code>#REF!</code> … — what a value typed with a leading <code>+</code> or <code>=</code> becomes), is refused with the row
-  named. Such values are typed with a leading apostrophe (<code>'+36 30 …</code>), the sheet's own way. A
-  cleared position (salary row, Expert Pool tile, SAP item) is dropped from the page; an
-  Expert Pool row without a count is left out with a warning.</li>
-<li><strong>The job</strong>: <code>.github/workflows/idbc-sync-bertabla.yml</code>, every 15 minutes and on
-  demand: download → <code>idbcsync.py</code> → <code>check.py</code> → commit and push only on a change. GitHub
-  runs schedules on a best-effort basis (a run can start late) and pauses scheduled
-  workflows after 60 days without repository activity.</li>
-<li><strong>Adding rows</strong> (a new position, a new SAP item) needs a new <code>id</code>, so it is a studio task
-  or needs the hidden <code>A</code> column shown; changing and clearing values never does.</li>
+<li><strong>The JSON files are the source (D48).</strong> Every value the pages show is in
+  <code>data/guide-data.json</code> or <code>data/areas.json</code>; the sheet, the workbook and the scripts only
+  feed them. Where each value lives and how to change it: <a href="developer-handover.html"><code>16-developer-handover.md</code></a> §3.1.</li>
+<li><strong>Salary and Expert Pool</strong> come from the <code>IDBC_bertabla</code> sheet: <code>build-salary-data.py</code>
+  reads the table under the <code>rekord_azonosito</code> header row of <code>WEB_BERTABLA_IMPORT</code> and the
+  <code>EXPERT_POOL_IMPORT</code> tab and rewrites <code>salary.webBertabla</code> and <code>salary.expertPool</code>, keeping
+  the rest of the file. A <code>terulet</code> value it cannot map to a Bérek area stops it; an Expert
+  Pool row without a count is skipped and printed; names are trimmed.</li>
+<li><strong>The survey</strong> comes from the client's final research workbook through
+  <code>build-guide-data.py</code> (the survey half was built from it on 2026-09-08; the workbook is not in
+  the repository).
+  The client's later decisions — the dataset names and order from <code>areas.json</code>, the three
+  employer questions added on 2026-09-25 — are in <code>survey_edits.py</code>, which the converter also
+  runs, so a rebuild keeps them.</li>
+<li><strong>Area texts and the SAP catalogue</strong> are edited in the JSON; <strong>page copy</strong> in the pages.
+  The <code>data-sync</code> attributes and <code>/*sync:…*/</code> comments in the pages are left over from the
+  parked <code>IDBCSYNC</code> setup (D37) and are read by nothing.</li>
+<li><strong>The job</strong>: <code>.github/workflows/idbc-sync-bertabla.yml</code>, on demand (Actions → Run
+  workflow): download the sheet → <code>build-salary-data.py</code> → <code>check.py</code> → commit
+  <code>guide-data.json</code> and push only when it changed.</li>
 <li><code>split.py</code> (production, to write) cuts <code>guide-data.json</code> into per-page files and builds
   the Excel (openpyxl): one sheet per bértábla area + Expert Pool + Talent Insight, with the
   same labels as the pages and the footnote.</li>

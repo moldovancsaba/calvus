@@ -58,7 +58,7 @@ studio cannot resolve without more from the client (#16 from that mail is closed
 <tr>
 <td>17</td>
 <td>"IT Contracting" as a Bérek salary segment — the bértábla sheet has no rows for it (the separate market-trends survey data does have it)</td>
-<td>IT Contracting salary figures from the client, or confirmation the segment is already folded into "IT" today. Since D37 the figures go into <code>IDBCSYNC</code> as new <code>SAL-</code> rows (new ids, so the studio adds them once the figures arrive); the area appears in the Bérek filter as soon as it has one row. <strong>Asked directly in the sheet itself</strong> on 2026-09-25 — a new tab, "HIÁNYZÓ ADATOK - kérés".</td>
+<td>IT Contracting salary figures from the client, or confirmation the segment is already folded into "IT" today. The figures go into the sheet's <code>WEB_BERTABLA_IMPORT</code> tab as new rows with <code>terulet</code> = IT Contracting; the area appears in the Bérek filter on the next sync. <strong>Asked directly in the sheet itself</strong> on 2026-09-25 — a new tab, "HIÁNYZÓ ADATOK - kérés".</td>
 </tr>
 <tr>
 <td>18</td>
@@ -175,7 +175,7 @@ studio cannot resolve without more from the client (#16 from that mail is closed
 <tr>
 <td>16</td>
 <td>Survey questions missing from the employer charts: Home office "Milyen hatással van a jelenlegi home office policy a toborzás sikerességére?" (every area); AI "Rendelkezik a vállalatod dedikált költségkerettel…?" and "Mire használja a vállalatod AI eszközöket a toborzási folyamat során?" (non-IT areas)</td>
-<td>Fixed in <code>IDBCSYNC</code>, D40. The 2026-09-22 answer ("absent from the parsed data") was wrong: the answers were there for all 12 data sets; only the rows that put a question into a topic were missing. Four topic rows added (hidden, technical); the questions now show in every area and company-size view</td>
+<td>Fixed, D40; since D48 kept in <code>data/survey_edits.py</code>. The answers were in the survey data for every area all along (the 2026-09-22 answer, "absent from the parsed data", was wrong); only their place in the topics was missing. They show in every area and company-size view</td>
 </tr>
 <tr>
 <td>19</td>
@@ -185,7 +185,7 @@ studio cannot resolve without more from the client (#16 from that mail is closed
 <tr>
 <td>20</td>
 <td>Whether BSC's "Sales Project Manager" showing "Manager" is Drive-editable</td>
-<td>Yes. Since D37 it is <code>IDBCSYNC</code> row 2936 (<code>SAL-BUSINESS-SERVICE-CENTER-BSC-039-SZINT</code>, visible, value <code>Manager</code>); clearing the cell removes the grey line on the next sync (an empty level is accepted, checked), D34. Left as it is until the client decides</td>
+<td>Yes: the <code>IDBC_bertabla</code> sheet, tab <code>WEB_BERTABLA_IMPORT</code>, row 99, column C (<code>tapasztalati_szint</code> = <code>Manager</code>). Clearing the cell and running the sync removes the grey line; an empty level is accepted (D34). Left as it is until the client decides</td>
 </tr>
 <tr>
 <td>22</td>

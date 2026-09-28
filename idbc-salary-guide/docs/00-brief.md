@@ -1,8 +1,8 @@
 # IDBC Salary Guide — brief
 
 *For a first reader — client, IDBC staff, a developer picking up the build: what this is,
-what is real, where it stands. Written 2026-09-18; the dated trail is the process log in
-`README.md` and the change notes in `SOURCES-AND-GAPS.md`.*
+what is real, where it stands. Written 2026-09-18, updated 2026-09-28; the dated trail is the
+process log in `README.md` and the change notes in `SOURCES-AND-GAPS.md`.*
 
 ## The client
 
@@ -22,18 +22,20 @@ place, and write down each gap between the spec and the data instead of papering
 
 ## What the prototype is
 
-Seven static pages on GitHub Pages, all reading one JSON built from the client's
-workbooks by two converters in `data/`:
+Eight static pages on GitHub Pages, in idbc.hu's design (D39). Every value they show comes
+from two JSON files, `data/guide-data.json` and `data/areas.json` — the source since D48; the
+client's sheet, research workbook and copy feed them (`16-developer-handover.md` §3):
 
 | Page | Content | Data |
 |---|---|---|
-| Piaci trendek (`index.html`) | 4 topics × employee/employer, whole sample, segment filters; 11 area cards | survey: 12 datasets (whole sample + 11 areas), 12 employee and 13 employer questions per set |
+| Piaci trendek (`index.html`) | 4 topics × employee/employer, whole sample, segment filters; 11 area cards | survey: 12 datasets (whole sample + 11 areas); 12 employee and 13 employer questions in the general set, 16 and 13 in the IT + Contracting set |
 | Területi összefoglaló (`terulet/`) | one template, 11 areas by `?terulet=`: summary text, video or key-thought placeholder, that area's results | same, per area |
-| Bérek (`berezes/`) | 13 areas: TOP3 point-line chart with LinkedIn market counts, full table with levels | bértábla: 432 rows, 39 TOP3 rows; Talent Insight counts 37/39 |
-| SAP (`sap/`) | client's trend copy, 20-item product catalogue, TOP3 chart, table | bértábla SAP rows (12) |
-| Expert Pool (`expert-pool/`) | Expert Community copy, join and contact forms (inert), 15 position tiles with IDBC and market counts | pool sheet + Talent Insight 13/15 |
+| Bérek (`berezes/`) | 12 areas: TOP3 point-line chart with LinkedIn market counts, full table with levels | bértábla: 432 rows in 13 areas (SAP on its own page), 39 TOP3 rows, Talent Insight counts 39/39 |
+| SAP (`sap/`) | client's trend copy, product catalogue (5 categories, 25 items), TOP3 chart, table | bértábla SAP rows (12) |
+| Expert Pool (`expert-pool/`) | Expert Community copy, join and contact forms (inert), 29 position tiles (IT 15, Non-IT 14) with the IDBC bar and market counts | pool sheet, Talent Insight 29/29; Qualified Person waits for its count |
 | Esettanulmányok (`esettanulmanyok/`) | two case studies as articles, video placeholders | client copy |
 | Regisztráció (`regisztracio/`) | the client's field list, inert | — |
+| Kapcsolat (`kapcsolat/`) | the Ajánlatkérés page the header button opens (D30), form inert | — |
 
 Live: <https://moldovancsaba.github.io/calvus/idbc-salary-guide/>
 
@@ -55,7 +57,8 @@ Live: <https://moldovancsaba.github.io/calvus/idbc-salary-guide/>
 
 | | |
 |---|---|
-| Phase | fine-tuning with the client — 55 commits since 2026-07-30; three client feedback rounds in September |
+| Phase | **ready for the developers (2026-09-28)** — every client correction up to 2026-09-25 is in, on idbc.hu's design; six client feedback rounds in September |
 | Customer side | data provenance and gaps documented from day one; presentation (`bemutato.html`), decision register, gate and client-asks list written 2026-09-18 |
 | Technical side | proposed — SSOT, architecture with a **PROPOSED** stack, technical design, implementation plan, token map (`10`–`14`), 2026-09-18; the client's own spec assumed WordPress + Google Sheets API + a paywall and that assumption is examined there |
-| Open with the client | `08-client-asks.md` |
+| Handover | `16-developer-handover.md`: running it, where every value lives, the interactive parts, the path to production |
+| Open with the client | content still to come and the decisions before publication — `19-implementation-prerequisites.md`; the register of asks — `08-client-asks.md` |

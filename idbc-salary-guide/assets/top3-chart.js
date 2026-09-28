@@ -6,7 +6,8 @@
   const COLOR_IDBC = '#4ca283';  // IDBC szakértői által javasolt bér
   const COLOR_MAX = '#35715c';   // jelöltek által elvárt bér
 
-  // The texts below carry a sync marker: they come from the IDBCSYNC sheet (data/idbcsync.py rewrites them).
+  // The chart's own texts. Their /*sync:…*/ markers are left over from the parked IDBCSYNC setup (D47);
+  // nothing reads them — edit the strings here.
   const LABEL = {
     min: /*sync:SHARED-CHART-MIN*/"Vállalatok által kínált bér",
     idbc: /*sync:SHARED-CHART-IDBC*/"IDBC szakértői által javasolt bér",

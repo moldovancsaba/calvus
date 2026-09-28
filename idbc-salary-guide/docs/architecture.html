@@ -194,11 +194,12 @@ paywall yes, as WordPress users.</p>
 <li><strong>Teaser → registration → guide</strong>: public teaser (the client's home mockup) → register
    (the field list, D19 page) → e-mail confirmation → any guide page. Logged-out hits on
    guide URLs redirect to registration and back.</li>
-<li><strong>Data update</strong>: the client edits the <code>IDBCSYNC</code> tab of <code>IDBC_bertabla</code> → within about
-   15 minutes a scheduled job rebuilds the data and page texts (<code>data/idbcsync.py</code>), gates
-   them and deploys; a value the converter cannot accept (a date where text belongs, a word
-   in a salary, an unknown placeholder) stops the job and the live site keeps its last good
-   version (D37).</li>
+<li><strong>Data update</strong>: the pages read two JSON files, the source since D48. Salary and Expert
+   Pool: the client edits the <code>WEB_BERTABLA_IMPORT</code> or <code>EXPERT_POOL_IMPORT</code> tab of
+   <code>IDBC_bertabla</code> → someone runs the sync (on demand), which rebuilds that half of
+   <code>guide-data.json</code> (<code>data/build-salary-data.py</code>), gates it and deploys; a value the converter
+   cannot map stops the job and the live site keeps its last good version. Survey, area texts,
+   SAP catalogue: edited in the JSON (the survey workbook is final); page copy: in the pages.</li>
 <li><strong>Filter</strong>: client-side as in the prototype; the page loads only its own JSON slice.</li>
 <li><strong>Excel download</strong>: link to the generated file; event to GTM; login required.</li>
 <li><strong>Ajánlatkérés / join</strong>: form → e-mail to IDBC + entry stored + CRM webhook.</li>
@@ -311,7 +312,7 @@ are a developer task with a checklist (<code>12</code> §4); monitoring is the h
 <td>ADR-2</td>
 <td>Build-time data import, not a runtime Sheets API</td>
 <td>runtime API (the spec)</td>
-<td>§3: data is periodic and needs transformation; the conversion is deterministic and validated before anything is published. <strong>Upgrade path taken 2026-09-25 (D35, then D37)</strong>: the prototype is built from one sheet tab, <code>IDBCSYNC</code>, by <code>.github/workflows/idbc-sync-bertabla.yml</code> — every 15 minutes and on demand it downloads <code>IDBC_bertabla</code> through its public export URL (the sheet is shared "anyone with the link", so no service-account credentials), runs <code>data/idbcsync.py</code> (which writes <code>guide-data.json</code>, <code>areas.json</code> and every marked page text), gates the result with <code>check.py</code>, and pushes to <code>main</code> only when something changed. Still build-time: a reader never waits on Google, a sheet error never reaches the page, and every change is a reviewable commit. Production keeps the same shape (a scheduled import into the CMS's data files), with the sheet restricted to named editors — "anyone with the link can edit" is acceptable for a prototype, not for a published guide.</td>
+<td>§3: data is periodic and needs transformation; the conversion is deterministic and validated before anything is published. <strong>Upgrade path taken 2026-09-25 (D35, then D37)</strong>: the prototype is built from one sheet tab, <code>IDBCSYNC</code>, by <code>.github/workflows/idbc-sync-bertabla.yml</code> — every 15 minutes and on demand it downloads <code>IDBC_bertabla</code> through its public export URL (the sheet is shared "anyone with the link", so no service-account credentials), runs <code>data/idbcsync.py</code> (which writes <code>guide-data.json</code>, <code>areas.json</code> and every marked page text), gates the result with <code>check.py</code>, and pushes to <code>main</code> only when something changed. Still build-time: a reader never waits on Google, a sheet error never reaches the page, and every change is a reviewable commit. Production keeps the same shape (a scheduled import into the CMS's data files), with the sheet restricted to named editors — "anyone with the link can edit" is acceptable for a prototype, not for a published guide. <strong>Reverted 2026-09-28 (D47–D48)</strong>: at the owner's request the guide is back on the previous structure — the two JSON files are the source; salary and Expert Pool are refreshed on demand from the sheet's <code>WEB_BERTABLA_IMPORT</code> and <code>EXPERT_POOL_IMPORT</code> tabs by <code>data/build-salary-data.py</code>; the <code>IDBCSYNC</code> setup is parked. Still build-time, still gated.</td>
 </tr>
 <tr>
 <td>ADR-3</td>

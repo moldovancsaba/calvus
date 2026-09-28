@@ -1,12 +1,7 @@
 # IDBC Salary Guide — technical design
 
-*The detail under `11-architecture.md`, on the PROPOSED stack. Written 2026-09-18.*
-
-> **Since 2026-09-28 (D47, D48) the JSON files are the source**: every value the pages show is in
-> `data/guide-data.json` or `data/areas.json`; salary and Expert Pool are refreshed from the sheet's
-> `WEB_BERTABLA_IMPORT` and `EXPERT_POOL_IMPORT` tabs by `data/build-salary-data.py` (run on demand).
-> The current JSON shape and where each value lives: `16-developer-handover.md` §3. What this document
-> says about `IDBCSYNC` and `idbcsync.py` describes the parked setup (D37, in history at `7d43ed3`).
+*The detail under `11-architecture.md`, on the PROPOSED stack. Written 2026-09-18; §3
+rewritten 2026-09-28 for D47–D48.*
 
 ## 1. Page kinds → templates
 
@@ -38,40 +33,36 @@ smaller JSON (charts, filters). Chart and tooltip code is `top3-chart.js` unchan
 ## 3. Data pipeline
 
 ```
-IDBCSYNC (sheet tab) ──▶ export .xlsx ──▶ data/idbcsync.py ──▶ guide-data.json, areas.json, page texts
-                                                           └──▶ (production) split.py ──▶ data/trends-*.json,
-                                                                  salary.json, pool.json, sap-products.json,
-                                                                  exports/salary-guide-2026.xlsx
+sheet IDBC_bertabla: WEB_BERTABLA_IMPORT, EXPERT_POOL_IMPORT ──▶ build-salary-data.py ─┐
+research workbook (final) ──▶ build-guide-data.py + survey_edits.py ──────────────────────┤
+client copy: area texts, SAP catalogue ─────────────────────────────────────────────────────┤
+                                                                                            ▼
+                                    data/guide-data.json, data/areas.json  ◀── the pages read only these
+                                                                                            │
+                        (production) split.py ──▶ data/trends-*.json, salary.json, pool.json,
+                                                  sap-products.json, exports/salary-guide-2026.xlsx
 ```
 
-- **One source (D37).** Every text and figure is one row of `IDBCSYNC`: `id` (technical,
-  hidden), `változó` (what it is), `érték` (the value — the only column read besides `id`),
-  `megjelenés` (where it shows), `segítség` (what to type). Rows the client never needs to
-  touch — survey figures, screen-reader labels, technical keys — sit in one hidden block at
-  the end; since D42 the header and footer rows and the survey texts are hidden where they
-  stand (show the row group to edit them; hiding never changes what the sync reads). Rows whose `id` starts with `#` are section headings and are ignored.
-  Each section has its own pastel background and a bold heading row (D43); formatting is never read.
-- **How a row reaches a page.** Data rows build `guide-data.json` and `areas.json` by id
-  pattern (`AREA-`, `SAL-`, `EXPERT-`, `SAPPROD-`, `SURVEY-`). Page texts are marked in the
-  HTML: `data-sync="ID"` on an element holding only text (a line break in the cell is a
-  `<br>`), `data-sync-attr="alt:ID;title:ID"` for attributes, `data-sync-href="tel:ID"` /
-  `"mailto:ID"` for contact links, and `/*sync:ID*/"…"` for a text inside a page script or
-  `assets/top3-chart.js` (a `{placeholder}` there is filled in by the page; unknown
-  placeholders are refused). Only files that change are written; a changed chart text bumps
-  `top3-chart.js?v=` on every page.
-- **Validation before anything is written**: every marked id exists in the sheet; numbers
-  are numbers (spaces and "Ft" tolerated), percentages 0–100, TOP3 `igen`/`nem`, media
-  `video`/`highlight`; a cell Google turned into a date, or a formula error (`#ERROR!`,
-  `#REF!` … — what a value typed with a leading `+` or `=` becomes), is refused with the row
-  named. Such values are typed with a leading apostrophe (`'+36 30 …`), the sheet's own way. A
-  cleared position (salary row, Expert Pool tile, SAP item) is dropped from the page; an
-  Expert Pool row without a count is left out with a warning.
-- **The job**: `.github/workflows/idbc-sync-bertabla.yml`, every 15 minutes and on
-  demand: download → `idbcsync.py` → `check.py` → commit and push only on a change. GitHub
-  runs schedules on a best-effort basis (a run can start late) and pauses scheduled
-  workflows after 60 days without repository activity.
-- **Adding rows** (a new position, a new SAP item) needs a new `id`, so it is a studio task
-  or needs the hidden `A` column shown; changing and clearing values never does.
+- **The JSON files are the source (D48).** Every value the pages show is in
+  `data/guide-data.json` or `data/areas.json`; the sheet, the workbook and the scripts only
+  feed them. Where each value lives and how to change it: `16-developer-handover.md` §3.1.
+- **Salary and Expert Pool** come from the `IDBC_bertabla` sheet: `build-salary-data.py`
+  reads the table under the `rekord_azonosito` header row of `WEB_BERTABLA_IMPORT` and the
+  `EXPERT_POOL_IMPORT` tab and rewrites `salary.webBertabla` and `salary.expertPool`, keeping
+  the rest of the file. A `terulet` value it cannot map to a Bérek area stops it; an Expert
+  Pool row without a count is skipped and printed; names are trimmed.
+- **The survey** comes from the client's final research workbook through
+  `build-guide-data.py` (the survey half was built from it on 2026-09-08; the workbook is not in
+  the repository).
+  The client's later decisions — the dataset names and order from `areas.json`, the three
+  employer questions added on 2026-09-25 — are in `survey_edits.py`, which the converter also
+  runs, so a rebuild keeps them.
+- **Area texts and the SAP catalogue** are edited in the JSON; **page copy** in the pages.
+  The `data-sync` attributes and `/*sync:…*/` comments in the pages are left over from the
+  parked `IDBCSYNC` setup (D37) and are read by nothing.
+- **The job**: `.github/workflows/idbc-sync-bertabla.yml`, on demand (Actions → Run
+  workflow): download the sheet → `build-salary-data.py` → `check.py` → commit
+  `guide-data.json` and push only when it changed.
 - `split.py` (production, to write) cuts `guide-data.json` into per-page files and builds
   the Excel (openpyxl): one sheet per bértábla area + Expert Pool + Talent Insight, with the
   same labels as the pages and the footnote.

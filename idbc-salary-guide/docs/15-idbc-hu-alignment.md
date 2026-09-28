@@ -6,6 +6,10 @@ site (home, `/go/sap/`, `/talent/`, a blog article, `/kapcsolat/`) at 1440 and 3
 Phase 0 applied the same day (D38); phases 1–6 delivered the same day on the §5
 recommendations (D39) — see §10.*
 
+*Since 2026-09-28 (D47–D48) the texts this plan placed in the `IDBCSYNC` sheet tab (the footer
+facts, the new footer rows) live in the pages' HTML, and `IDBCSYNC` is parked; where §4 and §6–§10 mention it, they record
+how the work was done at the time. The design itself is unchanged and live.*
+
 ## 1. Why
 
 The guide is meant to live inside idbc.hu (ADR-1, `11-architecture.md`); the client's own

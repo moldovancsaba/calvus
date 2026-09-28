@@ -265,3 +265,12 @@ order, the three employer questions), kept in `data/survey_edits.py` so a rebuil
 Everything the pages read now equals the version the client reviewed on 2026-09-25.
 `16-developer-handover.md` rewritten for this setup.
 
+**2026-09-28 — documentation brought up to the JSON-first setup.** Every current-state document
+now describes where the data lives today: the brief (eight pages, current figures, ready for the
+developers), the business logic, the SSOT (glossary, dataset keys, the data model with the source of
+each entity), the architecture's data-update flow and ADR-2, the technical design's pipeline, the
+register of asks (#16, #17, #20) and the prerequisites (C-7, C-8, C-10) with the sheet rows to edit,
+and a note on the idbc.hu plan. Code comments that named `IDBCSYNC` in four pages and the chart
+script corrected (comments only). The decision register and the dated change notes keep their
+history as written.
+

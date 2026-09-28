@@ -332,7 +332,7 @@
     function escapeHtml(s) {
       return String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
     }
-    // Sheet texts with {placeholders} (IDBCSYNC): fill them in without touching anything else.
+    // Texts with {placeholders}: fill them in without touching anything else.
     const fill = (s, v) => s.replace(/\{(\w+)\}/g, (m, k) => (k in v ? v[k] : m));
     function fmtHuf(n) {
       return (n === null || n === undefined) ? '–' : new Intl.NumberFormat('hu-HU').format(n) + ' Ft';
