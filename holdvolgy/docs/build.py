@@ -24,6 +24,7 @@ PAGES = [  # (source, output, nav label)
     ("09-latogatas-build.md", "latogatas-build.html", "Látogatás build"),
     ("10-shop-build.md", "shop-build.html", "Shop build"),
     ("11-gate-sweep.md", "gate-sweep.html", "Gate sweep"),
+    ("15-variant-b.md", "variant-b.html", "Variant B"),
     ("09-business-logic.md", "business-logic.html", "Business logic"),
     ("10-ssot.md", "ssot.html", "SSOT"),
     ("11-architecture.md", "architecture.html", "Architecture"),
@@ -71,7 +72,7 @@ def render(src, out, label):
 def nav_html(current):
     nav = "".join(f'<a href="{o}"{" aria-current=page" if o == current else ""}>{l}</a>' for _, o, l in PAGES)
     nav = nav.replace('<a href="layouts.html"', f'<a href="design-system.html"{" aria-current=page" if current == "design-system.html" else ""}>Design system</a><a href="layouts.html"', 1)
-    return nav.replace('<a href="plan.html"', '<a href="bemutato.html">Bemutató</a><a href="plan.html"', 1)
+    return nav.replace('<a href="plan.html"', '<a href="bemutato.html">Bemutató</a><a href="osszehasonlitas.html">A / B</a><a href="plan.html"', 1)
 
 def sync_static_nav():
     """Hand-written doc pages (design-system.html) get the same navigation as the generated ones, on every build."""

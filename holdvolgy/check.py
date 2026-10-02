@@ -6,7 +6,9 @@ Exit 1 on any finding. Run before every push (CLAUDE.md rule 2).
 3. every docs page links every other docs page
 4. no stale-state phrase on any site page or docs index (things that were true once:
    "in Phase N", "coming soon", "for approval", "not yet built", placeholders)
-5. every site page carries the current prototype banner, none the old one
+5. every site page carries the current prototype banner, none the old one — one banner pair per variant
+   (A at the project root, B in b/; B's says "B változat" / "Version B")
+6. Version B stays inside B (no link into A's pages; shared assets only), carries noindex, and no A page does
 """
 import re, sys, pathlib
 ROOT = pathlib.Path(__file__).resolve().parent.parent
@@ -34,7 +36,7 @@ for f in ALL:
         if tgt is not None and m.group(2) not in ids[tgt]: findings.append(f"missing anchor  {f.relative_to(ROOT)} → {m.group(1)}#{m.group(2)}")
 
 # 3 — every documentation page links every other; client-facing pages carry no documentation menu by design
-CLIENT_PAGES = {"bemutato"}
+CLIENT_PAGES = {"bemutato", "osszehasonlitas"}
 names = [p.stem for p in DOCS if p.stem not in CLIENT_PAGES]
 for p in DOCS:
     if p.stem in CLIENT_PAGES: continue
@@ -55,14 +57,32 @@ for f in SCAN:
 
 # 5 — one banner, current, everywhere (the redirect stub has none)
 site_pages = [p for p in SITE if p.name != "index.html" or p.parent.name != "borok"]
-banners = {}
-for p in site_pages:
-    m = re.search(r'<p class="proto">(.*?)</p>', p.read_text(encoding="utf-8"))
-    banners.setdefault(m.group(1) if m else "MISSING", []).append(p)
-if len(banners) > 2 or "MISSING" in banners:
-    findings.append("banner  " + "; ".join(f"{len(v)} pages: {k[:60]}" for k, v in banners.items()))
+is_b = lambda p: p.relative_to(ROOT/"holdvolgy").parts[0] == "b"
+for variant in (False, True):
+    banners = {}
+    for p in site_pages:
+        if is_b(p) != variant: continue
+        m = re.search(r'<p class="proto">(.*?)</p>', p.read_text(encoding="utf-8"))
+        banners.setdefault(m.group(1) if m else "MISSING", []).append(p)
+    if len(banners) > 2 or "MISSING" in banners:
+        findings.append(("banner B  " if variant else "banner  ") + "; ".join(f"{len(v)} pages: {k[:60]}" for k, v in banners.items()))
+    if variant and any(not k.startswith(("B változat", "Version B")) for k in banners):
+        findings.append("banner B  a Version B page does not say it is Version B: " + "; ".join(k[:40] for k in banners))
 
-print(f"checked {len(ALL)} files, {refs} references, {len(SCAN)} stale-scan targets, {len(site_pages)} banners")
+# 6 — B is a closed tree: every relative link stays in b/ or goes to the shared assets; noindex on B, never on A
+for p in site_pages:
+    t = p.read_text(encoding="utf-8")
+    has_noindex = 'name="robots" content="noindex"' in t
+    if is_b(p) != has_noindex: findings.append(f"noindex  {p.relative_to(ROOT)}: {'B page without' if is_b(p) else 'A page with'} noindex")
+    if not is_b(p): continue
+    for m in re.finditer(r'(?:href|src)="([^"#?]+)(?:[#?][^"]*)?"', t):
+        h = m.group(1).strip()
+        if h.startswith(("http", "mailto:", "tel:", "data:", "javascript:")): continue
+        tgt = (p.parent / h).resolve()
+        if not any(d in tgt.parents for d in (ROOT/"holdvolgy"/"b", ROOT/"holdvolgy"/"assets")):  # parents, not a string prefix: "b" would match "borok.html"
+            findings.append(f"B leaves B  {p.relative_to(ROOT)} → {h}"); break
+
+print(f"checked {len(ALL)} files, {refs} references, {len(SCAN)} stale-scan targets, {len(site_pages)} banners (A and B)")
 for x in findings: print("  ", x)
 print("GATE:", "CLEAN" if not findings else f"{len(findings)} FINDINGS")
 sys.exit(1 if findings else 0)

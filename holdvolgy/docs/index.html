@@ -46,7 +46,7 @@ pre code{background:none;padding:0;font-size:inherit}
 </head>
 <body>
 <div class="wrap">
-<nav class="docnav" aria-label="Project documentation"><span class="docnav-brand">Holdvölgy · dokumentáció</span><a href="index.html" aria-current=page>Overview</a><a href="brief.html">Brief</a><a href="bemutato.html">Bemutató</a><a href="plan.html">Plan</a><a href="benchmarks.html">Benchmarks</a><a href="audit.html">Brand & site audit</a><a href="assets.html">Assets</a><a href="decisions.html">Decisions</a><a href="design-system.html">Design system</a><a href="layouts.html">Layouts</a><a href="home-build.html">Home build</a><a href="birtok-build.html">Birtok build</a><a href="aszu-build.html">Aszú build</a><a href="latogatas-build.html">Látogatás build</a><a href="shop-build.html">Shop build</a><a href="gate-sweep.html">Gate sweep</a><a href="business-logic.html">Business logic</a><a href="ssot.html">SSOT</a><a href="architecture.html">Architecture</a><a href="technical-design.html">Technical design</a><a href="implementation-plan.html">Implementation plan</a><a href="token-map.html">Token map</a></nav>
+<nav class="docnav" aria-label="Project documentation"><span class="docnav-brand">Holdvölgy · dokumentáció</span><a href="index.html" aria-current=page>Overview</a><a href="brief.html">Brief</a><a href="bemutato.html">Bemutató</a><a href="osszehasonlitas.html">A / B</a><a href="plan.html">Plan</a><a href="benchmarks.html">Benchmarks</a><a href="audit.html">Brand & site audit</a><a href="assets.html">Assets</a><a href="decisions.html">Decisions</a><a href="design-system.html">Design system</a><a href="layouts.html">Layouts</a><a href="home-build.html">Home build</a><a href="birtok-build.html">Birtok build</a><a href="aszu-build.html">Aszú build</a><a href="latogatas-build.html">Látogatás build</a><a href="shop-build.html">Shop build</a><a href="gate-sweep.html">Gate sweep</a><a href="variant-b.html">Variant B</a><a href="business-logic.html">Business logic</a><a href="ssot.html">SSOT</a><a href="architecture.html">Architecture</a><a href="technical-design.html">Technical design</a><a href="implementation-plan.html">Implementation plan</a><a href="token-map.html">Token map</a></nav>
 <header><p class="eyebrow">Holdvölgy · project documentation</p><h1>Holdvölgy 2026 — project documentation</h1></header>
 <p>Owner directive 2026-09-16: the whole process is documented next to the project —
 research, findings, decisions, assets, and every build round. This folder is that
@@ -62,6 +62,10 @@ record. Each file is dated inside; this index is the process log.</p>
 <tr>
 <td><code>bemutato.html</code></td>
 <td><strong>A birtoknak szóló bemutató, magyarul</strong> — a birtok saját arculatában: hét lépés az élő oldalakkal, mi valódi, mit kérünk, hogyan tovább</td>
+</tr>
+<tr>
+<td><code>osszehasonlitas.html</code></td>
+<td><strong>A és B változat, magyarul</strong> — ugyanaz az oldal két formanyelvvel, egymás mellett, élőben; elemről elemre, mért kontraszttal és súllyal; a döntés három útja</td>
 </tr>
 <tr>
 <td><a href="brief.html"><code>00-brief.md</code></a></td>
@@ -98,6 +102,10 @@ record. Each file is dated inside; this index is the process log.</p>
 <tr>
 <td><code>assets-used.md</code></td>
 <td>Every asset fetched for the build, its source URL, original and derivative sizes</td>
+</tr>
+<tr>
+<td><a href="variant-b.html"><code>15-variant-b.md</code></a></td>
+<td><strong>Variant B</strong> — the same site in the live holdvolgy.com's original design language: what was measured, how it is built beside A without changing A, what it deliberately does not copy, verification</td>
 </tr>
 <tr>
 <td><a href="gate-sweep.html"><code>11-gate-sweep.md</code></a></td>
@@ -315,7 +323,20 @@ The proposed stack — stay on WordPress and WooCommerce, replace Elementor with
 theme transcribed from the prototype, stored-content multilingual, CDN, monitoring — is
 in <a href="architecture.html"><code>11-architecture.md</code></a> §10–11 in status <strong>PROPOSED</strong>; nothing is decided with the
 client yet. The docs renderer's page list and navigation grew by six pages.</p>
-<p><strong>Next.</strong> Client review of the whole; the stack decision and who builds (blocked
+<p><strong>2026-10-02 — Variant B, the original design language (D21, D22).</strong> The client asked to
+see a variant in the original design language and to compare the two. The live site's
+language was measured (computed styles: Didot caps, the champagne gradient
+<code>#B8A689 → #E0D2BB → #BAA793</code>, ghost buttons, the 40 × 100 px edge cart tab, the 52 px
+marquee band, the taupe hero wash, the grey mist and footer band) and built as a layer
+beside A in <code>holdvolgy/b/</code> — 76 pages, HU and EN, from the same generator and content;
+A's 77 pages are byte-identical to before. It does not copy the original's legibility
+defects (white on champagne 2.4 : 1, 11–12 px copy). The gate now checks B as its own
+tree (own banners, <code>noindex</code>, no link into A). The comparison page puts A and B side by
+side live, with the measurements (<a href="variant-b.html"><code>15-variant-b.md</code></a>, <code>osszehasonlitas.html</code>). Found by
+looking: Bodoni Moda's display optical size makes uppercase look detached on screen, so
+B caps it. Not done: the live storefront in <code>customer.direct</code> still shows A; B is not
+pushed.</p>
+<p><strong>Next.</strong> Client review of the whole and the A / B choice; the stack decision and who builds (blocked
 register in <code>13</code>); then the items in §6 of the plan as they arrive.</p>
 <script>(function(){function f(){document.querySelectorAll('.scale-d').forEach(function(e){e.style.setProperty('--w',e.clientWidth)});document.querySelectorAll('.scale-p').forEach(function(e){e.style.setProperty('--pw',e.clientWidth)})}f();addEventListener('resize',f)})();</script>
 <footer>Holdvölgy · dokumentáció, 2026</footer>

@@ -24,10 +24,10 @@ for g in GATES:
     if r.returncode != 0:
         failed.append(g); print(r.stdout)
 
-# Client-facing presentations (bemutato.html / presentation.html) carry no company name and no
+# Client-facing presentations (bemutato.html / presentation.html / osszehasonlitas.html) carry no company name and no
 # internal-documentation link — the client sees the product, not the workshop (owner rule, 2026-09-20).
 import re as _re2
-for p in list(ROOT.rglob("bemutato.html")) + list(ROOT.rglob("presentation.html")):
+for p in list(ROOT.rglob("bemutato.html")) + list(ROOT.rglob("presentation.html")) + list(ROOT.rglob("osszehasonlitas.html")):
     if "node_modules" in p.parts: continue
     t2 = p.read_text(encoding="utf-8")
     if "Calvus" in t2: failed.append(f"{p.relative_to(ROOT)}: company name in a client-facing document")

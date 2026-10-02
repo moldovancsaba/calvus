@@ -472,6 +472,76 @@ dialog{border:0;padding:0;background:transparent;max-width:none;max-height:none}
 .age{margin:auto;width:min(100% - 32px,440px);background:var(--hv-ground);border:1px solid var(--hv-line);padding:32px 28px;text-align:center} .age h2{font-size:28px;margin:12px 0 8px} .age p{color:var(--hv-muted);margin:0 0 20px} .age .row{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
 """
 
+# Version B — the design language of the live holdvolgy.com (docs/02, docs/15): the same pages, content and
+# navigation as A, dressed in the original's champagne-metal gradient, taupe hero wash, uppercase Didot-style display,
+# tracked small sans, ghost buttons, edge cart tab and grey footer band. Measured values: docs/15-variant-b.md.
+# Built as a layer over CSS so A stays byte-identical; only the home hero, cart, footer and age gate differ in markup.
+CSS_B = r"""
+/* ---- Version B ---- */
+:root{--hv-champ:linear-gradient(90deg,#B8A689 2.08%,#E0D2BB 31.97%,#BAA793 100%);--hv-champ-v:linear-gradient(180deg,#B8A689 2.08%,#E0D2BB 31.97%,#BAA793 100%);--hv-wash:linear-gradient(135deg,#BDAF98 0%,#D4C9B7 46%,#C3B59F 100%);--hv-mist:linear-gradient(358deg,rgba(245,245,245,0) 1.48%,rgba(245,245,245,.8) 12.64%,rgba(231,231,230,.8) 23.8%,rgba(217,216,215,.8) 31.41%,rgba(245,245,245,.8) 63.88%,rgba(245,245,245,0) 98.88%);--hv-radius:0}
+html{font-variation-settings:"opsz" 30} /* Bodoni Moda at its display optical size has hairlines so thin that capitals look detached on screen; a sturdier cut keeps the high contrast */
+body{background:#fff;font-size:14px;letter-spacing:.04em}
+h1,h2{text-transform:uppercase;letter-spacing:0;line-height:1.14}
+.proto{background:var(--hv-ink);color:#F3EFE8;letter-spacing:.04em}
+.btn{border:0;background:var(--hv-champ);color:var(--hv-ink);padding:12px 30px;font-weight:500;letter-spacing:.1em;border-radius:0}
+.btn:hover{background:var(--hv-ink);color:#fff}
+.btn-2{background:transparent;border:1px solid var(--hv-ink)} .btn-2:hover{background:var(--hv-ink);color:#fff}
+.btn-w{background:transparent;border:1px solid #fff;color:#fff} .btn-w:hover{background:#fff;color:var(--hv-ink)}
+.btn-3,.btn-3:hover{background:none;border:0;padding:0;font-size:14px;letter-spacing:.1em;font-weight:500;color:var(--hv-accent-deep)} .btn-3:hover{color:var(--hv-ink)}
+.label,.eyebrow{letter-spacing:.1em}
+/* header: white, tall, tracked caps; the cart is the champagne tab on the right edge */
+.hd{background:#fff;backdrop-filter:none;border-bottom:0;box-shadow:0 1px 0 var(--hv-line-soft)}
+.wordmark{letter-spacing:.14em}
+.hd .cart{display:none}
+@media(min-width:1024px){
+ .hd .wrap{min-height:104px} .hd nav{gap:32px}
+ .hd nav a.top{font-size:12px;letter-spacing:.1em;color:var(--hv-ink);border-bottom:1px solid transparent} .hd nav a.top:hover,.hd nav>div:focus-within a.top{border-color:var(--hv-accent)}
+ .panel b{text-transform:uppercase;letter-spacing:.06em;font-size:15px}
+ .hd .cart{display:grid;position:fixed;right:0;top:calc(50% - 50px);z-index:35;width:40px;height:100px;border:0;background:var(--hv-champ-v);color:var(--hv-ink);place-items:center;box-shadow:0 6px 18px rgba(29,29,27,.18)}
+ .cart .cnt{position:absolute;left:0;top:-30px;width:40px;height:28px;display:grid;place-items:center;background:#fff;color:var(--hv-ink);font-size:11px;letter-spacing:0;box-shadow:0 6px 18px rgba(29,29,27,.18)}
+}
+/* home hero: taupe wash, uppercase title, monochrome collage in hairline frames */
+.hero.hb{height:auto;background:var(--hv-wash);padding:44px 0 52px;overflow:hidden} .hero.hb::after{display:none}
+.hero.hb .wrap{position:static;color:var(--hv-ink);display:grid;gap:36px;align-items:center}
+.hb h1{color:var(--hv-ink);font-size:clamp(38px,6.4vw,76px);max-width:none;line-height:1.06}
+.hb .tag{font-size:13px;letter-spacing:.1em;text-transform:uppercase;margin:18px 0 0;max-width:36ch;color:var(--hv-ink)}
+.hb .row{margin-top:28px} .hb .btn-w{border-color:var(--hv-ink);color:var(--hv-ink)} .hb .btn-w:hover{background:var(--hv-ink);color:#fff}
+.collage{display:grid;grid-template-columns:.78fr 1.1fr .78fr;gap:10px;align-items:center;position:relative;margin-top:30px}
+.collage figure{margin:0;border:1px solid rgba(255,255,255,.92);background:#cfc4b2;overflow:hidden} .collage img{position:static;inset:auto;width:100%;height:100%;object-fit:cover;filter:grayscale(1) contrast(1.05)}
+.collage .c1,.collage .c3{aspect-ratio:3/4} .collage .c2{aspect-ratio:3/4.3}
+.seal{position:absolute;right:-4px;top:-46px;width:92px;height:92px}
+@media(min-width:768px){.hero.hb{padding:64px 0 72px} .hero.hb .row .btn-w{display:inline-flex}}
+@media(min-width:1024px){.hero.hb{min-height:720px;display:grid;align-items:center;padding:72px 0} .hero.hb .wrap{grid-template-columns:1fr 1.1fr;gap:56px} .collage{margin-top:0;gap:14px} .seal{width:112px;height:112px;right:2%;top:-26px}}
+/* the champagne marquee band */
+.marq{background:var(--hv-champ);overflow:hidden;white-space:nowrap;height:52px;display:flex;align-items:center;color:var(--hv-ink)}
+.mq{display:inline-flex;animation:mq 46s linear infinite} .mq span{font-family:var(--hv-display);font-size:22px;letter-spacing:.14em;text-transform:uppercase;padding:0 26px} .mq span::after{content:"·";margin-left:52px}
+@keyframes mq{to{transform:translateX(-50%)}} @media(prefers-reduced-motion:reduce){.mq{animation:none}}
+/* inner-page heroes: full-bleed photograph, lighter veil, uppercase title */
+.hero::after{background:linear-gradient(180deg,rgba(29,29,27,.14) 0%,rgba(29,29,27,.5) 100%)}
+.hero h1{text-transform:uppercase;font-size:clamp(34px,5.4vw,72px);max-width:20ch;letter-spacing:0;line-height:1.08} .badge{border:0;padding:0;letter-spacing:.16em}
+/* surfaces */
+.band{background:var(--hv-mist),#fff;margin-top:0}
+.card h3,.pc h3,.panel b{letter-spacing:.04em} .card h3{text-transform:uppercase}
+.news{border-top:3px solid;border-image:var(--hv-champ) 1;border-bottom:0;background:#fff;box-shadow:0 10px 30px rgba(29,29,27,.06);padding-inline:24px;margin-bottom:48px}
+.cta,.guar,.exp,.wall{background:var(--hv-mist),#F5F5F5}
+.chip{border-radius:0;letter-spacing:.1em} .chip[aria-pressed="true"]{background:var(--hv-champ);color:var(--hv-ink);border-color:transparent}
+/* footer: full-bleed grey band, uppercase display column heads */
+footer.ftb{display:block;padding:0;background:#F4F4F4;color:var(--hv-text)}
+.ftb .fin{display:grid;gap:18px;padding:40px 0 96px}
+.ftb b{font-family:var(--hv-display);font-weight:400;font-size:16px;text-transform:uppercase;letter-spacing:.06em}
+@media(min-width:768px){.ftb .fin{grid-template-columns:1.4fr 1fr 1fr;gap:32px;padding:56px 0}}
+@media(min-width:1024px){.ftb .fin{grid-template-columns:1.4fr 1fr 1fr 1fr 1fr}}
+/* phone: bottom bar, menu sheet, age gate */
+.bar{background:#fff;border-top:1px solid var(--hv-line-soft);box-shadow:0 -3px 0 0 #D4C6AE} .bar a,.bar button{color:var(--hv-ink);letter-spacing:.1em} .bar .on{color:var(--hv-accent-deep)}
+.sheet li a{text-transform:uppercase;letter-spacing:.08em;font-size:20px}
+.age{background:#F2F2F0;border:0;box-shadow:0 24px 60px rgba(29,29,27,.28);padding:36px 28px 32px} .age h2{font-size:20px;letter-spacing:.04em;margin:18px 0 6px} .age img{margin:0 auto}
+"""
+
+THEME = "a"; BASE = "holdvolgy/"   # set per build pass in build_all(); A is the default and stays byte-identical
+for _l, _p, _w in (("hu", "B változat — Holdvölgy 2026, az eredeti holdvolgy.com formanyelvével. A kosár és az űrlapok nem küldenek; a vásárlás és a foglalás a holdvolgy.com-on él.", ["Türelem","Szellem","Lélek","Gondolat","Tudás","Elvek","Fantázia"]),
+                   ("en", "Version B — Holdvölgy 2026 in the original holdvolgy.com design language. The cart and forms do not send; purchases and bookings run on holdvolgy.com.", ["Patience","Spirit","Mind","Thoughts","Knowledge","Principles","Imagination"])):
+    C[_l]["proto_b"] = _p; C[_l]["words"] = _w   # the seven words are the estate's own marquee, read from its home page
+
 def _common(c):
     e = html.escape
     nav = "".join(
@@ -489,31 +559,7 @@ def _common(c):
     sheet_sub = "".join(f'<li><a href="{h}">{e(x)}</a></li>' for x,h in sub)
     alt_lang = "en" if c["lang"]=="hu" else "hu"
     alt_href = "en/index.html" if c["lang"]=="hu" else "../index.html"
-    return f"""<!DOCTYPE html>
-<html lang="{c['lang']}">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>{e(c['title'])}</title>
-<meta name="description" content="{e(c['desc'])}">
-<link rel="alternate" hreflang="hu" href="https://moldovancsaba.github.io/calvus/holdvolgy/index.html">
-<link rel="alternate" hreflang="en" href="https://moldovancsaba.github.io/calvus/holdvolgy/en/index.html">
-<link rel="alternate" hreflang="x-default" href="https://moldovancsaba.github.io/calvus/holdvolgy/index.html">
-<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:opsz,wght@6..96,400;6..96,500&family=Archivo:wdth,wght@112.5,400;112.5,500;112.5,600&display=swap">
-<link rel="stylesheet" href="{TOK}">
-<style>{CSS}</style>
-</head>
-<body>
-<p class="proto">{e(c['proto'])}</p>
-<header class="hd"><div class="wrap">
-  <a class="wordmark" href="#top">HOLDVÖLGY</a>
-  <nav aria-label="{'Fő navigáció' if c['lang']=='hu' else 'Main navigation'}">{nav}</nav>
-  <a class="btn btn-2 book" href="latogatas.html#foglalas">{e(c['book'])}</a>
-  <div class="right"><a class="lang label" href="{alt_href}" lang="{alt_lang}" hreflang="{alt_lang}">{e(c['lang_other'][0])}</a><a class="cart" href="borok.html" aria-label="{e(c['cart'])}">◯</a></div>
-</div></header>
-<main id="top">
-<section class="hero" id="birtok">
+    hero_a = f"""<section class="hero" id="birtok">
   <picture>
     <source media="(max-width: 767px)" type="image/avif" srcset="{IMG}hero-cellar-portrait-780.avif"><source media="(max-width: 767px)" type="image/webp" srcset="{IMG}hero-cellar-portrait-780.webp">
     <source media="(max-width: 1279px)" type="image/avif" srcset="{IMG}hero-cellar-1024.avif"><source media="(max-width: 1279px)" type="image/webp" srcset="{IMG}hero-cellar-1024.webp">
@@ -521,17 +567,61 @@ def _common(c):
     <img src="{IMG}hero-cellar-1440.webp" alt="{e(c['hero_alt'])}" width="1440" height="659" fetchpriority="high">
   </picture>
   <div class="wrap"><span class="label badge">{e(c['badge'])}</span><h1>{e(c['h1'])}</h1><div class="row"><a class="btn" href="latogatas.html#foglalas">{e(c['book'])}</a><a class="btn btn-w" href="borok.html">{e(c['nav'][1])}</a></div></div>
+</section>"""
+    if THEME == "b":
+        seal_txt = e((c["badge"].upper() + " · ") * 2)
+        words = "".join(f"<span>{e(w)}</span>" for w in c["words"])
+        hero_html = f"""<section class="hero hb" id="birtok">
+  <div class="wrap"><div class="txt"><h1>{e(c['badge'])}</h1><p class="tag">{e(c['h1'])}</p><div class="row"><a class="btn" href="latogatas.html#foglalas">{e(c['book'])}</a><a class="btn btn-w" href="borok.html">{e(c['nav'][1])}</a></div></div>
+  <div class="collage"><figure class="c1"><img src="{IMG}tl-2005-nevado.webp" alt="" width="413" height="462" fetchpriority="high"></figure><figure class="c2"><img src="{IMG}card-ev-pinceszete.webp" alt="{e(c['cards'][0][5])}" width="413" height="462" fetchpriority="high"></figure><figure class="c3"><img src="{IMG}card-pince.webp" alt="" width="413" height="462" fetchpriority="high"></figure>
+  <svg class="seal" viewBox="0 0 100 100" aria-hidden="true"><defs><path id="sealp" d="M50,50 m-37,0 a37,37 0 1,1 74,0 a37,37 0 1,1 -74,0"/></defs><circle cx="50" cy="50" r="48" fill="none" stroke="#fff" stroke-width=".7"/><circle cx="50" cy="50" r="27" fill="none" stroke="#fff" stroke-width=".5"/><text font-size="6.4" fill="#1D1D1B" font-family="Bodoni Moda,Didot,serif"><textPath href="#sealp" textLength="228" lengthAdjust="spacing">{seal_txt}</textPath></text><text x="50" y="56" text-anchor="middle" font-size="15" fill="#1D1D1B" font-family="Bodoni Moda,Didot,serif">2026</text></svg></div></div>
 </section>
+<div class="marq" role="img" aria-label="{e(', '.join(c['words']))}"><div class="mq" aria-hidden="true">{words * 4}</div></div>"""
+        cart_inner = '<span class="cnt" aria-hidden="true">0</span><svg width="18" height="20" viewBox="0 0 18 20" fill="none" stroke="currentColor" stroke-width="1.2" aria-hidden="true"><path d="M2 6h14l-1 13H3L2 6z"/><path d="M6 6V5a3 3 0 0 1 6 0v1"/></svg>'
+        footer_html = f"""<footer class="ftb" id="kapcsolat"><div class="wrap fin"><div><span class="wordmark" style="font-size:16px">HOLDVÖLGY</span><p style="margin:8px 0 0">3909 Mád, Árpád u. 13. · Tokaj-Hegyalja</p><p style="margin:4px 0 0"><a href="mailto:visit@holdvolgy.com">visit@holdvolgy.com</a><a href="tel:+36703914643">+36 70 391 4643</a></p><small>{e(c['responsible'])}</small><p style="margin:10px 0 0"></p></div>{foot}</div></footer>"""
+        age_mark = f'<img src="{IMG}logo.svg" width="96" height="96" alt="" loading="lazy">'
+        robots = '\n<meta name="robots" content="noindex">'
+    else:
+        hero_html = hero_a
+        cart_inner = "◯"
+        footer_html = f"""<footer class="wrap" id="kapcsolat"><div><span class="wordmark" style="font-size:16px">HOLDVÖLGY</span><p style="margin:8px 0 0">3909 Mád, Árpád u. 13. · Tokaj-Hegyalja</p><p style="margin:4px 0 0"><a href="mailto:visit@holdvolgy.com">visit@holdvolgy.com</a><a href="tel:+36703914643">+36 70 391 4643</a></p><small>{e(c['responsible'])}</small><p style="margin:10px 0 0"></p></div>{foot}</footer>"""
+        age_mark = '<svg width="40" height="40" viewBox="0 0 40 40" aria-hidden="true" style="margin:0 auto"><circle cx="20" cy="20" r="13" fill="none" stroke="#B8A689" stroke-width="1.2"/><circle cx="25" cy="16" r="10" fill="#FAFAFA"/></svg>'
+        robots = ""
+    return f"""<!DOCTYPE html>
+<html lang="{c['lang']}">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{e(c['title'])}</title>
+<meta name="description" content="{e(c['desc'])}">{robots}
+<link rel="alternate" hreflang="hu" href="https://moldovancsaba.github.io/calvus/{BASE}index.html">
+<link rel="alternate" hreflang="en" href="https://moldovancsaba.github.io/calvus/{BASE}en/index.html">
+<link rel="alternate" hreflang="x-default" href="https://moldovancsaba.github.io/calvus/{BASE}index.html">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:opsz,wght@6..96,400;6..96,500&family=Archivo:wdth,wght@112.5,400;112.5,500;112.5,600&display=swap">
+<link rel="stylesheet" href="{TOK}">
+<style>{CSS}{CSS_B if THEME == "b" else ""}</style>
+</head>
+<body>
+<p class="proto">{e(c['proto_b'] if THEME == "b" else c['proto'])}</p>
+<header class="hd"><div class="wrap">
+  <a class="wordmark" href="#top">HOLDVÖLGY</a>
+  <nav aria-label="{'Fő navigáció' if c['lang']=='hu' else 'Main navigation'}">{nav}</nav>
+  <a class="btn btn-2 book" href="latogatas.html#foglalas">{e(c['book'])}</a>
+  <div class="right"><a class="lang label" href="{alt_href}" lang="{alt_lang}" hreflang="{alt_lang}">{e(c['lang_other'][0])}</a><a class="cart" href="borok.html" aria-label="{e(c['cart'])}">{cart_inner}</a></div>
+</div></header>
+<main id="top">
+{hero_html}
 <section class="wrap cards">{cards}</section>
 <section class="band" id="borok"><div class="wrap"><div class="head"><h2>{e(c['band_h'])}</h2><a class="btn btn-3 short" href="borok.html">{e(c['band_all_short'])} →</a><a class="btn btn-3 long" href="borok.html">{e(c['band_all'])} →</a></div><div class="rail">{bottles}</div></div></section>
 <section class="wrap dulok"><img class="map" src="{IMG}dulok-map-1000.webp" alt="{e(c['map_alt'])}" width="1000" height="590" loading="lazy"><div><h2>{e(c['dulok_h'])}</h2><p class="lede">{e(c['dulok_lede'])}</p>{rocks}<p class="all"><a class="btn btn-3" href="birtok.html#dulok">{e(c['dulok_all'])} →</a></p></div></section>
 <section class="wrap visit" id="latogatas"><img class="photo" src="{IMG}visit-tunnel-1120.webp" alt="{e(c['tunnel_alt'])}" width="1120" height="1484" loading="lazy"><div><div class="nums">{nums}</div><h2>{e(c['visit_h'])}</h2><p class="short">{e(c['hours_short'])}</p><p class="long">{e(c['hours'])}</p><p>3909 Mád, Árpád u. 13.</p><p><a class="tel" href="tel:+36703914643">+36 70 391 4643</a> · <a class="tel" href="mailto:visit@holdvolgy.com">visit@holdvolgy.com</a></p><a class="btn" href="latogatas.html#foglalas">{e(c['book'])}</a></div></section>
 <section class="wrap news" id="borklub"><h3>{e(c['news_h'])}</h3><form onsubmit="return false"><input type="email" id="news-email" placeholder="{e(c['news_ph'])}" aria-label="{e(c['news_ph'])}"><button class="btn btn-2" type="submit">{e(c['news_btn'])}</button></form></section>
 </main>
-<footer class="wrap" id="kapcsolat"><div><span class="wordmark" style="font-size:16px">HOLDVÖLGY</span><p style="margin:8px 0 0">3909 Mád, Árpád u. 13. · Tokaj-Hegyalja</p><p style="margin:4px 0 0"><a href="mailto:visit@holdvolgy.com">visit@holdvolgy.com</a><a href="tel:+36703914643">+36 70 391 4643</a></p><small>{e(c['responsible'])}</small><p style="margin:10px 0 0"></p></div>{foot}</footer>
+{footer_html}
 <nav class="bar" aria-label="{'Alsó navigáció' if c['lang']=='hu' else 'Bottom navigation'}"><a class="on" href="latogatas.html#foglalas"><i>◷</i>{e(c['book'].split(' ')[0])}</a><a href="borok.html"><i>▯</i>{e(c['nav'][1])}</a><a href="borok.html"><i>◯</i>{e(c['cart'])}</a><button type="button" id="menuBtn"><i>≡</i>{e(c['menu'])}</button></nav>
 <dialog class="sheet" id="menu" aria-label="{e(c['menu'])}"><div class="top"><span class="wordmark">HOLDVÖLGY</span><button class="x" type="button" id="menuClose" aria-label="{e(c['close'])}">✕</button></div><ul>{sheet_main}</ul><ul class="sub">{sheet_sub}</ul></dialog>
-<dialog class="age" id="age" aria-labelledby="ageQ"><svg width="40" height="40" viewBox="0 0 40 40" aria-hidden="true" style="margin:0 auto"><circle cx="20" cy="20" r="13" fill="none" stroke="#B8A689" stroke-width="1.2"/><circle cx="25" cy="16" r="10" fill="#FAFAFA"/></svg><h2 id="ageQ">{e(c['age_q'])}</h2><p>{e(c['age_note'])}</p><div class="row"><button class="btn" type="button" id="ageYes">{e(c['yes'])}</button><a class="btn btn-2" href="https://www.google.com">{e(c['no'])}</a></div></dialog>
+<dialog class="age" id="age" aria-labelledby="ageQ">{age_mark}<h2 id="ageQ">{e(c['age_q'])}</h2><p>{e(c['age_note'])}</p><div class="row"><button class="btn" type="button" id="ageYes">{e(c['yes'])}</button><a class="btn btn-2" href="https://www.google.com">{e(c['no'])}</a></div></dialog>
 <script>
 (function(){{
   var age=document.getElementById('age'),ok=false;
@@ -734,7 +824,7 @@ def render(c, rel, main_override=None, title=None, desc=None, slug=None, depth="
         doc = doc.replace(f"<title>{html.escape(c['title'])}</title>", f"<title>{html.escape(title)}</title>",1)
         doc = doc.replace(f'<meta name="description" content="{html.escape(c["desc"])}">', f'<meta name="description" content="{html.escape(desc)}">',1)
         # hreflang + language switch for this page
-        doc = doc.replace('holdvolgy/index.html">',f'holdvolgy/{slug}.html">').replace('holdvolgy/en/index.html">',f'holdvolgy/en/{slug}.html">')
+        doc = doc.replace(f'{BASE}index.html">',f'{BASE}{slug}.html">').replace(f'{BASE}en/index.html">',f'{BASE}en/{slug}.html">')
         doc = doc.replace('href="en/index.html" lang="en"',f'href="en/{slug}.html" lang="en"').replace('href="../index.html" lang="hu"',f'href="../{slug}.html" lang="hu"')
         # in-page anchors that live on the home page must point back to it
         doc = doc.replace('href="#borok"','href="index.html#borok"').replace('href="#latogatas"','href="index.html#latogatas"').replace('href="#borklub"','href="index.html#borklub"').replace('href="#kapcsolat"','href="index.html#kapcsolat"')
@@ -751,8 +841,12 @@ def render(c, rel, main_override=None, title=None, desc=None, slug=None, depth="
     out = HERE / rel; out.parent.mkdir(parents=True, exist_ok=True); out.write_text(doc, encoding="utf-8")
     if not depth: print(f"{rel:16s} {out.stat().st_size:6d} bytes")
 
-if __name__ == "__main__":
-    for lang, rel, tok, img in (("hu", "index.html", "assets/tokens.css", "assets/img/"), ("en", "en/index.html", "../assets/tokens.css", "../assets/img/")):
+def build_all(theme):
+    """One pass per variant: A at the project root (as published), B in b/ — same pages, same paths below it."""
+    global THEME, BASE, TOK, IMG
+    THEME = theme; BASE = "holdvolgy/b/" if theme == "b" else "holdvolgy/"
+    pre, up = ("b/", "../") if theme == "b" else ("", "")
+    for lang, rel, tok, img in (("hu", pre + "index.html", up + "assets/tokens.css", up + "assets/img/"), ("en", pre + "en/index.html", up + "../assets/tokens.css", up + "../assets/img/")):
         TOK, IMG = tok, img
         render(C[lang], rel)
         b = C[lang]["birtok"]
@@ -767,3 +861,6 @@ if __name__ == "__main__":
         for p in CAT:
             t = f'{p["name"]} — {p["cat"][lang]} · Holdvölgy'
             render(C[lang], rel.replace("index.html", f"bor/{p['id']}.html"), main_override=product_main(C[lang], p), title=t, desc=(p["tagline"][lang] or p["desc"][lang] or p["desc"]["hu"])[:160], slug=f"bor/{p['id']}", depth="../")
+
+if __name__ == "__main__":
+    build_all("a"); build_all("b")

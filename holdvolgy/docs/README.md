@@ -7,6 +7,7 @@ record. Each file is dated inside; this index is the process log.
 | File | What it holds |
 |---|---|
 | `bemutato.html` | **A birtoknak szóló bemutató, magyarul** — a birtok saját arculatában: hét lépés az élő oldalakkal, mi valódi, mit kérünk, hogyan tovább |
+| `osszehasonlitas.html` | **A és B változat, magyarul** — ugyanaz az oldal két formanyelvvel, egymás mellett, élőben; elemről elemre, mért kontraszttal és súllyal; a döntés három útja |
 | `00-brief.md` | Two pages for a first reader: the client, the problem, what the prototype is, what is real, where it stands |
 | `00-plan.md` | Research findings and the phased implementation plan — the approval document |
 | `01-research-benchmarks.md` | Every estate site read, what it returned, and the sites that could not be reached |
@@ -16,6 +17,7 @@ record. Each file is dated inside; this index is the process log.
 | `04-decisions.md` | Decision log — what was decided, by whom, why, and what it replaced |
 | `design-system.html` | Phase 1 gate 1: the design system rendered live from the tokens — colour, type, spacing, buttons, cards, bottles, dűlő rows, both navigations |
 | `assets-used.md` | Every asset fetched for the build, its source URL, original and derivative sizes |
+| `15-variant-b.md` | **Variant B** — the same site in the live holdvolgy.com's original design language: what was measured, how it is built beside A without changing A, what it deliberately does not copy, verification |
 | `11-gate-sweep.md` | Phase 5: the whole-site sweep — method, 152 measurements over 76 pages, hand-off state |
 | `10-shop-build.md` | Phase 3: the shop — catalogue, grid, product template, Borklub, measurements |
 | `09-latogatas-build.md` | Phase 2: the Látogatás page — sources, booking form, measurements, and the map fix |
@@ -176,5 +178,19 @@ theme transcribed from the prototype, stored-content multilingual, CDN, monitori
 in `11-architecture.md` §10–11 in status **PROPOSED**; nothing is decided with the
 client yet. The docs renderer's page list and navigation grew by six pages.
 
-**Next.** Client review of the whole; the stack decision and who builds (blocked
+**2026-10-02 — Variant B, the original design language (D21, D22).** The client asked to
+see a variant in the original design language and to compare the two. The live site's
+language was measured (computed styles: Didot caps, the champagne gradient
+`#B8A689 → #E0D2BB → #BAA793`, ghost buttons, the 40 × 100 px edge cart tab, the 52 px
+marquee band, the taupe hero wash, the grey mist and footer band) and built as a layer
+beside A in `holdvolgy/b/` — 76 pages, HU and EN, from the same generator and content;
+A's 77 pages are byte-identical to before. It does not copy the original's legibility
+defects (white on champagne 2.4 : 1, 11–12 px copy). The gate now checks B as its own
+tree (own banners, `noindex`, no link into A). The comparison page puts A and B side by
+side live, with the measurements (`15-variant-b.md`, `osszehasonlitas.html`). Found by
+looking: Bodoni Moda's display optical size makes uppercase look detached on screen, so
+B caps it. Not done: the live storefront in `customer.direct` still shows A; B is not
+pushed.
+
+**Next.** Client review of the whole and the A / B choice; the stack decision and who builds (blocked
 register in `13`); then the items in §6 of the plan as they arrive.

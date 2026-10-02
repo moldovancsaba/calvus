@@ -10,7 +10,7 @@ Static HTML/CSS/JS wireframe and prototype pages (Lexodont dental site,
 IDBC Salary Guide, Holdvölgy, DiscountDirect, business.direct), no package manager, no
 test runner.
 Generators exist and must be re-run after editing their sources: `python3 holdvolgy/build.py`
-(site pages, HU + EN, from `build.py` content and `data/catalogue.json`); the IDBC salary
+(site pages, HU + EN, from `build.py` content and `data/catalogue.json`; since 2026-10-02 it builds two trees in one run — A at `holdvolgy/` and the original-design-language variant B at `holdvolgy/b/` — and A must stay byte-identical when only B's layer changes: hash the A pages before and after); the IDBC salary
 converter (`idbc-salary-guide/data/build-salary-data.py <IDBC_bertabla.xlsx>` — since 2026-09-28
 the IDBC guide's JSON files are its source, D47–D48: every value the pages show is in
 `data/guide-data.json` or `data/areas.json`; salary and Expert Pool are refreshed from the sheet's
