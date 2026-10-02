@@ -7,7 +7,7 @@ Exit 1 on any finding. Run before every push (CLAUDE.md rule 2).
 4. no stale-state phrase on any site page or docs index (things that were true once:
    "in Phase N", "coming soon", "for approval", "not yet built", placeholders)
 5. every site page carries the current prototype banner, none the old one — one banner pair per variant
-   (A at the project root, B in b/; B's says "B változat" / "Version B")
+   (A at the project root, B in b/; each says which version it is: "A változat" / "Version A", "B változat" / "Version B")
 6. Version B stays inside B (no link into A's pages; shared assets only), carries noindex, and no A page does
 """
 import re, sys, pathlib
@@ -66,8 +66,9 @@ for variant in (False, True):
         banners.setdefault(m.group(1) if m else "MISSING", []).append(p)
     if len(banners) > 2 or "MISSING" in banners:
         findings.append(("banner B  " if variant else "banner  ") + "; ".join(f"{len(v)} pages: {k[:60]}" for k, v in banners.items()))
-    if variant and any(not k.startswith(("B változat", "Version B")) for k in banners):
-        findings.append("banner B  a Version B page does not say it is Version B: " + "; ".join(k[:40] for k in banners))
+    want = ("B változat", "Version B") if variant else ("A változat", "Version A")
+    if any(k != "MISSING" and not k.startswith(want) for k in banners):
+        findings.append(("banner B  " if variant else "banner A  ") + "a page does not say which version it is: " + "; ".join(k[:40] for k in banners))
 
 # 6 — B is a closed tree: every relative link stays in b/ or goes to the shared assets; noindex on B, never on A
 for p in site_pages:

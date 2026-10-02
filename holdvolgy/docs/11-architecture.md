@@ -30,7 +30,7 @@ booking is a contact form — audit §2).
 | Languages | TranslatePress (runtime translation of one HU content tree into `/en/`) | — |
 | Distinct plugins referenced on home + shop front end | **23** (list in §2.1) | **< 12** |
 | Home HTML alone | **624 KB**; 79 `<script src>`, 76 stylesheets, 30 `<img>` | whole page **< 1,5 MB** |
-| Home, whole page | **8,8 MB, 226 requests** (client's technical brief, 2026-09-08); the prototype's home measures 600–734 KB (`06-home-build.md`) | **< 1,5 MB** ✗ |
+| Home, whole page | **8,8 MB, 226 requests** (client's technical brief, 2026-09-08); measured again 2026-10-02: **17,9 MB phone / 19,7 MB desktop, about 250 requests**; the prototypes' home: A 0,57 / 0,77 MB, B 0,85 / 1,10 MB (`15-variant-b.md`) | **< 1,5 MB** ✗ |
 | Shop HTML alone | 887 KB | |
 | TTFB, cached (`x-litespeed-cache: hit`) | HU 0,06 s · EN 0,06 s (three runs each) | **< 800 ms** ✓ |
 | TTFB, cache miss | EN **4,49 s** (one cold hit) | **< 800 ms** ✗ |
@@ -182,5 +182,5 @@ All **PROPOSED** 2026-09-18. Flipping one to DECIDED is a `04-decisions.md` entr
 | ADR-5 | CDN in front of the existing LiteSpeed cache; browser caching enabled for static assets | tune origin only | the origin will still miss; the target is measured at the edge and at the origin both |
 | ADR-6 | Uptime + error alerting to a named person, from staging onward | none | acceptance target |
 | ADR-7 | Booking stays a request form (no availability engine) in Release 1 | Amelia availability + payment | R2 and the audit: the live "booking system" is a form; availability is a business-process change the estate has not asked for |
-| ADR-8 | The prototype is the specification: markup, CSS, copy and images are transcribed, not reinterpreted; deviations are recorded as decisions | redesign in the theme | three gates were approved on it; the measurements are its acceptance evidence |
+| ADR-8 | The chosen variant is the specification — A (reimagined for 2027) or B (built from today's site), the client's choice (D21): markup, CSS, copy and images are transcribed, not reinterpreted; deviations are recorded as decisions | redesign in the theme | A passed the owner's three internal gates; both variants are measured and gated; the measurements are the acceptance evidence. The client has accepted neither yet (D23) |
 | ADR-9 | Build on staging inside the freeze; cut over after 15 January (assumption A1: the freeze binds production only) | wait for the freeze to end before building | the freeze is the window; confirm A1 with the client in `13` blocked register |

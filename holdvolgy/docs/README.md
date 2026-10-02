@@ -9,7 +9,7 @@ record. Each file is dated inside; this index is the process log.
 | `bemutato.html` | **A birtoknak szóló bemutató, magyarul** — a birtok saját arculatában: hét lépés az élő oldalakkal, mi valódi, mit kérünk, hogyan tovább |
 | `osszehasonlitas.html` | **A és B változat, magyarul** — ugyanaz az oldal két formanyelvvel, egymás mellett, élőben; elemről elemre, mért kontraszttal és súllyal; a döntés három útja |
 | `00-brief.md` | Two pages for a first reader: the client, the problem, what the prototype is, what is real, where it stands |
-| `00-plan.md` | Research findings and the phased implementation plan — the approval document |
+| `00-plan.md` | Research findings and the phased implementation plan (reviewed by the owner; not yet by the client) |
 | `01-research-benchmarks.md` | Every estate site read, what it returned, and the sites that could not be reached |
 | `02-brand-and-site-audit.md` | Holdvölgy's measured brand tokens, fonts, page architecture, product/booking/club pages, and defects found |
 | `03-asset-inventory.md` | The 180 real images on the live site, grouped by use, with formats and sizes read from headers |
@@ -18,6 +18,7 @@ record. Each file is dated inside; this index is the process log.
 | `design-system.html` | Phase 1 gate 1: the design system rendered live from the tokens — colour, type, spacing, buttons, cards, bottles, dűlő rows, both navigations |
 | `assets-used.md` | Every asset fetched for the build, its source URL, original and derivative sizes |
 | `15-variant-b.md` | **Variant B** — the same site in the live holdvolgy.com's original design language: what was measured, how it is built beside A without changing A, what it deliberately does not copy, verification |
+| `15-variant-b.md` | **Variant B** — built from today's holdvolgy.com: what was read from the live site, how B sits beside A without changing A's design, where it differs and why, the re-verified live-site facts, the product-data refresh, verification |
 | `11-gate-sweep.md` | Phase 5: the whole-site sweep — method, 152 measurements over 76 pages, hand-off state |
 | `10-shop-build.md` | Phase 3: the shop — catalogue, grid, product template, Borklub, measurements |
 | `09-latogatas-build.md` | Phase 2: the Látogatás page — sources, booking form, measurements, and the map fix |
@@ -31,6 +32,8 @@ record. Each file is dated inside; this index is the process log.
 | `12-technical-design.md` | Page kinds → theme templates, content model, `catalogue.json` → WooCommerce mapping, forms, club tiers, languages, URLs and redirects, images, performance, operations |
 | `13-implementation-plan.md` | Milestones M0–M6 inside the change freeze, issues HV-000..084 with Definition of Done, blocked register, risks, Release 1 scope |
 | `14-token-map.md` | `tokens.css` → `theme.json`, components → theme parts and patterns, what is not tokenised, how it is verified |
+
+**Reading the log:** "approved" in this log means approved by the owner in internal review. The client has not yet reviewed or accepted either variant (D23).
 
 ## The standard documentation structure
 
@@ -178,19 +181,26 @@ theme transcribed from the prototype, stored-content multilingual, CDN, monitori
 in `11-architecture.md` §10–11 in status **PROPOSED**; nothing is decided with the
 client yet. The docs renderer's page list and navigation grew by six pages.
 
-**2026-10-02 — Variant B, the original design language (D21, D22).** The client asked to
-see a variant in the original design language and to compare the two. The live site's
-language was measured (computed styles: Didot caps, the champagne gradient
-`#B8A689 → #E0D2BB → #BAA793`, ghost buttons, the 40 × 100 px edge cart tab, the 52 px
-marquee band, the taupe hero wash, the grey mist and footer band) and built as a layer
-beside A in `holdvolgy/b/` — 76 pages, HU and EN, from the same generator and content;
-A's 77 pages are byte-identical to before. It does not copy the original's legibility
-defects (white on champagne 2.4 : 1, 11–12 px copy). The gate now checks B as its own
-tree (own banners, `noindex`, no link into A). The comparison page puts A and B side by
-side live, with the measurements (`15-variant-b.md`, `osszehasonlitas.html`). Found by
-looking: Bodoni Moda's display optical size makes uppercase look detached on screen, so
-B caps it. Not done: the live storefront in `customer.direct` still shows A; B is not
-pushed.
+**2026-10-02 — Two variants for the first client meeting (D21–D24).** A is reimagined for
+2027; B is built from today's holdvolgy.com to make it faster, with a dedicated mobile
+experience and better usability. The first B (a re-dressed A with the live site's colours)
+was found inconsistent with the live site by the owner and rebuilt: the live site's logo,
+eight-item menu, four hero banners (the estate's own images, converted to WebP), home flow,
+champagne marquee, footer and shop tabs, in HU and EN; 76 pages in `holdvolgy/b/`. A's
+design is untouched; its banner now says "A változat — 2027-re újragondolva". The gate
+checks each variant's banners, B's `noindex` and that B never links into A. The wording of
+every document was aligned: no client acceptance exists, the owner's approvals are internal
+(D23). Every statement about the live site was re-verified: the product pages now carry
+fact sheets, only one of our links was dead, the home page is 17.9 MB on a phone — the
+client documents were corrected (D24). Our catalogue was refreshed from the live pages:
+Hold and Hollo Dry is now 2025 at 4 350 Ft, and 14 products lost raw page text from their
+description, tasting or vintage fields. A width sweep from 360 to 1920 px found two horizontal overflows in A on narrow
+laptop windows (header 1024–1056 px, home visit block 1024–1150 px; both present since the
+first build) — fixed with a 1024–1239 px rule; none remains in either variant. Measured:
+home 17.9 MB / 250 requests (live) against 0.57 MB (A) and 0.85 MB (B). The comparison page puts A and B side by side live
+(`osszehasonlitas.html`, `15-variant-b.md`). Found by looking: Bodoni Moda's display optical
+size makes capitals look detached on screen, so B caps it. Not done: the live storefront in
+`customer.direct` still shows A and holds the old Hold and Hollo Dry values.
 
 **Next.** Client review of the whole and the A / B choice; the stack decision and who builds (blocked
 register in `13`); then the items in §6 of the plan as they arrive.

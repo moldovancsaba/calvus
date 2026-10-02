@@ -21,15 +21,19 @@ the live site from 15 October to 15 January. A first prototype (commit `8342956`
 withdrawn as a direction: dark ground, gold accent, generic. The owner required
 industry research before any second build.
 
-## What the prototype is
+## What the prototypes are
 
-A complete, generated, bilingual site on the estate's own brand, served from this repo
-on GitHub Pages: home, Birtok, Tokaji aszú, Látogatás, Borok with 32 product pages,
-Borklub — HU and EN, 76 pages. Built through three approval gates (design system →
-layout frames → home) and five phases, every page measured at 390 and 1440. The
+Two complete, generated, bilingual versions of the site, served from this repo on GitHub
+Pages, each home, Birtok, Tokaji aszú, Látogatás, Borok with 32 product pages, Borklub —
+HU and EN, 76 pages. **A** is reimagined for 2027 (new structure and design on the estate's
+own brand); **B** is built from today's holdvolgy.com — its look, menu, banners and home
+flow — to make it faster, with a dedicated mobile experience and better usability (D21,
+`15-variant-b.md`). Neither has been reviewed or accepted by the client (D23). A was built
+through three internal review gates by the owner (design system → layout frames → home) and
+five phases, every page measured at 390 and 1440. The
 research (21 estate sites), the audit of the live site, the asset inventory, every
 decision and every build round are in this folder. The client-facing walkthrough is
-`bemutato.html`.
+`bemutato.html`; the two variants side by side are in `osszehasonlitas.html`.
 
 Live: <https://moldovancsaba.github.io/calvus/holdvolgy/> · EN
 <https://moldovancsaba.github.io/calvus/holdvolgy/en/>

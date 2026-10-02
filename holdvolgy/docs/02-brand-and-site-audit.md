@@ -2,6 +2,8 @@
 
 Everything here was read from holdvolgy.com over HTTP; nothing is inferred.
 
+**Update 2026-10-02 — the live site has moved since this audit.** Re-read that day: the home page has four `h1` still (HU and EN) and now weighs 17.9 MB on a phone (250 requests); the product pages now carry a full fact sheet, tasting and vintage notes (30 of 32 have the analysis table), where this audit found none; the English Vision 2021 page is in English; one of the product links this project held was dead (Hold and Hollo Dry, now the 2025 vintage at 4 350 Ft); the three generated images are still on Borkóstoló and Experience; Exaltation 2017 Reserve still shows 0 Ft; "2012. Október" is a default harvest date on 28 product pages; three English product texts are still Hungarian. The sections below are the state of 2026-09-16.
+
 ## Brand tokens (Elementor kit `post-16.css`)
 
 | Role | Value |

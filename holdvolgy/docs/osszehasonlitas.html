@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Holdvölgy 2026 — A és B változat</title>
-<meta name="description" content="Ugyanaz a Holdvölgy két formanyelvvel: az új (A) és a holdvolgy.com eredeti formanyelvével (B), egymás mellett, élőben.">
+<title>Holdvölgy — A és B változat</title>
+<meta name="description" content="Ugyanaz a tartalom két úton: az A változat 2027-re újragondolva, a B változat a mai holdvolgy.com-ból kiindulva, gyorsabban és külön mobilélménnyel. Egymás mellett, élőben.">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:opsz,wght@6..96,400;6..96,500&family=Archivo:wdth,wght@112.5,400;112.5,500;112.5,600&display=swap">
 <link rel="stylesheet" href="../assets/tokens.css">
@@ -25,7 +25,7 @@ h1,h2,h3{font-family:var(--hv-display);font-weight:400;color:var(--hv-ink);line-
 section{padding:48px 0} @media(min-width:768px){section{padding:72px 0}}
 .eyebrow{margin:0 0 10px;font-size:11px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--hv-accent-deep)}
 h1{font-size:34px;max-width:22ch} h2{font-size:30px;margin-bottom:14px} @media(min-width:768px){h1{font-size:56px} h2{font-size:40px}}
-.lede{font-size:17px;max-width:62ch;color:var(--hv-text);margin:14px 0 0}
+.lede{font-size:17px;max-width:66ch;color:var(--hv-text);margin:14px 0 0}
 .band{background:var(--hv-band)}
 /* the viewer */
 .ctl{display:flex;flex-wrap:wrap;gap:12px 20px;align-items:center;margin:24px 0 18px}
@@ -39,10 +39,11 @@ h1{font-size:34px;max-width:22ch} h2{font-size:30px;margin-bottom:14px} @media(m
 .vp{position:relative;overflow:hidden;border:1px solid var(--hv-line);background:#fff;margin-inline:auto;width:100%} .phone .vp{max-width:392px}
 .vp iframe{position:absolute;top:0;left:0;border:0;transform-origin:0 0;background:#fff}
 .hint{margin:14px 0 0;font-size:13px;color:var(--hv-muted)}
-/* tables */
-.tw{overflow-x:auto;margin-top:26px;border:1px solid var(--hv-line-soft);background:var(--hv-card)} table{border-collapse:collapse;width:100%;min-width:760px;font-size:14px} th,td{text-align:left;vertical-align:top;padding:14px 16px;border-bottom:1px solid var(--hv-line-soft)} th{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--hv-muted);font-weight:600;background:var(--hv-band)} td:first-child{font-family:var(--hv-display);font-size:18px;color:var(--hv-ink);white-space:nowrap} tr:last-child td{border-bottom:0}
-.two{display:grid;gap:14px;margin-top:24px} .two div{background:var(--hv-card);border:1px solid var(--hv-line-soft);padding:18px 20px} .two b{display:block;font-family:var(--hv-display);font-weight:400;font-size:22px;color:var(--hv-ink);margin-bottom:6px} .two p{margin:0;font-size:14.5px;color:var(--hv-text)}
+/* two versions */
+.two{display:grid;gap:14px;margin-top:24px} .two div{background:var(--hv-card);border:1px solid var(--hv-line-soft);padding:20px 22px} .two b{display:block;font-family:var(--hv-display);font-weight:400;font-size:24px;color:var(--hv-ink);margin-bottom:6px} .two p{margin:0 0 8px;font-size:14.5px;color:var(--hv-text)} .two ul{margin:0;padding-left:18px;font-size:14.5px} .two li{margin:2px 0}
 @media(min-width:768px){.two{grid-template-columns:1fr 1fr;gap:20px}}
+/* tables */
+.tw{overflow-x:auto;margin-top:26px;border:1px solid var(--hv-line-soft);background:var(--hv-card)} table{border-collapse:collapse;width:100%;min-width:720px;font-size:14px} th,td{text-align:left;vertical-align:top;padding:14px 16px;border-bottom:1px solid var(--hv-line-soft)} th{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--hv-muted);font-weight:600;background:var(--hv-band)} td:first-child{font-family:var(--hv-display);font-size:18px;color:var(--hv-ink);white-space:nowrap} tr:last-child td{border-bottom:0}
 .num{font-variant-numeric:tabular-nums;white-space:nowrap}
 .opts{display:grid;gap:14px;margin-top:24px} .opts div{border-top:2px solid var(--hv-accent);padding-top:14px} .opts b{display:block;font-family:var(--hv-display);font-weight:400;font-size:22px;color:var(--hv-ink);margin-bottom:6px} .opts p{margin:0;font-size:14.5px}
 @media(min-width:768px){.opts{grid-template-columns:repeat(3,1fr);gap:24px}}
@@ -50,19 +51,19 @@ footer{border-top:1px solid var(--hv-line);padding:28px 0 40px;font-size:13px;co
 </style>
 </head>
 <body>
-<div class="top"><div class="wrap"><a class="wordmark" href="../index.html">HOLDVÖLGY</a><span class="label mid">A és B változat · 2026</span><a class="label" href="../b/index.html" style="color:var(--hv-accent-deep)">B megnyitása →</a></div></div>
+<div class="top"><div class="wrap"><a class="wordmark" href="../index.html">HOLDVÖLGY</a><span class="label mid">A és B változat</span><a class="label" href="../b/index.html" style="color:var(--hv-accent-deep)">B megnyitása →</a></div></div>
 
 <section style="padding-bottom:0"><div class="wrap">
   <p class="eyebrow">Összehasonlítás</p>
-  <h1>Ugyanaz a Holdvölgy, két formanyelvvel</h1>
-  <p class="lede">Az <b>A</b> változat az új oldal, ahogy a három jóváhagyási lépésben elfogadták. A <b>B</b> változat ugyanennek az oldalnak a tartalma, szerkezete, képei és árai — a holdvolgy.com eredeti formanyelvében: pezsgőarany színátmenet, melegszürke nyitó, nagybetűs Didot-stílusú cím, kontúros gombok, jobb szélen álló kosárfül, szürke lábléc.</p>
+  <h1>Két változat, ugyanaz a tartalom</h1>
+  <p class="lede">Az <b>A</b> változatot 2027-re újragondoltuk: új szerkezet és új formanyelv a birtok színeivel és fotóival. A <b>B</b> változatot a mai holdvolgy.com-ból kiindulva készítettük: ugyanaz a külső, ugyanazok a menüpontok és a kezdőlap blokkjai, ugyanazok a nyitóképek — de sokkal gyorsabban, külön mobilélménnyel és jobb használhatósággal. Egyik változatról sem született még döntés; ezt az egyeztetést szeretnénk vele megalapozni.</p>
 </div></section>
 
 <section style="padding-top:8px"><div class="wrap">
   <noscript><p class="hint">Az egymás melletti nézethez JavaScript kell. Megnyitás: <a href="../index.html">A változat</a> · <a href="../b/index.html">B változat</a>.</p></noscript>
   <div class="ctl" role="group" aria-label="Nézet beállításai">
     <label for="pg">Oldal<br><select id="pg">
-      <option value="index">Kezdőlap</option><option value="birtok">Birtok</option><option value="aszu">Tokaji aszú</option><option value="latogatas">Látogatás</option><option value="borok">Borok</option><option value="bor/culture-2018">Egy bor oldala (Culture 2018)</option><option value="borklub">Borklub</option>
+      <option value="index">Kezdőlap</option><option value="birtok">Birtok</option><option value="aszu">Tokaji aszú</option><option value="latogatas">Látogatás / Borkóstoló</option><option value="borok">Borok</option><option value="bor/culture-2018">Egy bor oldala (Culture 2018)</option><option value="borklub">Borklub</option>
     </select></label>
     <div class="grp"><span>Eszköz</span><br><div class="seg" id="dev"><button type="button" data-v="desktop" aria-pressed="true">Asztali</button><button type="button" data-v="phone" aria-pressed="false">Telefon</button></div></div>
     <div class="grp"><span>Nyelv</span><br><div class="seg" id="lang"><button type="button" data-v="hu" aria-pressed="true">HU</button><button type="button" data-v="en" aria-pressed="false">EN</button></div></div>
@@ -70,84 +71,74 @@ footer{border-top:1px solid var(--hv-line);padding:28px 0 40px;font-size:13px;co
     <label class="chk" for="sync"><input type="checkbox" id="sync" checked>Görgetés együtt</label>
   </div>
   <div class="cols split" id="cols">
-    <div class="col" data-v="a"><h3>A — az új formanyelv</h3><p class="sub">Világos alap, a pince fotója a nyitón, sötét mondatcím.</p><div class="vp"><iframe title="A változat" loading="lazy"></iframe></div><a class="open" id="openA" href="../index.html">A megnyitása teljes oldalon →</a></div>
-    <div class="col" data-v="b"><h3>B — az eredeti formanyelv</h3><p class="sub">Melegszürke nyitó, fekete-fehér kollázs, pezsgőarany elemek.</p><div class="vp"><iframe title="B változat" loading="lazy"></iframe></div><a class="open" id="openB" href="../b/index.html">B megnyitása teljes oldalon →</a></div>
+    <div class="col" data-v="a"><h3>A — 2027-re újragondolva</h3><p class="sub">Új szerkezet és formanyelv: világos alap, a pince fotójával nyitó kezdőlap, öt menüpont.</p><div class="vp"><iframe title="A változat" loading="lazy"></iframe></div><a class="open" id="openA" href="../index.html">A megnyitása teljes oldalon →</a></div>
+    <div class="col" data-v="b"><h3>B — a mai oldalból kiindulva</h3><p class="sub">A mai oldal külseje, menüje, nyitóképei és kezdőlapja — gyorsabban, külön mobilélménnyel.</p><div class="vp"><iframe title="B változat" loading="lazy"></iframe></div><a class="open" id="openB" href="../b/index.html">B megnyitása teljes oldalon →</a></div>
   </div>
   <p class="hint">Mindkét keret élő oldal: görgethető, a menü, a szűrők és a gombok működnek. Telefonon az A és a B gombbal váltogathatnak a kettő között, a görgetési pozíció megmarad. Asztali nézetben a részletekhez válasszák az A vagy a B gombot: a keret ilyenkor teljes szélességű.</p>
 </div></section>
 
 <section class="band"><div class="wrap">
-  <p class="eyebrow">Mi változik</p>
-  <h2>Elemről elemre</h2>
-  <p class="lede">A harmadik oszlop az eredeti oldal mért értéke (2026. október 2.; a színek a birtok saját stíluskészletéből).</p>
+  <p class="eyebrow">A két változat</p>
+  <h2>Mi a különbség</h2>
+  <div class="two">
+    <div><b>A — 2027-re újragondolva</b>
+      <p>Új szerkezet és új formanyelv, a birtok saját színeivel, fotóival és szövegeivel.</p>
+      <ul><li>öt menüpont a mostani nyolc helyett</li><li>világos alap; a nyitó a pince fotója és a birtok mondata</li><li>kártyás kezdőlap: a hét dűlő a saját kőzetével, a látogatás</li><li>külön asztali és külön telefonos élmény</li></ul></div>
+    <div><b>B — a mai oldalból kiindulva</b>
+      <p>Ugyanaz a külső és ugyanaz a menü, mint a mai oldalon; újraépítve, hogy gyorsabb, mobilon külön élmény és jobban használható legyen.</p>
+      <ul><li>ugyanaz a logó, ugyanaz a nyolc menüpont ugyanabban a sorrendben</li><li>ugyanazok a nyitó bannerek és szövegek, ugyanaz a kezdőlapi sorrend</li><li>ugyanaz a pezsgőarany színátmenet, betűstílus, kosárfül, szalag, lábléc</li><li>külön asztali és külön telefonos élmény</li></ul></div>
+  </div>
+  <p class="lede">Közös a két változatban: minden szöveg, ár, technikai adatlap és fotó (magyarul és angolul), a borok szűrése és rendezése, az életkor-ellenőrzés és a felelős fogyasztásra szóló figyelmeztetés, a termékoldalak teljes adatlappal és kóstolási jegyzettel. A kosár és az űrlapok mindkét változatban nem küldenek; a vásárlás és a foglalás a holdvolgy.com-on él.</p>
+</div></section>
+
+<section><div class="wrap">
+  <p class="eyebrow">B és a mai oldal</p>
+  <h2>Ugyanaz, amit a látogató ma lát</h2>
+  <p class="lede">A mai oldalt 2026. október 2-án olvastuk végig, magyarul és angolul.</p>
   <div class="tw"><table>
-    <thead><tr><th>Elem</th><th>A — új</th><th>B — eredeti formanyelv</th><th>Az eredeti oldalon</th></tr></thead>
+    <thead><tr><th>Elem</th><th>A mai oldalon</th><th>B-ben</th></tr></thead>
     <tbody>
-      <tr><td>Nyitókép</td><td>A pince fényképe, alul sötét lefutással.</td><td>Melegszürke színátmenet, három fekete-fehér kép vékony fehér keretben, körpecséttel.</td><td>Ugyanez: „Év pincészete 2026”, fekete-fehér kollázs melegszürke alapon.</td></tr>
-      <tr><td>Címek</td><td>Bodoni Moda, kisbetűs mondatok.</td><td>Bodoni Moda, csupa nagybetű.</td><td>Didot, nagybetű: 72 px (fő cím), 52 px (alcím).</td></tr>
-      <tr><td>Szöveg és címkék</td><td>Archivo kiterjesztett, 15 px.</td><td>Archivo kiterjesztett, 14 px, ritkított betűközzel.</td><td>Akzidenz-Grotesk BQ Extended, 11–12 px, ritkított betűközzel.</td></tr>
-      <tr><td>Gombok</td><td>Tömör melegszürke kitöltés.</td><td>Pezsgőarany színátmenet, sötét felirat; a másodlagos gomb kontúros.</td><td>Ugyanaz a színátmenet (<span class="num">#B8A689 → #E0D2BB → #BAA793</span>), fehér felirat; fotón fehér kontúros gomb.</td></tr>
-      <tr><td>Fejléc</td><td>Áttetsző, 88 px.</td><td>Fehér, 104 px, nagybetűs 12 px-es menü.</td><td>Fehér, 104 px, 12 px-es menü.</td></tr>
-      <tr><td>Kosár</td><td>Gyűrű ikon a fejlécben.</td><td>Jobb szélen álló, 40 × 100 px-es pezsgőarany fül, fölötte a darabszám.</td><td>Ugyanez a fül.</td></tr>
-      <tr><td>Díszítés</td><td>—</td><td>Pezsgőarany szalag a birtok hét szavával: Türelem, Szellem, Lélek, Gondolat, Tudás, Elvek, Fantázia.</td><td>Ugyanez a szalag (52 px magas, futó felirat).</td></tr>
-      <tr><td>Borsor</td><td>Sík, világosszürke sáv.</td><td>Az eredeti „ködös” szürke színátmenet fehér alapon.</td><td>Ugyanez a színátmenet a szekciók háttérében.</td></tr>
-      <tr><td>Lábléc</td><td>Világos, a tartalom szélességében.</td><td>Teljes szélességű világosszürke sáv, nagybetűs oszlopfejek, a hírlevél emelt kártyán.</td><td>Szürke sáv, kapcsolattartók, térkép, hírlevél, fizetési logók.</td></tr>
-      <tr><td>Életkor-ellenőrzés</td><td>Világos kártya, holdsarló jel.</td><td>Világosszürke kártya, a birtok napkorong jele, pezsgőarany gombok.</td><td>Világosszürke kártya, a napkorong jel, pezsgőarany gombok.</td></tr>
+      <tr><td>Logó és menü</td><td>Napkorong jel és szövegjel; nyolc menüpont: Birtok, Borok, Borkóstoló, Bortrezor, Tokaji aszú, Borklub, Experience, Kapcsolat (angolul hét).</td><td>Ugyanaz a logó és ugyanazok a menüpontok ugyanabban a sorrendben; a Borok és a Borkóstoló alatt lenyíló lista.</td></tr>
+      <tr><td>Nyitókép</td><td>Négy diás váltakozó banner: Tokaji aszú előjegyzés, Év pincészete 2026, Borkóstolóélmény ajándékba, Tokaji aszú.</td><td>Ugyanaz a négy dia, ugyanazok a bannerek és szövegek, ugyanabban a sorrendben. Megáll, ha az egér fölötte van, és nem mozog, ha a látogató csökkentett mozgást kért.</td></tr>
+      <tr><td>Kezdőlap</td><td>Borok körhinta · Holdvölgy kezdetek · szlogen a pincén · fotómozaik · Aktualitások · szalag · Látogass meg minket · kapcsolattartók · lábléc.</td><td>Ugyanebben a sorrendben, az Aktualitások (blog-hírfolyam) nélkül.</td></tr>
+      <tr><td>Gombok, színek, betűk</td><td>Pezsgőarany színátmenet (<span class="num">#B8A689 → #E0D2BB → #BAA793</span>), kontúros gomb fotón, nagybetűs Didot cím, Akzidenz-Grotesk szöveg.</td><td>Ugyanaz a színátmenet és ugyanazok a formák. Betűk: szabadon használható megfelelők (Bodoni Moda, Archivo); a Didot és az Akzidenz licencelt fájljai a birtok saját betűfájljaival cserélhetők.</td></tr>
+      <tr><td>Kosár</td><td>Jobb szélen álló pezsgőarany fül, fölötte a darabszám.</td><td>Ugyanaz (asztali gépen; telefonon az alsó sávban).</td></tr>
+      <tr><td>Borok</td><td>Aláhúzott fülek (Minden bor, Borválogatás, Borkóstoló, Dűlők, Aszú, Édes, Száraz, Hold and Hollo, Díszdoboz); keret nélküli palackok, kis nagybetűs névvel.</td><td>Ugyanaz a megjelenés; a fülek: Mind, Száraz, Édes, Aszú, Hold and Hollo — és az ár is látszik a palack alatt.</td></tr>
+      <tr><td>Lábléc</td><td>Szürke sáv: linkek, hírlevél kártya, közösségi linkek, cím, fizetési logók.</td><td>Ugyanaz, a fizetési logók nélkül. A csak a mai oldalon létező oldalak (ÁSZF, adatkezelés, impresszum, partnerek, szállítás) a mai oldalra mutatnak.</td></tr>
+      <tr><td>Életkor-ellenőrzés</td><td>Világosszürke kártya, napkorong jel, pezsgőarany gombok.</td><td>Ugyanaz.</td></tr>
     </tbody>
   </table></div>
 </div></section>
 
-<section><div class="wrap">
-  <p class="eyebrow">Ami ugyanaz</p>
-  <h2>A tartalom nem változik</h2>
+<section class="band"><div class="wrap">
+  <p class="eyebrow">Mit javít B a mai oldalhoz képest</p>
+  <h2>Gyorsabb, mobilon külön élmény, jobban használható</h2>
+  <p class="lede">Mérés: első betöltés, gyorsítótár nélkül, minden letöltött bájttal együtt (a betűkkel is), 2026. október 2-án.</p>
+  <div class="tw"><table>
+    <thead><tr><th>Oldal</th><th>Eszköz</th><th>Mai oldal</th><th>A</th><th>B</th></tr></thead>
+    <tbody>
+      <tr><td>Kezdőlap</td><td>Telefon</td><td class="num">17,9 MB · 250 kérés</td><td class="num">0,57 MB · 19 kérés</td><td class="num">0,85 MB · 28 kérés</td></tr>
+      <tr><td>Kezdőlap</td><td>Asztali</td><td class="num">19,7 MB · 247 kérés</td><td class="num">0,77 MB · 24 kérés</td><td class="num">1,10 MB · 29 kérés</td></tr>
+      <tr><td>Bor oldala</td><td>Telefon</td><td class="num">9,9 MB · 199 kérés</td><td class="num">0,33 MB · 12 kérés</td><td class="num">0,35 MB · 13 kérés</td></tr>
+      <tr><td>Bor oldala</td><td>Asztali</td><td class="num">11,0 MB · 206 kérés</td><td class="num">0,33 MB · 12 kérés</td><td class="num">0,35 MB · 13 kérés</td></tr>
+    </tbody>
+  </table></div>
+  <p class="hint">A birtok műszaki célja a kezdőlapra 1,5 MB alatt; mindkét változat belül van. A „bor oldala” a mai oldalon a Culture évjáratait felsoroló oldal.</p>
   <div class="two">
-    <div><b>Szövegek, árak, képek</b><p>Minden szöveg, ár, technikai adatlap és fotó ugyanaz a két változatban, magyarul és angolul. Egyetlen sor sem készült újra.</p></div>
-    <div><b>Szerkezet</b><p>Ugyanaz az öt menüpont (Birtok · Borok · Látogatás · Borklub · Kapcsolat), ugyanaz a 76 oldal, ugyanaz a szűrés és rendezés a borok között, telefonon ugyanaz az alsó sáv.</p></div>
-    <div><b>Életkor-ellenőrzés és mértékletesség</b><p>Mindkét változat az első belépéskor megkérdezi, elmúlt-e a látogató 18 éves, és minden oldalon kiírja a felelős fogyasztásra szóló figyelmeztetést.</p></div>
-    <div><b>Ami nem működik — még</b><p>A kosár és az űrlapok mindkét változatban nem küldenek; a vásárlás és a foglalás a holdvolgy.com-on él. Ezt minden oldal tetején sáv mondja ki.</p></div>
+    <div><b>Mobilon külön élmény</b><p>Telefonon külön megtervezett nézet: alsó sáv (Foglalás · Borok · Kosár · Menü), a nyitószöveg a kép alatt, a teljes menü egy érintésre, legalább 44 px-es érintési felületek, két oszlopos borlista.</p></div>
+    <div><b>Jobban használható</b><p>A kezdőlapon egy fő cím a mai négy helyett. A borok szűrhetők és árra rendezhetők, a palack alatt látszik az ár. Minden bor oldalán teljes adatlap és kóstolási jegyzet van — a mai termékoldalak ezeket nem tartalmazzák.</p></div>
+    <div><b>Olvashatóbb</b><p>Az eltérések a mai oldaltól, számokkal: a világos nyitóbannereken sötét cím és gombfelirat (<span class="num">8,4 : 1</span>, a mai fehéré <span class="num">2,0 : 1</span>); a gombokon sötét felirat a pezsgőarany alapon (<span class="num">7,1–11,3 : 1</span>, a mai fehéré <span class="num">2,4 : 1</span> és gyengébb); hivatkozások mélybarnával (<span class="num">4,6 : 1</span>, a mai <span class="num">2,4 : 1</span>); törzsszöveg 14 px a mai 11–12 px helyett. A fotós nyitóbannereken a cím marad fehér.</p></div>
+    <div><b>Amit B nem vesz át</b><p>Az Aktualitások blog-hírfolyamát (szerkesztőrendszer kell hozzá), a fizetési logókat (a kosár nem működik), a kereső- és fiókikont (nincs mögöttük működés). Az angol kezdőlap szalagján a mai oldal „Principals” szót ír; B a „Principles” (elvek) alakot használja.</p></div>
   </div>
 </div></section>
 
-<section class="band"><div class="wrap">
-  <p class="eyebrow">Amit B szándékosan másképp csinál</p>
-  <h2>Az eredeti formanyelv, olvasható kontraszttal</h2>
-  <p class="lede">Az eredeti oldal néhány megoldása nehezen olvasható. B a formát átveszi, de ezeken a pontokon javít — a mért értékek:</p>
-  <div class="tw"><table>
-    <thead><tr><th>Megoldás</th><th>Az eredeti oldalon</th><th>B-ben</th></tr></thead>
-    <tbody>
-      <tr><td>Gombfelirat</td><td>Fehér a pezsgőarany alapon: <span class="num">2,4 : 1</span> a sötétebb végén, <span class="num">1,5 : 1</span> a világosabbon.</td><td>Sötét felirat: <span class="num">7,1 : 1</span> és <span class="num">11,3 : 1</span>.</td></tr>
-      <tr><td>Nyitócím</td><td>Fehér a melegszürke alapon: <span class="num">2,0 : 1</span>.</td><td>Sötét cím: <span class="num">8,4 : 1</span>.</td></tr>
-      <tr><td>Hivatkozások</td><td>Pezsgőarany szöveg fehér alapon: <span class="num">2,4 : 1</span>.</td><td>Mélybarna (<span class="num">#8B705B</span>): <span class="num">4,6 : 1</span>.</td></tr>
-      <tr><td>Törzsszöveg</td><td>11–12 px.</td><td>14 px.</td></tr>
-      <tr><td>Betűtípusok</td><td>Didot és Akzidenz-Grotesk BQ Extended, licencelt betűfájlok.</td><td>Szabadon használható megfelelők (Bodoni Moda, Archivo). Ha a birtok átadja a saját betűfájljait, és a licenc megengedi, a csere egyetlen sor a stíluskészletben.</td></tr>
-      <tr><td>Fő cím a kezdőlapon</td><td>Négy fő cím verseng egymással.</td><td>Egy.</td></tr>
-    </tbody>
-  </table></div>
-  <p class="hint">Az angol kezdőlap szalagján az eredeti oldal „Principals” szót ír; B a „Principles” (elvek) alakot használja.</p>
-</div></section>
-
 <section><div class="wrap">
-  <p class="eyebrow">Mérések</p>
-  <h2>A két változat ugyanolyan könnyű</h2>
-  <p class="lede">Első betöltés, az oldal és a képei, tömörítés nélkül, kilobájtban. A birtok műszaki célja a kezdőlapra 1,5 MB alatt.</p>
-  <div class="tw"><table>
-    <thead><tr><th>Oldal</th><th>Eszköz</th><th>A</th><th>B</th></tr></thead>
-    <tbody>
-      <tr><td>Kezdőlap</td><td>Telefon</td><td class="num">414 kB</td><td class="num">432 kB</td></tr>
-      <tr><td>Kezdőlap</td><td>Asztali</td><td class="num">636 kB</td><td class="num">648 kB</td></tr>
-      <tr><td>Bor oldala</td><td>Telefon</td><td class="num">194 kB</td><td class="num">200 kB</td></tr>
-      <tr><td>Bor oldala</td><td>Asztali</td><td class="num">194 kB</td><td class="num">200 kB</td></tr>
-    </tbody>
-  </table></div>
-</div></section>
-
-<section class="band"><div class="wrap">
   <p class="eyebrow">Döntés</p>
   <h2>Három út innen</h2>
   <div class="opts">
-    <div><b>A marad</b><p>Az új formanyelv és szerkezet. A munka folytatódik a jóváhagyott irányban.</p></div>
-    <div><b>B lesz</b><p>Az eredeti formanyelv az új szerkezettel. B minden oldala kész; az élesítés tervén nem változik semmi.</p></div>
-    <div><b>Elemenként válogatva</b><p>Jelöljék meg, mely elemek kellenek B-ből (például a gombok, a szalag, a kosárfül, a nyitó), a többi marad A-ból. Ezt ugyanígy, mérve építjük be.</p></div>
+    <div><b>A</b><p>Az újragondolt szerkezet és formanyelv — a munka ebben az irányban folytatódik.</p></div>
+    <div><b>B</b><p>A mai oldal külseje és menüje, gyorsabban és külön mobilélménnyel. B minden oldala kész; az élesítés tervén nem változik semmi.</p></div>
+    <div><b>Elemenként válogatva</b><p>Jelöljék meg, mely elemek kellenek B-ből (például a menü, a nyitó bannerek, a szalag, a kosárfül), a többi marad A-ból, vagy fordítva. Ezt ugyanígy, mérve építjük be.</p></div>
   </div>
 </div></section>
 

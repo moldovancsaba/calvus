@@ -5,6 +5,8 @@
 the contract. Every value below is copied from `tokens.css` as of 2026-09-18 — if the two
 ever differ, the CSS wins and this file is wrong.*
 
+> **Variant note (2026-10-02).** This map describes variant A's tokens. Variant B (built from today's site, `15-variant-b.md`) adds, on top of the same file: the champagne gradient `linear-gradient(90deg, #B8A689 2.08%, #E0D2BB 31.97%, #BAA793 100%)` and its vertical form, the grey "mist" gradient, a 0 radius, Bodoni Moda at optical size 30, uppercase display type, 14 px body with 0.04 em tracking and 0.1 em on labels. If the client chooses B, these join the table below; if A, nothing changes.
+
 ## 1. Colour
 
 | Token | Value | `theme.json` `settings.color.palette` slug | Role |

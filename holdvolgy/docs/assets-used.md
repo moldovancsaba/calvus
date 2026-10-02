@@ -70,3 +70,19 @@ Remaining bottle renders (`HV_*`/`HH_*` 1347×1347 PNGs), trimmed to content and
 `bottle-hh-sweet.webp` 28 KB, `bottle-expression-21.webp` 24 KB, `bottle-expression-22.webp` 18 KB, `bottle-vision-18.webp` 13 KB, `bottle-exaltation-18.webp` 20 KB, `bottle-intuition-no1-17.webp` 25 KB, `bottle-culture-06.webp` 27 KB, `bottle-culture-07.webp` 27 KB, `bottle-culture-08.webp` 31 KB, `bottle-culture-09.webp` 28 KB, `bottle-culture-10.webp` 29 KB, `bottle-culture-12.webp` 25 KB, `bottle-culture-13.webp` 32 KB, `bottle-culture-14.webp` 30 KB, `bottle-culture-16.webp` 33 KB, `bottle-culture-17.webp` 27 KB, `bottle-signature-07.webp` 39 KB, `bottle-culture-3d-palack.webp` 20 KB, `bottle-exaltation-17.webp` 15 KB, `bottle-culture-11.webp` 33 KB, `bottle-intuition-no3-20.webp` 13 KB, `bottle-hh-upp.webp` 15 KB, `bottle-intuition-no8-19.webp` 21 KB, `bottle-intuition-no2-24-dij.webp` 22 KB, `bottle-culture-18.webp` 33 KB
 
 Committed derivatives now total **4517 KB** across 130 files.
+
+## Built 2026-10-02 for variant B — the live site's banners and logo
+
+The estate's own images, from the live site's media library (`holdvolgy.com/wp-content/uploads/…`), encoded to WebP in a headless browser, alpha kept; originals not committed (D7). The generated images on the live Borkóstoló and Experience pages were not fetched (D6).
+
+| File | Source | Original | Derivative |
+|---|---|---|---|
+| `b-hero-preculture-1440.webp` | `2025/12/HV_Preculture_Deskop.png` | 1512 × 792, 968 KB | 1440 × 754, 41 KB |
+| `b-hero-preculture-m.webp` | `2025/12/mobil.png` | 410 × 700, 252 KB | 410 × 700, 20 KB |
+| `b-hero-ev-1440.webp` | `2026/09/ev_pinceszet3-Facebook-Cover-3.png` | 1640 × 924, 502 KB | 1440 × 811, 26 KB |
+| `b-hero-ev-m.webp` | `2026/09/ev_pinceszet3-Instagram-Story-3.png` | 1080 × 1920, 496 KB | 780 × 1387, 29 KB |
+| `b-hero-tasting-1440.webp` | `2024/07/IMG_4697-3-scaled.jpg` | 2560 × 1707, 975 KB | 1440 × 960, 196 KB |
+| `b-hero-tasting-m.webp` | `2024/07/pincejarat_nagy_termek.png` | 599 × 630, 866 KB | 599 × 630, 93 KB |
+| `hv-web-logo.png` | `2023/10/HV-web-logo.png` | 226 × 32, 3.8 KB | copied as is |
+
+Committed derivatives now total **5200 KB** across 137 files.

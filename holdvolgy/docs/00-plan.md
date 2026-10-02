@@ -1,6 +1,6 @@
 # Holdvölgy 2026 — research findings and implementation plan
 
-**Status 2026-09-16: all five phases built and live; see `11-gate-sweep.md`.** Written 2026-09-16, before any second build. Part of the documentation set in `holdvolgy/docs/` — see `README.md` there for the index and process log. The first prototype (commit `8342956`) is
+**Status 2026-10-02: the plan describes variant A (reimagined for 2027); all five phases were built and live by 2026-09-16 (`11-gate-sweep.md`), reviewed internally by the owner. Variant B, built from today's site, was added on 2026-10-02 (`15-variant-b.md`). The client has accepted neither (D23).** Status 2026-09-16 (original): all five phases built and live. Written 2026-09-16, before any second build. Part of the documentation set in `holdvolgy/docs/` — see `README.md` there for the index and process log. The first prototype (commit `8342956`) is
 withdrawn as a design direction: it used a dark ground, a saturated gold accent and a
 serif display face — none of which come from the Holdvölgy brand or from the wine
 world's best sites. Everything below is what was actually measured or read.
